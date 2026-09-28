@@ -74,3 +74,14 @@ Must work at 390px phone width and 1440px desktop; no horizontal scroll.
   customer-reviews); match their hero/intro style and components.
 - Real details only (from the live store via the Shopify / GemPages tools, read only). Never invent policies,
   phone numbers, addresses, timescales or prices.
+
+## Round 5 (all new pages)
+- Keep reminding yourself: established retailer, high SKU count, easy to use.
+- Signed-off pages are in /home/user/Cloud/final/ (quiz, symptom guide, why-poorly-pet, customer reviews,
+  track-my-order, faqs, contact-us). Match their intro/hero, section headings, buttons, spacing and the
+  "Still need help? Contact us" block pattern in final/faqs.html. Never show the registered office address.
+- Delivery facts that are confirmed (shop shipping policy + real rates): UK standard £3.99, free over £39,
+  dispatch 1–2 working days, delivery 2–4 working days after dispatch, Evri via Shopify Shipping, tracking emailed.
+  Returns (refund policy): 14 days to cancel + 14 days to return, 30-day money-back guarantee on eligible products,
+  opened supplements/perishables not returnable unless faulty, refunds within 14 days, faulty items covered.
+  Where live GemPages pages disagree with the policies, follow the policies.
