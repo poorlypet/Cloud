@@ -385,7 +385,7 @@ function saveDog(e){
     conditions:$$('input[name="cond"]:checked',f).map(function(c){return c.value})};
   rec.age=ageOf(b); /* kept for the live page, which shows `age` */
   if(editing){dogs=dogs.map(function(x){return x.id===editing?rec:x})}else{dogs.push(rec)}
-  activeId=rec.id;saveDogs();closeDog();renderAll();paintStats();
+  if(current==='dogs')activeId=rec.id;saveDogs();closeDog();renderAll();paintStats();
   toast('<span><b>'+esc(rec.name)+' saved</b>'+(rec.birthday?'Birthday points on '+dayMonth(nextBirthday(rec.birthday).date):'Add a birthday any time for birthday points')+'</span>');
 }
 function delDog(){if(!editing)return;var d=dogs.filter(function(x){return x.id===editing})[0];if(!window.confirm('Remove '+(d?d.name:'this dog')+' from your account?'))return;dogs=dogs.filter(function(x){return x.id!==editing});saveDogs();closeDog();renderAll();paintStats()}

@@ -3,3 +3,5 @@
 main{padding-bottom:0!important;margin-bottom:0!important}
 .foot{margin-top:0!important}
 main > :last-child{margin-bottom:0!important}
+/* keep the space above the footer tight on every page */
+main > section:last-of-type, main > div:last-child > section:last-of-type{padding-bottom:24px!important;margin-bottom:0!important}

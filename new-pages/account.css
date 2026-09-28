@@ -366,3 +366,8 @@
   .ac-fade,.ac-code--new,.ac-dlg{animation:none}
   .ac-bar>i,.ac-toast{transition:none}
 }
+/* spacing fixes after review */
+.ac-h3.ac-mt{margin-top:36px}
+.ac-red-l li:last-child{border-bottom:0;padding-bottom:0}
+.ac-o-more{margin-top:10px}
+.ac-o .ac-o-act{margin-top:10px}
