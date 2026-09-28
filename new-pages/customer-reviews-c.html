@@ -91,43 +91,22 @@
     </div>
   </section>
 
-  <section class="crv-c-pick" aria-labelledby="crv-pick-h">
-    <div class="wrap">
-      <div class="crv-c-pkh">
-        <div class="crv-c-ptl">
-          <h2 id="crv-pick-h">Choose a <em>product</em></h2>
-          <p>See what owners say about the thing you're looking at.</p>
+  <div class="wrap">
+    <section class="crv-b-res" id="crv-results" aria-labelledby="crv-lhead">
+      <aside class="crv-b-side" id="crv-panel" aria-live="polite"></aside>
+      <div class="crv-b-main">
+        <div class="crv-b-lh"><h2 id="crv-lhead">Latest reviews</h2></div>
+        <div class="crv-bar">
+          <div class="crv-chips" id="crv-chips" role="group" aria-label="Filter by stars"></div>
+          <label class="crv-sel">Sort <select id="crv-sort"><option value="newest">Newest</option><option value="highest">Highest rated</option><option value="lowest">Lowest rated</option></select></label>
         </div>
-        <div class="crv-c-ptr">
-          <div class="crv-c-find"><span class="mag" aria-hidden="true"></span><label class="sr" for="crv-psearch">Find a product</label><input id="crv-psearch" type="search" placeholder="Find a product" autocomplete="off" aria-controls="crv-picker"></div>
-          <div class="crv-c-arr"><button type="button" data-crv-scroll="-1" aria-label="Scroll products left">‹</button><button type="button" data-crv-scroll="1" aria-label="Scroll products right">›</button></div>
-        </div>
+        <p class="crv-status" id="crv-status" role="status">Showing reviews</p>
+        <div class="crv-b-list" id="crv-list"></div>
+        <div class="crv-morew"><button class="btn crv-ghost" type="button" id="crv-more">Show more reviews</button></div>
       </div>
-    </div>
-    <div class="crv-c-track" id="crv-track"><ul class="crv-c-picker" id="crv-picker" aria-label="Products with reviews"></ul></div>
-    <div class="wrap"><p class="crv-pcount" id="crv-pcount" role="status"></p></div>
-  </section>
-
-  <section class="wrap crv-c-res" id="crv-results" aria-labelledby="crv-lhead">
-    <aside class="crv-c-panel" id="crv-panel" aria-live="polite"></aside>
-    <div class="crv-c-feed">
-      <div class="crv-c-gh">
-        <h2 id="crv-lhead">All <em>reviews</em></h2>
-        <p class="crv-c-count" id="crv-status" role="status">Showing reviews</p>
-      </div>
-      <div class="crv-c-ctl">
-        <div class="crv-seg" id="crv-chips" role="group" aria-label="Filter by stars"></div>
-        <label class="crv-sel"><span class="sr">Sort</span><select id="crv-sort"><option value="newest">Newest</option><option value="highest">Highest rated</option><option value="lowest">Lowest rated</option></select></label>
-      </div>
-      <div class="crv-c-list" id="crv-list"></div>
-      <div class="crv-c-pager">
-        <p class="crv-c-pt" id="crv-ptext" aria-hidden="true"></p>
-        <div class="crv-c-pb" aria-hidden="true"><i id="crv-pbar"></i></div>
-        <button class="crv-c-more" type="button" id="crv-more">Show more reviews</button>
-      </div>
-    </div>
-  </section>
-  <div class="wrap"><p class="crv-note"><span data-crv-loaded>83</span> of <span data-crv-count>101</span> Judge.me reviews are in this preview; the rest load from Judge.me on the live site. Our guides and reviews don't replace your vet.</p></div>
+    </section>
+    <p class="crv-note"><span data-crv-loaded>83</span> of <span data-crv-count>101</span> Judge.me reviews are in this preview; the rest load from Judge.me on the live site. Our guides and reviews don't replace your vet.</p>
+  </div>
 </div>
 
 </main>

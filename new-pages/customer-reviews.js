@@ -668,115 +668,23 @@ function initB(){
 }
 
 /* ==========================================================================
-   Version C: C's teal score band on top, then B's product-led showcase
-   (choose a product, sticky product panel, that product's reviews),
-   drawn with C's review cards, segmented star filter and "Show more".
+   Version C (final): C's teal score band on top (static markup, filled by
+   the shared counters), then B's "All products" layout: the score panel card
+   beside the latest reviews, drawn with B's card(), chips(), Pager().
    ========================================================================== */
-function vline(r){
-  return '<span class="crv-c-who"><b>'+esc(r.reviewer_name||'Anonymous')+'</b>'+
-    (r.verified_buyer?'<span class="crv-c-vb">Verified buyer</span>':'')+
-    '<time class="crv-c-vd" datetime="'+esc(r.created_at)+'">'+fdate(r.created_at)+'</time></span>';
-}
-function pchip(r){
-  if(!r.product_handle)return '<span class="crv-c-pc crv-c-pc--shop">'+thumb(null,'')+'<span>Review of the Poorly Pet shop</span></span>';
-  var t=ptitle(r);
-  return '<a class="crv-c-pc" href="#">'+thumb(r.product_handle,t)+'<span>'+esc(t)+'</span></a>';
-}
-function cardC(r,noProd){
-  var sh=shortText(r.body),bid='crv-b-'+r.id;
-  return '<article class="crv-c-card">'+
-    '<div class="crv-c-side">'+rstars(r.rating,'sm')+vline(r)+(noProd?'':pchip(r))+'</div>'+
-    '<div class="crv-c-main">'+
-      (r.title?'<h3 class="crv-c-t">'+esc(r.title)+'</h3>':'')+
-      '<div class="crv-body crv-c-b" id="'+bid+'">'+(sh?'<p>'+esc(sh)+'</p>':paras(r.body))+'</div>'+
-      (sh?'<button type="button" class="crv-more" aria-expanded="false" aria-controls="'+bid+'" data-id="'+esc(r.id)+'">Read more</button>':'')+
-    '</div>'+
-  '</article>';
-}
 function initC(){
-  var st={product:'',stars:0,sort:'newest'};
-  var picker=$('#crv-picker'),panel=$('#crv-panel'),status=$('#crv-status'),head=$('#crv-lhead');
-  var list=$('#crv-list'),ptext=$('#crv-ptext'),pbar=$('#crv-pbar'),res=$('#crv-results');
-
-  /* product tiles: "All products" first, then every reviewed product */
-  function tile(p){
-    return '<li><button type="button" class="crv-c-tile" data-h="'+esc(p?p.handle:'')+'" aria-pressed="'+(p?'false':'true')+'">'+
-      (p?thumb(p.handle,p.title,'crv-c-timg'):'<span class="crv-th crv-c-timg crv-c-tall" aria-hidden="true"><b>'+one(D.summary.average_rating)+'</b></span>')+
-      '<span class="crv-c-tn">'+esc(p?p.title:'All products')+'</span>'+
-      '<span class="crv-c-tm">'+(p?tp(p.avg,'xs')+'<span>'+one(p.avg)+' · '+p.count+'</span>':'<span>'+plural(D.summary.number_of_reviews,'review')+'</span>')+'</span></button></li>';
-  }
-  picker.innerHTML=tile(null)+PLIST.map(tile).join('');
-  checkImgs(picker);
-  var track=$('#crv-track');
-  $$('[data-crv-scroll]').forEach(function(b){b.addEventListener('click',function(){track.scrollBy({left:(+b.dataset.crvScroll)*track.clientWidth*0.8,behavior:RM?'auto':'smooth'})})});
-  var ps=$('#crv-psearch');
-  ps.addEventListener('input',function(){
-    var w=ps.value.toLowerCase().trim(),n=0;
-    $$('li',picker).forEach(function(li,i){var t=li.querySelector('.crv-c-tn').textContent.toLowerCase();var on=!w||i===0||t.indexOf(w)>-1;li.hidden=!on;if(on&&i)n++});
-    track.scrollLeft=0;
-    $('#crv-pcount').textContent=w?(n?plural(n,'product')+' found':'No reviewed products match. You can still review it with Write a review.'):'';
-  });
-  picker.addEventListener('click',function(e){
-    var b=e.target.closest('.crv-c-tile');if(!b)return;
-    setProduct(b.dataset.h);
-    if(res.getBoundingClientRect().top<0||window.innerWidth<900)res.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
-  });
-  function setProduct(h){
-    st.product=h||'';st.stars=0;
-    $$('.crv-c-tile',picker).forEach(function(x){x.setAttribute('aria-pressed',x.dataset.h===st.product?'true':'false')});
-    $$('.crv-segb',seg).forEach(function(x){x.setAttribute('aria-pressed',x.dataset.s==='0'?'true':'false')});
-    drawPanel();run();
-  }
-
-  /* the sticky side panel */
-  function drawPanel(){
-    var p=st.product&&PIDX[st.product];
-    if(!p){
-      panel.innerHTML='<div class="crv-c-pall">'+
-        '<h3 class="crv-c-pname">All products</h3>'+
-        '<p class="crv-c-prate">'+rstars(D.summary.average_rating,'sm')+' <b>'+one(D.summary.average_rating)+'</b> <span>from '+plural(D.summary.number_of_reviews,'review')+'</span></p>'+
-        '<p class="crv-c-phint">'+PLIST.length+' products have reviews here. Choose one above to see what owners say about it.</p>'+
-        '<button type="button" class="btn sec wide" data-crv-write>Write a review</button></div>';
-      head.innerHTML='All <em>reviews</em>';
-      return;
-    }
-    var x=pp(p.handle),pr=money(x);
-    panel.innerHTML='<div class="crv-c-pcard">'+
-      '<div class="crv-c-well">'+(x&&x.img?'<span class="crv-th crv-c-wimg" data-t="'+esc(p.title)+'"><img src="'+esc(x.img)+'" alt="'+esc(p.title)+'"></span>':'<span class="crv-th crv-th--ph crv-c-wimg" aria-hidden="true"><span>'+esc(initial(p.title))+'</span></span>')+'</div>'+
-      '<div class="crv-c-pbody">'+(x&&x.brand?'<p class="crv-c-brand">'+esc(x.brand)+'</p>':'')+
-      '<h3 class="crv-c-pname">'+esc(p.title)+'</h3>'+
-      '<p class="crv-c-prate">'+rstars(p.avg,'sm')+' <b>'+one(p.avg)+'</b> <span>from '+plural(p.count,'review')+'</span></p>'+
-      (pr?'<p class="crv-c-price">'+esc(pr)+'</p>':'')+
-      '<div class="crv-c-pact"><a class="btn wide" href="#">View product</a>'+
-      '<button type="button" class="crv-c-rbtn" data-crv-write="'+esc(p.handle)+'">Review this product</button></div></div></div>';
-    checkImgs(panel);
-    head.innerHTML='Reviews of <em>this product</em>';
-  }
-
-  /* the list */
-  var pg=new Pager(list,$('#crv-more'),8,function(r){return cardC(r,!!st.product)},function(n,t){
-    ptext.textContent=t?'Showing '+n+' of '+t:'';
-    pbar.style.width=(t?n/t*100:0).toFixed(1)+'%';
-    $('.crv-c-pager').hidden=!t;
-    checkImgs(list);
-  });
-  function run(){
-    var l=select(st),p=st.product&&PIDX[st.product];
-    pg.set(l);
-    var t=statusText(l.length,st);
-    if(p&&!st.stars&&p.count>l.length)t+=' of '+p.count+'; the rest load from Judge.me on the live site';
-    status.textContent=t;
-    if(!l.length)list.innerHTML='<div class="crv-c-empty"><p>No reviews match this filter yet.</p><button type="button" class="crv-c-reset">Show all stars</button></div>';
-  }
-  var seg=$('#crv-chips');
-  seg.innerHTML=[0].concat(STARS_HELD).map(function(s){
-    return '<button type="button" class="crv-segb" data-s="'+s+'" aria-pressed="'+(st.stars===s)+'">'+(s?s+'<span class="crv-segs" aria-hidden="true"></span><span class="sr"> star</span>':'All')+'</button>';
-  }).join('');
-  function setStars(s){st.stars=s;$$('.crv-segb',seg).forEach(function(x){x.setAttribute('aria-pressed',+x.dataset.s===s?'true':'false')});run()}
-  seg.addEventListener('click',function(e){var b=e.target.closest('.crv-segb');if(b)setStars(+b.dataset.s)});
-  list.addEventListener('click',function(e){if(e.target.closest('.crv-c-reset'))setStars(0)});
+  var st={stars:0,sort:'newest'},list=$('#crv-list'),status=$('#crv-status');
+  $('#crv-panel').innerHTML='<div class="crv-pov">'+
+    '<p class="crv-k">All products</p>'+
+    '<div class="crv-big"><b>'+one(D.summary.average_rating)+'</b><span>out of 5</span></div>'+
+    rstars(D.summary.average_rating,'')+
+    '<p class="crv-of"><b>Excellent</b> from '+D.summary.number_of_reviews+' reviews on Judge.me</p>'+histHTML()+
+    '<button type="button" class="btn sec wide" data-crv-write>Write a review</button></div>';
+  var pg=new Pager(list,$('#crv-more'),6,function(r){return card(r)},function(){checkImgs(list)});
+  function run(){var l=select(st);pg.set(l);status.textContent=statusText(l.length,st)}
+  chips($('#crv-chips'),st,run);
   $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
-  drawPanel();run();
+  run();
 }
 
 if(V==='a')initA();else if(V==='b')initB();else if(V==='c')initC();
