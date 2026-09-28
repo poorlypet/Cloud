@@ -74,17 +74,16 @@
 <div class="wrap pvbar"><span class="cardsw pvp" aria-label="Versions"><span>Symptom guide</span><a href="symptom-guide-a.html">A</a><a href="symptom-guide-b.html">B</a><a href="symptom-guide-c.html" class="on" aria-current="page">C</a></span></div>
 <div class="sg sg-c" data-sg="c">
 <section class="wrap sg-hero sgc-hero">
-  <div class="sg-hero-t"><h1>Symptom <em>explorer</em></h1><p>Choose a symptom. We explain it simply and show what helps.</p></div>
+  <div class="sg-hero-t"><h1>Symptom <em>explorer</em></h1><p>Search a symptom. We explain it simply and show what helps.</p></div>
 </section>
 <section class="wrap" aria-label="Symptom explorer">
   <div class="sgc">
-    <aside class="sgc-rail" id="sgc-rail" aria-label="All symptoms">
-      <button class="sgc-open" id="sgc-open" type="button" aria-expanded="false" aria-controls="sgc-drawer"><span><small>Symptom</small><b id="sgc-cur"></b></span><span class="sgc-oc">Change</span></button>
-      <div class="sgc-drawer" id="sgc-drawer">
-        <div class="sg-search sgc-search"><label class="sr" for="sgc-q">Search symptoms</label><span class="sg-mag" aria-hidden="true"></span><input id="sgc-q" type="search" placeholder="Search symptoms" autocomplete="off" aria-controls="sgc-list"></div>
-        <div class="sgc-toggle" id="sgc-toggle" role="group" aria-label="Order symptoms"><button type="button" data-mode="area" aria-pressed="true">By area</button><button type="button" data-mode="az" aria-pressed="false">A–Z</button></div>
-        <div class="sgc-listw"><ul class="sgc-list" id="sgc-list"></ul></div>
+    <aside class="sgc-rail" id="sgc-rail" aria-label="Find a symptom">
+      <div class="sgc-find">
+        <div class="sgc-q"><label class="sr" for="sgc-q">Search symptoms</label><span class="sgc-mag" aria-hidden="true"></span><input id="sgc-q" type="search" placeholder="Search symptoms" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="sgc-list" aria-autocomplete="list"><button class="sgc-clear" id="sgc-clear" type="button" aria-label="Clear search" hidden>&times;</button></div>
+        <div class="sgc-meta"><label class="sr" for="sgc-area">Filter by area</label><select id="sgc-area" class="sgc-area"></select><span class="sgc-count" id="sgc-count" aria-live="polite"></span></div>
       </div>
+      <ul class="sgc-list" id="sgc-list" role="listbox" aria-label="Symptoms"></ul>
     </aside>
     <div class="sgc-pane" id="sgc-pane"></div>
   </div>
