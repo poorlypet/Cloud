@@ -161,8 +161,9 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .os-hgrid>div+div{border-top:1px solid var(--line2)}
 }
 @media (max-width:599px){
-  .os-facts{grid-template-columns:minmax(0,1fr)}
-  .os-facts li:nth-child(even){padding-left:0;border-left:0}
+  .os-facts li{padding:12px 10px 12px 0;font-size:14px}
+  .os-facts li:nth-child(even){padding-left:12px}
+  .os-facts b{font-size:16px}
 }
 @media (prefers-reduced-motion:reduce){
   .os *,.os *:before,.os *:after{animation:none!important;transition:none!important}
