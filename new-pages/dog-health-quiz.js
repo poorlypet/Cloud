@@ -1,443 +1,652 @@
-/* ==================================================================
-   Dog health quiz. One script for all three versions.
-   The page sets data-hq="a", "b" or "c" on the quiz root.
-   Plain vanilla JS, no requests, works from a local file.
-   ================================================================== */
+/* ==========================================================================
+   Dog health quiz: shared engine for versions A, B and C.
+   Works out what the dog needs from its profile and symptoms, then recommends
+   real products from window.PP_TAGS / PP_PRODUCTS (products.js, loaded first).
+   Vanilla JS, no external requests. Each version is a root with data-hq="a|b|c".
+   ========================================================================== */
 (function(){
-  'use strict';
-  var root=document.querySelector('[data-hq]');
-  if(!root)return;
-  var V=root.getAttribute('data-hq');
-  var app=root.querySelector('[data-hq-app]');
-  var live=root.querySelector('.hq-live');
-  var LETTERS=['A','B','C','D','E'];
+'use strict';
 
-  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-  function say(t){if(!live)return;live.textContent='';setTimeout(function(){live.textContent=t},60)}
-  function focusEl(sel){var el=app.querySelector(sel);if(el){el.focus({preventScroll:true});}}
-  function scrollToApp(){
-    var r=app.getBoundingClientRect();
-    if(r.top<0||r.top>window.innerHeight*0.5){
-      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({top:window.pageYOffset+r.top-16,behavior:reduce?'auto':'smooth'});
+var PRODUCTS=window.PP_PRODUCTS||[],BY=window.PP_BY_HANDLE||{},TAGS=window.PP_TAGS||{};
+if(!Object.keys(BY).length)PRODUCTS.forEach(function(p){BY[p.handle]=p});
+var RM=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function money(n){return '£'+(Math.round(n*100)/100).toFixed(2)}
+function $(sel,el){return (el||document).querySelector(sel)}
+function $$(sel,el){return Array.prototype.slice.call((el||document).querySelectorAll(sel))}
+function later(fn,ms){return setTimeout(fn,RM?0:ms)}
+function has(a,v){return a.indexOf(v)>-1}
+function cleanTitle(t){return String(t).replace(/\s*\|\s*/g,', ')}
+
+/* ---------- data: areas and the 43 real symptoms (signed-off/shop-by-symptom.html) ---------- */
+var AREAS=[
+ {k:'legs-paws',n:'Legs & paws',ex:'Limping, stiffness, slow to get up',s:[
+  ['limping-or-favouring-a-leg','Limping or favouring a leg','joints'],['stiffness-after-rest','Stiffness after rest','joints'],
+  ['slow-to-get-up','Slow to get up','joints'],['holding-a-paw-up','Holding a paw up','joints'],
+  ['licking-or-chewing-paws','Licking or chewing paws','skin'],['scuffed-nails-or-dragging-paws','Scuffed nails or dragging paws','grip']]},
+ {k:'back-spine',n:'Back & spine',ex:'Reluctant to jump, wobbly back legs',s:[
+  ['reluctant-to-jump-or-climb','Reluctant to jump or climb','back'],['wobbly-back-legs','Wobbly back legs','back'],
+  ['hunched-or-arched-posture','Hunched or arched posture','back'],['yelping-when-touched','Yelping when touched','back'],
+  ['sudden-rear-weakness','Sudden rear weakness','back']]},
+ {k:'skin-coat',n:'Skin & coat',ex:'Scratching, hot spots, flaky skin',s:[
+  ['excessive-scratching','Excessive scratching','skin'],['red-or-irritated-skin','Red or irritated skin','skin'],
+  ['raw-weepy-hot-spots','Raw, weepy hot spots','skin'],['constant-licking-of-one-spot','Constant licking of one spot','skin'],
+  ['flaky-skin-or-dandruff','Flaky skin or dandruff','skin'],['hair-loss-or-bald-patches','Hair loss or bald patches','skin']]},
+ {k:'tummy-gut',n:'Tummy & gut',ex:'Loose stools, wind, appetite changes',s:[
+  ['loose-stools-or-diarrhoea','Loose stools or diarrhoea','tummy'],['excessive-wind','Excessive wind','tummy'],
+  ['gurgling-noisy-stomach','Gurgling, noisy stomach','tummy'],['vomiting-or-regurgitation','Vomiting or regurgitation','tummy'],
+  ['appetite-changes','Appetite changes','tummy'],['weight-gain','Weight gain','weight']]},
+ {k:'eyes-ears',n:'Eyes & ears',ex:'Scratching at ears, head shaking',s:[
+  ['scratching-at-ears','Scratching at ears','ears'],['head-shaking','Head shaking','ears'],
+  ['odour-from-the-ears','Odour from the ears','ears'],['red-inflamed-ear-flaps','Red, inflamed ear flaps','ears'],
+  ['weepy-or-red-eyes','Weepy or red eyes','ears']]},
+ {k:'mouth-teeth',n:'Mouth & teeth',ex:'Bad breath, tartar, sore gums',s:[
+  ['bad-breath','Bad breath','teeth'],['yellow-or-brown-tartar','Yellow or brown tartar','teeth'],
+  ['bleeding-or-red-gums','Bleeding or red gums','teeth'],['dropping-food-slow-chewing','Dropping food or slow chewing','teeth'],
+  ['pawing-at-the-mouth','Pawing at the mouth','teeth']]},
+ {k:'behaviour-mood',n:'Behaviour & mood',ex:'Worried alone, scared of noises',s:[
+  ['whining-or-barking-when-alone','Whining or barking when alone','calm'],['trembling-at-noises','Trembling at noises','calm'],
+  ['pacing-or-restlessness','Pacing or restlessness','calm'],['hiding-or-unusually-clingy','Hiding or unusually clingy','calm'],
+  ['destructive-behaviour','Destructive behaviour','calm']]},
+ {k:'whole-body',n:'Whole body',ex:'Slowing down, low energy, weight',s:[
+  ['general-stiffness-with-age','General stiffness with age','senior'],['low-energy-or-lethargy','Low energy or lethargy','senior'],
+  ['weight-management','Trouble managing weight','weight'],['post-surgery-recovery','Recovering from surgery or injury','recovery'],
+  ['drinking-more-than-usual','Drinking more than usual','kidney']]}
+];
+var AREA={},SYM={};
+AREAS.forEach(function(a){AREA[a.k]=a;a.syms=a.s.map(function(x){var k=a.k+'/'+x[0];SYM[k]={k:k,n:x[1],need:x[2],area:a.k};return SYM[k]})});
+
+/* What a dog can need. {n} is the dog's name. */
+var NEEDS={
+ joints:{t:'Joint and mobility support',s:'Daily joint support, plus comfort at home, to keep {n} moving easily.',tags:['arthritis'],area:'legs-paws'},
+ back:{t:'Back and spine care',s:'A supported spine and fewer big jumps help {n} stay comfortable.',tags:['back-pain'],area:'back-spine'},
+ grip:{t:'Grip and paw protection',s:'Boots and braces protect {n}’s paws and help with footing on walks.',tags:['knuckling','rear-leg-weakness'],area:'legs-paws'},
+ skin:{t:'Itch relief and skin care',s:'Soothe the itch on the outside and feed the skin from the inside.',tags:['itchy-skin','seasonal-allergies'],area:'skin-coat'},
+ ears:{t:'Ear and eye care',s:'Gentle, regular cleaning keeps {n}’s ears and eyes comfortable.',tags:['ear-eye-care'],area:'eyes-ears'},
+ teeth:{t:'Clean teeth and fresh breath',s:'A minute of dental care a day makes a real difference for {n}.',tags:['dental-disease'],area:'mouth-teeth'},
+ tummy:{t:'A settled tummy',s:'Gut support and gentle food help settle {n}’s digestion.',tags:['digestive-issues'],area:'tummy-gut'},
+ weight:{t:'A healthy weight',s:'Lighter food, smarter treats and slower meals help {n} stay trim.',tags:['weight-management'],area:'whole-body'},
+ calm:{t:'Calm and confidence',s:'Calming support and something to focus on help {n} feel settled.',tags:['anxiety'],area:'behaviour-mood'},
+ senior:{t:'Senior support',s:'All-round support for an older dog, from joints to energy.',tags:['senior-support'],area:'whole-body'},
+ recovery:{t:'Recovery and healing',s:'Protect the wound and keep {n} comfortable while they heal.',tags:['post-surgery-recovery','wound-recovery'],area:'whole-body'},
+ kidney:{t:'Kidney support',s:'Gentle daily support for kidney health and hydration.',tags:['kidney-support'],area:'whole-body'}
+};
+/* primary need per area, used when an area is chosen without symptoms */
+var AREA_NEED={'legs-paws':'joints','back-spine':'back','skin-coat':'skin','tummy-gut':'tummy','eyes-ears':'ears','mouth-teeth':'teeth','behaviour-mood':'calm','whole-body':'senior'};
+
+var AGE=[{k:0,t:'Puppy',d:'Under 1 year'},{k:1,t:'Adult',d:'1 to 7 years'},{k:2,t:'Senior',d:'7 to 10 years'},{k:3,t:'Golden oldie',d:'Over 10 years'}];
+var SIZE=[{k:0,t:'Small',d:'Under 10kg, like a Jack Russell'},{k:1,t:'Medium',d:'10 to 25kg, like a Cocker Spaniel'},{k:2,t:'Large',d:'25 to 45kg, like a Labrador'},{k:3,t:'Giant',d:'Over 45kg, like a Great Dane'}];
+var BREED=[{k:'long',t:'Long back, short legs',d:'Dachshund, Corgi, Basset Hound'},{k:'flat',t:'Flat-faced',d:'Pug, French Bulldog, Bulldog'},{k:'working',t:'Working or sporting',d:'Labrador, Spaniel, Collie'},{k:'mixed',t:'Mixed, or none of these',d:'Crossbreeds and everyone else'}];
+var EXTRA=[{k:'older',t:'Slowing down with age'},{k:'weight',t:'Carrying a little extra weight'},{k:'surgery',t:'Recovering from an operation or injury'},{k:'none',t:'None of these',x:1}];
+var KINDS=[{k:'supp',t:'Daily supplements',d:'Chews, powders and oils'},{k:'home',t:'Support and comfort',d:'Beds, ramps, braces and harnesses'},{k:'care',t:'Soothing care',d:'Shampoos, sprays, balms, dental'},{k:'food',t:'Food and treats',d:'Gentle food, toppers, healthy treats'},{k:'mix',t:'Show me a mix',d:'The best of everything',x:1}];
+/* C: size and breed type in one question */
+var BUILD=[{k:'s',t:'Small and light',d:'Under 10kg',size:0,breed:'mixed'},{k:'m',t:'Medium',d:'10 to 25kg',size:1,breed:'mixed'},{k:'l',t:'Large or giant',d:'Over 25kg, like a Labrador',size:2,breed:'working'},{k:'long',t:'Long back, short legs',d:'Dachshund, Corgi, Basset',size:0,breed:'long'},{k:'flat',t:'Flat-faced',d:'Pug, French Bulldog, Bulldog',size:1,breed:'flat'}];
+
+/* ---------- product kind, used for placeholders and the "what suits you" question ---------- */
+var KIND_LABEL={supp:'Supplement',food:'Food & treats',home:'Support & comfort',care:'Care',kit:'Care kit'};
+function kind(p){
+  if(p._k)return p._k;
+  var t=(p.productType||'').toLowerCase(),all=t+' '+(p.title||'').toLowerCase(),k;
+  if(/bundle|gift set/.test(t))k='kit';
+  else if(/shampoo|groom|spray|balm|wipe|gel|clean|conditioner|dental|toothpaste|first aid|bandage|wound|disinfect|sanitis|cologne|flea|tick|glove|towel/.test(t))k='care';
+  else if(/supplement|digestive support|wellness|pet health|healthcare/.test(t))k='supp';
+  else if(/food|treat|topper|diet/.test(t))k='food';
+  else if(/bed|ramp|stairs|mobility|blanket|mat|pad|wheelchair|harness|brace|splint|boot|rehab|support|jacket|coat|carrier|bowl|feeder|toy|enrichment|lead|collar|shirt|wear|cover|wrap|light/.test(t))k='home';
+  else if(/chew|powder|oil|capsule|tablet|probiotic/.test(all))k='supp';
+  else k='care';
+  p._k=k;return k;
+}
+
+/* ---------- the recommender ---------- */
+function dogName(st,cap){var n=(st.name||'').trim();return n?n:(cap?'Your dog':'your dog')}
+function poss(st,cap){var n=(st.name||'').trim();return n?n+'’s':(cap?'Your dog’s':'your dog’s')}
+function fill(s,st){return s.replace(/\{n\}’s/g,poss(st)).replace(/\{n\}/g,dogName(st))}
+
+function recommend(st){
+  var syms=st.syms||[],extra=st.extra||[],kinds=(st.kinds||[]).filter(function(k){return k!=='mix'});
+  var score={},why={},keys={};
+  function need(n,sc,reason){score[n]=(score[n]||0)+sc;why[n]=why[n]||[];if(reason&&!has(why[n],reason))why[n].push(reason)}
+  function key(n,k,w){if(!TAGS[k])return;keys[n]=keys[n]||{};keys[n][k]=Math.max(keys[n][k]||0,w)}
+  syms.forEach(function(k){var s=SYM[k];if(!s)return;need(s.need,10,s.n);key(s.need,k,10);key(s.need,s.area,3)});
+  (st.areas||[]).forEach(function(a){
+    var any=syms.some(function(k){return SYM[k]&&SYM[k].area===a});
+    if(!any){var n=AREA_NEED[a];need(n,7,AREA[a].n);key(n,a,8)}
+  });
+  if(has(syms,'skin-coat/raw-weepy-hot-spots')||has(syms,'skin-coat/constant-licking-of-one-spot'))key('skin','hot-spots',8);
+  if(has(syms,'behaviour-mood/whining-or-barking-when-alone')||has(syms,'behaviour-mood/destructive-behaviour'))key('calm','separation-anxiety',8);
+  if(has(syms,'behaviour-mood/trembling-at-noises'))key('calm','noise-fear',8);
+  if(has(syms,'back-spine/wobbly-back-legs')||has(syms,'back-spine/sudden-rear-weakness'))key('back','rear-leg-weakness',6);
+  if(has(syms,'legs-paws/holding-a-paw-up')||has(syms,'legs-paws/limping-or-favouring-a-leg'))key('joints','cruciate-ligament',4);
+  if(has(syms,'legs-paws/scuffed-nails-or-dragging-paws'))key('grip','knuckling',8);
+  /* the dog: age, size, breed type */
+  var age=st.age,size=st.size,breed=st.breed;
+  if(age>=2){need('senior',age===3?7:4,AGE[age].t);key('senior','senior-support',7);if(score.joints){score.joints+=3;key('joints','senior-support',3)}if(score.back)key('back','spondylosis',4)}
+  if(age===0){if(score.calm)key('calm','anxiety',6)}
+  if(breed==='long'){
+    if(score.back){score.back+=6;key('back','ivdd',10);why.back.push('Long back, short legs')}
+    else if(score.joints){score.joints+=2;key('joints','ivdd',3)}
+    else{need('back',3,'Long back, short legs');key('back','ivdd',7)}
+  }
+  if(size>=2){if(score.joints){score.joints+=3;key('joints','hip-dysplasia',6);key('joints','elbow-dysplasia',4);why.joints.push(SIZE[size].t+' dog')}}
+  if(breed==='working'&&score.joints){score.joints+=1;key('joints','cruciate-ligament',5)}
+  if(breed==='flat'){if(score.skin)score.skin+=2;if(score.ears)score.ears+=2}
+  /* anything else going on */
+  if(has(extra,'surgery')){need('recovery',12,'Recovering from an operation');key('recovery','post-surgery-recovery',9);key('recovery','wound-recovery',7)}
+  if(has(extra,'weight')){need('weight',9,'A little extra weight');key('weight','weight-management',8);key('weight','whole-body/weight-management',9)}
+  if(has(extra,'older')){need('senior',8,'Slowing down with age');key('senior','senior-support',8);key('senior','whole-body/general-stiffness-with-age',7)}
+  /* nothing specific: keep them well, by profile */
+  if(!Object.keys(score).length){
+    if(age>=2){need('senior',6,AGE[age].t);key('senior','senior-support',8)}
+    if(breed==='long'){need('back',5,'Long back, short legs');key('back','ivdd',8)}
+    if(size>=2||breed==='working'){need('joints',5,'Keeping joints well');key('joints','arthritis',6)}
+    if(breed==='flat'){need('skin',4,'Flat-faced breeds');key('skin','itchy-skin',6)}
+    if(age===0){need('calm',4,'Puppy');key('calm','anxiety',6)}
+    need('teeth',3,'Everyday care');key('teeth','dental-disease',6);
+    if(Object.keys(score).length<2){need('joints',2,'Everyday care');key('joints','arthritis',5)}
+  }
+  /* every need also draws on its own condition and area lists */
+  Object.keys(score).forEach(function(n){var d=NEEDS[n];d.tags.forEach(function(t){key(n,t,5)});key(n,d.area,2)});
+
+  var order=Object.keys(score).sort(function(a,b){return score[b]-score[a]}).slice(0,4);
+  var used={};
+  var needs=order.map(function(n){
+    var sc={},ks=keys[n]||{};
+    Object.keys(ks).forEach(function(k){(TAGS[k]||[]).forEach(function(h,i){sc[h]=(sc[h]||0)+ks[k]*Math.max(.35,1-i*.09)})});
+    var list=Object.keys(sc).filter(function(h){return BY[h]&&!used[h]}).map(function(h){
+      var p=BY[h],s=sc[h];
+      if(p.rating)s+=(p.rating-3.5)*.6+Math.log(1+p.reviewCount)*.35;
+      if(kinds.length){var kk=kind(p);if(has(kinds,kk))s+=6;else if(kk!=='kit')s-=1}
+      return {p:p,s:s};
+    }).sort(function(a,b){return b.s-a.s}).map(function(x){return x.p});
+    var items=list.slice(0,6);items.slice(0,3).forEach(function(p){used[p.handle]=1});
+    var d=NEEDS[n];
+    return {id:n,t:d.t,s:fill(d.s,st),why:why[n]||[],area:d.area,areaName:AREA[d.area].n,items:items.slice(0,3),more:items.slice(3,6)};
+  }).filter(function(x){return x.items.length});
+  return {needs:needs,kit:needs.length>=3?needs.slice(0,3).map(function(x){return x.items[0]}):topN(needs,3)};
+}
+function topN(needs,n){var out=[];for(var r=0;r<3&&out.length<n;r++)needs.forEach(function(x){if(x.items[r]&&out.length<n)out.push(x.items[r])});return out}
+function total(ps){return ps.reduce(function(a,p){return a+p.price},0)}
+function wasTotal(ps){return ps.reduce(function(a,p){return a+(p.compareAt&&p.compareAt>p.price?p.compareAt:p.price)},0)}
+
+/* ---------- product UI ---------- */
+function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<=5;i++){var f=r-(i-1);h+=f>=1?'<i class="on"></i>':f>0?'<i class="part" style="--f:'+Math.round(f*100)+'%"></i>':'<i></i>'}return h+'</span>'}
+function photo(p){
+  var k=kind(p);
+  if(p.img)return '<img class="hq-img" src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async" data-k="'+k+'">';
+  return phEl(k);
+}
+function phEl(k){return '<span class="hq-ph" data-photo="'+k+'" aria-hidden="true"><span class="hq-ph-s"></span><span class="hq-ph-l">'+KIND_LABEL[k]+'</span></span>'}
+function priceHtml(p){
+  var h='<span class="now">'+money(p.price)+'</span>';
+  if(p.compareAt&&p.compareAt>p.price)h+='<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>';
+  return h;
+}
+function revHtml(p){
+  if(!p.rating)return '<span class="rev none" aria-hidden="true"></span>';
+  return '<span class="rev">'+stars(p.rating)+'<span class="sr">Rated '+p.rating.toFixed(1)+' out of 5</span><span aria-hidden="true">'+p.rating.toFixed(1)+'</span><em>('+p.reviewCount+')</em></span>';
+}
+function card(p){
+  return '<article class="pk hq-pk"><div class="well hq-well">'+photo(p)+'</div><div class="body">'+
+    '<span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(cleanTitle(p.title))+'</a>'+revHtml(p)+
+    '<p class="price">'+priceHtml(p)+'</p>'+
+    '<button class="btn hq-add" type="button" data-h="'+esc(p.handle)+'">Add to basket<span class="sr"> '+esc(cleanTitle(p.title))+'</span></button></div></article>';
+}
+function mini(p,extra){
+  return '<div class="hq-mini"><span class="hq-thumb">'+photo(p)+'</span><span class="hq-mini-t"><span class="hq-mini-b">'+esc(p.brand)+'</span><span class="hq-mini-n">'+esc(cleanTitle(p.title))+'</span></span><span class="hq-mini-p">'+money(p.price)+'</span>'+(extra||'')+'</div>';
+}
+/* a broken local image falls back to the placeholder */
+document.addEventListener('error',function(e){var t=e.target;if(t&&t.classList&&t.classList.contains('hq-img')){var s=document.createElement('span');s.innerHTML=phEl(t.getAttribute('data-k')||'care');t.parentNode.replaceChild(s.firstChild,t)}},true);
+
+/* ---------- basket (count in the header plus a small toast) ---------- */
+var cnts=$$('.cnt'),bcount=cnts.length?(parseInt(cnts[0].textContent,10)||0):0,toastEl,toastT;
+function addToBasket(handles){
+  handles=[].concat(handles).filter(function(h){return BY[h]});if(!handles.length)return;
+  bcount+=handles.length;
+  cnts.forEach(function(c){c.textContent=bcount;c.setAttribute('data-n',bcount)});
+  if(!toastEl){toastEl=document.createElement('div');toastEl.className='hq-toast';toastEl.setAttribute('role','status');toastEl.setAttribute('aria-live','polite');document.body.appendChild(toastEl)}
+  var msg=handles.length===1?'<b>Added to basket</b><span>'+esc(cleanTitle(BY[handles[0]].title))+'</span>':'<b>'+handles.length+' items added to basket</b><span>'+money(total(handles.map(function(h){return BY[h]})))+' in total</span>';
+  toastEl.innerHTML='<span class="hq-toast-c" aria-hidden="true">'+bcount+'</span><span class="hq-toast-t">'+msg+'</span><a href="#">View basket ('+bcount+')</a>';
+  toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},4000);
+}
+function flash(btn,txt){
+  if(!btn)return;var o=btn.getAttribute('data-o')||btn.innerHTML;btn.setAttribute('data-o',o);
+  btn.classList.add('hq-added');btn.innerHTML='<span class="hq-tick" aria-hidden="true"></span>'+(txt||'Added');
+  clearTimeout(btn._t);btn._t=setTimeout(function(){btn.classList.remove('hq-added');btn.innerHTML=o},2200);
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.hq-add[data-h]');
+  if(b){addToBasket(b.getAttribute('data-h'));flash(b)}
+});
+
+/* ---------- shared result blocks ---------- */
+function profileBits(st){
+  var b=[];
+  if(st.age!=null)b.push(AGE[st.age].t);
+  if(st.size!=null&&st.build==null)b.push(SIZE[st.size].t);
+  if(st.build!=null){var bb=BUILD.filter(function(x){return x.k===st.build})[0];if(bb)b.push(bb.t)}
+  else if(st.breed&&st.breed!=='mixed')b.push(BREED.filter(function(x){return x.k===st.breed})[0].t);
+  (st.syms||[]).forEach(function(k){if(SYM[k])b.push(SYM[k].n)});
+  (st.extra||[]).forEach(function(k){if(k!=='none')b.push(EXTRA.filter(function(x){return x.k===k})[0].t)});
+  return b;
+}
+function needsHtml(res,st,opt){
+  opt=opt||{};
+  return res.needs.map(function(n,i){
+    return '<article class="hq-need" id="hq-need-'+n.id+'"><div class="hq-need-h"><span class="hq-num" aria-hidden="true">'+(i+1)+'</span><div class="hq-need-t">'+
+      '<h3>'+esc(n.t)+'</h3><p>'+esc(n.s)+'</p>'+(n.why.length?'<p class="hq-why">Because of: '+esc(n.why.slice(0,3).join(', ').toLowerCase().replace(/^./,function(c){return c.toUpperCase()}))+'</p>':'')+
+      '</div><a class="hq-shop" href="#">Shop '+esc(n.areaName.toLowerCase().replace('&','and'))+' <span aria-hidden="true">›</span></a></div>'+
+      '<div class="hq-cards">'+n.items.map(card).join('')+'</div></article>';
+  }).join('');
+}
+function kitHtml(res,st){
+  var ps=res.kit,t=total(ps),w=wasTotal(ps);
+  return '<div class="hq-kit-in"><p class="hq-eyebrow">Save time</p><h3>Build '+esc(poss(st))+' <em>kit</em></h3><p class="hq-kit-s">Our top pick for each need, in one go.</p>'+
+    '<ul class="hq-kit-l">'+ps.map(function(p){return '<li>'+mini(p)+'</li>'}).join('')+'</ul>'+
+    '<div class="hq-total"><span>'+ps.length+' items</span><span class="hq-total-v">'+(w>t+.001?'<s>'+money(w)+'</s> ':'')+'<b>'+money(t)+'</b></span></div>'+
+    '<button class="btn wide hq-addall" type="button" data-hs="'+ps.map(function(p){return p.handle}).join(',')+'">Add all '+ps.length+' to basket</button>'+
+    '<p class="hq-kit-note">'+(t>=39?'This kit qualifies for free UK delivery.':'Free UK delivery on orders over £39.')+'</p></div>';
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.hq-addall[data-hs]');
+  if(b){addToBasket(b.getAttribute('data-hs').split(','));flash(b,'Added to basket')}
+});
+
+function animateIn(el,dir){
+  if(RM||!el)return;el.classList.remove('hq-in-f','hq-in-b');void el.offsetWidth;el.classList.add(dir<0?'hq-in-b':'hq-in-f');
+}
+function reveal(root){
+  var els=$$('.hq-rv',root);
+  if(RM||!('IntersectionObserver' in window)){return}
+  els.forEach(function(el){el.classList.add('hq-rv-wait')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('hq-rv-wait');io.unobserve(en.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){io.observe(el)});
+}
+function scrollTo(el){if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-16;window.scrollTo({top:y,behavior:RM?'auto':'smooth'})}
+
+/* ==========================================================================
+   Stepper: one question per screen, progress bar, Back. Used by A and C.
+   step: {id, eyebrow, q, hint, type:'text'|'single'|'multi', key, opts, groups, style, max, cta}
+   ========================================================================== */
+function Stepper(host,steps,st,done,opt){
+  opt=opt||{};
+  var i=0,navigated=false;
+  host.innerHTML='<div class="hq-card'+(opt.cls?' '+opt.cls:'')+'"><div class="hq-top">'+
+    '<button class="hq-back" type="button"><span aria-hidden="true">‹</span> Back</button>'+
+    '<div class="hq-prog" role="progressbar" aria-label="Quiz progress" aria-valuemin="1"><span class="hq-bar"></span></div>'+
+    '<span class="hq-of"></span></div><div class="hq-stage"></div>'+
+    '<div class="hq-foot"><span class="hq-sel" aria-live="polite"></span><button class="btn hq-next" type="button">Continue</button></div></div>';
+  var card=$('.hq-card',host),stage=$('.hq-stage',host),back=$('.hq-back',host),bar=$('.hq-bar',host),prog=$('.hq-prog',host),of=$('.hq-of',host),foot=$('.hq-foot',host),next=$('.hq-next',host),sel=$('.hq-sel',host);
+  function list(){return steps.filter(function(s){return !s.skip||!s.skip(st)})}
+  function val(s){return st[s.key]}
+  function optsOf(s){return typeof s.opts==='function'?s.opts(st):s.opts}
+  function txt(v){return typeof v==='function'?v(st):(v||'')}
+  function render(dir){
+    var L=list(),s=L[i],n=L.length;
+    back.hidden=i===0&&!opt.backFirst;
+    bar.style.width=Math.round((i+1)/(n+1)*100)+'%';
+    prog.setAttribute('aria-valuemax',n);prog.setAttribute('aria-valuenow',i+1);prog.setAttribute('aria-valuetext','Question '+(i+1)+' of '+n);
+    of.textContent=(i+1)+' of '+n;
+    card.setAttribute('data-step',s.id);card.setAttribute('data-type',s.type+(s.style?' '+s.style:''));
+    var h='<div class="hq-step">'+(txt(s.eyebrow)?'<p class="hq-eyebrow">'+esc(txt(s.eyebrow))+'</p>':'')+
+      '<h2 class="hq-q" tabindex="-1">'+txt(s.q)+'</h2>'+(txt(s.hint)?'<p class="hq-hint">'+esc(txt(s.hint))+'</p>':'');
+    if(s.type==='text'){
+      h+='<form class="hq-name" novalidate><label class="sr" for="hq-name-'+s.id+'">'+esc(s.label||'Name')+'</label><input id="hq-name-'+s.id+'" type="text" maxlength="20" autocomplete="off" placeholder="'+esc(s.ph||'')+'" value="'+esc(st[s.key]||'')+'"></form>';
+      if(s.after)h+=s.after(st);
+    }else if(s.groups){
+      h+=s.groups(st).map(function(g){return '<div class="hq-grp"><h3>'+esc(g.h)+'</h3><div class="hq-chips" role="group" aria-label="'+esc(g.h)+'">'+g.items.map(function(o){return optBtn(s,o,'chip')}).join('')+'</div></div>'}).join('');
+      if(s.none)h+='<button class="hq-none" type="button" data-none>'+esc(txt(s.none))+'</button>';
+    }else{
+      var st2=s.style||(s.type==='multi'?'tiles':'tiles');
+      h+='<div class="hq-opts hq-opts-'+st2+'" role="group" aria-label="'+esc(txt(s.q).replace(/<[^>]+>/g,''))+'">'+optsOf(s).map(function(o){return optBtn(s,o,st2)}).join('')+'</div>';
     }
+    h+='</div>';
+    stage.innerHTML=h;
+    var stepEl=$('.hq-step',stage);animateIn(stepEl,dir);
+    bind(s);sync(s);
+    if(navigated){var q=$('.hq-q',stage);q&&q.focus({preventScroll:true});if(card.getBoundingClientRect().top<0)scrollTo(card)}
   }
-  function links(list){
-    return '<div class="hq-links">'+list.map(function(l){return '<a href="#">'+esc(l)+' ›</a>'}).join('')+'</div>';
+  function optBtn(s,o,style){
+    var v=val(s),on=s.type==='multi'?has(v||[],o.k):v===o.k;
+    var inner=style==='chip'?esc(o.t):style==='cards'?
+      '<span class="hq-oc-ph" data-photo="'+esc(o.k)+'" aria-hidden="true"></span><span class="hq-oc-t"><b>'+esc(o.t)+'</b>'+(o.d?'<span>'+esc(o.d)+'</span>':'')+'</span><span class="hq-check" aria-hidden="true"></span>':
+      '<span class="hq-ot"><b>'+esc(o.t)+'</b>'+(o.d?'<span>'+esc(o.d)+'</span>':'')+'</span>'+(s.type==='multi'?'<span class="hq-check" aria-hidden="true"></span>':'<span class="hq-arr" aria-hidden="true">›</span>');
+    return '<button type="button" class="hq-o hq-o-'+style+'" data-v="'+esc(o.k)+'"'+(o.x?' data-x="1"':'')+' aria-pressed="'+on+'">'+inner+'</button>';
   }
+  function bind(s){
+    if(s.type==='text'){
+      var f=$('form',stage),inp=$('input',stage);
+      inp.addEventListener('input',function(){st[s.key]=inp.value.trim().replace(/^./,function(c){return c.toUpperCase()});sync(s)});
+      f.addEventListener('submit',function(e){e.preventDefault();go(1)});
+      if(navigated||opt.focusFirst)setTimeout(function(){inp.focus({preventScroll:true})},RM?0:260);
+      return;
+    }
+    $$('.hq-o',stage).forEach(function(b){b.addEventListener('click',function(){
+      var raw=b.getAttribute('data-v'),v=isNaN(+raw)||raw===''?raw:+raw;
+      if(s.type==='single'){
+        st[s.key]=v;$$('.hq-o',stage).forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+        if(s.onPick)s.onPick(st,v);
+        sync(s);later(function(){go(1)},240);return;
+      }
+      var a=(st[s.key]||[]).slice(),ix=a.indexOf(v);
+      if(ix>-1)a.splice(ix,1);
+      else{
+        if(b.getAttribute('data-x'))a=[];
+        else a=a.filter(function(k){var o=$('.hq-o[data-v="'+k+'"]',stage);return !(o&&o.getAttribute('data-x'))});
+        if(s.max&&a.length>=s.max){sel.textContent='You can choose up to '+s.max+'.';card.classList.add('hq-shake');later(function(){card.classList.remove('hq-shake')},400);return}
+        a.push(v);
+      }
+      st[s.key]=a;
+      $$('.hq-o',stage).forEach(function(x){var r=x.getAttribute('data-v');x.setAttribute('aria-pressed',has(a,isNaN(+r)?r:+r))});
+      sync(s);
+    })});
+    var none=$('[data-none]',stage);
+    if(none)none.addEventListener('click',function(){st[s.key]=[];go(1)});
+  }
+  function sync(s){
+    var v=val(s),n=(v||[]).length;
+    if(s.type==='single'){foot.hidden=v==null;next.disabled=false;next.textContent='Continue';sel.textContent='';return}
+    foot.hidden=false;
+    if(s.type==='text'){next.textContent=v?'Continue':'Skip';sel.textContent='';return}
+    if(s.max)$$('.hq-o',stage).forEach(function(o){o.classList.toggle('hq-dim',n>=s.max&&o.getAttribute('aria-pressed')!=='true')});
+    next.disabled=!!(s.min&&n<s.min);
+    next.textContent=s.cta?s.cta(st,n):'Continue';
+    sel.textContent=s.selText?s.selText(st,n):(n?n+' chosen':'');
+  }
+  function go(d){
+    navigated=true;
+    var L=list();
+    if(d>0&&i>=L.length-1){done(st,api);return}
+    if(d<0&&i===0){if(opt.onBackFirst)opt.onBackFirst();return}
+    i=Math.max(0,Math.min(L.length-1,i+d));render(d);
+  }
+  back.addEventListener('click',function(){go(-1)});
+  next.addEventListener('click',function(){go(1)});
+  var api={goTo:function(id){var L=list();for(var k=0;k<L.length;k++)if(L[k].id===id){i=k;navigated=true;render(-1);return}},restart:function(){i=0;navigated=true;render(-1)},host:host};
+  render(0);
+  return api;
+}
 
-  /* ================================================================
-     A: health check-up
-     Levels per area: 0 looking good, 1 keep an eye, 2 worth working on, 3 talk to your vet
-     ================================================================ */
-  var LEVELS=['Looking good','Keep an eye','Worth working on','Talk to your vet'];
-  var AREAS={
-    joints:{name:'Joints & mobility',shop:['Mobility & Joint','Rehab','Legs & paws','Back & spine'],
-      adv:['Moving well. Keep walks regular rather than long weekend marathons, and keep their weight in check. That does more for joints than anything in a tub.',
-           'A little stiffness after rest is often the first sign of joint wear. Shorter, more frequent walks, a supportive bed out of draughts and rugs on slippy floors all help.',
-           'Avoiding stairs or jumps usually means something hurts. Ramps, non-slip matting and gentle, steady exercise help, and a joint supplement may be worth discussing with your vet.',
-           'Struggling to get up or needing help is a sign of real pain. Book a vet check. There is a lot that can be done for sore joints once you know what you are dealing with.'],
-      vet:'Sudden lameness, a leg they will not put down, yelping when touched or wobbly back legs are a same-day vet call.'},
-    skin:{name:'Skin & coat',shop:['Skin & Allergies','Skin & coat','Eyes & ears'],
-      adv:['Skin sounds comfortable. Keep up regular flea treatment and a brush through, which lets you spot lumps and sore patches early.',
-           'A bit of scratching after walks is common. Wipe paws and tummy after walks through grass and check for fleas with a fine comb.',
-           'Scratching most days is not normal. Check flea treatment is up to date and think about what changed: food, season, shampoo, bedding. If it is not better in a week or two, see your vet.',
-           'Sore, broken or bald skin needs a vet. Itchy dogs can make a small patch much worse in a day, and allergies and infections need the right diagnosis.'],
-      vet:'Red, weeping patches that spread fast, a swollen face or hives, or a painful, smelly ear need a vet today.'},
-    tummy:{name:'Tummy',shop:['Internal Health','Tummy & gut'],
-      adv:['Firm, regular poos are the best daily health check you have. Change food slowly, over a week or so, to keep it that way.',
-           'The odd upset is normal, especially after scavenging. Keep an eye on bin raids and rich treats, and make any food change gradually.',
-           'Loose stools or wind most weeks suggests the diet or gut is not quite right. A steady, simple diet and fewer extras is a good start. Talk to your vet if it carries on.',
-           'Ongoing vomiting or diarrhoea, or blood, needs your vet. Dogs can dehydrate quickly, particularly puppies and older dogs.'],
-      vet:'A swollen, tight belly with retching but nothing coming up is an emergency. Ring your vet straight away.'},
-    teeth:{name:'Teeth',shop:['Essential Care','Mouth & teeth'],
-      adv:['Teeth sound good. Daily brushing with a dog toothpaste is the gold standard, and it keeps them that way.',
-           'A little yellow on the back teeth is the start of tartar. Start brushing now, a few seconds a day is enough to begin with, and use dog toothpaste only.',
-           'Bad breath and brown tartar usually means gum disease has started. Brushing will not shift hard tartar, so ask your vet about a dental check at the next visit.',
-           'Red gums, dropping food or chewing on one side often means mouth pain. Book a vet appointment. Dogs hide dental pain well.'],
-      vet:'A swollen face or a lump under the eye can be a tooth root abscess. Call your vet today.'},
-    mood:{name:'Mood',shop:['Behaviour & Mood','Behaviour & mood'],
-      adv:['Settled and happy. Keep up the walks, sniffing time and play. A tired, busy brain is a calm one.',
-           'Worries about fireworks or the vet are very common. Plan ahead: a safe den, the curtains closed and the TV on, and short, happy practice visits to the vet.',
-           'A dog who is anxious alone or often on edge is not being naughty, they are struggling. Build up time alone in tiny steps and speak to your vet, who can refer you to a qualified behaviourist.',
-           'A sudden change in behaviour, hiding or snapping, is often pain or illness. Book a vet check before assuming it is behavioural.'],
-      vet:'If your dog suddenly seems confused, disorientated or collapses, ring your vet straight away.'},
-    weight:{name:'Weight',shop:['Internal Health','Whole body'],
-      adv:['A healthy weight is one of the best things you can give a dog. It takes pressure off joints, heart and breathing.',
-           'Not quite enough exercise to burn off the day. Add a short extra walk or a game, and weigh out food rather than guessing.',
-           'A little extra padding. Weigh their food, count treats as part of the daily amount and cut back slowly. Many vet practices run free weight clinics with a nurse.',
-           'This is worth a vet visit. Both very thin and very overweight dogs benefit from a plan made with your vet, and unexplained weight loss always needs checking.'],
-      vet:'Weight loss you cannot explain, especially with drinking more or eating less, needs a vet appointment.'}
-  };
-  var ORDER=['joints','skin','tummy','teeth','mood','weight'];
-
-  var AQ=[
-    {id:'age',step:'Age',q:'How old is your dog?',hint:'Age changes what is worth watching. Large and giant breeds count as senior sooner, often from around six.',
-      o:[{t:'Puppy',d:'Under 1 year'},{t:'Adult',d:'1 to 7 years'},{t:'Senior',d:'7 to 10 years',s:{teeth:1}},{t:'Golden oldie',d:'Over 10 years',s:{teeth:1,joints:1}}]},
-    {id:'size',step:'Size',q:'How big is your dog?',hint:'A rough guide is fine. Think of their adult weight.',
-      o:[{t:'Small',d:'Under 10kg, like a Jack Russell or Shih Tzu'},{t:'Medium',d:'10 to 25kg, like a Cocker Spaniel or Staffie'},{t:'Large',d:'25 to 45kg, like a Labrador or German Shepherd'},{t:'Giant',d:'Over 45kg, like a Great Dane or Newfoundland'}]},
-    {id:'breed',step:'Breed type',q:'Which of these sounds most like your dog?',hint:'Body shape brings its own weak spots. Crossbreeds can take after either side.',
-      o:[{t:'Flat-faced',d:'Pug, French Bulldog, Bulldog, Boxer'},{t:'Long back, short legs',d:'Dachshund, Corgi, Basset Hound'},{t:'Working or sporting',d:'Labrador, Spaniel, Collie, Retriever'},{t:'Mixed, or none of these',d:'Crossbreeds and everyone else'}]},
-    {id:'walk',step:'Exercise',q:'How much exercise does your dog get on most days?',hint:'Walks, off-lead running and proper play all count. Pottering in the garden does not.',
-      o:[{t:'Under 30 minutes',d:'Short strolls, mostly',s:{weight:1}},{t:'30 minutes to an hour',d:'One or two decent walks'},{t:'1 to 2 hours',d:'Busy days out'},{t:'Over 2 hours',d:'A proper athlete'}]},
-    {id:'getup',step:'Getting up',q:'How does your dog get going after a long rest?',hint:'Watch first thing in the morning, or after a nap following a walk.',
-      o:[{t:'Up and off straight away',d:'No sign of stiffness'},{t:'A bit stiff for a minute',d:'Then walks it off',s:{joints:1}},{t:'Slow and stiff most mornings',d:'Takes a while to loosen up',s:{joints:2}},{t:'Struggles, or needs help',d:'Slips, or has to try more than once',s:{joints:3}}]},
-    {id:'stairs',step:'Stairs & jumping',q:'What about stairs, the sofa or jumping into the car?',hint:'Dogs rarely complain. Avoiding things they used to do is often how they tell you.',
-      o:[{t:'No problem at all',d:'Up and down happily'},{t:'Thinks twice sometimes',d:'A pause before jumping',s:{joints:1}},{t:'Avoids them now',d:'Waits to be lifted, or goes round',s:{joints:2}},{t:'Yelps, or has suddenly stopped',d:'A change in the last few days',s:{joints:3},urgent:'Sudden yelping or refusing stairs can be back pain, including a slipped disc (IVDD). Ring your vet today and keep your dog calm, off stairs and off furniture until then.'}]},
-    {id:'itch',step:'Skin & scratching',q:'How often is your dog scratching, licking or chewing their paws?',hint:'Include rubbing their face on the carpet and scooting along the floor.',
-      o:[{t:'Hardly ever',d:'A normal scratch now and then'},{t:'Now and then',d:'Usually after walks',s:{skin:1}},{t:'Most days',d:'You notice it every day',s:{skin:2}},{t:'Constantly',d:'With sore, red or bald patches',s:{skin:3}}]},
-    {id:'tummy',step:'Tummy',q:'How is your dog\'s tummy, most of the time?',hint:'Poo tells you a lot. Firm, easy to pick up and the same most days is what you want.',
-      o:[{t:'Firm and regular',d:'No complaints'},{t:'The odd upset',d:'Usually after eating something they should not',s:{tummy:1}},{t:'Often loose or windy',d:'Most weeks',s:{tummy:2}},{t:'Ongoing sickness or diarrhoea',d:'Lasting more than a day, or with blood',s:{tummy:3},urgent:'Vomiting or diarrhoea lasting more than a day, any blood, or a dog who seems flat with it, needs a vet today. Keep water available.'}]},
-    {id:'teeth',step:'Teeth & breath',q:'Lift their lip. What do you see and smell?',hint:'Look at the big teeth at the back, not just the front ones.',
-      o:[{t:'Clean teeth, normal breath',d:'White teeth and pink gums'},{t:'A little yellow at the back',d:'Breath is fine',s:{teeth:1}},{t:'Brown tartar, bad breath',d:'You notice it when they pant',s:{teeth:2}},{t:'Red gums or chewing on one side',d:'Or dropping food',s:{teeth:3}}]},
-    {id:'mood',step:'Mood',q:'How would you describe your dog\'s mood lately?',hint:'Think about the last few weeks, not one bad day.',
-      o:[{t:'Settled and happy',d:'Their usual self'},{t:'Worried by certain things',d:'Fireworks, the vet, the hoover',s:{mood:1}},{t:'Often anxious or on edge',d:'Or upset when left alone',s:{mood:2}},{t:'A sudden change',d:'Hiding, grumpy or snapping',s:{mood:3}}]},
-    {id:'ribs',step:'Weight',q:'Run your hands along their sides. What can you feel?',hint:'Use flat hands and light pressure, then look down at them from above.',
-      o:[{t:'Ribs easy to feel',d:'Under a light covering, with a waist from above'},{t:'Ribs need a firm press',d:'The waist is hard to see',s:{weight:2}},{t:'Cannot feel ribs',d:'No waist, fat over the hips',s:{weight:3}},{t:'Ribs and hips stick out',d:'You can see bones easily',s:{weight:3}}]}
+/* ---------- common steps ---------- */
+function stepsProfile(){
+  return [
+    {id:'name',type:'text',key:'name',eyebrow:'About your dog',q:'First, what is your dog called?',hint:'We will use it to make the results about them.',label:'Your dog’s name',ph:'Their name'},
+    {id:'age',type:'single',key:'age',eyebrow:function(st){return 'About '+dogName(st)},q:function(st){return 'How old is '+esc(dogName(st))+'?'},opts:AGE},
+    {id:'size',type:'single',key:'size',eyebrow:function(st){return 'About '+dogName(st)},q:function(st){return 'How big is '+esc(dogName(st))+'?'},opts:SIZE},
+    {id:'breed',type:'single',key:'breed',eyebrow:function(st){return 'About '+dogName(st)},q:function(st){return 'Is '+esc(dogName(st))+' one of these types?'},hint:'Some body shapes need a little extra support.',opts:BREED}
   ];
+}
+function symGroups(areas){
+  return (areas&&areas.length?areas.map(function(k){return AREA[k]}):AREAS).map(function(a){return {h:a.n,items:a.syms.map(function(s){return {k:s.k,t:s.n}})}});
+}
+function selText(st,n){return n?n+' selected':'Choose as many as you like'}
 
-  function runA(){
-    var st={i:-1,ans:[],name:''};
-    var steps=root.querySelector('.hq-steps');
-    function dogName(){return st.name?esc(st.name):'your dog'}
-    function drawSteps(){
-      if(!steps)return;
-      steps.innerHTML=AQ.map(function(q,k){
-        var c=k<st.i||st.i>=AQ.length?'hq-done':(k===st.i?'hq-here':'');
-        return '<li class="'+c+'"'+(k===st.i?' aria-current="step"':'')+'><i aria-hidden="true"></i>'+esc(q.step)+'</li>';
-      }).join('');
-    }
-    function start(){
-      st={i:-1,ans:[],name:st.name};
-      drawSteps();
-      app.innerHTML='<div class="hq-card hq-a-start"><div>'+
-        '<span class="hq-chip">11 questions · about 2 minutes</span>'+
-        '<h2 class="hq-q" tabindex="-1" style="margin-top:16px">Let\'s start with <em>who</em> we are checking</h2>'+
-        '<p class="hq-hint">Answer for how your dog is on a normal day. You will get a snapshot of six areas, with what to do next for each.</p>'+
-        '<form class="hq-a-form" novalidate><div class="hq-field"><label for="hq-name">Your dog\'s name (optional)</label>'+
-        '<input id="hq-name" name="name" type="text" maxlength="24" autocomplete="off" placeholder="For example, Biscuit" value="'+esc(st.name)+'"></div>'+
-        '<button class="btn sec" type="submit">Start the check-up ›</button></form></div>'+
-        '<div><ul class="hq-a-list"><li>Joints & mobility</li><li>Skin & coat</li><li>Tummy</li><li>Teeth</li><li>Mood</li><li>Weight</li></ul>'+
-        '<p class="hq-small">This is a guide, not a diagnosis. Nothing we say here replaces your vet.</p></div></div>';
-      app.querySelector('form').addEventListener('submit',function(e){
-        e.preventDefault();
-        st.name=app.querySelector('#hq-name').value.trim().slice(0,24);
-        go(0);
-      });
-    }
-    function go(i,noFocus){
-      st.i=i;drawSteps();
-      if(i>=AQ.length){result();return}
-      var q=AQ[i],pct=Math.round(i/AQ.length*100);
-      var qt=q.q.replace('your dog',dogName());
-      app.innerHTML='<div class="hq-card">'+
-        '<div class="hq-top"><span class="hq-count">Question '+(i+1)+' of '+AQ.length+'</span><span class="hq-chip">'+esc(q.step)+'</span></div>'+
-        '<div class="hq-bar" role="progressbar" aria-label="Check-up progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div>'+
-        '<h2 class="hq-q" id="hq-qh" tabindex="-1">'+qt+'</h2><p class="hq-hint">'+esc(q.hint)+'</p>'+
-        '<div class="hq-opts" role="group" aria-labelledby="hq-qh">'+q.o.map(function(o,k){
-          return '<button type="button" class="hq-opt" data-k="'+k+'" aria-pressed="'+(st.ans[i]===k)+'"><span class="hq-l" aria-hidden="true">'+LETTERS[k]+'</span><span class="hq-ot"><b>'+esc(o.t)+'</b><span>'+esc(o.d)+'</span></span></button>';
-        }).join('')+'</div>'+
-        '<div class="hq-foot"><button type="button" class="hq-txtbtn" data-back'+(i===0?' disabled':'')+'>‹ Back</button><button type="button" class="hq-txtbtn" data-restart>Start again</button></div></div>';
-      app.querySelectorAll('.hq-opt').forEach(function(b){
-        b.addEventListener('click',function(){
-          st.ans[i]=+b.getAttribute('data-k');
-          app.querySelectorAll('.hq-opt').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-          setTimeout(function(){go(i+1)},220);
-        });
-      });
-      app.querySelector('[data-back]').addEventListener('click',function(){if(i>0)go(i-1)});
-      app.querySelector('[data-restart]').addEventListener('click',function(){start();focusEl('.hq-q')});
-      if(!noFocus){scrollToApp();focusEl('.hq-q')}
-    }
-    function result(){
-      var lv={},why={},urg=[],notes={};
-      ORDER.forEach(function(a){lv[a]=0;why[a]=[];notes[a]=[]});
-      AQ.forEach(function(q,k){
-        var o=q.o[st.ans[k]];if(!o)return;
-        if(o.s)Object.keys(o.s).forEach(function(a){
-          if(o.s[a]>lv[a])lv[a]=o.s[a];
-          why[a].push(o.t);
-        });
-        if(o.urgent)urg.push(o.urgent);
-      });
-      var age=st.ans[0],size=st.ans[1],breed=st.ans[2],walk=st.ans[3];
-      if((size===2||size===3)&&age>=2&&lv.joints<1){lv.joints=1;why.joints.push('Large breed, senior')}
-      if(breed===1)notes.joints.push('<b>Long-backed breeds</b> are prone to IVDD, a disc problem in the spine. Use ramps, discourage jumping off furniture and use a harness rather than a collar. Sudden back pain, wobbly or dragging back legs is a vet job today.');
-      if(breed===2||size>=2)notes.joints.push('<b>Bigger and working breeds</b> are more likely to have hip or elbow problems. Keeping them lean is the single most useful thing you can do.');
-      if(age===0)notes.joints.push('<b>Growing puppies</b> do best with short, frequent play and walks. Go easy on lots of stairs, jumping and long runs until they are fully grown, and ask your vet when that is for their breed.');
-      if(breed===0){notes.skin.push('<b>Flat-faced breeds</b> need their skin folds cleaned and dried a few times a week, and their eyes checked daily. Noisy breathing, struggling in the heat or tiring quickly are worth raising with your vet.');}
-      if(age===0)notes.teeth.push('<b>Puppies</b> swap 28 baby teeth for 42 adult teeth by around six or seven months. Start handling their mouth and brushing now, so it is easy for life.');
-      if(size===0&&lv.teeth<3)notes.teeth.push('<b>Small dogs</b> tend to get tartar earlier because their teeth are crowded. Daily brushing matters even more.');
-      if(walk===0&&age===3)notes.weight.push('<b>Older dogs</b> often walk less. Gentle, short walks more often, and adjusting food to match, keeps weight steady.');
-      if(st.ans[10]===3)notes.weight.push('<b>Very thin</b> dogs can be ill, so rule that out with your vet before simply feeding more.');
-      if(walk===0&&lv.mood<1){lv.mood=1;why.mood.push('Under 30 minutes of exercise')}
-
-      var sorted=ORDER.slice().sort(function(a,b){return lv[b]-lv[a]});
-      var count=[0,0,0,0];ORDER.forEach(function(a){count[lv[a]]++});
-      var nm=st.name?esc(st.name)+'\'s':'Your dog\'s';
-      var summary=count[3]?'A few things are worth talking to your vet about. The rest is below, area by area.':(count[2]?'Mostly doing well, with a couple of things worth working on.':(count[1]?'Looking good overall, with one or two things to keep an eye on.':'Looking good across the board. Keep doing what you are doing.'));
-      var h='<div class="hq-card">'+
-        '<div class="hq-snap-h"><div><span class="hq-kick">Your health snapshot</span><h2 tabindex="-1" style="margin-top:12px">'+nm+' <em>health snapshot</em></h2><p>'+summary+'</p></div>'+
-        '<div class="hq-tally">'+[0,1,2,3].filter(function(n){return count[n]}).map(function(n){return '<span class="hq-lv'+n+'"><i aria-hidden="true"></i>'+count[n]+' '+LEVELS[n].toLowerCase()+'</span>'}).join('')+'</div></div>';
-      if(urg.length)h+='<div class="hq-urgent" role="alert"><h3>Ring your vet today</h3><ul>'+urg.map(function(u){return '<li>'+esc(u)+'</li>'}).join('')+'</ul></div>';
-      h+='<div class="hq-areas">'+sorted.map(function(a){
-        var A=AREAS[a],n=lv[a];
-        return '<article class="hq-area"><div class="hq-area-h"><h3>'+esc(A.name)+'</h3><span class="hq-st hq-st'+n+'">'+LEVELS[n]+'</span></div>'+
-          '<div class="hq-meter" role="img" aria-label="'+esc(A.name)+': '+LEVELS[n]+'">'+[0,1,2,3].map(function(k){return '<i class="'+(k<=n?'on hq-dot'+n:'')+'"></i>'}).join('')+'</div>'+
-          '<div class="hq-meter-l" aria-hidden="true"><span>Looking good</span><span>Talk to your vet</span></div>'+
-          '<p>'+esc(A.adv[n])+'</p>'+
-          (why[a].length?'<p class="hq-based">Based on: <b>'+why[a].map(esc).join('</b>, <b>')+'</b></p>':'')+
-          notes[a].map(function(t){return '<p class="hq-note">'+t+'</p>'}).join('')+
-          (n>=2?'<div class="hq-vetnote"><span><b>When it is a vet job:</b> '+esc(A.vet)+'</span></div>':'')+
-          links(A.shop)+'</article>';
-      }).join('')+'</div>'+
-        '<div class="hq-res-foot"><p>This snapshot is a starting point, not a diagnosis. If something does not feel right, trust your instinct and speak to your vet. A yearly check-up, or six-monthly for older dogs, catches most things early.</p>'+
-        '<div class="hq-actions"><button type="button" class="btn" data-print>Print snapshot</button><button type="button" class="btn sec" data-restart>Start again</button></div></div></div>';
-      app.innerHTML=h;
-      app.querySelector('[data-restart]').addEventListener('click',function(){start();scrollToApp();focusEl('.hq-q')});
-      app.querySelector('[data-print]').addEventListener('click',function(){window.print()});
-      scrollToApp();focusEl('.hq-snap-h h2');
-      say('Your snapshot is ready.');
-    }
-    start();
+/* ==========================================================================
+   Version A: guided questions, then a full results page.
+   ========================================================================== */
+function initA(root){
+  var app=$('[data-hq-app]',root),st={name:'',age:null,size:null,breed:null,syms:[],extra:[],kinds:[]};
+  var steps=stepsProfile().concat([
+    {id:'syms',type:'multi',key:'syms',eyebrow:function(st){return 'About '+dogName(st)+'’s health'},q:'What are you noticing?',hint:'Tap everything that applies.',
+      groups:function(){return symGroups()},none:function(st){return 'Nothing in particular, just keeping '+dogName(st)+' well'},selText:selText,
+      cta:function(st,n){return n?'Continue with '+n:'Continue'}},
+    {id:'extra',type:'multi',key:'extra',eyebrow:'Nearly there',q:function(st){return 'Anything else going on with '+esc(dogName(st))+'?'},opts:EXTRA,style:'rows',selText:function(){return ''},
+      cta:function(st,n){return n?'Continue':'Skip'}},
+    {id:'kinds',type:'multi',key:'kinds',eyebrow:'Last one',q:'What sort of help suits you?',hint:'We will lean towards these in your results.',opts:KINDS,selText:function(){return ''},
+      cta:function(st,n){return 'See '+esc(poss(st))+' results'}}
+  ]);
+  var stepper=Stepper(app,steps,st,showResults);
+  function showResults(){
+    var res=recommend(st),bits=profileBits(st);
+    root.classList.add('hq-done');
+    app.innerHTML='<section class="hq-res" aria-labelledby="hq-res-h">'+
+      '<div class="hq-res-h hq-rise"><div><p class="hq-eyebrow">Your results</p><h2 id="hq-res-h" tabindex="-1">Here is what <em>'+esc(dogName(st))+'</em> needs</h2>'+
+      '<p class="hq-res-s">'+res.needs.length+' areas to focus on, with the products we would choose.</p>'+
+      '<ul class="hq-bits" aria-label="Your answers">'+bits.slice(0,8).map(function(b){return '<li>'+esc(b)+'</li>'}).join('')+(bits.length>8?'<li>+'+(bits.length-8)+' more</li>':'')+'</ul></div>'+
+      '<div class="hq-res-acts"><button class="btn sec hq-edit" type="button">Change answers</button><button class="hq-link hq-restart" type="button">Start again</button></div></div>'+
+      '<div class="hq-res-grid"><div class="hq-needs">'+needsHtml(res,st).replace(/class="hq-need"/g,'class="hq-need hq-rv"')+'</div>'+
+      '<aside class="hq-kit hq-rise" aria-label="'+esc(poss(st,true))+' kit">'+kitHtml(res,st)+'</aside></div>'+
+      '<p class="hq-calm">Our quiz doesn’t replace your vet.</p></section>';
+    reveal(app);
+    var h=$('#hq-res-h',app);scrollTo(root.querySelector('.hq-quiz')||app);setTimeout(function(){h.focus({preventScroll:true})},RM?0:400);
+    $('.hq-edit',app).addEventListener('click',function(){root.classList.remove('hq-done');stepper=Stepper(app,steps,st,showResults);stepper.goTo('syms')});
+    $('.hq-restart',app).addEventListener('click',function(){root.classList.remove('hq-done');st.name='';st.age=st.size=st.breed=null;st.syms=[];st.extra=[];st.kinds=[];stepper=Stepper(app,steps,st,showResults,{focusFirst:true});scrollTo(root)});
   }
+}
 
-  /* ================================================================
-     B: knowledge quiz
-     ================================================================ */
-  var BQ=[
-    {q:'How many teeth does an adult dog have?',tag:'Teeth',o:['28','32','42','48'],a:2,
-      why:'Adult dogs have 42 teeth, ten more than we do. Puppies have 28 baby teeth, which are replaced by around six or seven months old.',
-      learn:['Mouth & teeth','Essential Care']},
-    {q:'What is a normal body temperature for a dog?',tag:'Whole body',o:['36.5 to 37.5°C','38.3 to 39.2°C','39.5 to 40.5°C','Same as ours'],a:1,
-      why:'Dogs run warmer than us, at roughly 38.3 to 39.2°C. A reading above about 39.5°C, or below 37.5°C, is worth a call to your vet. A warm ear or dry nose is not a reliable guide, a rectal thermometer is.',
-      learn:['Whole body']},
-    {q:'Your dog is fast asleep. Roughly how many breaths a minute is normal?',tag:'Breathing',o:['Under 30','40 to 60','60 to 80','Over 100'],a:0,
-      why:'A healthy dog at rest or asleep usually breathes fewer than 30 times a minute, often much less. Count one rise and fall of the chest as one breath. A resting rate that stays above that, especially in a dog with a heart condition, is worth ringing your vet about.',
-      learn:['Whole body','Internal Health']},
-    {q:'True or false: a few grapes or raisins are fine as a treat.',tag:'Toxic foods',tf:true,o:['True','False'],a:1,
-      why:'False. Grapes, raisins, sultanas and currants can cause sudden kidney failure in some dogs, and there is no known safe amount. Research points to tartaric acid as the likely cause. If your dog eats any, ring your vet straight away, even if they seem fine.',
-      vet:'Grapes, raisins, chocolate and xylitol are all a call to your vet, straight away.',
-      learn:['Internal Health','Tummy & gut']},
-    {q:'How often should you ideally brush your dog\'s teeth?',tag:'Teeth',o:['Once a month','Once a week','Every day','Only when their breath smells'],a:2,
-      why:'Daily brushing is the gold standard, because plaque starts hardening into tartar within a few days. Use a dog toothpaste, never human toothpaste, which can contain xylitol and fluoride.',
-      learn:['Mouth & teeth','Essential Care']},
-    {q:'What is a hot spot?',tag:'Skin',o:['A patch of sunburnt skin','A red, moist, sore patch of skin that spreads fast','A warm place your dog likes to lie','A sign of a high temperature'],a:1,
-      why:'A hot spot, or acute moist dermatitis, is an angry, weeping patch of infected skin. It can grow in hours, often set off by an itch from fleas, allergies or an ear problem, then made worse by licking. Most need a vet to clip, clean and treat them.',
-      learn:['Skin & coat','Skin & Allergies']},
-    {q:'Which of these can be a sign of IVDD, a disc problem in the spine?',tag:'Back & spine',o:['Reluctance to jump or use stairs','Yelping when picked up','Wobbly or dragging back legs','All of these'],a:3,
-      why:'All of these. IVDD is most common in long-backed and short-legged breeds like Dachshunds, French Bulldogs and Corgis, but any dog can get it. It can come on suddenly.',
-      vet:'Sudden back pain, wobbly back legs or loss of use of the legs is an emergency. Keep your dog still and ring your vet now.',
-      learn:['Back & spine','Mobility & Joint','Neurological']},
-    {q:'True or false: a warm, dry nose means your dog is poorly.',tag:'Myths',tf:true,o:['True','False'],a:1,
-      why:'False. Noses go warm and dry after sleep, in the sun or by the radiator. Far better clues are appetite, energy, drinking, toilet habits and whether they are behaving like themselves.',
-      learn:['Whole body']},
-    {q:'Xylitol, a sweetener in some sugar-free gum, sweets and peanut butters, is...',tag:'Toxic foods',o:['Harmless to dogs','Dangerous, even in small amounts','Only a problem for puppies','Good for their teeth'],a:1,
-      why:'Xylitol can cause a sudden, dangerous drop in blood sugar in dogs, and liver damage. It is sometimes labelled birch sugar or E967. Check the label of any peanut butter before sharing.',
-      vet:'If your dog has eaten something containing xylitol, ring your vet now. Do not wait for signs.',
-      learn:['Internal Health']},
-    {q:'True or false: you only need to worm your dog when you see worms.',tag:'Prevention',tf:true,o:['True','False'],a:1,
-      why:'False. Most worms are never seen in poo. Regular treatment is the way to go, and how often depends on your dog\'s lifestyle. Lungworm, spread by slugs and snails, is found across the UK and not every wormer covers it, so ask your vet which product suits your dog.',
-      learn:['Essential Care','Tummy & gut']},
-    {q:'Which is the best sign your dog is a healthy weight?',tag:'Weight',o:['You cannot feel their ribs at all','Their ribs are easy to see','You can feel their ribs under a light covering and see a waist','The number on the scales, nothing else'],a:2,
-      why:'The hands-on rib check beats the scales. You should feel ribs easily, like the back of your hand, and see a waist from above. Carrying extra weight puts strain on joints, heart and breathing, and it is very common in UK dogs.',
-      learn:['Internal Health','Mobility & Joint']}
+/* ==========================================================================
+   Version B: a chat. Poorly Pet asks, the owner taps replies. The basket
+   on the right fills in as soon as we know what the dog is noticing.
+   ========================================================================== */
+function initB(root){
+  var log=$('.hq-log',root),comp=$('.hq-comp',root),bask=$('.hq-bask',root),mbar=$('.hq-mbar',root);
+  var st={name:'',age:null,size:null,breed:null,areas:[],syms:[],extra:[],kinds:[]},hist=[],sel={},swaps={},finished=false;
+  var Q=[
+    {id:'name',type:'text',key:'name',ask:function(){return ['Hello. I’m here to help you find the right things for your dog. It takes about a minute.','First, what’s your dog called?']}},
+    {id:'age',type:'single',key:'age',opts:AGE,ask:function(){return [(st.name?'Lovely to meet '+esc(st.name)+'. ':'')+'How old is '+esc(dogName(st))+'?']}},
+    {id:'size',type:'single',key:'size',opts:SIZE,ask:function(){return ['And how big is '+esc(dogName(st))+'?']}},
+    {id:'breed',type:'single',key:'breed',opts:BREED,ask:function(){return ['Is '+esc(dogName(st))+' one of these types? Some body shapes need a little extra support.']}},
+    {id:'areas',type:'multi',key:'areas',opts:AREAS.map(function(a){return {k:a.k,t:a.n}}).concat([{k:'none',t:'Nothing, just keeping them well',x:1}]),
+      ask:function(){return ['What have you noticed lately? Pick any areas.']}},
+    {id:'syms',type:'multi',key:'syms',skip:function(){return !st.areas.length||has(st.areas,'none')},groups:function(){return symGroups(st.areas)},
+      ask:function(){return ['Which of these sound like '+esc(dogName(st))+'? Tap all that apply.']}},
+    {id:'extra',type:'multi',key:'extra',opts:EXTRA,ask:function(){return ['Anything else going on?']}},
+    {id:'kinds',type:'multi',key:'kinds',opts:KINDS,ask:function(){return ['Last one. What sort of things suit you?']}}
   ];
-  var TIERS=[
-    {min:0,t:'Keen to learn',s:'Everyone starts somewhere. Read the answers below. Every one is worth knowing.'},
-    {min:5,t:'Good all-rounder',s:'You know the basics well. A few answers below are worth a second look.'},
-    {min:8,t:'Sharp-eyed owner',s:'Your dog is in good hands. You clearly pay attention.'},
-    {min:11,t:'Top of the class',s:'Full marks. You could teach this. Share it and see how your friends do.'}
-  ];
-
-  function runB(){
-    var st={i:0,picks:[],score:0};
-    var sn=root.querySelector('.hq-score-n'),dots=root.querySelector('.hq-dots'),tip=root.querySelector('.hq-tip');
-    function board(){
-      if(sn)sn.innerHTML=st.score+'<small>/ '+BQ.length+'</small>';
-      if(dots)dots.innerHTML=BQ.map(function(q,k){
-        var p=st.picks[k],c=p===undefined?(k===st.i?'hq-cur':''):(p===q.a?'hq-ok':'hq-no');
-        return '<i class="'+c+'"></i>';
-      }).join('');
-      if(dots)dots.setAttribute('aria-label',Object.keys(st.picks).length+' of '+BQ.length+' answered, '+st.score+' right');
-    }
-    function show(i,noFocus){
-      st.i=i;board();
-      if(i>=BQ.length){result();return}
-      var q=BQ[i];
-      app.innerHTML='<div class="hq-card'+(q.tf?' hq-tf':'')+'">'+
-        '<div class="hq-top"><span class="hq-count">Question '+(i+1)+' of '+BQ.length+'</span><span class="hq-chip">'+(q.tf?'True or false · ':'')+esc(q.tag)+'</span></div>'+
-        '<div class="hq-bar" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="'+BQ.length+'" aria-valuenow="'+i+'"><i style="width:'+Math.round(i/BQ.length*100)+'%"></i></div>'+
-        '<h2 class="hq-q" id="hq-qh" tabindex="-1">'+esc(q.q)+'</h2>'+
-        '<div class="hq-opts" role="group" aria-labelledby="hq-qh" style="margin-top:22px">'+q.o.map(function(o,k){
-          return '<button type="button" class="hq-opt" data-k="'+k+'"><span class="hq-l" aria-hidden="true">'+LETTERS[k]+'</span><span class="hq-ot"><b>'+esc(o)+'</b></span><span class="hq-mark"></span></button>';
-        }).join('')+'</div><div class="hq-fbw"></div>'+
-        '<div class="hq-foot"><span class="hq-count">Score so far: '+st.score+'</span><button type="button" class="hq-txtbtn" data-restart>Start again</button></div></div>';
-      app.querySelectorAll('.hq-opt').forEach(function(b){b.addEventListener('click',function(){answer(+b.getAttribute('data-k'))})});
-      app.querySelector('[data-restart]').addEventListener('click',restart);
-      if(!noFocus){scrollToApp();focusEl('.hq-q')}
-    }
-    function answer(k){
-      var q=BQ[st.i];if(st.picks[st.i]!==undefined)return;
-      st.picks[st.i]=k;var ok=k===q.a;if(ok)st.score++;
-      app.querySelectorAll('.hq-opt').forEach(function(b,j){
-        b.disabled=true;
-        if(j===q.a){b.classList.add('hq-right');b.querySelector('.hq-mark').textContent='Right answer'}
-        else if(j===k){b.classList.add('hq-wrong');b.querySelector('.hq-mark').textContent='Your answer'}
-      });
-      var last=st.i===BQ.length-1;
-      app.querySelector('.hq-fbw').innerHTML='<div class="hq-fb'+(ok?'':' hq-fb-no')+'"><h3 tabindex="-1">'+(ok?'Right. ':'Not quite. ')+'The answer is '+esc(q.o[q.a])+'.</h3>'+
-        '<p>'+esc(q.why)+'</p>'+(q.vet?'<div class="hq-vetnote"><span><b>Vet job:</b> '+esc(q.vet)+'</span></div>':'')+
-        '<p class="hq-small" style="margin-top:12px">Learn more:</p>'+links(q.learn)+
-        '<div class="hq-fb-row"><button type="button" class="btn sec" data-next>'+(last?'See my score ›':'Next question ›')+'</button></div></div>';
-      app.querySelector('.hq-foot .hq-count').textContent='Score so far: '+st.score;
-      app.querySelector('[data-next]').addEventListener('click',function(){show(st.i+1)});
-      if(tip)tip.innerHTML='<b>'+(ok?'Nice one':'Worth knowing')+'</b>'+esc(q.why.split('. ')[0].replace(/\.$/,''))+'.';
-      board();
-      focusEl('.hq-fb h3');
-    }
-    function tier(){var t=TIERS[0];TIERS.forEach(function(x){if(st.score>=x.min)t=x});return t}
-    function result(){
-      var t=tier(),n=BQ.length;
-      var shareText='I scored '+st.score+' out of '+n+' on the Poorly Pet dog health quiz: '+t.t+'. How well do you know your dog\'s health?';
-      app.innerHTML='<div class="hq-card"><div class="hq-share">'+
-        '<div class="hq-sc" role="img" aria-label="Result card: '+st.score+' out of '+n+', '+esc(t.t)+'">'+
-          '<span class="hq-sc-wm">poorlypet</span>'+
-          '<div><span class="hq-sc-k">Dog health quiz</span><div class="hq-sc-n">'+st.score+'<small>/'+n+'</small></div><div class="hq-sc-t">'+esc(t.t)+'</div><p class="hq-sc-s">How well do you know your dog\'s health?</p></div>'+
-          '<span class="hq-sc-u">poorly-pet.com</span></div>'+
-        '<div class="hq-share-r"><span class="hq-kick">Your result</span><h2 tabindex="-1" style="margin-top:12px">You scored <em>'+st.score+' out of '+n+'</em></h2><p>'+esc(t.s)+'</p>'+
-          '<div class="hq-actions"><button type="button" class="btn" data-copy>Copy my score</button><button type="button" class="btn sec" data-restart>Try again</button></div>'+
-          '<p class="hq-copied" aria-live="polite"></p>'+
-          '<p class="hq-small">Knowing the facts helps you spot problems early. It does not replace your vet. If you are worried about your dog, ring them.</p></div></div>'+
-        '<div class="hq-review"><h3>Your answers</h3>'+BQ.map(function(q,k){
-          var ok=st.picks[k]===q.a;
-          return '<details class="hq-rv"><summary><span class="hq-rvm '+(ok?'hq-ok':'hq-no')+'" aria-hidden="true">'+(k+1)+'</span><span>'+esc(q.q)+'<span class="hq-live">'+(ok?' You got this right.':' You got this wrong.')+'</span></span></summary>'+
-            '<div class="hq-rv-b"><p class="hq-you">You said: <b>'+esc(q.o[st.picks[k]])+'</b>'+(ok?'':'. The answer: <b>'+esc(q.o[q.a])+'</b>')+'</p><p>'+esc(q.why)+'</p>'+links(q.learn)+'</div></details>';
-        }).join('')+'</div></div>';
-      app.querySelector('[data-restart]').addEventListener('click',restart);
-      app.querySelector('[data-copy]').addEventListener('click',function(){
-        var out=app.querySelector('.hq-copied');
-        function done(){out.textContent='Copied. Paste it wherever you like.'}
-        function fallback(){
-          var ta=document.createElement('textarea');ta.value=shareText;ta.setAttribute('readonly','');ta.style.position='absolute';ta.style.left='-9999px';
-          document.body.appendChild(ta);ta.select();
-          try{document.execCommand('copy');done()}catch(e){out.textContent=shareText}
-          document.body.removeChild(ta);
-        }
-        if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(shareText).then(done,fallback)}else fallback();
-      });
-      if(tip)tip.innerHTML='<b>All done</b>Open any answer below to read it again.';
-      scrollToApp();focusEl('.hq-share-r h2');
-      say('Quiz finished. You scored '+st.score+' out of '+n+'.');
-    }
-    function restart(){st={i:0,picks:[],score:0};if(tip)tip.innerHTML='<b>Did you know?</b>Most of what a vet checks first, you can check at home: gums, breathing, temperature and weight.';show(0)}
-    show(0,true);
+  function steps(){return Q.filter(function(q){return !q.skip||!q.skip()})}
+  function answerText(q){
+    var v=st[q.key];
+    if(q.type==='text')return v||'I’d rather not say';
+    if(q.type==='single')return q.opts.filter(function(o){return o.k===v})[0].t;
+    if(!v.length)return q.id==='syms'?'Not sure':'None of these';
+    if(q.id==='syms')return v.map(function(k){return SYM[k].n}).join(', ');
+    return v.map(function(k){var o=q.opts.filter(function(o){return o.k===k})[0];return o?o.t:k}).join(', ');
   }
-
-  /* ================================================================
-     C: spot the sign. Calls: 0 fine, 1 keep an eye, 2 call the vet today
-     ================================================================ */
-  var CALLS=['Fine','Keep an eye','Call the vet today'];
-  var CALLDESC=['Normal dog behaviour. Nothing to do.','Watch for a day or two, make small changes, book in if it carries on.','Ring your vet today for advice or an appointment. Some are ring now.'];
-  var CS=[
-    {dog:'Pip, 3, Jack Russell',ph:'Terrier sniffing in long grass',t:2,q:'A few sneezes after a sniff',s:'Pip sneezes three or four times after nosing through long grass. A minute later she is fine, sniffing on and eating her tea as normal.',a:0,
-      why:'A few sneezes after a good sniff is a dog clearing their nose.',todo:'If sneezing keeps going, comes with pawing at the nose or a nosebleed, or starts suddenly and violently after a walk, think grass seed and call your vet.',sign:'Brief sneezing after sniffing',area:['Eyes & ears']},
-    {dog:'Duke, 6, Great Dane',ph:'Large dog standing, belly swollen',t:4,q:'Retching after dinner',s:'An hour after his dinner, Duke is pacing, trying to be sick but nothing comes up, and his belly looks tight and swollen.',a:2,now:true,
-      why:'This is the classic picture of bloat (GDV), where the stomach fills with gas and can twist. It is most common in large, deep-chested breeds and can kill within hours.',todo:'Ring your vet or the nearest out-of-hours vet now and set off. Do not wait to see if it settles.',sign:'Retching with nothing coming up, swollen belly',area:['Tummy & gut','Internal Health']},
-    {dog:'Rosie, 10, Labrador',ph:'Older Labrador getting out of a bed',t:1,q:'Stiff in the mornings',s:'Rosie is a bit stiff for the first few minutes after getting out of bed. Once she has walked around the garden she moves normally and enjoys her walk.',a:1,
-      why:'Stiffness after rest that eases with movement is a very common early sign of arthritis in older dogs.',todo:'Mention it at her next check-up. Meanwhile: a supportive bed, rugs on slippy floors, steady daily walks and keeping her lean. Book sooner if she starts limping or avoiding stairs.',sign:'Stiffness after rest that eases',area:['Legs & paws','Mobility & Joint']},
-    {dog:'Ted, 4, Cockapoo',ph:'Dog next to a dropped snack bag',t:2,q:'Ate some raisins',s:'Twenty minutes ago Ted got into a bag of raisins dropped on the floor. You think he ate a small handful. He seems completely fine.',a:2,now:true,
-      why:'Raisins and grapes can cause sudden kidney failure in some dogs and there is no known safe amount. Seeming fine means nothing yet.',todo:'Ring your vet now. If they act quickly they can often make him sick to get the raisins out before harm is done.',sign:'Ate grapes, raisins, chocolate or xylitol',area:['Internal Health']},
-    {dog:'Bramble, 5, Springer Spaniel',ph:'Spaniel tilting its head',t:3,q:'Sudden head shaking',s:'Straight after a walk through summer meadows, Bramble starts shaking her head hard, holding it tilted to one side and pawing at one ear.',a:2,
-      why:'Sudden head shaking after long grass, especially in summer, is very often a grass seed in the ear. The seed can work its way down and damage the eardrum.',todo:'Call your vet today. Do not try to dig it out yourself. From June to September, check ears, paws and armpits after every walk.',sign:'Sudden head shaking or tilt after long grass',area:['Eyes & ears','Paws & Limbs']},
-    {dog:'Milo, 2, Labrador',ph:'Young dog asleep on a rug',t:4,q:'Twitching in his sleep',s:'Milo is fast asleep, paws paddling and giving little muffled woofs. When you say his name he wakes, wags and is his normal self straight away.',a:0,
-      why:'That is dreaming. Dogs have the same dream sleep we do, and twitching, paddling and soft woofs are normal.',todo:'A seizure is different: the dog cannot be woken, may go stiff, drool or wet themselves, and is often confused afterwards. That is a call to your vet.',sign:'Twitching and woofing in sleep, wakes easily',area:['Behaviour & mood','Neurological']},
-    {dog:'Nala, 7, Staffie',ph:'Dog lying in the shade on a warm day',t:3,q:'Heavy panting on a hot day',s:'On a warm afternoon, Nala has come back from a walk panting hard and drooling. She is wobbly on her feet and does not want to settle in the shade.',a:2,now:true,
-      why:'This could be heatstroke, which can be fatal. Dogs cannot sweat like we do and overheat fast, especially flat-faced and overweight dogs.',todo:'Move her somewhere cool, offer small sips of water, pour cool (not ice cold) water over her and ring your vet now. On warm days, walk early or late.',sign:'Heavy panting, drooling, wobbly in the heat',area:['Whole body']},
-    {dog:'Biscuit, 3, Beagle',ph:'Beagle next to a food bowl',t:2,q:'One soft poo',s:'Biscuit had one soft poo this morning after a new chew yesterday. He is bright, eating, drinking and wants his walk.',a:1,
-      why:'A one-off soft poo in a bright dog is usually something they ate, and settles on its own.',todo:'Stick to his usual food and skip the new chew. Call your vet if it carries on past a day, has blood in it, comes with vomiting or he goes quiet. Puppies and older dogs need checking sooner.',sign:'One soft poo in a bright, eating dog',area:['Tummy & gut']},
-    {dog:'Maggie, 11, Border Terrier',ph:'Older dog at a water bowl',t:1,q:'Drinking a lot more',s:'Over the last couple of weeks Maggie has been emptying her water bowl much faster than usual and asking to go out for wees more often. It has not been hot.',a:2,
-      why:'A clear rise in thirst and weeing in an older dog can be a sign of kidney disease, diabetes or a hormone problem. None are emergencies today, but all are much easier to manage when caught early.',todo:'Call your vet today to book a check. They may ask you to bring a fresh wee sample. Measure how much she drinks in 24 hours if you can.',sign:'Drinking and weeing more than usual',area:['Whole body','Internal Health']},
-    {dog:'Frank, 5, Dachshund',ph:'Dachshund standing with a hunched back',t:4,q:'Wobbly back legs',s:'Frank was fine last night. This morning his back legs are wobbly, he is scuffing a back paw and he cried when you picked him up.',a:2,now:true,
-      why:'This sounds like a disc problem in his spine (IVDD), common in Dachshunds. Pressure on the spinal cord can get worse quickly, and early treatment makes a real difference.',todo:'Keep him as still as you can, carry him rather than let him walk, and ring your vet now.',sign:'Sudden wobbly back legs, crying when lifted',area:['Back & spine','Neurological']},
-    {dog:'Poppy, 6, Shih Tzu',ph:'Close-up of a small dog\'s teeth',t:3,q:'Bad breath and tartar',s:'Poppy\'s breath has become quite smelly and you can see brown tartar on her back teeth. She is eating her dinner and crunching her biscuits as normal.',a:1,
-      why:'Bad breath and tartar mean gum disease has started, which is very common in small dogs. It is not urgent, but it will not get better on its own.',todo:'Ask for a dental check at her next vet visit and start daily brushing with dog toothpaste. Book sooner if she drops food, chews on one side or her face swells.',sign:'Bad breath and tartar, still eating well',area:['Mouth & teeth','Essential Care']},
-    {dog:'Hector, 4, Greyhound',ph:'Dog grazing on a lawn',t:1,q:'Eating some grass',s:'Hector nibbles some grass on his walk, as he often does, then carries on as normal. He is eating his meals and his poos are normal.',a:0,
-      why:'Lots of healthy dogs eat grass now and then. Most of the time it means nothing.',todo:'Keep them off grass that may have been sprayed. If grass eating suddenly becomes frantic, or comes with repeated vomiting, not eating or tummy pain, call your vet.',sign:'Nibbling grass, otherwise normal',area:['Tummy & gut']}
-  ];
-
-  function runC(){
-    var st={i:0,picks:[]};
-    var trail=root.querySelector('.hq-trail');
-    function grade(k,q){return k===q.a?'ok':(k>q.a?'safe':'no')}
-    function drawTrail(){
-      if(!trail)return;
-      trail.innerHTML=CS.map(function(q,k){
-        var p=st.picks[k];
-        return '<i class="'+(p===undefined?(k===st.i?'hq-cur':''):'hq-'+grade(p,q))+'"></i>';
-      }).join('');
-      var done=st.picks.filter(function(x){return x!==undefined}).length;
-      trail.setAttribute('aria-label',done+' of '+CS.length+' cards done');
-    }
-    function card(i,noFocus){
-      st.i=i;drawTrail();
-      if(i>=CS.length){result();return}
-      var q=CS[i];
-      app.innerHTML='<div class="hq-scn">'+
-        '<span class="hq-ph hq-t'+q.t+'" data-photo="scenario" data-label="Photo: '+esc(q.ph)+'" aria-hidden="true"></span>'+
-        '<div class="hq-scn-b"><div class="hq-top" style="margin:0"><span class="hq-count">Card '+(i+1)+' of '+CS.length+'</span><span class="hq-chip">'+esc(q.dog)+'</span></div>'+
-        '<h2 class="hq-q" id="hq-qh" tabindex="-1">'+esc(q.q)+'</h2><p>'+esc(q.s)+'</p>'+
-        '<p class="hq-count" id="hq-ask" style="color:var(--teal)">What would you do?</p>'+
-        '<div class="hq-calls" role="group" aria-labelledby="hq-ask">'+CALLS.map(function(c,k){
-          return '<button type="button" class="hq-call" data-k="'+k+'"><span class="hq-ico hq-ico'+k+'" aria-hidden="true"></span>'+c+'</button>';
-        }).join('')+'</div><div class="hq-vw"></div>'+
-        '<div class="hq-foot" style="margin-top:4px"><span></span><button type="button" class="hq-txtbtn" data-restart>Start again</button></div></div></div>';
-      app.querySelectorAll('.hq-call').forEach(function(b){b.addEventListener('click',function(){pick(+b.getAttribute('data-k'))})});
-      app.querySelector('[data-restart]').addEventListener('click',restart);
-      if(!noFocus){scrollToApp();focusEl('.hq-q')}
-    }
-    function pick(k){
-      var q=CS[st.i];if(st.picks[st.i]!==undefined)return;
-      st.picks[st.i]=k;var g=grade(k,q);
-      app.querySelectorAll('.hq-call').forEach(function(b,j){
-        b.disabled=true;
-        if(j===k)b.classList.add('hq-pick');
-        if(j===q.a){b.classList.add('hq-ans');b.insertAdjacentHTML('beforeend','<span class="hq-tag">'+(j===k?'Your call, right':'The right call')+'</span>')}
-        else if(j===k)b.insertAdjacentHTML('beforeend','<span class="hq-tag">Your call</span>');
-      });
-      var head=g==='ok'?'Good call.':(g==='safe'?'A safe call.':'Not this time.');
-      var extra=g==='safe'?' Being cautious is never wrong, and your vet would rather hear from you.':'';
-      var last=st.i===CS.length-1;
-      app.querySelector('.hq-vw').innerHTML='<div class="hq-verdict'+(g==='no'?' hq-v-no':'')+'"><h3 tabindex="-1">'+head+' The call: '+CALLS[q.a]+(q.now?' <span class="hq-now">Ring now</span>':'')+'</h3>'+
-        '<p>'+esc(q.why)+extra+'</p><p class="hq-todo"><b>What to do:</b> '+esc(q.todo)+'</p>'+links(q.area)+
-        '<div class="hq-fb-row" style="margin-top:4px"><button type="button" class="btn sec" data-next>'+(last?'See my results ›':'Next card ›')+'</button></div></div>';
-      app.querySelector('[data-next]').addEventListener('click',function(){card(st.i+1)});
-      drawTrail();
-      focusEl('.hq-verdict h3');
-    }
-    function result(){
-      var right=0,safe=0,miss=0;
-      CS.forEach(function(q,k){var g=grade(st.picks[k],q);if(g==='ok')right++;else if(g==='safe')safe++;else miss++});
-      var msg=miss===0?'You did not miss a single sign that needed a vet. That is the part that matters most.':(miss===1?'You missed one sign that needed a vet. Have a look at the red column below.':'You missed '+miss+' signs that needed a vet. The red column below is the one to remember.');
-      var h='<div class="hq-c-res-h"><div><span class="hq-kick hq-on-teal" style="color:#fff">Your results</span><h2 tabindex="-1" style="margin-top:12px">You made <em>'+right+' of '+CS.length+'</em> calls right</h2><p>'+msg+' Keep this as a cheat sheet.</p></div>'+
-        '<div class="hq-c-stats"><div><b>'+right+'</b><span>right calls</span></div><div><b>'+safe+'</b><span>safe calls</span></div><div><b>'+miss+'</b><span>missed</span></div></div></div>'+
-        '<div class="hq-cheat">'+[2,1,0].map(function(c){
-          return '<section class="hq-col" aria-labelledby="hq-col'+c+'"><div class="hq-col-h"><span class="hq-ico hq-ico'+c+'" aria-hidden="true"></span><div><h3 id="hq-col'+c+'">'+CALLS[c]+'</h3><p>'+CALLDESC[c]+'</p></div></div>'+
-            CS.filter(function(q){return q.a===c}).map(function(q){
-              var k=CS.indexOf(q),g=grade(st.picks[k],q);
-              var yl=g==='ok'?'You got this right':(g==='safe'?'You were extra cautious':'You said '+CALLS[st.picks[k]].toLowerCase());
-              return '<div class="hq-sign"><b>'+esc(q.sign)+(q.now?' <span class="hq-now">Ring now</span>':'')+'</b><span>'+esc(q.why)+'</span><span class="hq-yours hq-'+g+'"><i aria-hidden="true"></i>'+yl+'</span>'+links(q.area)+'</div>';
-            }).join('')+'</section>';
-        }).join('')+'</div>'+
-        '<div class="hq-res-foot"><p>If in doubt, ring. Your vet would always rather hear from you early. Out of hours, your vet\'s phone line will tell you where their emergency cover is.</p><div class="hq-actions"><button type="button" class="btn sec" data-restart>Start again</button></div></div>';
-      app.innerHTML=h;
-      app.querySelector('[data-restart]').addEventListener('click',restart);
-      scrollToApp();focusEl('.hq-c-res-h h2');
-      say('All cards done. You made '+right+' of '+CS.length+' calls right.');
-    }
-    function restart(){st={i:0,picks:[]};card(0)}
-    card(0,true);
+  function bot(lines,anim){return lines.map(function(t,j){return '<div class="hq-msg hq-bot'+(anim?' hq-pop':'')+'"'+(anim?' style="animation-delay:'+(RM?0:j*350)+'ms"':'')+'>'+(j===0?'<span class="hq-av" aria-hidden="true">PP</span>':'<span class="hq-av hq-av-s" aria-hidden="true"></span>')+'<p>'+t+'</p></div>'}).join('')}
+  function me(t,anim){return '<div class="hq-msg hq-me'+(anim?' hq-pop':'')+'"><p><span class="sr">You: </span>'+esc(t)+'</p></div>'}
+  function renderLog(anim){
+    var h='',S=steps();
+    hist.forEach(function(id){var q=S.filter(function(x){return x.id===id})[0];if(!q)return;h+=bot(q.ask())+me(answerText(q))});
+    var cur=current();
+    if(cur)h+=bot(cur.ask(),anim);
+    else h+=bot(['Thanks. Here’s what I’d put in '+esc(poss(st))+' basket, with the reasons why. Untick anything you don’t need.'],anim);
+    log.innerHTML=h;
+    log.scrollTop=log.scrollHeight;
   }
+  function current(){var S=steps();for(var k=0;k<S.length;k++)if(!has(hist,S[k].id))return S[k];return null}
+  function typing(cb){
+    if(RM){cb();return}
+    var t=document.createElement('div');t.className='hq-msg hq-bot hq-typing';t.innerHTML='<span class="hq-av" aria-hidden="true">PP</span><p><span class="sr">Poorly Pet is typing</span><i></i><i></i><i></i></p>';
+    log.appendChild(t);log.scrollTop=log.scrollHeight;setTimeout(cb,550);
+  }
+  function renderComp(){
+    var q=current(),h='';
+    var backBtn=hist.length?'<button class="hq-undo" type="button"><span aria-hidden="true">‹</span> Back</button>':'';
+    if(!q){comp.innerHTML='<div class="hq-comp-row">'+backBtn+'<button class="hq-link hq-restart" type="button">Start again</button></div>';bindComp(null);return}
+    if(q.type==='text'){
+      h='<form class="hq-say"><label class="sr" for="hq-b-name">Your dog’s name</label><input id="hq-b-name" type="text" maxlength="20" autocomplete="off" placeholder="Type their name" value="'+esc(st.name)+'"><button class="btn" type="submit">Send</button></form>'+
+        '<div class="hq-comp-row">'+backBtn+'<button class="hq-link hq-skip" type="button">Skip</button></div>';
+    }else{
+      var v=st[q.key],chips;
+      if(q.groups)chips=q.groups().map(function(g){return '<div class="hq-rgrp"><span class="hq-rgrp-h">'+esc(g.h)+'</span><div class="hq-replies">'+g.items.map(function(o){return rep(q,o,v)}).join('')+'</div></div>'}).join('');
+      else chips='<div class="hq-replies">'+q.opts.map(function(o){return rep(q,o,v)}).join('')+'</div>';
+      h='<div class="hq-comp-l" role="group" aria-label="Your reply">'+chips+'</div>'+
+        '<div class="hq-comp-row">'+backBtn+(q.type==='multi'?'<button class="btn hq-send" type="button">'+(v&&v.length?'Send':'Skip')+'</button>':'')+'</div>';
+    }
+    comp.innerHTML=h;bindComp(q);
+  }
+  function rep(q,o,v){var on=q.type==='multi'?has(v||[],o.k):v===o.k;return '<button class="hq-rep" type="button" data-v="'+esc(o.k)+'"'+(o.x?' data-x="1"':'')+' aria-pressed="'+on+'">'+esc(o.t)+'</button>'}
+  function bindComp(q){
+    var u=$('.hq-undo',comp);if(u)u.addEventListener('click',undo);
+    var r=$('.hq-restart',comp);if(r)r.addEventListener('click',restart);
+    if(!q)return;
+    if(q.type==='text'){
+      var f=$('form',comp),inp=$('input',comp);
+      f.addEventListener('submit',function(e){e.preventDefault();st.name=inp.value.trim().replace(/^./,function(c){return c.toUpperCase()});answer(q)});
+      $('.hq-skip',comp).addEventListener('click',function(){st.name='';answer(q)});
+      if(hist.length||started)inp.focus({preventScroll:true});
+      return;
+    }
+    $$('.hq-rep',comp).forEach(function(b){b.addEventListener('click',function(){
+      var raw=b.getAttribute('data-v'),v=isNaN(+raw)?raw:+raw;
+      if(q.type==='single'){st[q.key]=v;b.setAttribute('aria-pressed','true');answer(q);return}
+      var a=(st[q.key]||[]).slice(),ix=a.indexOf(v);
+      if(ix>-1)a.splice(ix,1);else{if(b.getAttribute('data-x'))a=[];else a=a.filter(function(k){return k!=='none'&&k!=='mix'});a.push(v)}
+      st[q.key]=a;
+      $$('.hq-rep',comp).forEach(function(x){var r=x.getAttribute('data-v');x.setAttribute('aria-pressed',has(a,isNaN(+r)?r:+r))});
+      $('.hq-send',comp).textContent=a.length?'Send':'Skip';
+    })});
+    $('.hq-send',comp).addEventListener('click',function(){
+      if(q.id==='areas'){st.syms=st.syms.filter(function(k){return has(st.areas,SYM[k].area)})}
+      if(q.id==='extra')st.extra=st.extra.filter(function(k){return k!=='none'});
+      answer(q);
+    });
+  }
+  var started=false;
+  function answer(q){
+    started=true;hist.push(q.id);
+    log.insertAdjacentHTML('beforeend',me(answerText(q),true));
+    comp.innerHTML='';
+    updateBasket();
+    typing(function(){renderLog(true);renderComp();var c=current();if(!c)finish();focusComp()});
+  }
+  function focusComp(){var f=$('.hq-rep,input,.hq-send',comp);if(f&&window.innerWidth>=900)f.focus({preventScroll:true});if(window.innerWidth<900&&comp.getBoundingClientRect().bottom>window.innerHeight)comp.scrollIntoView({block:'end',behavior:RM?'auto':'smooth'})}
+  function undo(){
+    finished=false;root.classList.remove('hq-done');
+    var id=hist.pop();
+    renderLog(false);renderComp();updateBasket();
+    var f=$('.hq-rep[aria-pressed="true"],.hq-rep,input',comp);f&&f.focus({preventScroll:true});
+  }
+  function restart(){st.name='';st.age=st.size=st.breed=null;st.areas=[];st.syms=[];st.extra=[];st.kinds=[];hist=[];sel={};swaps={};finished=false;root.classList.remove('hq-done');renderLog(false);renderComp();updateBasket();scrollTo(root);var i=$('input',comp);i&&i.focus({preventScroll:true})}
+  function finish(){finished=true;root.classList.add('hq-done');updateBasket();if(window.innerWidth<900)later(function(){scrollTo(bask)},300)}
+  /* the recommended basket */
+  function knowsNeeds(){return has(hist,'areas')}
+  function updateBasket(){
+    var head='<div class="hq-bask-h"><p class="hq-eyebrow">'+(finished?'Recommended for '+esc(dogName(st)):'Building as we chat')+'</p><h2 tabindex="-1">'+esc(poss(st,true))+' <em>basket</em></h2></div>';
+    if(!knowsNeeds()){
+      var known=[['Name',st.name||'',has(hist,'name')],['Age',st.age!=null?AGE[st.age].t:'',st.age!=null&&has(hist,'age')],['Size',st.size!=null?SIZE[st.size].t:'',has(hist,'size')],['Type',st.breed?BREED.filter(function(b){return b.k===st.breed})[0].t:'',has(hist,'breed')]];
+      bask.innerHTML=head+'<div class="hq-bask-empty"><p>Your recommendations appear here as soon as you tell us what you are noticing.</p><ul class="hq-known">'+known.map(function(k){return '<li class="'+(k[2]?'on':'')+'"><span>'+k[0]+'</span><b>'+(k[2]?esc(k[1]||'Skipped'):'—')+'</b></li>'}).join('')+'</ul></div>';
+      mbar.hidden=true;return;
+    }
+    var s2={};for(var k in st)s2[k]=st[k];
+    if(!has(hist,'syms'))s2.syms=[];
+    if(!has(hist,'extra'))s2.extra=[];
+    if(!has(hist,'kinds'))s2.kinds=[];
+    if(has(s2.areas,'none'))s2.areas=[];
+    var res=recommend(s2),h=head+'<div class="hq-bask-l">';
+    res.needs.forEach(function(n){
+      var pool=n.items.concat(n.more);if(!pool.length)return;
+      var ix=(swaps[n.id]||0)%pool.length,pick=pool[ix];
+      if(sel[pick.handle]==null)sel[pick.handle]=true;
+      h+='<section class="hq-bn"><h3>'+esc(n.t)+'</h3><p>'+esc(n.s)+'</p>'+row(pick,true)+
+        (pool.length>1?'<button class="hq-swap" type="button" data-need="'+n.id+'">Show another option <span aria-hidden="true">↻</span></button>':'')+'</section>';
+    });
+    h+='</div>';
+    bask.innerHTML=h+'<div class="hq-bask-f"></div>';
+    $$('.hq-swap',bask).forEach(function(b){b.addEventListener('click',function(){var id=b.getAttribute('data-need');swaps[id]=(swaps[id]||0)+1;updateBasket();var nb=$('.hq-swap[data-need="'+id+'"]',bask);nb&&nb.focus()})});
+    $$('.hq-row input',bask).forEach(function(c){c.addEventListener('change',function(){sel[c.value]=c.checked;c.closest('.hq-row').classList.toggle('off',!c.checked);foot()})});
+    foot();
+  }
+  function row(p){
+    var on=sel[p.handle]!==false;
+    return '<label class="hq-row'+(on?'':' off')+'"><input type="checkbox" value="'+esc(p.handle)+'"'+(on?' checked':'')+'><span class="hq-box" aria-hidden="true"></span>'+
+      '<span class="hq-thumb">'+photo(p)+'</span><span class="hq-row-t"><span class="hq-mini-b">'+esc(p.brand)+'</span><span class="hq-mini-n">'+esc(cleanTitle(p.title))+'</span>'+
+      (p.rating?'<span class="hq-row-r">'+stars(p.rating)+'<span>'+p.rating.toFixed(1)+' ('+p.reviewCount+')</span></span>':'')+'</span>'+
+      '<span class="hq-row-p">'+money(p.price)+(p.compareAt&&p.compareAt>p.price?'<s>'+money(p.compareAt)+'</s>':'')+'</span></label>';
+  }
+  function foot(){
+    var hs=$$('.hq-row input',bask).filter(function(c){return c.checked}).map(function(c){return c.value}),ps=hs.map(function(h){return BY[h]}),t=total(ps),f=$('.hq-bask-f',bask);
+    if(!f)return;
+    f.innerHTML='<div class="hq-total"><span>'+ps.length+' item'+(ps.length===1?'':'s')+'</span><span class="hq-total-v"><b>'+money(t)+'</b></span></div>'+
+      '<button class="btn wide hq-addall" type="button" data-hs="'+hs.join(',')+'"'+(ps.length?'':' disabled')+'>'+(ps.length?'Add '+ps.length+' to basket':'Nothing selected')+'</button>'+
+      '<p class="hq-kit-note">'+(t>=39?'Free UK delivery on this basket.':'Free UK delivery on orders over £39.')+'</p>';
+    if(mbar){mbar.hidden=!ps.length;mbar.innerHTML='<span><b>'+esc(poss(st,true))+' basket</b> '+ps.length+' item'+(ps.length===1?'':'s')+' · '+money(t)+'</span><a href="#hq-bask" class="hq-mbar-a">View</a>'}
+  }
+  mbar&&mbar.addEventListener('click',function(e){if(e.target.closest('a')){e.preventDefault();scrollTo(bask)}});
+  renderLog(true);renderComp();updateBasket();
+}
 
-  if(V==='a')runA();else if(V==='b')runB();else if(V==='c')runC();
+/* ==========================================================================
+   Version C: start from the problem. Areas (cards), symptoms, two quick
+   questions about the dog, then Good / Better / Complete kits.
+   ========================================================================== */
+function initC(root){
+  var app=$('[data-hq-app]',root),st={name:'',age:null,size:null,breed:null,build:null,areas:[],syms:[]},stepper;
+  var steps=[
+    {id:'areas',type:'multi',key:'areas',max:3,min:1,style:'cards',eyebrow:'Step 1',q:'Where is the <em>problem</em>?',hint:'Pick up to three areas.',
+      opts:AREAS.map(function(a){return {k:a.k,t:a.n,d:a.ex}}),selText:function(st,n){return n+' of 3 chosen'},cta:function(){return 'Continue'}},
+    {id:'syms',type:'multi',key:'syms',eyebrow:'Step 2',q:'What are you <em>noticing</em>?',hint:'Tap everything that applies.',
+      groups:function(st){return symGroups(st.areas)},selText:selText,cta:function(st,n){return n?'Continue with '+n:'Not sure, continue'}},
+    {id:'age',type:'single',key:'age',eyebrow:'Step 3',q:'How old is your dog?',opts:AGE,
+      hint:'Add their name for a personal kit (optional).',
+      pre:true},
+    {id:'build',type:'single',key:'build',eyebrow:'Step 4',q:function(st){return 'Which sounds most like '+esc(dogName(st))+'?'},opts:BUILD,
+      onPick:function(st,v){var b=BUILD.filter(function(x){return x.k===v})[0];st.size=b.size;st.breed=b.breed}}
+  ];
+  /* name field sits above the age tiles on step 3 */
+  var obs=new MutationObserver(function(){
+    var card=$('.hq-card',app);if(!card||card.getAttribute('data-step')!=='age'||$('.hq-cname',app))return;
+    var hint=$('.hq-hint',app);if(!hint)return;
+    hint.insertAdjacentHTML('afterend','<div class="hq-cname"><label for="hq-c-name">Name</label><input id="hq-c-name" type="text" maxlength="20" autocomplete="off" placeholder="Your dog’s name" value="'+esc(st.name)+'"></div>');
+    var inp=$('#hq-c-name',app);inp.addEventListener('input',function(){st.name=inp.value.trim().replace(/^./,function(c){return c.toUpperCase()})});
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();var o=$('.hq-o',app);o&&o.focus()}});
+  });
+  obs.observe(app,{childList:true,subtree:true});
+  function start(goto){root.classList.remove('hq-done');stepper=Stepper(app,steps,st,showResults,{cls:'hq-card-c'});if(goto)stepper.goTo(goto)}
+  start();
+  function showResults(){
+    var res=recommend(st),n=dogName(st);
+    var needs=res.needs,tiers=makeTiers(needs);
+    root.classList.add('hq-done');
+    var tabs='<div class="hq-tabs" role="tablist" aria-label="Kits">'+tiers.map(function(t,i){return '<button role="tab" type="button" id="hq-tab-'+t.k+'" aria-controls="hq-tier-'+t.k+'" aria-selected="'+(i===1)+'" tabindex="'+(i===1?0:-1)+'">'+t.n+'</button>'}).join('')+'</div>';
+    app.innerHTML='<section class="hq-res hq-res-c" aria-labelledby="hq-res-h">'+
+      '<div class="hq-res-h hq-rise"><div><p class="hq-eyebrow">Your results</p><h2 id="hq-res-h" tabindex="-1">Three kits for <em>'+esc(n)+'</em></h2>'+
+      '<p class="hq-res-s">Built from what you told us. Pick the one that suits you, or shop product by product below.</p>'+
+      '<ul class="hq-bits" aria-label="Your answers">'+profileBits(st).slice(0,7).map(function(b){return '<li>'+esc(b)+'</li>'}).join('')+'</ul></div>'+
+      '<div class="hq-res-acts"><button class="btn sec hq-edit" type="button">Change answers</button><button class="hq-link hq-restart" type="button">Start again</button></div></div>'+
+      tabs+'<div class="hq-tiers">'+tiers.map(function(t,i){return tierHtml(t,i)}).join('')+'</div>'+
+      '<div class="sec-h hq-c-sub"><div><h2>What '+esc(n)+' <em>needs</em></h2><p>Every pick, area by area.</p></div></div>'+
+      '<div class="hq-needs hq-needs-c">'+needsHtml(res,st).replace(/class="hq-need"/g,'class="hq-need hq-rv"')+'</div>'+
+      '<p class="hq-calm">Our quiz doesn’t replace your vet.</p></section>';
+    reveal(app);
+    var tabBtns=$$('.hq-tabs [role=tab]',app);
+    function pick(i,focus){tabBtns.forEach(function(b,j){b.setAttribute('aria-selected',i===j);b.tabIndex=i===j?0:-1});$$('.hq-tier',app).forEach(function(t,j){t.classList.toggle('on',i===j)});if(focus)tabBtns[i].focus()}
+    tabBtns.forEach(function(b,i){b.addEventListener('click',function(){pick(i)});b.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pick((i+(e.key==='ArrowRight'?1:2))%3,true)}})});
+    scrollTo(root.querySelector('.hq-c-top')||app);var h=$('#hq-res-h',app);setTimeout(function(){h.focus({preventScroll:true})},RM?0:400);
+    $('.hq-edit',app).addEventListener('click',function(){start('syms')});
+    $('.hq-restart',app).addEventListener('click',function(){st.name='';st.age=st.size=st.breed=st.build=null;st.areas=[];st.syms=[];start();scrollTo(root)});
+  }
+  function makeTiers(needs){
+    var good=[needs[0].items[0]];
+    var better=needs.map(function(n){return n.items[0]});if(better.length<2&&needs[0].items[1])better.push(needs[0].items[1]);
+    var complete=better.slice();needs.forEach(function(n){if(n.items[1]&&!has(complete,n.items[1]))complete.push(n.items[1])});
+    needs.forEach(function(n){if(n.items[2]&&complete.length<5&&!has(complete,n.items[2]))complete.push(n.items[2])});
+    complete=complete.slice(0,6);
+    return [
+      {k:'good',n:'Good',s:'The one product to start with for '+needs[0].t.toLowerCase()+'.',ps:good},
+      {k:'better',n:'Better',s:'Our top pick for each thing '+dogName(st)+' needs.',ps:better,best:1},
+      {k:'complete',n:'Complete',s:'Everything, with a second product for each need.',ps:complete}
+    ];
+  }
+  function tierHtml(t,i){
+    var tot=total(t.ps),w=wasTotal(t.ps);
+    return '<article class="hq-tier'+(t.best?' hq-tier-best':'')+(i===1?' on':'')+'" id="hq-tier-'+t.k+'" role="tabpanel" aria-labelledby="hq-tab-'+t.k+'">'+
+      (t.best?'<span class="hq-flag">Our pick</span>':'')+
+      '<div class="hq-tier-h"><h3>'+t.n+'</h3><p>'+esc(t.s)+'</p></div>'+
+      '<div class="hq-tier-p"><b>'+money(tot)+'</b>'+(w>tot+.001?'<s>'+money(w)+'</s>':'')+'<span>'+t.ps.length+' item'+(t.ps.length===1?'':'s')+'</span></div>'+
+      '<ul class="hq-tier-l">'+t.ps.map(function(p){return '<li>'+mini(p)+'</li>'}).join('')+'</ul>'+
+      '<button class="btn wide hq-addall'+(t.best?'':' hq-ghost')+'" type="button" data-hs="'+t.ps.map(function(p){return p.handle}).join(',')+'">Add '+t.n+' kit to basket</button></article>';
+  }
+}
+
+/* ---------- boot ---------- */
+var root=document.querySelector('[data-hq]');
+if(root){
+  var v=root.getAttribute('data-hq');
+  if(!PRODUCTS.length){root.insertAdjacentHTML('beforeend','<p class="wrap hq-calm">Products are loading. Please refresh the page.</p>');return}
+  if(v==='a')initA(root);else if(v==='b')initB(root);else if(v==='c')initC(root);
+  /* A starts on the name question; put the cursor there only if the user clicks Start */
+}
+window.PPQuiz={recommend:recommend,SYM:SYM,AREAS:AREAS};
 })();
