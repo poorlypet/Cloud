@@ -212,7 +212,7 @@ a.tmo-way:hover b{color:var(--teal);text-decoration:underline}
    ========================================================================== */
 .tmo-c-hero{padding-bottom:28px}
 .tmo-c-band{background:var(--pale);padding:32px 0 40px;border-top:1px solid var(--line)}
-.tmo-c{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px;align-items:start}
+.tmo-c-wrap{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px;align-items:start}
 .tmo-c-nav{position:sticky;top:16px;background:#fff;border:1px solid var(--line);border-radius:var(--rp);padding:20px}
 .tmo-c-nav ul{list-style:none;margin:0 -8px;padding:0}
 .tmo-c-nav li a{display:block;padding:10px 8px;border-radius:6px;font:500 15px/1.3 var(--sans);color:var(--ink)}
@@ -245,7 +245,7 @@ a.tmo-way:hover b{color:var(--teal);text-decoration:underline}
 @media (max-width:1023px){
   .tmo-a-grid{grid-template-columns:minmax(0,1fr)}
   .tmo-a-side{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-  .tmo-c{grid-template-columns:minmax(0,1fr)}
+  .tmo-c-wrap{grid-template-columns:minmax(0,1fr)}
   .tmo-c-nav{position:static;order:2}
   .tmo-c-nav ul{display:grid;grid-template-columns:1fr 1fr;column-gap:8px}
   .tmo-b-ways .tmo-ways{grid-template-columns:minmax(0,1fr)}

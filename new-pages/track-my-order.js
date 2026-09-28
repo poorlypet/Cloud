@@ -101,10 +101,19 @@ function $$(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(n){return n===0?'Free':'£'+Number(n).toFixed(2)}
 var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function pdate(s){if(!s)return null;var t=/^\d{4}-\d\d-\d\d$/.test(s)?new Date(s+'T12:00:00'):new Date(s);return isNaN(t)?null:t}
-function fday(s){var t=pdate(s);return t?DAYS[t.getDay()]+' '+t.getDate()+' '+MONTHS[t.getMonth()]:''}
-function flong(s){var t=pdate(s);return t?fday(s)+' '+t.getFullYear():''}
-function ftime(s){var t=pdate(s);if(!t||/^\d{4}-\d\d-\d\d$/.test(s))return '';var h=t.getHours(),m=t.getMinutes();return (h%12||12)+':'+(m<10?'0':'')+m+(h<12?'am':'pm')}
+/* dates and times always shown in UK time, whatever the viewer's clock says */
+var UK;try{UK=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',year:'numeric',month:'numeric',day:'numeric',weekday:'short',hour:'numeric',minute:'numeric',hour12:false})}catch(e){UK=null}
+function parts(s){
+  if(!s)return null;
+  if(/^\d{4}-\d\d-\d\d$/.test(s)){var a=s.split('-'),dt=new Date(Date.UTC(+a[0],a[1]-1,+a[2],12));return {y:+a[0],m:a[1]-1,d:+a[2],w:dt.getUTCDay(),h:null,mi:null}}
+  var t=new Date(s);if(isNaN(t))return null;
+  if(!UK)return {y:t.getFullYear(),m:t.getMonth(),d:t.getDate(),w:t.getDay(),h:t.getHours(),mi:t.getMinutes()};
+  var o={};UK.formatToParts(t).forEach(function(p){o[p.type]=p.value});
+  return {y:+o.year,m:o.month-1,d:+o.day,w:DAYS.indexOf(o.weekday),h:(+o.hour)%24,mi:+o.minute};
+}
+function fday(s){var p=parts(s);return p?DAYS[p.w]+' '+p.d+' '+MONTHS[p.m]:''}
+function flong(s){var p=parts(s);return p?fday(s)+' '+p.y:''}
+function ftime(s){var p=parts(s);if(!p||p.h==null)return '';return (p.h%12||12)+':'+(p.mi<10?'0':'')+p.mi+(p.h<12?'am':'pm')}
 
 var BY={};(window.PP_PRODUCTS||[]).forEach(function(p){BY[p.handle]=p;BY['t:'+p.title.toLowerCase()]=p});
 function prod(it){return BY[it.handle]||BY['t:'+String(it.title||'').toLowerCase()]||null}
