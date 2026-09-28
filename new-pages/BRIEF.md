@@ -62,3 +62,15 @@ Must work at 390px phone width and 1440px desktop; no horizontal scroll.
   because previews may block external images. Show photos contained on white like the `.pk` card.
 - No small "eyebrow" labels with a dot above headings (e.g. "• Dog health quiz"); the owner dislikes them.
 - Pages should use the full page width where content allows (full-bleed sections), not boxed cards floating in space.
+
+## Round 4 direction from the owner (applies to all new pages)
+- This is a redesign because the current poorly-pet.com looks TOO AI-designed. The new site must look like an
+  established UK retailer that has been trading for years: lots of SKUs, practical, confident, dense where useful
+  (think Pets at Home, Zooplus, Boots, John Lewis help pages), not a startup landing page.
+- Avoid AI-looking tropes: no gradient blobs, no oversized soft cards floating in space, no decorative dots or
+  eyebrow labels, no emoji, no "hero with three feature tiles" filler, no vague marketing copy. Prefer real
+  information, clear tables/lists, tidy forms, standard retail patterns, the site's existing components.
+- Signed-off pages so far live in /home/user/Cloud/final/ (dog-health-quiz, symptom-guide, why-poorly-pet,
+  customer-reviews); match their hero/intro style and components.
+- Real details only (from the live store via the Shopify / GemPages tools, read only). Never invent policies,
+  phone numbers, addresses, timescales or prices.
