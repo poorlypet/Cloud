@@ -1,0 +1,5 @@
+/* Site-wide rules for every new page (loaded after home.css).
+   The page runs straight into the footer: no white gap before it. */
+main{padding-bottom:0!important;margin-bottom:0!important}
+.foot{margin-top:0!important}
+main > :last-child{margin-bottom:0!important}
