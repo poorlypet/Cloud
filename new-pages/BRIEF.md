@@ -40,3 +40,18 @@ For page slug `X`: `new-pages/X-a.html`, `X-b.html`, `X-c.html`, plus one `new-p
 All links to other site pages can be `#`, except links between the new pages themselves.
 No external requests except Google Fonts (already in the shell). Everything must work opened as local files.
 Must work at 390px phone width and 1440px desktop; no horizontal scroll.
+
+## Round 2 feedback from the owner (these override anything above)
+- Commercial first. Pages exist to help owners find the right products and buy. Do NOT push people
+  away from ordering. No "Is it urgent?" boxes, no "vet today" banners, no traffic-light urgency,
+  no emergency panels, anywhere. At most one short, calm line near the footer area of the page
+  content such as "Our guides don't replace your vet." (the site footer already has the legal line).
+- No drawn/SVG dogs or body-part selectors. No clip-art.
+- Simpler, cleaner, better UI/UX: fewer elements per screen, generous spacing, one clear primary
+  action per step, big tappable targets, obvious next step. Less text. Nothing cluttered.
+- Real products with real photos and prices, from `new-pages/products.js` and `new-pages/img/`
+  (built by the catalogue step; read the header comment in products.js for the shape). Product cards
+  should look like the signed-off `.pk` card in home.css (image well, brand, name, price, lime
+  "Add to basket" button).
+- Motion is welcome where it helps (smooth transitions between steps, gentle reveal on scroll),
+  always respecting prefers-reduced-motion, and content must be visible without JS animation running.
