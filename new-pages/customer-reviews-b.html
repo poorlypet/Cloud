@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-GB"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Customer reviews by product. Poorly Pet</title>
+<title>Customer reviews. Poorly Pet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/home.css">
@@ -73,62 +73,47 @@
 <main id="main">
 <div class="wrap pvbar"><span class="cardsw pvp" aria-label="Versions"><span>Customer reviews</span><a href="customer-reviews-a.html">A</a><a href="customer-reviews-b.html" class="on" aria-current="page">B</a><a href="customer-reviews-c.html">C</a></span></div>
 
-<div class="cr" data-cr="b">
+<div class="crv" data-crv="b">
   <div class="wrap">
-    <section class="crb-hero" aria-labelledby="crb-h1">
+    <header class="crv-b-head">
       <div>
-        <h1 id="crb-h1">Reviews by <em>product</em></h1>
-        <p class="lead">Find what you bought, or what you are thinking of buying. Read what other owners said, then add yours.</p>
-        <form class="crb-q" id="crb-qform" role="search">
-          <label class="sr" for="crb-q">Find a product</label>
-          <div class="cr-cb"><span class="mag" aria-hidden="true"></span><input id="crb-q" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="crb-lb" autocomplete="off" spellcheck="false" placeholder="Find a product, e.g. wheelchair or MSM"><ul class="cr-lb" id="crb-lb" role="listbox" aria-label="Products" hidden></ul></div>
-        </form>
-        <p class="crb-sum"><span data-cr-stars=""></span><span><b data-cr-avg>4.6</b> out of 5 from <b><span data-cr-count>101</span> reviews</b> on Judge.me</span></p>
+        <h1>Reviews by <em>product</em></h1>
+        <p class="crv-lead"><span data-crv-stars=""></span> <b><span data-crv-avg>4.6</span> out of 5</b> from <span data-crv-count>101</span> reviews on Judge.me</p>
       </div>
-      <div class="cr-help">
-        <div class="cr-hc"><b>50 Club points</b><span>for every verified review you write.</span></div>
-        <div class="cr-hc cr-urg"><b>Is it urgent?</b><span>Sudden weakness, collapse or severe pain is a vet visit, not a basket.</span></div>
+      <button class="btn sec" type="button" data-crv-write>Write a review</button>
+    </header>
+
+    <section class="crv-b-pick" aria-labelledby="crv-pick-h">
+      <div class="crv-b-pt">
+        <h2 id="crv-pick-h">Choose a product</h2>
+        <div class="crv-b-srch"><span class="mag" aria-hidden="true"></span><label class="sr" for="crv-psearch">Find a product</label><input id="crv-psearch" type="search" placeholder="Find a product" autocomplete="off" aria-controls="crv-picker"></div>
+        <div class="crv-b-arr"><button type="button" data-crv-scroll="-1" aria-label="Scroll products left">‹</button><button type="button" data-crv-scroll="1" aria-label="Scroll products right">›</button></div>
+      </div>
+      <div class="crv-track" id="crv-track"><ul class="crv-picker" id="crv-picker" aria-label="Products with reviews"></ul></div>
+      <p class="crv-pcount" id="crv-pcount" role="status"></p>
+    </section>
+
+    <section class="crv-b-res" id="crv-results" aria-labelledby="crv-lhead">
+      <aside class="crv-b-side" id="crv-panel" aria-live="polite"></aside>
+      <div class="crv-b-main">
+        <div class="crv-b-lh"><h2 id="crv-lhead">Latest reviews</h2></div>
+        <div class="crv-bar">
+          <div class="crv-chips" id="crv-chips" role="group" aria-label="Filter by stars"></div>
+          <label class="crv-sel">Sort <select id="crv-sort"><option value="newest">Newest</option><option value="highest">Highest rated</option><option value="lowest">Lowest rated</option></select></label>
+        </div>
+        <p class="crv-status" id="crv-status" role="status">Showing reviews</p>
+        <div class="crv-b-list" id="crv-list"></div>
+        <div class="crv-morew"><button class="btn crv-ghost" type="button" id="crv-more">Show more reviews</button></div>
       </div>
     </section>
+    <p class="crv-note"><span data-crv-loaded>83</span> of <span data-crv-count>101</span> Judge.me reviews are in this preview; the rest load from Judge.me on the live site. Our guides and reviews don't replace your vet.</p>
   </div>
-
-  <section class="wrap crb-pick" aria-labelledby="crb-pick-h">
-    <div class="sec-h"><div><h2 id="crb-pick-h">Most <em>reviewed</em></h2><p>Products with reviews, most reviewed first. Pick one to read them.</p></div></div>
-    <div class="crb-cats" id="crb-cats" role="group" aria-label="Filter products by category"></div>
-    <ul class="crb-tiles" id="crb-tiles"></ul>
-    <div class="cr-moreb"><button class="btn cr-ghost" type="button" id="crb-tmore" aria-controls="crb-tiles">Show all</button></div>
-  </section>
-
-  <section class="wrap crb-view" id="crb-view" aria-labelledby="crb-view-h">
-    <div class="crb-head">
-      <div class="crb-ph" id="crb-head"></div>
-      <div class="crb-hwrap">
-        <div class="cr-hist" id="crb-hist" role="group" aria-label="Filter by stars"></div>
-        <p class="cr-note" id="crb-hnote"></p>
-      </div>
-    </div>
-    <div class="crb-body">
-      <div>
-        <div class="crb-bar">
-          <p class="cr-status" id="crb-status" role="status" tabindex="-1"></p>
-          <label class="cr-sel">Sort <select id="crb-sort"><option value="newest">Newest first</option><option value="highest">Highest rated</option><option value="lowest">Lowest rated</option></select></label>
-        </div>
-        <p class="crb-pnote" id="crb-pnote" hidden></p>
-        <div class="crb-list" id="crb-list"></div>
-        <div class="cr-moreb"><button class="btn cr-ghost" type="button" id="crb-more">Show more reviews</button></div>
-      </div>
-      <aside class="crb-formcard" aria-labelledby="crb-form-h">
-        <h2 id="crb-form-h">Write a review</h2>
-        <p>Takes a minute. Earn 50 Club points when it matches your order.</p>
-        <div id="crb-form"></div>
-      </aside>
-    </div>
-  </section>
 </div>
 
 </main>
 
-<footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="#">Contact us</a></li><li><a href="#">FAQs</a></li><li><a href="#">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="#">Sign in</a></li><li><a href="#">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="#">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 99 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>
+<footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="#">Contact us</a></li><li><a href="#">FAQs</a></li><li><a href="#">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="#">Sign in</a></li><li><a href="#">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="#">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 101 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>
 <script src="shell.js"></script>
+<script src="products.js"></script>
 <script src="customer-reviews.js"></script>
 </body></html>
