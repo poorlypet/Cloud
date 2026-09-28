@@ -103,7 +103,7 @@
     function drawSteps(){
       if(!steps)return;
       steps.innerHTML=AQ.map(function(q,k){
-        var c=k<st.i||st.i>=AQ.length?'hq-done':(k===st.i?'hq-now':'');
+        var c=k<st.i||st.i>=AQ.length?'hq-done':(k===st.i?'hq-here':'');
         return '<li class="'+c+'"'+(k===st.i?' aria-current="step"':'')+'><i aria-hidden="true"></i>'+esc(q.step)+'</li>';
       }).join('');
     }
