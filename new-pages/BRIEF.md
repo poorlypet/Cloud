@@ -55,3 +55,10 @@ Must work at 390px phone width and 1440px desktop; no horizontal scroll.
   "Add to basket" button).
 - Motion is welcome where it helps (smooth transitions between steps, gentle reveal on scroll),
   always respecting prefers-reduced-motion, and content must be visible without JS animation running.
+
+## Round 3 feedback from the owner
+- Product images: `p.img` now holds the real Shopify CDN photo URL (external). They show on the real site
+  and when opened from the owner's computer. Every <img> MUST have an error fallback to the placeholder,
+  because previews may block external images. Show photos contained on white like the `.pk` card.
+- No small "eyebrow" labels with a dot above headings (e.g. "• Dog health quiz"); the owner dislikes them.
+- Pages should use the full page width where content allows (full-bleed sections), not boxed cards floating in space.

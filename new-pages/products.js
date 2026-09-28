@@ -572,3 +572,8 @@ window.PP_TAGS = {
 };
 
 window.PP_BY_HANDLE = window.PP_PRODUCTS.reduce(function (m, p) { m[p.handle] = p; return m; }, {});
+
+/* Use the Shopify CDN photo when no local image is saved. The photos load on the real site and when
+   these pages are opened from your computer; previews that block outside images fall back to the
+   placeholder via each page's image error handler. */
+(window.PP_PRODUCTS || []).forEach(function (p) { if (!p.img && p.cdn) p.img = p.cdn; });
