@@ -714,7 +714,7 @@ function initC(){
     prev.disabled=track.scrollLeft<=2;next.disabled=track.scrollLeft>=max-2;
     var pv=track.clientWidth/Math.max(1,track.scrollWidth);
     prog.style.width=(pv*100).toFixed(1)+'%';
-    prog.style.transform='translateX('+(max>0?(track.scrollLeft/max)*(1/pv-1)*100:0).toFixed(1)+'%)';
+    prog.style.transform='translateX('+(track.scrollLeft/Math.max(1,track.clientWidth)*100).toFixed(1)+'%)';
   }
   var raf=0;track.addEventListener('scroll',function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(mark)},{passive:true});
   window.addEventListener('resize',mark);

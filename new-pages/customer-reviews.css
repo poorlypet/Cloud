@@ -459,7 +459,7 @@ a.crv-c-pc:hover{background:var(--pale2)}
   .crv-c-prog{margin-top:24px}
   .crv-c-all{padding-top:52px}
   .crv-c-gh{flex-direction:column;margin-bottom:18px}
-  .crv-c-bar{position:static}
+  .crv-c-bar,.crv-c-bar.stuck{position:static;box-shadow:none}
   .crv-c-bari{flex-direction:column;align-items:stretch;gap:10px;padding-top:14px;padding-bottom:14px}
   .crv-seg{display:flex}
   .crv-segb{flex:1;min-width:0;padding:0 6px}
