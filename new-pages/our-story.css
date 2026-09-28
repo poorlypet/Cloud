@@ -105,7 +105,7 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 .osa-card.end h3{font-size:48px}
 .osa-hint{display:none;margin-top:24px;font:600 15px/1 var(--sans);color:rgba(255,255,255,.7)}
 /* pinned mode (JS, wide screens) */
-.osa-tl.pin .osa-stage{position:sticky;top:0;height:100vh;min-height:640px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:48px 0}
+.osa-tl.pin .osa-stage{position:sticky;top:var(--stk,0px);height:calc(100vh - var(--stk,0px));min-height:640px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:48px 0}
 .osa-tl.pin .osa-track{overflow:visible;scroll-snap-type:none;will-change:transform;margin-top:40px;padding-bottom:0}
 .osa-tl.pin .osa-hint{display:block}
 .osa-tl.pin .osa-card .os-ph{min-height:min(460px,52vh)}
@@ -222,13 +222,13 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 /* pinned mode (JS) */
 .osc-album.pin{height:calc(var(--n,5)*85vh + 100vh)}
 .osc-album.pin .osc-stage{position:sticky;top:var(--stk,0px);height:calc(100vh - var(--stk,0px));padding:0;overflow:hidden}
-.osc-album.pin .osc-ch{position:absolute;inset:0 0 80px;padding:56px var(--edge) 24px;pointer-events:none}
+.osc-album.pin .osc-ch{position:absolute;inset:0 0 80px;padding:56px calc(var(--edge) + 24px) 24px;pointer-events:none}
 .osc-album.pin .osc-ch.cur{pointer-events:auto}
-.osc-album.pin .osc-print{max-height:calc(100vh - var(--stk,0px) - 200px);margin:0 auto;width:100%;max-width:640px;opacity:0;transform:translate(var(--dx,0),120%) rotate(var(--rot,0deg));transition:transform 1s var(--ease),opacity .5s}
+.osc-album.pin .osc-print{max-height:calc(100vh - var(--stk,0px) - 200px);margin:0 auto;width:100%;max-width:560px;opacity:0;transform:translate(var(--dx,0),120%) rotate(var(--rot,0deg));transition:transform 1s var(--ease),opacity .5s}
 .osc-album.pin .osc-ch.dealt .osc-print{opacity:1;transform:translate(var(--dx,0),0) rotate(var(--rot,0deg))}
 .osc-album.pin .osc-ch.dealt:not(.cur) .osc-print figcaption{opacity:0}
-.osc-album.pin .osc-txt{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .6s var(--ease)}
-.osc-album.pin .osc-ch.cur .osc-txt{opacity:1;transform:none;transition-delay:.15s}
+.osc-album.pin .osc-txt{opacity:0;transform:translateY(24px);transition:opacity .25s,transform .6s var(--ease)}
+.osc-album.pin .osc-ch.cur .osc-txt{opacity:1;transform:none;transition:opacity .5s .25s,transform .6s var(--ease) .25s}
 .osc-album.pin .osc-nav{position:absolute;left:0;right:0;bottom:0;height:80px;display:flex;align-items:center;gap:8px;padding:0 var(--edge);border-top:1px solid rgba(15,76,72,.15)}
 .osc-nav button{flex:1;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:left;font:700 14px/1 var(--sans);color:var(--mute)}
 .osc-nav button:after{content:"";display:block;height:4px;border-radius:2px;background:rgba(15,76,72,.15);background-image:linear-gradient(var(--teal),var(--teal));background-repeat:no-repeat;background-size:calc(var(--f,0)*100%) 100%}
@@ -379,3 +379,9 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .os-js .osb-ch .os-ph{clip-path:none}
   .os-js .osb-ch .osb-txt>*,.os-js .osb-ch .osb-no b{opacity:1;transform:none}
 }
+
+/* A: white and lime cards sit inside the teal band, so reset the on-teal colours */
+.osa-card em{color:var(--teal)}
+.osa-card .btn.os-line{color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
+.osa-card .btn.os-line:hover{background:rgba(255,255,255,.4)}
+.osa-tl.pin .osa-stage>.wrap{width:100%}

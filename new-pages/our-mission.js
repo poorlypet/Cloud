@@ -207,7 +207,7 @@
     }
     ck.classList.add('run');reset();
     var rp=$('[data-replay]',ck);if(rp)rp.addEventListener('click',run);
-    if(hasIO){var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run();cio.disconnect()}})},{threshold:.4});cio.observe(ck)}
+    if(hasIO){var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run();cio.disconnect()}})},{threshold:.25});cio.observe(ck)}
     else run();
   }
   if(ck&&reduce){var r2=$('[data-replay]',ck);if(r2)r2.style.display='none'}
