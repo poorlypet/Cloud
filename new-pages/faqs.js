@@ -235,7 +235,7 @@ var FAQS=[
 
 /* ---------------- helpers ---------------- */
 function slug(s){return s.toLowerCase().replace(/&/g,' and ').replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,64).replace(/-+$/,'')}
-function strip(h){var d=document.createElement('div');d.innerHTML=h;return (d.textContent||'').replace(/\s+/g,' ').trim()}
+function strip(h){var d=document.createElement('div');d.innerHTML=h.replace(/<(\/p|\/li|\/td|\/th|\/tr|br)[^>]*>/g,'$& ');return (d.textContent||'').replace(/\s+/g,' ').trim()}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 var CAT={};CATS.forEach(function(c){c.items=[];CAT[c.id]=c});
 FAQS.forEach(function(f,i){f.id=slug(f.q);f.i=i;f.txt=strip(f.a);f.lq=f.q.toLowerCase();f.la=f.txt.toLowerCase();CAT[f.c].items.push(f)});
@@ -265,7 +265,7 @@ function hl(text,q){
 function snippet(f,q){
   var t=tokens(q),txt=f.txt,pos=-1;
   for(var i=0;i<t.length&&pos<0;i++)pos=txt.toLowerCase().indexOf(t[i]);
-  var st=Math.max(0,pos-60),s=txt.slice(st,st+170);
+  var st=Math.max(0,pos-60);if(st>0){var sp=txt.indexOf(' ',st);if(sp>-1&&sp<pos)st=sp+1}var s=txt.slice(st,st+170);
   return (st>0?'…':'')+hl(s,q)+(st+170<txt.length?'…':'');
 }
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -274,7 +274,7 @@ function scrollTo(el){
   var top=el.getBoundingClientRect().top+window.pageYOffset-stickyOffset()-16;
   window.scrollTo({top:top,behavior:reduce?'auto':'smooth'});
 }
-function stickyOffset(){var s=document.querySelector('.fq-tabs');return s?s.offsetHeight:0}
+function stickyOffset(){var s=document.querySelector('.fq-tabs'),m=document.getElementById('msearch'),h=0;if(m){var cs=getComputedStyle(m);if(cs.display!=='none'&&cs.position==='sticky')h=m.offsetHeight}return (s?s.offsetHeight:0)+h}
 function setHash(h){try{history.replaceState(null,'',h?'#'+h:location.pathname+location.search)}catch(e){}}
 function flash(el){if(!el)return;el.classList.remove('fq-hit');void el.offsetWidth;el.classList.add('fq-hit')}
 
@@ -455,6 +455,8 @@ function initC(){
   wireSearch(input,clear,function(q){filter(q);if(q){var first=body.querySelector('.fqc-sec:not([hidden])');if(first)scrollTo(first)}});
   function fromHash(){var f=qFromHash();if(f){if(input.value){input.value='';clear.hidden=true;filter('')}var r=document.getElementById(f.id);scrollTo(r);flash(r);return}
     var c=catFromHash();if(c)scrollTo(document.getElementById('topic-'+c))}
+  function setTop(){var m=document.getElementById('msearch'),h=0;if(m){var cs=getComputedStyle(m);if(cs.display!=='none'&&cs.position==='sticky')h=m.offsetHeight}root.style.setProperty('--fq-top',h+'px')}
+  setTop();window.addEventListener('resize',setTop);
   spy();
   if(location.hash)setTimeout(fromHash,60);
   window.addEventListener('hashchange',fromHash);
