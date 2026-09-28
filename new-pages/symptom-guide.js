@@ -564,6 +564,7 @@ function initA(root){
 function initB(root){
   var map=$('#sg-map',root),panel=$('#sg-panel',root),body=$('#sg-pbody',root),head=$('#sg-phead',root),crumb=$('#sg-crumb',root);
   var cur={area:null,slug:null};
+  function wide(){return window.innerWidth>=1024}
 
   /* size the label pills to their text */
   function fitLabels(){
@@ -587,13 +588,13 @@ function initB(root){
     }).join('');
     crumb.hidden=parts.length<2;
   }
-  function start(){
+  function start(init){
     cur={area:null,slug:null};mark();crumbs([]);
     head.innerHTML='Where are you <em>seeing it?</em>';
     body.innerHTML='<p class="sg-lead">Pick a part of the dog, or one of these.</p><ul class="sg-alist">'+AREAS.map(function(a){
       return '<li><button type="button" class="sg-arow" data-open-area="'+a.id+'"><b>'+esc(a.name)+'</b><span>'+a.items.slice(0,2).map(function(s){return esc(s.name)}).join(' · ')+' and more</span></button></li>';
     }).join('')+'</ul>';
-    setHash('');
+    if(!init)setHash('');
   }
   function showArea(id,focus){
     var a=AREA[id];cur={area:id,slug:null};mark();
@@ -643,10 +644,10 @@ function initB(root){
     }).join('')+'</ul></div>';
   }).join('');
 
-  start();
+  start(true);
   return {
-    symptom:function(slug){showSymptom(slug,false);scrollTo($('#sg-bm',root));head.focus({preventScroll:true})},
-    area:function(id){showArea(id,false);scrollTo($('#sg-bm',root))}
+    symptom:function(slug){showSymptom(slug,false);scrollTo(wide()?$('#sg-bm',root):panel);head.focus({preventScroll:true})},
+    area:function(id){showArea(id,false);scrollTo(wide()?$('#sg-bm',root):panel);head.focus({preventScroll:true})}
   };
 }
 
@@ -754,6 +755,12 @@ function route(){
   if(BY[h])api.symptom(h);else if(AREA[h])api.area(h);
 }
 window.addEventListener('hashchange',route);
+/* in-page links to a symptom or area: handle directly, so a repeat click still works */
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+  var h=a.getAttribute('href').slice(1);
+  if(BY[h]||AREA[h]){e.preventDefault();setHash(h);if(BY[h])api.symptom(h);else api.area(h)}
+});
 if(location.hash)setTimeout(route,0);
 
 window.PPSymptoms={areas:AREAS,symptoms:SYMPTOMS,urgency:URG,emergency:EMERGENCY};
