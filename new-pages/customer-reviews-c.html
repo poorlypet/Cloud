@@ -73,42 +73,63 @@
 <main id="main">
 <div class="wrap pvbar"><span class="cardsw pvp" aria-label="Versions"><span>Customer reviews</span><a href="customer-reviews-a.html">A</a><a href="customer-reviews-b.html">B</a><a href="customer-reviews-c.html" class="on" aria-current="page">C</a></span></div>
 
-<div class="crv" data-crv="c">
-  <div class="wrap">
-    <section class="crv-c-top" aria-labelledby="crv-title-c">
-      <div class="crv-c-sum">
+<div class="crv crv--c" data-crv="c">
+  <section class="crv-c-band" aria-labelledby="crv-title-c">
+    <div class="wrap crv-c-bi">
+      <div class="crv-c-intro">
         <h1 id="crv-title-c">What owners <em>say</em></h1>
-        <div class="crv-big"><b data-crv-avg>4.6</b><span>out of 5</span></div>
-        <span data-crv-stars="md"></span>
-        <p class="crv-of"><b>Excellent</b> from <b><span data-crv-count>101</span> reviews</b> on Judge.me</p>
-        <button class="btn" type="button" data-crv-write>Write a review</button>
+        <p>Every review is from a real customer, collected by Judge.me. Good and bad, we publish them all.</p>
+        <button class="btn crv-c-cta" type="button" data-crv-write>Write a review</button>
+      </div>
+      <div class="crv-c-score">
+        <p class="crv-c-word">Excellent</p>
+        <div class="crv-c-num"><b data-crv-avg>4.6</b><span>out of 5</span></div>
+        <span data-crv-stars="lg"></span>
+        <p class="crv-c-based">Based on <b><span data-crv-count>101</span> reviews</b> · Judge.me</p>
+      </div>
+      <div class="crv-c-split" data-crv-hist></div>
+    </div>
+  </section>
+
+  <section class="crv-c-feat" aria-labelledby="crv-feat-h">
+    <div class="wrap">
+      <div class="crv-c-fh">
+        <h2 id="crv-feat-h">Owners in their <em>own words</em></h2>
+        <div class="crv-c-arr"><button type="button" id="crv-prev" aria-label="Previous reviews"><span aria-hidden="true"></span></button><button type="button" id="crv-next" aria-label="Next reviews"><span aria-hidden="true"></span></button></div>
       </div>
       <div class="crv-car-w" role="region" aria-roledescription="carousel" aria-label="Featured reviews">
-        <ul class="crv-car" id="crv-car" tabindex="0" aria-label="Featured reviews, use the arrow keys to move"></ul>
-        <div class="crv-car-nav">
-          <div class="crv-dots" id="crv-dots"></div>
-          <div class="crv-arrows"><button type="button" id="crv-prev" aria-label="Previous review">‹</button><button type="button" id="crv-next" aria-label="Next review">›</button></div>
-        </div>
+        <ul class="crv-c-car" id="crv-car" tabindex="0" aria-label="Featured reviews, use the arrow keys to move"></ul>
       </div>
-    </section>
+      <div class="crv-c-prog" aria-hidden="true"><i id="crv-cprog"></i></div>
+    </div>
+  </section>
 
-    <section class="crv-c-grid" aria-labelledby="crv-all-h">
+  <section class="crv-c-all" aria-labelledby="crv-all-h">
+    <div class="wrap">
       <div class="crv-c-gh">
-        <div><h2 id="crv-all-h">All <em>reviews</em></h2><p>Every review is from a real customer, good and bad.</p></div>
+        <h2 id="crv-all-h">All <em>reviews</em></h2>
+        <p class="crv-c-count" id="crv-status" role="status">Showing reviews</p>
       </div>
-      <div class="crv-c-f">
-        <div class="crv-chips" id="crv-chips" role="group" aria-label="Filter by stars"></div>
+    </div>
+    <div class="crv-c-bar" id="crv-cbar">
+      <div class="wrap crv-c-bari">
+        <div class="crv-seg" id="crv-chips" role="group" aria-label="Filter by stars"></div>
         <div class="crv-c-sels">
           <label class="crv-sel"><span class="sr">Product</span><select id="crv-prod"></select></label>
           <label class="crv-sel"><span class="sr">Sort</span><select id="crv-sort"><option value="newest">Newest</option><option value="highest">Highest rated</option><option value="lowest">Lowest rated</option></select></label>
         </div>
       </div>
-      <p class="crv-status" id="crv-status" role="status">Showing reviews</p>
+    </div>
+    <div class="wrap">
       <div class="crv-c-list" id="crv-list"></div>
-      <div class="crv-morew"><button class="btn crv-ghost" type="button" id="crv-more">Show more reviews</button></div>
-    </section>
-    <p class="crv-note"><span data-crv-loaded>83</span> of <span data-crv-count>101</span> Judge.me reviews are in this preview; the rest load from Judge.me on the live site. Our guides and reviews don't replace your vet.</p>
-  </div>
+      <div class="crv-c-pager">
+        <p class="crv-c-pt" id="crv-ptext" aria-hidden="true"></p>
+        <div class="crv-c-pb" aria-hidden="true"><i id="crv-pbar"></i></div>
+        <button class="crv-c-more" type="button" id="crv-more">Show more reviews</button>
+      </div>
+      <p class="crv-note"><span data-crv-loaded>83</span> of <span data-crv-count>101</span> Judge.me reviews are in this preview; the rest load from Judge.me on the live site. Our guides and reviews don't replace your vet.</p>
+    </div>
+  </section>
 </div>
 
 </main>

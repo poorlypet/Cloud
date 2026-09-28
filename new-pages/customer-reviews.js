@@ -164,9 +164,18 @@ function money(p){
 function initial(t){var m=String(t||'').match(/[A-Za-z]/);return m?m[0].toUpperCase():'P'}
 function thumb(h,title,cls){
   var p=pp(h),c='crv-th'+(cls?' '+cls:'');
-  if(p&&p.img)return '<span class="'+c+'"><img src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async"></span>';
+  if(p&&p.img)return '<span class="'+c+'" data-t="'+esc(title||'')+'"><img src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async"></span>';
   return '<span class="'+c+' crv-th--ph" aria-hidden="true"><span>'+(h?esc(initial(title)):'pp')+'</span></span>';
 }
+
+/* ---- photos are external (Shopify CDN): if one fails, swap in the placeholder tile ---- */
+function phFallback(img){
+  var box=img.closest&&img.closest('.crv-th');if(!box||box.classList.contains('crv-th--ph'))return;
+  box.classList.add('crv-th--ph');box.setAttribute('aria-hidden','true');
+  box.innerHTML='<span>'+esc(initial(box.getAttribute('data-t')||''))+'</span>';
+}
+doc.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG')phFallback(t)},true);
+function checkImgs(r){$$('.crv-th img',r).forEach(function(i){if(i.complete&&!i.naturalWidth&&i.getAttribute('src'))phFallback(i)})}
 
 /* ---- stars: the Judge.me square language from home.css (.tp) ---- */
 function tp(r,size){
@@ -258,13 +267,14 @@ doc.addEventListener('click',function(e){
 });
 
 /* ---- paged list: shows N, "Show more" adds N and moves focus to the first new card ---- */
-function Pager(list,more,page,render){
+function Pager(list,more,page,render,after){
   var items=[],shown=0;
   function add(focus){
     var from=shown,to=Math.min(items.length,shown+page),h='';
     for(var i=from;i<to;i++)h+=render(items[i]);
     list.insertAdjacentHTML('beforeend',h);shown=to;
     if(more)more.hidden=shown>=items.length;
+    if(after)after(shown,items.length,from);
     if(focus){var c=list.children[from];if(c){c.setAttribute('tabindex','-1');c.focus({preventScroll:false})}}
   }
   if(more)more.addEventListener('click',function(){add(true)});
@@ -316,7 +326,7 @@ $$('[data-crv-hist]').forEach(function(e){e.innerHTML=histHTML()});
 var M=(function(){
   var TOTAL=4;
   var wrap=doc.createElement('div');
-  wrap.className='crv-modal';wrap.id='crv-modal';wrap.hidden=true;
+  wrap.className='crv-modal'+(V?' crv-m-'+V:'');wrap.id='crv-modal';wrap.hidden=true;
   var stars='';for(var s=1;s<=5;s++)stars+='<input type="radio" class="sr" name="crv-rating" id="crv-r'+s+'" value="'+s+'"><label for="crv-r'+s+'" data-v="'+s+'"><span class="sr">'+s+' star'+(s>1?'s':'')+', '+WORD[s]+'</span></label>';
   wrap.innerHTML=
   '<div class="crv-mbg" data-crv-close></div>'+
@@ -658,44 +668,93 @@ function initB(){
 }
 
 /* ==========================================================================
-   Version C: featured carousel, then a tidy grid
+   Version C: score band, featured carousel, then an even grid with a
+   sticky control row and a deliberate "Show more".
    ========================================================================== */
+function vline(r){
+  return '<span class="crv-c-who"><b>'+esc(r.reviewer_name||'Anonymous')+'</b>'+
+    '<span class="crv-c-vd">'+(r.verified_buyer?'<span class="crv-c-vb">Verified buyer</span><span aria-hidden="true"> · </span>':'')+
+    '<time datetime="'+esc(r.created_at)+'">'+fdate(r.created_at)+'</time></span></span>';
+}
+function pchip(r){
+  if(!r.product_handle)return '<span class="crv-c-pc crv-c-pc--shop">'+thumb(null,'')+'<span>Review of the Poorly Pet shop</span></span>';
+  var t=ptitle(r);
+  return '<a class="crv-c-pc" href="#">'+thumb(r.product_handle,t)+'<span>'+esc(t)+'</span></a>';
+}
+function cardC(r){
+  var sh=shortText(r.body),bid='crv-b-'+r.id;
+  return '<article class="crv-c-card">'+
+    '<div class="crv-c-top">'+rstars(r.rating,'sm')+'</div>'+
+    (r.title?'<h3 class="crv-c-t">'+esc(r.title)+'</h3>':'')+
+    '<div class="crv-body crv-c-b" id="'+bid+'">'+(sh?'<p>'+esc(sh)+'</p>':paras(r.body))+'</div>'+
+    (sh?'<button type="button" class="crv-more" aria-expanded="false" aria-controls="'+bid+'" data-id="'+esc(r.id)+'">Read more</button>':'')+
+    '<div class="crv-c-foot">'+vline(r)+pchip(r)+'</div>'+
+  '</article>';
+}
 function initC(){
   /* featured: five-star reviews with a headline and a readable length, one per product */
   var seen={},feat=D.reviews.filter(function(r){return r.rating===5&&r.title&&r.body.length>=80&&r.body.length<=460}).sort(function(a,b){return b.body.length-a.body.length}).filter(function(r){var k=r.product_handle||'shop';if(seen[k])return false;seen[k]=1;return true}).slice(0,6);
-  var track=$('#crv-car'),dots=$('#crv-dots');
+  var track=$('#crv-car'),prog=$('#crv-cprog');
   track.innerHTML=feat.map(function(r,i){
-    var t=ptitle(r);
-    return '<li class="crv-slide" id="crv-s'+i+'" aria-roledescription="slide" aria-label="'+(i+1)+' of '+feat.length+'">'+
-      '<figure>'+rstars(5,'')+'<blockquote><p class="crv-qt">“'+esc(r.title)+'”</p><p class="crv-qb">'+esc(r.body)+'</p></blockquote>'+
-      '<figcaption><span class="crv-qn">'+esc(r.reviewer_name)+(r.verified_buyer?' <span class="crv-ver">Verified buyer</span>':'')+'</span>'+
-      (r.product_handle?'<a class="crv-qp" href="#">'+thumb(r.product_handle,t)+'<span>'+esc(t)+'</span></a>':'')+'</figcaption></figure></li>';
+    return '<li class="crv-c-slide" id="crv-s'+i+'" aria-roledescription="slide" aria-label="'+(i+1)+' of '+feat.length+'">'+
+      '<figure class="crv-c-q">'+rstars(5,'sm')+
+        '<blockquote><p class="crv-c-qt">'+esc(r.title)+'</p><p class="crv-c-qb">'+esc(r.body)+'</p></blockquote>'+
+        '<figcaption>'+vline(r)+pchip(r)+'</figcaption></figure></li>';
   }).join('');
-  dots.innerHTML=feat.map(function(r,i){return '<button type="button" aria-label="Show review '+(i+1)+'" aria-controls="crv-s'+i+'"'+(i?'':' aria-current="true"')+'></button>'}).join('');
-  var cur=0;
-  function to(i){i=Math.max(0,Math.min(feat.length-1,i));track.scrollTo({left:track.children[i].offsetLeft-track.offsetLeft,behavior:RM?'auto':'smooth'})}
+  var prev=$('#crv-prev'),next=$('#crv-next');
+  function slides(){return $$('.crv-c-slide',track)}
+  function perView(){var s=slides()[0];return s?Math.max(1,Math.round(track.clientWidth/s.getBoundingClientRect().width)):1}
+  function curIdx(){
+    var sl=slides(),x=track.scrollLeft,best=0,d=1e9;
+    sl.forEach(function(s,i){var dd=Math.abs(s.offsetLeft-sl[0].offsetLeft-x);if(dd<d){d=dd;best=i}});return best;
+  }
+  function to(i){var sl=slides();i=Math.max(0,Math.min(sl.length-1,i));track.scrollTo({left:sl[i].offsetLeft-sl[0].offsetLeft,behavior:RM?'auto':'smooth'})}
   function mark(){
-    var i=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));
-    if(i===cur&&dots.querySelector('[aria-current]'))return;cur=i;
-    $$('button',dots).forEach(function(d,k){if(k===i)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current')});
-    $('#crv-prev').disabled=i<=0;$('#crv-next').disabled=i>=feat.length-1;
+    var max=track.scrollWidth-track.clientWidth;
+    prev.disabled=track.scrollLeft<=2;next.disabled=track.scrollLeft>=max-2;
+    var pv=track.clientWidth/Math.max(1,track.scrollWidth);
+    prog.style.width=(pv*100).toFixed(1)+'%';
+    prog.style.transform='translateX('+(max>0?(track.scrollLeft/max)*(1/pv-1)*100:0).toFixed(1)+'%)';
   }
   var raf=0;track.addEventListener('scroll',function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(mark)},{passive:true});
-  $('#crv-prev').addEventListener('click',function(){to(cur-1)});
-  $('#crv-next').addEventListener('click',function(){to(cur+1)});
-  dots.addEventListener('click',function(e){var b=e.target.closest('button');if(b)to($$('button',dots).indexOf(b))});
-  track.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();to(cur+1)}else if(e.key==='ArrowLeft'){e.preventDefault();to(cur-1)}});
+  window.addEventListener('resize',mark);
+  prev.addEventListener('click',function(){to(curIdx()-perView())});
+  next.addEventListener('click',function(){to(curIdx()+perView())});
+  track.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();to(curIdx()+1)}else if(e.key==='ArrowLeft'){e.preventDefault();to(curIdx()-1)}});
   mark();
 
+  /* the grid */
   var st={stars:0,sort:'newest',product:''},status=$('#crv-status');
-  var sel=$('#crv-prod');
+  var sel=$('#crv-prod'),list=$('#crv-list'),ptext=$('#crv-ptext'),pbar=$('#crv-pbar'),bar=$('#crv-cbar');
   sel.innerHTML='<option value="">All products</option>'+PLIST.map(function(p){return '<option value="'+esc(p.handle)+'">'+esc(p.title)+' ('+p.reviews.length+')</option>'}).join('');
-  var pg=new Pager($('#crv-list'),$('#crv-more'),9,function(r){return card(r)});
-  function run(){var l=select(st);pg.set(l);status.textContent=statusText(l.length,st)}
-  chips($('#crv-chips'),st,run);
+  var pg=new Pager(list,$('#crv-more'),12,cardC,function(n,t){
+    ptext.textContent=t?'Showing '+n+' of '+t:'';
+    pbar.style.width=(t?n/t*100:0).toFixed(1)+'%';
+    $('.crv-c-pager').hidden=!t;
+    checkImgs(list);
+  });
+  var first=true;
+  function run(){
+    var l=select(st);pg.set(l);status.textContent=statusText(l.length,st);
+    if(!l.length)list.innerHTML='<div class="crv-c-empty"><p>No reviews match these filters yet.</p><button type="button" class="crv-c-reset">Clear filters</button></div>';
+    if(!first&&bar){var top=bar.getBoundingClientRect().top;if(top<0)window.scrollBy({top:top+1,behavior:'auto'})}
+    first=false;
+  }
+  var seg=$('#crv-chips');
+  seg.innerHTML=[0].concat(STARS_HELD).map(function(s){
+    return '<button type="button" class="crv-segb" data-s="'+s+'" aria-pressed="'+(st.stars===s)+'">'+(s?s+'<span class="crv-segs" aria-hidden="true"></span><span class="sr"> star</span>':'All')+'</button>';
+  }).join('');
+  function setStars(s){st.stars=s;$$('.crv-segb',seg).forEach(function(x){x.setAttribute('aria-pressed',+x.dataset.s===s?'true':'false')});run()}
+  seg.addEventListener('click',function(e){var b=e.target.closest('.crv-segb');if(b)setStars(+b.dataset.s)});
+  list.addEventListener('click',function(e){if(e.target.closest('.crv-c-reset')){sel.value='';st.product='';setStars(0)}});
   sel.addEventListener('change',function(){st.product=sel.value;run()});
   $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
-  run();
+  run();checkImgs(track);
+  /* the control row gets a hairline shadow once it is stuck */
+  if(bar&&'IntersectionObserver' in window){
+    var s=doc.createElement('div');s.style.height='1px';bar.parentNode.insertBefore(s,bar);
+    new IntersectionObserver(function(en){bar.classList.toggle('stuck',!en[0].isIntersecting)}).observe(s);
+  }
 }
 
 if(V==='a')initA();else if(V==='b')initB();else if(V==='c')initC();

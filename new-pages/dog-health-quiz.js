@@ -397,22 +397,26 @@ function initA(root){
     {id:'kinds',type:'multi',key:'kinds',eyebrow:'Last one',q:'What sort of help suits you?',hint:'We will lean towards these in your results.',opts:KINDS,selText:function(){return ''},
       cta:function(st,n){return 'See '+esc(poss(st))+' results'}}
   ]);
-  var stepper=Stepper(app,steps,st,showResults);
+  var hero=$('.hq-a-hero',root),quiz=$('.hq-quiz',root),startBtn=$('.hq-start',root),stepper;
+  var OPT={cls:'hq-card-a',backFirst:true,focusFirst:true,onBackFirst:function(){root.classList.remove('hq-on');scrollTo(root);startBtn&&startBtn.focus({preventScroll:true})}};
+  root.classList.add('hq-js');
+  function open(){root.classList.add('hq-on');stepper=Stepper(app,steps,st,showResults,OPT);scrollTo(quiz)}
+  if(startBtn)startBtn.addEventListener('click',function(e){e.preventDefault();open()});
   function showResults(){
     var res=recommend(st),bits=profileBits(st);
     root.classList.add('hq-done');
-    app.innerHTML='<section class="hq-res" aria-labelledby="hq-res-h">'+
-      '<div class="hq-res-h hq-rise"><div><p class="hq-eyebrow">Your results</p><h2 id="hq-res-h" tabindex="-1">Here is what <em>'+esc(dogName(st))+'</em> needs</h2>'+
+    app.innerHTML='<section class="hq-res hq-res-a" aria-labelledby="hq-res-h">'+
+      '<div class="hq-res-band"><div class="wrap"><div class="hq-res-h hq-rise"><div><h2 id="hq-res-h" tabindex="-1">Here is what <em>'+esc(dogName(st))+'</em> needs</h2>'+
       '<p class="hq-res-s">'+res.needs.length+' areas to focus on, with the products we would choose.</p>'+
       '<ul class="hq-bits" aria-label="Your answers">'+bits.slice(0,8).map(function(b){return '<li>'+esc(b)+'</li>'}).join('')+(bits.length>8?'<li>+'+(bits.length-8)+' more</li>':'')+'</ul></div>'+
-      '<div class="hq-res-acts"><button class="btn sec hq-edit" type="button">Change answers</button><button class="hq-link hq-restart" type="button">Start again</button></div></div>'+
-      '<div class="hq-res-grid"><div class="hq-needs">'+needsHtml(res,st).replace(/class="hq-need"/g,'class="hq-need hq-rv"')+'</div>'+
+      '<div class="hq-res-acts"><button class="btn sec hq-edit" type="button">Change answers</button><button class="hq-link hq-restart" type="button">Start again</button></div></div></div></div>'+
+      '<div class="wrap"><div class="hq-res-grid"><div class="hq-needs">'+needsHtml(res,st).replace(/class="hq-need"/g,'class="hq-need hq-rv"')+'</div>'+
       '<aside class="hq-kit hq-rise" aria-label="'+esc(poss(st,true))+' kit">'+kitHtml(res,st)+'</aside></div>'+
-      '<p class="hq-calm">Our quiz doesn’t replace your vet.</p></section>';
+      '<p class="hq-calm">Our quiz doesn’t replace your vet.</p></div></section>';
     reveal(app);
-    var h=$('#hq-res-h',app);scrollTo(root.querySelector('.hq-quiz')||app);setTimeout(function(){h.focus({preventScroll:true})},RM?0:400);
-    $('.hq-edit',app).addEventListener('click',function(){root.classList.remove('hq-done');stepper=Stepper(app,steps,st,showResults);stepper.goTo('syms')});
-    $('.hq-restart',app).addEventListener('click',function(){root.classList.remove('hq-done');st.name='';st.age=st.size=st.breed=null;st.syms=[];st.extra=[];st.kinds=[];stepper=Stepper(app,steps,st,showResults,{focusFirst:true});scrollTo(root)});
+    var h=$('#hq-res-h',app);scrollTo(quiz);setTimeout(function(){h.focus({preventScroll:true})},RM?0:400);
+    $('.hq-edit',app).addEventListener('click',function(){root.classList.remove('hq-done');stepper=Stepper(app,steps,st,showResults,OPT);stepper.goTo('syms')});
+    $('.hq-restart',app).addEventListener('click',function(){root.classList.remove('hq-done');st.name='';st.age=st.size=st.breed=null;st.syms=[];st.extra=[];st.kinds=[];stepper=Stepper(app,steps,st,showResults,OPT);scrollTo(quiz)});
   }
 }
 

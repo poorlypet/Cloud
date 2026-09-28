@@ -31,7 +31,7 @@
     el.textContent=pre+(0).toFixed(dec);requestAnimationFrame(step);
   }
 
-  /* ---- split words for the A quote ---- */
+  /* ---- split words (the quote, and the C hero headline) ---- */
   $$('[data-words]').forEach(function(el){
     var i=0;
     (function walk(n){
@@ -67,12 +67,12 @@
     rv.forEach(function(el){el.classList.add('in')});
   }
 
-  /* ================= A: sticky photo that follows the chapters ================= */
-  var story=$('.wpa-story');
+  /* ---- story: sticky photo that follows the chapters ---- */
+  var story=$('.wps');
   if(story){
-    var chs=$$('.wpa-ch',story),phs=$$('.wpa-stack .wp-ph',story),bars=$$('.wpa-prog button',story),badge=$('.wpa-badge',story),cur=-1;
+    var chs=$$('.wps-ch',story),phs=$$('.wps-stack .wp-ph',story),bars=$$('.wps-prog button',story),badge=$('.wps-badge',story),cur=-1;
     function setCh(i){
-      if(i===cur)return;cur=i;
+      if(i===cur||i<0)return;cur=i;
       phs.forEach(function(p,k){p.classList.toggle('on',k===i)});
       bars.forEach(function(b,k){b.classList.toggle('on',k===i);b.classList.toggle('done',k<i);if(k===i)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});
       if(badge){
@@ -92,84 +92,21 @@
     }
   }
 
-  /* ================= B: story carousel ================= */
-  var car=$('.wpb-car');
-  if(car){
-    var track=$('.wpb-track',car),cards=$$('.wpb-card',car),dots=$$('.wpb-dots button',car),
-        prev=$('.wpb-prev',car),next=$('.wpb-next',car),count=$('.wpb-count',car),at=-1;
-    function mark(i){
-      if(i===at)return;at=i;
-      cards.forEach(function(c,k){c.classList.toggle('on',k===i);c.setAttribute('aria-hidden',k===i?'false':'true')});
-      dots.forEach(function(d,k){d.classList.toggle('on',k===i);d.setAttribute('aria-current',k===i?'true':'false')});
-      prev.disabled=i===0;next.disabled=i===cards.length-1;
-      if(count)count.textContent='Chapter '+(i+1)+' of '+cards.length;
+  /* ---- C hero: the panoramic strip drifts sideways as you scroll ---- */
+  var strip=$('.whc-strip'),row=strip&&$('.whc-row',strip);
+  if(row&&!reduce){
+    var tick=0;
+    function drift(){
+      tick=0;
+      var r=strip.getBoundingClientRect(),vh=window.innerHeight;
+      if(r.bottom<0||r.top>vh)return;
+      var k=(vh-r.top)/(vh+r.height);            /* 0 as it enters, 1 as it leaves */
+      row.style.setProperty('--px',(k*-0.12*window.innerWidth).toFixed(1));
     }
-    function go(i){
-      i=Math.max(0,Math.min(cards.length-1,i));
-      track.scrollTo({left:cards[i].offsetLeft-cards[0].offsetLeft,behavior:reduce?'auto':'smooth'});
-      mark(i);
-    }
-    function nearest(){
-      var x=track.scrollLeft,b=0,bd=1e9;
-      cards.forEach(function(c,k){var d=Math.abs(c.offsetLeft-cards[0].offsetLeft-x);if(d<bd){bd=d;b=k}});
-      return b;
-    }
-    var raf=0;
-    track.addEventListener('scroll',function(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;mark(nearest())})},{passive:true});
-    prev.addEventListener('click',function(){go(at-1)});
-    next.addEventListener('click',function(){go(at+1)});
-    dots.forEach(function(d,k){d.addEventListener('click',function(){go(k)})});
-    track.addEventListener('keydown',function(e){
-      if(e.key==='ArrowRight'){e.preventDefault();go(at+1)}
-      else if(e.key==='ArrowLeft'){e.preventDefault();go(at-1)}
-      else if(e.key==='Home'){e.preventDefault();go(0)}
-      else if(e.key==='End'){e.preventDefault();go(cards.length-1)}
-    });
-    mark(0);
+    window.addEventListener('scroll',function(){if(!tick)tick=requestAnimationFrame(drift)},{passive:true});
+    window.addEventListener('resize',drift);
+    drift();
   }
-  $$('.wpb-fc').forEach(function(b){
-    b.addEventListener('click',function(){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true')});
-  });
-
-  /* ================= C: draggable timeline ================= */
-  var stage=$('.wpc-stage');
-  if(stage){
-    var range=$('.wpc-range',stage),ps=$$('.wpc-p',stage),stops=$$('.wpc-stops button',stage),
-        lbl=$('.wpc-lbl b',stage),seg=100,max=(ps.length-1)*seg,idx=-1,anim=0;
-    range.max=max;
-    var tints=['#EAF0E6','#F2F4F3','#E4EED6','#F3F6F1','#E4EED6'];
-    function show(i){
-      if(i===idx)return;idx=i;
-      ps.forEach(function(p,k){p.classList.toggle('on',k===i);p.setAttribute('aria-hidden',k===i?'false':'true')});
-      stops.forEach(function(s,k){s.classList.toggle('on',k===i);s.setAttribute('aria-pressed',k===i?'true':'false')});
-      stage.style.backgroundColor=tints[i%tints.length];
-      var h=ps[i].querySelector('h2');
-      range.setAttribute('aria-valuetext',ps[i].getAttribute('data-year')+': '+(h?h.textContent:''));
-      if(lbl)lbl.textContent=ps[i].getAttribute('data-year');
-    }
-    function paint(){range.style.setProperty('--p',(range.value/max*100)+'%')}
-    function tween(to){
-      cancelAnimationFrame(anim);
-      var from=+range.value;if(reduce||from===to){range.value=to;paint();show(Math.round(to/seg));return}
-      var t0=null;
-      (function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/350),e=1-Math.pow(1-k,3);
-        range.value=from+(to-from)*e;paint();if(k<1)anim=requestAnimationFrame(st)})(performance.now());
-      show(Math.round(to/seg));
-    }
-    function woke(){range.classList.remove('hint')}
-    range.addEventListener('input',function(){woke();cancelAnimationFrame(anim);paint();show(Math.round(range.value/seg))});
-    range.addEventListener('change',function(){tween(Math.round(range.value/seg)*seg)});
-    range.addEventListener('keydown',function(e){
-      var k=e.key,i=Math.round(range.value/seg);
-      if(k==='ArrowRight'||k==='ArrowUp'){e.preventDefault();woke();tween(Math.min(ps.length-1,i+1)*seg)}
-      else if(k==='ArrowLeft'||k==='ArrowDown'){e.preventDefault();woke();tween(Math.max(0,i-1)*seg)}
-    });
-    stops.forEach(function(s,k){s.addEventListener('click',function(){woke();tween(k*seg)})});
-    range.value=0;paint();show(0);
-  }
-  $$('.wpc-q').forEach(function(q){
-    q.addEventListener('click',function(){q.setAttribute('aria-expanded',q.getAttribute('aria-expanded')==='true'?'false':'true')});
-  });
 
   /* switch on the animated states last, so a script error leaves everything visible */
   document.documentElement.classList.add('wp-js');
