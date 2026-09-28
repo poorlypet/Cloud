@@ -72,61 +72,34 @@
 </div>
 
 <main id="main">
-<div class="wrap pvbar"><a class="cardsw-x" href="account-sign-in.html" style="font:600 13px/30px var(--sans);color:var(--teal)">Sign in page ›</a><span class="cardsw pvp" aria-label="Versions"><span>Your account</span><a href="account-a.html" class="on">A</a><a href="account-b.html">B</a><a href="account-c.html">C</a></span></div><div class="ac ac-a" data-ac="a"><section class="wrap ac-hero"><nav class="ac-crumb" aria-label="Breadcrumb"><ol><li><a href="#">Home</a></li><li aria-current="page">Your account</li></ol></nav><div class="ac-hrow"><div><h1>Hello, <em data-ac-stat="name">Sarah</em></h1><p class="ac-lead">Your orders, your dogs and your Club points in one place.</p></div><a class="ac-out" href="/account/logout">Sign out</a></div></section><div class="wrap"><p class="ac-ex"><b>Example account.</b> Sarah, her dogs, orders and points are made up to show the layout. Changes you make are saved in this browser only. <button type="button" data-ac-resetdogs>Reset the example</button></p></div>
-<div class="ac-band"><div class="wrap ac-a-grid" data-ac-scrollto>
-<nav class="ac-side" aria-label="Your account">
- <div class="ac-side-u"><span class="ac-av sm" aria-hidden="true">S</span><span><b>Sarah Example</b><span><span data-ac-stat="tier">Regular</span> member</span></span></div>
- <ul>
-  <li><a href="#overview" data-ac-go="overview">Overview</a></li>
-  <li><a href="#orders" data-ac-go="orders">Orders <small data-ac-stat="orders">5</small></a></li>
-  <li><a href="#dogs" data-ac-go="dogs">My dogs <small data-ac-stat="dogs">2</small></a></li>
-  <li><a href="#club" data-ac-go="club">Club points <small data-ac-stat="balance">0</small></a></li>
-  <li><a href="#refer" data-ac-go="refer">Refer a friend</a></li>
-  <li><a href="#details" data-ac-go="details">Addresses and details</a></li>
-  <li><a href="/account" >Subscriptions</a></li>
-  <li class="ac-sep"><a href="/account/logout">Sign out</a></li>
- </ul>
-</nav>
+<div class="wrap pvbar"><a class="cardsw-x" href="account-sign-in.html" style="font:600 13px/30px var(--sans);color:var(--teal)">Sign in page ›</a><span class="cardsw pvp" aria-label="Versions"><span>Your account</span><a href="account-a.html" class="on">A1</a><a href="account-b.html">A2</a><a href="account-c.html">A3</a></span></div>
+<div class="ac ac-a1" data-ac="a1">
+<section class="ac-top"><div class="wrap">
+<nav class="ac-crumb" aria-label="Breadcrumb"><ol><li><a href="#">Home</a></li><li aria-current="page">Your account</li></ol></nav>
+<div class="sec-h ac-hello"><div><h1>Hello, <em data-ac-stat="name">Sarah</em></h1><p><span data-ac-stat="tier">Regular</span> Club member since <span data-ac-stat="since">March 2026</span>.</p></div><div class="sec-r"><a class="all" href="/account/logout">Sign out ›</a></div></div>
+<p class="ac-ex"><b>Example account.</b> The orders, dogs and points are made up. Changes stay in this browser. <button type="button" data-ac-resetdogs>Reset the example</button></p>
+</div></section>
+<section class="ac-body" aria-label="Your account"><div class="wrap ac-grid" data-ac-scrollto>
+<nav class="ac-menu" aria-label="Your account"><div class="ac-menu-u"><span class="ac-av sm" aria-hidden="true">S</span><span><b>Sarah Example</b><span>sarah@example.com</span></span></div><ul><li><a href="#overview" data-ac-go="overview">Overview</a></li><li><a href="#orders" data-ac-go="orders">Orders <small data-ac-stat="orders"></small></a></li><li><a href="#dogs" data-ac-go="dogs">My dogs <small data-ac-stat="dogs"></small></a></li><li><a href="#club" data-ac-go="club">Club points <small data-ac-stat="balance"></small></a></li><li><a href="#vouchers" data-ac-go="vouchers">Vouchers <small data-ac-stat="vouchers"></small></a></li><li><a href="#refer" data-ac-go="refer">Refer a friend</a></li><li><a href="#details" data-ac-go="details">Your details</a></li><li class="ac-sep"><a href="/account/logout">Sign out</a></li></ul><p class="ac-menu-help">Need help? <a href="contact-us-c.html">Contact us</a> or <a href="track-my-order-a.html">track an order</a>.</p></nav>
 <div class="ac-main">
- <section class="ac-panel" data-ac-panel="overview" aria-labelledby="a-ov-h">
-  <h2 class="ac-h2" id="a-ov-h">Overview</h2><p class="ac-h2sub">Your latest order, your points and your dogs.</p>
-  <div class="ac-a-ov">
-   <div class="ac-card"><div class="ac-card-h"><h3 class="ac-h3">Latest order</h3><button type="button" data-ac-go="orders">All orders</button></div><div data-ac-orders data-limit="1" data-compact></div></div>
-   <div class="ac-card"><div class="ac-card-h"><h3 class="ac-h3">Your dogs</h3><button type="button" data-ac-go="dogs">Manage</button></div><ul class="ac-mini" data-ac-dogmini></ul><button class="btn sec sm ac-adddog" type="button" data-ac-adddog>Add a dog</button></div>
-  </div>
-  <div class="ac-card ac-mt"><div class="ac-card-h"><h3 class="ac-h3">Club points</h3><button type="button" data-ac-go="club">Use your points</button></div><div data-ac-points></div></div>
-  <div class="ac-sec"><div class="sec-h"><div><h2>Buy it <em>again</em></h2><p>Things you have ordered before.</p></div><div class="sec-r"><a class="all" href="#orders" data-ac-go="orders">All orders ›</a></div></div><div data-ac-buyagain data-limit="4"></div></div>
- </section>
- <section class="ac-panel" data-ac-panel="orders" aria-labelledby="a-or-h" hidden>
-  <h2 class="ac-h2" id="a-or-h">Orders</h2><p class="ac-h2sub">Track a parcel, buy something again or leave a review for 50 points.</p>
-  <div data-ac-orders></div>
- </section>
- <section class="ac-panel" data-ac-panel="dogs" aria-labelledby="a-dg-h" hidden>
-  <h2 class="ac-h2" id="a-dg-h">My dogs</h2><p class="ac-h2sub">Their details help us show the right products and sizes. Add a birthday for 250 Club points each year.</p>
-  <div data-ac-dogs></div>
-  <div class="ac-sec" data-ac-dogrecs data-limit="4"></div>
- </section>
- <section class="ac-panel" data-ac-panel="club" aria-labelledby="a-cl-h" hidden>
-  <h2 class="ac-h2" id="a-cl-h">Club points</h2><p class="ac-h2sub">Points are added the day your order ships. 500 points is £5 off.</p>
-  <div class="ac-card"><div data-ac-points></div></div>
-<div class="ac-grid2 ac-mt"><div class="ac-card" data-ac-rewards></div><div class="ac-card" data-ac-vouchers></div></div>
-  <div class="ac-sec"><h3 class="ac-h3">Points history</h3><div data-ac-ledger></div></div>
-  <div class="ac-sec"><h3 class="ac-h3">Ways to earn</h3><div data-ac-earn></div></div>
- </section>
- <section class="ac-panel" data-ac-panel="refer" aria-labelledby="a-rf-h" hidden>
-  <h2 class="ac-h2" id="a-rf-h">Refer a friend</h2><div data-ac-referral></div>
- </section>
- <section class="ac-panel" data-ac-panel="details" aria-labelledby="a-dt-h" hidden>
-  <h2 class="ac-h2" id="a-dt-h">Addresses and details</h2><p class="ac-h2sub">Your sign-in, delivery address and email choices.</p><div data-ac-details></div>
- </section>
-</div></div></div>
-<section class="ac-help" aria-labelledby="ac-help-h"><div class="wrap">
-<h2 id="ac-help-h">Still need help? <em>Contact us</em></h2><p class="ac-help-p">Real people, not a chatbot. We answer every email within one working day, Monday to Friday.</p>
-<div class="ac-help-g">
-<div><h3>Email our team</h3><p>Email <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a>. If it is about an order, include your order number.</p><a class="btn" href="contact-us-c.html">Contact us</a></div>
-<div><h3>Track an order</h3><p>You need your order number and the email address you used at checkout. No need to sign in.</p><a class="btn sec" href="track-my-order-a.html">Track my order</a></div>
-<div><h3>Questions about points</h3><p>Earning, spending, tiers and your account, answered on our FAQs page.</p><a class="btn sec" href="faqs-c.html">Read the FAQs</a></div>
-</div></div></section><p class="wrap ac-note">Our guides don’t replace your vet.</p></div>
+<section class="ac-panel" data-ac-panel="overview" data-rail="picks" aria-labelledby="ov-h"><h2 class="sr" id="ov-h">Overview</h2><div class="ac-ov1"><div class="ac-pan ac-teal"><div class="ac-pan-h"><h3 class="ac-h3">Club <em>points</em></h3><a href="#club" data-ac-go="club">Use your points ›</a></div><div data-ac-points="full"></div></div><div class="ac-two"><div class="ac-pan ac-pale"><div class="ac-pan-h"><h3 class="ac-h3">Latest order</h3><a href="#orders" data-ac-go="orders">All orders ›</a></div><div data-ac-latest></div></div><div class="ac-pan ac-pale"><div class="ac-pan-h"><h3 class="ac-h3">Your dogs</h3><a href="#dogs" data-ac-go="dogs">Manage ›</a></div><div data-ac-dogmini></div></div></div></div></section>
+<section class="ac-panel" data-ac-panel="orders" data-rail="again" aria-labelledby="or-h" hidden>
+<div class="sec-h"><div><h2 id="or-h">Your <em>orders</em></h2><p>Track a parcel, buy again, or review for 50 points.</p></div><div class="sec-r"><a class="all" href="track-my-order-a.html">Track an order ›</a></div></div><div data-ac-orders></div></section>
+<section class="ac-panel" data-ac-panel="dogs" data-rail="picks" aria-labelledby="dg-h" hidden>
+<div class="sec-h"><div><h2 id="dg-h">My <em>dogs</em></h2><p>Their details help us pick the right products and sizes.</p></div><div class="sec-r"><button class="btn sec sm" type="button" data-ac-adddog>Add a dog</button></div></div><div data-ac-dogs></div></section>
+<section class="ac-panel" data-ac-panel="club" data-rail="" aria-labelledby="cl-h" hidden>
+<div class="sec-h"><div><h2 id="cl-h">Club <em>points</em></h2><p>Added the day your order ships. 500 points is £5 off.</p></div><div class="sec-r"><a class="all" href="club-a.html">How the Club works ›</a></div></div><div class="ac-pan ac-teal"><div data-ac-points="full"></div></div>
+<div class="ac-pan ac-pale ac-mt" data-ac-rewards-wrap><div class="ac-pan-h"><h3 class="ac-h3">Swap points for money off</h3></div><div data-ac-rewards></div></div>
+<h3 class="ac-h3 ac-mt">Points history</h3><div data-ac-ledger></div></section>
+<section class="ac-panel" data-ac-panel="vouchers" data-rail="" aria-labelledby="vo-h" hidden>
+<div class="sec-h"><div><h2 id="vo-h">Your <em>vouchers</em></h2><p>Single-use codes made from your points.</p></div><div class="sec-r"><a class="all" href="#club" data-ac-go="club">Get a code ›</a></div></div><div data-ac-vouchers></div></section>
+<section class="ac-panel" data-ac-panel="refer" data-rail="" aria-labelledby="rf-h" hidden>
+<div class="sec-h"><div><h2 id="rf-h">Refer a <em>friend</em></h2><p>Share your link. You both get 500 points.</p></div></div><div data-ac-referral></div></section>
+<section class="ac-panel" data-ac-panel="details" data-rail="" aria-labelledby="dt-h" hidden>
+<div class="sec-h"><div><h2 id="dt-h">Your <em>details</em></h2><p>Sign-in, delivery address and emails.</p></div><div class="sec-r"><a class="all" href="/account/logout">Sign out ›</a></div></div><div data-ac-details></div></section>
+</div></div></section>
+<section class="ac-rsec" data-ac-rail aria-labelledby="ac-rail-h"><div class="wrap"></div></section>
+</div>
 </main>
 
 <footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="contact-us-c.html">Contact us</a></li><li><a href="faqs-c.html">FAQs</a></li><li><a href="track-my-order-a.html">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="account-sign-in.html">Sign in</a></li><li><a href="club-a.html">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="account-a.html">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 101 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>

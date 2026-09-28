@@ -1,0 +1,12 @@
+/* Sign in: one simple panel. Shopify new customer accounts (email + 6-digit code) at /account/login. Prefix si-. */
+.si-sec{padding:24px 0 48px}
+.si-band{background:#E4EED6;border-radius:var(--rl);padding:64px 24px;display:flex;justify-content:center}
+.si-box{background:#fff;border-radius:var(--rp);width:100%;max-width:440px;padding:36px 36px 30px;text-align:center}
+.si-box h1{font:700 36px/1.1 var(--serif);color:var(--teal);margin:0 0 10px}
+.si-box p{font:400 16px/1.45 var(--sans);color:var(--mute);margin:0}
+.si-btn{width:100%;margin-top:24px;font-size:17px}
+.si-box .si-new{margin-top:18px;color:var(--ink)}
+.si-box a:not(.btn){color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.si-box .si-club{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:14px}
+@media (max-width:899px){.si-sec{padding-top:16px}.si-band{padding:40px 16px}}
+@media (max-width:599px){.si-box{padding:28px 20px 24px}.si-box h1{font-size:32px}}
