@@ -32,6 +32,7 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 .wp-calm{margin:28px 0 0;font:400 14px/1.4 var(--sans);color:var(--mute);text-align:center}
 .wp .stars.gold{color:var(--gold)}
 .on-teal .stars i:before{color:rgba(255,255,255,.25)}
+.on-teal .stars i.on:before{color:currentColor}
 
 /* photo placeholders: flat tints and a caption (the owner supplies photos) */
 .wp-ph{position:relative;display:block;min-height:240px;border-radius:var(--rl);background:var(--pale2);overflow:hidden}
@@ -229,10 +230,10 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 .wpc-range:focus-visible{outline:3px solid var(--teal);outline-offset:4px;border-radius:8px}
 .wpc-range.hint::-webkit-slider-thumb{animation:wpcPulse 1.6s ease-out infinite}
 @keyframes wpcPulse{0%{box-shadow:0 0 0 0 rgba(15,76,72,.45)}100%{box-shadow:0 0 0 18px rgba(15,76,72,0)}}
-.wpc-stops{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:4px}
-.wpc-stops button{min-height:48px;font:600 15px/1.2 var(--sans);color:var(--mute);text-align:center;padding:6px 4px;border-radius:8px;transition:color .2s}
-.wpc-stops button:first-child{text-align:left}
-.wpc-stops button:last-child{text-align:right}
+.wpc-stops{position:relative;height:52px;margin:4px 18px 0}
+.wpc-stops button{position:absolute;top:0;left:calc(var(--k)*25%);transform:translateX(-50%);white-space:nowrap;min-height:48px;font:600 15px/1.2 var(--sans);color:var(--mute);text-align:center;padding:6px 4px;border-radius:8px;transition:color .2s}
+.wpc-stops button:first-child{transform:translateX(-18px)}
+.wpc-stops button:last-child{transform:translateX(calc(18px - 100%))}
 .wpc-stops button.on{color:var(--teal)}
 .wpc-stops button:hover{color:var(--teal)}
 
@@ -244,6 +245,7 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 .wpc-a{display:block;font:400 18px/1.45 var(--sans);color:var(--ink)}
 .wp-js .wpc-q .plus{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--lime);color:var(--teal);font:600 26px/1 var(--sans);transition:transform .4s var(--ease)}
 .wp-js .wpc-a{position:absolute;inset:0;display:flex;align-items:flex-end;padding:28px;background:var(--teal);color:#fff;transform:translateY(101%);transition:transform .5s var(--ease)}
+.wp-js .wpc-a>span{display:block}
 .wp-js .wpc-a em{color:var(--lime)}
 .wp-js .wpc-q[aria-expanded="true"] .wpc-a{transform:none}
 @media (hover:hover){.wp-js .wpc-q:hover .wpc-a{transform:none}}
@@ -329,7 +331,8 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .wpc-p h2{font-size:26px}
   .wpc-p p{font-size:17px}
   .wpc-ctl{margin-top:20px}
-  .wpc-stops button{font-size:13px}
+  .wpc-stops button{font-size:13px;white-space:normal;width:64px;line-height:1.15}
+  .wpc-stops button:first-child,.wpc-stops button:last-child{width:auto}
   .wpc-qs{grid-template-columns:minmax(0,1fr);gap:12px}
   .wpc-q{min-height:180px;padding:22px}
   .wp-js .wpc-a{padding:22px}
