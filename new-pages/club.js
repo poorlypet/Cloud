@@ -221,6 +221,13 @@ function bindCheck(root){
 function init(){
   document.querySelectorAll('[data-club-calc]').forEach(bindCalc);
   document.querySelectorAll('[data-club-check]').forEach(bindCheck);
+  /* in-page contents: highlight the section in view */
+  document.querySelectorAll('[data-club-toc]').forEach(function(toc){
+    var links=[].slice.call(toc.querySelectorAll('a[href^="#"]')),secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))}).filter(Boolean);
+    if(!('IntersectionObserver' in window)||!secs.length)return;
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}})},{rootMargin:'-20% 0px -70% 0px'});
+    secs.forEach(function(s){io.observe(s)});
+  });
   document.querySelectorAll('[data-club-reset]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();reset()})});
   /* header shortcuts: the shell's drawers are not on these pages, so go to the pages instead */
   var ab=document.getElementById('account-btn'),cb=document.getElementById('club-btn');

@@ -246,7 +246,7 @@ var panels=$$('[data-ac-panel]');
 function show(id,focus){
   if(!panels.length)return;
   var ok=panels.some(function(p){return p.getAttribute('data-ac-panel')===id});if(!ok)id=panels[0].getAttribute('data-ac-panel');
-  panels.forEach(function(p){var on=p.getAttribute('data-ac-panel')===id;p.hidden=!on;if(on&&!p.classList.contains('ac-in'))p.classList.add('ac-in')});
+  panels.forEach(function(p){var on=p.getAttribute('data-ac-panel')===id;p.hidden=!on;if(on&&!p.classList.contains('ac-fade'))p.classList.add('ac-fade')});
   $$('[data-ac-go]').forEach(function(a){var on=a.getAttribute('data-ac-go')===id;a.classList.toggle('on',on);if(a.getAttribute('role')==='tab')a.setAttribute('aria-selected',on);else if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   if(focus){var p=$('[data-ac-panel="'+id+'"]');var h=p&&p.querySelector('h2');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}
     var top=$('[data-ac-scrollto]');if(top&&top.getBoundingClientRect().top<0)top.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}

@@ -40,7 +40,7 @@
 /* ---------- containers ---------- */
 .ac-band{background:var(--pale);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 0 48px}
 .ac-panel{background:#fff;border:1px solid var(--line);border-radius:var(--rp);padding:32px}
-.ac-in{animation:acIn .3s ease-out}
+.ac-fade{animation:acIn .3s ease-out}
 @keyframes acIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .ac-grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
 .ac-card{border:1px solid var(--line);border-radius:var(--rp);padding:24px;background:#fff;min-width:0}
@@ -114,7 +114,7 @@
 .ac-big{display:block;font:700 44px/1 var(--serif);color:var(--teal)}
 .ac-tiername{display:block;font:700 30px/1.1 var(--serif);color:var(--ink);margin-top:4px}
 .ac-pts-w{display:block;margin-top:6px;font:400 14px/1.4 var(--sans);color:var(--mute)}
-.ac-ladder{grid-column:1/-1;padding-bottom:40px}
+.ac-ladder{grid-column:1/-1;padding-bottom:4px}
 .ac-lad-t{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font:600 14px/1.3 var(--sans);color:var(--ink)}
 .ac-bar{position:relative;height:12px;border-radius:6px;background:var(--mist);border:1px solid var(--line)}
 .ac-bar>i{display:block;height:100%;border-radius:6px;background:var(--teal);transition:width .5s ease}
@@ -374,7 +374,10 @@
   .ac-code-c{font-size:20px}
 }
 @media (prefers-reduced-motion:reduce){
-  .ac-in,.ac-code--new,.ac-dlg{animation:none}
+  .ac-fade,.ac-code--new,.ac-dlg{animation:none}
   .ac-bar>i,.ac-toast{transition:none}
 }
 .ac-mt{margin-top:24px}
+.ac-band+.ac-help{margin-top:0;border-top:0}
+.ac-card [data-ac-points]+[data-ac-rewards]{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.ac-modal [hidden]{display:none!important}
