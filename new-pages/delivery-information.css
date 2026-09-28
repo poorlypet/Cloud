@@ -64,6 +64,7 @@ p.dl-note,.dl-pale p.dl-note,.dl-card p.dl-note,.dl-teal p.dl-note{margin:14px 0
 .dl-fill{display:flex;flex-direction:column}
 .dl-fill .dl-rules{flex:1;display:flex;flex-direction:column}
 .dl-fill .dl-rules .rule{flex:1;align-items:center}
+.dl-fill p.dl-note{margin-top:auto;padding-top:18px}
 /* rules as a row of columns (delivery A) */
 .dl-rules.dl-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 24px;margin-bottom:22px}
 .dl-rules.dl-cols .rule,.dl-rules.dl-cols .rule:first-child{flex-direction:column;align-items:flex-start;gap:4px;padding:0 0 0 18px;border-top:0;border-left:2px solid rgba(15,76,72,.25)}

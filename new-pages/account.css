@@ -205,10 +205,14 @@
 /* A1: teal points panel, then latest order and dogs side by side */
 .ac-ov1 .ac-two{margin-top:20px}
 /* A2: latest order leads (points live in the menu) */
-.ac-ov2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+.ac-ov2{display:grid;gap:20px}
+.ac-ov2 .ac-mini{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px}
+.ac-ov2 .ac-o-items{grid-template-columns:repeat(2,minmax(0,1fr))}
 /* A3: two-column panel grid */
 .ac-ov3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
-.ac-ov3 .ac-teal{grid-row:span 2}
+.ac-ov3 .ac-teal{grid-row:span 2;display:flex;flex-direction:column}
+.ac-ov3 [data-ac-points]{flex:1;display:flex;flex-direction:column}
+.ac-ov3 .ac-ladder{margin-top:auto;padding-top:24px}
 .ac-ov3 .ac-teal .ac-pts{grid-template-columns:minmax(0,1fr)}
 
 /* ---------- dog dialog ---------- */
@@ -299,6 +303,7 @@
   .ac-grid{grid-template-columns:240px minmax(0,1fr);gap:28px}
   .ac-ov2,.ac-ov3{grid-template-columns:minmax(0,1fr)}
   .ac-ov3 .ac-teal{grid-row:auto}
+  .ac-ov2 .ac-mini,.ac-ov2 .ac-o-items{grid-template-columns:minmax(0,1fr)}
   .ac-ov3 .ac-teal .ac-pts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
 @media (max-width:899px){

@@ -197,7 +197,7 @@ function renderPoints(el){
   }
   el.innerHTML='<div class="ac-pts"><div><span class="ac-k">Points balance</span><b class="ac-big">'+C.fmt(b)+'</b><span class="ac-pts-w">Worth '+C.money(v.value)+' in vouchers'+(pend?'. '+C.fmt(pend)+' more on the way.':'.')+'</span></div>'+
     '<div><span class="ac-k">Your tier</span><b class="ac-tier">'+pr.tier.name+'</b><span class="ac-pts-w">'+pr.tier.rate+' points per £1'+(pr.tier.from>0?', free delivery':'')+'</span></div></div>'+
-    '<div class="ac-ladder"><div class="ac-lad-t"><span>'+money(s.spend)+' spent</span><span>'+T.map(function(t){return t.name}).join(' · ')+'</span></div>'+bar+'<p class="ac-lad-n">'+next+'</p></div>';
+    '<div class="ac-ladder"><div class="ac-lad-t"><span>'+money(s.spend)+' spent</span><span>'+(pr.next?'Next: '+pr.next.name+' at £'+pr.next.from:'Top tier')+'</span></div>'+bar+'<p class="ac-lad-n">'+next+'</p></div>';
 }
 function renderRedeem(el){
   var b=C.balanceOf(C.state.ledger);
@@ -244,7 +244,7 @@ function paintStats(){
   var s=C.state,b=C.balanceOf(s.ledger),pr=C.progress(s.spend);
   var act=(s.vouchers||[]).filter(function(v){return !v.used}).length;
   var map={balance:C.fmt(b),tier:pr.tier.name,name:CUSTOMER.firstName,orders:String(ORDERS.length),dogs:String(dogs.length),vouchers:String(act),since:CUSTOMER.since};
-  $$('[data-ac-stat]').forEach(function(el){var k=el.getAttribute('data-ac-stat');if(k in map)el.textContent=map[k]});
+  $$('[data-ac-stat]').forEach(function(el){var k=el.getAttribute('data-ac-stat');if(k in map)el.textContent=(el.tagName==='SMALL'&&map[k]==='0')?'':map[k]});
   $$('[data-ac-optcount]').forEach(function(o){var k=o.getAttribute('data-ac-optcount');o.textContent=o.getAttribute('data-l')+(map[k]&&map[k]!=='0'?' ('+map[k]+')':'')});
 }
 
