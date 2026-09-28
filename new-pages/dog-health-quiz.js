@@ -262,8 +262,9 @@ function reveal(root){
   els.forEach(function(el){el.classList.add('hq-rv-wait')});
   var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('hq-rv-wait');io.unobserve(en.target)}})},{rootMargin:'0px 0px -8% 0px'});
   els.forEach(function(el){io.observe(el)});
+  setTimeout(function(){els.forEach(function(el){el.classList.remove('hq-rv-wait')})},1600);
 }
-function scrollTo(el){if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-16;window.scrollTo({top:y,behavior:RM?'auto':'smooth'})}
+function scrollTo(el){if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-(window.innerWidth<1024?76:16);window.scrollTo({top:y,behavior:RM?'auto':'smooth'})}
 
 /* ==========================================================================
    Stepper: one question per screen, progress bar, Back. Used by A and C.
@@ -495,9 +496,9 @@ function initB(root){
       if(ix>-1)a.splice(ix,1);else{if(b.getAttribute('data-x'))a=[];else a=a.filter(function(k){return k!=='none'&&k!=='mix'});a.push(v)}
       st[q.key]=a;
       $$('.hq-rep',comp).forEach(function(x){var r=x.getAttribute('data-v');x.setAttribute('aria-pressed',has(a,isNaN(+r)?r:+r))});
-      $('.hq-send',comp).textContent=a.length?'Send':'Skip';
+      var sb=$('.hq-send',comp);if(sb)sb.textContent=a.length?'Send':'Skip';
     })});
-    $('.hq-send',comp).addEventListener('click',function(){
+    var send=$('.hq-send',comp);if(send)send.addEventListener('click',function(){
       if(q.id==='areas'){st.syms=st.syms.filter(function(k){return has(st.areas,SYM[k].area)})}
       if(q.id==='extra')st.extra=st.extra.filter(function(k){return k!=='none'});
       answer(q);
@@ -561,7 +562,7 @@ function initB(root){
     f.innerHTML='<div class="hq-total"><span>'+ps.length+' item'+(ps.length===1?'':'s')+'</span><span class="hq-total-v"><b>'+money(t)+'</b></span></div>'+
       '<button class="btn wide hq-addall" type="button" data-hs="'+hs.join(',')+'"'+(ps.length?'':' disabled')+'>'+(ps.length?'Add '+ps.length+' to basket':'Nothing selected')+'</button>'+
       '<p class="hq-kit-note">'+(t>=39?'Free UK delivery on this basket.':'Free UK delivery on orders over £39.')+'</p>';
-    if(mbar){mbar.hidden=!ps.length;mbar.innerHTML='<span><b>'+esc(poss(st,true))+' basket</b> '+ps.length+' item'+(ps.length===1?'':'s')+' · '+money(t)+'</span><a href="#hq-bask" class="hq-mbar-a">View</a>'}
+    if(mbar){mbar.hidden=!ps.length;mbar.innerHTML='<span><b>'+esc(poss(st,true))+' basket</b> '+ps.length+' item'+(ps.length===1?'':'s')+' · '+money(t)+'</span>'+(finished?'<a href="#hq-bask" class="hq-mbar-a">View</a>':'')}
   }
   mbar&&mbar.addEventListener('click',function(e){if(e.target.closest('a')){e.preventDefault();scrollTo(bask)}});
   renderLog(true);renderComp();updateBasket();
