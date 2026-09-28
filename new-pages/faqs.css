@@ -234,3 +234,8 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .fq-chev{transition:none}
   .fq-hit{animation:none;outline:2px solid var(--lime);outline-offset:2px}
 }
+/* contact block: buttons line up across the three columns */
+.fq-cgrid > div{display:flex;flex-direction:column;align-items:flex-start}
+.fq-cgrid > div .btn{margin-top:auto}
+.fq-cgrid > div p{margin-bottom:20px}
+.fq-mail-i{font-weight:700;color:var(--teal);text-decoration:underline;text-underline-offset:3px}
