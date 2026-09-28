@@ -668,13 +668,13 @@ function initB(){
 }
 
 /* ==========================================================================
-   Version C: score band, featured carousel, then an even grid with a
+   Version C: score band, then a single-column list of reviews with a
    sticky control row and a deliberate "Show more".
    ========================================================================== */
 function vline(r){
   return '<span class="crv-c-who"><b>'+esc(r.reviewer_name||'Anonymous')+'</b>'+
-    '<span class="crv-c-vd">'+(r.verified_buyer?'<span class="crv-c-vb">Verified buyer</span><span aria-hidden="true"> · </span>':'')+
-    '<time datetime="'+esc(r.created_at)+'">'+fdate(r.created_at)+'</time></span></span>';
+    (r.verified_buyer?'<span class="crv-c-vb">Verified buyer</span>':'')+
+    '<time class="crv-c-vd" datetime="'+esc(r.created_at)+'">'+fdate(r.created_at)+'</time></span>';
 }
 function pchip(r){
   if(!r.product_handle)return '<span class="crv-c-pc crv-c-pc--shop">'+thumb(null,'')+'<span>Review of the Poorly Pet shop</span></span>';
@@ -684,46 +684,16 @@ function pchip(r){
 function cardC(r){
   var sh=shortText(r.body),bid='crv-b-'+r.id;
   return '<article class="crv-c-card">'+
-    '<div class="crv-c-top">'+rstars(r.rating,'sm')+'</div>'+
-    (r.title?'<h3 class="crv-c-t">'+esc(r.title)+'</h3>':'')+
-    '<div class="crv-body crv-c-b" id="'+bid+'">'+(sh?'<p>'+esc(sh)+'</p>':paras(r.body))+'</div>'+
-    (sh?'<button type="button" class="crv-more" aria-expanded="false" aria-controls="'+bid+'" data-id="'+esc(r.id)+'">Read more</button>':'')+
-    '<div class="crv-c-foot">'+vline(r)+pchip(r)+'</div>'+
+    '<div class="crv-c-side">'+rstars(r.rating,'sm')+vline(r)+pchip(r)+'</div>'+
+    '<div class="crv-c-main">'+
+      (r.title?'<h3 class="crv-c-t">'+esc(r.title)+'</h3>':'')+
+      '<div class="crv-body crv-c-b" id="'+bid+'">'+(sh?'<p>'+esc(sh)+'</p>':paras(r.body))+'</div>'+
+      (sh?'<button type="button" class="crv-more" aria-expanded="false" aria-controls="'+bid+'" data-id="'+esc(r.id)+'">Read more</button>':'')+
+    '</div>'+
   '</article>';
 }
 function initC(){
-  /* featured: five-star reviews with a headline and a readable length, one per product */
-  var seen={},feat=D.reviews.filter(function(r){return r.rating===5&&r.title&&r.body.length>=80&&r.body.length<=460}).sort(function(a,b){return b.body.length-a.body.length}).filter(function(r){var k=r.product_handle||'shop';if(seen[k])return false;seen[k]=1;return true}).slice(0,6);
-  var track=$('#crv-car'),prog=$('#crv-cprog');
-  track.innerHTML=feat.map(function(r,i){
-    return '<li class="crv-c-slide" id="crv-s'+i+'" aria-roledescription="slide" aria-label="'+(i+1)+' of '+feat.length+'">'+
-      '<figure class="crv-c-q">'+rstars(5,'sm')+
-        '<blockquote><p class="crv-c-qt">'+esc(r.title)+'</p><p class="crv-c-qb">'+esc(r.body)+'</p></blockquote>'+
-        '<figcaption>'+vline(r)+pchip(r)+'</figcaption></figure></li>';
-  }).join('');
-  var prev=$('#crv-prev'),next=$('#crv-next');
-  function slides(){return $$('.crv-c-slide',track)}
-  function perView(){var s=slides()[0];return s?Math.max(1,Math.round(track.clientWidth/s.getBoundingClientRect().width)):1}
-  function curIdx(){
-    var sl=slides(),x=track.scrollLeft,best=0,d=1e9;
-    sl.forEach(function(s,i){var dd=Math.abs(s.offsetLeft-sl[0].offsetLeft-x);if(dd<d){d=dd;best=i}});return best;
-  }
-  function to(i){var sl=slides();i=Math.max(0,Math.min(sl.length-1,i));track.scrollTo({left:sl[i].offsetLeft-sl[0].offsetLeft,behavior:RM?'auto':'smooth'})}
-  function mark(){
-    var max=track.scrollWidth-track.clientWidth;
-    prev.disabled=track.scrollLeft<=2;next.disabled=track.scrollLeft>=max-2;
-    var pv=track.clientWidth/Math.max(1,track.scrollWidth);
-    prog.style.width=(pv*100).toFixed(1)+'%';
-    prog.style.transform='translateX('+(track.scrollLeft/Math.max(1,track.clientWidth)*100).toFixed(1)+'%)';
-  }
-  var raf=0;track.addEventListener('scroll',function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(mark)},{passive:true});
-  window.addEventListener('resize',mark);
-  prev.addEventListener('click',function(){to(curIdx()-perView())});
-  next.addEventListener('click',function(){to(curIdx()+perView())});
-  track.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();to(curIdx()+1)}else if(e.key==='ArrowLeft'){e.preventDefault();to(curIdx()-1)}});
-  mark();
-
-  /* the grid */
+  /* the list */
   var st={stars:0,sort:'newest',product:''},status=$('#crv-status');
   var sel=$('#crv-prod'),list=$('#crv-list'),ptext=$('#crv-ptext'),pbar=$('#crv-pbar'),bar=$('#crv-cbar');
   sel.innerHTML='<option value="">All products</option>'+PLIST.map(function(p){return '<option value="'+esc(p.handle)+'">'+esc(p.title)+' ('+p.reviews.length+')</option>'}).join('');
@@ -749,7 +719,7 @@ function initC(){
   list.addEventListener('click',function(e){if(e.target.closest('.crv-c-reset')){sel.value='';st.product='';setStars(0)}});
   sel.addEventListener('change',function(){st.product=sel.value;run()});
   $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
-  run();checkImgs(track);
+  run();
   /* the control row gets a hairline shadow once it is stuck */
   if(bar&&'IntersectionObserver' in window){
     var s=doc.createElement('div');s.style.height='1px';bar.parentNode.insertBefore(s,bar);

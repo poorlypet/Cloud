@@ -299,7 +299,7 @@ html.crv-lock,html.crv-lock body{overflow:hidden}
 
 
 /* ==========================================================================
-   C: full-width score band, featured carousel on pale, even review grid.
+   C: full-width score band, then a single-column review list.
    Everything below is scoped to .crv--c (page) or .crv-m-c (its modal).
    ========================================================================== */
 .crv--c{padding-bottom:96px}
@@ -338,34 +338,13 @@ html.crv-lock,html.crv-lock body{overflow:hidden}
 .crv-c-split .crv-hn{color:rgba(255,255,255,.7)}
 .crv-c-band :focus-visible{outline-color:var(--lime)}
 
-/* ---- featured carousel ---- */
-.crv-c-feat{background:var(--pale);padding:80px 0 72px}
-.crv-c-fh{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px}
 .crv--c h2{font-size:36px;line-height:1.1;letter-spacing:-.005em}
-.crv-c-arr{display:flex;gap:10px}
-.crv-c-arr button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line2);background:#fff;position:relative;transition:border-color .15s,background .15s}
-.crv-c-arr button span{position:absolute;left:50%;top:50%;width:9px;height:9px;border:solid var(--teal);border-width:2px 2px 0 0;transform:translate(-65%,-50%) rotate(45deg)}
-.crv-c-arr button:first-child span{transform:translate(-35%,-50%) rotate(-135deg)}
-.crv-c-arr button:hover:not(:disabled){border-color:var(--teal)}
-.crv-c-arr button:disabled{opacity:.4;cursor:default}
-.crv-c-car{list-style:none;margin:0;padding:0;display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.crv-c-car::-webkit-scrollbar{display:none}
-.crv-c-car:focus-visible{outline-offset:6px}
-.crv-c-slide{flex:0 0 calc((100% - 48px)/3);scroll-snap-align:start;display:flex}
-.crv-c-q{position:relative;margin:0;width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:var(--rp);padding:32px 32px 28px;display:flex;flex-direction:column;gap:18px}
-.crv-c-q:before{content:"\201C";position:absolute;right:28px;top:14px;font:700 88px/1 var(--serif);color:var(--teal);opacity:.12}
-.crv-c-q blockquote{margin:0;display:flex;flex-direction:column;gap:12px}
-.crv-c-qt{font:700 22px/1.3 var(--serif);color:var(--ink)}
-.crv-c-qb{font:400 16px/1.65 var(--sans);color:#2B4240}
-.crv-c-q figcaption{margin-top:auto;display:flex;flex-direction:column;gap:16px;padding-top:20px;border-top:1px solid var(--line)}
-.crv-c-prog{height:3px;border-radius:3px;background:var(--line2);margin-top:32px;overflow:hidden}
-.crv-c-prog i{display:block;height:100%;width:33%;background:var(--teal);border-radius:3px;transition:transform .2s ease}
 
-/* reviewer line and product chip, shared by carousel and grid */
+/* reviewer line and product chip (left column of each row) */
 .crv-c-who{display:flex;flex-direction:column;gap:5px}
 .crv-c-who b{font:600 15px/1.2 var(--sans);color:var(--ink)}
-.crv-c-vd{font:400 13px/1.3 var(--sans);color:var(--mute)}
-.crv-c-vb{display:inline-flex;align-items:center;gap:5px;color:var(--teal);font-weight:600}
+.crv-c-vd{font:400 13.5px/1.3 var(--sans);color:var(--mute)}
+.crv-c-vb{display:inline-flex;align-items:center;gap:5px;font:600 13.5px/1.3 var(--sans);color:var(--teal)}
 .crv-c-vb:before{content:"";width:13px;height:13px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 7.2l2 2 4-4.4' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat}
 .crv-c-pc{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:10px;background:var(--pale);text-decoration:none;color:var(--ink);transition:background .15s}
 a.crv-c-pc:hover{background:var(--pale2)}
@@ -389,16 +368,18 @@ a.crv-c-pc:hover{background:var(--pale2)}
 .crv-c-sels{display:flex;gap:10px}
 .crv--c .crv-sel select{min-height:48px;border-color:var(--line2);font-size:14px}
 .crv-c-sels .crv-sel:first-child select{width:300px}
-.crv-c-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px}
-.crv-c-card{display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid var(--line);border-radius:12px;background:#fff;animation:crv-in .35s ease both;transition:border-color .15s}
-.crv-c-card:hover{border-color:var(--line2)}
+.crv-c-list{display:flex;flex-direction:column;margin-top:8px;border-bottom:1px solid var(--line)}
+.crv-c-card{display:grid;grid-template-columns:300px minmax(0,1fr);gap:64px;padding:48px 0;border-top:1px solid var(--line);animation:crv-in .35s ease both}
+.crv-c-list>.crv-c-card:first-child{border-top:0}
 .crv-c-card:focus{outline:none}
-.crv-c-top{display:flex;align-items:center}
-.crv--c .crv-c-t{font:700 17px/1.35 var(--sans);color:var(--ink)}
-.crv-c-b p{font:400 15.5px/1.65 var(--sans);color:#2B4240}
-.crv--c .crv-more{font-size:14px;padding:2px 0;min-height:28px;margin-top:-4px}
-.crv-c-foot{margin-top:auto;display:flex;flex-direction:column;gap:16px;padding-top:18px;border-top:1px solid var(--line)}
-.crv-c-empty{grid-column:1/-1;text-align:center;padding:56px 16px;border:1px dashed var(--line2);border-radius:12px;font:400 16px/1.5 var(--sans);color:var(--mute)}
+.crv-c-side{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.crv-c-side .crv-c-pc{align-self:stretch;margin-top:4px}
+.crv-c-main{display:flex;flex-direction:column;gap:12px;min-width:0;max-width:760px}
+.crv--c .crv-c-t{font:700 20px/1.35 var(--sans);color:var(--ink)}
+.crv-c-b p{font:400 16.5px/1.7 var(--sans);color:#2B4240}
+.crv-c-b p+p{margin-top:10px}
+.crv--c .crv-more{align-self:flex-start;font-size:14px;padding:2px 0;min-height:28px;margin-top:-2px}
+.crv-c-empty{text-align:center;padding:56px 16px;margin:32px 0;border:1px dashed var(--line2);border-radius:12px;font:400 16px/1.5 var(--sans);color:var(--mute)}
 .crv-c-reset{margin-top:12px;min-height:44px;padding:0 20px;border:1.5px solid var(--teal);border-radius:var(--r);background:#fff;font:600 15px/1 var(--sans);color:var(--teal)}
 .crv-c-pager{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:56px}
 .crv-c-pager[hidden]{display:none}
@@ -429,8 +410,7 @@ a.crv-c-pc:hover{background:var(--pale2)}
   .crv-c-bi{grid-template-columns:1fr 1fr;row-gap:44px}
   .crv-c-intro{grid-column:1/-1;padding-right:0}
   .crv-c-bi>.crv-c-score{padding-left:0;border-left:0;align-items:flex-start;text-align:left}
-  .crv-c-slide{flex-basis:calc((100% - 24px)/2)}
-  .crv-c-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .crv-c-card{grid-template-columns:240px minmax(0,1fr);gap:40px}
   .crv-c-sels .crv-sel:first-child select{width:240px}
 }
 @media (max-width:899px){
@@ -446,17 +426,7 @@ a.crv-c-pc:hover{background:var(--pale2)}
   .crv--c .crv-c-cta{width:100%;margin-top:22px}
   .crv-c-bi>.crv-c-score{align-items:center;text-align:center}
   .crv-c-num b{font-size:76px}
-  .crv-c-feat{padding:48px 0}
   .crv--c h2{font-size:28px}
-  .crv-c-fh{margin-bottom:20px}
-  .crv-c-arr{display:none}
-  .crv-c-car{margin:0 calc(var(--gut) * -1);padding:0 var(--gut);scroll-padding:0 var(--gut);gap:12px}
-  .crv-c-slide{flex-basis:86%}
-  .crv-c-q{padding:24px 22px 22px}
-  .crv-c-q:before{font-size:72px;right:20px}
-  .crv-c-qt{font-size:20px}
-  .crv-c-qb{font-size:15.5px}
-  .crv-c-prog{margin-top:24px}
   .crv-c-all{padding-top:52px}
   .crv-c-gh{flex-direction:column;margin-bottom:18px}
   .crv-c-bar,.crv-c-bar.stuck{position:static;box-shadow:none}
@@ -466,13 +436,17 @@ a.crv-c-pc:hover{background:var(--pale2)}
   .crv-c-sels{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:8px}
   .crv-c-sels .crv-sel{min-width:0}
   .crv-c-sels .crv-sel select,.crv-c-sels .crv-sel:first-child select{width:100%;min-width:0}
-  .crv-c-list{grid-template-columns:1fr;gap:14px;margin-top:20px}
-  .crv-c-card{padding:22px}
+  .crv-c-list{margin-top:4px}
+  .crv-c-card{grid-template-columns:minmax(0,1fr);gap:18px;padding:32px 0}
+  .crv-c-side{gap:10px}
+  .crv-c-who{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+  .crv--c .crv-c-t{font-size:18px}
+  .crv-c-b p{font-size:16px}
   .crv-c-pager{margin-top:36px}
   .crv-c-more{width:100%}
   .crv--c .crv-note{text-align:left;margin-top:40px}
 }
 @media (prefers-reduced-motion:reduce){
   .crv-c-card{animation:none}
-  .crv-c-prog i,.crv-c-pb i,.crv-segb,.crv-c-bar{transition:none}
+  .crv-c-pb i,.crv-segb,.crv-c-bar{transition:none}
 }

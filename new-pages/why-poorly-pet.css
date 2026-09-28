@@ -3,7 +3,7 @@
    All three share the full-width sticky-photo story (wps-) and the
    same closing section (quote, numbers, promises, CTA). Each has
    its own hero: wha- (A, photo hero), whb- (B, split hero),
-   whc- (C, typographic hero with panoramic strip).
+   whc- (C, typographic hero).
    Everything is readable with no JS and with reduced motion:
    hidden/animated states only apply under html.wp-js.
    ============================================================ */
@@ -84,19 +84,13 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 @keyframes whbWipe{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
 
 /* ==================================================================
-   HERO C: centred type on pale green, panoramic strip that drifts
+   HERO C: centred type on a full-width pale green band
    ================================================================== */
-.whc{background:linear-gradient(var(--sage) 0,var(--sage) calc(100% - 190px),#fff calc(100% - 190px));overflow:hidden;text-align:center}
-.whc .wrap{padding-top:104px;padding-bottom:64px}
+.whc{background:var(--sage);overflow:hidden;text-align:center}
+.whc .wrap{padding-top:112px;padding-bottom:120px}
 .whc .wp-h1{font-size:104px;line-height:1;max-width:1100px;margin:0 auto 28px}
 .whc .wp-lead{margin:0 auto;font-size:21px;max-width:620px;color:var(--ink)}
 .whc .wp-btns{justify-content:center}
-.whc-strip{position:relative;height:420px}
-.whc-row{position:absolute;left:-8vw;top:0;bottom:0;display:flex;gap:16px;width:max-content;transform:translate3d(calc(var(--px,0) * 1px),0,0);will-change:transform}
-.whc-row .wp-ph{flex:0 0 auto;width:34vw;max-width:560px;min-height:0;height:100%;border-radius:var(--rp)}
-.whc-row .wp-ph:nth-child(2n){width:24vw;max-width:400px}
-.whc-row .wp-ph.dk{background:var(--teal)}
-.whc-row .wp-ph.wt{background:var(--pale2)}
 .wp-js .whc .wp-h1 .w{display:inline-block;animation:whcWord .9s var(--ease) both;animation-delay:calc(var(--i)*.09s + .1s)}
 @keyframes whcWord{from{opacity:0;transform:translateY(.45em)}to{opacity:1;transform:none}}
 
@@ -210,16 +204,11 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .whb-ph{min-height:0;height:64vw;max-height:420px}
 
   /* hero C */
-  .whc{background:linear-gradient(var(--sage) 0,var(--sage) calc(100% - 100px),#fff calc(100% - 100px))}
-  .whc .wrap{padding-top:56px;padding-bottom:40px}
+  .whc .wrap{padding-top:56px;padding-bottom:64px}
   .whc .wp-h1{font-size:50px;margin-bottom:20px}
   .whc .wp-lead{font-size:18px}
   .whc .wp-btns{margin-top:24px}
   .whc .wp-btns .btn{flex:1 1 100%}
-  .whc-strip{height:220px}
-  .whc-row{gap:10px;left:-24vw}
-  .whc-row .wp-ph{width:62vw;border-radius:12px}
-  .whc-row .wp-ph:nth-child(2n){width:44vw}
 
   /* story: the photo sticks full width at the top */
   .wp-js .wps-grid,.wp-js .wps.bg .wps-grid{display:grid;grid-template-columns:minmax(0,1fr)}
@@ -260,5 +249,4 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
   .wp-js .wp [data-rv]{opacity:1;transform:none}
   .wp-js .wp-rule .w{opacity:1}
   .wps-stack .wp-ph{transform:none}
-  .whc-row{transform:none}
 }

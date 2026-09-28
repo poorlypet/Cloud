@@ -99,22 +99,6 @@
     }
   }
 
-  /* ---- C hero: the panoramic strip drifts sideways as you scroll ---- */
-  var strip=$('.whc-strip'),row=strip&&$('.whc-row',strip);
-  if(row&&!reduce){
-    var tick=0;
-    function drift(){
-      tick=0;
-      var r=strip.getBoundingClientRect(),vh=window.innerHeight;
-      if(r.bottom<0||r.top>vh)return;
-      var k=(vh-r.top)/(vh+r.height);            /* 0 as it enters, 1 as it leaves */
-      row.style.setProperty('--px',(k*-0.12*window.innerWidth).toFixed(1));
-    }
-    window.addEventListener('scroll',function(){if(!tick)tick=requestAnimationFrame(drift)},{passive:true});
-    window.addEventListener('resize',drift);
-    drift();
-  }
-
   /* switch on the animated states last, so a script error leaves everything visible */
   document.documentElement.classList.add('wp-js');
 })();
