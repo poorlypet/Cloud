@@ -114,7 +114,7 @@ main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
 .dlv-opt:has(input:checked){border-color:var(--teal);background:var(--pale);box-shadow:inset 0 0 0 1px var(--teal)}
 .dlv-out{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
 .dlv-out[hidden]{display:none}
-.dlv-ot{font:700 20px/1.25 var(--serif);color:var(--teal);margin:0 0 10px}
+.dlv-out .dlv-ot{font:700 20px/1.25 var(--serif);color:var(--teal);margin:0 0 10px}
 .dlv-out p{font:400 15px/1.5 var(--sans);color:var(--ink)}
 .dlv-out p+p{margin-top:8px}
 .dlv-out .dlv-kv{margin-top:4px}

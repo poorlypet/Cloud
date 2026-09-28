@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your account. Poorly Pet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="account.css">
+</head>
+<body>
+
+<a class="sr" href="#">Skip to content</a>
+
+<!-- utility bar: deep teal, three items spread edge to edge, a dropdown at the right end -->
+<div class="util on-teal" id="util">
+  <div class="wrap">
+    <span class="ui show" id="ui0"><b>Free UK delivery</b><span class="tail">: on orders over £39</span></span>
+    <span class="ui" id="ui1"><b>Vet informed</b><span class="tail">: every product reviewed</span></span>
+    <span class="ui" id="ui2"><span class="jm"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>Excellent</b> 4.6 on Judge.me</span></span></span>
+  </div>
+</div>
+
+<!-- desktop header: wordmark lozenge, search at half width, icon-over-label actions -->
+<header class="hdr on-teal" id="hdr">
+  <div class="wrap">
+    <a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a>
+    <div class="search on-white" id="search">
+      <form role="search" action="#" method="get" autocomplete="off">
+        <label class="sr" for="q">Search a condition, a symptom or a product</label>
+        <input id="q" name="q" type="search" placeholder="Search a condition, a symptom or a product" aria-expanded="false" aria-controls="sdrop" aria-autocomplete="list" data-drop="sdrop">
+        <button class="sbtn" type="submit" aria-label="Search"><span class="mag" aria-hidden="true"></span></button>
+      </form>
+      <div class="sdrop" id="sdrop" role="listbox" aria-label="Search suggestions"></div>
+    </div>
+    <div class="acts">
+      <button class="act" id="account-btn" type="button" aria-controls="account" aria-expanded="false"><span class="ic ic-user" aria-hidden="true"></span><span class="lbl">Sign in</span></button>
+      <button class="act" id="club-btn" type="button" aria-controls="clubdrawer" aria-expanded="false"><span class="ic ic-club" aria-hidden="true">PP</span><span class="lbl">Club</span></button>
+      <button class="act" id="basket-btn" type="button" aria-controls="basket" aria-expanded="false"><span class="ic ic-bag" aria-hidden="true"></span><span class="lbl">Basket</span><span class="cnt" data-n="0" data-count="">0</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- nav row: the four mega menus render into the list from PP.content.nav -->
+<nav class="dnav on-teal" id="dnav" aria-label="Shop">
+  <div class="wrap"><ul id="navlist"><li><button class="nv" type="button" data-mega="cond" aria-expanded="false" aria-controls="mega-cond">Shop by condition</button><div class="mega on-white" id="mega-cond" data-kind="cond"><div class="cols"><div class="c1"><a class="r1" href="#" data-i="-1"><span class="t">Shop all conditions</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="0"><span class="t">Mobility &amp; Joint</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="1"><span class="t">Paws &amp; Limbs</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="2"><span class="t">Internal Health</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="3"><span class="t">Skin &amp; Allergies</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="4"><span class="t">Behaviour &amp; Mood</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="5"><span class="t">Essential Care</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="6"><span class="t">Neurological</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="7"><span class="t">Rehab</span><span class="car" aria-hidden="true">›</span></a></div><div class="c2"></div><div class="c3"></div></div><div class="strip"><div class="l"><b>More to explore</b><a href="#">Symptom finder</a><a href="#">Dog health quiz</a><a href="#">AI symptom scanner</a><a href="club-a.html">Poorly Pet Club</a></div><div class="rt"><a href="#">Support</a><a href="mailto:hello@poorly-pet.com">Contact</a></div></div></div></li><li><button class="nv" type="button" data-mega="symp" aria-expanded="false" aria-controls="mega-symp">Shop by symptom</button><div class="mega on-white" id="mega-symp" data-kind="symp"><div class="cols"><div class="c1"><a class="r1" href="#" data-i="-1"><span class="t">Shop all symptoms</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="0"><span class="t">Legs &amp; paws</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="1"><span class="t">Skin &amp; coat</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="2"><span class="t">Tummy &amp; gut</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="3"><span class="t">Eyes &amp; ears</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="4"><span class="t">Mouth &amp; teeth</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="5"><span class="t">Back &amp; spine</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="6"><span class="t">Behaviour &amp; mood</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="7"><span class="t">Whole body</span><span class="car" aria-hidden="true">›</span></a></div><div class="c2"></div><div class="c3"></div></div><div class="strip"><div class="l"><b>More to explore</b><a href="#">Symptom finder</a><a href="#">Dog health quiz</a><a href="#">AI symptom scanner</a><a href="club-a.html">Poorly Pet Club</a></div><div class="rt"><a href="#">Support</a><a href="mailto:hello@poorly-pet.com">Contact</a></div></div></div></li><li><button class="nv" type="button" data-mega="prod" aria-expanded="false" aria-controls="mega-prod">Shop by product</button><div class="mega on-white" id="mega-prod" data-kind="prod"><div class="cols"><div class="c1"><a class="r1" href="#" data-i="-1"><span class="t">Shop all products</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="0"><span class="t">Supplements &amp; health</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="1"><span class="t">Mobility &amp; recovery aids</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="2"><span class="t">Recovery &amp; first aid</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="3"><span class="t">Food, treats &amp; toppers</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="4"><span class="t">Shampoo &amp; grooming</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="5"><span class="t">Skin, ear &amp; eye care</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="6"><span class="t">Dental care</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="7"><span class="t">Calming &amp; enrichment</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="8"><span class="t">Beds &amp; comfort</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="9"><span class="t">Flea, tick &amp; worming</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="10"><span class="t">Walking &amp; out and about</span><span class="car" aria-hidden="true">›</span></a><a class="r1" href="#" data-i="11"><span class="t">Condition bundles</span><span class="car" aria-hidden="true">›</span></a></div><div class="c2"></div><div class="c3"></div></div><div class="strip"><div class="l"><b>More to explore</b><a href="#">Symptom finder</a><a href="#">Dog health quiz</a><a href="#">AI symptom scanner</a><a href="club-a.html">Poorly Pet Club</a></div><div class="rt"><a href="#">Support</a><a href="mailto:hello@poorly-pet.com">Contact</a></div></div></div></li><li><a class="nv" href="#">Wheelchairs &amp; mobility</a></li><li><a class="nv" href="#">Care kits</a></li><li class="has-small"><button class="nv offers" type="button" data-mega="offers" aria-expanded="false" aria-controls="mega-offers">Offers</button><div class="mega on-white small" id="mega-offers" data-kind="offers"><div class="odd"><h4>This month's offers</h4><a class="orow" href="#"><b>Double Club points on supplements</b></a><a class="orow" href="#"><b>Two supplements, 10% off</b></a><a class="orow" href="#"><b>Three supplements, 15% off</b></a><a class="orow" href="#"><b>Free wheelchair fitting</b></a><a class="orow" href="#"><b>Care kits, up to 15% off</b></a><a class="oall" href="#">See all offers ›</a></div></div></li><li><a class="nv" href="#">Advice</a></li><li><button class="nv" type="button" data-mega="help" aria-expanded="false" aria-controls="mega-help">Help &amp; resources</button><div class="mega on-white" id="mega-help" data-kind="help"><div class="help"><div><h4>Tools</h4><a href="#">AI Symptom Scanner</a><a href="dog-health-quiz-a.html">Dog Health Quiz</a><a href="#">AI Support Assistant</a></div><div><h4>Learn</h4><a href="#">Guides &amp; Blog</a><a href="customer-reviews-a.html">Customer Reviews</a><a href="why-poorly-pet-a.html">Why Poorly Pet</a></div><div><h4>About</h4><a href="#">Our Mission</a><a href="#">Our Story</a><a href="#">Sustainability</a><a href="#">Work With Us</a></div><div><h4>Support</h4><a href="contact-us-c.html">Contact Us</a><a href="faqs-c.html">FAQs</a><a href="track-my-order-a.html">Track my order</a><a href="#">Delivery Information</a></div><div><h4>Your account</h4><a href="#">Subscriptions</a><a href="account-a.html">Account &amp; dogs</a><a href="#">Returns &amp; refunds</a></div></div><div class="strip"><div class="l"><b>More to explore</b><a href="#">Symptom finder</a><a href="#">Dog health quiz</a><a href="#">AI symptom scanner</a><a href="club-a.html">Poorly Pet Club</a></div><div class="rt"><a href="#">Support</a><a href="mailto:hello@poorly-pet.com">Contact</a></div></div></div></li><li class="push"><a class="nv sub" href="#">Subscribe &amp; Save</a></li></ul></div>
+</nav>
+
+<!-- mobile header (below 1024): hamburger, wordmark, search icon, basket -->
+<header class="mhdr on-teal" id="mhdr">
+  <div class="wrap">
+    <button class="ib burger" id="burger" type="button" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><i aria-hidden="true"></i></button>
+    <a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a>
+    <div class="macts">
+      <button class="ib" id="msearch-btn" type="button" aria-label="Search" aria-controls="msearch" aria-expanded="false"><span class="mag" aria-hidden="true"></span></button>
+      <button class="ib" id="mbasket-btn" type="button" aria-label="Basket" aria-controls="basket" aria-expanded="false"><span class="ic ic-bag" aria-hidden="true"></span><span class="cnt" data-n="0" data-count="">0</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- the mobile search bar slides down under the header -->
+<div class="msearch on-white" id="msearch">
+  <div class="search">
+    <form role="search" action="#" method="get" autocomplete="off">
+      <span class="mag" aria-hidden="true" style="color:var(--teal)"></span>
+      <label class="sr" for="mq">Search a condition, a symptom or a product</label>
+      <input id="mq" name="q" type="search" placeholder="Search a symptom or a product" aria-expanded="false" aria-controls="msdrop" aria-autocomplete="list" data-drop="msdrop">
+      <button class="mx" id="msearch-x" type="button" aria-label="Close search">×</button>
+    </form>
+    <div class="sdrop" id="msdrop" role="listbox" aria-label="Search suggestions"></div>
+  </div>
+</div>
+
+<main id="main">
+<div class="wrap pvbar"><a class="cardsw-x" href="account-sign-in.html" style="font:600 13px/30px var(--sans);color:var(--teal)">Sign in page ›</a><span class="cardsw pvp" aria-label="Versions"><span>Your account</span><a href="account-a.html" class="on">A</a><a href="account-b.html">B</a><a href="account-c.html">C</a></span></div><div class="ac ac-a" data-ac="a"><section class="wrap ac-hero"><nav class="ac-crumb" aria-label="Breadcrumb"><ol><li><a href="#">Home</a></li><li aria-current="page">Your account</li></ol></nav><div class="ac-hrow"><div><h1>Hello, <em data-ac-stat="name">Sarah</em></h1><p class="ac-lead">Your orders, your dogs and your Club points in one place.</p></div><a class="ac-out" href="/account/logout">Sign out</a></div></section><div class="wrap"><p class="ac-ex"><b>Example account.</b> Sarah, her dogs, orders and points are made up to show the layout. Changes you make are saved in this browser only. <button type="button" data-ac-resetdogs>Reset the example</button></p></div>
+<div class="ac-band"><div class="wrap ac-a-grid" data-ac-scrollto>
+<nav class="ac-side" aria-label="Your account">
+ <div class="ac-side-u"><span class="ac-av sm" aria-hidden="true">S</span><span><b>Sarah Example</b><span><span data-ac-stat="tier">Regular</span> member</span></span></div>
+ <ul>
+  <li><a href="#overview" data-ac-go="overview">Overview</a></li>
+  <li><a href="#orders" data-ac-go="orders">Orders <small data-ac-stat="orders">5</small></a></li>
+  <li><a href="#dogs" data-ac-go="dogs">My dogs <small data-ac-stat="dogs">2</small></a></li>
+  <li><a href="#club" data-ac-go="club">Club points <small data-ac-stat="balance">0</small></a></li>
+  <li><a href="#refer" data-ac-go="refer">Refer a friend</a></li>
+  <li><a href="#details" data-ac-go="details">Addresses and details</a></li>
+  <li><a href="/account" >Subscriptions</a></li>
+  <li class="ac-sep"><a href="/account/logout">Sign out</a></li>
+ </ul>
+</nav>
+<div class="ac-main">
+ <section class="ac-panel" data-ac-panel="overview" aria-labelledby="a-ov-h">
+  <h2 class="ac-h2" id="a-ov-h">Overview</h2><p class="ac-h2sub">Your latest order, your points and your dogs.</p>
+  <div class="ac-a-ov">
+   <div class="ac-card"><div class="ac-card-h"><h3 class="ac-h3">Latest order</h3><button type="button" data-ac-go="orders">All orders</button></div><div data-ac-orders data-limit="1" data-compact></div></div>
+   <div class="ac-card"><div class="ac-card-h"><h3 class="ac-h3">Your dogs</h3><button type="button" data-ac-go="dogs">Manage</button></div><ul class="ac-mini" data-ac-dogmini></ul><button class="btn sec sm ac-adddog" type="button" data-ac-adddog>Add a dog</button></div>
+  </div>
+  <div class="ac-card ac-mt"><div class="ac-card-h"><h3 class="ac-h3">Club points</h3><button type="button" data-ac-go="club">Use your points</button></div><div data-ac-points></div></div>
+  <div class="ac-sec"><div class="sec-h"><div><h2>Buy it <em>again</em></h2><p>Things you have ordered before.</p></div><div class="sec-r"><a class="all" href="#orders" data-ac-go="orders">All orders ›</a></div></div><div data-ac-buyagain data-limit="4"></div></div>
+ </section>
+ <section class="ac-panel" data-ac-panel="orders" aria-labelledby="a-or-h" hidden>
+  <h2 class="ac-h2" id="a-or-h">Orders</h2><p class="ac-h2sub">Track a parcel, buy something again or leave a review for 50 points.</p>
+  <div data-ac-orders></div>
+ </section>
+ <section class="ac-panel" data-ac-panel="dogs" aria-labelledby="a-dg-h" hidden>
+  <h2 class="ac-h2" id="a-dg-h">My dogs</h2><p class="ac-h2sub">Their details help us show the right products and sizes. Add a birthday for 250 Club points each year.</p>
+  <div data-ac-dogs></div>
+  <div class="ac-sec" data-ac-dogrecs data-limit="4"></div>
+ </section>
+ <section class="ac-panel" data-ac-panel="club" aria-labelledby="a-cl-h" hidden>
+  <h2 class="ac-h2" id="a-cl-h">Club points</h2><p class="ac-h2sub">Points are added the day your order ships. 500 points is £5 off.</p>
+  <div class="ac-card"><div data-ac-points></div></div>
+<div class="ac-grid2 ac-mt"><div class="ac-card" data-ac-rewards></div><div class="ac-card" data-ac-vouchers></div></div>
+  <div class="ac-sec"><h3 class="ac-h3">Points history</h3><div data-ac-ledger></div></div>
+  <div class="ac-sec"><h3 class="ac-h3">Ways to earn</h3><div data-ac-earn></div></div>
+ </section>
+ <section class="ac-panel" data-ac-panel="refer" aria-labelledby="a-rf-h" hidden>
+  <h2 class="ac-h2" id="a-rf-h">Refer a friend</h2><div data-ac-referral></div>
+ </section>
+ <section class="ac-panel" data-ac-panel="details" aria-labelledby="a-dt-h" hidden>
+  <h2 class="ac-h2" id="a-dt-h">Addresses and details</h2><p class="ac-h2sub">Your sign-in, delivery address and email choices.</p><div data-ac-details></div>
+ </section>
+</div></div></div>
+<section class="ac-help" aria-labelledby="ac-help-h"><div class="wrap">
+<h2 id="ac-help-h">Still need help? <em>Contact us</em></h2><p class="ac-help-p">Real people, not a chatbot. We answer every email within one working day, Monday to Friday.</p>
+<div class="ac-help-g">
+<div><h3>Email our team</h3><p>Email <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a>. If it is about an order, include your order number.</p><a class="btn" href="contact-us-c.html">Contact us</a></div>
+<div><h3>Track an order</h3><p>You need your order number and the email address you used at checkout. No need to sign in.</p><a class="btn sec" href="track-my-order-a.html">Track my order</a></div>
+<div><h3>Questions about points</h3><p>Earning, spending, tiers and your account, answered on our FAQs page.</p><a class="btn sec" href="faqs-c.html">Read the FAQs</a></div>
+</div></div></section><p class="wrap ac-note">Our guides don’t replace your vet.</p></div>
+</main>
+
+<footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="contact-us-c.html">Contact us</a></li><li><a href="faqs-c.html">FAQs</a></li><li><a href="track-my-order-a.html">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="account-sign-in.html">Sign in</a></li><li><a href="club-a.html">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="account-a.html">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 101 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>
+<script src="shell.js"></script>
+<script src="products.js"></script><script src="club.js"></script><script src="account.js"></script>
+</body></html>

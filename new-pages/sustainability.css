@@ -70,7 +70,7 @@
 .su-glance .su-dl>div:last-child{border-bottom:0}
 .su-a-body{display:grid;grid-template-columns:240px minmax(0,1fr);gap:64px;padding-top:48px}
 .su-toc{position:sticky;top:20px;align-self:start}
-.su-toc h2{font:700 13px/1.2 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.su-toc h2{font:700 18px/1.2 var(--sans);color:var(--ink);margin:0 0 10px}
 .su-toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .su-toc a{display:flex;align-items:center;min-height:46px;padding:8px 12px;border-bottom:1px solid var(--line);border-left:3px solid transparent;text-decoration:none;font:600 15px/1.3 var(--sans);color:var(--ink)}
 .su-toc a:hover{color:var(--teal);background:var(--su-pale)}
@@ -124,7 +124,8 @@
 .su-ql a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:10px 2px;border-bottom:1px solid var(--line2);text-decoration:none;font:600 16px/1.3 var(--sans);color:var(--ink)}
 .su-ql a:after{content:"›";font:400 22px/1 var(--sans);color:var(--teal)}
 .su-ql a:hover{color:var(--teal)}
-.su-ql a span{display:block;font:400 14px/1.35 var(--sans);color:var(--mute);margin-top:2px}
+.su-ql a>span>span{display:block;font:400 14px/1.35 var(--sans);color:var(--mute);margin-top:2px}
+.su-ql a b{font-weight:400}
 .su-c-sec{padding-top:56px;scroll-margin-top:20px}
 .su-table{width:100%;border-collapse:collapse;border-top:2px solid var(--teal)}
 .su-table th,.su-table td{text-align:left;vertical-align:top;padding:18px 20px 18px 0;border-bottom:1px solid var(--line)}

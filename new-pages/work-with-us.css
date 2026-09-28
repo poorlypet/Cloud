@@ -142,6 +142,7 @@
 .wk-b-panel .wk-crit{margin-top:12px}
 .wk-b-panel .wk-quote{font-size:22px;margin-top:28px;padding-left:18px;border-left:4px solid var(--lime)}
 .wk-b-form{position:sticky;top:80px}
+.wk-b-form .wk-row2{grid-template-columns:minmax(0,1fr)}
 
 /* ======================= Version C: form first, accordion sidebar ======================= */
 .wk-c-intro{background:var(--wk-pale);padding:32px 0 40px}
@@ -160,7 +161,7 @@
 .wk-acc .wk-accb p{font:400 15px/1.5 var(--sans);color:var(--ink)}
 .wk-acc .wk-ticks li{font-size:15px}
 .wk-acc .btn{margin-top:16px}
-.wk-c-side h2{font:700 13px/1.2 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.wk-c-side h2{font:700 24px/1.2 var(--serif);color:var(--teal);margin:0 0 12px}
 .wk-c-band{background:var(--teal);color:#fff;margin-top:64px;padding:52px 0}
 .wk-c-band .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
 .wk-c-band h2{font:400 40px/1.1 var(--serif);color:#fff;margin:0 0 20px}
