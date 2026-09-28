@@ -74,12 +74,18 @@
 <div class="wrap pvbar"><span class="cardsw pvp" aria-label="Versions"><span>Dog health quiz</span><a href="dog-health-quiz-a.html" class="on">A</a><a href="dog-health-quiz-b.html">B</a><a href="dog-health-quiz-c.html">C</a></span></div>
 <div data-hq="a" class="hq hq-a">
 <section class="hq-intro" aria-labelledby="hq-h1"><div class="wrap hq-intro-in"><div class="hq-intro-l"><div class="hq-intro-t"><h1 id="hq-h1">Find what your dog <em>needs</em></h1><p>Seven quick questions, one at a time. We match your answers to the right products.</p><a class="btn hq-go" href="#hq-stage" data-start>Start the quiz</a></div><div class="hq-help"><a class="hq-hc" href="#"><b>Know the diagnosis?</b><span>Shop by condition ›</span></a><a class="hq-hc" href="mailto:hello@poorly-pet.com"><b>Rather ask a person?</b><span>Email our team ›</span></a></div></div><span class="hq-ph hq-ph-hero" data-photo="hero" aria-hidden="true"></span></div></section>
-<section class="hq-a-stage" id="hq-stage" aria-label="Dog health quiz"><div class="wrap hq-a-in">
-<div class="hq-a-top"><button class="hq-back" type="button" hidden><span aria-hidden="true">‹</span> Back</button><div class="hq-a-prog" role="progressbar" aria-label="Quiz progress" aria-valuemin="1"></div><span class="hq-a-of"></span></div>
-<div class="hq-a-q" data-q aria-live="polite"></div>
-<div class="hq-a-foot"><button class="btn hq-next" type="button">Continue</button></div>
+<section class="hq-quiz" id="hq-stage" aria-label="Dog health quiz"><div class="wrap">
+<div class="hq-a-box">
+<div class="hq-a-card">
+<div class="hq-top"><span class="hq-count" aria-live="polite"></span><button class="hq-link hq-reset" type="button" hidden>Start again</button></div>
+<div class="hq-seg" role="progressbar" aria-label="Quiz progress" aria-valuemin="1"></div>
+<div class="hq-a-q" data-q></div>
+<div class="hq-foot"><button class="hq-back" type="button" hidden><span aria-hidden="true">‹</span> Back</button><div class="hq-foot-r"><button class="hq-link" type="button" data-skip hidden>Skip to results</button><button class="btn hq-next" type="button">Continue</button></div></div>
+</div>
+<aside class="hq-a-side" aria-label="Your answers"><h2 class="hq-a-sumh">Your answers</h2><button class="hq-a-sumtog" type="button" aria-expanded="false" aria-controls="hq-sum">Your answers <span data-n></span></button><ol class="hq-sum" id="hq-sum"></ol></aside>
+</div>
+<div class="hq-res hq-a-res" id="hq-res" aria-label="Your results" hidden></div>
 </div></section>
-<section class="hq-res hq-a-res" id="hq-res" aria-label="Your results" hidden></section>
 </div>
 </main>
 
