@@ -83,11 +83,18 @@
     bars.forEach(function(b,k){b.addEventListener('click',function(){
       chs[k].scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
     })});
+    /* keep the photo clear of the sticky mobile search bar */
+    function stk(){
+      var m=$('#msearch'),h=0;
+      if(m){var cs=getComputedStyle(m);if(cs.display!=='none'&&cs.position==='sticky')h=m.offsetHeight}
+      story.style.setProperty('--stk',h+'px');
+    }
+    stk();window.addEventListener('resize',stk);
     setCh(0);
     if(hasIO){
       var cio=new IntersectionObserver(function(es){
         es.forEach(function(e){if(e.isIntersecting)setCh(chs.indexOf(e.target))});
-      },{rootMargin:'-45% 0px -45% 0px'});
+      },{rootMargin:(window.matchMedia&&matchMedia('(max-width:899px)').matches)?'-62% 0px -30% 0px':'-45% 0px -45% 0px'});
       chs.forEach(function(c){cio.observe(c)});
     }
   }
