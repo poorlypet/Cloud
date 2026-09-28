@@ -12,3 +12,5 @@
   var i=0,ui=document.querySelectorAll('.util .ui');
   if(ui.length>1)setInterval(function(){ui[i].classList.remove('show');i=(i+1)%ui.length;ui[i].classList.add('show')},4000);
 })();
+/* keep the Judge.me line in the top bar white on teal */
+(function(){var s=document.createElement('style');s.textContent='.util .jm,.util .jm b{color:#fff}';document.head.appendChild(s)})();
