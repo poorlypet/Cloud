@@ -72,90 +72,29 @@
 
 <main id="main">
 <div class="wrap pvbar"><span class="cardsw pvp" aria-label="Versions"><span>Symptom guide</span><a href="symptom-guide-a.html">A</a><a href="symptom-guide-b.html" class="on" aria-current="page">B</a><a href="symptom-guide-c.html">C</a></span></div>
-<div class="sg sg-vb" data-sg="b">
-<section class="sg-intro" aria-labelledby="sg-h1"><div class="wrap sg-intro-in">
-  <div><h1 id="sg-h1">Symptom <em>guide</em></h1><p class="sg-sub">Show us where you are seeing it. We explain what it might mean, what helps at home, and when it is a vet job.</p></div>
-  <div class="sg-help">
-    <a class="sg-hc" href="#"><b>Know the diagnosis?</b><span>Shop by condition ›</span></a>
-    <div class="sg-hc sg-hc-urg"><b>Is it urgent?</b><span>Sudden weakness, collapse or severe pain is a vet visit, not a basket.</span></div>
+<div class="sg sg-b" data-sg="b">
+<section class="wrap sg-hero sgb-hero">
+  <div class="sg-hero-t"><h1>Find it by <em>symptom</em></h1><p>Every symptom in one place. Tap one to see what it means and what helps.</p></div>
+  <div class="sgb-sw">
+    <div class="sg-search"><label class="sr" for="sgb-q">Filter symptoms</label><span class="sg-mag" aria-hidden="true"></span><input id="sgb-q" type="search" placeholder="Filter, like itchy, wind or fireworks" autocomplete="off" aria-describedby="sgb-count"><button class="sgb-clear" id="sgb-clear" type="button" hidden>Clear</button></div>
+    <p class="sgb-count" id="sgb-count" aria-live="polite"></p>
   </div>
-</div></section>
-
-<section class="sg-bm" id="sg-bm" aria-label="Body map"><div class="wrap"><div class="sg-bm-in">
-  <div class="sg-mapcol">
-    <div class="sg-mapbox">
-      <svg id="sg-map" viewBox="0 0 640 400" role="group" aria-label="Body map of a dog. Choose a part to see its symptoms, or use the list further down the page.">
-        <ellipse cx="330" cy="368" rx="250" ry="14" fill="rgba(15,76,72,.08)"/>
-        <path class="sg-tail1" d="M170,186 C132,176 108,150 100,108"/>
-        <path class="sg-tail2" d="M170,186 C132,176 108,150 100,108"/>
-
-        <g class="sg-hs" data-area="legs-paws" role="button" tabindex="0" aria-pressed="false" aria-label="Legs and paws, 6 symptoms">
-          <rect class="sg-f sg-f2" x="216" y="226" width="34" height="120" rx="14"/>
-          <rect class="sg-f sg-f2" x="212" y="334" width="50" height="22" rx="11"/>
-          <rect class="sg-f sg-f2" x="386" y="226" width="32" height="118" rx="14"/>
-          <rect class="sg-f sg-f2" x="384" y="332" width="48" height="22" rx="11"/>
-          <rect class="sg-f" x="176" y="230" width="38" height="120" rx="15"/>
-          <rect class="sg-f" x="172" y="338" width="54" height="22" rx="11"/>
-          <rect class="sg-f" x="420" y="230" width="36" height="120" rx="15"/>
-          <rect class="sg-f" x="418" y="338" width="54" height="22" rx="11"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="318" y="330" text-anchor="middle">Legs &amp; paws</text></g>
-        </g>
-
-        <g class="sg-hs" data-area="skin-coat" role="button" tabindex="0" aria-pressed="false" aria-label="Skin and coat, 6 symptoms">
-          <path class="sg-f" d="M396,168 C414,128 436,100 456,80 L534,124 C528,160 508,204 468,232 L420,244 Z"/>
-          <path class="sg-f" d="M162,200 C162,154 198,136 246,136 L398,136 C446,136 468,164 468,204 C468,248 442,272 398,272 L240,272 C190,272 162,246 162,200 Z"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="300" y="203" text-anchor="middle">Skin &amp; coat</text></g>
-        </g>
-
-        <g class="sg-hs" data-area="back-spine" role="button" tabindex="0" aria-pressed="false" aria-label="Back and spine, 5 symptoms">
-          <path class="sg-f" d="M178,172 C190,148 214,136 246,136 L398,136 C428,136 450,148 460,172 C440,166 420,164 398,164 L246,164 C214,164 196,166 178,172 Z"/>
-          <path class="sg-spine" d="M214,150 L424,150"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="310" y="112" text-anchor="middle">Back &amp; spine</text></g>
-        </g>
-
-        <g class="sg-hs" data-area="tummy-gut" role="button" tabindex="0" aria-pressed="false" aria-label="Tummy and gut, 6 symptoms">
-          <path class="sg-f sg-fb" d="M232,272 C240,238 276,224 318,224 C360,224 396,238 404,272 Z"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="318" y="262" text-anchor="middle">Tummy &amp; gut</text></g>
-        </g>
-
-        <g class="sg-hs" data-area="eyes-ears" role="button" tabindex="0" aria-pressed="false" aria-label="Eyes and ears, 5 symptoms">
-          <circle class="sg-f" cx="498" cy="96" r="50"/>
-          <path class="sg-f sg-f2" d="M472,56 C446,58 432,96 440,134 C446,156 470,154 474,130 C478,106 484,80 472,56 Z"/>
-          <circle class="sg-d" cx="516" cy="84" r="7"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="456" y="24" text-anchor="middle">Eyes &amp; ears</text></g>
-        </g>
-
-        <g class="sg-hs" data-area="mouth-teeth" role="button" tabindex="0" aria-pressed="false" aria-label="Mouth and teeth, 5 symptoms">
-          <path class="sg-f" d="M524,84 C554,80 590,88 594,110 C598,134 570,146 536,144 C518,142 508,128 512,108 C514,94 516,86 524,84 Z"/>
-          <ellipse class="sg-d" cx="590" cy="100" rx="11" ry="9"/>
-          <path class="sg-ds" d="M548,132 C562,138 576,134 584,126"/>
-          <g class="sg-lbl"><rect rx="16"/><text x="566" y="186" text-anchor="middle">Mouth &amp; teeth</text></g>
-        </g>
-      </svg>
-      <p class="sg-maphint">Tap a part of the dog. Keyboard: Tab to a part, then Enter.</p>
-    </div>
-    <p class="sg-maph">Not in one place?</p>
-    <div class="sg-tiles">
-      <button type="button" class="sg-tile" data-area="behaviour-mood" aria-pressed="false"><b>Behaviour &amp; mood</b><span>Pacing, hiding, fear of noises, barking when alone</span></button>
-      <button type="button" class="sg-tile" data-area="whole-body" aria-pressed="false"><b>Whole body</b><span>Thirst, low energy, weight, stiffness, recovery</span></button>
-    </div>
+</section>
+<div class="sgb-jumpw"><div class="wrap"><nav class="sgb-jump" id="sgb-jump" aria-label="Jump to an area"></nav></div></div>
+<div class="wrap sgb-groups" id="sgb-groups"></div>
+<p class="wrap sg-note">Our guides don't replace your vet.</p>
+</div>
+<div class="sgb-modal" id="sgb-modal" hidden>
+  <div class="sgb-scrim" data-close></div>
+  <div class="sgb-sheet" id="sgb-sheet" role="dialog" aria-modal="true" aria-labelledby="sgb-title">
+    <button class="sgb-x" id="sgb-x" type="button" data-close aria-label="Close">×</button>
+    <div class="sgb-body" id="sgb-body"></div>
   </div>
-  <div class="sg-panel" id="sg-panel">
-    <div class="sg-phd"><nav class="sg-crumb" id="sg-crumb" aria-label="Where you are" hidden></nav><h2 id="sg-phead" tabindex="-1"></h2></div>
-    <div class="sg-pbody" id="sg-pbody"></div>
-  </div>
-</div></div></section>
-
-<section class="sg-az" aria-labelledby="sg-az-h"><div class="wrap">
-  <div class="sec-h"><div><h2 id="sg-az-h">Every symptom, as a list</h2><p>Prefer a list? All <span data-sg-count>43</span> symptoms by area. The dot shows how urgent each usually is.</p></div><div class="sec-r"><a class="all" href="mailto:hello@poorly-pet.com">Can't see it? Email us ›</a></div></div>
-  <div class="sg-key"><span><i class="sg-dot sg-u-today" aria-hidden="true"></i>Vet today</span><span><i class="sg-dot sg-u-book" aria-hidden="true"></i>Book a vet</span><span><i class="sg-dot sg-u-home" aria-hidden="true"></i>Try at home first</span></div>
-  <div class="sg-azg" id="sg-azg"></div>
-  <p class="sg-disc">This guide is general information, not a diagnosis. Nothing here replaces your vet. If you are worried, call them.</p>
-</div></section>
 </div>
 </main>
 
-<footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="#">Contact us</a></li><li><a href="#">FAQs</a></li><li><a href="#">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="#">Sign in</a></li><li><a href="#">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="#">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 99 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>
+<footer class="foot" id="foot"><span class="blob" aria-hidden="true"></span><div class="wrap"><div class="fask"><div><h3>Worried about your dog? <em>Ask us.</em></h3><p>Real people, not a chatbot. We answer every email within one working day.</p><a class="fmail" href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a></div><div class="fsign"><h4>Get <em>10% off</em> your first order</h4><p>Use code <b>POORLY10</b> at checkout.</p><form class="nl" action="#" method="get"><label class="sr" for="nlf">Email address</label><input id="nlf" type="email" name="email" placeholder="Your email address" autocomplete="email" required=""><button class="btn" type="submit">Sign up</button></form><p class="nlok" hidden="">Thank you. Your code is <b>POORLY10</b>, use it at checkout.</p></div></div><div class="fcols"><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc0">Shop</button></h4><ul id="fc0"><li><a href="#">Shop by condition</a></li><li><a href="#">Shop by symptom</a></li><li><a href="#">Shop by product</a></li><li><a href="#">Care kits</a></li><li><a href="#">Sale</a></li><li><a href="#">All brands</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc1">Advice</button></h4><ul id="fc1"><li><a href="#">Guides and blog</a></li><li><a href="dog-health-quiz-a.html">Dog health quiz</a></li><li><a href="symptom-guide-a.html">Symptom guide</a></li><li><a href="customer-reviews-a.html">Customer reviews</a></li><li><a href="why-poorly-pet-a.html">Why Poorly Pet</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc2">Help</button></h4><ul id="fc2"><li><a href="#">Contact us</a></li><li><a href="#">FAQs</a></li><li><a href="#">Track my order</a></li><li><a href="#">Delivery information</a></li><li><a href="#">Returns and refunds</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc3">Account</button></h4><ul id="fc3"><li><a href="#">Sign in</a></li><li><a href="#">Poorly Pet Club</a></li><li><a href="#">Subscriptions</a></li><li><a href="#">Account and dogs</a></li></ul></div><div class="fcol"><h4><button class="fh" type="button" aria-expanded="false" aria-controls="fc4">Company</button></h4><ul id="fc4"><li><a href="#">Our mission</a></li><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Work with us</a></li></ul></div><div class="fcol fcolj"><h4><span class="fh">Rated by owners</span></h4><a class="fjm" href="#"><span class="stars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="part" style="--f:60%"></i></span><span><b>4.6 out of 5</b> from 101 reviews on Judge.me</span></a></div></div><div class="fbase"><a class="wm" href="#" aria-label="Poorly Pet home">poorlypet</a><ul class="pay" aria-label="Ways to pay"><li>Visa</li><li>Mastercard</li><li>Amex</li><li>PayPal</li><li>Apple Pay</li><li>Google Pay</li><li>Klarna</li></ul></div><div class="flegal"><p>Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your dog is in pain, deteriorating or unwell, speak to your vet.</p><p class="fsmall">© 2026 Poorly Pet. <a href="#">Privacy</a> <a href="#">Terms</a> <a href="#">Cookies</a> <a href="#">Accessibility</a></p></div></div></footer>
 <script src="shell.js"></script>
+<script src="products.js"></script>
 <script src="symptom-guide.js"></script>
 </body></html>
