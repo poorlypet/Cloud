@@ -115,7 +115,7 @@ a.crv-pn:hover{text-decoration:underline}
 .crv-tile .crv-th{width:100%;height:96px;border-radius:10px}
 .crv-tile .crv-th--ph span{font-size:30px}
 .crv-th--all{background:var(--teal)}.crv-th--all span{font:700 30px/1 var(--serif);color:var(--lime)}
-.crv-tn{font:600 14px/1.3 var(--sans);color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.crv-tn{font:600 14px/1.3 var(--sans);color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:3.9em}
 .crv-tm{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--sans);color:var(--mute);margin-top:auto}
 .crv-pcount{font:500 14px/1.4 var(--sans);color:var(--mute);margin-top:10px}
 .crv-pcount:empty{display:none}
@@ -356,3 +356,9 @@ html.crv-lock,html.crv-lock body{overflow:hidden}
   .crv-mbg,.crv-mp,.crv-pbar i,.crv-dots button:after,.crv-tile,.crv-chip,.crv-rrow label{transition:none}
   .crv-mp{transform:none}
 }
+
+/* stars on the teal band in C: lime squares, as elsewhere on teal */
+.crv-c-sum .tp i{background:var(--lime)}
+.crv-c-sum .tp i:before,.crv-c-sum .tp i.part b{color:var(--teal)}
+.crv-c-sum .tp i.part{background:rgba(223,228,58,.28)}
+.crv-c-sum .tp i.part:after{background:var(--lime)}

@@ -531,7 +531,7 @@ var M=(function(){
     if(window.console)console.info('[preview] review not sent anywhere',review);
     st.sent=true;
     var first=review.name.split(' ')[0];
-    $('.crv-thx-s',wrap).innerHTML='Thanks, '+esc(first)+'. Your '+review.rating+'-star review of <b>'+esc(review.product_title)+'</b> is with us. It goes live once we’ve checked it, usually within a day.';
+    $('.crv-thx-s',wrap).innerHTML='Thanks, '+esc(first)+'. Your '+review.rating+'-star review of <b>'+esc(review.product_title)+'</b> is with us. It goes live once it’s been checked.';
     go(5);
   });
   again.addEventListener('click',function(){reset();go(1);});
