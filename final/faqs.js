@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Poorly Pet FAQs: data + behaviour shared by faqs-a.html, faqs-b.html, faqs-c.html.
+   Poorly Pet FAQs: data + behaviour shared by faqs.html, faqs.html, faqs.html.
 
    SOURCES (read only, 28 Sep 2026). Every answer below carries a "src:" comment.
    [SHIP]   Shopify shop policy SHIPPING_POLICY "Shipping & Delivery Policy", last updated 22 June 2026
@@ -109,7 +109,7 @@ var FAQS=[
  a:'<p>Every product that comes in sizes has a size chart on its product page, usually based on measurements such as chest girth, leg circumference or weight. Measure your dog carefully before ordering. If you are between sizes, email '+M+' and we will help you choose.</p>'},
 // src: [LFAQ] "How do I know which product is right for my dog?" (tools renamed to the redesign pages)
 {c:'products',q:'How do I choose the right product for my dog?',
- a:'<p>Each product page lists the conditions and symptoms it is designed to support. You can also shop by condition or by symptom, take the <a href="dog-health-quiz-a.html">dog health quiz</a>, or email us and a real person will reply.</p>'},
+ a:'<p>Each product page lists the conditions and symptoms it is designed to support. You can also shop by condition or by symptom, take the <a href="dog-health-quiz.html">dog health quiz</a>, or email us and a real person will reply.</p>'},
 // src: [LFAQ] "Are your supplements safe to give alongside other medication?"
 {c:'products',pop:1,q:'Can I give supplements alongside my dog’s medication?',
  a:'<p>Most of our supplements can be given alongside standard medication, but every dog is different. Check with your vet before starting a new supplement, especially if your dog has a kidney, liver or heart condition or takes prescription medication.</p>'},
@@ -224,7 +224,7 @@ var FAQS=[
  a:'<p>We stock 73 brands, including our own Poorly Pet range and specialists such as Ortocanis, Bugalugs, OurDogsLife, Supernature, Calibra, Balto and KRUUSE. See <a href="#">All brands</a>.</p>'},
 // src: [REV] "Every review is from a real customer, collected by Judge.me. Good and bad, we publish them all."; 4.6 from 101 reviews (shell)
 {c:'about',q:'Are your reviews genuine?',
- a:'<p>Yes. Reviews are collected by Judge.me from real customers, and we publish good and bad. We are rated 4.6 out of 5 from 101 reviews. <a href="customer-reviews-a.html">Read customer reviews</a>.</p>'},
+ a:'<p>Yes. Reviews are collected by Judge.me from real customers, and we publish good and bad. We are rated 4.6 out of 5 from 101 reviews. <a href="customer-reviews.html">Read customer reviews</a>.</p>'},
 // src: [FOOT] "Real people, not a chatbot. We answer every email within one working day."; [CONT] form + "Office hours Mon–Fri, 9am–5pm"
 {c:'about',pop:1,q:'How can I contact you?',
  a:'<p>Email '+M+' or use the form on our <a href="#">contact page</a>. Real people, not a chatbot, answer every email within one working day. Our team works Monday to Friday, 9am to 5pm.</p>'},
