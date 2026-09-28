@@ -333,7 +333,8 @@ html.crv-lock,html.crv-lock body{overflow:hidden}
   .crv-c-gh h2{font-size:28px}
   .crv-c-sels{width:100%}
   .crv-c-sels .crv-sel{flex:1 1 100%}
-  .crv-c-sels select{max-width:none}
+  .crv-c-sels select{max-width:none;width:100%;min-width:0}
+  .crv-c-sels .crv-sel{min-width:0}
   .crv-c-list{grid-template-columns:1fr}
   .crv-note{text-align:left}
 
