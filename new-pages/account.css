@@ -212,7 +212,7 @@
 .ac-ov3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
 .ac-ov3 .ac-teal{grid-row:span 2;display:flex;flex-direction:column}
 .ac-ov3 [data-ac-points]{flex:1;display:flex;flex-direction:column}
-.ac-ov3 .ac-ladder{margin-top:auto;padding-top:24px}
+.ac-ov3 .ac-ladder{margin-top:8px;padding-top:24px}
 .ac-ov3 .ac-teal .ac-pts{grid-template-columns:minmax(0,1fr)}
 
 /* ---------- dog dialog ---------- */
