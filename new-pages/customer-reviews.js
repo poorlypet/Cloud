@@ -126,12 +126,18 @@ window.CR_DATA={
 
 /* ==========================================================================
    Customer reviews: behaviour. One file for all three versions.
-   Each page marks its root with data-cr="a" | "b" | "c".
+   Each page marks its root with data-crv="a" | "b" | "c".
+   Product photos, brands and prices come from new-pages/products.js
+   (window.PP_PRODUCTS, keyed by Shopify handle). Load it before this file.
+   If it is missing, products show a neutral tile instead of a photo.
    ========================================================================== */
 (function(){
 'use strict';
 var D=window.CR_DATA;if(!D)return;
-var doc=document;
+var doc=document,root=doc.querySelector('[data-crv]');
+var V=root?root.getAttribute('data-crv'):'';
+var RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+
 function $(s,r){return (r||doc).querySelector(s)}
 function $$(s,r){return Array.prototype.slice.call((r||doc).querySelectorAll(s))}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -140,331 +146,373 @@ function fdate(iso){var p=String(iso).split('-');return (+p[2])+' '+MON[+p[1]-1]
 function one(n){return (Math.round(n*10)/10).toFixed(1)}
 function plural(n,w){return n+' '+w+(n===1?'':'s')}
 var WORD={5:'Excellent',4:'Great',3:'Okay',2:'Poor',1:'Bad'};
+var NUMW={5:'five',4:'four',3:'three',2:'two',1:'one'};
 
-/* ---- stars: the Judge.me / Trustpilot square language from home.css (.tp) ---- */
+/* ---- product catalogue with photos (products.js), keyed by handle ---- */
+var PPM={};
+(function(){
+  var P=window.PP_PRODUCTS;if(!P)return;
+  var arr=Array.isArray(P)?P:Object.keys(P).map(function(k){var o=P[k]||{};if(!o.handle)o.handle=k;return o});
+  arr.forEach(function(p){if(p&&p.handle)PPM[p.handle]=p});
+})();
+function pp(h){return h&&PPM[h]||null}
+function money(p){
+  if(!p||p.price==null||p.price==='')return '';
+  if(typeof p.price==='number')return '£'+p.price.toFixed(2);
+  var s=String(p.price);return /£/.test(s)?s:'£'+s;
+}
+function initial(t){var m=String(t||'').match(/[A-Za-z]/);return m?m[0].toUpperCase():'P'}
+function thumb(h,title,cls){
+  var p=pp(h),c='crv-th'+(cls?' '+cls:'');
+  if(p&&p.img)return '<span class="'+c+'"><img src="'+esc(p.img)+'" alt="" loading="lazy" decoding="async"></span>';
+  return '<span class="'+c+' crv-th--ph" aria-hidden="true"><span>'+(h?esc(initial(title)):'pp')+'</span></span>';
+}
+
+/* ---- stars: the Judge.me square language from home.css (.tp) ---- */
 function tp(r,size){
   var h='<span class="tp'+(size?' '+size:'')+'" aria-hidden="true">';
   for(var i=1;i<=5;i++){
     var f=Math.max(0,Math.min(1,r-(i-1)));
     if(f>=0.99)h+='<i></i>';
     else if(f<=0.01)h+='<i class="off"></i>';
-    else h+='<i class="part" style="--f:'+Math.round(f*100)+'%"><b>\u2605</b></i>';
+    else h+='<i class="part" style="--f:'+Math.round(f*100)+'%"><b>★</b></i>';
   }
   return h+'</span>';
 }
-function rstars(r,size){return '<span class="cr-st" role="img" aria-label="Rated '+(Math.round(r*10)/10)+' out of 5">'+tp(r,size||'sm')+'</span>'}
+function rstars(r,size){return '<span class="crv-st" role="img" aria-label="Rated '+(Math.round(r*10)/10)+' out of 5">'+tp(r,size||'sm')+'</span>'}
 
-/* ---- the product index: every product that has reviews here, with Judge.me stats ---- */
+/* ---- the product index: products with reviews here, with Judge.me stats ---- */
 var CAT={};D.catalogue.forEach(function(p){CAT[p[1]]={title:p[0],handle:p[1],cat:p[2]}});
-var PIDX={},PLIST=[];
-D.reviews.forEach(function(r,i){
-  r._i=i;
+var PIDX={},PLIST=[],RBY={};
+D.reviews.forEach(function(r){
+  RBY[r.id]=r;
   if(!r.product_handle)return;
   var p=PIDX[r.product_handle];
   if(!p){
-    var st=D.productStats[r.product_handle];
-    p=PIDX[r.product_handle]={handle:r.product_handle,title:r.product_title,cat:r.category,reviews:[],judge:st||null};
+    var c=CAT[r.product_handle];
+    p=PIDX[r.product_handle]={handle:r.product_handle,title:c?c.title:r.product_title,cat:r.category,reviews:[],judge:D.productStats[r.product_handle]||null};
     PLIST.push(p);
   }
   p.reviews.push(r);
 });
 PLIST.forEach(function(p){
-  if(p.judge){p.avg=p.judge.avg;p.count=p.judge.count;p.hist=p.judge.histogram}
-  else{var s=0,h=[0,0,0,0,0];p.reviews.forEach(function(r){s+=r.rating;h[5-r.rating]++});p.avg=s/p.reviews.length;p.count=p.reviews.length;p.hist=h;p.computed=true}
+  if(p.judge){p.avg=p.judge.avg;p.count=p.judge.count}
+  else{var s=0;p.reviews.forEach(function(r){s+=r.rating});p.avg=s/p.reviews.length;p.count=p.reviews.length}
+  if(p.count<p.reviews.length)p.count=p.reviews.length;
 });
 PLIST.sort(function(a,b){return b.count-a.count||b.avg-a.avg||a.title.localeCompare(b.title)});
-function productByHandle(h){
+function product(h){
+  if(!h)return null;
   if(PIDX[h])return PIDX[h];
-  var c=CAT[h];if(!c)return null;
-  return {handle:h,title:c.title,cat:c.cat,reviews:[],judge:null,avg:0,count:0,hist:[0,0,0,0,0]};
+  var c=CAT[h]||(pp(h)?{title:pp(h).title,handle:h}:null);if(!c)return null;
+  return {handle:h,title:c.title,cat:c.cat,reviews:[],avg:0,count:0};
 }
+function ptitle(r){var p=r.product_handle&&PIDX[r.product_handle];return p?p.title:r.product_title}
 
-/* ---- counting and filtering over the reviews held on the page ---- */
-function counts(list,key){var o={};list.forEach(function(r){var k=r[key];o[k]=(o[k]||0)+1});return o}
+/* ---- filtering and sorting ---- */
 var SORTS={
-  newest:function(a,b){return a.created_at<b.created_at?1:a.created_at>b.created_at?-1:a._i-b._i},
+  newest:function(a,b){return a.created_at<b.created_at?1:a.created_at>b.created_at?-1:0},
   highest:function(a,b){return b.rating-a.rating||SORTS.newest(a,b)},
   lowest:function(a,b){return a.rating-b.rating||SORTS.newest(a,b)}
 };
-function filterReviews(st){
-  var q=(st.q||'').toLowerCase().trim();
-  var out=D.reviews.filter(function(r){
-    if(st.star&&r.rating!==st.star)return false;
-    if(st.cat&&r.category!==st.cat)return false;
-    if(st.handle&&r.product_handle!==st.handle)return false;
-    if(q&&(r.title+' '+r.body+' '+r.product_title+' '+r.reviewer_name).toLowerCase().indexOf(q)<0)return false;
-    return true;
-  });
-  return out.sort(SORTS[st.sort]||SORTS.newest);
+function select(st){
+  return D.reviews.filter(function(r){
+    return (!st.stars||r.rating===st.stars)&&(!st.product||r.product_handle===st.product);
+  }).sort(SORTS[st.sort||'newest']);
 }
+var STARS_HELD=[5,4,3,2,1].filter(function(s){return D.reviews.some(function(r){return r.rating===s})});
 
-/* ---- one review card; variant classes set the layout per version ---- */
+/* ---- one review card ---- */
+var CLAMP=230;
+function shortText(t){
+  if(t.length<=CLAMP+50)return null;
+  var s=t.slice(0,CLAMP),i=s.lastIndexOf(' ');if(i>120)s=s.slice(0,i);
+  return s.replace(/[\s,.;:\-]+$/,'')+'…';
+}
 function paras(t){return t.split(/\n+/).filter(Boolean).map(function(p){return '<p>'+esc(p)+'</p>'}).join('')}
-function hashN(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function prodLine(r){
+  if(!r.product_handle)return '<div class="crv-prod">'+thumb(null,'')+'<span class="crv-pn">A review of the Poorly Pet shop</span></div>';
+  var t=ptitle(r);
+  return '<div class="crv-prod">'+thumb(r.product_handle,t)+'<a class="crv-pn" href="#">'+esc(t)+'</a>'+
+    '<button type="button" class="crv-rt" data-crv-write="'+esc(r.product_handle)+'" aria-label="Review '+esc(t)+'">Review this</button></div>';
+}
 function card(r,o){
   o=o||{};
-  var limit=o.clamp||260,long=r.body.length>limit,bid='crb-'+r.id;
-  var h='<article class="cr-rv'+(o.cls?' '+o.cls:'')+'" tabindex="-1" aria-label="'+esc((r.title||'Review')+', '+r.rating+' stars, by '+r.reviewer_name)+'">';
-  h+='<div class="cr-rv-top">'+rstars(r.rating)+'<time class="cr-rv-d" datetime="'+r.created_at+'">'+fdate(r.created_at)+'</time></div>';
-  if(r.title)h+='<h3 class="cr-rv-t">'+esc(r.title)+'</h3>';
-  h+='<div class="cr-rv-b'+(long?' cr-shut':'')+'" id="'+bid+'">'+paras(r.body)+'</div>';
-  if(long)h+='<button type="button" class="cr-more" aria-expanded="false" aria-controls="'+bid+'">Read more</button>';
-  if(r.pictures_count){
-    /* Judge.me photo URLs are kept out of the preview (no external requests). Live, render pictures_urls here. */
-    h+='<div class="cr-rv-ph">';
-    for(var i=0;i<Math.min(3,r.pictures_count);i++)h+='<span class="cr-ph cr-t'+(i%4+1)+'" data-photo="review" role="img" aria-label="Customer photo '+(i+1)+' of '+r.pictures_count+'"></span>';
-    h+='</div>';
-  }
-  var ini=(r.reviewer_name||'?').trim().charAt(0).toUpperCase();
-  h+='<div class="cr-rv-who"><span class="cr-ini cr-ini'+(hashN(r.reviewer_name)%3)+'" aria-hidden="true">'+esc(ini)+'</span><span class="cr-rv-n"><b>'+esc(r.reviewer_name)+'</b>'+(r.verified_buyer?'<span class="cr-ver">Verified buyer</span>':'')+'</span></div>';
-  if(!o.noProduct){
-    if(r.product_handle)h+='<button type="button" class="cr-rv-p" data-handle="'+esc(r.product_handle)+'"><span class="cr-ph cr-ph-s cr-t'+(hashN(r.product_handle)%4+1)+'" data-photo="product" aria-hidden="true"></span><span><small>Reviewed</small><span class="cr-rv-pt">'+esc(r.product_title)+'</span></span></button>';
-    else h+='<div class="cr-rv-p cr-rv-shop"><span class="cr-ph cr-ph-s cr-t1" aria-hidden="true"></span><span><small>Review of</small><span class="cr-rv-pt">Poorly Pet, the shop</span></span></div>';
-  }
-  return h+'</article>';
+  var sh=shortText(r.body),bid='crv-b-'+r.id;
+  return '<article class="crv-card'+(o.cls?' '+o.cls:'')+'">'+
+    '<div class="crv-meta">'+rstars(r.rating)+(r.verified_buyer?'<span class="crv-ver">Verified buyer</span>':'')+
+      '<time class="crv-date" datetime="'+esc(r.created_at)+'">'+fdate(r.created_at)+'</time></div>'+
+    (r.title?'<h3 class="crv-t">'+esc(r.title)+'</h3>':'')+
+    '<div class="crv-body" id="'+bid+'">'+(sh?'<p>'+esc(sh)+'</p>':paras(r.body))+'</div>'+
+    (sh?'<button type="button" class="crv-more" aria-expanded="false" aria-controls="'+bid+'" data-id="'+esc(r.id)+'">Read more</button>':'')+
+    '<p class="crv-by">'+esc(r.reviewer_name||'Anonymous')+'</p>'+
+    (o.noProd?'':prodLine(r))+
+  '</article>';
 }
 doc.addEventListener('click',function(e){
-  var b=e.target.closest&&e.target.closest('.cr-more');if(!b)return;
-  var body=doc.getElementById(b.getAttribute('aria-controls'));
+  var b=e.target.closest&&e.target.closest('.crv-more');if(!b)return;
+  var r=RBY[b.dataset.id],body=doc.getElementById(b.getAttribute('aria-controls'));if(!r||!body)return;
   var open=b.getAttribute('aria-expanded')!=='true';
+  body.innerHTML=open?paras(r.body):'<p>'+esc(shortText(r.body))+'</p>';
   b.setAttribute('aria-expanded',open?'true':'false');b.textContent=open?'Show less':'Read more';
-  body.classList.toggle('cr-shut',!open);
 });
 
-/* ---- paged list: shows N, then "Show more" adds N and moves focus to the first new card ---- */
-function List(el,o){
-  this.el=el;this.o=o;this.page=o.page||10;this.items=[];this.shown=0;
-  this.more=o.more;this.status=o.status;var self=this;
-  if(this.more)this.more.addEventListener('click',function(){self.add(true)});
-}
-List.prototype.set=function(items){
-  this.items=items;this.shown=0;this.el.innerHTML='';
-  if(!items.length){this.el.innerHTML=this.o.empty||'<p class="cr-empty">No reviews match these filters.</p>'}
-  this.add(false);
-};
-List.prototype.add=function(focus){
-  var from=this.shown,to=Math.min(this.items.length,from+this.page),h='';
-  for(var i=from;i<to;i++)h+=card(this.items[i],this.o.card);
-  this.el.insertAdjacentHTML('beforeend',h);this.shown=to;
-  if(focus&&this.el.children[from])this.el.children[from].focus();
-  if(this.more){this.more.hidden=this.shown>=this.items.length;this.more.textContent='Show more reviews ('+(this.items.length-this.shown)+' left)'}
-  if(this.status)this.status.textContent=this.items.length?('Showing '+this.shown+' of '+plural(this.items.length,'review')):'No reviews match';
-};
-
-/* ---- rating bars: real Judge.me distribution, each bar filters the list ---- */
-function histHTML(hist,total,label){
-  var h='';
-  for(var s=5;s>=1;s--){
-    var n=hist[5-s]||0,pc=total?Math.round(n/total*100):0;
-    h+='<button type="button" class="cr-hrow" data-star="'+s+'" aria-pressed="false"'+(n?'':' disabled')+' aria-label="'+s+' star: '+n+' of '+total+' '+label+'. Show '+s+' star reviews"><span class="cr-hs">'+s+' star</span><span class="cr-hb"><i style="width:'+pc+'%"></i></span><span class="cr-hn">'+n+'</span></button>';
+/* ---- paged list: shows N, "Show more" adds N and moves focus to the first new card ---- */
+function Pager(list,more,page,render){
+  var items=[],shown=0;
+  function add(focus){
+    var from=shown,to=Math.min(items.length,shown+page),h='';
+    for(var i=from;i<to;i++)h+=render(items[i]);
+    list.insertAdjacentHTML('beforeend',h);shown=to;
+    if(more)more.hidden=shown>=items.length;
+    if(focus){var c=list.children[from];if(c){c.setAttribute('tabindex','-1');c.focus({preventScroll:false})}}
   }
-  return h;
+  if(more)more.addEventListener('click',function(){add(true)});
+  this.set=function(arr){items=arr;shown=0;list.innerHTML='';add(false)};
 }
+
+/* ---- rating split: real Judge.me distribution (all 101 reviews) ---- */
 var HIST=[5,4,3,2,1].map(function(s){return D.summary.histogram[s]||0});
-
-/* ======================================================================
-   The review form. Same fields in every version; mode changes the shell:
-   "full" (drawer), "inline" (product chosen for you), "steps" (1-2-3).
-   ====================================================================== */
-var FN=0;
-function formHTML(p,mode){
-  var S=mode==='steps';
-  function step(n,title,inner){
-    return '<div class="cr-fs" data-s="'+n+'"'+(S&&n>1?' hidden':'')+'>'+(S?'<h3 class="cr-fs-h" tabindex="-1"><span>Step '+n+' of 3</span>'+title+'</h3>':'')+inner+'</div>';
-  }
-  var h='<form class="cr-form cr-form--'+mode+'" novalidate>';
-  if(S)h+='<ol class="cr-prog" aria-label="Progress"><li class="on" aria-current="step"><span>1</span>Product</li><li><span>2</span>Stars</li><li><span>3</span>Your words</li></ol>';
-  h+=step(1,'Which product did you buy?',
-    '<div class="cr-f cr-combo" data-f="product">'+
-      '<label class="cr-l'+(S?' sr':'')+'" for="'+p+'-prod">Which product are you reviewing?</label>'+
-      '<div class="cr-chosen" hidden><span class="cr-ph cr-t2" data-photo="product" aria-hidden="true"></span><span class="cr-chosen-t"><small>Reviewing</small><b></b></span><button type="button" class="cr-change">Change<span class="sr"> product</span></button></div>'+
-      '<div class="cr-cb"><span class="mag" aria-hidden="true"></span><input id="'+p+'-prod" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="'+p+'-lb" autocomplete="off" spellcheck="false" placeholder="Search '+D.catalogue.length+' products, e.g. wheelchair" aria-describedby="'+p+'-prod-e"><ul class="cr-lb" id="'+p+'-lb" role="listbox" aria-label="Products" hidden></ul></div>'+
-      '<p class="cr-err" id="'+p+'-prod-e"></p>'+
-    '</div>');
-  var rate='<fieldset class="cr-f cr-rate" data-f="rating" aria-describedby="'+p+'-rate-e"><legend class="cr-l'+(S?' sr':'')+'">Your rating</legend><div class="cr-rate-row">';
-  for(var v=1;v<=5;v++)rate+='<input class="sr" type="radio" name="rating" id="'+p+'-r'+v+'" value="'+v+'"><label for="'+p+'-r'+v+'" class="cr-sq"><span class="sr">'+v+' star'+(v>1?'s':'')+', '+WORD[v]+'</span></label>';
-  rate+='<span class="cr-rate-w" aria-hidden="true">Tap a star</span></div><p class="cr-err" id="'+p+'-rate-e"></p></fieldset>';
-  h+=step(2,'How many stars?',rate);
-  h+=step(3,'How did it go?',
-    '<div class="cr-f" data-f="title"><label class="cr-l" for="'+p+'-title">Headline</label><input id="'+p+'-title" type="text" maxlength="80" autocomplete="off" placeholder="Sum it up in a few words" aria-describedby="'+p+'-title-e"><p class="cr-err" id="'+p+'-title-e"></p></div>'+
-    '<div class="cr-f" data-f="body"><label class="cr-l" for="'+p+'-body">Your review</label><p class="cr-hint" id="'+p+'-body-h">What changed for your dog? What would you tell another owner?</p><textarea id="'+p+'-body" rows="5" maxlength="5000" aria-describedby="'+p+'-body-h '+p+'-body-e"></textarea><p class="cr-err" id="'+p+'-body-e"></p></div>'+
-    '<div class="cr-f" data-f="photos"><span class="cr-l" id="'+p+'-ph-l">Photos <i>optional</i></span><input class="sr cr-file" type="file" id="'+p+'-ph" accept="image/*" multiple aria-labelledby="'+p+'-ph-l '+p+'-ph-b" aria-describedby="'+p+'-ph-e"><label class="cr-drop" for="'+p+'-ph"><span class="cr-drop-i" aria-hidden="true"></span><span><b id="'+p+'-ph-b">Add photos</b><small>Up to 3 images, 10MB each</small></span></label><ul class="cr-thumbs" aria-label="Chosen photos"></ul><p class="cr-err" id="'+p+'-ph-e"></p></div>'+
-    '<div class="cr-two">'+
-      '<div class="cr-f" data-f="name"><label class="cr-l" for="'+p+'-name">Your name</label><input id="'+p+'-name" type="text" autocomplete="name" maxlength="60" aria-describedby="'+p+'-name-h '+p+'-name-e"><p class="cr-hint" id="'+p+'-name-h">Shown with your review</p><p class="cr-err" id="'+p+'-name-e"></p></div>'+
-      '<div class="cr-f" data-f="email"><label class="cr-l" for="'+p+'-email">Email</label><input id="'+p+'-email" type="email" autocomplete="email" inputmode="email" aria-describedby="'+p+'-email-h '+p+'-email-e"><p class="cr-hint" id="'+p+'-email-h">Not published. We use it to match your order.</p><p class="cr-err" id="'+p+'-email-e"></p></div>'+
-    '</div>');
-  h+='<div class="cr-nav">';
-  if(S)h+='<button type="button" class="btn cr-ghost cr-back" hidden>Back</button><button type="button" class="btn sec cr-next">Next</button>';
-  h+='<button type="submit" class="btn cr-send"'+(S?' hidden':'')+'>Submit review</button></div>';
-  h+='<p class="cr-pts"><span class="cr-pp" aria-hidden="true">PP</span>Earn 50 Club points for a verified review</p>';
-  h+='</form>';
-  h+='<div class="cr-thx" hidden><span class="cr-tick" aria-hidden="true"></span><h3 class="cr-thx-h" tabindex="-1">Thanks, your review will appear once it is checked.</h3><p class="cr-thx-s"></p><p class="cr-pts"><span class="cr-pp" aria-hidden="true">PP</span><span>If we can match it to your order it counts as a verified review, and 50 Club points go on your account.</span></p><div class="cr-thx-b"><button type="button" class="btn sec cr-again">Write another review</button></div></div>';
-  return h;
-}
-
-/* ---- product combobox (used in the form and as the product picker in version B) ---- */
-function words(s){return s.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(' ').filter(Boolean)}
-function searchProducts(q){
-  var w=words(q);
-  if(!w.length)return PLIST.slice(0,8).map(function(p){return CAT[p.handle]||{title:p.title,handle:p.handle,cat:p.cat}});
-  var res=[];
-  D.catalogue.forEach(function(c){
-    var t=c[0].toLowerCase(),ok=true;
-    for(var i=0;i<w.length;i++)if(t.indexOf(w[i])<0){ok=false;break}
-    if(!ok)return;
-    var sc=(t.indexOf(w[0])===0?2:0)+(PIDX[c[1]]?1:0);
-    res.push({title:c[0],handle:c[1],cat:c[2],sc:sc});
+function histHTML(){
+  var t=D.summary.number_of_reviews,h='<ul class="crv-hist" aria-label="How the '+t+' reviews split">';
+  [5,4,3,2,1].forEach(function(s,i){
+    var n=HIST[i],pc=t?n/t*100:0;
+    h+='<li><span class="crv-hs">'+s+' <span aria-hidden="true">★</span><span class="sr"> stars</span></span>'+
+      '<span class="crv-hb" aria-hidden="true"><i style="width:'+pc.toFixed(1)+'%"></i></span><span class="crv-hn">'+n+'</span></li>';
   });
-  res.sort(function(a,b){return b.sc-a.sc||a.title.length-b.title.length});
-  return res.slice(0,8);
+  return h+'</ul>';
 }
-function mark(t,q){
-  var w=words(q),out=esc(t);
-  w.forEach(function(x){if(x.length<2)return;out=out.replace(new RegExp('('+x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig'),'<mark>$1</mark>')});
-  return out;
+
+/* ---- star filter chips and sort ---- */
+function chips(el,st,onChange){
+  var opts=[0].concat(STARS_HELD);
+  el.innerHTML=opts.map(function(s){
+    return '<button type="button" class="crv-chip" data-s="'+s+'" aria-pressed="'+(st.stars===s)+'">'+(s?s+' <span aria-hidden="true">★</span><span class="sr"> star</span>':'All')+'</button>';
+  }).join('');
+  el.addEventListener('click',function(e){
+    var b=e.target.closest('.crv-chip');if(!b)return;
+    st.stars=+b.dataset.s;
+    $$('.crv-chip',el).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    onChange();
+  });
 }
-function Combo(input,lb,onPick){
-  var act=-1,items=[],self=this;this.input=input;
-  function meta(h){var p=PIDX[h];return p?(one(p.avg)+' from '+plural(p.count,'review')):'No reviews yet'}
-  function draw(){
-    items=searchProducts(input.value);act=-1;
-    var h=input.value.trim()?'':'<li class="cr-lb-h" role="presentation">Most reviewed</li>';
-    if(!items.length)h='<li class="cr-lb-none" role="presentation">No product matches. Try one word, like "brace".</li>';
-    items.forEach(function(it,i){h+='<li role="option" id="'+lb.id+'-o'+i+'" aria-selected="false" data-i="'+i+'"><b>'+mark(it.title,input.value)+'</b><small>'+esc(it.cat)+' · '+meta(it.handle)+'</small></li>'});
-    lb.innerHTML=h;
+function statusText(n,st){
+  var w=st.stars?NUMW[st.stars]+'-star ':'';
+  return n?'Showing '+n+' '+w+'review'+(n===1?'':'s'):'No '+w+'reviews here yet';
+}
+
+/* ---- fill the shared counters in the page ---- */
+$$('[data-crv-avg]').forEach(function(e){e.textContent=one(D.summary.average_rating)});
+$$('[data-crv-count]').forEach(function(e){e.textContent=D.summary.number_of_reviews});
+$$('[data-crv-loaded]').forEach(function(e){e.textContent=D.reviews.length});
+$$('[data-crv-stars]').forEach(function(e){e.innerHTML=rstars(D.summary.average_rating,e.getAttribute('data-crv-stars'))});
+$$('[data-crv-hist]').forEach(function(e){e.innerHTML=histHTML()});
+
+/* ==========================================================================
+   WRITE A REVIEW: one modal, four short steps, then a thank you.
+   Opened by any element with [data-crv-write]; a value is a product handle
+   and preselects that product (the flow then starts at the stars).
+   ========================================================================== */
+var M=(function(){
+  var TOTAL=4;
+  var wrap=doc.createElement('div');
+  wrap.className='crv-modal';wrap.id='crv-modal';wrap.hidden=true;
+  var stars='';for(var s=1;s<=5;s++)stars+='<input type="radio" class="sr" name="crv-rating" id="crv-r'+s+'" value="'+s+'"><label for="crv-r'+s+'" data-v="'+s+'"><span class="sr">'+s+' star'+(s>1?'s':'')+', '+WORD[s]+'</span></label>';
+  wrap.innerHTML=
+  '<div class="crv-mbg" data-crv-close></div>'+
+  '<div class="crv-mp" role="dialog" aria-modal="true" aria-labelledby="crv-h1">'+
+    '<div class="crv-mtop">'+
+      '<div class="crv-prog"><span class="crv-pl" id="crv-pl">Step 1 of 4</span><span class="crv-pbar" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>'+
+      '<button type="button" class="crv-x" data-crv-close aria-label="Close"><span aria-hidden="true"></span></button>'+
+    '</div>'+
+    '<form class="crv-mf" novalidate>'+
+      '<div class="crv-mbody">'+
+        '<section class="crv-step" data-step="1">'+
+          '<h2 class="crv-mh" id="crv-h1" tabindex="-1">Which product are you reviewing?</h2>'+
+          '<p class="crv-ms">Search, or pick one of our most reviewed.</p>'+
+          '<div class="crv-srch"><span class="mag" aria-hidden="true"></span><label class="sr" for="crv-q">Search products</label>'+
+            '<input id="crv-q" type="search" autocomplete="off" placeholder="Search products, e.g. wheelchair" role="combobox" aria-expanded="true" aria-controls="crv-opts" aria-autocomplete="list"></div>'+
+          '<p class="crv-oh" id="crv-oh">Most reviewed</p>'+
+          '<ul class="crv-opts" id="crv-opts" role="listbox" aria-labelledby="crv-oh"></ul>'+
+          '<p class="crv-err" id="crv-e1" role="alert"></p>'+
+        '</section>'+
+        '<section class="crv-step" data-step="2" hidden>'+
+          '<div class="crv-chosen"></div>'+
+          '<h2 class="crv-mh" id="crv-h2" tabindex="-1">How would you rate it?</h2>'+
+          '<fieldset class="crv-rate"><legend class="sr">Your rating</legend><div class="crv-rrow" data-v="0">'+stars+'</div></fieldset>'+
+          '<p class="crv-rw" aria-hidden="true">Tap a star</p>'+
+          '<p class="crv-err" id="crv-e2" role="alert"></p>'+
+        '</section>'+
+        '<section class="crv-step" data-step="3" hidden>'+
+          '<div class="crv-chosen"></div>'+
+          '<h2 class="crv-mh" id="crv-h3" tabindex="-1">Tell other owners how it went</h2>'+
+          '<div class="crv-f"><label for="crv-title">Headline <span>(optional)</span></label><input id="crv-title" type="text" maxlength="100" placeholder="Sum it up in a few words"></div>'+
+          '<div class="crv-f"><label for="crv-body">Your review</label><textarea id="crv-body" rows="6" maxlength="5000" placeholder="What did you buy it for, and how has it helped?" aria-describedby="crv-e3"></textarea><p class="crv-err" id="crv-e3"></p></div>'+
+        '</section>'+
+        '<section class="crv-step" data-step="4" hidden>'+
+          '<h2 class="crv-mh" id="crv-h4" tabindex="-1">Nearly done</h2>'+
+          '<p class="crv-ms">Use the email you ordered with and your review is marked verified.</p>'+
+          '<div class="crv-f"><label for="crv-name">Your name</label><input id="crv-name" type="text" autocomplete="name" maxlength="60" placeholder="Shown with your review" aria-describedby="crv-e4n"><p class="crv-err" id="crv-e4n"></p></div>'+
+          '<div class="crv-f"><label for="crv-email">Email</label><input id="crv-email" type="email" autocomplete="email" inputmode="email" placeholder="Never shown" aria-describedby="crv-e4e"><p class="crv-err" id="crv-e4e"></p></div>'+
+          '<div class="crv-f"><span class="crv-fl" id="crv-phl">Photos <span>(optional, up to 5)</span></span>'+
+            '<div class="crv-ph"><label class="crv-add" for="crv-file"><span aria-hidden="true">+</span> Add photos</label><input id="crv-file" class="sr" type="file" accept="image/*" multiple aria-labelledby="crv-phl"><ul class="crv-thumbs" aria-label="Chosen photos"></ul></div>'+
+            '<p class="crv-err" id="crv-e4p" role="alert"></p></div>'+
+        '</section>'+
+        '<section class="crv-step crv-thx" data-step="5" hidden>'+
+          '<span class="crv-tick" aria-hidden="true"></span>'+
+          '<h2 class="crv-mh" id="crv-h5" tabindex="-1">Thank you</h2>'+
+          '<p class="crv-ms crv-thx-s"></p>'+
+          '<div class="crv-club"><b>50 Club points</b><span>go to your Poorly Pet Club account once we match your email to an order and mark the review verified.</span></div>'+
+        '</section>'+
+      '</div>'+
+      '<div class="crv-mnav">'+
+        '<button type="button" class="crv-back">Back</button>'+
+        '<button type="submit" class="btn sec crv-next">Next</button>'+
+        '<button type="button" class="crv-again" hidden>Review another</button>'+
+        '<button type="button" class="btn sec crv-done" data-crv-close hidden>Done</button>'+
+      '</div>'+
+    '</form>'+
+  '</div>';
+  doc.body.appendChild(wrap);
+
+  var panel=$('.crv-mp',wrap),form=$('form',wrap),q=$('#crv-q',wrap),opts=$('#crv-opts',wrap),oh=$('#crv-oh',wrap);
+  var back=$('.crv-back',wrap),next=$('.crv-next',wrap),again=$('.crv-again',wrap),done=$('.crv-done',wrap);
+  var row=$('.crv-rrow',wrap),rw=$('.crv-rw',wrap),mbody=$('.crv-mbody',wrap);
+  var inp={title:$('#crv-title',wrap),body:$('#crv-body',wrap),name:$('#crv-name',wrap),email:$('#crv-email',wrap),file:$('#crv-file',wrap)};
+  var st={step:1,product:null,rating:0,files:[],sent:false},opener=null,items=[],act=-1,closeT=null;
+
+  /* step 1: product search with thumbnails */
+  function words(s){return s.toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(' ').filter(Boolean)}
+  var ALL=D.catalogue.map(function(c){return c[1]});
+  PLIST.forEach(function(p){if(!CAT[p.handle])ALL.push(p.handle)});
+  function search(v){
+    var w=words(v);if(!w.length)return PLIST.slice(0,8);
+    var res=[];
+    ALL.forEach(function(h){
+      var p=product(h);if(!p)return;
+      var t=p.title.toLowerCase(),ok=w.every(function(x){return t.indexOf(x)>-1});
+      if(ok)res.push({p:p,sc:(t.indexOf(w[0])===0?2:0)+(p.count?1:0)});
+    });
+    return res.sort(function(a,b){return b.sc-a.sc||b.p.count-a.p.count||a.p.title.localeCompare(b.p.title)}).slice(0,8).map(function(x){return x.p});
   }
-  function open(){draw();lb.hidden=false;input.setAttribute('aria-expanded','true')}
-  function close(){lb.hidden=true;input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');act=-1}
-  function move(d){
-    if(lb.hidden)open();if(!items.length)return;
+  function drawOpts(){
+    var v=q.value.trim();items=search(v);act=-1;q.removeAttribute('aria-activedescendant');
+    oh.textContent=v?(items.length?'Matching products':'No products match “'+v+'”'):'Most reviewed';
+    opts.innerHTML=items.map(function(p,i){
+      var sel=st.product&&st.product.handle===p.handle;
+      return '<li role="option" id="crv-o'+i+'" data-i="'+i+'" aria-selected="'+(sel?'true':'false')+'">'+thumb(p.handle,p.title)+
+        '<span class="crv-ot"><b>'+esc(p.title)+'</b><span>'+(p.count?tp(p.avg,'xs')+' '+one(p.avg)+' · '+plural(p.count,'review'):'Be the first to review it')+'</span></span></li>';
+    }).join('');
+  }
+  function moveAct(d){
+    if(!items.length)return;
     act=(act+d+items.length)%items.length;
-    $$('[role=option]',lb).forEach(function(o,i){o.setAttribute('aria-selected',i===act?'true':'false')});
-    var o=doc.getElementById(lb.id+'-o'+act);input.setAttribute('aria-activedescendant',o.id);o.scrollIntoView({block:'nearest'});
+    $$('[role=option]',opts).forEach(function(o,i){o.classList.toggle('act',i===act)});
+    var o=$('#crv-o'+act,opts);q.setAttribute('aria-activedescendant',o.id);o.scrollIntoView({block:'nearest'});
   }
-  function pick(i){var it=items[i];if(!it)return;input.value=it.title;input.dataset.h=it.handle;close();onPick(it)}
-  input.addEventListener('focus',open);
-  input.addEventListener('click',function(){if(lb.hidden)open()});
-  input.addEventListener('input',function(){delete input.dataset.h;open()});
-  input.addEventListener('keydown',function(e){
-    if(e.key==='ArrowDown'){e.preventDefault();move(1)}
-    else if(e.key==='ArrowUp'){e.preventDefault();move(-1)}
-    else if(e.key==='Enter'){if(!lb.hidden&&act>-1){e.preventDefault();pick(act)}else if(!lb.hidden&&items.length===1){e.preventDefault();pick(0)}}
-    else if(e.key==='Escape'){if(!lb.hidden){e.preventDefault();e.stopPropagation();close()}}
-    else if(e.key==='Tab')close();
+  q.addEventListener('input',drawOpts);
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){e.preventDefault();moveAct(1)}
+    else if(e.key==='ArrowUp'){e.preventDefault();moveAct(-1)}
+    else if(e.key==='Enter'&&act>-1){e.preventDefault();pick(items[act])}
   });
-  input.addEventListener('blur',function(){setTimeout(close,120)});
-  lb.addEventListener('mousedown',function(e){e.preventDefault()});
-  lb.addEventListener('click',function(e){var o=e.target.closest('[role=option]');if(o)pick(+o.dataset.i)});
-  this.close=close;
-}
-
-/* ---- form controller ---- */
-function ReviewForm(host,opts){
-  opts=opts||{};var p='crf'+(++FN),mode=opts.mode||'full',self=this;
-  host.innerHTML=formHTML(p,mode);
-  var f=$('form',host),thx=$('.cr-thx',host),S=mode==='steps';
-  var inp={product:$('#'+p+'-prod',host),title:$('#'+p+'-title',host),body:$('#'+p+'-body',host),name:$('#'+p+'-name',host),email:$('#'+p+'-email',host),file:$('#'+p+'-ph',host)};
-  var chosen=$('.cr-chosen',host),cb=$('.cr-cb',host),row=$('.cr-rate-row',host),word=$('.cr-rate-w',host);
-  var files=[],touched={},product=null,stepN=1;
-  this.el=host;
-
-  /* product */
-  function setProduct(it,lock){
-    product=it;
-    if(it){inp.product.value=it.title;inp.product.dataset.h=it.handle}
-    if(lock&&it){$('b',chosen).textContent=it.title;chosen.hidden=false;cb.hidden=true}
-    else{chosen.hidden=true;cb.hidden=false}
-    if(touched.product)check('product');
+  opts.addEventListener('click',function(e){var li=e.target.closest('[role=option]');if(li)pick(items[+li.dataset.i])});
+  function pick(p){if(!p)return;setProduct(p);err(1,'');go(2)}
+  function setProduct(p){
+    st.product=p;
+    var h=p?'<div class="crv-chip-p">'+thumb(p.handle,p.title)+'<span><small>Reviewing</small><b>'+esc(p.title)+'</b></span>'+
+      '<button type="button" class="crv-change">Change</button></div>':'';
+    $$('.crv-chosen',wrap).forEach(function(c){c.innerHTML=h});
   }
-  new Combo(inp.product,$('#'+p+'-lb',host),function(it){product=it;touched.product=true;check('product');if(opts.onProduct)opts.onProduct(it)});
-  $('.cr-change',host).addEventListener('click',function(){chosen.hidden=true;cb.hidden=false;inp.product.value='';delete inp.product.dataset.h;product=null;inp.product.focus()});
-  this.setProduct=setProduct;
+  wrap.addEventListener('click',function(e){if(e.target.closest('.crv-change')){go(1);q.focus()}});
 
-  /* stars: the squares fill up to the hovered or chosen value */
-  function paint(v){row.setAttribute('data-v',v||0);word.textContent=v?WORD[v]:'Tap a star'}
-  function chosenRating(){var c=$('input[name=rating]:checked',f);return c?+c.value:0}
-  $$('.cr-sq',row).forEach(function(l,i){
-    l.addEventListener('mouseenter',function(){paint(i+1)});
+  /* step 2: big stars */
+  var viaPointer=false,advT=null;
+  function paint(v){row.setAttribute('data-v',v||0);rw.textContent=v?WORD[v]:'Tap a star'}
+  row.addEventListener('pointerdown',function(){viaPointer=true});
+  row.addEventListener('mouseover',function(e){var l=e.target.closest('label');if(l)paint(+l.dataset.v)});
+  row.addEventListener('mouseleave',function(){paint(st.rating)});
+  row.addEventListener('change',function(e){
+    st.rating=+e.target.value;paint(st.rating);err(2,'');
+    clearTimeout(advT);
+    if(viaPointer){advT=setTimeout(function(){if(st.step===2)go(3)},RM?150:420)}
+    viaPointer=false;
   });
-  row.addEventListener('mouseleave',function(){paint(chosenRating())});
-  $$('input[name=rating]',f).forEach(function(r){r.addEventListener('change',function(){paint(+r.value);touched.rating=true;check('rating')})});
 
-  /* photos with a preview */
-  var thumbs=$('.cr-thumbs',host);
+  /* step 4: photos */
+  var thumbs=$('.crv-thumbs',wrap);
   function drawThumbs(){
-    thumbs.innerHTML=files.map(function(fl,i){return '<li><img src="'+fl.url+'" alt="Photo '+(i+1)+': '+esc(fl.file.name)+'"><button type="button" data-i="'+i+'" aria-label="Remove photo '+(i+1)+'"></button></li>'}).join('');
+    thumbs.innerHTML=st.files.map(function(x,i){return '<li><img src="'+x.url+'" alt=""><button type="button" data-i="'+i+'" aria-label="Remove photo '+(i+1)+'">×</button></li>'}).join('');
   }
   inp.file.addEventListener('change',function(){
-    var err='';
-    Array.prototype.forEach.call(inp.file.files,function(fl){
-      if(!/^image\//.test(fl.type)){err='That file is not a photo. Choose a JPG, PNG or HEIC image.';return}
-      if(fl.size>10*1024*1024){err=fl.name+' is over 10MB. Choose a smaller photo.';return}
-      if(files.length>=3){err='You can add up to 3 photos.';return}
-      files.push({file:fl,url:URL.createObjectURL(fl)});
+    var msg='';
+    Array.prototype.forEach.call(inp.file.files,function(f){
+      if(!/^image\//.test(f.type)){msg='Photos only, please (JPG or PNG).';return}
+      if(f.size>10*1024*1024){msg='Each photo needs to be under 10MB.';return}
+      if(st.files.length>=5){msg='Up to 5 photos.';return}
+      st.files.push({file:f,url:URL.createObjectURL(f)});
     });
-    inp.file.value='';drawThumbs();showErr('photos',err);
+    inp.file.value='';drawThumbs();err('4p',msg);
   });
   thumbs.addEventListener('click',function(e){
     var b=e.target.closest('button');if(!b)return;var i=+b.dataset.i;
-    URL.revokeObjectURL(files[i].url);files.splice(i,1);drawThumbs();showErr('photos','');
-    var nb=$('button',thumbs);(nb||inp.file).focus();
+    URL.revokeObjectURL(st.files[i].url);st.files.splice(i,1);drawThumbs();
+    var nb=$('button',thumbs);(nb||$('.crv-add',wrap)).focus();
   });
+  $('.crv-add',wrap).addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.file.click()}});
+  $('.crv-add',wrap).setAttribute('tabindex','0');$('.crv-add',wrap).setAttribute('role','button');
 
-  /* validation, inline */
-  var RULES={
-    product:function(){return product&&inp.product.dataset.h?'':(inp.product.value.trim()?'Pick the product from the list so we can match your review to it.':'Choose the product you are reviewing.')},
-    rating:function(){return chosenRating()?'':'Choose a star rating, from 1 to 5.'},
-    title:function(){return inp.title.value.trim()?'':'Add a short headline.'},
-    body:function(){var n=inp.body.value.trim().length;return n>=20?'':(n?'Tell us a little more, at least 20 characters.':'Write your review.')},
-    name:function(){return inp.name.value.trim()?'':'Add the name to show with your review.'},
-    email:function(){var v=inp.email.value.trim();return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?'':(v?'Enter an email address like name@example.com.':'Add your email so we can match your order.')},
-    photos:function(){return ''}
-  };
-  function fieldEl(k){return $('[data-f="'+k+'"]',host)}
-  function showErr(k,msg){
-    var fe=fieldEl(k),e=$('.cr-err',fe);e.textContent=msg;fe.classList.toggle('cr-bad',!!msg);
-    var c=k==='rating'?fe:(k==='photos'?inp.file:inp[k]);if(c)c.setAttribute('aria-invalid',msg?'true':'false');
+  /* validation */
+  function err(k,m){
+    var e=$('#crv-e'+k,wrap);if(e)e.textContent=m||'';
+    var map={3:inp.body,'4n':inp.name,'4e':inp.email};
+    if(map[k])map[k].setAttribute('aria-invalid',m?'true':'false');
+    return !m;
   }
-  function check(k){var m=RULES[k]();showErr(k,m);return !m}
-  ['title','body','name','email'].forEach(function(k){
-    inp[k].addEventListener('blur',function(){if(inp[k].value.trim()){touched[k]=true}if(touched[k])check(k)});
-    inp[k].addEventListener('input',function(){if(touched[k])check(k)});
-  });
-  inp.product.addEventListener('blur',function(){setTimeout(function(){if(inp.product.value.trim())touched.product=true;if(touched.product)check('product')},160)});
-  var STEPF={1:['product'],2:['rating'],3:['title','body','name','email']};
-  function checkAll(keys){
-    var bad=null;keys.forEach(function(k){touched[k]=true;if(!check(k)&&!bad)bad=k});
-    if(bad){var el=bad==='rating'?$('input[name=rating]',f):inp[bad];if(bad==='product'&&cb.hidden){$('.cr-change',host).focus()}else el.focus()}
-    return !bad;
-  }
-
-  /* steps mode */
-  function go(n){
-    stepN=n;
-    $$('.cr-fs',f).forEach(function(s){s.hidden=+s.dataset.s!==n});
-    $$('.cr-prog li',f).forEach(function(li,i){li.classList.toggle('on',i<n);li.classList.toggle('done',i<n-1);if(i===n-1)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current')});
-    $('.cr-back',f).hidden=n===1;$('.cr-next',f).hidden=n===3;$('.cr-send',f).hidden=n!==3;
-    $('.cr-fs[data-s="'+n+'"] .cr-fs-h',f).focus();
-  }
-  if(S){
-    $('.cr-next',f).addEventListener('click',function(){if(checkAll(STEPF[stepN]))go(stepN+1)});
-    $('.cr-back',f).addEventListener('click',function(){go(stepN-1)});
-  }
-
-  /* submit: nothing is sent in the preview */
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(S&&stepN<3){if(checkAll(STEPF[stepN]))go(stepN+1);return}
-    if(!checkAll(['product','rating','title','body','name','email'])){
-      if(S){for(var n=1;n<=3;n++){if(STEPF[n].some(function(k){return RULES[k]()})){if(n!==stepN){go(n);checkAll(STEPF[n])}break}}}
-      return;
+  function valid(n){
+    if(n===1)return err(1,st.product?'':'Pick the product you bought to carry on.')||(q.focus(),false);
+    if(n===2)return err(2,st.rating?'':'Tap a star to rate it.')||($('input[name=crv-rating]',wrap).focus(),false);
+    if(n===3){var b=inp.body.value.trim();return err(3,b.length<3?'Write a few words about how it went.':'')||(inp.body.focus(),false)}
+    if(n===4){
+      var nm=err('4n',inp.name.value.trim()?'':'Add your name, first name is fine.');
+      var em=inp.email.value.trim(),okE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em);
+      var e2=err('4e',em?(okE?'':'That email doesn’t look right.'):'Add your email so we can check your order.');
+      if(!nm){inp.name.focus();return false}
+      if(!e2){inp.email.focus();return false}
+      return true;
     }
+    return true;
+  }
+
+  /* moving between steps */
+  function go(n){
+    st.step=n;
+    $$('.crv-step',wrap).forEach(function(s){
+      var on=+s.dataset.step===n;s.hidden=!on;
+      if(on&&!RM){s.classList.remove('in');void s.offsetWidth;s.classList.add('in')}
+    });
+    var thx=n===5;
+    $('#crv-pl',wrap).textContent=thx?'All done':'Step '+n+' of '+TOTAL;
+    $$('.crv-pbar i',wrap).forEach(function(i,k){i.classList.toggle('on',k<n)});
+    back.hidden=thx||n===1;next.hidden=thx;again.hidden=!thx;done.hidden=!thx;
+    next.textContent=n===4?'Post review':'Next';
+    panel.setAttribute('aria-labelledby','crv-h'+n);
+    if(n===1)drawOpts();
+    if(n===2)paint(st.rating);
+    mbody.scrollTop=0;
+    var h=$('#crv-h'+n,wrap);if(h&&!wrap.hidden)h.focus({preventScroll:true});
+  }
+  back.addEventListener('click',function(){if(st.step>1)go(st.step-1)});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(st.step<4){if(valid(st.step))go(st.step+1);return}
+    if(!valid(4))return;
     var review={
       platform:'shopify',
-      product_handle:inp.product.dataset.h,product_title:product.title,
-      rating:chosenRating(),title:inp.title.value.trim(),body:inp.body.value.trim(),
+      product_handle:st.product.handle,product_title:st.product.title,
+      rating:st.rating,title:inp.title.value.trim(),body:inp.body.value.trim(),
       name:inp.name.value.trim(),email:inp.email.value.trim(),
-      pictures:files.map(function(x){return x.file})
+      pictures:st.files.map(function(x){return x.file})
     };
     /* ------------------------------------------------------------------
        JUDGE.ME REVIEW SUBMISSION PLUGS IN HERE.
@@ -474,237 +522,181 @@ function ReviewForm(host,opts){
              id:<Shopify product id for review.product_handle>,
              name, email, rating, title, body,
              picture_urls:[...] }   // upload the photos first, then pass their URLs
-       (this is the public endpoint Judge.me's own review form uses; no private
-       token needed). Judge.me then holds it for checking, marks it verified if
-       the email matches an order, and the Club app adds the 50 points.
+       (the public endpoint Judge.me's own review form uses; no private token
+       needed). Show the thank-you only when that request succeeds; on failure
+       keep the form and say "That didn't send, please try again."
+       Judge.me holds the review for checking, marks it verified if the email
+       matches an order, and the Club app then adds the 50 points.
        ------------------------------------------------------------------ */
     if(window.console)console.info('[preview] review not sent anywhere',review);
-    $('.cr-thx-s',thx).innerHTML='Your '+review.rating+' star review of <b>'+esc(review.product_title)+'</b> has been saved for checking.';
-    f.hidden=true;thx.hidden=false;$('.cr-thx-h',thx).focus();
-    if(opts.onSent)opts.onSent(review);
+    st.sent=true;
+    var first=review.name.split(' ')[0];
+    $('.crv-thx-s',wrap).innerHTML='Thanks, '+esc(first)+'. Your '+review.rating+'-star review of <b>'+esc(review.product_title)+'</b> is with us. It goes live once we’ve checked it, usually within a day.';
+    go(5);
   });
-  $('.cr-again',thx).addEventListener('click',function(){self.reset();var t=cb.hidden?$('input[name=rating]',f):inp.product;(S?$('.cr-fs-h',f):t).focus()});
-  this.reset=function(keepProduct){
-    var keep=opts.lockProduct&&product?product:null;
-    f.reset();files.forEach(function(x){URL.revokeObjectURL(x.url)});files=[];drawThumbs();touched={};paint(0);
-    ['product','rating','title','body','name','email','photos'].forEach(function(k){showErr(k,'')});
-    product=null;delete inp.product.dataset.h;
-    if(keep)setProduct(keep,true);else setProduct(null,false);
-    f.hidden=false;thx.hidden=true;if(S)go(1);
-  };
-}
+  again.addEventListener('click',function(){reset();go(1);});
 
-/* ---- simple modal drawer with a focus trap (version A) ---- */
-function Drawer(el){
-  var last=null,self=this;
-  function focusables(){return $$('a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),textarea,select,[tabindex="0"]',el).filter(function(x){return x.offsetParent!==null||x===doc.activeElement})}
-  this.open=function(from){last=from||doc.activeElement;el.hidden=false;doc.documentElement.classList.add('cr-lock');requestAnimationFrame(function(){el.classList.add('open')});setTimeout(function(){var t=$('.cr-dr-h',el);t.focus()},30)};
-  this.close=function(){el.classList.remove('open');doc.documentElement.classList.remove('cr-lock');setTimeout(function(){el.hidden=true},200);if(last)last.focus()};
-  el.addEventListener('keydown',function(e){
-    if(e.key==='Escape'){e.preventDefault();self.close();return}
+  function reset(){
+    form.reset();st.files.forEach(function(x){URL.revokeObjectURL(x.url)});
+    st={step:1,product:null,rating:0,files:[],sent:false};
+    drawThumbs();setProduct(null);paint(0);q.value='';
+    ['1','2','3','4n','4e','4p'].forEach(function(k){err(k,'')});
+  }
+
+  /* open / close, focus trap, Esc, backdrop */
+  function focusables(){return $$('a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]):not([type=file]),textarea,select,[tabindex="0"]',panel).filter(function(x){return !x.closest('[hidden]')&&x.getClientRects().length})}
+  function trap(e){
+    if(e.key==='Escape'){e.preventDefault();close();return}
     if(e.key!=='Tab')return;
-    var f=focusables();if(!f.length)return;var a=f[0],z=f[f.length-1];
-    if(e.shiftKey&&(doc.activeElement===a||doc.activeElement===$('.cr-dr-h',el))){e.preventDefault();z.focus()}
+    var f=focusables();
+    var a=f[0],z=f[f.length-1];
+    if(!f.length){e.preventDefault();return}
+    if(!panel.contains(doc.activeElement)){e.preventDefault();a.focus();return}
+    if(e.shiftKey&&doc.activeElement===a){e.preventDefault();z.focus()}
     else if(!e.shiftKey&&doc.activeElement===z){e.preventDefault();a.focus()}
+  }
+  function open(handle,from){
+    clearTimeout(closeT);
+    opener=from||doc.activeElement;
+    if(st.sent)reset();
+    var p=product(handle);
+    wrap.hidden=false;doc.documentElement.classList.add('crv-lock');
+    requestAnimationFrame(function(){wrap.classList.add('open')});
+    if(p){setProduct(p);go(2)}else go(st.product&&st.step>1?st.step:1);
+    doc.addEventListener('keydown',trap);
+  }
+  function close(){
+    if(wrap.hidden)return;
+    wrap.classList.remove('open');doc.removeEventListener('keydown',trap);clearTimeout(advT);
+    closeT=setTimeout(function(){wrap.hidden=true;doc.documentElement.classList.remove('crv-lock')},RM?0:260);
+    if(opener&&opener.focus&&doc.contains(opener))opener.focus();
+    if(st.sent)reset();
+  }
+  wrap.addEventListener('click',function(e){if(e.target.closest('[data-crv-close]'))close()});
+  doc.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('[data-crv-write]');if(!t||wrap.contains(t))return;
+    e.preventDefault();open(t.getAttribute('data-crv-write')||'',t);
   });
-  $$('[data-cr-close]',el).forEach(function(b){b.addEventListener('click',self.close)});
+  return {open:open,close:close};
+})();
+window.CRV_WRITE=M;
+
+/* ==========================================================================
+   Version A: centred single column
+   ========================================================================== */
+function initA(){
+  var st={stars:0,sort:'newest'},status=$('#crv-status');
+  var pg=new Pager($('#crv-list'),$('#crv-more'),8,function(r){return card(r)});
+  function run(){var l=select(st);pg.set(l);status.textContent=statusText(l.length,st)}
+  chips($('#crv-chips'),st,run);
+  $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
+  run();
 }
 
-/* ---- shared bits of page state ---- */
-function catCounts(){return counts(D.reviews,'category')}
-function catOrder(){var c=catCounts();return Object.keys(c).sort(function(a,b){return (a==='Store review')-(b==='Store review')||c[b]-c[a]})}
-function setPressed(btns,val,attr){btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute(attr))===String(val||'')?'true':'false')})}
-function fillSummary(root){
-  $$('[data-cr-avg]',root).forEach(function(e){e.textContent=one(D.summary.average_rating)});
-  $$('[data-cr-count]',root).forEach(function(e){e.textContent=D.summary.number_of_reviews});
-  $$('[data-cr-loaded]',root).forEach(function(e){e.textContent=D.reviews.length});
-  $$('[data-cr-stars]',root).forEach(function(e){e.innerHTML=tp(D.summary.average_rating,e.getAttribute('data-cr-stars'))});
-  $$('[data-cr-updated]',root).forEach(function(e){e.textContent=fdate(D.summary.updated_at)});
-}
-
-/* ======================================================================
-   Version A: score panel + filter sidebar + list + drawer form
-   ====================================================================== */
-function initA(root){
-  fillSummary(root);
-  var st={star:0,cat:'',handle:'',sort:'newest',q:''};
-  var list=new List($('#cra-list'),{page:10,more:$('#cra-more'),status:$('#cra-status'),card:{cls:'cr-rv--row'},
-    empty:'<div class="cr-empty"><b>No reviews match these filters.</b><button type="button" class="btn sec sm" data-cr-clear>Clear filters</button></div>'});
-  var hist=$('#cra-hist');hist.innerHTML=histHTML(HIST,D.summary.number_of_reviews,'reviews on Judge.me');
-
-  // sidebar: stars
-  var sc=counts(D.reviews,'rating'),h='<label class="cr-opt"><input type="radio" name="cra-star" value="0" checked><span>All ratings</span><em>'+D.reviews.length+'</em></label>';
-  for(var s=5;s>=1;s--)h+='<label class="cr-opt"><input type="radio" name="cra-star" value="'+s+'"'+(sc[s]?'':' disabled')+'><span>'+tp(s,'sm')+'<span class="sr">'+s+' star</span></span><em>'+(sc[s]||0)+'</em></label>';
-  $('#cra-stars').innerHTML=h;
-  // categories
-  var cc=catCounts();h='<label class="cr-opt"><input type="radio" name="cra-cat" value="" checked><span>All categories</span><em>'+D.reviews.length+'</em></label>';
-  catOrder().forEach(function(c){h+='<label class="cr-opt"><input type="radio" name="cra-cat" value="'+esc(c)+'"><span>'+esc(c)+'</span><em>'+cc[c]+'</em></label>'});
-  $('#cra-cats').innerHTML=h;
-  // products
-  var sel=$('#cra-prod');
-  function prodOpts(){
-    var h='<option value="">All products</option>';
-    PLIST.filter(function(p){return !st.cat||p.cat===st.cat}).forEach(function(p){h+='<option value="'+esc(p.handle)+'">'+esc(p.title)+' ('+p.reviews.length+')</option>'});
-    sel.innerHTML=h;sel.value=st.handle;
+/* ==========================================================================
+   Version B: product-led. Pick a product, see its reviews.
+   ========================================================================== */
+function initB(){
+  var st={product:'',stars:0,sort:'newest'},picker=$('#crv-picker'),panel=$('#crv-panel'),status=$('#crv-status'),head=$('#crv-lhead');
+  function tile(p){
+    return '<li><button type="button" class="crv-tile" data-h="'+esc(p?p.handle:'')+'" aria-pressed="'+(p?'false':'true')+'">'+
+      (p?thumb(p.handle,p.title):'<span class="crv-th crv-th--all" aria-hidden="true"><span>'+one(D.summary.average_rating)+'</span></span>')+
+      '<span class="crv-tn">'+esc(p?p.title:'All products')+'</span>'+
+      '<span class="crv-tm">'+(p?tp(p.avg,'xs')+' '+p.count:plural(D.summary.number_of_reviews,'review'))+'</span></button></li>';
   }
-  prodOpts();
-
-  function chips(){
-    var h='';
-    if(st.star)h+='<button type="button" class="cr-chip on" data-x="star">'+st.star+' star<span class="sr">, remove filter</span></button>';
-    if(st.cat)h+='<button type="button" class="cr-chip on" data-x="cat">'+esc(st.cat)+'<span class="sr">, remove filter</span></button>';
-    if(st.handle)h+='<button type="button" class="cr-chip on" data-x="handle">'+esc(PIDX[st.handle].title)+'<span class="sr">, remove filter</span></button>';
-    if(st.q)h+='<button type="button" class="cr-chip on" data-x="q">"'+esc(st.q)+'"<span class="sr">, remove search</span></button>';
-    $('#cra-chips').innerHTML=h;
-    var n=(st.star?1:0)+(st.cat?1:0)+(st.handle?1:0)+(st.q?1:0);
-    $('#cra-fbtn-n').textContent=n?String(n):'';
-  }
-  function sync(){
-    $$('input[name=cra-star]',root).forEach(function(r){r.checked=+r.value===st.star});
-    $$('input[name=cra-cat]',root).forEach(function(r){r.checked=r.value===st.cat});
-    setPressed($$('.cr-hrow',hist),st.star||'','data-star');
-    sel.value=st.handle;$('#cra-q').value=st.q;$('#cra-sort').value=st.sort;
-    var pn=$('#cra-pnote');
-    if(st.handle){var p=PIDX[st.handle];pn.hidden=false;pn.innerHTML=p.reviews.length<p.count?('Judge.me has '+p.count+' reviews of this product, averaging '+one(p.avg)+'. '+p.reviews.length+' are in this preview; the rest load live.'):('All '+plural(p.count,'review')+' of this product, averaging '+one(p.avg)+'.')}
-    else pn.hidden=true;
-    chips();list.set(filterReviews(st));
-  }
-  root.addEventListener('change',function(e){
-    var t=e.target;
-    if(t.name==='cra-star'){st.star=+t.value;sync()}
-    else if(t.name==='cra-cat'){st.cat=t.value;if(st.handle&&PIDX[st.handle].cat!==st.cat&&st.cat)st.handle='';prodOpts();sync()}
-    else if(t.id==='cra-prod'){st.handle=t.value;sync()}
-    else if(t.id==='cra-sort'){st.sort=t.value;sync()}
+  picker.innerHTML=tile(null)+PLIST.map(tile).join('');
+  var track=$('#crv-track');
+  $$('[data-crv-scroll]').forEach(function(b){b.addEventListener('click',function(){track.scrollBy({left:(+b.dataset.crvScroll)*track.clientWidth*0.8,behavior:RM?'auto':'smooth'})})});
+  var ps=$('#crv-psearch');
+  ps.addEventListener('input',function(){
+    var w=ps.value.toLowerCase().trim(),n=0;
+    $$('li',picker).forEach(function(li,i){var t=li.textContent.toLowerCase();var on=!w||i===0||t.indexOf(w)>-1;li.hidden=!on;if(on&&i)n++});
+    $('#crv-pcount').textContent=w?(n?plural(n,'product')+' found':'No reviewed products match. You can still review it.'):'';
   });
-  var qt;$('#cra-q').addEventListener('input',function(e){clearTimeout(qt);qt=setTimeout(function(){st.q=e.target.value.trim();sync()},220)});
-  $('#cra-qform').addEventListener('submit',function(e){e.preventDefault();st.q=$('#cra-q').value.trim();sync()});
-  hist.addEventListener('click',function(e){var b=e.target.closest('.cr-hrow');if(!b)return;var s=+b.dataset.star;st.star=st.star===s?0:s;sync()});
-  root.addEventListener('click',function(e){
-    var x=e.target.closest('[data-x]');if(x){st[x.dataset.x]=x.dataset.x==='star'?0:'';if(x.dataset.x==='cat')prodOpts();sync();$('#cra-status').focus();return}
-    if(e.target.closest('[data-cr-clear]')){st.star=0;st.cat='';st.handle='';st.q='';prodOpts();sync();$('#cra-status').focus();return}
-    var pb=e.target.closest('.cr-rv-p[data-handle]');if(pb){st.handle=pb.dataset.handle;st.cat='';prodOpts();sync();$('#cra-status').focus();$('#cra-top').scrollIntoView({behavior:'smooth',block:'start'})}
+  picker.addEventListener('click',function(e){
+    var b=e.target.closest('.crv-tile');if(!b)return;
+    $$('.crv-tile',picker).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    st.product=b.dataset.h;st.stars=0;
+    $$('#crv-chips .crv-chip').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.s==='0'?'true':'false')});
+    drawPanel();run();
+    if(window.innerWidth<900){var t=$('#crv-results');t.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}
   });
-  // mobile filter disclosure
-  var fb=$('#cra-fbtn'),fp=$('#cra-filters');
-  fb.addEventListener('click',function(){var o=fb.getAttribute('aria-expanded')!=='true';fb.setAttribute('aria-expanded',String(o));fp.classList.toggle('open',o)});
-  // drawer + form
-  var dr=new Drawer($('#cra-drawer'));
-  var form=new ReviewForm($('#cra-form'),{mode:'full'});
-  $$('[data-cr-write]',root).forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();form.reset();if(st.handle)form.setProduct(CAT[st.handle]||{title:PIDX[st.handle].title,handle:st.handle},false);dr.open(b)})});
-  $('.cr-again',$('#cra-drawer')).insertAdjacentHTML('afterend','<button type="button" class="btn cr-ghost" data-cr-close>Close</button>');
-  $('.cr-thx [data-cr-close]',$('#cra-drawer')).addEventListener('click',dr.close);
-  sync();
-}
-
-/* ======================================================================
-   Version B: product first. Pick a product, read it, review it inline.
-   ====================================================================== */
-function initB(root){
-  fillSummary(root);
-  var st={handle:'',star:0,sort:'newest',cat:''};
-  var tiles=$('#crb-tiles'),showAll=false;
-  function tileHTML(p){
-    return '<li><button type="button" class="cr-tile" data-handle="'+esc(p.handle)+'" aria-pressed="false"><span class="cr-ph cr-t'+(hashN(p.handle)%4+1)+'" data-photo="product" aria-hidden="true"></span><span class="cr-tile-b"><small>'+esc(p.cat)+'</small><b>'+esc(p.title)+'</b><span class="cr-tile-r">'+rstars(p.avg)+'<span>'+one(p.avg)+' <em>('+p.count+')</em></span></span></span></button></li>';
-  }
-  function drawTiles(){
-    var ps=PLIST.filter(function(p){return !st.cat||p.cat===st.cat});
-    var lim=showAll?ps.length:8;
-    tiles.innerHTML=ps.slice(0,lim).map(tileHTML).join('');
-    var mb=$('#crb-tmore');mb.hidden=ps.length<=8;mb.textContent=showAll?'Show fewer products':'Show all '+ps.length+' reviewed products';mb.setAttribute('aria-expanded',String(showAll));
-    setPressed($$('.cr-tile',tiles),st.handle,'data-handle');
-  }
-  // category chips for tiles
-  var cc=counts(PLIST,'cat'),ch='<button type="button" class="cr-chip" data-cat="" aria-pressed="true">All</button>';
-  Object.keys(cc).sort(function(a,b){return cc[b]-cc[a]}).forEach(function(c){ch+='<button type="button" class="cr-chip" data-cat="'+esc(c)+'" aria-pressed="false">'+esc(c)+' <em>'+cc[c]+'</em></button>'});
-  $('#crb-cats').innerHTML=ch;
-  $('#crb-cats').addEventListener('click',function(e){var b=e.target.closest('[data-cat]');if(!b)return;st.cat=b.dataset.cat;showAll=false;setPressed($$('[data-cat]',root),st.cat,'data-cat');drawTiles()});
-  $('#crb-tmore').addEventListener('click',function(){showAll=!showAll;drawTiles()});
-  tiles.addEventListener('click',function(e){var b=e.target.closest('.cr-tile');if(b)choose(b.dataset.handle,true)});
-
-  var list=new List($('#crb-list'),{page:6,more:$('#crb-more'),status:$('#crb-status'),card:{cls:'cr-rv--card',noProduct:true}});
-  var form=new ReviewForm($('#crb-form'),{mode:'inline',lockProduct:true,onProduct:function(it){choose(it.handle,false,true)}});
-  // page-level product search
-  new Combo($('#crb-q'),$('#crb-lb'),function(it){choose(it.handle,true)});
-  $('#crb-qform').addEventListener('submit',function(e){e.preventDefault()});
-
-  var stars=$('#crb-stars');
-  function draw(){
-    var p=st.handle?productByHandle(st.handle):null,v=$('#crb-view');
-    var head=$('#crb-head'),hh;
-    if(p){
-      hh='<span class="cr-ph cr-t'+(hashN(p.handle)%4+1)+' cr-ph-p" data-photo="product" aria-hidden="true"></span><div class="cr-bh-t"><small>'+esc(p.cat)+'</small><h2 id="crb-view-h" tabindex="-1">'+esc(p.title)+'</h2>';
-      if(p.count)hh+='<p class="cr-bh-r">'+rstars(p.avg,'')+'<b>'+one(p.avg)+'</b> out of 5 from '+plural(p.count,'review')+(p.computed?'':' on Judge.me')+'</p>';
-      else hh+='<p class="cr-bh-r">No reviews yet. Yours would be the first.</p>';
-      hh+='<a class="cr-link" href="#">View product ›</a> <button type="button" class="cr-link" id="crb-all">See all products</button></div>';
-    }else{
-      hh='<span class="cr-ph cr-t1 cr-ph-p cr-ph-all" aria-hidden="true"><b>'+one(D.summary.average_rating)+'</b></span><div class="cr-bh-t"><small>Every product</small><h2 id="crb-view-h" tabindex="-1">All reviews</h2><p class="cr-bh-r">'+rstars(D.summary.average_rating,'')+'<b>'+one(D.summary.average_rating)+'</b> out of 5 from '+D.summary.number_of_reviews+' reviews on Judge.me</p><p class="cr-bh-n">Pick a product above to see only its reviews.</p></div>';
+  function drawPanel(){
+    var p=st.product&&PIDX[st.product];
+    if(!p){
+      panel.innerHTML='<div class="crv-pov">'+
+        '<p class="crv-k">All products</p>'+
+        '<div class="crv-big"><b>'+one(D.summary.average_rating)+'</b><span>out of 5</span></div>'+
+        rstars(D.summary.average_rating,'')+
+        '<p class="crv-of"><b>Excellent</b> from '+D.summary.number_of_reviews+' reviews on Judge.me</p>'+histHTML()+
+        '<button type="button" class="btn sec wide" data-crv-write>Write a review</button></div>';
+      head.textContent='Latest reviews';
+      return;
     }
-    head.innerHTML=hh;
-    var hist=p?p.hist:HIST,tot=p?p.count:D.summary.number_of_reviews;
-    var hb=$('#crb-hist');
-    hb.innerHTML=tot?histHTML(hist,tot,p&&p.computed?'reviews here':'reviews on Judge.me'):'';
-    hb.hidden=!tot;
-    $('#crb-hnote').textContent=!tot?'':(p&&p.computed?'Worked out from the '+tot+' reviews on this page.':'Real distribution from Judge.me'+(p?'':', updated '+fdate(D.summary.updated_at))+'.');
-    setPressed($$('.cr-hrow',hb),st.star||'','data-star');
-    var items=filterReviews({handle:st.handle,star:st.star,sort:st.sort});
-    var note=$('#crb-pnote');
-    if(p&&p.reviews.length<p.count){note.hidden=false;note.textContent=p.reviews.length+' of '+p.count+' reviews are in this preview. On the live site the rest load from Judge.me.'}else note.hidden=true;
-    var jn=p&&st.star?(p.hist[5-st.star]||0):0;
-    list.o.empty=p?'<div class="cr-empty"><b>'+(!p.count?'No reviews of this product yet.':(jn?'The '+plural(jn,st.star+' star review')+' of this product load from Judge.me on the live site.':'No '+st.star+' star reviews of this product.'))+'</b><span>'+(p.count?'':'Bought it? Tell other owners how it went.')+'</span></div>':'';
-    list.set(items);
-    $('#crb-form-h').textContent=p?'Review this product':'Write a review';
-    var ab=$('#crb-all');if(ab)ab.addEventListener('click',function(){choose('',true)});
+    var x=pp(p.handle),pr=money(x);
+    panel.innerHTML='<div class="crv-pcard">'+
+      '<div class="crv-well">'+(x&&x.img?'<img src="'+esc(x.img)+'" alt="'+esc(p.title)+'">':'<span class="crv-th crv-th--ph crv-th--xl" aria-hidden="true"><span>'+esc(initial(p.title))+'</span></span>')+'</div>'+
+      '<div class="crv-pbody">'+(x&&x.brand?'<p class="crv-brand">'+esc(x.brand)+'</p>':'')+
+      '<h2 class="crv-pname">'+esc(p.title)+'</h2>'+
+      '<p class="crv-prate">'+rstars(p.avg)+' <b>'+one(p.avg)+'</b> <span>from '+plural(p.count,'review')+'</span></p>'+
+      (pr?'<p class="crv-price">'+esc(pr)+'</p>':'')+
+      '<a class="btn wide" href="#">View product</a>'+
+      '<button type="button" class="crv-rt crv-rt--lg" data-crv-write="'+esc(p.handle)+'">Review this product</button></div></div>';
+    head.textContent='Reviews of this product';
   }
-  function choose(h,scroll,fromForm){
-    st.handle=h;st.star=0;
-    setPressed($$('.cr-tile',tiles),h,'data-handle');
-    if(!fromForm){var it=h?(CAT[h]||{title:PIDX[h].title,handle:h}):null;form.reset();if(it)form.setProduct(it,true)}
-    draw();
-    try{history.replaceState(null,'',h?'#p='+h:location.pathname)}catch(e){}
-    if(scroll){$('#crb-view').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){$('#crb-view-h').focus({preventScroll:true})},350)}
+  var pg=new Pager($('#crv-list'),$('#crv-more'),6,function(r){return card(r,{noProd:!!st.product})});
+  function run(){
+    var l=select(st),p=st.product&&PIDX[st.product];
+    pg.set(l);
+    var t=statusText(l.length,st);
+    if(p&&!st.stars&&p.count>l.length)t+=' of '+p.count+' (the rest load from Judge.me on the live site)';
+    status.textContent=t;
   }
-  $('#crb-hist').addEventListener('click',function(e){var b=e.target.closest('.cr-hrow');if(!b)return;var s=+b.dataset.star;st.star=st.star===s?0:s;draw()});
-  $('#crb-sort').addEventListener('change',function(e){st.sort=e.target.value;draw()});
-  drawTiles();
-  var m=/#p=([\w-]+)/.exec(location.hash);
-  if(m&&productByHandle(m[1]))choose(m[1],false);else draw();
+  chips($('#crv-chips'),st,run);
+  $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
+  drawPanel();run();
 }
 
-/* ======================================================================
-   Version C: the wall, with the three-step form as a big block.
-   ====================================================================== */
-function initC(root){
-  fillSummary(root);
-  var mh=$('#crc-mini');if(mh){var t=D.summary.number_of_reviews;mh.innerHTML=[5,4,3,2,1].map(function(s){var n=D.summary.histogram[s]||0;return '<li><span>'+s+'</span><i><b style="width:'+Math.round(n/t*100)+'%"></b></i><em>'+n+'</em></li>'}).join('')}
-  var st={star:0,cat:'',handle:'',sort:'newest'};
-  var list=new List($('#crc-wall'),{page:12,more:$('#crc-more'),status:$('#crc-status'),card:{cls:'cr-rv--wall',clamp:320},
-    empty:'<div class="cr-empty"><b>No reviews match.</b><button type="button" class="btn sec sm" data-cr-clear>Clear filters</button></div>'});
-  var sc=counts(D.reviews,'rating'),h='<button type="button" class="cr-chip" data-star="" aria-pressed="true">All <em>'+D.reviews.length+'</em></button>';
-  for(var s=5;s>=1;s--)if(sc[s])h+='<button type="button" class="cr-chip cr-chip-st" data-star="'+s+'" aria-pressed="false">'+s+' <i class="cr-sqi" aria-hidden="true"></i><span class="sr">star</span> <em>'+sc[s]+'</em></button>';
-  $('#crc-stars').innerHTML=h;
-  var cc=catCounts();h='<option value="">All categories ('+D.reviews.length+')</option>';
-  catOrder().forEach(function(c){h+='<option value="'+esc(c)+'">'+esc(c)+' ('+cc[c]+')</option>'});
-  $('#crc-cat').innerHTML=h;
-  function sync(){
-    setPressed($$('[data-star]',$('#crc-stars')),st.star||'','data-star');
-    $('#crc-cat').value=st.cat;$('#crc-sort').value=st.sort;
-    var pf=$('#crc-pf');
-    if(st.handle){pf.hidden=false;pf.innerHTML='Showing <b>'+esc(PIDX[st.handle].title)+'</b> <button type="button" class="cr-chip on" data-cr-unp>Clear<span class="sr"> product filter</span></button>'}else pf.hidden=true;
-    list.set(filterReviews(st));
+/* ==========================================================================
+   Version C: featured carousel, then a tidy grid
+   ========================================================================== */
+function initC(){
+  /* featured: five-star reviews with a headline and a readable length, one per product */
+  var seen={},feat=D.reviews.filter(function(r){return r.rating===5&&r.title&&r.body.length>=80&&r.body.length<=460}).sort(function(a,b){return b.body.length-a.body.length}).filter(function(r){var k=r.product_handle||'shop';if(seen[k])return false;seen[k]=1;return true}).slice(0,6);
+  var track=$('#crv-car'),dots=$('#crv-dots');
+  track.innerHTML=feat.map(function(r,i){
+    var t=ptitle(r);
+    return '<li class="crv-slide" id="crv-s'+i+'" aria-roledescription="slide" aria-label="'+(i+1)+' of '+feat.length+'">'+
+      '<figure>'+rstars(5,'')+'<blockquote><p class="crv-qt">“'+esc(r.title)+'”</p><p class="crv-qb">'+esc(r.body)+'</p></blockquote>'+
+      '<figcaption><span class="crv-qn">'+esc(r.reviewer_name)+(r.verified_buyer?' <span class="crv-ver">Verified buyer</span>':'')+'</span>'+
+      (r.product_handle?'<a class="crv-qp" href="#">'+thumb(r.product_handle,t)+'<span>'+esc(t)+'</span></a>':'')+'</figcaption></figure></li>';
+  }).join('');
+  dots.innerHTML=feat.map(function(r,i){return '<button type="button" aria-label="Show review '+(i+1)+'" aria-controls="crv-s'+i+'"'+(i?'':' aria-current="true"')+'></button>'}).join('');
+  var cur=0;
+  function to(i){i=Math.max(0,Math.min(feat.length-1,i));track.scrollTo({left:track.children[i].offsetLeft-track.offsetLeft,behavior:RM?'auto':'smooth'})}
+  function mark(){
+    var i=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));
+    if(i===cur&&dots.querySelector('[aria-current]'))return;cur=i;
+    $$('button',dots).forEach(function(d,k){if(k===i)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current')});
+    $('#crv-prev').disabled=i<=0;$('#crv-next').disabled=i>=feat.length-1;
   }
-  $('#crc-stars').addEventListener('click',function(e){var b=e.target.closest('[data-star]');if(!b)return;st.star=+b.dataset.star||0;sync()});
-  $('#crc-cat').addEventListener('change',function(e){st.cat=e.target.value;st.handle='';sync()});
-  $('#crc-sort').addEventListener('change',function(e){st.sort=e.target.value;sync()});
-  root.addEventListener('click',function(e){
-    if(e.target.closest('[data-cr-clear]')){st.star=0;st.cat='';st.handle='';sync();$('#crc-status').focus();return}
-    if(e.target.closest('[data-cr-unp]')){st.handle='';sync();$('#crc-status').focus();return}
-    var pb=e.target.closest('.cr-rv-p[data-handle]');if(pb){st.handle=pb.dataset.handle;st.cat='';st.star=0;sync();$('#crc-wall-h').scrollIntoView({behavior:'smooth'});$('#crc-status').focus({preventScroll:true})}
-  });
-  new ReviewForm($('#crc-form'),{mode:'steps'});
-  sync();
+  var raf=0;track.addEventListener('scroll',function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(mark)},{passive:true});
+  $('#crv-prev').addEventListener('click',function(){to(cur-1)});
+  $('#crv-next').addEventListener('click',function(){to(cur+1)});
+  dots.addEventListener('click',function(e){var b=e.target.closest('button');if(b)to($$('button',dots).indexOf(b))});
+  track.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();to(cur+1)}else if(e.key==='ArrowLeft'){e.preventDefault();to(cur-1)}});
+  mark();
+
+  var st={stars:0,sort:'newest',product:''},status=$('#crv-status');
+  var sel=$('#crv-prod');
+  sel.innerHTML='<option value="">All products</option>'+PLIST.map(function(p){return '<option value="'+esc(p.handle)+'">'+esc(p.title)+' ('+p.reviews.length+')</option>'}).join('');
+  var pg=new Pager($('#crv-list'),$('#crv-more'),9,function(r){return card(r)});
+  function run(){var l=select(st);pg.set(l);status.textContent=statusText(l.length,st)}
+  chips($('#crv-chips'),st,run);
+  sel.addEventListener('change',function(){st.product=sel.value;run()});
+  $('#crv-sort').addEventListener('change',function(e){st.sort=e.target.value;run()});
+  run();
 }
 
-var root=doc.querySelector('[data-cr]');
-if(root){var v=root.getAttribute('data-cr');if(v==='a')initA(root);else if(v==='b')initB(root);else if(v==='c')initC(root)}
-window.CR={tp:tp,card:card,filter:filterReviews,products:PLIST};
+if(V==='a')initA();else if(V==='b')initB();else if(V==='c')initC();
 })();
