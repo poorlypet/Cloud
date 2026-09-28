@@ -254,3 +254,6 @@
   .cl-seg label{flex:1 1 auto}
 }
 @media (prefers-reduced-motion:reduce){.cl-bar i{transition:none}.cl-faq summary:after{transition:none}}
+.cl-a-hero .cl-card{max-width:540px;justify-self:end;width:100%}
+.cl-join>.cl-card{max-width:420px;justify-self:end;width:100%}
+@media (max-width:899px){.cl-a-hero .cl-card,.cl-join>.cl-card{justify-self:start}}

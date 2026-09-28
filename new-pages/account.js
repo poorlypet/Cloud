@@ -312,7 +312,7 @@ function openDog(id,from){
   $$('.ac-ferr',dlg).forEach(function(x){x.hidden=true});$$('.ac-f',dlg).forEach(function(x){x.classList.remove('is-err')});
   if(d){f.name.value=d.name||'';f.breed.value=d.breed||'';f.weight.value=d.weight||'';f.birthday.value=d.birthday||'';$$('input[name="cond"]',f).forEach(function(c){c.checked=(d.conditions||[]).indexOf(c.value)>-1})}
   $('[data-ac-deldog]',dlg).hidden=!d;
-  dlg.hidden=false;document.documentElement.classList.add('ac-lock');setTimeout(function(){f.name.focus()},30);
+  dlg.hidden=false;document.documentElement.classList.add('ac-lock');f.name.focus();
 }
 function closeDog(){if(!dlg||dlg.hidden)return;dlg.hidden=true;document.documentElement.classList.remove('ac-lock');if(lastFocus&&document.body.contains(lastFocus))lastFocus.focus()}
 function saveDog(e){
