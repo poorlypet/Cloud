@@ -35,8 +35,8 @@ through the Shopify Admin API and GemPages. Nothing in the store was changed.
 | Rule | Value |
 |---|---|
 | Member (from first order) | 5 points per £1 |
-| Regular (after £150 spent) | 6 points per £1, free delivery on every order |
-| Committed (after £400 spent) | 8 points per £1, free delivery, first look at new brands |
+| Regular (after £150 spent) | 6 points per £1 |
+| Committed (after £400 spent) | 8 points per £1, first look at new brands |
 | First order | Double points |
 | Verified Judge.me review | 50 points |
 | Referral | 500 points each when a friend places a first order |
@@ -65,7 +65,7 @@ points expiry; voucher expiry; whether a Club voucher combines with POORLY10 or 
 |---|---|---|
 | Points ledger (every earn, reversal, redemption) | **Cloudflare D1** table behind a Worker (same Cloudflare account as the order tracker), or the existing "Poorly Pet Account" app server if it has a database | Append-only, queryable, idempotent. Metafields are not a ledger. |
 | Balance, tier, lifetime spend (snapshot) | Customer metafields `loyalty.points` (number_integer), `loyalty.tier` (single_line_text), `loyalty.spend` (number_decimal) | Liquid can show the balance instantly with no API call; Klaviyo and segments can read them. |
-| Tier for discounts | Customer tags `club-member`, `club-regular`, `club-committed` | Customer segments (for free delivery and early access) can filter on tags. |
+| Tier for discounts | Customer tags `club-member`, `club-regular`, `club-committed` | Customer segments (for early access and new brands) can filter on tags. |
 | Dogs | Customer metafield `custom.dogs` (type `json`), definition with storefront read access | Already read by the live page; add `birthday` (YYYY-MM-DD). A `dog` metaobject is only worth it if dogs need their own admin screens. |
 | Vouchers | D1 `vouchers` table (code, value, points, discount id, created, used, order) | Shown in the account; the discount itself lives in Shopify. |
 
@@ -127,7 +127,6 @@ mutation($d: DiscountCodeBasicInput!) {
 Needs the app scopes `write_discounts`, `read_orders`, `read_customers`, `write_customers` (metafields and tags).
 
 ### 3.4 Tier perks
-- **Free delivery (Regular, Committed):** one automatic free-shipping discount whose `context` is a customer segment `customer_tags CONTAINS 'club-regular' OR customer_tags CONTAINS 'club-committed'`. Only works when the customer is signed in at checkout.
 - **Sale prices a day early:** the sale's automatic discount goes live a day earlier for the segment `club-member OR club-regular OR club-committed`, then for everyone.
 - **First look at new brands:** a collection shown only when the Liquid `customer.tags` contains `club-committed`.
 
@@ -150,7 +149,7 @@ Needs the app scopes `write_discounts`, `read_orders`, `read_customers`, `write_
 | Look and feel | App widget, or its API / JS SDK to drive these pages | Exactly the signed-off design |
 | Data | In the app; export if you leave | Yours |
 | Birthday per dog | Usually one birthday per customer | Any rule you like |
-| Tier perks (free delivery, early access) | Some apps apply perks; others only tag customers, and the segments above are still needed | As in 3.4 |
+| Tier perks (early access, new brands) | Some apps apply perks; others only tag customers, and the segments above are still needed | As in 3.4 |
 
 **Recommendation:** use a loyalty app with a storefront API (so the new account and Club pages keep this design and read the balance, tier and vouchers from it), and keep the custom "Poorly Pet Account" app for what an app cannot do: dog profiles in `custom.dogs`, per-dog birthday points (posted to the app as a custom activity), and the dog-based product picks. Go fully custom only if the plan price for tiers plus API is more than the ongoing cost of maintaining the edge cases.
 

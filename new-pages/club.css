@@ -131,3 +131,24 @@
 .cl-c .cl-teal .cl-ch{font:400 30px/1.1 var(--serif);margin:0 0 16px}
 @media (max-width:599px){.cl-c .cl-teal .cl-ch{font-size:24px}}
 .cl-cf label.cl-fo{display:inline-flex;align-items:center;margin:0;opacity:1;font-size:14px}
+
+/* ---------- version A, mobile intro (under 760px): one pale panel, read top to bottom ----------
+   heading, then the club card full width, then the three rules as a compact list, the extras
+   line and two full-width buttons. Desktop keeps the homepage 60/40 panel untouched. */
+@media (max-width:759px){
+  .cl-a .club{display:flex;flex-direction:column;background:#E4EED6;border:0;padding:22px 18px 20px;gap:0}
+  .cl-a .club .say{display:contents}
+  .cl-a .club .say h3{order:1;font-size:26px;line-height:1.12;margin:0}
+  .cl-a .club .say h3 br{display:none}
+  .cl-a .club .say h3 .chip{margin-top:6px;padding:3px 10px 6px;border-radius:10px}
+  .cl-a .club .say .lead{display:none}
+  .cl-a .club .cardside{order:2;background:transparent;padding:0;margin:16px 0 0;display:block}
+  .cl-a .club .card{width:100%;max-width:none;aspect-ratio:1.586/1;border-radius:16px}
+  .cl-a .clubB1 .rules{order:3;margin:16px 0 0}
+  .cl-a .clubB1 .rule{display:grid;grid-template-columns:122px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 0}
+  .cl-a .clubB1 .rule b{font-size:19px;white-space:nowrap}
+  .cl-a .clubB1 .rule span{font-size:14px;line-height:1.35}
+  .cl-a .clubB .extras{order:4;font-size:14px;line-height:1.45;margin:12px 0 0}
+  .cl-a .club .say .row{order:5;display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0 0;padding:0}
+  .cl-a .club .say .row .btn{width:100%;justify-content:center;min-height:48px}
+}

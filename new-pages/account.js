@@ -196,7 +196,7 @@ function renderPoints(el){
     return;
   }
   el.innerHTML='<div class="ac-pts"><div><span class="ac-k">Points balance</span><b class="ac-big">'+C.fmt(b)+'</b><span class="ac-pts-w">Worth '+C.money(v.value)+' in vouchers'+(pend?'. '+C.fmt(pend)+' more on the way.':'.')+'</span></div>'+
-    '<div><span class="ac-k">Your tier</span><b class="ac-tier">'+pr.tier.name+'</b><span class="ac-pts-w">'+pr.tier.rate+' points per £1'+(pr.tier.from>0?', free delivery':'')+'</span></div></div>'+
+    '<div><span class="ac-k">Your tier</span><b class="ac-tier">'+pr.tier.name+'</b><span class="ac-pts-w">'+pr.tier.rate+' points per £1</span></div></div>'+
     '<div class="ac-ladder"><div class="ac-lad-t"><span>'+money(s.spend)+' spent</span><span>'+(pr.next?'Next: '+pr.next.name+' at £'+pr.next.from:'Top tier')+'</span></div>'+bar+'<p class="ac-lad-n">'+next+'</p></div>';
 }
 function renderRedeem(el){

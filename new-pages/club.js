@@ -27,8 +27,8 @@
 var RULES={
   tiers:[
     {id:'member',   name:'Member',   from:0,   rate:5, perks:['5 points per £1']},
-    {id:'regular',  name:'Regular',  from:150, rate:6, perks:['6 points per £1','Free delivery on every order']},
-    {id:'committed',name:'Committed',from:400, rate:8, perks:['8 points per £1','Free delivery on every order','First look at new brands']}
+    {id:'regular',  name:'Regular',  from:150, rate:6, perks:['6 points per £1']},
+    {id:'committed',name:'Committed',from:400, rate:8, perks:['8 points per £1','First look at new brands']}
   ],
   firstOrderMultiplier:2,
   review:50,

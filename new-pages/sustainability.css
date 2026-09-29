@@ -193,3 +193,4 @@
   .su-chip{min-height:42px;padding:0 13px;font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){.su *{transition:none!important;scroll-behavior:auto!important}}
+.su-contact{background:#fff!important;border-top:1px solid var(--line);margin-top:0!important;padding:40px 0 24px!important}

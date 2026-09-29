@@ -223,3 +223,5 @@
   .wk-contact h2,.wk-c-band h2{font-size:30px}
 }
 @media (prefers-reduced-motion:reduce){.wk *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+.wk-contact{background:#fff!important;border-top:1px solid var(--line);margin-top:0!important;padding:40px 0 24px!important}
+.wk-crit li:before{content:"\2713"!important;width:28px!important;height:28px!important;border-radius:50%!important;background:#E4EED6!important;color:var(--teal)!important;font:700 14px/1 var(--sans)!important}.wk-crit li{grid-template-columns:40px minmax(0,1fr)!important}
