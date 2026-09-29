@@ -1,26 +1,26 @@
-/* Poorly Pet symptom scanner. One engine, three layouts (A, B, C).
+/* Poorly Pet symptom scanner. Photo first: one engine, three layouts (A, B, C).
    Load order: shell.js, products.js (PP_PRODUCTS, PP_BY_HANDLE, PP_TAGS), offers.js (PPOffers), this file.
    The page root carries data-ss="a" | "b" | "c".
 
-   How the live scanner works (GemPages page "Symptom Scanner", /pages/symptom-scanner, one Free HTML element):
-   the owner uploads ONE photo, the browser resizes it to max 1024px wide JPEG (quality 0.85) as a data URL,
-   and POSTs JSON to a Cloudflare Worker:
-     POST https://poorlypet-vision.green-mud-a533.workers.dev/symptom-check
-     Content-Type: application/json
-     { "area": "auto", "kind": "image", "images": ["data:image/jpeg;base64,..."] }
-   and gets back
-     { summary, see_vet_now, vet_reason, not_assessable,
-       conditions: [ { slug, label, confidence, explanation } ] }
-   where slug is one of the 16 condition slugs in LIVE_COND below. This page keeps that request shape.
-   With LIVE = false (preview) a local engine matches the owner's words and picked signs to the
-   43 symptoms of the signed-off symptom guide, using its synonyms. */
+   Same flow as the live scanner (GemPages page "Symptom Scanner", /pages/symptom-scanner, Free HTML element):
+     1. the owner picks, drops or takes ONE photo
+     2. the browser resizes it to max 1024px wide and makes a JPEG data URL (quality 0.85)
+     3. POST https://poorlypet-vision.green-mud-a533.workers.dev/symptom-check
+        Content-Type: application/json
+        { "area": "auto", "kind": "image", "images": ["data:image/jpeg;base64,..."] }
+     4. response { summary, see_vet_now, vet_reason, not_assessable,
+                   conditions: [ { slug, label, confidence, explanation } ] }
+        normalised exactly like the live page. not_assessable (or no conditions) = "we couldn't see enough".
+   see_vet_now / vet_reason are read but not shown (owner's rule); the page shows one calm line instead.
+   If the Worker can't be reached (offline, blocked preview) the owner can describe the problem instead:
+   a local matcher maps their words to the 43 signs of the signed-off symptom guide. */
 (function(){
 'use strict';
 
 /* ============================================================ CONFIG */
-var LIVE = false;                                                          // true = call the live Worker when a photo is added
-var ENDPOINT = 'https://poorlypet-vision.green-mud-a533.workers.dev/symptom-check';   // same URL as the live page
-var SEND_TEXT = false;   // the live Worker was built for {area, kind, images}. Set true only once it accepts "notes" too.
+var LIVE = true;                                                                     // false = never call the Worker
+var ENDPOINT = 'https://poorlypet-vision.green-mud-a533.workers.dev/symptom-check';  // same URL as the live page
+var TIMEOUT = 45000;                                                                 // ms before we give up on a scan
 /* ==================================================================== */
 
 var AREAS=[{"id":"legs-paws","name":"Legs & paws","blurb":"Limping, stiffness, sore or licked paws"},{"id":"skin-coat","name":"Skin & coat","blurb":"Itching, hot spots, flaky or thin coat"},{"id":"tummy-gut","name":"Tummy & gut","blurb":"Upsets, wind, appetite and weight"},{"id":"eyes-ears","name":"Eyes & ears","blurb":"Head shaking, smelly ears, weepy eyes"},{"id":"mouth-teeth","name":"Mouth & teeth","blurb":"Bad breath, tartar and sore gums"},{"id":"back-spine","name":"Back & spine","blurb":"Stiff backs, wobbly legs, no jumping"},{"id":"behaviour-mood","name":"Behaviour & mood","blurb":"Worry, noise fear and restlessness"},{"id":"whole-body","name":"Whole body","blurb":"Ageing, energy, weight and recovery"}];
@@ -69,52 +69,6 @@ var SYMPTOMS=[
 {"slug":"post-surgery-recovery","name":"Recovering from surgery or injury","area":"whole-body","syn":["after surgery","after an operation","operation","recovery","stitches","wound","cone","spay","neuter","cage rest","crate rest"],"looks":"Your dog is healing after an operation, an injury or a wound, and needs rest and protection.","why":"Neutering, joint surgery such as a cruciate repair, lump removal, or an injury.","helps":"Follow your vet's rest and exercise plan."},
 {"slug":"weight-management","name":"Trouble managing weight","area":"whole-body","syn":["losing weight","weight loss","underweight","thin","diet","can't lose weight","skinny"],"looks":"Your dog keeps gaining despite a diet, or is losing weight without trying.","why":"Too many calories or too little exercise. Unplanned weight loss can go with dental, gut or other health changes.","helps":"Weigh your dog monthly and keep a note."}
 ];
-
-/* The 16 condition slugs the live Worker returns, with the PP_TAGS key used for products. */
-var LIVE_COND={
-  'hot-spots':{label:'Hot spots',tag:'hot-spots',area:'skin-coat'},
-  'itchy-skin':{label:'Itchy skin & allergies',tag:'itchy-skin',area:'skin-coat'},
-  'seasonal-allergies':{label:'Seasonal allergies',tag:'seasonal-allergies',area:'skin-coat'},
-  'ear-infections':{label:'Ear infections',tag:'ear-eye-care',area:'eyes-ears'},
-  'dental-disease':{label:'Dental disease',tag:'dental-disease',area:'mouth-teeth'},
-  'arthritis':{label:'Arthritis',tag:'arthritis',area:'legs-paws'},
-  'hip-dysplasia':{label:'Hip dysplasia',tag:'hip-dysplasia',area:'legs-paws'},
-  'cruciate-ligament':{label:'Cruciate ligament',tag:'cruciate-ligament',area:'legs-paws'},
-  'luxating-patella':{label:'Luxating patella',tag:'luxating-patella',area:'legs-paws'},
-  'elbow-dysplasia':{label:'Elbow dysplasia',tag:'elbow-dysplasia',area:'legs-paws'},
-  'rear-leg-weakness':{label:'Rear leg weakness',tag:'rear-leg-weakness',area:'back-spine'},
-  'knuckling':{label:'Knuckling',tag:'knuckling',area:'legs-paws'},
-  'paw-conditions':{label:'Paw conditions',tag:'legs-paws',area:'legs-paws'},
-  'ivdd':{label:'IVDD',tag:'ivdd',area:'back-spine'},
-  'back-pain':{label:'Back pain',tag:'back-pain',area:'back-spine'},
-  'spondylosis':{label:'Spondylosis',tag:'spondylosis',area:'back-spine'}
-};
-/* our areas -> the live Worker's "area" values (it accepts auto, skin, ears, mouth, gait, back) */
-var LIVE_AREA={'skin-coat':'skin','eyes-ears':'ears','mouth-teeth':'mouth','legs-paws':'gait','back-spine':'back'};
-/* conditions named in a symptom's "why" text, shown as links under a match */
-var LINKED=[
-  ['arthritis',/arthritis/i,'Arthritis'],['hip-dysplasia',/hip (or elbow )?dysplasia/i,'Hip dysplasia'],
-  ['cruciate-ligament',/cruciate/i,'Cruciate ligament'],['luxating-patella',/kneecap|patella/i,'Luxating patella'],
-  ['ivdd',/ivdd/i,'IVDD'],['spondylosis',/spondylosis/i,'Spondylosis'],['degenerative-myelopathy',/myelopathy/i,'Degenerative myelopathy'],
-  ['itchy-skin',/allerg/i,'Itchy skin & allergies'],['hot-spots',/hot spot/i,'Hot spots'],['dental-disease',/gum disease|dental|tartar/i,'Dental disease'],
-  ['anxiety',/anxi|stress/i,'Anxiety'],['weight-management',/weight/i,'Weight'],['digestive-issues',/diet|digest|tummy|gut/i,'Digestive issues']
-];
-
-/* ------------------------------------------------------------ lookups */
-var BY={},AREA={};
-AREAS.forEach(function(a){AREA[a.id]=a;a.items=[]});
-SYMPTOMS.forEach(function(s){BY[s.slug]=s;AREA[s.area].items.push(s)});
-var PBH=window.PP_BY_HANDLE||{},TAGS=window.PP_TAGS||{},OFF=window.PPOffers||null;
-var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function $(s,el){return (el||document).querySelector(s)}
-function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
-function money(n){return '£'+(Math.round(n*100)/100).toFixed(2)}
-function lower(n){return n.charAt(0).toLowerCase()+n.slice(1)}
-function scrollToEl(el,off){if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-(off||12);window.scrollTo({top:y,behavior:RM?'auto':'smooth'})}
-function guideUrl(slug){return 'symptom-guide-a.html#'+slug}
-
 /* ------------------------------------------------------------ local matching engine */
 var STOP={};('a an the my his her he she him it its is are was were be been being has have had and or of on in at to for with keeps keep keeping kept '+
   'dog dogs doggy pup our me i we you very really bit lot just seems seem seemed does do did from up this that these them they their there '+
@@ -151,90 +105,106 @@ function localScan(st){
   });
   HINTS.forEach(function(h){if(h[0].test(low))Object.keys(h[1]).forEach(function(k){if(score[k]>0||h[1][k]>=.8)score[k]+=h[1][k]})});
   picks.forEach(function(k){if(k in score)score[k]+=3});
-  if(st.area)AREA[st.area].items.forEach(function(s){if(score[s.slug]>0)score[s.slug]+=.4});
   var list=SYMPTOMS.filter(function(s){return score[s.slug]>=.75}).sort(function(a,b){return score[b.slug]-score[a.slug]});
   var top=list.length?score[list[0].slug]:0;
   list=list.filter(function(s){return score[s.slug]>=top*.35}).slice(0,3);
-  return build(list.map(function(s){return {sym:s}}),st,'local');
+  return list;
 }
 
-/* ------------------------------------------------------------ result model shared by local and live */
-function build(hits,st,source,summary){
-  var items=hits.map(function(h,i){
-    if(h.sym){var s=h.sym;return {rank:i,name:s.name,area:s.area,areaName:AREA[s.area].name,why:s.why,tip:s.helps,link:guideUrl(s.slug),
-      tag:s.area+'/'+s.slug,linked:LINKED.filter(function(c){return c[1].test(s.why)}).slice(0,3)}}
-    var c=h.cond,m=LIVE_COND[c.slug]||{};
-    return {rank:i,name:c.label||m.label||c.slug,area:m.area||'',areaName:m.area?AREA[m.area].name:'',why:c.explanation||'',tip:'',link:'#',
-      tag:m.tag||'',linked:[]};
-  });
-  /* products: best of the first match, then the others, then the area */
-  var lists=items.map(function(it){return (TAGS[it.tag]||[]).slice()}),take=[4,3,2],out=[],why={};
-  function add(h,it){if(PBH[h]&&!why[h]&&out.length<10){why[h]=it;out.push(h)}}
-  lists.forEach(function(l,i){l.slice(0,take[i]).forEach(function(h){add(h,items[i])})});
-  lists.forEach(function(l,i){l.forEach(function(h){add(h,items[i])})});
-  if(items[0]&&items[0].area)(TAGS[items[0].area]||[]).forEach(function(h){if(out.length<8)add(h,items[0])});
-  if(st.age==='senior'&&items.length)(TAGS['senior-support']||[]).slice(0,2).forEach(function(h){if(out.length>=10)out.pop();add(h,items[0])});
-  return {source:source,items:items,products:out.map(function(h){return PBH[h]}),helps:why,summary:summary||'',empty:!items.length,dog:st.name||''};
-}
+/* The 16 condition slugs the live Worker returns: our label, and the PP_TAGS key used for products. */
+var COND={
+  'hot-spots':{label:'Hot spots',tag:'hot-spots',group:'Skin'},
+  'itchy-skin':{label:'Itchy skin & allergies',tag:'itchy-skin',group:'Skin'},
+  'seasonal-allergies':{label:'Seasonal allergies',tag:'seasonal-allergies',group:'Skin'},
+  'ear-infections':{label:'Ear infections',tag:'ear-eye-care',group:'Ears & mouth'},
+  'dental-disease':{label:'Dental disease',tag:'dental-disease',group:'Ears & mouth'},
+  'arthritis':{label:'Arthritis',tag:'arthritis',group:'Joints'},
+  'hip-dysplasia':{label:'Hip dysplasia',tag:'hip-dysplasia',group:'Joints'},
+  'elbow-dysplasia':{label:'Elbow dysplasia',tag:'elbow-dysplasia',group:'Joints'},
+  'cruciate-ligament':{label:'Cruciate ligament',tag:'cruciate-ligament',group:'Joints'},
+  'luxating-patella':{label:'Luxating patella',tag:'luxating-patella',group:'Joints'},
+  'paw-conditions':{label:'Paw conditions',tag:'legs-paws',group:'Legs & paws'},
+  'knuckling':{label:'Knuckling',tag:'knuckling',group:'Legs & paws'},
+  'rear-leg-weakness':{label:'Rear leg weakness',tag:'rear-leg-weakness',group:'Legs & paws'},
+  'ivdd':{label:'IVDD',tag:'ivdd',group:'Back'},
+  'back-pain':{label:'Back pain',tag:'back-pain',group:'Back'},
+  'spondylosis':{label:'Spondylosis',tag:'spondylosis',group:'Back'}
+};
 
-/* ------------------------------------------------------------ >>> REAL SCANNER PLUGS IN HERE <<<
-   Same request and response as the live /pages/symptom-scanner page. Only used when LIVE is true
-   and the owner added a photo (the live Worker reads photos). Anything else uses localScan().
-   The live response's see_vet_now / vet_reason are deliberately not shown (owner's round 2 rule). */
-function realScanner(st){
-  var body={area:LIVE_AREA[st.area]||'auto',kind:'image',images:[st.photo]};
-  if(SEND_TEXT)body.notes=st.text||'';
-  return fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
-    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
-    .then(function(d){
-      d=d||{};
-      if(d.not_assessable||!(d.conditions||[]).length)return null;
-      var hits=(d.conditions||[]).slice(0,3).map(function(c){return {cond:{slug:c.slug||'',label:c.label||'',explanation:c.explanation||''}}});
-      return build(hits,st,'live',d.summary||'');
-    });
-}
-function scan(st){
-  var wait=new Promise(function(r){setTimeout(r,RM?0:650)});
-  var job=(LIVE&&st.photo)?realScanner(st).catch(function(e){if(window.console)console.warn('Scanner offline, using local match',e);return null})
-    .then(function(r){return r||localScan(st)}):Promise.resolve(localScan(st));
-  return Promise.all([job,wait]).then(function(a){return a[0]});
-}
+/* ------------------------------------------------------------ helpers */
+var BY={};SYMPTOMS.forEach(function(s){BY[s.slug]=s});
+var PBH=window.PP_BY_HANDLE||{},TAGS=window.PP_TAGS||{},OFF=window.PPOffers||null;
+if(!window.PP_BY_HANDLE&&window.PP_PRODUCTS)window.PP_PRODUCTS.forEach(function(p){PBH[p.handle]=p});
+var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function $(s,el){return (el||document).querySelector(s)}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+function money(n){return '£'+(Math.round(n*100)/100).toFixed(2)}
+function shopName(l){return /^[A-Z]{3,}$/.test(l)?l:l.charAt(0).toLowerCase()+l.slice(1)}
+function scrollToEl(el,off){if(!el)return;var y=el.getBoundingClientRect().top+window.pageYOffset-(off||12);window.scrollTo({top:y,behavior:RM?'auto':'smooth'})}
 
-/* ------------------------------------------------------------ photo: resize on the device, like the live page */
+/* ------------------------------------------------------------ photo: resize on the device, exactly like the live page */
 function readPhoto(file,cb){
-  if(!file||!/^image\//.test(file.type||'')){cb(null,'Please choose a photo (JPG, PNG or HEIC).');return}
+  var ty=(file&&file.type)||'',nm=((file&&file.name)||'').toLowerCase();
+  if(!file||ty.indexOf('video')===0||/\.(mov|mp4|m4v|avi|webm|3gp|3g2|mkv|hevc|qt)$/.test(nm)){cb(null,'Please choose a photo (JPG, PNG or HEIC).');return}
   var url=URL.createObjectURL(file),img=new Image();
   img.onload=function(){
-    var w=Math.min(1024,img.width),c=document.createElement('canvas');c.width=w;c.height=Math.round(img.height*w/img.width);
-    c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
-    try{cb(c.toDataURL('image/jpeg',.85))}catch(e){cb(null,'Sorry, that photo could not be read.')}
+    var c=document.createElement('canvas');
+    var w=Math.min(1024,img.width),scale=w/img.width;
+    c.width=w;c.height=Math.round(img.height*scale);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url);
+    try{cb(c.toDataURL('image/jpeg',0.85))}catch(e){cb(null,'Sorry, that photo couldn’t be read. Please try a JPG or PNG.')}
   };
-  img.onerror=function(){URL.revokeObjectURL(url);cb(null,'Sorry, that photo could not be read. Try a JPG or PNG.')};
+  img.onerror=function(){URL.revokeObjectURL(url);cb(null,'Sorry, that photo couldn’t be read. Please try a JPG or PNG.')};
   img.src=url;
 }
-function photoField(id,small){
-  return '<div class="ss-photo'+(small?' ss-photo-s':'')+'" data-photo>'+
-    '<input class="ss-file" type="file" id="'+id+'" accept="image/*">'+
-    '<label class="ss-drop" for="'+id+'"><span class="ss-cam" aria-hidden="true"></span><span><b>Add a photo</b><span>Optional. Close up, in good light.</span></span></label>'+
-    '<div class="ss-prev" hidden><img alt="Your photo"><span class="ss-prev-t"><b>Photo added</b><span>Sent with your scan</span></span><button class="ss-link ss-rm" type="button">Remove</button></div>'+
-    '<p class="ss-err" role="alert" hidden></p></div>';
-}
-function bindPhoto(box,st,onChange){
-  var inp=$('.ss-file',box),drop=$('.ss-drop',box),prev=$('.ss-prev',box),err=$('.ss-err',box);
-  function set(d){st.photo=d||null;prev.hidden=!d;drop.hidden=!!d;if(d)$('img',prev).src=d;if(onChange)onChange(d)}
-  inp.addEventListener('change',function(){
-    var f=inp.files&&inp.files[0];if(!f)return;err.hidden=true;
-    readPhoto(f,function(d,msg){if(msg){err.textContent=msg;err.hidden=false;return}set(d)});
-    try{inp.value=''}catch(e){}
+
+/* ------------------------------------------------------------ the scan request, same as the live page */
+function normalize(d){
+  d=d||{};
+  var conds=(d.conditions||[]).map(function(c){
+    return {slug:c.slug||'',label:c.label||(COND[c.slug]||{}).label||c.slug||'Possible match',confidence:Math.round(c.confidence||0),explanation:c.explanation||''};
   });
-  ['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('on')})});
-  ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('on')})});
-  drop.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)readPhoto(f,function(d,msg){if(msg){err.textContent=msg;err.hidden=false}else set(d)})});
-  $('.ss-rm',box).addEventListener('click',function(){set(null)});
-  return {clear:function(){set(null)}};
+  return {summary:d.summary||'Here’s what we found.',see_vet_now:!!d.see_vet_now,vet_reason:d.vet_reason||'',conditions:conds,not_assessable:!!d.not_assessable};
+}
+function fail(kind,e){var x=new Error(kind);x.kind=kind;x.cause=e;return x}
+function scanPhoto(data){
+  if(!LIVE)return Promise.reject(fail('offline'));
+  if(navigator.onLine===false)return Promise.reject(fail('offline'));
+  var ctl=window.AbortController?new AbortController():null,timer=ctl?setTimeout(function(){ctl.abort()},TIMEOUT):0;
+  return fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({area:'auto',kind:'image',images:[data]}),signal:ctl?ctl.signal:undefined})
+    .then(function(r){
+      clearTimeout(timer);
+      return r.json().catch(function(){throw fail('server')}).then(function(d){if(!r.ok&&!(d&&d.conditions))throw fail('server');return normalize(d)});
+    },function(e){clearTimeout(timer);throw fail(e&&e.name==='AbortError'?'slow':'offline',e)});
 }
 
-/* ------------------------------------------------------------ the site's product card (.pk) and rail */
+/* ------------------------------------------------------------ result model (photo scan or described) */
+function productsFor(items){
+  var lists=items.map(function(it){return (TAGS[it.tag]||[]).slice()}),take=[4,3,2],out=[],why={};
+  function add(h,it){if(PBH[h]&&!why[h]&&out.length<10){why[h]=it;out.push(h)}}
+  lists.forEach(function(l,i){l.slice(0,take[i]||1).forEach(function(h){add(h,items[i])})});
+  lists.forEach(function(l,i){l.forEach(function(h){add(h,items[i])})});
+  return {list:out.map(function(h){return PBH[h]}),why:why};
+}
+function fromScan(d,photo){
+  var items=d.conditions.slice(0,3).map(function(c){
+    var m=COND[c.slug]||{};
+    return {label:m.label||c.label,text:c.explanation,tag:m.tag||c.slug};
+  });
+  var pr=productsFor(items);
+  return {source:'photo',photo:photo,summary:d.summary,items:items,products:pr.list,why:pr.why};
+}
+function fromWords(text){
+  var list=localScan({text:text});
+  var items=list.map(function(s){return {label:s.name,text:s.why,tag:s.area+'/'+s.slug}});
+  var pr=productsFor(items);
+  if(items[0]&&pr.list.length<8)(TAGS[list[0].area]||[]).forEach(function(h){if(PBH[h]&&!pr.why[h]&&pr.list.length<10){pr.why[h]=items[0];pr.list.push(PBH[h])}});
+  return {source:'words',summary:items.length?'Matched from your description, closest first.':'',items:items,products:pr.list,why:pr.why,empty:!items.length};
+}
+
+/* ------------------------------------------------------------ the site's product card (.pk) and rail, as on the homepage */
 function catTab(p){
   var t=(p.productType||'').toLowerCase()+' '+(p.title||'').toLowerCase();
   if(/bundle|gift set/.test(t))return 'Care kit';
@@ -254,25 +224,23 @@ function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<
 function rev(p){
   if(!p.rating)return '<span class="rev none" aria-hidden="true"></span>';
   var n=p.reviewCount||0;
-  return '<a class="rev" href="#">'+stars(p.rating)+'<span>'+(Math.round(p.rating*10)/10)+' <em>('+n+' review'+(n===1?'':'s')+')</em></span></a>';
+  return '<a class="rev" href="#">'+stars(p.rating)+'<span>'+(Math.round(p.rating*10)/10).toFixed(1)+' <em>('+n+' review'+(n===1?'':'s')+')</em></span></a>';
 }
 function pk(p,helps){
-  var badge=OFF?OFF.badge(p):null,line=OFF?(OFF.lines(p)[0]||''):'',tab=catTab(p),sale=p.compareAt&&p.compareAt>p.price,src=p.img||p.cdn||'';
+  var badge=OFF?OFF.badge(p):null,line=OFF?(OFF.lines(p)[0]||''):'',tab=catTab(p),sale=p.compareAt&&p.compareAt>p.price,src=p.img||'';
   return '<article class="pk">'+(badge?'<span class="tab sale">'+esc(badge)+'</span>':tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-    '<a class="well" href="#">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy" data-ss-img>':'<span class="ss-noimg" aria-hidden="true"></span>')+'</a>'+
+    '<a class="well" href="#">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy" data-ss-img>':'')+'</a>'+
     '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(p.title)+'</a>'+rev(p)+
     (helps?'<span class="helps">'+esc(helps)+'</span>':'')+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>':'')+'</div>'+
+    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span>':'')+'</div>'+
     (line?'<span class="ss-offer">'+esc(line)+'</span>':'')+
     '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
 }
-document.addEventListener('error',function(e){
-  var t=e.target;
-  if(t&&t.tagName==='IMG'&&t.hasAttribute('data-ss-img')){var s=document.createElement('span');s.className='ss-noimg';s.setAttribute('aria-hidden','true');t.parentNode.replaceChild(s,t)}
-},true);
+/* image error fallback: drop the photo and leave the plain well */
+document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.hasAttribute('data-ss-img'))t.remove()},true);
 function rail(res){
   return '<div class="railwrap ss-rw"><div class="rail prail" tabindex="0" aria-label="Products that help">'+
-    res.products.map(function(p){var it=res.helps[p.handle];return pk(p,it?'For '+lower(it.name):'')}).join('')+'</div>'+
+    res.products.map(function(p){var it=res.why[p.handle];return pk(p,it?'For '+shopName(it.label):'')}).join('')+'</div>'+
     '<div class="scroller"><button class="sarr prev" type="button" aria-label="Scroll back" disabled><span>←</span></button><div class="track"><i></i></div><button class="sarr next" type="button" aria-label="Scroll forward"><span>→</span></button></div></div>';
 }
 var railUps=[];
@@ -309,171 +277,251 @@ document.addEventListener('click',function(e){
   var o=b.getAttribute('data-o')||b.textContent;b.setAttribute('data-o',o);b.textContent='Added';clearTimeout(b._t);b._t=setTimeout(function(){b.textContent=o},1800);
 });
 
-/* ------------------------------------------------------------ shared report blocks */
-function headline(res){
-  if(res.empty)return 'No clear match yet';
-  return (res.dog?esc(res.dog)+'\u2019s closest match: ':'Closest match: ')+esc(lower(res.items[0].name));
+/* ------------------------------------------------------------ shared result blocks */
+function rowsHtml(res){
+  return '<ol class="ss-rows">'+res.items.map(function(it,i){
+    return '<li class="ss-row"><span class="ss-conf'+(i?'':' ss-c1')+'">'+(i?'Also possible':'Most likely')+'</span>'+
+      '<div class="ss-row-t"><h3>'+esc(it.label)+'</h3>'+(it.text?'<p>'+esc(it.text)+'</p>':'')+'</div>'+
+      '<a class="ss-shop" href="#">Shop '+esc(shopName(it.label))+' <span aria-hidden="true">›</span></a></li>';
+  }).join('')+'</ol>';
 }
-function hitHtml(it){
-  return '<li class="ss-hit'+(it.rank===0?' ss-top':'')+'"><div class="ss-hit-h"><span class="ss-rank">'+(it.rank===0?'Closest match':'Also possible')+'</span>'+
-    (it.areaName?'<span class="ss-area">'+esc(it.areaName)+'</span>':'')+'</div>'+
-    '<h3>'+esc(it.name)+'</h3>'+
-    (it.why?'<p><b>Usually down to:</b> '+esc(it.why)+'</p>':'')+
-    (it.tip?'<p><b>Try first:</b> '+esc(it.tip)+'</p>':'')+
-    (it.linked.length?'<p class="ss-linked"><b>Linked to:</b> '+it.linked.map(function(c){return '<a href="#">'+esc(c[2])+'</a>'}).join(', ')+'</p>':'')+
-    '<a class="ss-more" href="'+esc(it.link)+'">'+(it.link==='#'?'Shop '+esc(lower(it.name))+' ›':'Read more in the symptom guide ›')+'</a></li>';
+var CALM='<p class="ss-calm">Our scanner doesn’t replace your vet.</p>';
+function emptyWordsHtml(){
+  return '<div class="ss-note ss-note-s"><b>No clear match yet</b><p>Try the words you would use to a friend, like “itchy ears”, “limping” or “red skin on the belly”.</p></div>';
 }
-function hitsHtml(res){return '<ol class="ss-hits">'+res.items.map(hitHtml).join('')+'</ol>'}
-function emptyHtml(){
-  return '<div class="ss-empty"><p>We could not match that to a sign in our guide. Try the words you would use to a friend, like <b>itchy ears</b>, <b>limping</b> or <b>upset tummy</b>, or browse by area.</p>'+
-    '<div class="ss-areas">'+AREAS.map(function(a){return '<a href="symptom-guide-a.html#'+a.items[0].slug+'">'+esc(a.name)+'</a>'}).join('')+'</div></div>';
+function fillProducts(res){
+  var prod=$('#ss-prod');if(!prod)return;
+  prod.hidden=res.empty||!res.products.length;
+  if(prod.hidden)return;
+  var names=res.items.slice(0,2).map(function(it){return shopName(it.label)});
+  $('[data-prod-h]',prod).innerHTML='Products for <em>'+esc(names[0])+'</em>';
+  $('[data-prod-p]',prod).textContent=res.products.length+' picks for '+names.join(' and ')+', with this month’s offers.';
+  $('[data-prod-all]',prod).textContent='Shop '+names[0]+' ›';
+  var body=$('[data-prod-body]',prod);body.innerHTML=rail(res);bindRails(prod);
 }
-function summaryLine(res){
-  if(res.empty)return 'Nothing matched closely enough.';
-  if(res.summary)return res.summary;
-  var n=res.items.length;
-  return n===1?'One sign in our guide fits what you described.':'Most likely first. '+n+' signs in our guide fit what you described.';
+function hideProducts(){var p=$('#ss-prod');if(p)p.hidden=true}
+
+/* ------------------------------------------------------------ the scanner widget (upload -> preview -> scanning -> result) */
+var STEPS=['Preparing your photo','Looking for visible signs','Matching to common conditions','Finding products that help'];
+var NOTES={
+  offline:['The scanner needs an internet connection to scan photos','Check you’re online and try again, or describe what you can see and we’ll match it for you.'],
+  slow:['That scan took too long','Please try again in a moment, or describe what you can see instead.'],
+  server:['We couldn’t finish that scan','Please try again in a moment, or describe what you can see instead.'],
+  unclear:['We couldn’t see enough in that photo','Try a closer, well-lit photo of one area, like one ear, one paw or one patch of skin.']
+};
+var TRY=[['Itchy ears','scratching his ears and shaking his head'],['Red, itchy skin','red itchy skin on his belly'],['Licking paws','keeps licking and chewing his paws'],['Limping','limping on a back leg after walks']];
+var uid=0;
+function stageHtml(o){
+  var n=++uid;
+  return '<div class="ss-stage" data-state="idle">'+
+    '<input class="ss-file" type="file" accept="image/*" tabindex="-1" aria-hidden="true" data-in="pick">'+
+    '<input class="ss-file" type="file" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true" data-in="cam">'+
+    /* idle: drop zone */
+    '<div class="ss-drop" data-drop>'+
+      '<span class="ss-drop-ic" aria-hidden="true"></span>'+
+      '<p class="ss-drop-t">'+(o.dropTitle||'Drop a photo here')+'</p>'+
+      '<p class="ss-drop-s">or choose one from your device. JPG, PNG or HEIC.</p>'+
+      '<div class="ss-drop-b"><button class="btn sec" type="button" data-choose>Choose a photo</button>'+
+      '<button class="btn ss-ghost ss-camb" type="button" data-camera>Take a photo</button></div>'+
+      '<p class="ss-err" role="alert" hidden></p>'+
+    '</div>'+
+    /* ready / scanning: preview */
+    '<div class="ss-view" data-view>'+
+      '<div class="ss-pic"><img alt="Your photo" data-pic><span class="ss-beam" aria-hidden="true"></span></div>'+
+      '<div class="ss-side">'+
+        '<div class="ss-ready"><p class="ss-side-t">Photo added</p><p class="ss-side-s">Check it shows the problem clearly, then scan.</p>'+
+          '<button class="btn sec ss-go" type="button" data-go>Scan this photo</button>'+
+          '<button class="ss-link" type="button" data-retake>Retake or choose another</button></div>'+
+        '<div class="ss-busy"><p class="ss-side-t">Scanning your photo</p><ol class="ss-steps">'+STEPS.map(function(s){return '<li>'+s+'</li>'}).join('')+'</ol>'+
+          '<p class="sr" aria-live="polite" data-live></p></div>'+
+        '<div class="ss-done"><p class="ss-side-t">Scan complete</p><p class="ss-side-s">Your results are ready.</p>'+
+          '<button class="ss-link" type="button" data-again-s>Scan another photo</button></div>'+
+      '</div>'+
+    '</div>'+
+    /* error / unclear */
+    '<div class="ss-note" data-note tabindex="-1"><b data-note-t></b><p data-note-p></p>'+
+      '<div class="ss-note-b"><button class="btn sec" type="button" data-retry>Try again</button>'+
+      '<button class="btn ss-ghost" type="button" data-retake2>Choose another photo</button>'+
+      '<button class="ss-link" type="button" data-describe>Describe it instead</button></div></div>'+
+    /* describe: text fallback */
+    '<form class="ss-desc" data-desc novalidate><label for="ss-d'+n+'">Describe what you can see</label>'+
+      '<textarea id="ss-d'+n+'" rows="3" placeholder="For example: red, itchy skin on his belly and he keeps scratching"></textarea>'+
+      '<div class="ss-try"><span>Try:</span>'+TRY.map(function(t){return '<button class="ss-chip" type="button" data-try="'+esc(t[1])+'">'+esc(t[0])+'</button>'}).join('')+'</div>'+
+      '<div class="ss-desc-b"><button class="btn sec" type="submit">Find matches</button><button class="ss-link" type="button" data-back>Scan a photo instead</button></div>'+
+      '<p class="ss-err" role="alert" hidden data-derr></p></form>'+
+    (o.noDescribeLink?'':'<p class="ss-alt" data-alt>No photo to hand? <button class="ss-link" type="button" data-describe>Describe it instead</button></p>')+
+  '</div>';
 }
+function Scanner(host,o){
+  o=o||{};
+  host.innerHTML=stageHtml(o);
+  var el=$('.ss-stage',host),pick=$('[data-in=pick]',el),cam=$('[data-in=cam]',el),drop=$('[data-drop]',el),pic=$('[data-pic]',el);
+  var err=$('.ss-drop .ss-err',el),live=$('[data-live]',el),steps=$$('.ss-steps li',el),note=$('[data-note]',el),ta=$('textarea',el),derr=$('[data-derr]',el);
+  var S={photo:null,state:'idle',run:0,last:null};
+  function set(st){S.state=st;el.setAttribute('data-state',st);if(o.onState)o.onState(st,S)}
+  function showErr(m){err.textContent=m;err.hidden=!m}
+  function take(file){
+    showErr('');
+    readPhoto(file,function(d,m){
+      if(m){showErr(m);set('idle');return}
+      S.photo=d;pic.src=d;set('ready');
+      var g=$('[data-go]',el);if(g)g.focus({preventScroll:true});
+    });
+  }
+  function onPick(e){var f=e.target.files&&e.target.files[0];if(f)take(f);try{e.target.value=''}catch(x){}}
+  pick.addEventListener('change',onPick);cam.addEventListener('change',onPick);
+  $('[data-choose]',el).addEventListener('click',function(){pick.click()});
+  $('[data-camera]',el).addEventListener('click',function(){cam.click()});
+  drop.addEventListener('click',function(e){if(e.target===drop||e.target.closest('.ss-drop-ic,.ss-drop-t,.ss-drop-s'))pick.click()});
+  ['dragenter','dragover'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('on')})});
+  ['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('on')})});
+  drop.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)take(f)});
+  function reset(focus){
+    S.run++;S.photo=null;pic.removeAttribute('src');showErr('');set('idle');
+    if(o.onReset)o.onReset();
+    if(focus)$('[data-choose]',el).focus({preventScroll:true});
+  }
+  function retake(){reset(false);pick.click()}
+  $('[data-retake]',el).addEventListener('click',retake);
+  $('[data-retake2]',el).addEventListener('click',retake);
+  function progress(i){steps.forEach(function(li,k){li.className=k<i?'done':k===i?'now':''});if(STEPS[i])live.textContent=STEPS[i]}
+  function go(){
+    if(!S.photo)return;
+    var run=++S.run;set('scanning');progress(0);
+    var i=0,tick=setInterval(function(){if(i<STEPS.length-1)progress(++i)},RM?250:700);
+    var min=new Promise(function(r){setTimeout(r,RM?300:2400)});
+    Promise.all([scanPhoto(S.photo).then(function(d){return {d:d}},function(e){return {e:e}}),min]).then(function(a){
+      clearInterval(tick);if(run!==S.run)return;progress(STEPS.length);
+      var r=a[0];
+      if(r.e){if(window.console)console.warn('Symptom scanner:',r.e.kind,r.e.cause||'');showNote(r.e.kind||'offline');return}
+      if(r.d.not_assessable||!r.d.conditions.length){showNote('unclear');return}
+      var res=fromScan(r.d,S.photo);S.last=res;set('result');
+      if(o.onResult)o.onResult(res);
+    });
+  }
+  function showNote(kind){
+    var t=NOTES[kind]||NOTES.server;
+    $('[data-note-t]',note).textContent=t[0];$('[data-note-p]',note).textContent=t[1];
+    note.setAttribute('data-kind',kind);
+    set(kind==='unclear'?'unclear':'error');
+    note.focus({preventScroll:true});
+  }
+  $('[data-go]',el).addEventListener('click',go);
+  $('[data-again-s]',el).addEventListener('click',function(){reset(true)});
+  $('[data-retry]',el).addEventListener('click',go);
+  $$('[data-describe]',el).forEach(function(b){b.addEventListener('click',function(){set('describe');ta.focus()})});
+  $('[data-back]',el).addEventListener('click',function(){set(S.photo?'ready':'idle');if(!S.photo)$('[data-choose]',el).focus()});
+  function describe(){
+    var v=ta.value.trim();
+    if(!v){derr.textContent='Add a few words about what you can see.';derr.hidden=false;ta.focus();return}
+    derr.hidden=true;
+    var res=fromWords(v);
+    if(res.empty){derr.textContent='We couldn’t match that. Try the words you would use to a friend, like “itchy ears” or “limping”.';derr.hidden=false;return}
+    S.last=res;if(o.onResult)o.onResult(res);
+  }
+  $('[data-desc]',el).addEventListener('submit',function(e){e.preventDefault();describe()});
+  $$('[data-try]',el).forEach(function(b){b.addEventListener('click',function(){ta.value=b.getAttribute('data-try');describe()})});
+  return {el:el,reset:reset,set:set,state:function(){return S.state},photo:function(){return S.photo},pick:function(){pick.click()},choose:$('[data-choose]',el)};
+}
+
 function faqBind(root){
   $$('.ss-q',root).forEach(function(q){q.addEventListener('click',function(){
     var on=!q.classList.contains('on');q.classList.toggle('on',on);q.setAttribute('aria-expanded',on);q.nextElementSibling.classList.toggle('on',on);
   })});
 }
-function fillResults(res,st){
-  var rep=$('#ss-rep'),prod=$('#ss-prod');
-  if(rep){
-    rep.hidden=false;
-    $('[data-rep-h]',rep).innerHTML=headline(res).replace(/(match: )(.*)$/,'$1<em>$2</em>');
-    $('[data-rep-p]',rep).textContent=summaryLine(res);
-    $('[data-rep-body]',rep).innerHTML=res.empty?emptyHtml():hitsHtml(res);
-  }
-  if(prod){
-    prod.hidden=res.empty||!res.products.length;
-    if(!prod.hidden){
-      $('[data-prod-p]',prod).textContent=res.products.length+' picks for '+lower(res.items[0].name)+(res.items.length>1?' and related signs':'')+'.';
-      $('[data-prod-body]',prod).innerHTML=rail(res);bindRails(prod);
-    }
-  }
-}
-function busy(btn,on){if(!btn)return;if(on){btn.setAttribute('data-o',btn.innerHTML);btn.innerHTML='Scanning…';btn.disabled=true}else{btn.innerHTML=btn.getAttribute('data-o')||btn.innerHTML;btn.disabled=false}}
-function needWords(st){return !st.text.trim()&&!(st.picks&&st.picks.length)&&!(LIVE&&st.photo)}
-var NEED_MSG='Add a few words about what you are seeing'+(LIVE?'':' (in this preview the scan reads your words; the photo goes to the live scanner)')+'.';
+function thumb(res){return res.photo?'<img class="ss-thumb" src="'+res.photo+'" alt="Your photo">':''}
 
-/* ============================================================ VERSION A: one panel, results below */
+/* ============================================================ VERSION A: big drop zone hero, results below */
 function runA(root){
-  var st={text:'',photo:null,picks:[],area:null,name:'',age:''};
-  var form=$('#ss-form',root),ta=$('#ss-desc',root),btn=$('.ss-go',root),msg=$('.ss-msg',root);
-  $('[data-photo-slot]',root).innerHTML=photoField('ss-file-a');
-  bindPhoto($('[data-photo]',root),st);
-  function go(){
-    st.text=ta.value;st.name=($('#ss-name',root).value||'').trim();st.age=$('#ss-age',root).value;
-    if(needWords(st)){msg.textContent=NEED_MSG;msg.hidden=false;ta.focus();return}
-    msg.hidden=true;busy(btn,true);
-    scan(st).then(function(res){busy(btn,false);fillResults(res,st);scrollToEl($('#ss-rep'))});
+  var rep=$('#ss-rep');
+  var sc=Scanner($('[data-stage]',root),{dropTitle:'Drop a photo of the problem here',onResult:show,onReset:clear});
+  function show(res){
+    rep.hidden=false;
+    $('[data-rep-h]',rep).innerHTML=res.source==='photo'?'Your scan <em>results</em>':'Your <em>matches</em>';
+    $('[data-rep-p]',rep).textContent=res.summary;
+    $('[data-rep-body]',rep).innerHTML='<div class="ss-a-res'+(res.photo?'':' ss-nopic')+'">'+(res.photo?'<div class="ss-a-pic">'+thumb(res)+'<button class="ss-link" type="button" data-again>Scan another photo</button></div>':'')+'<div>'+rowsHtml(res)+CALM+'</div></div>';
+    $$('[data-again]',rep).forEach(function(b){b.addEventListener('click',again)});
+    fillProducts(res);scrollToEl(rep);
   }
-  form.addEventListener('submit',function(e){e.preventDefault();go()});
-  $$('[data-try]',root).forEach(function(b){b.addEventListener('click',function(){ta.value=b.getAttribute('data-try');go()})});
-  $$('[data-again]',root).forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();ta.value='';scrollToEl($('#ss-scan'));setTimeout(function(){ta.focus({preventScroll:true})},RM?0:500)})});
+  function clear(){rep.hidden=true;hideProducts()}
+  function again(e){if(e)e.preventDefault();sc.reset(true);scrollToEl($('#ss-scan'))}
+  $$('[data-again-top]',root).forEach(function(a){a.addEventListener('click',again)});
 }
 
-/* ============================================================ VERSION B: guided, where then what */
+/* ============================================================ VERSION B: stepped modal launched from a compact page */
 function runB(root){
-  var st={text:'',photo:null,picks:[],area:null,name:'',age:''};
-  var s1=$('[data-step="1"]',root),s2=$('[data-step="2"]',root),btn=$('.ss-go',root),msg=$('.ss-msg',root),ta=$('#ss-desc',root);
-  var segs=$$('.ss-seg i',root),cnt=$('.ss-count',root);
-  $('[data-areas]',root).innerHTML=AREAS.map(function(a){return '<button class="ss-tile" type="button" data-area="'+a.id+'"><b>'+esc(a.name)+'</b><span>'+esc(a.blurb)+'</span></button>'}).join('');
-  $('[data-photo-slot]',root).innerHTML=photoField('ss-file-b',true);
-  bindPhoto($('[data-photo]',root),st);
-  function show(n){
-    s1.hidden=n!==1;s2.hidden=n!==2;segs.forEach(function(s,i){s.classList.toggle('on',i<n)});cnt.innerHTML='Step <b>'+n+'</b> of 2';
-    var t=n===1?s1:s2;t.classList.remove('ss-in');void t.offsetWidth;t.classList.add('ss-in');
+  var modal=$('#ss-modal'),dlg=$('.ss-dlg',modal),resBox=$('[data-dlgres]',modal),rep=$('#ss-rep'),opener=null,last=null;
+  var marks=$$('.ss-stepper li',modal);
+  var sc=Scanner($('[data-stage]',modal),{noDescribeLink:false,onState:step,onResult:show,onReset:function(){}});
+  function step(st){
+    var n=st==='scanning'?2:st==='result'?3:1;
+    marks.forEach(function(m,i){m.classList.toggle('on',i<n);m.classList.toggle('now',i===n-1);if(i===n-1)m.setAttribute('aria-current','step');else m.removeAttribute('aria-current')});
+    resBox.hidden=st!=='result';
   }
-  function pickArea(id){
-    st.area=id;st.picks=[];
-    $$('.ss-tile',root).forEach(function(t){t.setAttribute('aria-pressed',t.getAttribute('data-area')===id)});
-    var a=AREA[id];
-    $('[data-where]',root).textContent=a?a.name:'Anywhere';
-    $('[data-chips]',root).innerHTML=a?a.items.map(function(s){return '<button class="ss-chip" type="button" aria-pressed="false" data-pick="'+s.slug+'">'+esc(s.name)+'</button>'}).join(''):'';
-    $('[data-chips-h]',root).hidden=!a;
-    ta.placeholder=a?'Anything else? For example: worse after walks, started last week':'For example: he keeps scratching his ears and shaking his head';
-    show(2);scrollToEl($('#ss-scan'),8);
+  function show(res){
+    last=res;sc.set('result');
+    resBox.innerHTML='<div class="ss-b-res">'+(res.photo?thumb(res):'')+'<p class="ss-sum">'+esc(res.summary)+'</p></div>'+rowsHtml(res)+CALM+
+      '<div class="ss-b-go">'+(res.products.length?'<button class="btn sec" type="button" data-see>See '+res.products.length+' products that help</button>':'')+
+      '<button class="ss-link" type="button" data-again>Scan another photo</button></div>';
+    var see=$('[data-see]',resBox);if(see)see.addEventListener('click',function(){close();fillPage(res);scrollToEl(rep)});
+    $('[data-again]',resBox).addEventListener('click',function(){sc.reset(true)});
+    fillPage(res);
+    var h=$('.ss-rows',resBox);dlg.scrollTop=0;
+    (see||$('[data-again]',resBox)).focus({preventScroll:true});
   }
-  $('[data-areas]',root).addEventListener('click',function(e){var b=e.target.closest('[data-area]');if(b)pickArea(b.getAttribute('data-area'))});
-  $('[data-skip]',root).addEventListener('click',function(){pickArea(null)});
-  $('[data-back]',root).addEventListener('click',function(){show(1)});
-  $('[data-chips]',root).addEventListener('click',function(e){
-    var c=e.target.closest('[data-pick]');if(!c)return;var k=c.getAttribute('data-pick'),on=c.getAttribute('aria-pressed')!=='true';
-    c.setAttribute('aria-pressed',on);st.picks=on?st.picks.concat(k):st.picks.filter(function(x){return x!==k});msg.hidden=true;
+  function fillPage(res){
+    rep.hidden=false;
+    $('[data-rep-h]',rep).innerHTML='Your last <em>scan</em>';
+    $('[data-rep-p]',rep).textContent=res.summary;
+    $('[data-rep-body]',rep).innerHTML=rowsHtml(res);
+    fillProducts(res);
+  }
+  function focusables(){return $$('button:not([disabled]),[href],textarea,input:not([tabindex="-1"]),[tabindex]:not([tabindex="-1"])',dlg).filter(function(x){return x.offsetParent!==null})}
+  function open(e){
+    opener=e&&e.currentTarget||document.activeElement;
+    if(sc.state()==='result'||sc.state()==='error'||sc.state()==='unclear')sc.reset(false);
+    modal.hidden=false;document.documentElement.classList.add('ss-lock');
+    requestAnimationFrame(function(){modal.classList.add('on')});
+    sc.choose.focus({preventScroll:true});
+  }
+  function close(){
+    modal.classList.remove('on');modal.hidden=true;document.documentElement.classList.remove('ss-lock');
+    if(opener&&opener.focus)opener.focus({preventScroll:true});
+  }
+  $$('[data-open-scan]').forEach(function(b){b.addEventListener('click',open)});
+  $$('[data-close]',modal).forEach(function(b){b.addEventListener('click',close)});
+  modal.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){e.preventDefault();close();return}
+    if(e.key!=='Tab')return;
+    var f=focusables();if(!f.length)return;
+    if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus()}
+    else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus()}
   });
-  btn.addEventListener('click',function(){
-    st.text=ta.value;
-    if(needWords(st)){msg.textContent=st.area?'Pick one or more signs, or describe what you are seeing.':NEED_MSG;msg.hidden=false;return}
-    msg.hidden=true;busy(btn,true);
-    scan(st).then(function(res){busy(btn,false);fillResults(res,st);scrollToEl($('#ss-rep'))});
-  });
-  $$('[data-again]',root).forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();ta.value='';st.picks=[];show(1);scrollToEl($('#ss-scan'))})});
-  show(1);
+  step('idle');
 }
 
-/* ============================================================ VERSION C: chat-style scan with a report card */
+/* ============================================================ VERSION C: split, photo left, results panel right */
 function runC(root){
-  var st={text:'',photo:null,picks:[],area:null,name:'',age:''};
-  var log=$('.ss-log',root),form=$('.ss-compose',root),inp=$('#ss-say',root),card=$('.ss-card',root),stage='describe';
-  $('[data-photo-slot]',root).innerHTML=photoField('ss-file-c',true);
-  var photo=$('[data-photo]',root);
-  function scrollLog(){log.scrollTo({top:log.scrollHeight,behavior:RM?'auto':'smooth'})}
-  function say(who,html,quick){
-    var d=document.createElement('div');d.className='ss-msgc '+(who==='me'?'ss-me':'ss-bot');
-    d.innerHTML='<div class="ss-bub">'+html+'</div>'+(quick?'<div class="ss-quick">'+quick.map(function(q){return '<button type="button" class="ss-chip" data-q="'+esc(q)+'">'+esc(q)+'</button>'}).join('')+'</div>':'');
-    $$('.ss-quick',log).forEach(function(q){q.remove()});
-    log.appendChild(d);scrollLog();return d;
+  var panel=$('[data-panel]',root),body=$('[data-panel-body]',panel),head=$('[data-panel-h]',panel),sub=$('[data-panel-p]',panel);
+  var EMPTY=body.innerHTML;
+  var sc=Scanner($('[data-stage]',root),{dropTitle:'Drop a photo here',onState:state,onResult:show,onReset:clear});
+  function state(st){
+    panel.setAttribute('data-state',st);
+    if(st==='scanning'){head.innerHTML='Scanning…';sub.textContent='This usually takes a few seconds.';body.innerHTML='<ol class="ss-rows ss-skel" aria-hidden="true"><li></li><li></li><li></li></ol>'}
+    else if(st==='error'||st==='unclear'){head.innerHTML='No results <em>yet</em>';sub.textContent='See the note beside your photo.';body.innerHTML=EMPTY}
+    else if(st==='idle'||st==='ready'){head.innerHTML='Your <em>results</em>';sub.textContent=st==='ready'?'Press “Scan this photo” to fill this in.':'They appear here after the scan.';body.innerHTML=EMPTY}
   }
-  function typing(){var d=say('bot','<span class="ss-dots" aria-label="Scanning"><i></i><i></i><i></i></span>');return d}
-  var START=['Scratching ears and shaking head','Limping on a back leg after walks','Licking his paws','Upset tummy'];
-  function start(){
-    log.innerHTML='';stage='describe';st.text='';st.photo=null;st.age='';st._shown=0;
-    say('bot','Hello. What are you seeing? Describe it in your own words, and add a photo if it helps.',START);
-    card.classList.remove('on');$('[data-card]',card).innerHTML='<p class="ss-card-empty">Your report appears here after the scan: the closest matches, what usually causes them, and what helps.</p>';
-    $('#ss-prod').hidden=true;
+  function show(res){
+    panel.setAttribute('data-state','result');
+    head.innerHTML=res.source==='photo'?'Most likely <em>matches</em>':'Closest <em>matches</em>';
+    sub.textContent=res.summary;
+    body.innerHTML=rowsHtml(res)+CALM+'<div class="ss-c-go">'+(res.products.length?'<a class="btn sec" href="#ss-prod" data-see>See '+res.products.length+' products that help</a>':'')+'<button class="ss-link" type="button" data-again>Scan another photo</button></div>';
+    $('[data-again]',body).addEventListener('click',function(){sc.reset(true)});
+    var see=$('[data-see]',body);if(see)see.addEventListener('click',function(e){e.preventDefault();scrollToEl($('#ss-prod'))});
+    fillProducts(res);
+    if(window.innerWidth<900)scrollToEl(panel);
   }
-  function finish(){
-    var t=typing();
-    scan(st).then(function(res){
-      t.remove();
-      if(res.empty){stage='describe';say('bot','I could not match that to a sign in our guide. Try the words you would use to a friend, like "itchy ears" or "limping".',START);return}
-      say('bot','Closest match: <b>'+esc(lower(res.items[0].name))+'</b>'+(res.items.length>1?', with '+(res.items.length-1)+' other possible sign'+(res.items.length>2?'s':''):'')+'. Your report is ready, and the products that help are below.',['Scan something else']);
-      stage='done';
-      $('[data-card]',card).innerHTML='<h3 class="ss-card-h">'+headline(res)+'</h3><p class="ss-card-p">'+esc(summaryLine(res))+'</p>'+hitsHtml(res)+
-        '<a class="btn sec ss-card-go" href="#ss-prod">See '+res.products.length+' products that help</a>';
-      card.classList.add('on');
-      fillResults(res,st);
-      if(window.innerWidth<900)setTimeout(function(){scrollToEl(card)},RM?0:250);
-    });
-  }
-  function handle(text){
-    text=(text||'').trim();
-    if(stage==='done'){if(/something else/i.test(text)||!text){start();return}stage='describe';st.text='';st._shown=0}
-    if(stage==='describe'){
-      if(text)say('me',esc(text));
-      if(st.photo&&!st._shown){st._shown=1;say('me','<img class="ss-chimg" src="'+st.photo+'" alt="Your photo">')}
-      st.text=(st.text?st.text+' ':'')+text;
-      if(needWords(st)){say('bot','Thanks for the photo. Add a few words about what you are seeing and I will match it.');return}
-      stage='age';
-      say('bot','Thanks. How old is your dog? It helps us pick the right products.',['Puppy','Adult','Senior (7+)','Skip']);
-      return;
-    }
-    if(stage==='age'){
-      say('me',esc(text||'Skip'));st.age=/senior|old|7|8|9|1[0-9]/i.test(text)?'senior':/pup/i.test(text)?'puppy':'';
-      stage='scan';finish();
-    }
-  }
-  form.addEventListener('submit',function(e){e.preventDefault();var v=inp.value;inp.value='';handle(v);pc.clear()});
-  log.addEventListener('click',function(e){var q=e.target.closest('[data-q]');if(q)handle(q.getAttribute('data-q'))});
-  var pc=bindPhoto(photo,st,function(d){if(d&&stage==='done')stage='describe'});
-  pc.clear=(function(orig){return function(){var p=st.photo;orig();st.photo=p}})(pc.clear);
-  $$('[data-again]',root).forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();start();scrollToEl($('#ss-scan'))})});
-  $$('[data-try]',root).forEach(function(b){b.addEventListener('click',function(){start();scrollToEl($('#ss-scan'));handle(b.getAttribute('data-try'))})});
-  start();
+  function clear(){hideProducts()}
 }
 
 /* ------------------------------------------------------------ boot */
