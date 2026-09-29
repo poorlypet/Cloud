@@ -1,6 +1,5 @@
 /* Poorly Pet offers: one source of truth for the offer badges shown on product cards.
    These are the offers in the site's "Offers" menu ("This month's offers"):
-     Double Club points on supplements
      Two supplements, 10% off
      Three supplements, 15% off
      Free wheelchair fitting
@@ -18,8 +17,6 @@
   function isKit(p) { return (p.productType || '') === 'Condition Bundle' || /\b(bundle|care kit)\b/i.test(p.title || ''); }
 
   var ALL = [
-    { id: 'double-points', name: 'Double Club points on supplements', short: 'Double points', test: isSupplement,
-      line: function (p) { return 'Double Club points: earn ' + Math.floor(p.price) * 10 + ' points'; } },
     { id: 'two-supps', name: 'Two supplements, 10% off', short: '2 for 10% off', test: isSupplement,
       line: function () { return 'Buy 2 supplements, save 10%. Buy 3, save 15%'; } },
     { id: 'three-supps', name: 'Three supplements, 15% off', short: '3 for 15% off', test: isSupplement, line: null },
