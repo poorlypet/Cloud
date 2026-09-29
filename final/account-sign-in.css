@@ -1,0 +1,12 @@
+/* Sign in: a page with only the sign-in box and a back link. Shopify new customer accounts at /account/login. Prefix si-. */
+.si-page{background:#fff;margin:0}
+.si-main{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:72px 16px 48px;position:relative;box-sizing:border-box}
+.si-back{position:absolute;top:24px;left:24px;font:600 16px/1 var(--sans);color:var(--teal);text-decoration:none;padding:10px 4px}
+.si-back:hover{text-decoration:underline;text-underline-offset:3px}
+.si-box{background:#fff;border:1px solid var(--line);border-radius:var(--rp);width:100%;max-width:440px;padding:36px 36px 30px;text-align:center;box-sizing:border-box}
+.si-box h1{font:700 36px/1.1 var(--serif);color:var(--teal);margin:0 0 10px}
+.si-box p{font:400 16px/1.45 var(--sans);color:var(--mute);margin:0}
+.si-btn{width:100%;margin-top:24px;font-size:17px}
+.si-box .si-new{margin-top:18px;color:var(--ink)}
+.si-box a:not(.btn){color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:599px){.si-back{top:16px;left:16px}.si-box{padding:28px 20px 24px}.si-box h1{font-size:32px}}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in. Poorly Pet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="account-sign-in.css">
+</head>
+<body class="si-page">
+<main id="main" class="si-main">
+<a class="si-back" href="index.html">&larr; Back</a>
+<div class="si-box"><h1 id="si-h">Sign in</h1><p>We’ll email you a code. No password needed.</p><a class="btn si-btn" href="/account/login">Sign in</a><p class="si-new">New here? <a href="/account/login">Create an account</a></p></div>
+</main>
+<script>document.querySelector('.si-back').addEventListener('click',function(e){if(history.length>1&&document.referrer){e.preventDefault();history.back();}});</script>
+</body></html>

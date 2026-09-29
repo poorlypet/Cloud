@@ -1,0 +1,211 @@
+/* Subscribe & Save, versions A/B/C. Built from the signed-off homepage patterns in css/home.css.
+   Every class here is prefixed ss-. The product card (.pk) and rail are home.css only. */
+main .pvbar{display:flex;justify-content:flex-end;padding-top:14px;padding-bottom:0}
+main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
+
+/* section rhythm, as the homepage */
+.ss-sec{padding:44px 0 8px}
+.ss-sec.ss-last{padding-bottom:48px}
+.ss-top{padding:14px 0 0}
+@media (max-width:899px){.ss-sec{padding-top:32px}}
+
+/* ---------- hero panel (homepage hero slide: teal, rounded, Domine + lime em) ---------- */
+.ss-hero{background:var(--teal);color:#fff;border-radius:var(--rl);padding:48px 56px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center}
+.ss-hero h1{font:400 46px/1.08 var(--serif);margin:0 0 16px;color:#fff}
+.ss-hero h1 em{color:var(--lime)}
+.ss-hero p{font:400 18px/1.45 var(--sans);margin:0 0 24px;max-width:44ch}
+.ss-hero .btn{min-height:52px;padding:0 24px}
+.ss-hero .ss-note{font:600 14px/1.3 var(--sans);opacity:.9;margin:18px 0 0}
+
+/* tiers inside the panel (A) */
+.ss-tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.ss-tiers li{background:var(--deep);border-radius:var(--rp);padding:22px 18px;display:flex;flex-direction:column;gap:6px}
+.ss-tiers b{font:700 40px/1 var(--serif);color:var(--lime)}
+.ss-tiers span{font:400 15px/1.3 var(--sans)}
+.ss-tiers span strong{display:block;font-weight:600}
+
+/* B: homepage hero grid, tiers beside the panel */
+.ss-hgrid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:16px}
+.ss-hgrid .ss-hero{grid-template-columns:1fr;padding:52px 56px}
+.ss-hgrid .ss-hero p{max-width:52ch}
+.ss-side{display:grid;grid-template-rows:repeat(3,1fr);gap:12px;margin:0;padding:0;list-style:none}
+.ss-side li{background:#E4EED6;color:var(--teal);border-radius:var(--rl);padding:18px 24px;display:flex;align-items:center;gap:18px}
+.ss-side b{font:700 38px/1 var(--serif);min-width:2.3em}
+.ss-side span{font:400 15px/1.3 var(--sans)}
+.ss-side span strong{display:block;font-weight:600;font-size:16px}
+
+/* C: panel then a trust-style strip underneath */
+.ss-hero.ss-wide{grid-template-columns:minmax(0,1fr) auto;padding:44px 56px}
+.ss-hero.ss-wide p{margin-bottom:0}
+.ss-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0 0;padding:0;list-style:none}
+.ss-strip li{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 20px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.ss-strip b{font:700 26px/1 var(--serif);color:var(--teal)}
+.ss-strip span{font:400 14px/1.3 var(--sans);color:var(--mute)}
+.ss-strip span strong{display:block;font:600 16px/1.2 var(--sans);color:var(--teal)}
+
+/* ---------- product rails by category ---------- */
+.ss-cat+.ss-cat{margin-top:36px}
+.ss-ch{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 14px}
+.ss-ch h3{font:700 22px/1.2 var(--serif);color:var(--teal);margin:0}
+.ss-ch .all{font:600 15px/1 var(--sans);color:var(--teal);text-decoration:none;white-space:nowrap}
+.ss-ch .all:hover{text-decoration:underline}
+.ss-rw.ss-fit .scroller{display:none}
+.pk .ss-subp{font:600 13px/1.3 var(--sans);color:var(--teal);margin:-6px 0 4px}
+.pk .ss-subp b{font-weight:700}
+
+/* B: category label to the left, four cards across */
+@media (min-width:1024px){
+  .ss-rows .ss-cat{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:start}
+  .ss-rows .ss-cat+.ss-cat{margin-top:0;padding-top:28px;border-top:1px solid var(--line);margin-top:28px}
+  .ss-rows .ss-ch{flex-direction:column;align-items:flex-start;gap:10px;padding-top:6px}
+  .ss-rows .ss-ch p{font:400 15px/1.4 var(--sans);color:var(--mute);margin:0}
+  .ss-rows .prail .pk{width:calc((100% - 48px) / 4)}
+}
+@media (max-width:1023px){.ss-rows .ss-ch p{display:none}}
+
+/* C: jump links to each rail */
+.ss-jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
+.ss-jump a{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;font:600 15px/1 var(--sans);color:var(--teal);text-decoration:none;background:#fff}
+.ss-jump a:hover{background:var(--pale)}
+.ss-cat{scroll-margin-top:16px}
+
+/* ---------- how it works: pale green panel, compact steps ---------- */
+.ss-how{background:#E4EED6;color:var(--teal);border-radius:var(--rl);padding:28px 32px}
+.ss-how h3{font:700 24px/1.1 var(--serif);margin:0 0 16px}
+.ss-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;counter-reset:ss}
+.ss-steps li{counter-increment:ss;background:#fff;border-radius:12px;padding:16px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:4px;align-content:start}
+.ss-steps li:before{content:counter(ss) ".";font:700 18px/1.25 var(--serif);color:var(--teal);grid-row:span 2}
+.ss-steps b{font:700 16px/1.25 var(--serif);color:var(--ink)}
+.ss-steps span{font:400 14px/1.4 var(--sans);color:var(--mute)}
+.ss-facts{display:flex;flex-wrap:wrap;gap:8px 24px;margin:16px 0 0;padding:0;list-style:none;font:600 14px/1.3 var(--sans)}
+.ss-facts li{display:flex;align-items:center;gap:8px}
+.ss-facts li:before{content:"✓";font-weight:700}
+.ss-how .btn{margin-top:18px}
+/* stacked steps when the panel sits in a half-width column */
+.ss-pair .ss-steps{grid-template-columns:1fr}
+.ss-pair .ss-facts{flex-direction:column;gap:8px}
+
+/* ---------- FAQ: the homepage "Ask us about" accordion ---------- */
+.ss-faq{background:var(--teal);color:#fff;border-radius:var(--rl);padding:28px 32px 30px}
+.ss-faq h3{font:400 30px/1.1 var(--serif);margin:0 0 14px}
+.ss-faq h3 em{color:var(--lime)}
+.ss-faq .qa{display:flex;flex-direction:column}
+.ss-faq .q{text-align:left;width:100%;font:600 16px/1.3 var(--serif);color:#fff;padding:14px 0;border-top:1px solid rgba(255,255,255,.16);display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;background:none;min-height:48px}
+.ss-faq .q:after{content:"+";font:400 20px/1 var(--sans);opacity:.8}
+.ss-faq .q[aria-expanded="true"]:after{content:"−"}
+.ss-faq .a{display:none;font:400 15px/1.5 var(--sans);opacity:.95;padding:0 0 14px;max-width:62ch}
+.ss-faq .a.on{display:block}
+.ss-faq .a a{color:var(--lime)}
+.ss-faq.ss-2col .ss-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.ss-faq .ss-more{font:400 15px/1.4 var(--sans);margin:16px 0 0;opacity:.95}
+.ss-faq .ss-more a{color:var(--lime);font-weight:600}
+
+/* two panels side by side, as the homepage .ed3 */
+.ss-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.ss-good{background:#E4EED6;color:var(--teal);border-radius:var(--rl);padding:28px 32px;display:flex;flex-direction:column;gap:12px}
+.ss-good h3{font:700 24px/1.1 var(--serif);margin:0}
+.ss-good dl{margin:0;display:flex;flex-direction:column}
+.ss-good dl div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;padding:12px 0;border-top:1px solid rgba(15,76,72,.15)}
+.ss-good dt{font:600 15px/1.35 var(--sans)}
+.ss-good dd{margin:0;font:400 15px/1.4 var(--sans);color:var(--ink)}
+.ss-good .btn{align-self:flex-start;margin-top:auto}
+
+/* ---------- compact savings calculator (C) ---------- */
+.ss-calc{background:var(--teal);color:#fff;border-radius:var(--rl);padding:28px 32px;display:flex;flex-direction:column;gap:16px}
+.ss-calc h3{font:400 30px/1.1 var(--serif);margin:0}
+.ss-calc h3 em{color:var(--lime)}
+.ss-calc label,.ss-calc legend{font:600 15px/1.3 var(--sans);display:block;margin:0 0 8px;padding:0}
+.ss-calc fieldset{border:0;margin:0;padding:0;min-width:0}
+.ss-money{display:flex;align-items:center;background:#fff;border-radius:var(--r);max-width:200px;padding:0 14px;min-height:48px;color:var(--ink)}
+.ss-money span{font:600 18px/1 var(--sans);margin-right:6px}
+.ss-money input{border:0;outline:0;font:600 18px/1 var(--sans);width:100%;min-height:46px;background:transparent;color:var(--ink)}
+.ss-money:focus-within{box-shadow:0 0 0 3px var(--lime)}
+.ss-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ss-seg label{margin:0;position:relative}
+.ss-seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.ss-seg span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;border:1px solid rgba(255,255,255,.35);border-radius:var(--r);font:600 14px/1.25 var(--sans);text-align:center;padding:6px}
+.ss-seg span i{font-style:normal;font-weight:400;opacity:.85}
+.ss-seg input:checked+span{background:var(--lime);color:var(--teal);border-color:var(--lime)}
+.ss-seg input:checked+span i{opacity:1}
+.ss-seg input:focus-visible+span{outline:3px solid #fff;outline-offset:2px}
+.ss-res{background:var(--deep);border-radius:var(--rp);padding:16px 20px;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.ss-res b{font:700 34px/1 var(--serif);color:var(--lime)}
+.ss-res span{font:400 15px/1.4 var(--sans)}
+.ss-res small{flex-basis:100%;font:400 13px/1.4 var(--sans);opacity:.85}
+
+/* small print line above the footer */
+.ss-small{font:400 14px/1.4 var(--sans);color:var(--mute);margin:20px 0 0}
+
+/* added state on card buttons */
+.pk .btn.ss-added{background:var(--teal);color:#fff}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .ss-hero{padding:40px}
+  .ss-hero h1{font-size:40px}
+  .ss-hgrid{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+  .ss-pair{grid-template-columns:minmax(0,1fr)}
+  .ss-pair .ss-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ss-pair .ss-facts{flex-direction:row}
+}
+@media (max-width:899px){
+  .ss-hero,.ss-hero.ss-wide{grid-template-columns:minmax(0,1fr);gap:24px}
+  .ss-hgrid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .ss-side{grid-template-rows:none;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ss-side li{flex-direction:column;align-items:flex-start;gap:6px;padding:16px}
+  .ss-steps,.ss-pair .ss-steps{grid-template-columns:minmax(0,1fr)}
+  .ss-faq.ss-2col .ss-cols{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:599px){
+  .ss-hero,.ss-hgrid .ss-hero,.ss-hero.ss-wide{padding:26px 22px;border-radius:20px}
+  .ss-hero h1{font-size:32px;margin-bottom:12px}
+  .ss-hero p{font-size:16px;margin-bottom:18px}
+  .ss-hero .btn{width:100%}
+  .ss-tiers{gap:8px}
+  .ss-tiers li{padding:14px 10px;border-radius:12px}
+  .ss-tiers b{font-size:28px}
+  .ss-tiers span{font-size:13px}
+  .ss-side{gap:8px}
+  .ss-side li{padding:14px 12px;border-radius:16px}
+  .ss-side b{font-size:28px;min-width:0}
+  .ss-side span{font-size:13px}
+  .ss-side span strong{font-size:14px}
+  .ss-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .ss-strip li{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px}
+  .ss-strip b{font-size:22px}
+  .ss-strip span{font-size:12px}
+  .ss-strip span strong{font-size:13px}
+  .ss-ch h3{font-size:20px}
+  .ss-ch .all{font-size:14px}
+  .ss-how,.ss-faq,.ss-good,.ss-calc{padding:20px 16px;border-radius:20px}
+  .ss-faq h3,.ss-calc h3{font-size:24px}
+  .ss-how h3,.ss-good h3{font-size:22px}
+  .ss-good dl div{grid-template-columns:minmax(0,1fr);gap:2px}
+  .ss-how .btn,.ss-good .btn{width:100%}
+  .ss-seg span{font-size:13px}
+  .ss-jump{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--gut));padding-right:var(--gut)}
+  .ss-jump::-webkit-scrollbar{display:none}
+  .ss-jump a{white-space:nowrap}
+}
+
+/* B: four across at full width (home.css gap is 20px above 1180) */
+@media (min-width:1181px){.ss-rows .prail .pk{width:calc((100% - 60px) / 4)}}
+
+/* C: two categories side by side, calculator in the last cell */
+.ss-grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px 32px;align-items:start}
+.ss-grid2 .ss-cat+.ss-cat{margin-top:0}
+.ss-grid2 .prail .pk{width:calc((100% - 40px) / 2.4)}
+.ss-grid2 .ss-calc{align-self:stretch;margin-top:40px;justify-content:center}
+@media (max-width:1180px){
+  .ss-grid2{grid-template-columns:minmax(0,1fr);gap:36px}
+  .ss-grid2 .prail .pk{width:calc((100% - 48px) / 4)}
+  .ss-grid2 .ss-calc{margin-top:0}
+}
+@media (max-width:899px){.ss-grid2 .prail .pk{width:calc((100% - 32px) / 3)}}
+@media (max-width:599px){.ss-grid2 .prail .pk{width:auto;flex:0 0 58%}}
+.ss-nb{white-space:nowrap}
+@media (max-width:599px){
+  .ss-side{grid-template-columns:minmax(0,1fr)}
+  .ss-side li{flex-direction:row;align-items:center;gap:14px;padding:12px 16px}
+  .ss-side b{font-size:26px;min-width:2.4em}
+}
