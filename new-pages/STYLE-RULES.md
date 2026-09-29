@@ -44,3 +44,11 @@ The last section runs into the footer: `css/site.css` removes the footer margin.
 Eyebrow labels, dot labels, emoji, gradient blobs, oversized hero typography on utility pages,
 tilted/rotated cards, giant empty photo placeholders, three-feature-tile filler, "How it works" with
 huge numbered circles, walls of text, urgency boxes, the registered address.
+
+## Offers on product cards (from the Offers menu)
+Load `offers.js` after `products.js`. On every `.pk` card:
+- If `PPOffers.badge(p)` returns a label, show it as an extra small lime badge in the card's top-left, next to or instead of
+  the category `.tab` (e.g. "Double points", "Free fitting", "Kit saving"), styled like `.tab` but lime background, teal text.
+- Under the price, show the first line from `PPOffers.lines(p)` in 13px teal semibold (e.g. "Buy 2 supplements, save 10%. Buy 3, save 15%").
+- Where a page lists many products, offer a filter "On offer" and a small "This month's offers" strip that links each offer.
+Nothing else on the card changes.
