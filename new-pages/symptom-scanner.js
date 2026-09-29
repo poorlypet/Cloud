@@ -312,7 +312,7 @@ document.addEventListener('click',function(e){
 /* ------------------------------------------------------------ shared report blocks */
 function headline(res){
   if(res.empty)return 'No clear match yet';
-  return (res.dog?esc(res.dog)+': ':'')+'closest match is '+esc(lower(res.items[0].name));
+  return (res.dog?esc(res.dog)+'\u2019s closest match: ':'Closest match: ')+esc(lower(res.items[0].name));
 }
 function hitHtml(it){
   return '<li class="ss-hit'+(it.rank===0?' ss-top':'')+'"><div class="ss-hit-h"><span class="ss-rank">'+(it.rank===0?'Closest match':'Also possible')+'</span>'+
@@ -343,7 +343,7 @@ function fillResults(res,st){
   var rep=$('#ss-rep'),prod=$('#ss-prod');
   if(rep){
     rep.hidden=false;
-    $('[data-rep-h]',rep).innerHTML=headline(res).replace(/^(.*?)(closest match is )(.*)$/,function(m,a,b,c){return a+b+'<em>'+c+'</em>'});
+    $('[data-rep-h]',rep).innerHTML=headline(res).replace(/(match: )(.*)$/,'$1<em>$2</em>');
     $('[data-rep-p]',rep).textContent=summaryLine(res);
     $('[data-rep-body]',rep).innerHTML=res.empty?emptyHtml():hitsHtml(res);
   }
@@ -443,7 +443,7 @@ function runC(root){
       if(res.empty){stage='describe';say('bot','I could not match that to a sign in our guide. Try the words you would use to a friend, like "itchy ears" or "limping".',START);return}
       say('bot','Closest match: <b>'+esc(lower(res.items[0].name))+'</b>'+(res.items.length>1?', with '+(res.items.length-1)+' other possible sign'+(res.items.length>2?'s':''):'')+'. Your report is ready, and the products that help are below.',['Scan something else']);
       stage='done';
-      $('[data-card]',card).innerHTML='<h3 class="ss-card-h">'+headline(res).replace(/closest match is /,'Closest match: ')+'</h3><p class="ss-card-p">'+esc(summaryLine(res))+'</p>'+hitsHtml(res)+
+      $('[data-card]',card).innerHTML='<h3 class="ss-card-h">'+headline(res)+'</h3><p class="ss-card-p">'+esc(summaryLine(res))+'</p>'+hitsHtml(res)+
         '<a class="btn sec ss-card-go" href="#ss-prod">See '+res.products.length+' products that help</a>';
       card.classList.add('on');
       fillResults(res,st);
