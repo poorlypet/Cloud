@@ -434,13 +434,13 @@ function thumb(res){return res.photo?'<img class="ss-thumb" src="'+res.photo+'" 
 /* ============================================================ VERSION A: big drop zone hero, results below */
 function runA(root){
   var rep=$('#ss-rep');
-  var sc=Scanner($('[data-stage]',root),{dropTitle:'Drop a photo of the problem here',onResult:show,onReset:clear});
+  var grid=$('.ss-a-grid',root);
+  var sc=Scanner($('[data-stage]',root),{dropTitle:'Drop a photo of the problem here',onResult:show,onReset:clear,onState:function(st){grid.classList.toggle('ss-has',st!=='idle')}});
   function show(res){
     rep.hidden=false;
     $('[data-rep-h]',rep).innerHTML=res.source==='photo'?'Your scan <em>results</em>':'Your <em>matches</em>';
     $('[data-rep-p]',rep).textContent=res.summary;
-    $('[data-rep-body]',rep).innerHTML='<div class="ss-a-res'+(res.photo?'':' ss-nopic')+'">'+(res.photo?'<div class="ss-a-pic">'+thumb(res)+'<button class="ss-link" type="button" data-again>Scan another photo</button></div>':'')+'<div>'+rowsHtml(res)+CALM+'</div></div>';
-    $$('[data-again]',rep).forEach(function(b){b.addEventListener('click',again)});
+    $('[data-rep-body]',rep).innerHTML=rowsHtml(res)+CALM;
     fillProducts(res);scrollToEl(rep);
   }
   function clear(){rep.hidden=true;hideProducts()}
