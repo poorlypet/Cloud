@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Poorly Pet Club. Shared by club-a.html, club-b.html, club-c.html.
+   Built from the signed-off homepage: the Club panel (.club.clubB.clubB1),
+   the "Ask us" accordion (.ed3 .talk .qa), the .pk product rail and the
+   section rhythm (.sec-h, padding 44px 0 8px). Only layout glue lives here,
+   every class prefixed cl-. Product cards are styled by css/home.css only.
+   ========================================================================== */
+.pvbar{display:flex;justify-content:flex-end;padding-top:14px;padding-bottom:0}
+.pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
+.cl :focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.cl .cl-teal :focus-visible,.cl .talk :focus-visible{outline-color:var(--lime)}
+
+/* ---------- sections: the homepage rhythm ---------- */
+.cl-sec{padding:44px 0 8px}
+.cl-sec.cl-first{padding-top:12px}
+.cl-sec.cl-last{padding-bottom:48px}
+.cl .sec-h h1{font:700 32px/1.1 var(--serif);color:var(--teal);margin:0 0 6px}
+.cl .sec-h h1 em,.cl .sec-h h2 em{font-style:normal;font-weight:700;color:var(--teal)}
+.cl-h3{font:700 24px/1.15 var(--serif);color:var(--teal);margin:0}
+.cl-sub{font:700 24px/1.15 var(--serif);color:var(--teal);margin:36px 0 16px}
+.cl-foot{font:400 14px/1.45 var(--sans);color:var(--mute);margin:14px 0 0}
+
+/* intro: the homepage Club panel, links instead of drawer buttons */
+.cl .club .btn.ghost{display:inline-flex}
+
+/* ---------- panels (homepage colours and radius) ---------- */
+.cl-pale{background:#E4EED6;color:var(--teal);border-radius:var(--rl);padding:28px 32px 30px;min-width:0}
+.cl-teal{background:var(--teal);color:#fff;border-radius:var(--rl);padding:28px 32px 30px;min-width:0}
+.cl-teal h3{font:400 30px/1.1 var(--serif);color:#fff;margin:0}
+.cl-teal h3 em{font-style:normal;font-weight:700;color:var(--lime)}
+.cl-teal .cl-lead{font:400 16px/1.45 var(--sans);color:#fff;opacity:.9;margin:8px 0 0}
+.cl-pale .cl-lead{font:400 16px/1.45 var(--sans);color:var(--teal);margin:8px 0 0}
+.cl-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+
+/* ---------- rule rows, the homepage "price list" (clubB1) ---------- */
+.cl-rows{list-style:none;margin:16px 0 0;padding:0}
+.cl-rows li{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-top:1px solid rgba(15,76,72,.16)}
+.cl-rows li:last-child{border-bottom:1px solid rgba(15,76,72,.16)}
+.cl-rows b{font:700 24px/1 var(--serif);color:var(--teal);white-space:nowrap;min-width:150px}
+.cl-rows span{font:400 16px/1.4 var(--sans);color:var(--ink)}
+.cl-teal .cl-rows li{border-color:rgba(255,255,255,.16)}
+.cl-teal .cl-rows b{color:var(--lime)}
+.cl-teal .cl-rows span{color:#fff}
+
+/* ---------- tables (earn, tiers) ---------- */
+.cl-tw{border:1px solid #E6EAE3;border-radius:var(--rl);overflow:hidden;background:#fff}
+.cl-tbl{width:100%;border-collapse:collapse;font:400 16px/1.4 var(--sans);color:var(--ink)}
+.cl-tbl th,.cl-tbl td{text-align:left;padding:14px 20px;border-top:1px solid #E6EAE3;vertical-align:baseline}
+.cl-tbl thead th{border-top:0;background:var(--pale);font:700 18px/1.2 var(--serif);color:var(--teal)}
+.cl-tbl thead th small{display:block;font:400 14px/1.3 var(--sans);color:var(--mute);margin-top:4px}
+.cl-tbl tbody th{font-weight:600;color:var(--ink);width:30%}
+.cl-tbl td b{font:700 20px/1 var(--serif);color:var(--teal)}
+.cl-tbl .cl-no{color:var(--mute)}
+.cl-tbl.cl-earn td{width:34%}
+.cl-pale .cl-tw{border-color:transparent}
+
+/* ---------- spend + calculator ---------- */
+.cl-vals{display:flex;flex-wrap:wrap;gap:10px 28px;margin:16px 0 0;padding:0;list-style:none}
+.cl-vals li{font:400 16px/1.3 var(--sans);color:#fff}
+.cl-vals b{font:700 26px/1 var(--serif);color:var(--lime);margin-right:6px}
+.cl-calc{margin:20px 0 0;padding:20px 0 0;border-top:1px solid rgba(255,255,255,.16)}
+.cl-calc .cl-ch{font:600 16px/1.3 var(--serif);color:#fff;margin:0 0 12px}
+.cl-cf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:end}
+.cl-cf label{display:block;font:600 13px/1.2 var(--sans);color:#fff;opacity:.9;margin:0 0 6px}
+.cl-money{position:relative;display:block}
+.cl-money:before{content:"£";position:absolute;left:14px;top:50%;transform:translateY(-50%);font:600 17px/1 var(--sans);color:var(--teal)}
+.cl-calc input[type=number],.cl-calc select{width:100%;height:48px;border:0;border-radius:var(--r);background:#fff;color:var(--ink);font:600 17px/1 var(--sans);padding:0 12px}
+.cl-calc input[type=number]{padding-left:30px}
+.cl-calc select{appearance:none;-webkit-appearance:none;padding-right:34px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230F4C48' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center}
+.cl-fo{display:inline-flex;align-items:center;gap:8px;height:48px;font:600 14px/1.2 var(--sans);color:#fff;cursor:pointer;white-space:nowrap}
+.cl-fo input{width:20px;height:20px;accent-color:var(--lime);margin:0}
+.cl-out{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 0;background:rgba(255,255,255,.08);border-radius:12px;padding:14px 16px}
+.cl-out b{font:700 30px/1 var(--serif);color:var(--lime);white-space:nowrap}
+.cl-out span{font:400 15px/1.2 var(--sans);color:#fff}
+.cl-out i{font-style:normal;opacity:.6}
+.cl-note{font:400 14px/1.45 var(--sans);color:#fff;opacity:.85;margin:10px 0 0;min-height:1.45em}
+
+/* ---------- FAQ: the homepage "Ask us" accordion (.ed3 .talk .qa) ---------- */
+.cl .ed3 .talk .cl-lead{margin:0}
+.cl .ed3.cl-faq2{grid-template-columns:1fr}
+.cl-faq2 .qa{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.cl-faq2 .qa>div{display:flex;flex-direction:column}
+.cl .ed3 .a{max-width:60ch}
+.cl-join{justify-content:flex-start}
+.cl-join .cl-rows b{min-width:36px}
+.cl-join .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto;padding-top:16px}
+.cl-join .btn{background:var(--teal);color:#fff}
+.cl-join .btn.ghost{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+
+/* ---------- rail: .pk cards untouched, just the photo fallback ---------- */
+.cl .railwrap.cl-fit .scroller{display:none}
+
+/* ---------- version C: earn beside tiers ---------- */
+.cl-side{display:grid;grid-template-columns:5fr 7fr;gap:20px;align-items:start}
+
+/* ---------- version B: spend strip ---------- */
+.cl-strip{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start}
+.cl-strip .cl-calc{margin:0;padding:0;border:0}
+
+@media (max-width:1180px){
+  .cl-pair,.cl-side,.cl-strip{grid-template-columns:1fr}
+  .cl-strip{gap:20px}
+}
+@media (max-width:899px){
+  .cl-sec{padding-top:32px}
+  .cl .sec-h h1{font-size:26px}
+  .cl-faq2 .qa{grid-template-columns:1fr}
+}
+@media (max-width:599px){
+  .cl-sec.cl-first{padding-top:8px}
+  .cl-pale,.cl-teal{padding:20px 16px 22px}
+  .cl-teal h3{font-size:24px}
+  .cl-h3,.cl-sub{font-size:21px}
+  .cl-rows li{flex-direction:column;gap:4px}
+  .cl-rows b{min-width:0;font-size:21px}
+  .cl-cf{grid-template-columns:1fr 1fr}
+  .cl-cf .cl-fo{grid-column:1 / -1;height:auto}
+  .cl-out b{font-size:26px}
+  .cl-tbl{font-size:14px}
+  .cl-tbl th,.cl-tbl td{padding:12px 10px}
+  .cl-tbl thead th{font-size:15px}
+  .cl-tbl thead th small{font-size:12px}
+  .cl-tbl tbody th{width:auto}
+  .cl-tbl td b{font-size:17px}
+  .cl-tbl.cl-tiers thead th:first-child{width:28%}
+}
+/* fixes after first screenshot pass */
+.cl-fo{align-self:end}
+.cl-fo input[type=checkbox]{-webkit-appearance:checkbox;appearance:auto;display:inline-block;flex:0 0 20px;width:20px;height:20px;position:static;margin:0}
+.cl-c .cl-teal .cl-calc{margin:0;padding:0;border:0}
+.cl-c .cl-teal .cl-ch{font:400 30px/1.1 var(--serif);margin:0 0 16px}
+@media (max-width:599px){.cl-c .cl-teal .cl-ch{font-size:24px}}
+.cl-cf label.cl-fo{display:inline-flex;align-items:center;margin:0;opacity:1;font-size:14px}
+
+/* ---------- version A, mobile intro (under 760px): one pale panel, read top to bottom ----------
+   heading, then the club card full width, then the three rules as a compact list, the extras
+   line and two full-width buttons. Desktop keeps the homepage 60/40 panel untouched. */
+@media (max-width:759px){
+  .cl-a .club{display:flex;flex-direction:column;background:#E4EED6;border:0;padding:22px 18px 20px;gap:0}
+  .cl-a .club .say{display:contents}
+  .cl-a .club .say h3{order:1;font-size:26px;line-height:1.12;margin:0}
+  .cl-a .club .say h3 br{display:none}
+  .cl-a .club .say h3 .chip{margin-top:6px;padding:3px 10px 6px;border-radius:10px}
+  .cl-a .club .say .lead{display:none}
+  .cl-a .club .cardside{order:2;background:transparent;padding:0;margin:16px 0 0;display:block}
+  .cl-a .club .card{width:100%;max-width:none;aspect-ratio:1.586/1;border-radius:16px}
+  .cl-a .clubB1 .rules{order:3;margin:16px 0 0}
+  .cl-a .clubB1 .rule{display:grid;grid-template-columns:122px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 0}
+  .cl-a .clubB1 .rule b{font-size:19px;white-space:nowrap}
+  .cl-a .clubB1 .rule span{font-size:14px;line-height:1.35}
+  .cl-a .clubB .extras{order:4;font-size:14px;line-height:1.45;margin:12px 0 0}
+  .cl-a .club .say .row{order:5;display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0 0;padding:0}
+  .cl-a .club .say .row .btn{width:100%;justify-content:center;min-height:48px}
+}

@@ -1,0 +1,177 @@
+/* ============================================================
+   Our story: versions A, B and C share this stylesheet.
+   Built the homepage way (css/home.css): white page, .wrap,
+   .sec-h headings, the .pk product rail, the two doors.
+   The one bespoke component is the pinned chapter sequence
+   (os-album), kept from the previous round at the owner's request.
+   Prefix: os-. Versions differ only in intro and section order.
+   Everything reads with no JS and with reduced motion.
+   ============================================================ */
+
+/* version switcher */
+main .pvbar{display:flex;justify-content:flex-end;padding-top:14px;padding-bottom:14px}
+main .pvbar .cardsw a{width:auto;min-width:30px;padding:0 8px}
+
+.os{--sage:#E4EED6;--pale:#F3F6F1;--pale2:#EAF0E6;--ease:cubic-bezier(.2,.7,.2,1);--edge:max(var(--gut),calc((100vw - 1440px)/2 + var(--gut)));color:var(--ink)}
+.os em{font-style:normal;font-weight:700}
+
+/* ---------- sections: exactly the homepage rhythm ---------- */
+.os-sec{padding:44px 0 8px}
+.os-sec .sec-h h2 em{color:var(--teal)}
+.os-sec.os-last{padding-bottom:48px}
+
+/* ---------- intro (three treatments) ---------- */
+.os-in h1{font:700 48px/1.08 var(--serif);color:var(--teal);margin:0 0 12px;letter-spacing:-.01em}
+.os-in p{font:400 18px/1.5 var(--sans);color:var(--mute);margin:0;max-width:560px}
+.os-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.os-btns .btn{min-height:48px}
+.btn.os-line{background:transparent;color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
+.btn.os-line:hover{background:var(--pale)}
+
+/* A: white, text left, two help cards right (the shop-by-condition intro) */
+.os-in-a{padding:16px 0 40px}
+.os-in-a .wrap{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:48px;align-items:end}
+.os-hcs{display:grid;gap:12px}
+.os-hc{display:flex;flex-direction:column;gap:4px;padding:20px 22px;border-radius:var(--rp);background:var(--pale);text-decoration:none;color:var(--ink)}
+.os-hc b{font:700 17px/1.3 var(--sans)}
+.os-hc span{font:600 16px/1.3 var(--sans);color:var(--teal)}
+.os-hc:hover span{text-decoration:underline;text-underline-offset:3px}
+
+/* B: the one full-bleed band, deep teal, centred */
+.os-in-b{background:var(--teal);color:#fff;text-align:center}
+.os-in-b .wrap{padding-top:52px;padding-bottom:56px}
+.os-in-b h1{color:#fff;font-size:52px;max-width:900px;margin:0 auto 14px}
+.os-in-b h1 em{color:var(--lime)}
+.os-in-b p{color:rgba(255,255,255,.85);margin:0 auto}
+.os-in-b .os-btns{justify-content:center}
+.os-in-b .btn.os-line{color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
+.os-in-b .btn.os-line:hover{background:rgba(255,255,255,.1)}
+
+/* C: a rounded pale panel inside .wrap, with the four facts beside it */
+.os-in-c{padding:8px 0 24px}
+.os-in-c .os-pan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:48px;align-items:center;padding:44px;border-radius:var(--rl);background:var(--pale)}
+.os-facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line2)}
+.os-facts li{padding:16px 16px 16px 0;border-bottom:1px solid var(--line2);font:400 15px/1.35 var(--sans);color:var(--mute)}
+.os-facts li:nth-child(even){padding-left:16px;border-left:1px solid var(--line2)}
+.os-facts b{display:block;font:700 18px/1.25 var(--serif);color:var(--teal);margin-bottom:2px}
+
+/* ---------- the chapter sequence (kept) ---------- */
+.os-album{background:var(--sage)}
+.os-stage{padding:24px 0}
+.os-ch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;padding:40px var(--edge)}
+.os-print{position:relative;display:block;margin:0;aspect-ratio:4/3.2;background:#fff;padding:14px 14px 52px;border-radius:12px;border:1px solid rgba(15,76,72,.08);box-shadow:0 4px 16px rgba(10,58,55,.06)}
+.os-ph{position:absolute;inset:14px 14px 52px;display:block;border-radius:4px;background:var(--pale2)}
+.os-ph.t1{background:#DDE8CF}
+.os-ph.t2{background:var(--mist)}
+.os-print figcaption{position:absolute;left:18px;right:18px;bottom:17px;font:600 15px/1.2 var(--sans);color:var(--mute)}
+.os-yr{display:block;font:700 22px/1 var(--serif);color:var(--mute);margin:0 0 14px}
+.os-txt h2{font:700 52px/1.06 var(--serif);color:var(--teal);margin:0 0 20px;letter-spacing:-.012em}
+.os-txt p{font:400 20px/1.55 var(--sans);color:var(--ink);max-width:540px;margin:0}
+.os-txt .os-sign{margin-top:14px;font:700 24px/1.3 var(--serif);color:var(--teal)}
+.os-nav{display:none}
+
+.os-album.pin{height:calc(var(--n,5)*75vh + 100vh)}
+.os-album.pin .os-stage{position:sticky;top:var(--stk,0px);height:calc(100vh - var(--stk,0px));padding:0;overflow:hidden}
+.os-album.pin .os-ch{position:absolute;inset:0 0 80px;padding:48px var(--edge) 24px;pointer-events:none}
+.os-album.pin .os-ch.cur{pointer-events:auto}
+/* the photo pile: each chapter's card is dealt on top, earlier cards stay visible underneath */
+.os-album.pin .os-ch:nth-of-type(1){--rot:-3deg;--dx:-14px;--dy:6px}
+.os-album.pin .os-ch:nth-of-type(2){--rot:2deg;--dx:12px;--dy:-4px}
+.os-album.pin .os-ch:nth-of-type(3){--rot:-1.5deg;--dx:-8px;--dy:-8px}
+.os-album.pin .os-ch:nth-of-type(4){--rot:2.5deg;--dx:10px;--dy:4px}
+.os-album.pin .os-ch:nth-of-type(5){--rot:-.5deg;--dx:0px;--dy:0px}
+.os-album.pin .os-print{max-height:calc(100vh - var(--stk,0px) - 200px);margin:0 auto;width:100%;max-width:560px;opacity:0;box-shadow:0 10px 28px rgba(10,58,55,.12);transform:translate(calc(var(--dx,0px)*var(--k,1)),calc(var(--dy,0px)*var(--k,1) + 60%)) rotate(var(--rot,0deg));transition:transform .9s var(--ease),opacity .5s}
+.os-album.pin .os-ch.dealt .os-print{opacity:1;transform:translate(calc(var(--dx,0px)*var(--k,1)),calc(var(--dy,0px)*var(--k,1))) rotate(var(--rot,0deg))}
+.os-album.pin .os-ch.dealt:not(.cur) .os-print figcaption{opacity:0}
+.os-album.pin .os-txt{opacity:0;transform:translateY(20px);transition:opacity .25s,transform .6s var(--ease)}
+.os-album.pin .os-ch.cur .os-txt{opacity:1;transform:none;transition:opacity .5s .2s,transform .6s var(--ease) .2s}
+.os-album.pin .os-nav{position:absolute;left:0;right:0;bottom:0;height:80px;display:flex;align-items:center;gap:8px;padding:0 var(--edge);border-top:1px solid rgba(15,76,72,.15)}
+.os-nav button{flex:1;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:8px;text-align:left;font:700 14px/1 var(--sans);color:var(--mute);background:none;border:0;padding:0;cursor:pointer}
+.os-nav button:after{content:"";display:block;height:4px;border-radius:2px;background:rgba(15,76,72,.15);background-image:linear-gradient(var(--teal),var(--teal));background-repeat:no-repeat;background-size:calc(var(--f,0)*100%) 100%}
+.os-nav button.on,.os-nav button:hover{color:var(--teal)}
+
+/* ---------- what Marble taught us: a plain list ---------- */
+.os-vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 40px;margin:0;padding:0;list-style:none}
+.os-vals li{padding:18px 0 20px;border-top:1px solid var(--line2)}
+.os-vals b{display:block;font:700 19px/1.3 var(--serif);color:var(--teal);margin-bottom:4px}
+.os-vals span{display:block;font:400 15px/1.5 var(--sans);color:var(--mute)}
+
+/* ---------- product rail: .pk untouched, only the missing-photo state ---------- */
+.os .railwrap.fit .scroller{visibility:hidden}
+
+/* ---------- the two doors, as links ---------- */
+.os a.door{text-decoration:none}
+
+/* ---------- still need help? ---------- */
+.os-help{padding:40px 44px 36px;border-radius:var(--rl);background:var(--pale)}
+.os-help h2{font:700 32px/1.1 var(--serif);color:var(--teal);margin:0 0 6px}
+.os-help h2 em{color:var(--teal)}
+.os-help>p{font:400 16px/1.45 var(--sans);color:var(--mute);margin:0}
+.os-hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px;border-top:1px solid var(--line2)}
+.os-hgrid>div{display:flex;flex-direction:column;align-items:flex-start;padding:20px 32px 4px 0}
+.os-hgrid>div+div{padding-left:32px;border-left:1px solid var(--line2)}
+.os-hgrid h3{font:700 17px/1.3 var(--sans);color:var(--ink);margin:0 0 4px}
+.os-hgrid p{font:400 15px/1.5 var(--sans);color:var(--mute);margin:0 0 16px}
+.os-hgrid p a{color:var(--teal);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.os-hgrid .btn{margin-top:auto;min-height:48px}
+.os-help .os-co{margin:24px 0 0;font:400 13px/1.5 var(--sans);color:var(--mute)}
+
+/* basket toast */
+.os-toast{position:fixed;left:50%;bottom:24px;z-index:80;transform:translate(-50%,20px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:16px;max-width:calc(100vw - 32px);padding:14px 18px;border-radius:var(--r);background:var(--teal);color:#fff;font:400 15px/1.35 var(--sans);transition:opacity .25s,transform .25s}
+.os-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.os-toast b{display:block}
+.os-toast a{color:var(--lime);font-weight:700;white-space:nowrap}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .os-ch{gap:48px}
+  .os-txt h2{font-size:44px}
+  .os-in-a .wrap{grid-template-columns:minmax(0,1fr) 340px;gap:32px}
+}
+@media (max-width:899px){
+  .os-sec{padding-top:32px}
+  .os-in h1,.os-in-b h1{font-size:34px}
+  .os-in p{font-size:16px}
+  .os-in-a{padding:4px 0 28px}
+  .os-in-a .wrap{grid-template-columns:minmax(0,1fr);gap:20px}
+  .os-hcs{grid-template-columns:1fr 1fr;gap:10px}
+  .os-hc{padding:14px 16px}
+  .os-hc b{font-size:15px}
+  .os-hc span{font-size:15px}
+  .os-in-b .wrap{padding-top:36px;padding-bottom:40px}
+  .os-in-c .os-pan{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 20px}
+  .os-btns .btn{flex:1 1 auto}
+
+  .os-ch{grid-template-columns:minmax(0,1fr);gap:24px;padding:32px var(--gut)}
+  .os-txt h2{font-size:30px;margin-bottom:12px}
+  .os-txt p{font-size:16px}
+  .os-yr{font-size:17px;margin-bottom:8px}
+  .os-txt .os-sign{font-size:19px;margin-top:8px}
+  .os-print{padding:10px 10px 40px}
+  .os-ph{inset:10px 10px 40px}
+  .os-print figcaption{left:12px;right:12px;bottom:13px;font-size:13px}
+  .os-album.pin{height:calc(var(--n,5)*70vh + 100vh)}
+  .os-album.pin .os-ch{inset:0 0 64px;padding:20px var(--gut) 12px;align-content:start;gap:18px}
+  .os-album.pin .os-print{width:auto;height:min(30vh,260px);max-height:none;aspect-ratio:4/3.2;max-width:calc(100% - 24px);margin:6px 0 0 12px;box-shadow:0 6px 18px rgba(10,58,55,.12)}
+  .os-album.pin .os-stage{--k:.5}
+  .os-album.pin .os-nav{height:64px;gap:6px;padding:0 var(--gut)}
+  .os-nav button{font-size:12px;gap:6px}
+
+  .os-vals{grid-template-columns:minmax(0,1fr)}
+  .os-vals li{padding:14px 0 16px}
+  .os-vals b{font-size:17px}
+
+  .os-help{padding:28px 20px 24px}
+  .os-help h2{font-size:26px}
+  .os-hgrid{grid-template-columns:minmax(0,1fr)}
+  .os-hgrid>div,.os-hgrid>div+div{padding:18px 0;border-left:0}
+  .os-hgrid>div+div{border-top:1px solid var(--line2)}
+}
+@media (max-width:599px){
+  .os-facts li{padding:12px 10px 12px 0;font-size:14px}
+  .os-facts li:nth-child(even){padding-left:12px}
+  .os-facts b{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .os *,.os *:before,.os *:after{animation:none!important;transition:none!important}
+}

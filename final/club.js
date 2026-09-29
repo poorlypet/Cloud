@@ -28,7 +28,7 @@ var RULES={
   tiers:[
     {id:'member',   name:'Member',   from:0,   rate:5, perks:['5 points per £1']},
     {id:'regular',  name:'Regular',  from:150, rate:6, perks:['6 points per £1']},
-    {id:'committed',name:'Committed',from:400, rate:8, perks:['8 points per £1','First look at new brands']}
+    {id:'committed',name:'Committed',from:400, rate:8, perks:['8 points per £1']}
   ],
   firstOrderMultiplier:2,
   review:50,
@@ -232,7 +232,7 @@ function init(){
   /* header shortcuts: the shell's drawers are not on these pages, so go to the pages instead */
   var ab=document.getElementById('account-btn'),cb=document.getElementById('club-btn');
   if(ab)ab.addEventListener('click',function(){location.href=document.body.getAttribute('data-account-url')||'account-sign-in.html'});
-  if(cb)cb.addEventListener('click',function(){location.href='club-a.html'});
+  if(cb)cb.addEventListener('click',function(){location.href='club.html'});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 
