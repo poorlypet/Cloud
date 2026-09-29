@@ -126,10 +126,10 @@
 .cl-empty button{border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--teal);text-decoration:underline;cursor:pointer}
 
 /* list view: same card, image left and details right */
-.cl-grid.cl-list{grid-template-columns:minmax(0,1fr);gap:12px}
+.cl .cl-grid.cl-list{grid-template-columns:minmax(0,1fr);gap:12px}
 .cl-list .pk{flex-direction:row;border-radius:16px}
 .cl-list .pk .well{flex:0 0 200px;height:auto;min-height:190px;padding:20px}
-.cl-list .pk .body{display:grid;grid-template-columns:minmax(0,1fr) 230px;grid-template-rows:auto auto auto 1fr;column-gap:32px;row-gap:6px;padding:20px 24px;align-content:center}
+.cl-list .pk .body{display:grid;grid-template-columns:minmax(0,1fr) 230px;grid-template-rows:auto auto auto auto;column-gap:32px;row-gap:6px;padding:20px 24px;align-content:center}
 .cl-list .pk .body>*{grid-column:1}
 .cl-list .pk .brand{grid-row:1}.cl-list .pk .name{grid-row:2;min-height:0;font-size:19px}.cl-list .pk .rev{grid-row:3}.cl-list .pk .helps{grid-row:4;align-self:start}
 .cl-list .pk .price{grid-column:2;grid-row:1 / 3;min-height:0;flex:none;align-self:end}
@@ -254,13 +254,13 @@ html.cl-lock,html.cl-lock body{overflow:hidden}
   .cl-grid,.cl-a .cl-grid,.cl-c .cl-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .cl-tools{margin-top:12px}
   .cl-tools .cl-tr{width:100%}
-  .cl-tools .cl-fbtn{flex:1}
+  .cl-tools .cl-fbtn{flex:0 0 auto}
   .cl-tools .cl-sort{flex:1}
   .cl-tools .cl-sort span{display:none}
   .cl-tools .cl-sort select{width:100%}
   .cl-stick{position:static}
   .cl-barw{min-height:0;padding-top:10px;padding-bottom:10px}
-  .cl-barw .cl-fbtn{flex:1}
+  .cl-barw .cl-fbtn{flex:0 0 auto}
   .cl-barw .cl-tr{flex:1;gap:8px}
   .cl-barw .cl-sort{flex:1}.cl-barw .cl-sort span{display:none}.cl-barw .cl-sort select{width:100%}
   .cl-b .cl-tools{padding-top:12px}
@@ -268,7 +268,11 @@ html.cl-lock,html.cl-lock body{overflow:hidden}
   .cl-facts>div{padding:0 16px}
   .cl-carr{display:none}
   .cl-ob{flex-wrap:wrap;padding:10px 12px}
-  .cl-ob ul{flex:1 1 100%;order:3}
+  .cl-ob ul{flex:1 1 100%;order:3;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:0 6px;margin:0 -12px 0 -8px;padding-right:12px}
+  .cl-ob ul::-webkit-scrollbar{display:none}
+  .cl-ob li{flex:0 0 auto}
+  .cl-ob li+li:before{display:none}
+  .cl-ob button{min-height:32px}
   .cl-oball{margin-left:auto}
   .cl-hp{grid-template-columns:minmax(0,1fr);padding:24px 20px}
   .cl-list .pk .well{flex-basis:150px}
@@ -302,3 +306,4 @@ html.cl-lock,html.cl-lock body{overflow:hidden}
   .cl-sheet.in .cl-sp{transform:none}
 }
 @media (prefers-reduced-motion:reduce){.cl-sheet,.cl-sp,.cl-chev,.cl-stick{transition:none}}
+.cl [hidden],.cl-sheet [hidden]{display:none!important}

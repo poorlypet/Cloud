@@ -354,7 +354,7 @@
       PILLS.map(function (x) { return '<button type="button" data-sub="' + x.v + '" class="cl-pill">' + esc(x.n) + ' <span data-pn="' + x.v + '"></span></button>'; }).join('') + '</div>';
     var car = $('#cl-car');
     if (car) {
-      car.innerHTML = '<div class="cl-cr" tabindex="0" role="group" aria-label="Shop by type">' + [{ v: '', n: 'All ' + C.name.toLowerCase(), t: function () { return true; } }].concat(PILLS).map(function (x) {
+      car.innerHTML = '<div class="cl-cr" tabindex="0" role="group" aria-label="Shop by type">' + [{ v: '', n: 'Shop all', t: function () { return true; } }].concat(PILLS).map(function (x) {
         var top = ALL.filter(x.t).sort(function (a, b) { return a._rec - b._rec; })[0];
         return '<button type="button" class="cl-ct" data-sub="' + x.v + '"><span class="cl-cw">' + (top ? img(top) : '') + '</span><span class="cl-cn">' + esc(x.n) + '</span><span class="cl-cc" data-pn="' + x.v + '"></span></button>';
       }).join('') + '</div><button class="cl-carr prev" type="button" aria-label="Scroll back">‹</button><button class="cl-carr next" type="button" aria-label="Scroll forward">›</button>';
@@ -400,7 +400,7 @@
     $$('[data-pn]').forEach(function (e) {
       var v = e.getAttribute('data-pn'), pl = PILLS.filter(function (x) { return x.v === v; })[0];
       var c = ALL.filter(function (p) { return pass(p, 'sub') && (!pl || pl.t(p)); }).length;
-      e.textContent = e.classList.contains('cl-cc') ? c + ' products' : c;
+      e.textContent = e.classList.contains('cl-cc') ? c + (c === 1 ? ' product' : ' products') : c;
       var b = e.closest('[data-sub]'); if (b) b.disabled = !c && S.sub !== v;
     });
     /* facet inputs + counts */
