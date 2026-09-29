@@ -86,6 +86,19 @@
 .pk .btn.aia-added{background:var(--teal);color:#fff}
 .aia-noimg{display:block;width:100%;height:100%;min-height:120px;border-radius:12px;background:var(--aia-pale,#E4EED6)}
 
+/* health answers in the chat */
+.aia-ul{margin:4px 0 0;padding-left:20px;list-style:disc}
+.aia-ul li+li{margin-top:2px}
+.aia-plead{margin-top:12px!important;font-weight:600;color:var(--teal)}
+.aia-links2{display:flex;flex-wrap:wrap;gap:4px 18px}
+.aia-links2 .aia-more{margin-top:8px}
+.aia-health .aia-rw{margin-top:8px}
+/* compact rail inside the pop-up panel (homepage .pk, only the width and image well are sized) */
+.aia-panel .aia-rw .prail{gap:12px}
+.aia-panel .aia-rw .prail .pk{width:184px;flex:0 0 184px}
+.aia-panel .aia-rw .pk .well{height:140px;padding:16px 14px 10px}
+.aia-panel .aia-rw .scroller{margin-top:8px}
+
 /* order result in the chat */
 .aia-ord{margin-top:10px;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:16px}
 .aia-ex{font:400 13px/1.45 var(--sans);color:var(--ink);background:#FFF8D6;border-radius:8px;padding:8px 10px;margin:0 0 12px!important}
@@ -148,6 +161,31 @@
 .aia-dl dt{font-weight:600;color:var(--mute)}
 .aia-dl dd{margin:0;color:var(--ink)}
 
+/* B final: health topics (6), small order-help row, ask box on the teal band */
+.aia-ht{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.aia-ht button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;min-height:92px;text-align:left;background:#fff;border:0;border-left:1px solid var(--line);border-top:1px solid var(--line);cursor:pointer;transition:background .15s}
+.aia-ht button:nth-child(3n+1){border-left:0}
+.aia-ht button:nth-child(-n+3){border-top:0}
+.aia-ht button:hover{background:var(--pale)}
+.aia-ht b{font:700 17px/1.25 var(--sans);color:var(--teal)}
+.aia-ht span{font:400 14px/1.4 var(--sans);color:var(--mute)}
+.aia-ht button:after{content:"Ask ›";margin-top:auto;padding-top:6px;font:600 14px/1 var(--sans);color:var(--teal)}
+.aia-sub{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:16px}
+.aia-sub>span{font:600 14px/1.3 var(--sans);color:var(--mute);margin-right:4px}
+.aia-sub button{min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--teal);font:600 14px/1.2 var(--sans);cursor:pointer}
+.aia-sub button:hover{background:var(--pale);border-color:var(--teal)}
+.aia-popq{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;border-top:1px solid var(--line)}
+.aia-popq li{border-bottom:1px solid var(--line)}
+.aia-popq button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:14px 0;background:none;border:0;text-align:left;cursor:pointer;font:600 16px/1.35 var(--sans);color:var(--ink)}
+.aia-popq button:hover span{color:var(--teal);text-decoration:underline}
+.aia-popq i{font-style:normal;color:var(--teal);font-size:20px}
+.aia-band .aia-ask{margin-top:24px}
+.aia-band .aia-ask input{border-color:#fff}
+.aia-band .aia-ask input:focus{outline:3px solid var(--lime);outline-offset:1px;border-color:#fff}
+.aia-eg{margin:12px 0 0;font:400 14px/1.4 var(--sans);color:rgba(255,255,255,.8)}
+.aia-eg button{border:0;background:none;padding:4px 0;color:#fff;font:600 14px/1.4 var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.aia-eg button:hover{color:var(--lime)}
+
 /* C: help page + floating widget */
 .aia-ask{display:flex;gap:8px;max-width:640px;margin-top:22px}
 .aia-ask input{flex:1;min-width:0;height:52px;border:1px solid var(--line2);border-radius:var(--r);padding:0 16px;font:400 16px/1 var(--sans);color:var(--ink)}
@@ -184,10 +222,9 @@
 .aia-launch.is-open .aia-lt{display:none}
 .aia-launch .aia-lc{display:none}
 .aia-launch.is-open .aia-lc{display:inline}
-.aia-panel{position:fixed;z-index:93;right:24px;bottom:92px;width:410px;max-width:calc(100vw - 32px);opacity:0;transform:translateY(12px);transition:opacity .18s ease,transform .18s ease}
+.aia-panel{position:fixed;z-index:93;right:24px;bottom:92px;width:440px;max-width:calc(100vw - 32px);opacity:0;transform:translateY(12px);transition:opacity .18s ease,transform .18s ease}
 .aia-panel.is-open{opacity:1;transform:none}
 .aia-panel .aia-chat{height:min(640px,calc(100vh - 120px));box-shadow:0 12px 40px rgba(10,58,55,.22);border-color:var(--line2)}
-.aia-panel .aia-rw .prail .pk{width:200px;flex-basis:200px}
 .aia-panel .aia-m{max-width:92%}
 .aia-panel .aia-m.aia-wide{max-width:100%}
 .aia-panel .aia-mail{display:none}
@@ -222,6 +259,11 @@
 }
 @media (max-width:899px){
   .aia-sec{padding-top:32px}
+  .aia-ht{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aia-ht button{border-top:1px solid var(--line)!important;border-left:1px solid var(--line)!important}
+  .aia-ht button:nth-child(2n+1){border-left:0!important}
+  .aia-ht button:nth-child(-n+2){border-top:0!important}
+  .aia-popq{grid-template-columns:minmax(0,1fr)}
   .aia h1{font-size:40px}
   .aia-acc{grid-template-columns:minmax(0,1fr)}
   .aia-cgrid{grid-template-columns:minmax(0,1fr)}
@@ -248,6 +290,12 @@
   .aia-qa4 b,.aia-links b{font-size:15px}
   .aia-ask{flex-direction:column}
   .aia-launch{right:16px;bottom:16px}
+  .aia-ht button{padding:16px;min-height:0}
+  .aia-ht b{font-size:15px}
+  .aia-ht span{font-size:13px}
+  .aia-ht button:after{display:none}
+  .aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 62%}
+  .aia-panel .aia-fine{display:block}
   .aia-panel{inset:0;width:auto;max-width:none;bottom:0;right:0}
   .aia-panel .aia-chat{height:100%;border-radius:0;border:0}
   html.aia-lock,html.aia-lock body{overflow:hidden}
