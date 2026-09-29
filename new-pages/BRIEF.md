@@ -82,6 +82,6 @@ Must work at 390px phone width and 1440px desktop; no horizontal scroll.
   "Still need help? Contact us" block pattern in final/faqs.html. Never show the registered office address.
 - Delivery facts that are confirmed (shop shipping policy + real rates): UK standard £3.99, free over £39,
   dispatch 1–2 working days, delivery 2–4 working days after dispatch, Evri via Shopify Shipping, tracking emailed.
-  Returns (refund policy): 14 days to cancel + 14 days to return, 30-day money-back guarantee on eligible products,
+  Returns (refund policy): 14 days to cancel + 14 days to return,
   opened supplements/perishables not returnable unless faulty, refunds within 14 days, faulty items covered.
   Where live GemPages pages disagree with the policies, follow the policies.

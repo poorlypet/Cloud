@@ -91,7 +91,7 @@ var FAQ=[
   {q:'My order hasn’t arrived. What should I do?',a:'If your order hasn’t arrived within the expected time, or arrives damaged, email <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a> with your order number and we’ll put it right.'},
   {q:'Tracking says delivered but I can’t find it.',a:'Check the tracking for any delivery notes, then check with neighbours and any safe places around your home. If you still can’t find it within 24 hours, email us with your order number and we’ll look into it with the courier.'},
   {q:'What happens if I miss the delivery?',a:'If a parcel comes back to us because of a missed delivery or an incorrect address, we’ll contact you to arrange redelivery, which may carry an extra charge. Please check your address carefully at checkout.'},
-  {q:'How do returns work?',a:'You can cancel within 14 days of receiving your order, then have a further 14 days to send items back unused. Eligible products also have our 30-day money-back guarantee. We refund within 14 days of receiving the return. Opened health products and supplements can only be returned if faulty. Email us with your order number to start.'}
+  {q:'How do returns work?',a:'You can cancel within 14 days of receiving your order, then have a further 14 days to send items back unused. We refund within 14 days of receiving the return. Opened health products and supplements can only be returned if faulty. Email us with your order number to start.'}
 ];
 
 /* ---------- helpers ---------- */

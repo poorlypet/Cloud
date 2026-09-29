@@ -20,7 +20,7 @@
 
    Where the live pages disagree with each other, the dated legal policies win (see report):
    delivery threshold £39 (policy) not £40 (/pages/delivery), dispatch 1-2 working days (policy),
-   returns 14 + 14 days with a 30-day guarantee on eligible products (policy), UK only (policy).
+   returns 14 + 14 days (policy), UK only (policy).
    ========================================================================== */
 (function(){
 'use strict';
@@ -74,7 +74,7 @@ var FAQS=[
 /* ---------------- Returns & refunds ---------------- */
 // src: [REF] 1, 2, 6
 {c:'returns',pop:1,q:'What is your returns policy?',
- a:'<ul><li>You can cancel your order within <b>14 days</b> of receiving it, without giving a reason (Consumer Contracts Regulations 2013).</li><li>After telling us, you have a further <b>14 days</b> to send the items back, unused and in their original condition and packaging where possible.</li><li>On top of your legal rights, eligible products come with a <b>30-day money-back guarantee</b>.</li></ul><p>Read the full <a href="#">Returns &amp; Refunds Policy</a>.</p>'},
+ a:'<ul><li>You can cancel your order within <b>14 days</b> of receiving it, without giving a reason (Consumer Contracts Regulations 2013).</li><li>After telling us, you have a further <b>14 days</b> to send the items back, unused and in their original condition and packaging where possible.</li></ul><p>Read the full <a href="#">Returns &amp; Refunds Policy</a>.</p>'},
 // src: [REF] 7 "How to start a return"; proof of postage from [LFAQ] "How do I start a return?"
 {c:'returns',pop:1,q:'How do I start a return?',
  a:'<p>Email '+M+' with your order number and the items you want to return, and we will guide you through the next steps. Keep your proof of postage until your refund has been processed.</p>'},
@@ -90,9 +90,6 @@ var FAQS=[
 // src: [REF] 5 "Faulty or incorrect items"; photo request from [LFAQ] / [DEL]
 {c:'returns',q:'My item arrived faulty, damaged or wrong.',
  a:'<p>We are sorry. Email '+M+' with your order number and a photo of the item and its packaging. Under the Consumer Rights Act 2015 we will arrange a replacement or a full refund, including any return postage.</p>'},
-// src: [REF] 6 "Our 30-day money-back guarantee"
-{c:'returns',q:'How does the 30-day money-back guarantee work?',
- a:'<p>It applies to eligible products and is in addition to your legal rights. If you are not satisfied, get in touch within 30 days of receiving your order and we will make it right.</p>'},
 // src: [LFAQ] "I bought a gift — can it be returned by the recipient?"
 {c:'returns',q:'Can a gift be returned?',
  a:'<p>Yes, under our normal returns policy. Whoever has the order number can email us to arrange it. Refunds for gift orders go back to the original payment method.</p>'},
