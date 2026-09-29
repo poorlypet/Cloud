@@ -300,6 +300,7 @@ html.cl-lock,html.cl-lock body{overflow:hidden}
   .cl-facts dt{font-size:12px}
   .cl-list .pk .well{flex-basis:112px;min-height:150px;padding:12px}
   .cl-list .pk .name{font-size:15px}
+  .cl-list .pk .tab{max-width:92px;white-space:normal;line-height:1.2;top:10px;left:10px}
   .cl-list .pk .btn{min-height:40px}
   .cl-hp h2{font-size:22px}
   .cl-sheet .cl-sp{top:auto;height:92vh;width:100%;border-radius:16px 16px 0 0;transform:translateY(100%)}
