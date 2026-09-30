@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IVDD Sketchbook</title>
+<style>
+@font-face{font-family:Caveat;font-weight:700;src:url(fonts/caveat-700.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--tile:#134A3D;--mark:#C25E2E;--rust:#A8542F;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--coral:#D65A3C}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:#E4E0D6;transform-origin:0 0}
+.page{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;background-color:var(--paper);
+  background-image:radial-gradient(circle,#D8DFDB 2.4px,transparent 3.1px);background-size:54px 54px;background-position:27px 27px;transform-origin:540px 960px}
+svg.art{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.t{position:absolute}
+.hand{font-family:Caveat,cursive;font-weight:700;color:var(--ink);line-height:.92;filter:url(#boilT)}
+.sans{font-family:Inter,sans-serif}
+.wd{display:inline-block}
+.hl{position:relative;display:inline-block;z-index:0}
+.hl>i{position:absolute;left:-.08em;right:-.1em;top:.34em;bottom:.06em;z-index:-1;transform-origin:0 50%;transform:scaleX(0)}
+.hl>i>svg{display:block;width:100%;height:100%;overflow:visible}
+.hl.ul>i{top:.72em;bottom:-.04em}
+.num{left:84px;top:40px;font-size:400px;color:var(--mark)}
+.of{font-size:110px;color:var(--mute)}
+.title{left:84px;width:930px;top:470px;font-size:150px}
+.line{left:88px;width:900px;font-size:86px;color:var(--tile)}
+.reg{font-family:Inter,sans-serif;font-weight:700;font-size:.4em;vertical-align:.95em;margin-left:.14em;margin-right:.06em}
+#wipe{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:500;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="boil" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1480" height="2320">
+      <feTurbulence class="turb" type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="6"/>
+    </filter>
+    <filter id="boilT" x="-10%" y="-20%" width="120%" height="140%">
+      <feTurbulence class="turb" type="fractalNoise" baseFrequency="0.045" numOctaves="1" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="3"/>
+    </filter>
+    <filter id="boilW" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2280" height="3120">
+      <feTurbulence class="turb" type="fractalNoise" baseFrequency="0.012 0.05" numOctaves="3" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="46"/>
+    </filter>
+  </svg>
+
+  <!-- intro -->
+  <div class="page" id="intro">
+    <svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:84px;top:120px;font-size:430px;line-height:1"><span class="hl" data-k="hl"><i></i>IVDD</span></div>
+    <div class="t hand" data-k="sub" style="left:84px;top:610px;font-size:170px"><span style="color:var(--mark)">5</span> signs to know</div>
+    <div class="t hand" data-k="spine" style="left:96px;top:920px;font-size:66px;color:var(--mute)">spinal cord</div>
+    <div class="t hand" data-k="bulge" style="left:800px;top:1240px;font-size:66px;color:var(--mark)">disc</div>
+    <div class="t sans" data-k="p1" style="left:88px;top:1390px;width:900px;font-size:48px;font-weight:600;line-height:1.3;color:var(--ink)">A disc in the spine bulging or pressing on the cord.</div>
+    <div class="t sans" data-k="p2" style="left:88px;top:1560px;width:900px;font-size:48px;font-weight:500;line-height:1.3;color:var(--mute)">Dachshunds, Bassets, Corgis and Beagles are most at risk, but any dog can get it.</div>
+  </div>
+
+  <!-- the five signs -->
+  <div class="page" id="s1">
+    <svg class="art"></svg>
+    <div class="t hand num" data-k="num">1</div><div class="t hand of" data-k="num">/5</div>
+    <div class="t hand title" data-k="title">A hunched back</div>
+    <div class="t hand line" data-k="line" style="top:660px">Arched and tense, head held low.</div>
+    <div class="t hand" data-k="arrow" style="left:590px;top:1010px;font-size:80px;color:var(--mark)">arched</div>
+  </div>
+  <div class="page" id="s2">
+    <svg class="art"></svg>
+    <div class="t hand num" data-k="num">2</div><div class="t hand of" data-k="num">/5</div>
+    <div class="t hand title" data-k="title">Yelps when<br>picked up</div>
+    <div class="t hand line" data-k="line" style="top:800px">Pain when you lift them or touch their back.</div>
+    <div class="t hand" data-k="yelp" data-fx="pop" style="left:340px;top:1335px;width:540px;text-align:center;font-size:190px">YELP!</div>
+    <div class="t hand" data-k="lift" style="left:90px;top:1770px;width:130px;text-align:center;font-size:70px;color:var(--tile)">lift</div>
+  </div>
+  <div class="page" id="s3">
+    <svg class="art"></svg>
+    <div class="t hand num" data-k="num">3</div><div class="t hand of" data-k="num">/5</div>
+    <div class="t hand title" data-k="title">Won't jump<br>or do stairs</div>
+    <div class="t hand line" data-k="line" style="top:800px">Suddenly reluctant to go up, or down.</div>
+    <div class="t hand" data-k="cross" style="left:870px;top:1010px;font-size:190px;color:var(--mark)">?</div>
+  </div>
+  <div class="page" id="s4">
+    <svg class="art"></svg>
+    <div class="t hand num" data-k="num">4</div><div class="t hand of" data-k="num">/5</div>
+    <div class="t hand title" data-k="title">Wobbly back legs</div>
+    <div class="t hand line" data-k="line" style="top:660px">Wobbling, crossing or knuckling over.</div>
+  </div>
+  <div class="page" id="s5">
+    <svg class="art"></svg>
+    <div class="t hand num" data-k="num">5</div><div class="t hand of" data-k="num">/5</div>
+    <div class="t hand title" data-k="title">Sudden weakness</div>
+    <div class="t hand" data-k="q" style="left:110px;top:740px;width:860px;text-align:center;font-size:104px;color:#fff">Can't stand,<br>or can't wee?</div>
+    <div class="t hand" data-k="vet" style="left:110px;top:965px;width:860px;text-align:center;font-size:130px;color:#fff;line-height:.95">Vet <span class="today">today,</span><br>not tomorrow.</div>
+  </div>
+
+  <!-- what can help -->
+  <div class="page" id="help">
+    <svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:80px;top:130px;font-size:180px">What can <span class="hl" data-k="hl"><i></i>help</span></div>
+    <div class="t hand" data-k="line" style="left:86px;top:370px;width:900px;font-size:104px;color:var(--tile)">Strict rest first,<br>weeks of it.</div>
+    <div class="t hand" data-k="cal" style="left:800px;top:610px;font-size:92px;color:var(--mute)">z z z</div>
+  </div>
+
+  <!-- the kit -->
+  <div class="page" id="kit">
+    <svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:80px;top:90px;font-size:170px">The <span class="hl ul" data-k="ul"><i></i>IVDD kit</span></div>
+    <div class="t hand" data-k="n0" style="left:440px;top:470px;width:600px;font-size:84px">Thermal Back Brace</div>
+    <div class="t hand" data-k="b0" style="left:442px;width:598px;font-size:62px;color:var(--tile);line-height:1">Holds the spine still<br>and warm. Stops the twist.</div>
+    <div class="t hand" data-k="n1" style="left:440px;top:900px;width:600px;font-size:84px">Lightweight Folding Dog Ramp</div>
+    <div class="t hand" data-k="b1" style="left:442px;width:598px;font-size:62px;color:var(--tile);line-height:1">No more jumping on and off<br>the sofa or into the car.</div>
+    <div class="t hand" data-k="n2" style="left:440px;top:1370px;width:600px;font-size:84px">Balto<span class="reg">®</span> Body Lift harness</div>
+    <div class="t hand" data-k="b2" style="left:442px;width:598px;font-size:62px;color:var(--tile);line-height:1">A handle for toilet trips<br>and stairs while they heal.</div>
+  </div>
+
+  <!-- end -->
+  <div class="page" id="end">
+    <svg class="art"></svg>
+    <div class="t sans" data-k="name" style="left:0;width:1080px;top:760px;text-align:center;font-size:120px;font-weight:800;letter-spacing:-.02em;color:var(--ink)">Poorly Pet</div>
+    <div class="t hand" data-k="cta" data-fx="btn" style="left:190px;top:1012px;font-size:96px;white-space:nowrap">Shop IVDD support</div>
+    <div class="t sans" data-k="url" style="left:0;width:1080px;top:1250px;text-align:center;font-size:60px;font-weight:700;color:var(--tile)">poorly-pet.com</div>
+    <div class="t sans" data-k="small" style="left:0;width:1080px;top:1520px;text-align:center;font-size:46px;font-weight:500;color:var(--mute)">Always check with your vet.</div>
+  </div>
+
+  <svg id="wipe" viewBox="0 0 1080 1920"><path id="wipeP" fill="none" stroke="#0B2A23" stroke-width="740" stroke-linecap="round" stroke-linejoin="round" filter="url(#boilW)" style="visibility:hidden"/></svg>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring, track } = Motion;
+const TL = window.TL, FPS = 30, DUR = TL.DUR;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { ink: '#101B17', deep: '#0B2A23', tile: '#134A3D', mark: '#C25E2E', mint: '#9FE8C9', pale: '#EDF1EC', mute: '#5E6E66', coral: '#D65A3C', peach: '#F5B48F', beige: '#EFE2CF', gold: '#EFCB6E', white: '#FFFFFF' };
+
+/* ---------- time helpers: every value is a spring of time ---------- */
+// A critically damped spring used as a progress value: 0 before dt=0, ~0.99 at dt=d.
+const crit = (dt, d) => dt <= 0 ? 0 : spring(dt, { w: 7 / Math.max(d, 0.04), z: 1 });
+const E = (pg, k) => TL.EV[pg][k];
+const P = (pg, k, t) => { const e = E(pg, k); return crit(t - e.t, e.d); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+
+/* ---------- drawing helpers ---------- */
+function S(tag, parent, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function ink(g, d, w = 8, c = C.ink) { return S('path', g, { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }
+function setDraw(p, q, dyn = false) {
+  const L = dyn ? p.getTotalLength() + 2 : (p._L || (p._L = p.getTotalLength() + 2));
+  q = clamp(q > 0.993 ? 1 : q);
+  p.style.visibility = q <= 0.002 ? 'hidden' : 'visible';
+  p.style.strokeDasharray = `${L} ${L}`;
+  p.style.strokeDashoffset = L * (1 - q);
+}
+// Draw strokes one after another, each weighted by its length.
+function drawSeq(items, q, dyn = false) {
+  const ws = items.map(p => Math.max(60, p._L || (p._L = p.getTotalLength() + 2)));
+  const tot = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  items.forEach((p, i) => { const a = acc / tot, b = (acc + ws[i]) / tot; acc += ws[i]; setDraw(p, (q - a) / (b - a), dyn); });
+}
+// A marker wash, off-register from its outline, revealed by a left-to-right swipe.
+let wid = 0;
+function wash(pg, g, d, color, off = [9, 7], op = 0.95) {
+  const id = `w${wid++}`;
+  const r = S('rect', S('clipPath', pg.defs, { id }), { x: 0, y: 0, width: 0, height: 0 });
+  const wg = S('g', g, { transform: `translate(${off[0]} ${off[1]})`, 'clip-path': `url(#${id})` });
+  const p = S('path', wg, { d, fill: color, opacity: op });
+  return {
+    p, set(q, dyn = false) {
+      const b = (!dyn && this.bb) || (this.bb = p.getBBox());
+      r.setAttribute('x', b.x - 14); r.setAttribute('y', b.y - 14); r.setAttribute('height', b.height + 28);
+      r.setAttribute('width', Math.max(0, (b.width + 28) * clamp(q > 0.993 ? 1 : q)));
+    },
+  };
+}
+const head = (x, y, a, s = 36) => `M ${x + s * Math.cos(a + 2.55)} ${y + s * Math.sin(a + 2.55)} L ${x} ${y} L ${x + s * Math.cos(a - 2.55)} ${y + s * Math.sin(a - 2.55)}`;
+// A hand-drawn rounded box whose stroke runs a little past its start, like a pen that did not stop.
+function box(x, y, w, h, r, j = [3, -4, 2, -3, 4, -2, 3, -3], over = 46) {
+  return `M ${x + r} ${y + j[0]} C ${x + w * .35} ${y + j[1]}, ${x + w * .65} ${y + j[2]}, ${x + w - r} ${y + j[3]} Q ${x + w} ${y}, ${x + w + j[4]} ${y + r}` +
+    ` C ${x + w + j[5]} ${y + h * .35}, ${x + w + j[6]} ${y + h * .65}, ${x + w} ${y + h - r} Q ${x + w} ${y + h}, ${x + w - r} ${y + h + j[7]}` +
+    ` C ${x + w * .65} ${y + h + j[0]}, ${x + w * .35} ${y + h + j[1]}, ${x + r} ${y + h} Q ${x} ${y + h}, ${x + j[2]} ${y + h - r}` +
+    ` C ${x + j[3]} ${y + h * .65}, ${x + j[4]} ${y + h * .35}, ${x} ${y + r} Q ${x} ${y}, ${x + r} ${y + j[0]}` + (over ? ` L ${x + r + over} ${y + j[0] - 4}` : '');
+}
+const closed = d => d.replace(/ L [^ ]+ [^ ]+$/, '') + ' Z';
+// A soft closed blob through n points around a centre (fixed radii, no randomness).
+function blob(cx, cy, r, k = [1, .92, 1.06, .95, 1.03, .9, 1.05, .97]) {
+  const pts = k.map((f, i) => { const a = i / k.length * Math.PI * 2; return [cx + Math.cos(a) * r * f * 1.05, cy + Math.sin(a) * r * f]; });
+  const n = pts.length; let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < n; i++) {
+    const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n];
+    d += ` C ${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6}, ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6}, ${p2[0]} ${p2[1]}`;
+  }
+  return d + ' Z';
+}
+const bez = (P0, P1, P2, P3, u) => { const m = 1 - u; return [0, 1].map(i => m * m * m * P0[i] + 3 * m * m * u * P1[i] + 3 * m * u * u * P2[i] + u * u * u * P3[i]); };
+const bezT = (P0, P1, P2, P3, u) => { const m = 1 - u; return [0, 1].map(i => 3 * m * m * (P1[i] - P0[i]) + 6 * m * u * (P2[i] - P1[i]) + 3 * u * u * (P3[i] - P2[i])); };
+const f1 = v => v.toFixed(1);
+
+/* ---------- handwriting: words are revealed left to right at a steady writing pace ---------- */
+function splitWords(root) {
+  const words = [];
+  const walk = n => [...n.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(s => {
+        if (!s) return;
+        if (/^\s+$/.test(s)) { frag.appendChild(document.createTextNode(s)); return; }
+        const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = s; frag.appendChild(sp); words.push(sp);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1 && c.tagName !== 'I' && c.tagName !== 'BR') {
+      if (c.classList.contains('reg')) { c.classList.add('wd'); words.push(c); } else walk(c);
+    }
+  });
+  walk(root);
+  const total = words.reduce((a, w) => a + w.textContent.length, 0);
+  let acc = 0;
+  words.forEach(w => { w._a = acc / total; acc += w.textContent.length; w._b = acc / total; });
+  return words;
+}
+function writeWords(words, t, e) {
+  for (const w of words) {
+    const s = e.t + e.d * w._a, d = Math.max(0.05, e.d * (w._b - w._a));
+    const p = crit(t - s, d);
+    if (p <= 0.002) { w.style.visibility = 'hidden'; continue; }
+    w.style.visibility = 'visible';
+    w.style.clipPath = p > 0.99 ? 'none' : `inset(-45% ${f1((1 - p) * 130 - 18)}% -45% -18%)`;
+  }
+}
+
+/* ---------- pages ---------- */
+const pages = {};
+function page(id, build) {
+  const el = document.getElementById(id);
+  const svg = el.querySelector('svg.art');
+  svg.setAttribute('viewBox', '0 0 1080 1920');
+  const pg = { id, el, t0: TL.PAGES[id].t0, turn: TL.PAGES[id].turn, defs: S('defs', svg) };
+  pg.g = S('g', svg, { filter: 'url(#boil)' });
+  pg.texts = [...el.querySelectorAll('[data-k]')].filter(x => !x.classList.contains('hl')).map(x => ({ el: x, k: x.dataset.k, fx: x.dataset.fx || 'write' }));
+  pg.hls = [...el.querySelectorAll('.hl')].map(x => ({ i: x.firstElementChild, k: x.dataset.k }));
+  // the marker highlight: a rough mint blob, stretched to the words
+  pg.hls.forEach(h => { h.i.innerHTML = `<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M 3 9 C 20 2, 60 5, 97 3 C 101 14, 99 28, 96 37 C 60 39, 25 36, 2 38 C -1 28, 0 16, 3 9 Z" fill="#9FE8C9"/></svg>`; });
+  pg.build = build;
+  pages[id] = pg;
+}
+function prepare() {
+  for (const pg of Object.values(pages)) {
+    pg.texts.forEach(tx => { if (tx.fx === 'write' || tx.fx === 'btn') tx.words = splitWords(tx.el); });
+    pg.update = pg.build(pg.g, pg);
+  }
+}
+function updatePage(pg, t) {
+  for (const tx of pg.texts) {
+    const e = E(pg.id, tx.k);
+    if (tx.words) writeWords(tx.words, t, e);
+  }
+  for (const h of pg.hls) {
+    const q = P(pg.id, h.k, t);
+    h.i.style.transform = `scaleX(${f1(q * 1000) / 1000}) rotate(-1.5deg)`;
+  }
+  pg.update && pg.update(t);
+}
+// Page layout that depends on real text sizes, measured once the fonts are in.
+const offs = (e, root) => { let x = 0, y = 0; for (let a = e; a && a !== root; a = a.offsetParent) { x += a.offsetLeft; y += a.offsetTop; } return [x, y]; };
+
+/* shared: the big sign number, its "/5" and a mint blob behind it */
+function signNumber(g, pg) {
+  const num = pg.el.querySelector('.num'), of = pg.el.querySelector('.of');
+  const [nx, ny] = offs(num, pg.el);
+  of.style.left = (nx + num.offsetWidth + 26) + 'px'; of.style.top = (ny + num.offsetHeight * 0.52) + 'px';
+  const cx = nx + num.offsetWidth / 2, cy = ny + num.offsetHeight * 0.56;
+  const w = wash(pg, g, blob(cx, cy, 128), C.mint, [10, 6], 0.9);
+  return t => w.set(P(pg.id, 'blob', t));
+}
+
+/* ---------- intro: IVDD, 5 signs to know, a disc pressing on the cord ---------- */
+page('intro', (g, pg) => {
+  g.setAttribute('transform', 'translate(0 90)');
+  const Y = 1010, BW = 130, BH = 110, STEP = 175, X0 = 110;
+  const blocks = [], washes = [], discs = [];
+  for (let i = 0; i < 5; i++) {
+    const x = X0 + i * STEP, j = [[2, -3, 3, -2, 3, -3, 2, -4], [-3, 2, -2, 3, -2, 4, -3, 2]][i % 2];
+    washes.push(wash(pg, g, closed(box(x, Y, BW, BH, 28, j, 0)), C.beige, [7, 6]));
+    blocks.push(ink(g, box(x, Y, BW, BH, 28, j, 24), 7));
+    if (i < 4) {
+      const cx = x + BW + (STEP - BW) / 2, cy = Y + BH / 2, rx = 21, ry = 50;
+      const d = `M ${cx - rx} ${cy} a ${rx} ${ry} 0 1 0 ${2 * rx} 0 a ${rx} ${ry} 0 1 0 ${-2 * rx} 0`;
+      if (i !== 2) washes.push(wash(pg, g, d, C.mint, [5, 4]));
+      discs.push(ink(g, d, 6));
+    }
+  }
+  const cord = ink(g, '', 12, C.tile);
+  const bw = wash(pg, g, '', C.mark, [4, 3], 0.9), bulge = ink(g, '', 6);
+  const arrow = ink(g, 'M 790 1160 C 740 1150, 690 1120, 660 1060', 7, C.mark), ah = ink(g, head(660, 1060, -2.1, 30), 7, C.mark);
+  const cordD = k => { const y = 960, b = y - 50 * k; return `M 70 ${y} L 470 ${y} C 540 ${y}, 560 ${f1(b)}, 612 ${f1(b)} C 664 ${f1(b)}, 684 ${y}, 754 ${y} L 1010 ${y}`; };
+  const bulgeD = k => { const top = 1016 - 62 * k; return `M 590 1040 C 588 ${f1(top + 10)}, 600 ${f1(top)}, 612 ${f1(top)} C 624 ${f1(top)}, 636 ${f1(top + 10)}, 634 1040 C 634 1100, 590 1100, 590 1040 Z`; };
+  return t => {
+    const q = P('intro', 'spine', t), k = P('intro', 'bulge', t);
+    cord.setAttribute('d', cordD(k));
+    drawSeq([cord, ...blocks, ...discs], q, true);
+    washes.forEach((w, i) => w.set((q - 0.25 - i * 0.05) * 2.2));
+    const bd = bulgeD(k);
+    bulge.setAttribute('d', bd); bw.p.setAttribute('d', bd);
+    setDraw(bulge, (q - 0.55) * 3, true); bw.set((q - 0.6) * 3, true);
+    drawSeq([arrow, ah], k);
+  };
+});
+
+/* ---------- 1: a hunched back, the spine line arches ---------- */
+page('s1', (g, pg) => {
+  const num = signNumber(g, pg);
+  const Y0 = 1640, X0 = 150, X1 = 930, NT = 11;
+  const ghost = S('path', g, { d: `M ${X0} ${Y0} L ${X1} ${Y0}`, fill: 'none', stroke: C.mute, 'stroke-width': 5, 'stroke-dasharray': '16 20', 'stroke-linecap': 'round', opacity: 0 });
+  const w = wash(pg, g, '', C.mint, [8, 8], 0.85);
+  const spine = ink(g, '', 11);
+  const ticks = Array.from({ length: NT }, () => ink(g, '', 9));
+  const arrow = ink(g, 'M 540 1215 L 540 1040', 10, C.mark), ah = ink(g, head(540, 1040, -Math.PI / 2, 40), 10, C.mark);
+  return t => {
+    num(t);
+    const q = P('s1', 'spine', t), k = P('s1', 'arch', t);
+    const cy = Y0 - 510 * k, A = [X0, Y0], B1 = [X0 + 170, cy], B2 = [X1 - 170, cy], D = [X1, Y0];
+    const d = `M ${A} C ${B1.map(f1)} ${B2.map(f1)} ${D}`;
+    spine.setAttribute('d', d); setDraw(spine, q, true);
+    ticks.forEach((tk, i) => {
+      const u = (i + 0.5) / NT, [x, y] = bez(A, B1, B2, D, u), [tx, ty] = bezT(A, B1, B2, D, u), L = Math.hypot(tx, ty) || 1;
+      const nx = -ty / L * 40, ny = tx / L * 40;
+      tk.setAttribute('d', `M ${f1(x - nx)} ${f1(y - ny)} L ${f1(x + nx)} ${f1(y + ny)}`);
+      setDraw(tk, (q - u) * 9, true);
+    });
+    w.p.setAttribute('d', `${d} Z`); w.set(k * 1.4, true);
+    ghost.setAttribute('opacity', f1(0.8 * k * 100) / 100);
+    drawSeq([arrow, ah], P('s1', 'arrow', t));
+  };
+});
+
+/* ---------- 2: yelps when picked up, a YELP! burst ---------- */
+page('s2', (g, pg) => {
+  const num = signNumber(g, pg);
+  const CX = 610, CY = 1400, J = [1, .94, 1.04, .97, 1.02, .93, 1.05, .96, 1, .95];
+  let d = '';
+  for (let k = 0; k < 18; k++) {
+    const a = -Math.PI / 2 + k / 18 * Math.PI * 2, r = (k % 2 ? 222 : 312) * J[k % J.length];
+    d += (k ? ' L ' : 'M ') + f1(CX + Math.cos(a) * r * 1.14) + ' ' + f1(CY + Math.sin(a) * r);
+  }
+  d += ' Z';
+  const bg = S('g', g);
+  const bw = wash(pg, bg, d, C.peach, [10, 8], 1), bk = ink(bg, d, 8);
+  const lines = ['M 1000 1110 L 1040 1060', 'M 1015 1210 L 1060 1195', 'M 250 1650 L 205 1690', 'M 300 1720 L 285 1770'].map(s => ink(g, s, 8));
+  const ag = S('g', g);
+  const shaft = ink(ag, 'M 155 1740 L 155 1300', 12, C.tile), ahd = ink(ag, head(155, 1296, -Math.PI / 2, 46), 12, C.tile);
+  const yelp = pg.el.querySelector('[data-k="yelp"]'), lift = pg.el.querySelector('[data-k="lift"]');
+  return t => {
+    num(t);
+    const e = E('s2', 'yelp');
+    drawSeq([bk], P('s2', 'burst', t)); bw.set(P('s2', 'burst', t) * 1.2 - 0.2);
+    const sc = track(t, 1, [[e.t, 1.1, 'snappy'], [e.t + 0.12, 1, 'default']]);
+    const sh = track(t, 0, [[e.t, 16, 'snappy'], [e.t + 0.05, -13, 'snappy'], [e.t + 0.1, 8, 'snappy'], [e.t + 0.16, 0, 'default']]);
+    bg.setAttribute('transform', `translate(${f1(sh)} 0) translate(${CX} ${CY}) scale(${sc.toFixed(4)}) translate(${-CX} ${-CY})`);
+    const tp = track(t, 0.25, [[e.t, 1, 'default']]), to = crit(t - e.t, 0.12);
+    yelp.style.opacity = to; yelp.style.transform = `translate(${f1(sh)}px,0) scale(${(tp * sc).toFixed(4)}) rotate(${f1(-6 * (1 - to))}deg)`;
+    drawSeq(lines, P('s2', 'lines', t));
+    const lq = P('s2', 'lift', t), up = track(t, 0, [[E('s2', 'lift').t + 0.35, -34, 'default']]);
+    drawSeq([shaft, ahd], lq);
+    ag.setAttribute('transform', `translate(0 ${f1(up)})`);
+    lift.style.transform = `translateY(${f1(up)}px)`;
+  };
+});
+
+/* ---------- 3: won't jump or do stairs ---------- */
+page('s3', (g, pg) => {
+  const num = signNumber(g, pg);
+  const st = 'M 470 1740 L 470 1635 L 575 1635 L 575 1530 L 680 1530 L 680 1425 L 785 1425 L 785 1320 L 890 1320 L 890 1215 L 1000 1215';
+  const sw = wash(pg, g, st + ' L 1000 1740 Z', C.beige, [9, 7]);
+  const floor = ink(g, 'M 80 1740 C 300 1746, 700 1734, 1000 1740', 8), stairs = ink(g, st, 8);
+  const A = [200, 1700], B1 = [215, 1170], B2 = [650, 1010], D = [850, 1185];
+  const tip = bezT(A, B1, B2, D, 1);
+  const arc = ink(g, `M ${A} C ${B1} ${B2} ${D}`, 8, C.tile), arcH = ink(g, head(D[0], D[1], Math.atan2(tip[1], tip[0]), 38), 8, C.tile);
+  const [mx, my] = bez(A, B1, B2, D, 0.5);
+  const x1 = ink(g, `M ${f1(mx - 85)} ${f1(my - 80)} L ${f1(mx + 85)} ${f1(my + 80)}`, 18, C.mark), x2 = ink(g, `M ${f1(mx + 85)} ${f1(my - 80)} L ${f1(mx - 85)} ${f1(my + 80)}`, 18, C.mark);
+  return t => {
+    num(t);
+    const q = P('s3', 'stairs', t);
+    drawSeq([floor, stairs], q); sw.set(q * 1.3 - 0.3);
+    drawSeq([arc, arcH], P('s3', 'arc', t));
+    drawSeq([x1, x2], P('s3', 'cross', t));
+  };
+});
+
+/* ---------- 4: wobbly back legs, two wobbling tracks that cross ---------- */
+page('s4', (g, pg) => {
+  const num = signNumber(g, pg);
+  const Y = 1400, XA = 170, XB = 900;
+  const lg = S('g', g);
+  const l1 = ink(lg, '', 13), l2 = ink(lg, '', 13, C.mark), h1 = ink(lg, '', 13), h2 = ink(lg, '', 13, C.mark);
+  const marks = [
+    'M 124 1280 C 94 1350, 94 1450, 124 1520', 'M 84 1250 C 46 1340, 46 1460, 84 1550',
+    'M 956 1280 C 986 1350, 986 1450, 956 1520', 'M 996 1250 C 1034 1340, 1034 1460, 996 1550'].map(s => ink(g, s, 8, C.tile));
+  const wave = (sg, A, ph) => {
+    const pts = [];
+    for (let i = 0; i <= 64; i++) { const x = XA + i * (XB - XA) / 64; pts.push([x, Y + sg * A * Math.sin(2 * Math.PI * (x - XA) / 292 + ph)]); }
+    return pts;
+  };
+  const toD = pts => pts.map((p, i) => (i ? 'L ' : 'M ') + f1(p[0]) + ' ' + f1(p[1])).join(' ');
+  return t => {
+    num(t);
+    const e = E('s4', 'wobble'), wob = crit(t - e.t, e.d);
+    const A = 85 + 55 * wob, ph = 2.2 * wob * Math.max(0, t - e.t);
+    const q = P('s4', 'lines', t);
+    [[l1, h1, 1], [l2, h2, -1]].forEach(([l, h, sg]) => {
+      const pts = wave(sg, A, ph), n = pts.length, a = Math.atan2(pts[n - 1][1] - pts[n - 3][1], pts[n - 1][0] - pts[n - 3][0]);
+      l.setAttribute('d', toD(pts)); h.setAttribute('d', head(pts[n - 1][0], pts[n - 1][1], a, 36));
+      setDraw(l, q * 1.1, true); setDraw(h, (q - 0.9) * 10, true);
+    });
+    lg.setAttribute('transform', `rotate(${(Math.sin(t * 7) * 1.6 * wob).toFixed(3)} 540 ${Y})`);
+    drawSeq(marks, P('s4', 'marks', t));
+    const jig = Math.sin(t * 19) * 7 * wob;
+    marks.forEach((m, i) => m.setAttribute('transform', `translate(${f1((i < 2 ? -1 : 1) * jig)} 0)`));
+  };
+});
+
+/* ---------- 5: sudden weakness, the coral box and an alert sign ---------- */
+page('s5', (g, pg) => {
+  const num = signNumber(g, pg);
+  const bd = box(90, 700, 900, 560, 40, [4, -5, 3, -4, 5, -3, 4, -4], 60);
+  const bw = wash(pg, g, closed(bd), C.coral, [6, 5], 1), bk = ink(g, bd, 7);
+  const today = pg.el.querySelector('.today'), [tx, ty] = offs(today, pg.el);
+  const uy = ty + today.offsetHeight * 0.93;
+  const ul = ink(g, `M ${tx + 4} ${f1(uy)} C ${tx + today.offsetWidth * .4} ${f1(uy - 8)}, ${tx + today.offsetWidth * .7} ${f1(uy + 6)}, ${tx + today.offsetWidth - 10} ${f1(uy - 4)}`, 9, C.white);
+  const ag = S('g', g);
+  const tri = 'M 540 1370 C 600 1470, 660 1580, 720 1690 C 600 1694, 480 1694, 360 1690 C 420 1580, 480 1470, 540 1370 Z';
+  const tw = wash(pg, ag, tri, C.gold, [10, 8], 1), tk = ink(ag, tri, 11);
+  const bang = ink(ag, 'M 540 1475 L 540 1590', 16), dot = ink(ag, 'M 540 1640 L 540 1642', 22);
+  return t => {
+    num(t);
+    bw.set(P('s5', 'box', t)); setDraw(bk, P('s5', 'box', t) * 1.1);
+    setDraw(ul, P('s5', 'ul', t));
+    const q = P('s5', 'alert', t);
+    drawSeq([tk, bang, dot], q); tw.set(q * 1.4 - 0.4);
+    const e = E('s5', 'bump'), s = track(t, 1, [[e.t, 1.1, 'snappy'], [e.t + 0.1, 1, 'default']]);
+    ag.setAttribute('transform', `translate(540 1560) scale(${s.toFixed(4)}) translate(-540 -1560)`);
+  };
+});
+
+/* ---------- what can help: strict rest, weeks of it (a calendar, crossed off) ---------- */
+page('help', (g, pg) => {
+  const X = 170, Yt = 760, W = 740, HH = 120, ROWS = 4, CH = 172, CW = W / 7;
+  const frame = box(X, Yt, W, HH + ROWS * CH, 30, [3, -4, 2, -3, 4, -2, 3, -3], 40);
+  const hw = wash(pg, g, `M ${X} ${Yt + 30} Q ${X} ${Yt} ${X + 30} ${Yt} L ${X + W - 30} ${Yt} Q ${X + W} ${Yt} ${X + W} ${Yt + 30} L ${X + W} ${Yt + HH} L ${X} ${Yt + HH} Z`, C.mint, [8, 6]);
+  const parts = [ink(g, frame, 8), ink(g, `M ${X} ${Yt + HH} C ${X + 250} ${Yt + HH + 4}, ${X + 500} ${Yt + HH - 4}, ${X + W} ${Yt + HH}`, 7)];
+  for (let i = 1; i < 7; i++) parts.push(ink(g, `M ${f1(X + i * CW)} ${Yt + HH} L ${f1(X + i * CW + (i % 2 ? 3 : -3))} ${Yt + HH + ROWS * CH}`, 4, C.mute));
+  for (let r = 1; r < ROWS; r++) parts.push(ink(g, `M ${X} ${Yt + HH + r * CH} L ${X + W} ${Yt + HH + r * CH + (r % 2 ? 3 : -3)}`, 4, C.mute));
+  parts.push(ink(g, `M ${X + 170} ${Yt - 40} L ${X + 170} ${Yt + 40}`, 12), ink(g, `M ${X + W - 170} ${Yt - 40} L ${X + W - 170} ${Yt + 40}`, 12));
+  const ticks = [];
+  const JX = [4, -6, 2, 7, -3, 5, -5], JY = [-5, 3, 6, -2, 4, -6, 2];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < 7; c++) {
+    const cx = X + c * CW + CW / 2 + JX[(r + c) % 7], cy = Yt + HH + r * CH + CH / 2 + JY[(r * 3 + c) % 7], s = 30;
+    ticks.push(ink(g, `M ${f1(cx - s)} ${f1(cy - s)} L ${f1(cx + s)} ${f1(cy + s)}`, 8, C.mark), ink(g, `M ${f1(cx + s)} ${f1(cy - s)} L ${f1(cx - s)} ${f1(cy + s)}`, 8, C.mark));
+  }
+  return t => {
+    const q = P('help', 'cal', t);
+    drawSeq(parts, q); hw.set(q * 1.4 - 0.3);
+    const tq = P('help', 'ticks', t);
+    ticks.forEach((tk, i) => setDraw(tk, (tq * ticks.length - i) * 1.0));
+  };
+});
+
+/* ---------- the IVDD kit: three product doodles ---------- */
+page('kit', (g, pg) => {
+  const ROW = [430, 880, 1340], OX = 70;
+  const rows = ROW.map(y0 => S('g', g, { transform: `translate(${OX} ${y0})` }));
+  const items = [];
+  // brace: a curved wrap with straps and warmth lines
+  { const r = rows[0], band = 'M 30 170 C 110 118, 230 118, 310 170 L 310 262 C 230 212, 110 212, 30 262 Z';
+    const w = wash(pg, r, band, C.tile, [9, 7], 0.92);
+    const inks = [ink(r, band, 8), ink(r, 'M 52 196 C 120 150, 220 150, 288 196', 5, C.mint),
+      ink(r, 'M 64 246 C 62 280, 70 306, 92 322 L 122 300', 8), ink(r, 'M 276 246 C 278 280, 270 306, 248 322 L 218 300', 8)];
+    const heat = [120, 170, 220].map(x => ink(r, `M ${x} 112 C ${x - 16} 96, ${x + 16} 80, ${x} 62 C ${x - 16} 46, ${x + 16} 34, ${x} 18`, 7, C.mark));
+    items.push({ inks: [...inks, ...heat], w }); }
+  // ramp: a folding plank up to a sofa
+  { const r = rows[1];
+    const sofa = 'M 236 312 L 236 190 Q 236 176 250 176 L 300 176 L 300 96 Q 300 82 314 82 L 336 82 L 336 312 Z';
+    const w = wash(pg, r, sofa, C.beige, [8, 6]);
+    const inks = [ink(r, 'M 6 314 C 120 318, 240 310, 346 314', 7), ink(r, sofa, 8), ink(r, 'M 236 232 L 300 232', 6),
+      ink(r, 'M 22 306 L 250 178', 30), ink(r, 'M 22 306 L 250 178', 16, C.mint), ink(r, 'M 136 238 m -12 0 a 12 12 0 1 0 24 0 a 12 12 0 1 0 -24 0', 6),
+      ...[0.22, 0.36, 0.64, 0.78].map(u => { const x = 22 + 228 * u, y = 306 - 128 * u; return ink(r, `M ${f1(x - 7)} ${f1(y - 13)} L ${f1(x + 7)} ${f1(y + 13)}`, 5); })];
+    items.push({ inks, w }); }
+  // harness: a padded body wrap with leg loops and a handle on top
+  { const r = rows[2], body = 'M 46 176 C 46 126, 304 126, 304 176 L 304 248 C 304 278, 46 278, 46 248 Z';
+    const hg = S('g', r);
+    const w = wash(pg, hg, body, C.mark, [9, 7], 0.9);
+    const inks = [ink(hg, body, 8), ink(hg, 'M 96 266 C 92 312, 138 326, 158 292', 8), ink(hg, 'M 254 266 C 258 312, 212 326, 192 292', 8),
+      ink(hg, 'M 128 140 C 124 34, 226 34, 222 140', 17), ink(hg, 'M 146 70 L 160 84 M 175 58 L 175 76 M 204 70 L 190 84', 5),
+      ink(hg, 'M 160 196 L 190 196 L 190 222 L 160 222 Z', 6, C.white)];
+    items.push({ inks, w, hg }); }
+  const divs = [ink(g, 'M 90 850 C 400 856, 700 846, 990 852', 4, C.mute), ink(g, 'M 90 1305 C 400 1300, 700 1310, 990 1304', 4, C.mute)];
+  // benefit lines sit under their product names
+  [0, 1, 2].forEach(i => {
+    const n = pg.el.querySelector(`[data-k="n${i}"]`), b = pg.el.querySelector(`[data-k="b${i}"]`);
+    b.style.top = (n.offsetTop + n.offsetHeight + 18) + 'px';
+  });
+  return t => {
+    items.forEach((it, i) => {
+      const q = P('kit', `d${i}`, t);
+      drawSeq(it.inks, q); it.w.set(q * 1.4 - 0.35);
+      if (it.hg) { const e = E('kit', 'd2'); const y = track(t, 0, [[e.t + e.d, -26, 'default'], [e.t + e.d + 0.4, 0, 'heavy']]); it.hg.setAttribute('transform', `translate(0 ${f1(y)})`); }
+    });
+    setDraw(divs[0], P('kit', 'd1', t) * 1.5); setDraw(divs[1], P('kit', 'd2', t) * 1.5);
+  };
+});
+
+/* ---------- end: the mark, sketched; the button; the vet line ---------- */
+page('end', (g, pg) => {
+  const CX = 540, CY = 560, SZ = 300, R = 72;
+  const sq = box(CX - SZ / 2, CY - SZ / 2, SZ, SZ, R, [2, -3, 2, -2, 3, -2, 2, -3], 0);
+  const mw = wash(pg, g, sq + ' Z', C.mark, [7, 6], 1), edge = ink(g, box(CX - SZ / 2, CY - SZ / 2, SZ, SZ, R, [2, -3, 2, -2, 3, -2, 2, -3], 30), 6, C.ink);
+  const pv = ink(g, `M ${CX + 3} ${CY - 60} L ${CX} ${CY + 60}`, 48, C.white), ph = ink(g, `M ${CX - 60} ${CY + 2} L ${CX + 60} ${CY}`, 48, C.white);
+  const cta = pg.el.querySelector('[data-k="cta"]');
+  const [cx0, cy0] = offs(cta, pg.el), cw = cta.offsetWidth, ch = cta.offsetHeight;
+  const arrowW = 96, gap = 26, bwid = cw + gap + arrowW + 120, bx = (1080 - bwid) / 2;
+  cta.style.left = (bx + 60) + 'px';
+  const ax = bx + 60 + cw + gap, ay = cy0 + ch * 0.56;
+  const bg = S('g', g);
+  const bd = box(bx, 975, bwid, 180, 70, [3, -4, 3, -3, 4, -3, 3, -4], 40);
+  const bw = wash(pg, bg, closed(bd), C.mint, [8, 7], 1), bk = ink(bg, bd, 8);
+  const ar = ink(bg, `M ${ax} ${f1(ay)} L ${ax + arrowW} ${f1(ay - 3)}`, 9), arh = ink(bg, head(ax + arrowW, ay - 3, 0, 32), 9);
+  return t => {
+    const mq = P('end', 'mark', t);
+    mw.set(mq); setDraw(edge, P('end', 'edge', t));
+    drawSeq([pv, ph], P('end', 'plus', t));
+    const q = P('end', 'btn', t);
+    bw.set(q); setDraw(bk, q * 1.15);
+    drawSeq([ar, arh], P('end', 'arrowR', t));
+    const e = E('end', 'press'), s = track(t, 1, [[e.t, 0.94, 'snappy'], [e.t + 0.12, 1, 'default']]);
+    const tr = `translate(540 1065) scale(${s.toFixed(4)}) translate(-540 -1065)`;
+    bg.setAttribute('transform', tr);
+    cta.style.transformOrigin = `${540 - bx - 60}px ${1065 - cy0}px`; cta.style.transform = `scale(${s.toFixed(4)})`;
+  };
+});
+
+/* ---------- page turns: a lift (the sheet slides off) or an ink wipe ---------- */
+const LIFT = { s1: [-1, -0.08, -7], s2: [1, -0.1, 7], s3: [-1, -0.1, -6], s4: [0.12, -1, 3], help: [-1, -0.06, -6], kit: [0.1, -1, -3] };
+const wipeP = document.getElementById('wipeP');
+const WIPE_D = { down: 'M -430 200 L 1510 200 L -430 660 L 1510 660 L -430 1120 L 1510 1120 L -430 1580 L 1510 1580', up: 'M 1510 1720 L -430 1720 L 1510 1260 L -430 1260 L 1510 800 L -430 800 L 1510 340 L -430 340' };
+function renderFrame(t) {
+  const seed = 1 + Math.floor(t * FPS / 4) % 8; // line boil: a new noise seed every 4 frames
+  document.querySelectorAll('.turb').forEach(f => f.setAttribute('seed', seed));
+  let wipe = null;
+  TL.ORDER.forEach((id, i) => {
+    const pg = pages[id], nid = TL.ORDER[i + 1], nx = nid ? TL.PAGES[nid] : null;
+    const T = nx ? nx.t0 : Infinity, turn = nx ? nx.turn : null;
+    if (pg.turn === 'wipe' && t > pg.t0 - 0.9 && t < pg.t0 + 1.2) wipe = pg;
+    const on = t >= pg.t0 && (turn === 'lift' ? t < T + 0.9 : t < T);
+    if (!on) { pg.el.style.display = 'none'; return; }
+    pg.el.style.display = 'block';
+    pg.el.style.zIndex = 100 - i;
+    if (turn === 'lift' && t >= T) {
+      const [dx, dy, dr] = LIFT[id];
+      const k = spring(t - T - 0.04, { w: 9.5, z: 0.92 });
+      const lift = track(t, 0, [[T - 0.06, 1, 'snappy'], [T + 0.22, 0, 'default']]);
+      pg.el.style.transform = `translate(${f1(dx * 1500 * k)}px,${f1(dy * 2150 * k - 26 * lift)}px) rotate(${(dr * k).toFixed(3)}deg) scale(${(1 + 0.03 * lift).toFixed(4)})`;
+      pg.el.style.boxShadow = `0 ${f1(18 + 26 * lift)}px 60px rgba(16,27,23,${(0.28 * clamp(k * 6 + lift)).toFixed(3)})`;
+    } else { pg.el.style.transform = 'none'; pg.el.style.boxShadow = 'none'; }
+    updatePage(pg, t);
+  });
+  if (wipe) {
+    const T = wipe.t0, L = wipeP._L || (wipeP._L = wipeP.getTotalLength());
+    const q1 = spring(t - (T - 0.55), { w: 12.5, z: 1 }), q2 = spring(t - T, { w: 9, z: 1 });
+    wipeP.style.visibility = q1 > 0.002 && q2 < 0.995 ? 'visible' : 'hidden';
+    wipeP.style.strokeDasharray = `${L} ${L}`;
+    wipeP.style.strokeDashoffset = L * (1 - q1) - L * q2;
+  } else wipeP.style.visibility = 'hidden';
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all(['700 100px Caveat', '500 40px Inter', '600 40px Inter', '700 40px Inter', '800 40px Inter'].map(f => document.fonts.load(f)))
+  .then(() => document.fonts.ready).then(() => {
+    // measure with every page laid out, then build the doodles
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'block'; });
+    wipeP.setAttribute('d', WIPE_D.down);
+    prepare();
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'none'; });
+    return true;
+  });
+// the help page wipes the other way (bottom up)
+const _rf = renderFrame;
+window.renderFrame = t => { wipeP.setAttribute('d', t > TL.PAGES.help.t0 - 1 ? WIPE_D.up : WIPE_D.down); wipeP._L = null; _rf(t); };
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const stage = document.getElementById('stage');
+  const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `translate(${(innerWidth - 1080 * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { window.renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
