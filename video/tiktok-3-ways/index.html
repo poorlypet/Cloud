@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poorly Pet 3 Ways</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+@font-face{font-family:Caveat;font-weight:700;src:url(fonts/caveat-700.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+.sec{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:0}
+.L{position:absolute;left:0;top:0;display:none}
+.disp{font-family:Fraunces,serif;font-weight:540;font-optical-sizing:auto;letter-spacing:-.018em;line-height:1.0;white-space:nowrap;color:var(--ink)}
+.disp em{font-style:italic;font-weight:460;color:var(--rust)}
+.num{font-family:Fraunces,serif;font-weight:500;font-size:250px;line-height:.8;color:var(--rust);letter-spacing:-.03em}
+.ui{font-family:Inter,sans-serif}
+.caret{display:inline-block;width:.06em;height:.8em;margin-left:.05em;background:var(--rust);vertical-align:-.06em}
+.w{display:inline-block}
+.pill{font:600 36px/1 Inter,sans-serif;padding:20px 30px;border-radius:999px;white-space:nowrap;box-sizing:border-box}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1080, H = 1920, DUR = 30, FPS = 30;
+const b = n => n * BEAT;                    // beats -> seconds
+const A = {}; for (const [k, v] of Object.entries(AT)) A[k] = Array.isArray(v) ? v.map(b) : b(v);
+const X0 = 96, XR = 984;                    // the one left margin, and the right edge of the column
+const C = { deep: [11, 42, 35], tile: [19, 74, 61], mint: [159, 232, 201], paper: [250, 249, 246], rust: [168, 84, 47], ink: [16, 27, 23], mute: [94, 110, 102], white: [255, 255, 255], line: [227, 232, 230], dim: [196, 205, 200] };
+const stage = document.getElementById('stage');
+
+/* ---------------- building blocks (as in the reference build) ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function section() { const g = document.createElement('div'); g.className = 'sec'; stage.appendChild(g); g.style.display = 'none'; ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'default') => Math.min(1, sp(t - t0, p) * 1.25);
+const press = (t, t0, depth = 0.92) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.12, 1, 'snappy']]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+function typed(e, parts, t, t0, cps, caretFor = 0.9) {
+  const total = parts.reduce((a, p) => a + (p[0] === '\n' ? 0 : p[0].length), 0);
+  const n = Math.max(0, Math.min(total, Math.floor((t - t0) * cps)));
+  let left = n, html = '';
+  for (const [s, em] of parts) {
+    if (s === '\n') { if (left > 0) html += '<br>'; continue; }
+    const part = s.slice(0, Math.max(0, left)); left -= s.length;
+    if (part) html += em ? `<em>${esc(part)}</em>` : esc(part);
+  }
+  const done = t0 + total / cps;
+  const caret = t >= t0 - 0.2 && (t < done || (t < done + caretFor && Math.floor((t - done) * 3) % 2 === 0));
+  e.innerHTML = (html || '&#8203;') + (caret ? '<span class="caret"></span>' : '');
+  return n / total;
+}
+function wrapWords(e) { e.innerHTML = e.innerHTML.replace(/(<em>)?([^\s<]+)(<\/em>)?/g, m => `<span class="w">${m}</span>`); }
+function words(e, t, t0, step, d = 24, p = 'default') {
+  [...e.querySelectorAll('.w')].forEach((w, i) => { const k = sp(t - t0 - i * step, p); w.style.opacity = Math.min(1, k * 1.4); w.style.transform = `translateY(${d * (1 - k)}px)`; });
+}
+// a slow list scroll: three staggered heavy springs, each carrying a third of the distance
+function scrollKeys(t0, from, to) { const d = to - from; return [[t0, from + d / 3, 'heavy'], [t0 + 1 / 6, from + 2 * d / 3, 'heavy'], [t0 + 1 / 3, to, 'heavy']]; }
+
+/* ---------------- icons (original line drawings) ---------------- */
+const ICON = {
+  legs: '<path d="M22 6 L30 30 L22 58"/><circle cx="30" cy="30" r="6"/><path d="M40 8 L36 30 L42 58"/>',
+  skin: '<path d="M32 8 C22 24 16 32 16 40 a16 16 0 0 0 32 0 C48 32 42 24 32 8Z"/>',
+  tummy: '<path d="M32 12 a20 20 0 1 1 -19 14"/><path d="M32 24 a8 8 0 1 1 -8 8"/>',
+  eyes: '<path d="M6 32 C18 16 46 16 58 32 C46 48 18 48 6 32Z"/><circle cx="32" cy="32" r="7"/>',
+  tooth: '<path d="M18 12 C24 8 28 12 32 12 C36 12 40 8 46 12 C54 18 49 30 47 38 C45 48 43 56 39 56 C35 56 35 42 32 42 C29 42 29 56 25 56 C21 56 19 48 17 38 C15 30 10 18 18 12Z"/>',
+  spine: '<rect x="22" y="6" width="20" height="10" rx="4"/><rect x="21" y="20" width="22" height="10" rx="4"/><rect x="21" y="34" width="22" height="10" rx="4"/><rect x="22" y="48" width="20" height="10" rx="4"/>',
+  mood: '<path d="M6 34 C12 18 20 18 24 32 S34 48 40 32 S52 16 58 32"/>',
+  pulse: '<path d="M4 32 H18 L25 14 L34 50 L41 32 H60"/>',
+  sparkle: '<path d="M32 6 C34 24 40 30 58 32 C40 34 34 40 32 58 C30 40 24 34 6 32 C24 30 30 24 32 6Z"/>',
+  check: '<path d="M16 33 L27 44 L48 21"/>',
+  send: '<path d="M32 50 V16 M18 30 L32 16 L46 30"/>',
+  info: '<circle cx="32" cy="32" r="24"/><path d="M32 29 V45"/><circle cx="32" cy="20" r="1.5"/>',
+};
+function icon(name, size, color, sw = 5) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
+}
+function mark(size, bg, fg) { // the Poorly Pet mark: rounded square with a plus
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${bg}"/><rect x="42" y="22" width="16" height="56" rx="6" fill="${fg}"/><rect x="22" y="42" width="56" height="16" rx="6" fill="${fg}"/></svg>`;
+}
+// a numbered list heading: big rust numeral, a hairline that draws to the right, then the typed title
+function stepHead(sec, n) {
+  const num = el(sec, String(n), 'num');
+  const rule = el(sec, '<svg width="700" height="4" viewBox="0 0 700 4"><path d="M2 2 H698" stroke="#D5DDD9" stroke-width="4" stroke-linecap="round"/></svg>');
+  const head = el(sec, '', 'disp', 'font-size:104px');
+  return { num, rule, head };
+}
+function renderHead(h, t, tArrive, typeStart, parts, cps) {
+  put(h.num, { x: X0 - 6, y: 250, o: 1 });
+  put(h.rule, { x: X0 + h.num._w + 34, y: 390 });
+  setDraw(h.rule.querySelector('path'), sp(t - tArrive, 'heavy'));
+  put(h.head, { x: X0 - 4, y: 480 });
+  typed(h.head, parts, t, typeStart, cps);
+}
+
+/* ================= 0: hook ================= */
+const S0 = section();
+const hQ = el(S0, '', 'disp', 'font-size:148px;line-height:1.02');
+const hLine = el(S0, "Here's where to start.", '', 'font:700 84px/1 Caveat,cursive;color:var(--rust);white-space:nowrap');
+const hArrow = el(S0, `<svg width="220" height="470" viewBox="0 0 220 470" fill="none" stroke="#A8542F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+  <path class="a1" d="M70 12 C 30 90, 150 130, 110 210 C 80 270, 40 250, 60 210 C 80 175, 130 230, 110 300 C 98 350, 92 390, 96 440"/>
+  <path class="a2" d="M58 396 L96 446 L140 402"/></svg>`, '', 'width:220px;height:470px');
+const HOOK = [["Something's"], ['\n'], ['not right', 1], [' with'], ['\n'], ['your dog?']];
+function scene0(t) {
+  typed(hQ, HOOK, t, A.hookType, TYPE.hook[2]);
+  put(hQ, { x: X0 - 6, y: 420 });
+  put(hLine, { x: X0, y: 960 + rise(t, A.hookLine, 40, 'heavy'), o: op(t, A.hookLine, 'heavy') });
+  put(hArrow, { x: X0 + 10, y: 1110 });
+  setDraw(hArrow.querySelector('.a1'), sp(t - A.hookArrow, 'heavy'));
+  setDraw(hArrow.querySelector('.a2'), sp(t - A.hookArrow - 0.45, 'default'));
+}
+
+/* ================= 1: start with what you're seeing ================= */
+const S1 = section();
+const h1 = stepHead(S1, 1);
+const AREAS = [['legs', 'Legs & paws'], ['skin', 'Skin & coat'], ['tummy', 'Tummy & gut'], ['eyes', 'Ears & eyes'], ['tooth', 'Mouth & teeth'], ['spine', 'Back & spine'], ['mood', 'Behaviour & mood'], ['pulse', 'Whole body']];
+const chips = AREAS.map(([ic, l]) => el(S1, `<div class="cb" style="position:absolute;inset:0;border-radius:999px;background:#fff;border:3px solid var(--line);box-sizing:border-box"></div>
+  <div style="position:absolute;left:24px;top:24px">${icon(ic, 54, '#0C342A', 5)}</div>
+  <div class="cl ui" style="position:absolute;left:94px;top:32px;font:600 38px/1 Inter;color:var(--ink);white-space:nowrap">${esc(l)}</div>`, '', 'height:102px'));
+const SYMS = [['Limping or favouring a leg', 'Often arthritis, a cruciate injury or a sore paw.'], ['Stiffness after rest', 'A classic early sign of arthritis or joint wear.'], ['Slow to get up', 'Joint or hip discomfort, common with age.']];
+const rows = SYMS.map(([a, d]) => el(S1, `<i style="position:absolute;left:0;top:17px;width:20px;height:20px;border-radius:10px;background:var(--rust)"></i>
+  <div class="ui" style="font:700 46px/1.15 Inter;color:var(--ink);margin-left:44px;white-space:nowrap">${a}</div>
+  <div class="ui" style="font:500 38px/1.3 Inter;color:var(--mute);margin:10px 0 0 44px;width:840px">${d}</div>`, '', 'width:888px'));
+const rowRules = SYMS.map(() => el(S1, '', '', 'width:888px;height:3px;background:var(--line)'));
+const cap1 = el(S1, '<b style="color:var(--ink)">8</b> body areas. <b style="color:var(--ink)">40+</b> signs.', 'ui', 'font:500 42px/1 Inter;color:var(--mute);white-space:nowrap');
+function scene1(t) {
+  renderHead(h1, t, A.scroll1 + 0.5, A.s1Type, [['Start with'], ['\n'], ["what you're seeing.", 1]], TYPE.s1[2]);
+  const selK = sp(t - A.s1Tap, 'snappy');
+  chips.forEach((c, i) => {
+    const t0 = A.s1Chips + i * b(0.25), [x, y] = chips._pos[i];
+    if (i === 0) {
+      c.querySelector('.cb').style.background = mix(C.white, C.mint, selK);
+      c.querySelector('.cb').style.borderColor = mix(C.line, [11, 42, 35], selK);
+      put(c, { x: x + rise(t, t0, 50), y, s: press(t, A.s1Tap, 0.93), o: op(t, t0) });
+      return;
+    }
+    const f = sp(t - A.s1Fold - (i % 4) * 0.04, 'default');
+    put(c, { x: x + rise(t, t0, 50), y: y + 60 * f, o: op(t, t0) * (1 - f) });
+  });
+  // symptom rows list out under the chosen area and push the caption down
+  let capY = T(t, chips._bottom + 64, rows._y.map((ry, i) => [A.s1Rows[i], ry + rows[i]._h + 70, 'default']));
+  rows.forEach((r, i) => {
+    const t0 = A.s1Rows[i];
+    put(r, { x: X0, y: rows._y[i] + rise(t, t0, 40), o: op(t, t0) });
+    put(rowRules[i], { x: X0, y: rows._y[i] + r._h + 26, sx: sp(t - t0 - 0.1, 'heavy'), ox: 0 });
+  });
+  put(cap1, { x: X0, y: capY + rise(t, A.s1Caption, 30), o: op(t, A.s1Caption) });
+}
+
+/* ================= 2: ask Poorly Pet AI ================= */
+const S2 = section();
+const h2 = stepHead(S2, 2);
+const PX = X0, PY = 740, PW = 888, PH = 870;
+const panel = el(S2, '', '', `width:${PW}px;height:${PH}px;border-radius:44px;background:var(--deep)`);
+const aiHead = el(S2, `<div style="position:absolute;left:0;top:0;width:92px;height:92px;border-radius:46px;background:var(--mint)"><div style="position:absolute;left:18px;top:18px">${icon('sparkle', 56, '#0B2A23', 4)}</div></div>
+  <div class="disp" style="position:absolute;left:120px;top:14px;font-size:60px;color:#fff">Poorly Pet AI</div>`, '', 'width:600px;height:92px');
+const BADGES = ['Instant', 'Free', 'No sign-up'];
+const badges = BADGES.map(s => el(S2, s, 'pill', 'border:3px solid var(--mint);color:var(--mint);font:600 34px/1 Inter;padding:14px 26px'));
+const aiRule = el(S2, '', '', `width:${PW - 88}px;height:2px;background:rgba(159,232,201,.25)`);
+const Q = 'My dog seems stiff after walks';
+const REPLY = 'Stiffness after walks is often linked to joints. I can suggest support, and when to see your vet.';
+const inBar = el(S2, `<div class="in ui" style="position:absolute;left:36px;top:30px;font:500 38px/40px Inter;color:#fff;white-space:nowrap"></div>
+  <div class="sendb" style="position:absolute;right:12px;top:12px;width:76px;height:76px;border-radius:38px;background:var(--mint)"><div style="position:absolute;left:14px;top:14px">${icon('send', 48, '#0B2A23', 6)}</div></div>`,
+  '', `width:${PW - 88}px;height:100px;border-radius:50px;background:var(--tile)`);
+const inTxt = inBar.querySelector('.in'), sendB = inBar.querySelector('.sendb');
+const uB = el(S2, esc(Q), 'ui', 'padding:28px 34px;border-radius:36px 36px 8px 36px;background:var(--paper);color:var(--ink);font:500 40px/1.25 Inter;white-space:nowrap');
+const dots = el(S2, [0, 1, 2].map(i => `<i class="dt" style="position:absolute;left:${34 + i * 36}px;top:36px;width:20px;height:20px;border-radius:10px;background:var(--mint)"></i>`).join(''), '', 'width:170px;height:92px;border-radius:36px 36px 36px 8px;background:var(--tile)');
+const rB = el(S2, esc(REPLY), 'ui', 'width:770px;padding:28px 34px;border-radius:36px 36px 36px 8px;background:var(--tile);color:#fff;font:500 40px/1.35 Inter;box-sizing:border-box');
+const note2 = el(S2, `<span style="display:inline-block;vertical-align:-8px;margin-right:12px">${icon('info', 40, '#5E6E66', 5)}</span>General guidance only. Not a substitute for your vet.`, 'ui', 'font:500 34px/1 Inter;color:var(--mute);white-space:nowrap');
+function scene2(t) {
+  renderHead(h2, t, A.scroll2 + 0.5, A.s2Type, [['Ask'], ['\n'], ['Poorly Pet AI.', 1]], TYPE.s2[2]);
+  put(panel, { x: PX, y: PY });
+  put(aiHead, { x: PX + 44, y: PY + 44 });
+  let bx = PX + 44;
+  badges.forEach((e, i) => { const t0 = A.s2Badges + i * b(0.25); put(e, { x: bx, y: PY + 170, s: T(t, 0.8, [[t0, 1, 'default']]), o: op(t, t0) }); bx += e._w + 16; });
+  put(aiRule, { x: PX + 44, y: PY + 268 });
+  // the question is typed into the input, then sent
+  const inY = PY + PH - 44 - 100;
+  put(inBar, { x: PX + 44, y: inY });
+  if (t < A.s2Input - 0.2 || t >= A.s2Send) inTxt.innerHTML = `<span style="color:rgba(255,255,255,.55)">${t >= A.s2Send ? 'Ask a follow-up…' : "Describe what you're seeing…"}</span>`;
+  else typed(inTxt, [[Q]], t, A.s2Input, TYPE.s2Input[2], 0);
+  sendB.style.transform = `scale(${press(t, A.s2Send, 0.84)})`;
+  const chatY = PY + 312;
+  put(uB, { x: PX + PW - 44 - uB._w, y: chatY + rise(t, A.s2Send, 60), s: T(t, 0.9, [[A.s2Send, 1, 'default']]), o: op(t, A.s2Send), ox: uB._w, oy: uB._h });
+  const rY = chatY + uB._h + 28;
+  if (t >= A.s2Dots && t < A.s2Reply) {
+    put(dots, { x: PX + 44, y: rY, s: T(t, 0.7, [[A.s2Dots, 1, 'default']]), o: op(t, A.s2Dots), ox: 0, oy: 92 });
+    dots.querySelectorAll('.dt').forEach((d, i) => d.style.transform = `translateY(${-9 * Math.max(0, Math.sin((t - A.s2Dots) * 9 - i * 0.9))}px)`);
+  }
+  if (t >= A.s2Reply) { put(rB, { x: PX + 44, y: rY, s: T(t, 0.94, [[A.s2Reply, 1, 'default']]), o: op(t, A.s2Reply), ox: 0, oy: rB._h }); words(rB, t, A.s2Reply, b(0.125), 18, 'default'); }
+  put(note2, { x: X0, y: PY + PH + 40 + rise(t, A.s2Note, 24), o: op(t, A.s2Note) });
+}
+
+/* ================= 3: scan a photo ================= */
+const S3 = section();
+const h3 = stepHead(S3, 3);
+const FX = X0, FY = 760, FS = 560;
+const finder = el(S3, `<div style="position:absolute;inset:0;border-radius:40px;background:var(--pale);overflow:hidden">
+    <div class="ph" style="position:absolute;inset:0">
+      <div style="position:absolute;left:40px;top:60px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(19,74,61,.20),rgba(19,74,61,0) 70%)"></div>
+      <div style="position:absolute;left:230px;top:200px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(194,94,46,.26),rgba(194,94,46,0) 70%)"></div>
+      <div style="position:absolute;left:160px;top:20px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(159,232,201,.9),rgba(159,232,201,0) 70%)"></div>
+    </div>
+    <div class="grid" style="position:absolute;inset:0"></div>
+    <div class="band" style="position:absolute;left:0;right:0;height:120px;background:linear-gradient(rgba(159,232,201,0),rgba(159,232,201,.75))"></div>
+    <div class="line" style="position:absolute;left:0;right:0;height:6px;background:var(--green)"></div>
+    <div class="flash" style="position:absolute;inset:0;background:#fff;opacity:0"></div>
+  </div>
+  <svg class="corners" width="${FS}" height="${FS}" viewBox="0 0 560 560" style="position:absolute;left:0;top:0" fill="none" stroke="#0C342A" stroke-width="12" stroke-linecap="round">
+    <path d="M16 120 V44 Q16 16 44 16 H120"/><path d="M440 16 H516 Q544 16 544 44 V120"/><path d="M544 440 V516 Q544 544 516 544 H440"/><path d="M120 544 H44 Q16 544 16 516 V440"/></svg>
+  <div class="shut" style="position:absolute;left:236px;top:440px;width:88px;height:88px;border-radius:44px;border:6px solid var(--green);box-sizing:border-box"><div style="position:absolute;left:8px;top:8px;width:60px;height:60px;border-radius:30px;background:var(--green)"></div></div>`, '', `width:${FS}px;height:${FS}px`);
+const fGrid = finder.querySelector('.grid');
+for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) { const d = document.createElement('i'); d.style.cssText = `position:absolute;left:${70 + c * 84}px;top:${70 + r * 84}px;width:10px;height:10px;border-radius:5px;background:#0C342A;opacity:0`; d.dataset.r = r; fGrid.appendChild(d); }
+const SPOTS = [[190, 170], [360, 300], [230, 380]];
+const spots = SPOTS.map(() => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;width:56px;height:56px;border-radius:28px;border:6px solid #A8542F;box-sizing:border-box;display:none'; finder.appendChild(d); return d; });
+const stat = el(S3, '<span style="font:300 104px/1 Inter;vertical-align:10px;margin-right:4px">&lt;</span>10s', 'disp', 'font-size:132px;color:var(--rust)');
+const statL = el(S3, 'average<br>scan', 'ui', 'font:600 42px/1.2 Inter;color:var(--ink)');
+const flow = el(S3, '<span>Capture</span> <span>→</span> <span>Analyse</span> <span>→</span> <span>Act</span>', 'disp', 'font-size:72px');
+const note3 = el(S3, `<span style="display:inline-block;vertical-align:-8px;margin-right:12px">${icon('info', 40, '#5E6E66', 5)}</span>Decision support, not a diagnosis.`, 'ui', 'font:500 38px/1 Inter;color:var(--mute);white-space:nowrap');
+function scene3(t) {
+  renderHead(h3, t, A.scroll3 + 0.5, A.s3Type, [['Scan'], ['\n'], ['a photo.', 1]], TYPE.s3[2]);
+  put(finder, { x: FX, y: FY });
+  finder.querySelectorAll('.corners path').forEach((p, i) => setDraw(p, sp(t - A.s3Finder - i * 0.08, 'heavy')));
+  const shut = finder.querySelector('.shut');
+  shut.style.transform = `scale(${press(t, A.s3Shutter, 0.8) * (1 - sp(t - A.s3Shutter - 0.25, 'default'))})`;
+  finder.querySelector('.flash').style.opacity = Math.max(0, T(t, 0, [[A.s3Shutter, 0.9, 'snappy'], [A.s3Shutter + 0.1, 0, 'default']]));
+  // a slow scan: four staggered heavy steps down the frame
+  const sy = T(t, -10, [0, 1, 2, 3].map(i => [A.s3Scan + i * b(0.5), -10 + (i + 1) * 142.5, 'heavy']));
+  const scanOn = t > A.s3Scan - 0.05 && t < A.s3Steps[2] + 0.35;
+  const line = finder.querySelector('.line'), band = finder.querySelector('.band');
+  line.style.top = sy + 'px'; band.style.top = sy - 120 + 'px';
+  line.style.opacity = band.style.opacity = scanOn ? 1 - sp(t - A.s3Steps[2], 'default') : 0;
+  fGrid.querySelectorAll('i').forEach(d => { const ry = 70 + d.dataset.r * 84; d.style.opacity = sy > ry && t > A.s3Scan ? 0.45 * (1 - sp(t - A.s3Steps[2], 'default')) : 0; });
+  spots.forEach((s, i) => { const t0 = A.s3Steps[2] + i * b(0.125); const k = sp(t - t0, 'default'); s.style.display = t > t0 ? 'block' : 'none'; s.style.transform = `translate(${SPOTS[i][0] - 28}px,${SPOTS[i][1] - 28}px) scale(${0.4 + 0.6 * k})`; s.style.opacity = Math.min(1, k * 1.3); });
+  put(stat, { x: FX + FS + 52, y: FY + 40 + rise(t, A.s3Stat, 50, 'heavy'), o: op(t, A.s3Stat, 'heavy') });
+  put(statL, { x: FX + FS + 58, y: FY + 190 + rise(t, A.s3Stat + 0.1, 40, 'heavy'), o: op(t, A.s3Stat + 0.1, 'heavy') });
+  const lit = [A.s3Steps[0], A.s3Steps[0] + 0.3, A.s3Steps[1], A.s3Steps[1] + 0.3, A.s3Steps[2]];
+  [...flow.children].forEach((e, i) => e.style.color = mix(C.dim, i % 2 ? C.rust : C.ink, sp(t - lit[i], 'default')));
+  put(flow, { x: X0 - 2, y: FY + FS + 70 + rise(t, A.s3Finder + 0.3, 40), o: op(t, A.s3Finder + 0.3) });
+  put(note3, { x: X0, y: FY + FS + 200 + rise(t, A.s3Note, 30), o: op(t, A.s3Note) });
+}
+
+/* ================= 4: recap + lockup ================= */
+const S4 = section();
+const rHead = el(S4, 'Where to <em>start.</em>', 'disp', 'font-size:104px');
+const RECAP = ["Start with what you're seeing.", 'Ask Poorly Pet AI.', 'Scan a photo.'];
+const rRows = RECAP.map((s, i) => el(S4, `<div class="bx" style="position:absolute;left:0;top:0;width:84px;height:84px;border-radius:24px;border:4px solid #C9D3CE;background:#fff;box-sizing:border-box">
+    <div style="position:absolute;left:6px;top:6px">${icon('check', 64, '#0B2A23', 7).replace('<path', '<path class="ck"')}</div></div>
+  <div class="disp" style="position:absolute;left:118px;top:4px;font-size:76px;color:var(--rust)">${i + 1}</div>
+  <div class="ui rt" style="position:absolute;left:180px;top:20px;font:700 44px/1.1 Inter;color:var(--ink);white-space:nowrap">${esc(s)}</div>`, '', 'width:888px;height:84px'));
+const rRules = RECAP.map(() => el(S4, '', '', 'width:888px;height:3px;background:var(--line)'));
+const lMark = el(S4, mark(128, '#C25E2E', '#fff'), '', 'width:128px;height:128px');
+const lWord = el(S4, 'Poorly Pet', 'ui', 'font:800 100px/128px Inter;color:var(--ink);letter-spacing:-.025em;white-space:nowrap');
+const lHi = el(S4, '<svg width="520" height="60" viewBox="0 0 520 60"><path d="M8 34 C140 26 330 22 512 30" fill="none" stroke="#9FE8C9" stroke-width="30" stroke-linecap="round"/></svg>', '', 'width:520px;height:60px');
+const lTag = el(S4, "<span class='w'>Helping</span> <span class='w'>you</span> <span class='w'>find</span><br><span class='w'>the</span> <span class='w hl'><em>right</em></span> <span class='w hl'><em>support</em></span><br><span class='w'>for</span> <span class='w'>your</span> <span class='w'>pet.</span>", 'disp', 'font-size:84px;line-height:1.08');
+const lUrl = el(S4, 'poorly-pet.com', 'ui', 'font:700 56px/1 Inter;color:var(--green);white-space:nowrap');
+const lCode = el(S4, '10% off your first order · <b style="color:var(--rust)">POORLY10</b>', 'pill', 'border:3px solid var(--ink);color:var(--ink);font:600 38px/1 Inter;padding:22px 34px');
+function scene4(t) {
+  put(rHead, { x: X0 - 4, y: 230 });
+  rRows.forEach((r, i) => {
+    const y = 430 + i * 150, tk = A.rTicks[i], k = sp(t - tk, 'snappy');
+    put(r, { x: X0, y });
+    const bx = r.querySelector('.bx');
+    bx.style.background = mix(C.white, C.mint, k); bx.style.borderColor = mix([201, 211, 206], C.deep, k);
+    bx.style.transform = `scale(${press(t, tk, 0.86)})`;
+    setDraw(r.querySelector('.ck'), sp(t - tk - 0.04, 'default'));
+    r.querySelector('.rt').style.color = mix(C.mute, C.ink, 0.35 + 0.65 * k);
+    if (i < 2) put(rRules[i], { x: X0, y: y + 84 + 32 });
+  });
+  const ly = 960;
+  put(lMark, { x: X0, y: ly + rise(t, A.rMark, 60, 'heavy'), s: T(t, 0.6, [[A.rMark, 1, 'heavy']]), o: op(t, A.rMark, 'heavy') });
+  put(lWord, { x: X0 + 128 + 30, y: ly, o: op(t, A.rMark + 0.12) });
+  lWord.style.clipPath = `inset(-10% ${100 - 100 * sp(t - A.rMark - 0.12, 'heavy')}% -10% 0)`;
+  put(lTag, { x: X0 - 4, y: ly + 190 });
+  words(lTag, t, A.rTag, b(0.125), 40, 'heavy');
+  put(lHi, { x: X0 - 4 + lTag._hlX - 2, y: ly + 190 + lTag._hlY + 14 - 34, o: 1 });
+  setDraw(lHi.querySelector('path'), sp(t - A.rUnder, 'heavy'));
+  put(lUrl, { x: X0, y: ly + 530 + rise(t, A.rUrl, 30, 'heavy'), o: op(t, A.rUrl, 'heavy') });
+  put(lCode, { x: X0, y: ly + 620, s: T(t, 0.85, [[A.rCode, 1, 'default']]), o: op(t, A.rCode), ox: 0 });
+}
+
+/* ---------------- touch indicator for the three taps ---------------- */
+const touch = document.createElement('div'); touch.className = 'L'; touch.style.cssText += 'z-index:50;width:120px;height:120px'; stage.appendChild(touch); ALL.push(touch);
+touch.innerHTML = '<div class="dot" style="position:absolute;left:10px;top:10px;width:100px;height:100px;border-radius:50px;background:rgba(16,27,23,.22);border:4px solid rgba(16,27,23,.5);box-sizing:border-box"></div><div class="ring" style="position:absolute;left:0;top:0;width:120px;height:120px;border-radius:60px;border:5px solid rgba(16,27,23,.5);box-sizing:border-box"></div>';
+function touchAt(t, scroll) {
+  const taps = [[A.s1Tap, 1, () => [chips._pos[0][0] + 50, chips._pos[0][1] + 50]], [A.s2Send, 2, () => [PX + 44 + PW - 88 - 50, PY + PH - 44 - 50]], [A.s3Shutter, 3, () => [FX + 280, FY + 484]]];
+  for (const [tp, secI, at] of taps) {
+    if (t < tp - 0.45 || t > tp + 0.6) continue;
+    const [x, y] = at(), sy = secI * H - scroll;
+    const k = sp(t - tp + 0.4, 'default') * (1 - sp(t - tp - 0.2, 'default'));
+    put(touch, { x: x - 60, y: y + sy - 60, s: press(t, tp, 0.78) * (0.7 + 0.3 * sp(t - tp + 0.4, 'default')), o: k });
+    const rk = sp(t - tp, 'snappy');
+    const ring = touch.querySelector('.ring');
+    ring.style.transform = `scale(${0.8 + 0.9 * rk})`; ring.style.opacity = t < tp ? 0 : (1 - rk) + 0.001;
+  }
+}
+
+/* ---------------- the page scroll ---------------- */
+const SCENES = [[S0, scene0], [S1, scene1], [S2, scene2], [S3, scene3], [S4, scene4]];
+function scrollAt(t) {
+  const k = [];
+  ['scroll1', 'scroll2', 'scroll3', 'scroll4'].forEach((s, i) => k.push(...scrollKeys(A[s], i * H, (i + 1) * H)));
+  return T(t, 0, k);
+}
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  const sc = scrollAt(t);
+  SCENES.forEach(([g, fn], i) => {
+    const y = i * H - sc;
+    if (y > H - 1 || y < -H + 1) return;
+    put(g, { y, ox: 0, oy: 0 }); fn(t);
+  });
+  touchAt(t, sc);
+}
+
+/* ---------------- layout that depends on real text sizes ---------------- */
+function measure() {
+  for (const e of ALL) { e.style.display = 'block'; e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  chips.forEach(c => { c.style.width = (94 + c.querySelector('.cl').offsetWidth + 36) + 'px'; c._w = c.offsetWidth; });
+  let x = X0, y = 770; chips._pos = chips.map(c => { if (x + c._w > XR) { x = X0; y += c._h + 20; } const p = [x, y]; x += c._w + 16; return p; });
+  chips._bottom = y + chips[0]._h;
+  let ry = 770 + chips[0]._h + 64; rows._y = rows.map(r => { const p = ry; ry += r._h + 60; return p; });
+  for (const e of [h1.num, h2.num, h3.num]) e._w = e.offsetWidth;
+  wrapWords(rB); rB._h = rB.offsetHeight;
+  const hl = lTag.querySelector('.hl'); lTag._hlX = hl.offsetLeft; lTag._hlY = hl.offsetTop + hl.offsetHeight / 2;
+  const hl2 = lTag.querySelectorAll('.hl')[1]; lHi.firstChild.setAttribute('width', hl2.offsetLeft + hl2.offsetWidth - hl.offsetLeft + 28);
+  lHi.firstChild.setAttribute('viewBox', `0 0 ${hl2.offsetLeft + hl2.offsetWidth - hl.offsetLeft + 28} 60`);
+  lHi.querySelector('path').setAttribute('d', `M8 34 C140 26 330 22 ${hl2.offsetLeft + hl2.offsetWidth - hl.offsetLeft + 20} 30`);
+  lHi.style.zIndex = 0; lTag.style.zIndex = 1;
+  for (const e of ALL) e.style.display = 'none';
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('540 100px Fraunces'), document.fonts.load('italic 460 100px Fraunces'), document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('500 40px Inter'), document.fonts.load('700 80px Caveat')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
