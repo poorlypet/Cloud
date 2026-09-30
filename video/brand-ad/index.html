@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poorly Pet Ad</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+#world{position:absolute;inset:0;transform-origin:540px 960px}
+.g{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.L{position:absolute;left:0;top:0;display:none}
+.full{width:1080px;height:1920px}
+.disp{font-family:Fraunces,serif;font-weight:540;font-optical-sizing:auto;letter-spacing:-.015em;line-height:.98;white-space:nowrap}
+.disp em{font-style:italic;font-weight:480}
+.ui{font-family:Inter,sans-serif}
+.eyebrow{font:700 34px/1 Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.caret{display:inline-block;width:.07em;height:.78em;margin-left:.04em;background:var(--rust);vertical-align:-.04em}
+.w{display:inline-block}
+.pill{font:600 40px/1 Inter,sans-serif;padding:22px 34px;border-radius:999px;white-space:nowrap;box-sizing:border-box}
+.card{background:#fff;border-radius:28px;border:2px solid var(--line);box-sizing:border-box}
+.bar{position:absolute;height:14px;border-radius:7px;background:#E6EAE8}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage"><div id="world"></div></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1080, H = 1920, DUR = 30, FPS = 30;
+const C = { deep: [11, 42, 35], tile: [19, 74, 61], mint: [159, 232, 201], paper: [250, 249, 246], rust: [168, 84, 47], ink: [16, 27, 23], mute: [94, 110, 102], white: [255, 255, 255], pale: [237, 241, 236] };
+const stage = document.getElementById('stage'), world = document.getElementById('world');
+
+/* ---------------- building blocks ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function group(z) { const g = document.createElement('div'); g.className = 'g'; g.style.zIndex = z; world.appendChild(g); g.style.display = 'none'; ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, z = null, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+  if (z !== null) e.style.zIndex = z;
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => sp(t - t0, p);
+const press = (t, t0, depth = 0.93) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.12, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+
+// typed text: parts like [['Know the'], ['\n'], ['condition?', 'em']]
+function typed(e, parts, t, t0, cps, caretFor = 0.7) {
+  const total = parts.reduce((a, p) => a + (p[0] === '\n' ? 0 : p[0].length), 0);
+  const n = Math.max(0, Math.min(total, Math.floor((t - t0) * cps)));
+  let left = n, html = '';
+  for (const [s, em] of parts) {
+    if (s === '\n') { html += '<br>'; continue; }
+    const part = s.slice(0, Math.max(0, left)); left -= s.length;
+    if (part) html += em ? `<em>${esc(part)}</em>` : esc(part);
+  }
+  const done = t0 + total / cps;
+  const caret = t >= t0 && (t < done || (t < done + caretFor && Math.floor((t - done) * 4) % 2 === 0));
+  e.innerHTML = html + (caret ? '<span class="caret"></span>' : '');
+  return n / total;
+}
+// word-by-word reveal (words wrapped once in .w spans)
+function wrapWords(e) { e.innerHTML = e.innerHTML.replace(/(<em>)?([^\s<]+)(<\/em>)?/g, (m) => `<span class="w">${m}</span>`); }
+function words(e, t, t0, step = 0.05, d = 60, p = 'default') {
+  [...e.querySelectorAll('.w')].forEach((w, i) => { const k = sp(t - t0 - i * step, p); w.style.opacity = Math.min(1, k * 1.5); w.style.transform = `translateY(${d * (1 - k)}px)`; });
+}
+
+/* ---------------- icons (original line drawings) ---------------- */
+const ICON = {
+  search: '<circle cx="26" cy="26" r="16" fill="none" stroke-width="6"/><path d="M38 38 L54 54" stroke-width="6"/>',
+  legs: '<path d="M22 6 L30 30 L22 58"/><circle cx="30" cy="30" r="6"/><path d="M40 8 L36 30 L42 58"/>',
+  skin: '<path d="M32 8 C22 24 16 32 16 40 a16 16 0 0 0 32 0 C48 32 42 24 32 8Z"/>',
+  tummy: '<path d="M32 12 a20 20 0 1 1 -19 14"/><path d="M32 24 a8 8 0 1 1 -8 8"/>',
+  eyes: '<path d="M6 32 C18 16 46 16 58 32 C46 48 18 48 6 32Z"/><circle cx="32" cy="32" r="7"/>',
+  tooth: '<path d="M18 12 C24 8 28 12 32 12 C36 12 40 8 46 12 C54 18 49 30 47 38 C45 48 43 56 39 56 C35 56 35 42 32 42 C29 42 29 56 25 56 C21 56 19 48 17 38 C15 30 10 18 18 12Z"/>',
+  spine: '<rect x="22" y="6" width="20" height="10" rx="4"/><rect x="21" y="20" width="22" height="10" rx="4"/><rect x="21" y="34" width="22" height="10" rx="4"/><rect x="22" y="48" width="20" height="10" rx="4"/>',
+  mood: '<path d="M6 34 C12 18 20 18 24 32 S34 48 40 32 S52 16 58 32"/>',
+  pulse: '<path d="M4 32 H18 L25 14 L34 50 L41 32 H60"/>',
+  sparkle: '<path d="M32 6 C34 24 40 30 58 32 C40 34 34 40 32 58 C30 40 24 34 6 32 C24 30 30 24 32 6Z"/>',
+  camera: '<rect x="6" y="18" width="52" height="36" rx="8"/><path d="M22 18 L26 10 H38 L42 18"/><circle cx="32" cy="36" r="10"/>',
+  check: '<path d="M16 33 L27 44 L48 21"/>',
+  arrow: '<path d="M12 32 H50 M36 18 L50 32 L36 46"/>',
+  send: '<path d="M14 32 H48 M34 18 L48 32 L34 46"/>',
+  bottle: '<rect x="30" y="8" width="20" height="10" rx="3"/><path d="M33 18 V26 C24 30 22 36 22 44 V80 C22 86 26 88 32 88 H48 C54 88 58 86 58 80 V44 C58 36 56 30 47 26 V18"/><rect x="26" y="50" width="28" height="22" rx="4"/>',
+  tub: '<rect x="14" y="22" width="68" height="14" rx="5"/><path d="M18 36 V76 C18 84 24 86 30 86 H66 C72 86 78 84 78 76 V36"/><path d="M30 56 H66"/>',
+  harness: '<path d="M16 68 C16 38 80 38 80 68"/><path d="M34 44 C34 18 62 18 62 44"/><rect x="40" y="56" width="16" height="12" rx="3"/><path d="M16 68 V78 M80 68 V78"/>',
+  ramp: '<path d="M8 82 L60 40 H88 V82 Z"/><path d="M22 70 L28 76 M34 60 L40 66 M46 50 L52 56"/>',
+  brace: '<rect x="28" y="10" width="40" height="76" rx="14"/><path d="M20 30 H76 M20 50 H76 M20 70 H76"/>',
+  chew: '<rect x="12" y="28" width="72" height="40" rx="20"/><circle cx="32" cy="48" r="4"/><circle cx="48" cy="44" r="4"/><circle cx="64" cy="50" r="4"/>',
+};
+function icon(name, size, color, sw = 5, vb = null) {
+  const v = vb || (['bottle', 'tub', 'harness', 'ramp', 'brace', 'chew'].includes(name) ? 96 : 64);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${v} ${v}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
+}
+const STAR = '<svg width="110" height="110" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="#C9982E"/></svg>';
+function mark(size, bg, fg) { // the Poorly Pet mark: rounded square with a plus
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${bg}"/><rect class="plusv" x="42" y="22" width="16" height="56" rx="6" fill="${fg}"/><rect class="plush" x="22" y="42" width="56" height="16" rx="6" fill="${fg}"/></svg>`;
+}
+
+/* ================= SCENE A: hook ================= */
+const A = group(10);
+const aBg = el(A, '', 'full', 'background:var(--paper)');
+const a2am = el(A, "<span class='w'>It's</span> <span class='w'>2am.</span>", 'disp', 'font-size:230px;color:var(--ink)');
+const aBar = el(A, `<div style="position:absolute;left:44px;top:43px">${icon('search', 64, '#5E6E66', 6)}</div><div class="aq ui" style="position:absolute;left:136px;top:44px;font:500 60px/64px Inter;color:var(--ink);white-space:nowrap"></div>`,
+  'card', 'width:960px;height:160px;border-radius:80px;border:4px solid var(--ink)');
+const aQ = aBar.querySelector('.aq');
+const TABS = ["10 causes of limping", "Is it serious??", "Forum: 243 replies", "Could be anything", "Try this ONE trick", "Just wait 2 weeks?", "Vet bills explained", "Joint or paw?", "Sponsored", "Read before panicking", "Page 7 of 40", "Ask your vet?"];
+const TABPOS = [[70, 250, -8], [590, 210, 6], [320, 470, -3], [40, 700, 5], [610, 660, -6], [330, 900, 4], [60, 1120, -5], [590, 1090, 7], [330, 1330, -4], [40, 1560, 6], [600, 1530, -7], [320, 1720, 3]];
+const aTabs = TABS.map((tt, i) => el(A, `<div style="position:absolute;left:26px;top:24px;display:flex;gap:10px">${['#E0735A', '#E9C46A', '#9FE8C9'].map(c => `<i style="width:16px;height:16px;border-radius:8px;background:${c};display:block"></i>`).join('')}</div>
+  <div class="bar" style="left:110px;top:25px;width:260px;height:14px"></div>
+  <div class="ui" style="position:absolute;left:28px;top:66px;font:700 40px/1.1 Inter;color:${i === 8 ? 'var(--rust)' : 'var(--ink)'};white-space:nowrap">${tt}</div>
+  <div class="bar" style="left:28px;top:130px;width:360px"></div><div class="bar" style="left:28px;top:156px;width:250px"></div>`, 'card', 'width:440px;height:196px;box-shadow:0 10px 30px rgba(16,27,23,.10)'));
+const aBand = el(A, '', '', 'width:1080px;height:390px;background:var(--ink)');
+const aQ2 = el(A, 'Where do you<br><em>even start?</em>', 'disp', 'font-size:150px;color:#fff');
+aQ2.querySelector('em').style.color = 'var(--mint)';
+const aMark = el(A, mark(200, '#C25E2E', '#fff'), '', 'width:200px;height:200px');
+
+function sceneA(t) {
+  if (t > 3.75) return;
+  put(A);
+  put(aBg);
+  put(a2am, { x: 56, y: 560 + T(t, 0, [[1.4, -930, 'default']]) }); words(a2am, t, -0.12, 0.12, 130, 'heavy');
+  const barY = 900 + rise(t, -0.2, 200) + T(t, 0, [[1.4, -820, 'default']]);
+  put(aBar, { x: 60, y: barY, s: press(t, 1.22, 0.96), ox: 480, oy: 75 });
+  typed(aQ, [['why is my dog limping']], t, 0.25, 22);
+  aTabs.forEach((c, i) => {
+    const t0 = 1.5 + i * 0.0625, [x, y, r] = TABPOS[i];
+    put(c, { x, y: y + rise(t, t0, 60, 'snappy'), s: pop(t, t0, 0.3), r: r * sp(t - t0, 'default'), o: op(t, t0), ox: 220, oy: 98 });
+  });
+  const bx = T(t, -1080, [[2.3, 0, 'default']]);
+  put(aBand, { x: bx, y: 760 });
+  put(aQ2, { x: 60 + bx * 1.15, y: 800 });
+  // the mark pops, then swallows the screen
+  const ms = pop(t, 2.95, 0, 'default') * T(t, 1, [[3.15, 13, 'heavy']]);
+  put(aMark, { x: 440, y: 860, s: ms, ox: 100, oy: 100 });
+  const pk = T(t, 1, [[3.1, 0, 'snappy']]);
+  aMark.querySelector('.plusv').setAttribute('transform', `translate(50 50) scale(${pk}) translate(-50 -50)`);
+  aMark.querySelector('.plush').setAttribute('transform', `translate(50 50) scale(${pk}) translate(-50 -50)`);
+}
+
+/* ================= SCENE B: brand ================= */
+const B = group(20);
+const bBg = el(B, '', 'full', 'background:#C25E2E');
+const bMark = el(B, mark(150, '#fff', '#C25E2E'), '', 'width:150px;height:150px');
+const bWord = el(B, 'Poorly Pet', 'ui', 'font:800 120px/150px Inter;color:#fff;letter-spacing:-.02em;white-space:nowrap');
+const bH1 = el(B, "<span class='w'>Pet</span> <span class='w'>health.</span>", 'disp', 'font-size:190px;color:#fff');
+const bH2 = el(B, "<span class='w'>Made</span> <span class='w'><em>easier.</em></span>", 'disp', 'font-size:190px;color:#fff');
+const bUnder = el(B, '<svg width="560" height="60" viewBox="0 0 560 60"><path d="M8 40 C120 18 300 14 552 30" fill="none" stroke="#0B2A23" stroke-width="16" stroke-linecap="round"/></svg>');
+const bSub = el(B, "The UK's pet health &amp; recovery specialist.", 'ui', 'font:500 46px/1.3 Inter;color:rgba(255,255,255,.92);width:960px');
+const FEATS = ['Shop by condition', 'Shop by symptom', 'AI care assistant', 'AI symptom scanner'];
+const bChips = FEATS.map(f => el(B, f, 'pill', 'background:#fff;color:#A8542F;font-size:44px'));
+function sceneB(t) {
+  if (t < 3.4 || t > 6.6) return;
+  const gy = T(t, 0, [[5.85, -1920, 'default']]);
+  put(B, { y: gy, ox: 0, oy: 0 });
+  put(bBg);
+  put(bMark, { x: 60, y: 660, s: pop(t, 3.6, 0.3, 'heavy'), o: op(t, 3.6) });
+  put(bWord, { x: 240, y: 660, o: op(t, 3.7) });
+  bWord.style.clipPath = `inset(-10% ${100 - 100 * sp(t - 3.72, 'default')}% -10% 0)`;
+  put(bH1, { x: 52, y: 900 }); words(bH1, t, 4.1, 0.12, 120, 'heavy');
+  put(bH2, { x: 52, y: 1090 }); words(bH2, t, 4.35, 0.12, 120, 'heavy');
+  put(bUnder, { x: 52 + (bH2._emX || 430) - 10, y: 1265 });
+  setDraw(bUnder.querySelector('path'), sp(t - 4.7, 'heavy'));
+  put(bSub, { x: 60, y: 1390 + rise(t, 5.0, 40), o: op(t, 5.0) });
+  bChips.forEach((c, i) => {
+    const t0 = 5.25 + i * 0.125, [x, y] = bChips._pos[i];
+    put(c, { x, y: y + rise(t, t0, 50, 'snappy'), s: pop(t, t0, 0.5), o: op(t, t0) });
+  });
+}
+
+/* ================= SCENE C: shop by condition ================= */
+const Cg = group(15);
+const cBg = el(Cg, '', 'full', 'background:var(--paper)');
+const cEye = el(Cg, '01 — Shop by condition', 'eyebrow', 'color:var(--rust)');
+const cH = el(Cg, '', 'disp', 'font-size:170px;color:var(--ink)');
+const CONDS = ['Arthritis', 'Hip dysplasia', 'IVDD', 'Cruciate ligament', 'Luxating patella', 'Elbow dysplasia', 'Back pain', 'Spondylosis', 'Knuckling', 'Itchy skin', 'Hot spots', 'Anxiety & stress', 'Dental disease', 'Digestive issues', 'Kidney disease', 'Wound care'];
+const cPills = CONDS.map((n, i) => el(Cg, esc(n), 'pill', 'font-size:52px;padding:28px 42px;' + (i === 0 ? 'background:var(--green);color:#fff' : i % 3 === 1 ? 'background:var(--pale);color:var(--ink)' : 'border:4px solid var(--green);color:var(--green)')));
+const cCount = el(Cg, '25 conditions · 8 care areas', 'ui', 'font:600 44px/1 Inter;color:var(--mute);white-space:nowrap');
+const cCard = el(Cg, '', 'card', 'border:3px solid var(--green)');
+const cDesc = el(Cg, 'Joint wear that brings stiffness<br>and pain, especially after rest.', 'ui', 'font:600 44px/1.25 Inter;color:var(--ink)');
+const cSignsL = el(Cg, 'Signs to look for', 'eyebrow', 'font-size:28px;color:var(--rust)');
+const cSigns = ['Stiff after rest', 'Slowing on walks', 'Reluctant to jump'].map(s => el(Cg, s, 'pill', 'font-size:32px;padding:18px 26px;background:var(--pale);color:var(--ink)'));
+const cMatchL = el(Cg, 'Matched support', 'eyebrow', 'font-size:28px;color:var(--rust)');
+const PRODS = ['tub', 'bottle', 'harness', 'ramp'];
+const cProds = PRODS.map(p => el(Cg, `<div style="position:absolute;inset:0;border-radius:24px;background:var(--pale)"></div><div style="position:absolute;left:47px;top:30px">${icon(p, 110, '#0C342A', 5)}</div><div class="bar" style="left:22px;top:156px;width:150px;background:#D6DEDA"></div><div class="bar" style="left:22px;top:180px;width:100px;background:#D6DEDA"></div>`, '', 'width:205px;height:210px'));
+const cBtn = el(Cg, `Shop products <span style="display:inline-block;vertical-align:-10px">${icon('arrow', 44, '#fff', 6)}</span>`, 'pill', 'background:var(--green);color:#fff;font-size:42px;padding:26px 40px');
+function sceneC(t) {
+  if (t < 5.8 || t > 10.7) return;
+  const gx = T(t, 0, [[10.2, -1080, 'default']]);
+  put(Cg, { x: gx, ox: 0, oy: 0 });
+  put(cBg);
+  put(cEye, { x: 60, y: 250 + rise(t, 6.0, 30), o: op(t, 6.0) });
+  put(cH, { x: 56, y: 320 }); typed(cH, [['Know the'], ['\n'], ['condition?', 1]], t, 6.05, 34);
+  const sel = t >= 8.1;
+  cPills.forEach((p, i) => {
+    const t0 = 6.75 + i * 0.0625, [x, y] = cPills._pos[i];
+    if (i === 0) return;
+    const drop = T(t, 0, [[8.15 + (i % 5) * 0.03, 1500, 'default']]);
+    put(p, { x, y: y + drop, s: pop(t, t0, 0.2, 'default') * (sel ? 1 : 1), r: sel ? (i % 2 ? 6 : -6) * sp(t - 8.15, 'default') : 0, o: op(t, t0) });
+  });
+  put(cCount, { x: 60, y: cPills._bottom + 40 + rise(t, 7.9, 30) + T(t, 0, [[8.15, 1400, 'default']]), o: op(t, 7.9) });
+  // Arthritis: pressed, then its pill morphs into the card
+  const [px, py] = cPills._pos[0], pw = cPills[0]._w, ph = cPills[0]._h;
+  const k = sp(t - 8.2, 'default');
+  const cx = px + (60 - px) * k, cy = py + (700 - py) * k, cw = pw + (960 - pw) * k, ch = ph + (1000 - ph) * k;
+  if (t >= 8.2) { cCard.style.width = cw + 'px'; cCard.style.height = ch + 'px'; cCard.style.borderRadius = (ph / 2) * (1 - k) + 36 * k + 'px'; put(cCard, { x: cx, y: cy, ox: 0, oy: 0 }); }
+  put(cPills[0], { x: px + (100 - px) * k, y: py + (740 - py) * k, s: press(t, 7.95, 0.9) * pop(t, 6.75, 0.2), o: op(t, 6.75), z: 5 });
+  put(cDesc, { x: 100, y: 860 + rise(t, 8.4, 40), o: op(t, 8.4), z: 5 });
+  put(cSignsL, { x: 100, y: 1020 + rise(t, 8.5, 30), o: op(t, 8.5), z: 5 });
+  let sx = 100;
+  cSigns.forEach((c, i) => { const t0 = 8.55 + i * 0.0625; put(c, { x: sx, y: 1070, s: pop(t, t0, 0.3), o: op(t, t0), z: 5 }); sx += c._w + 14; });
+  put(cMatchL, { x: 100, y: 1200 + rise(t, 8.8, 30), o: op(t, 8.8), z: 5 });
+  cProds.forEach((c, i) => { const t0 = 8.875 + i * 0.125; put(c, { x: 100 + i * 225, y: 1250 + rise(t, t0, 80, 'snappy'), s: pop(t, t0, 0.5), o: op(t, t0), z: 5 }); });
+  put(cBtn, { x: 100, y: 1540, s: pop(t, 9.3125, 0.5) * press(t, 9.7, 0.93), o: op(t, 9.3125), z: 5 });
+}
+
+/* ================= SCENE D: shop by symptom ================= */
+const D = group(30);
+const dBg = el(D, '', 'full', 'background:var(--deep)');
+const dEye = el(D, '02 — Shop by symptom', 'eyebrow', 'color:var(--mint)');
+const dH = el(D, '', 'disp', 'font-size:160px;color:#fff');
+const AREAS = [['legs', 'Legs & paws', 'Knees, hips, movement'], ['skin', 'Skin & coat', 'Itching, redness, coat'], ['tummy', 'Tummy & gut', 'Digestion and appetite'], ['eyes', 'Ears & eyes', 'Face, ears and head'],
+  ['tooth', 'Mouth & teeth', 'Breath, gums, chewing'], ['spine', 'Back & spine', 'Posture and back pain'], ['mood', 'Behaviour & mood', 'Stress and restlessness'], ['pulse', 'Whole body', 'Recovery and wellbeing']];
+const dTiles = AREAS.map(([ic, a, b]) => el(D, `<div class="bgt" style="position:absolute;inset:0;border-radius:30px;background:#134A3D"></div>
+  <div class="icc" style="position:absolute;left:28px;top:47px;width:96px;height:96px;border-radius:48px;background:var(--mint)"><div style="position:absolute;left:18px;top:18px">${icon(ic, 60, '#0B2A23', 5)}</div></div>
+  <div class="t1 ui" style="position:absolute;left:146px;top:52px;font:700 40px/1.1 Inter;color:#fff;white-space:nowrap">${esc(a)}</div>
+  <div class="t2 ui" style="position:absolute;left:146px;top:106px;font:500 28px/1.2 Inter;color:rgba(159,232,201,.85);white-space:nowrap">${esc(b)}</div>`, '', 'width:470px;height:190px'));
+const SYMS = [['Limping or favouring a leg', 'Often arthritis, a cruciate injury or a sore paw.'], ['Stiffness after rest', 'A classic early sign of arthritis or joint wear.'], ['Slow to get up', 'Joint or hip discomfort, common with age.']];
+const dRows = SYMS.map(([a, b], i) => el(D, `<div style="position:absolute;inset:0;border-radius:26px;background:var(--paper)"></div><i style="position:absolute;left:34px;top:46px;width:18px;height:18px;border-radius:9px;background:var(--rust)"></i>
+  <div class="ui" style="position:absolute;left:72px;top:32px;font:700 42px/1.1 Inter;color:var(--ink);white-space:nowrap">${a}</div>
+  <div class="ui" style="position:absolute;left:72px;top:92px;font:500 29px/1.2 Inter;color:var(--mute);white-space:nowrap">${b}</div>` +
+  (i === 0 ? '' : `<div style="position:absolute;right:30px;top:52px">${icon('arrow', 46, '#A8542F', 6)}</div>`), '', i === 0 ? 'width:960px;height:250px' : 'width:960px;height:150px'));
+const dBtn = el(D, `Find support <span style="display:inline-block;vertical-align:-8px">${icon('arrow', 38, '#0B2A23', 6)}</span>`, 'pill', 'background:var(--mint);color:var(--deep);font:700 34px/1 Inter;padding:18px 26px');
+const dStamp = el(D, '8 body areas · 40+ signs', 'ui', 'font:700 50px/1 Inter;color:var(--mint);white-space:nowrap');
+function sceneD(t) {
+  if (t < 10.1 || t > 14.6) return;
+  const gx = T(t, 1080, [[10.2, 0, 'default']]);
+  put(D, { x: gx, ox: 0, oy: 0 });
+  put(dBg);
+  put(dEye, { x: 60, y: 250 + rise(t, 10.35, 30), o: op(t, 10.35) });
+  put(dH, { x: 56, y: 320 }); typed(dH, [['Not sure'], ['\n'], ["what's wrong?", 1]], t, 10.4, 36);
+  dH.querySelectorAll('em').forEach(e => e.style.color = 'var(--mint)');
+  dH.querySelectorAll('.caret').forEach(e => e.style.background = 'var(--mint)');
+  AREAS.forEach((_, i) => {
+    const tile = dTiles[i], t0 = 11.0 + i * 0.125, col = i % 2, row = (i / 2) | 0;
+    let x = 60 + col * 490, y = 700 + row * 210, sy = T(t, 0, [[t0, 1, 'snappy']]), sx = 1;
+    if (i === 0) {
+      const k = sp(t - 12.3, 'default');
+      tile.style.width = 470 + 490 * k + 'px'; tile._w = 470 + 490 * k;
+      tile.querySelector('.bgt').style.background = mix(C.tile, C.mint, sp(t - 12.1, 'snappy'));
+      tile.querySelector('.t1').style.color = mix(C.white, C.deep, sp(t - 12.1, 'snappy'));
+      tile.querySelector('.t2').style.color = mix([159, 232, 201], C.deep, sp(t - 12.1, 'snappy'));
+      tile.querySelector('.icc').style.background = mix(C.mint, C.deep, sp(t - 12.1, 'snappy'));
+      tile.querySelector('.icc svg').setAttribute('stroke', mix(C.deep, C.mint, sp(t - 12.1, 'snappy')));
+      sx = press(t, 11.97, 0.95);
+    } else {
+      y += T(t, 0, [[12.2 + i * 0.025, 1500, 'default']]);
+    }
+    put(tile, { x, y, sx, sy: sy * (i === 0 ? sx : 1), o: op(t, t0), oy: 95 });
+  });
+  const rowY = [925, 1195, 1365];
+  dRows.forEach((r, i) => { const t0 = 12.5 + i * 0.125; put(r, { x: 60 + T(t, 1100, [[t0, 0, 'default']]), y: rowY[i] }); });
+  put(dBtn, { x: 132 + T(t, 1100, [[12.5, 0, 'default']]), y: 925 + 150, s: pop(t, 12.875, 0.5) * press(t, 13.72, 0.9), o: op(t, 12.875), z: 5 });
+  put(dStamp, { x: 60, y: 1580, s: pop(t, 13.25, 0.6, 'heavy'), o: op(t, 13.25), ox: 0 });
+}
+
+/* ================= SCENE E: AI care assistant ================= */
+const E = group(40);
+const eBg = el(E, '', '', 'background:var(--mint)');
+const eEye = el(E, '03 — AI care assistant', 'eyebrow', 'color:var(--deep)');
+const eH = el(E, '', 'disp', 'font-size:150px;color:var(--deep)');
+const eCard = el(E, `<div style="position:absolute;left:36px;top:34px;width:100px;height:100px;border-radius:50px;background:var(--deep)"><div style="position:absolute;left:20px;top:20px">${icon('sparkle', 60, '#9FE8C9', 4)}</div></div>
+  <div class="disp" style="position:absolute;left:162px;top:40px;font-size:54px;color:var(--ink)">Poorly Pet AI</div>
+  <div class="ui" style="position:absolute;left:162px;top:104px;font:500 30px/1 Inter;color:var(--mute);white-space:nowrap"><i style="display:inline-block;width:14px;height:14px;border-radius:7px;background:#3BB273;margin-right:10px"></i>Online · ask anything</div>
+  <div style="position:absolute;left:0;right:0;top:168px;height:2px;background:var(--line)"></div>
+  <div style="position:absolute;left:30px;right:30px;top:1030px;height:110px;border-radius:55px;background:var(--pale)"></div>
+  <div class="ein ui" style="position:absolute;left:74px;top:1068px;font:500 34px/40px Inter;color:var(--ink);white-space:nowrap"></div>
+  <div class="esend" style="position:absolute;left:846px;top:1045px;width:80px;height:80px;border-radius:40px;background:var(--deep)"><div style="position:absolute;left:16px;top:16px">${icon('send', 48, '#fff', 6)}</div></div>`,
+  'card', 'width:960px;height:1180px;border:none;border-radius:44px;box-shadow:0 24px 60px rgba(11,42,35,.18)');
+const eIn = eCard.querySelector('.ein');
+const Q = 'My dog is stiff after walks. What could help?';
+const eUser = el(E, esc(Q), 'ui', 'width:620px;padding:30px 34px;border-radius:34px 34px 8px 34px;background:var(--deep);color:#fff;font:500 38px/1.3 Inter;box-sizing:border-box');
+const eDots = el(E, [0, 1, 2].map(i => `<i class="dt" style="position:absolute;left:${34 + i * 36}px;top:34px;width:20px;height:20px;border-radius:10px;background:#5E6E66"></i>`).join(''), '', 'width:170px;height:88px;border-radius:34px;background:var(--pale)');
+const eReply = el(E, "Stiffness after rest is often linked to joint wear. Here's what can help at home, and when to see your vet.", 'ui', 'width:800px;padding:30px 36px;border-radius:34px 34px 34px 8px;background:var(--pale);color:var(--ink);font:500 38px/1.32 Inter;box-sizing:border-box;border-left:8px solid var(--rust)');
+const SUGG = [['tub', 'Joint support'], ['ramp', 'Ramps'], ['harness', 'Lift harness']];
+const eSugg = SUGG.map(([ic, l]) => el(E, `<div style="position:absolute;left:67px;top:22px">${icon(ic, 110, '#0C342A', 5)}</div><div class="ui" style="position:absolute;left:0;right:0;top:150px;text-align:center;font:600 30px/1 Inter;color:var(--ink)">${l}</div>`, '', 'width:244px;height:204px;border-radius:26px;border:3px solid var(--line);background:#fff;box-sizing:border-box'));
+const eView = el(E, `View support products <span style="display:inline-block;background:var(--mint);color:var(--deep);border-radius:20px;padding:4px 14px;margin-left:10px;font-size:30px">3</span>`, 'pill', 'background:var(--deep);color:#fff;font:700 36px/1 Inter;padding:24px 34px');
+const eNote = el(E, 'General guidance only. Always check with your vet.', 'ui', 'font:500 28px/1 Inter;color:var(--deep);opacity:.8;white-space:nowrap');
+function sceneE(t) {
+  if (t < 13.95 || t > 19.9) return;
+  put(E);
+  // the Find support button bursts open into the screen
+  const k = sp(t - 14.0, 'default');
+  const bx = 132, by = 925 + 150;
+  const x = bx * (1 - k), y = by * (1 - k), w = dBtn._w + (1080 - dBtn._w) * k, h = dBtn._h + (1920 - dBtn._h) * k;
+  eBg.style.width = w + 'px'; eBg.style.height = h + 'px'; eBg.style.borderRadius = (dBtn._h / 2) * (1 - k) + 'px';
+  put(eBg, { x, y, ox: 0, oy: 0 });
+  put(eEye, { x: 60, y: 250 + rise(t, 14.35, 30), o: op(t, 14.35) });
+  put(eH, { x: 56, y: 320 }); typed(eH, [["Tell us what's"], ['\n'], ['going on.', 1]], t, 14.4, 40);
+  eH.querySelectorAll('em').forEach(e => e.style.color = 'var(--rust)');
+  const cy = 660 + rise(t, 14.85, 1400);
+  put(eCard, { x: 60, y: cy, ox: 480, oy: 0 });
+  // typing in the input, then send
+  if (t < 16.0) typed(eIn, [[Q]], t, 15.2, 58, 0); else eIn.innerHTML = '<span style="color:#8A968F">Describe what you\'re seeing…</span>';
+  if (t < 15.2) eIn.innerHTML = '<span style="color:#8A968F">Describe what you\'re seeing…</span>';
+  eCard.querySelector('.esend').style.transform = `scale(${press(t, 15.9, 0.85)})`;
+  put(eUser, { x: 60 + 960 - 36 - 620, y: cy + 200 + rise(t, 16.0, 80, 'snappy'), s: pop(t, 16.0, 0.6, 'snappy'), o: op(t, 16.0), ox: 620, oy: eUser._h });
+  if (t >= 16.35 && t < 17.0) {
+    put(eDots, { x: 96, y: cy + 200 + eUser._h + 30, s: pop(t, 16.35, 0.5, 'snappy'), o: op(t, 16.35), ox: 0, oy: 88 });
+    eDots.querySelectorAll('.dt').forEach((d, i) => d.style.transform = `translateY(${-10 * Math.max(0, Math.sin((t - 16.35) * 14 - i * 0.9))}px)`);
+  }
+  if (t >= 17.0) { put(eReply, { x: 96, y: cy + 200 + eUser._h + 30 + rise(t, 17.0, 50), o: op(t, 17.0), ox: 0, oy: 0 }); words(eReply, t, 17.0, 0.035, 20, 'snappy'); }
+  const sy = cy + 200 + eUser._h + 30 + eReply._h + 30;
+  eSugg.forEach((c, i) => { const t0 = 18.0 + i * 0.125; put(c, { x: 96 + i * 264, y: sy + rise(t, t0, 60, 'snappy'), s: pop(t, t0, 0.5), o: op(t, t0) }); });
+  put(eView, { x: 96, y: sy + 236, s: pop(t, 18.5, 0.5), o: op(t, 18.5), ox: 0 });
+  put(eNote, { x: 90, y: cy + 1180 + 30 + rise(t, 18.8, 20), o: op(t, 18.8) * 0.9 });
+}
+
+/* ================= SCENE F: AI symptom scanner ================= */
+const F = group(50);
+const fBg = el(F, '', 'full', 'background:var(--deep)');
+const fEye = el(F, '04 — AI symptom scanner', 'eyebrow', 'color:var(--mint)');
+const fH = el(F, '', 'disp', 'font-size:132px;color:#fff');
+const fFrame = el(F, `<div style="position:absolute;inset:0;border-radius:40px;background:#123F33;overflow:hidden">
+    <div class="ph" style="position:absolute;inset:0">
+      <div style="position:absolute;left:60px;top:90px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(250,249,246,.20),rgba(250,249,246,0) 70%)"></div>
+      <div style="position:absolute;left:330px;top:300px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(194,94,46,.45),rgba(194,94,46,0) 70%)"></div>
+      <div style="position:absolute;left:200px;top:40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(159,232,201,.22),rgba(159,232,201,0) 70%)"></div>
+    </div>
+    <div class="dots" style="position:absolute;inset:0"></div>
+    <div class="band" style="position:absolute;left:0;right:0;height:90px;background:linear-gradient(rgba(159,232,201,0),rgba(159,232,201,.22))"></div>
+    <div class="line" style="position:absolute;left:0;right:0;height:6px;background:var(--mint)"></div>
+    <div class="flash" style="position:absolute;inset:0;background:var(--paper);opacity:0"></div>
+  </div>
+  <svg class="corners" width="700" height="700" viewBox="0 0 700 700" style="position:absolute;left:0;top:0" fill="none" stroke="#9FE8C9" stroke-width="12" stroke-linecap="round">
+    <path d="M16 140 V40 Q16 16 40 16 H140"/><path d="M560 16 H660 Q684 16 684 40 V140"/><path d="M684 560 V660 Q684 684 660 684 H560"/><path d="M140 684 H40 Q16 684 16 660 V560"/></svg>
+  <div class="cam" style="position:absolute;left:290px;top:290px">${icon('camera', 120, '#9FE8C9', 4)}</div>`, '', 'width:700px;height:700px');
+const fDots = fFrame.querySelector('.dots');
+for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) { const d = document.createElement('i'); d.style.cssText = `position:absolute;left:${60 + c * 83}px;top:${60 + r * 83}px;width:10px;height:10px;border-radius:5px;background:#9FE8C9;opacity:0`; d.dataset.r = r; fDots.appendChild(d); }
+const fCount = el(F, '', 'ui', 'font:600 38px/1 Inter;color:#fff;white-space:nowrap');
+const fBig = el(F, '&lt;10s', 'disp', 'font-size:230px;color:var(--mint)');
+const fBigL = el(F, 'average scan', 'ui', 'font:600 40px/1 Inter;color:#fff;white-space:nowrap');
+const fFlow = el(F, '<span>Capture</span> <span>→</span> <span>Analyse</span> <span>→</span> <span>Act</span>', 'disp', 'font-size:96px');
+const fRes = el(F, ['Plain-English results', 'Condition guides &amp; support', 'Clear vet guardrails'].map((s, i) => `<div class="rr" style="position:absolute;left:44px;top:${40 + i * 78}px;display:flex;align-items:center;gap:22px;font:600 40px/1 Inter;color:var(--ink);white-space:nowrap"><span style="width:52px;height:52px;border-radius:26px;background:var(--mint);display:inline-block;position:relative"><span style="position:absolute;left:4px;top:4px">${icon('check', 44, '#0B2A23', 7)}</span></span>${s}</div>`).join('') +
+  `<div class="rb" style="position:absolute;left:44px;top:282px;font:700 32px/1 Inter;color:var(--rust);white-space:nowrap">Decision support, not a diagnosis.</div>`, '', 'width:960px;height:360px;border-radius:40px;background:var(--paper)');
+function sceneF(t) {
+  if (t < 19.25 || t > 23.8) return;
+  const gy = T(t, -1920, [[19.3, 0, 'default']]);
+  put(F, { y: gy, ox: 0, oy: 0 });
+  put(fBg);
+  put(fEye, { x: 60, y: 250 + rise(t, 19.5, 30), o: op(t, 19.5) });
+  put(fH, { x: 56, y: 320 }); typed(fH, [['See what they'], ['\n'], ["can't tell you.", 1]], t, 19.55, 50);
+  fH.querySelectorAll('em').forEach(e => e.style.color = 'var(--mint)');
+  fH.querySelectorAll('.caret').forEach(e => e.style.background = 'var(--mint)');
+  put(fFrame, { x: 190, y: 620, s: pop(t, 20.05, 0.85, 'default'), o: op(t, 20.05) });
+  fFrame.querySelectorAll('.corners path').forEach((p, i) => setDraw(p, sp(t - 20.1 - i * 0.04, 'default')));
+  const cam = fFrame.querySelector('.cam');
+  cam.style.transform = `scale(${pop(t, 20.15, 0, 'snappy') * press(t, 20.44, 0.8)})`; cam.style.opacity = t < 20.55 ? 1 : 0;
+  fFrame.querySelector('.flash').style.opacity = Math.max(0, T(t, 0, [[20.5, 0.85, 'snappy'], [20.58, 0, 'default']]));
+  const scanY = T(t, -20, [[20.7, 700, 'heavy']]);
+  fFrame.querySelector('.line').style.top = scanY + 'px';
+  fFrame.querySelector('.line').style.opacity = t > 20.65 && t < 21.45 ? 1 : 0;
+  fFrame.querySelector('.band').style.top = scanY - 90 + 'px';
+  fFrame.querySelector('.band').style.opacity = t > 20.65 && t < 21.45 ? 1 : 0;
+  fDots.querySelectorAll('i').forEach(d => { const ry = 60 + d.dataset.r * 83; const on = scanY > ry ? sp(t - 20.7 - d.dataset.r * 0.055, 'snappy') : 0; d.style.opacity = (0.9 * on) * (1 - sp(t - 21.55, 'default') * 0.7); });
+  fFrame.querySelector('.ph').style.opacity = 1 - 0.6 * sp(t - 21.55, 'default');
+  const n = Math.min(40, Math.round(40 * sp(t - 20.8, 'heavy') * (t > 20.8 ? 1 : 0)));
+  fCount.innerHTML = `Screening <b style="color:var(--mint)">${n}${n >= 40 ? '+' : ''}</b> conditions`;
+  put(fCount, { x: 190 + 350 - fCount._w / 2, y: 1350 + rise(t, 20.75, 20), o: op(t, 20.75) * (1 - sp(t - 21.3, 'snappy')) });
+  put(fBig, { x: 540 - fBig._w / 2, y: 780, s: pop(t, 21.625, 0.6, 'heavy'), o: op(t, 21.625) });
+  put(fBigL, { x: 540 - fBigL._w / 2, y: 1030 + rise(t, 21.7, 20), o: op(t, 21.7) });
+  const lit = [21.0, 21.25, 21.5, 21.75, 22.0];
+  [...fFlow.children].forEach((e, i) => e.style.color = mix([40, 92, 78], i % 2 ? [159, 232, 201] : C.white, sp(t - lit[i], 'snappy')));
+  put(fFlow, { x: 540 - fFlow._w / 2, y: 1370 + rise(t, 21.35, 50, 'heavy') - 0, o: op(t, 21.35) });
+  // result sheet, then it opens into the next page
+  const k = sp(t - 23.2, 'default');
+  const ry = 1500 + rise(t, 22.3125, 500);
+  fRes.style.width = 960 + 120 * k + 'px'; fRes.style.height = 360 + (1920 - 360) * k + 'px'; fRes.style.borderRadius = 40 * (1 - k) + 'px';
+  if (t > 22.25) put(fRes, { x: 60 * (1 - k), y: ry * (1 - k), ox: 0, oy: 0 });
+  fRes.querySelectorAll('.rr').forEach((r, i) => { const kk = sp(t - 22.5 - i * 0.125, 'snappy'); r.style.opacity = kk * (1 - k); r.style.transform = `translateX(${40 * (1 - kk)}px)`; });
+  fRes.querySelector('.rb').style.opacity = sp(t - 22.875, 'snappy') * (1 - k);
+}
+
+/* ================= SCENE G: products + reviews ================= */
+const G = group(60);
+const gNum = el(G, '', 'disp', 'font-size:290px;color:var(--green)');
+const gLbl = el(G, 'products, matched to symptoms<br>and conditions', 'ui', 'font:500 46px/1.25 Inter;color:var(--mute)');
+const CONV = ['tub', 'bottle', 'harness', 'ramp', 'brace', 'chew', 'tub', 'bottle', 'ramp', 'harness'];
+const gTiles = CONV.map(p => el(G, `<div style="position:absolute;left:55px;top:55px">${icon(p, 120, '#0C342A', 5)}</div>`, '', 'width:230px;height:230px;border-radius:30px;background:var(--pale)'));
+const gStars = [0, 1, 2, 3, 4].map(() => el(G, STAR, '', 'width:110px;height:110px'));
+const gScore = el(G, '4.6<span style="font-size:110px;color:var(--mute)">/5</span>', 'disp', 'font-size:210px;color:var(--ink)');
+const gFrom = el(G, 'from 101 verified reviews', 'ui', 'font:600 44px/1 Inter;color:var(--ink);white-space:nowrap');
+const gQuote = el(G, '<div class="gq disp" style="position:absolute;left:48px;top:40px;width:830px;font-size:52px;line-height:1.18;white-space:normal;color:var(--ink)"></div><div class="ga ui" style="position:absolute;left:48px;top:262px;font:600 32px/1 Inter;color:var(--mute);white-space:nowrap">Lisa W. · Verified buyer · ★★★★★</div>',
+  '', 'width:960px;height:330px;border-radius:34px;background:#fff;border:2px solid var(--line);border-left:12px solid var(--rust);box-sizing:border-box');
+const QUOTE = '“Really helping our elderly lab with his arthritic shoulder. Great quality.”';
+function sceneG(t) {
+  if (t < 23.2 || t > 28.4) return;
+  put(G);
+  const n = Math.min(225, Math.round(225 * sp(t - 23.45, 'heavy')));
+  gNum.innerHTML = `${n}${n >= 225 ? '<em style="color:var(--rust)">+</em>' : ''}`;
+  put(gNum, { x: 52, y: 200, o: op(t, 23.4), ox: 0 });
+  put(gLbl, { x: 60, y: 520 + rise(t, 23.7, 30), o: op(t, 23.7) });
+  const car = T(t, 0, [[24.25, -250, 'snappy'], [24.5, -500, 'snappy'], [24.75, -750, 'snappy'], [25.0, -1000, 'snappy']]);
+  gTiles.forEach((c, i) => { const t0 = 23.6 + i * 0.0625; put(c, { x: 60 + i * 250 + car, y: 690, s: pop(t, t0, 0.4), o: op(t, t0) }); });
+  gStars.forEach((s, i) => { const t0 = 25.125 + i * 0.0625; put(s, { x: 60 + i * 124, y: 990, s: pop(t, t0, 0, 'default'), r: 0, o: op(t, t0) }); });
+  put(gScore, { x: 52, y: 1110, s: pop(t, 25.5, 0.7, 'heavy'), o: op(t, 25.5), ox: 0 });
+  put(gFrom, { x: 60, y: 1340 + rise(t, 25.65, 20), o: op(t, 25.65) });
+  put(gQuote, { x: 60, y: 1450 + rise(t, 25.85, 300), o: op(t, 25.85) });
+  typed(gQuote.querySelector('.gq'), [[QUOTE, 1]], t, 25.95, 85, 0.5);
+  gQuote.querySelector('.ga').style.opacity = sp(t - 26.875, 'snappy');
+}
+
+/* ================= SCENE H: lockup ================= */
+const Hn = document.createElement('div'); Hn.className = 'g'; Hn.style.zIndex = 80; stage.appendChild(Hn); ALL.push(Hn);
+const hBg = el(Hn, '', '', 'width:200px;height:200px;border-radius:48px;background:var(--deep)');
+const hMark = el(Hn, mark(170, '#C25E2E', '#fff'), '', 'width:170px;height:170px');
+const hWord = el(Hn, 'Poorly Pet', 'ui', 'font:800 118px/170px Inter;color:#fff;letter-spacing:-.02em;white-space:nowrap');
+const hT1 = el(Hn, 'Pet health.', 'disp', 'font-size:156px;color:#fff');
+const hT2 = el(Hn, '<em>Made easier.</em>', 'disp', 'font-size:156px;color:var(--mint)');
+const hUrl = el(Hn, 'poorly-pet.com', 'ui', 'font:700 58px/1 Inter;color:var(--mint);white-space:nowrap');
+const hCode = el(Hn, '10% off your first order · <b>POORLY10</b>', 'pill', 'border:3px solid rgba(255,255,255,.7);color:#fff;font-size:36px;padding:20px 32px');
+function sceneH(t) {
+  // everything seen so far collapses into the centre
+  const k = sp(t - 27.35, 'default');
+  world.style.transform = `scale(${1 - 0.93 * k})`;
+  world.style.opacity = 1 - sp(t - 27.5, 'snappy');
+  if (t < 27.35) return;
+  put(Hn);
+  put(hBg, { x: 440, y: 860, s: T(t, 0, [[27.4, 13, 'heavy']]), ox: 100, oy: 100 });
+  const lw = 170 + 30 + hWord._w, lx = 540 - lw / 2;
+  put(hMark, { x: lx, y: 640, s: pop(t, 27.625, 0.2, 'heavy'), o: op(t, 27.625) });
+  put(hWord, { x: lx + 200, y: 640, o: op(t, 27.75) });
+  hWord.style.clipPath = `inset(-10% ${100 - 100 * sp(t - 27.75, 'default')}% -10% 0)`;
+  put(hT1, { x: 540 - hT1._w / 2, y: 900 + rise(t, 28.05, 70, 'heavy'), o: op(t, 28.05, 'heavy') });
+  put(hT2, { x: 540 - hT2._w / 2, y: 1060 + rise(t, 28.15, 70, 'heavy'), o: op(t, 28.15, 'heavy') });
+  put(hUrl, { x: 540 - hUrl._w / 2, y: 1300 + rise(t, 28.45, 30, 'heavy'), o: op(t, 28.45, 'heavy') });
+  put(hCode, { x: 540 - hCode._w / 2, y: 1410, s: pop(t, 28.75, 0.7), o: op(t, 28.75) });
+}
+
+/* ---------------- layout that depends on real text widths ---------------- */
+function measure() {
+  for (const e of ALL) { e.style.display = 'block'; e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  // feature chips on the brand page, two per row
+  let x = 60, y = 1520; bChips._pos = bChips.map((c, i) => { if (x + c._w > 1020) { x = 60; y += c._h + 20; } const p = [x, y]; x += c._w + 20; return p; });
+  // condition pills, wrapped
+  x = 60; y = 720; cPills._pos = cPills.map(c => { if (x + c._w > 1020) { x = 60; y += c._h + 18; } const p = [x, y]; x += c._w + 16; return p; });
+  cPills._bottom = y + cPills[0]._h;
+  bH2._emX = bH2.querySelector('em').parentElement.offsetLeft;
+  // size-dependent text blocks
+  for (const e of [eUser, eReply, fCount, fBig, fBigL, fFlow, hWord, hT1, hT2, hUrl, hCode, dBtn]) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  wrapWords(eReply); eReply._h = eReply.offsetHeight;
+  fCount.innerHTML = 'Screening <b>40+</b> conditions'; fCount._w = fCount.offsetWidth;
+  for (const e of ALL) e.style.display = 'none';
+}
+
+/* ---------------- cursor (for the demo taps) ---------------- */
+const cursor = document.createElement('div'); cursor.className = 'L'; cursor.style.zIndex = 200; stage.appendChild(cursor); ALL.push(cursor);
+cursor.innerHTML = '<svg width="78" height="78" viewBox="0 0 64 64"><path d="M14 6 L14 50 L25 40 L33 58 L41 54 L33 37 L48 37 Z" fill="#101B17" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>';
+function cursorAt(t) {
+  // [time, x, y] waypoints; taps are listed separately
+  const pts = [[7.6, 1180, 1900], [7.72, 60 + 120, 750], [9.35, 380, 1575], [10.1, 1180, 1500], [11.75, 1180, 1900], [11.85, 250, 780], [13.45, 132 + 150, 1105], [14.1, 1180, 1800],
+    [15.7, 1180, 1900], [15.78, 900, 1720], [16.3, 1180, 1900], [20.2, 1180, 1400], [20.28, 560, 990], [20.8, 1180, 1400]];
+  const taps = [7.95, 9.7, 11.97, 13.72, 15.9, 20.44];
+  const vis = (t > 7.6 && t < 10.15) || (t > 11.75 && t < 14.15) || (t > 15.7 && t < 16.35) || (t > 20.2 && t < 20.85);
+  if (!vis) return;
+  let x = pts[0][1], y = pts[0][2];
+  const xs = [], ys = [];
+  pts.forEach(([pt, px, py], i) => { if (i) { xs.push([pt, px, 'default']); ys.push([pt, py, 'default']); } });
+  x = T(t, x, xs); y = T(t, y, ys);
+  const s = taps.reduce((a, tp) => a * press(t, tp, 0.8), 1);
+  put(cursor, { x: x - 16, y: y - 6, s, ox: 16, oy: 6 });
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  sceneA(t); sceneB(t); sceneC(t); sceneD(t); sceneE(t); sceneF(t); sceneG(t); sceneH(t); cursorAt(t);
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('540 100px Fraunces'), document.fonts.load('italic 480 100px Fraunces'), document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('500 40px Inter')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
