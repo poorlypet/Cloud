@@ -1,13 +1,13 @@
 /* Collection page (category or condition), shared by versions A, B and C.
-   Data: products.js (PP_PRODUCTS, PP_TAGS) then offers.js (PPOffers). Cards are the homepage .pk card.
+   Data: products.js (PP_PRODUCTS, PP_TAGS), offers.js (PPOffers), card.js (PPCard: the one site product card).
    Everything is written to the URL hash, e.g.
-   #c=arthritis&sub=supps&brand=AniForte|Weloca&min=10&max=30&rating=4&for=hip-dysplasia&offer=two-supps&type=Supplement&sort=price-asc&page=2&view=list
-   Versions differ only in markup/CSS: A = sidebar always open, B = top dropdown filter bar + sticky toolbar,
-   C = header card, sub-category image carousel and a sticky compact sidebar. Mobile: one filter sheet for all. */
+   #c=arthritis&sub=supps&brand=AniForte|Weloca&min=10&max=30&rating=4&for=hip-dysplasia&offer=two-supps&type=Supplement&sort=price-asc&page=2
+   All three versions share one layout (round sub-category tiles, boxed sticky sidebar, grid, pagination) and differ
+   only in the header: A = slim pale row card, B = plain H1 + one meta line, C = slim teal band. Mobile: one filter sheet. */
 (function () {
   'use strict';
   var root = document.querySelector('.cl');
-  if (!root || !window.PP_PRODUCTS || !window.PPOffers) return;
+  if (!root || !window.PP_PRODUCTS || !window.PPOffers || !window.PPCard) return;
   var V = root.getAttribute('data-v') || 'a';
   var PAGE = 24;
   var TAGS = window.PP_TAGS || {};
@@ -229,7 +229,6 @@
     if (S.max != null) parts.push('max=' + S.max);
     if (S.sort !== 'rec') parts.push('sort=' + S.sort);
     if (S.page > 1) parts.push('page=' + S.page);
-    if (S.view === 'list') parts.push('view=list');
     var h = '#' + parts.join('&');
     if (location.hash !== h) { try { history.replaceState(null, '', h); } catch (e) { lastHash = h; location.hash = h; } }
     lastHash = location.hash;
@@ -252,10 +251,10 @@
     if (kv.max && !isNaN(+kv.max)) S.max = +kv.max;
     if (kv.sort && SORTS.some(function (s) { return s[0] === kv.sort; })) S.sort = kv.sort;
     if (kv.page) S.page = Math.max(1, parseInt(kv.page, 10) || 1);
-    S.view = kv.view === 'list' ? 'list' : 'grid';
+    S.view = 'grid';
   }
 
-  /* ---------- the card: exactly the homepage .pk, plus the offer badge and offer line ---------- */
+  /* ---------- stars for the rating facet ---------- */
   function stars(r) {
     var h = '<span class="stars" aria-hidden="true">';
     for (var i = 1; i <= 5; i++) { var f = r - (i - 1); h += f >= 1 ? '<i class="on"></i>' : f > 0 ? '<i class="part" style="--f:' + Math.round(f * 100) + '%"></i>' : '<i></i>'; }
@@ -271,17 +270,10 @@
   function img(p, cls) {
     return p.img ? '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + esc(p.img) + '" alt="" loading="lazy" onerror="this.onerror=null;this.remove()">' : '';
   }
+  /* the one site card (card.js); the teal tab shows the sub-category when there is no offer */
   function card(p) {
-    var badge = PPOffers.badge(p), line = PPOffers.lines(p)[0], n = p.reviewCount, r = Math.round((p.rating || 0) * 10) / 10;
-    var tab = badge ? '<span class="tab sale">' + esc(badge) + '</span>' : (C.kind === 'condition' ? '<span class="tab">' + esc(TGN[p._g]) + '</span>' : '');
-    return '<article class="pk' + (p === KIT ? ' cl-kit' : '') + '">' + tab +
-      '<a class="well" href="#" tabindex="-1" aria-hidden="true">' + img(p) + '</a>' +
-      '<div class="body"><span class="brand">' + esc(p.brand) + '</span><a class="name" href="#">' + esc(p._name) + '</a>' +
-      (p.rating ? '<a class="rev" href="#" aria-label="Rated ' + r + ' out of 5 from ' + n + ' review' + (n === 1 ? '' : 's') + '">' + stars(p.rating) + '<span>' + r.toFixed(1) + ' <em>(' + n + ' review' + (n === 1 ? '' : 's') + ')</em></span></a>' : '<span class="rev none" aria-hidden="true"></span>') +
-      '<span class="helps">' + esc(helps(p)) + '</span>' +
-      '<div class="price"><span class="now">' + money(p.price) + '</span>' + (p._sale ? '<span class="was">' + money(p.compareAt) + '</span><span class="save">Save ' + Math.round((1 - p.price / p.compareAt) * 100) + '%</span>' : '') + '</div>' +
-      (line ? '<span class="cl-ofl">' + esc(line) + '</span>' : '') +
-      '<button class="btn" type="button" data-add="' + esc(p.handle) + '">Add to basket</button></div></article>';
+    var s = C.subs === 'supps' ? SUBS.filter(function (x) { return p._subs.indexOf(x[0]) > -1; })[0] : null;
+    return PPCard.html(p, { tab: p === KIT ? 'Care kit' : s ? s[1] : TGN[p._g], helps: helps(p) });
   }
 
   /* ---------- facet markup (used by the sidebar, the dropdown bar and the mobile sheet) ---------- */
@@ -332,14 +324,23 @@
     var brands = count(ALL, function (p) { return [p.brand]; }).length;
     var rated = ALL.filter(function (p) { return p.rating; }), rc = rated.reduce(function (a, p) { return a + p.reviewCount; }, 0);
     var avg = rc ? rated.reduce(function (a, p) { return a + p.rating * p.reviewCount; }, 0) / rc : 0;
-    var guide = C.guide ? '<a class="cl-guide" href="symptom-guide-a.html"><span>Guide:</span> ' + esc(C.guide) + ' <i aria-hidden="true">›</i></a>' : '';
     var head = $('#cl-head');
-    if (V === 'c') {
-      head.innerHTML = crumbs + '<div class="cl-hcard"><div class="cl-hl"><h1>' + C.h1 + '</h1><p>' + esc(C.line) + '</p>' + guide + '</div>' +
-        '<dl class="cl-facts"><div><dt>Products</dt><dd>' + n + '</dd></div><div><dt>Brands</dt><dd>' + brands + '</dd></div>' +
-        (rc ? '<div><dt>Owner rating</dt><dd>' + stars(avg) + ' ' + avg.toFixed(1) + ' <small>(' + rc + ')</small></dd></div>' : '') + '</dl></div>';
+    var cnt = n + ' product' + (n === 1 ? '' : 's');
+    var rate = rc ? '<span class="cl-rt"><span class="cl-st" aria-hidden="true">★</span> ' + avg.toFixed(1) + ' <span class="cl-rc">(' + rc + ')</span><span class="sr"> average owner rating from ' + rc + ' reviews</span></span>' : '';
+    var glink = C.guide ? '<a class="cl-gl" href="symptom-guide-a.html"><span>Guide:</span> ' + esc(C.guide) + ' <i aria-hidden="true">›</i></a>' : '';
+    var sep = '<span class="cl-dot" aria-hidden="true">·</span>';
+    if (V === 'a') {
+      /* A: one slim pale row: title + count left, rating + guide right; description clamped to one line */
+      head.innerHTML = crumbs + '<div class="cl-hbox cl-ha"><div class="cl-hm"><div class="cl-h1r"><h1>' + C.h1 + '</h1><p class="cl-meta"><span>' + cnt + '</span>' + (rate ? sep + rate : '') + '</p></div>' +
+        '<p class="cl-desc">' + esc(C.line) + '</p></div>' + (glink ? '<div class="cl-hr">' + glink + '</div>' : '') + '</div>';
+    } else if (V === 'b') {
+      /* B: no card: plain H1 and one small meta line (count, brands, rating, guide) */
+      head.innerHTML = crumbs + '<div class="cl-hbox cl-hb"><h1>' + C.h1 + '</h1><p class="cl-meta"><span>' + cnt + '</span>' + sep + '<span>' + brands + ' brands</span>' + (rate ? sep + rate : '') + (glink ? sep + glink : '') + '</p>' +
+        '<p class="cl-desc">' + esc(C.line) + '</p></div>';
     } else {
-      head.innerHTML = crumbs + '<div class="cl-ht"><h1>' + C.h1 + '</h1><span class="cl-hn">' + n + ' products</span></div><p class="cl-line">' + esc(C.line) + '</p>' + guide;
+      /* C: slim teal band, white text, lime guide link */
+      head.innerHTML = crumbs + '<div class="cl-hbox cl-hc"><div class="cl-hm"><div class="cl-h1r"><h1>' + C.h1 + '</h1><p class="cl-meta"><span>' + cnt + '</span>' + sep + '<span>' + brands + ' brands</span>' + (rate ? sep + rate : '') + '</p></div>' +
+        '<p class="cl-desc">' + esc(C.line) + '</p></div>' + (glink ? '<div class="cl-hr">' + glink + '</div>' : '') + '</div>';
     }
     /* offer banner: only the offers that apply here */
     var ob = $('#cl-offer');
@@ -361,7 +362,7 @@
     }
     /* sidebar / dropdown bar / sheet */
     var side = $('#cl-side');
-    if (side) side.innerHTML = '<div class="cl-sh"><h2>Filter</h2><button type="button" class="cl-clear" data-clear>Clear all</button></div><div class="cl-chips cl-schips" data-chips></div>' + facetList('side', V === 'a' ? 3 : 1);
+    if (side) side.innerHTML = '<div class="cl-sh"><h2>Filter</h2><button type="button" class="cl-clear" data-clear>Clear all</button></div><div class="cl-chips cl-schips" data-chips></div>' + facetList('side', 1);
     var fbar = $('#cl-fbar');
     if (fbar) fbar.innerHTML = FACETS.map(function (F) {
       var id = 'cl-dd-' + F.f;
@@ -384,7 +385,6 @@
     if (S.page > pages) S.page = pages;
     var from = (S.page - 1) * PAGE, slice = r.slice(from, from + PAGE);
     var grid = $('#cl-grid');
-    grid.className = 'cl-grid' + (S.view === 'list' ? ' cl-list' : '');
     grid.innerHTML = slice.length ? slice.map(card).join('') : '<div class="cl-empty"><h2>No products match those filters</h2><p>Try removing a filter, or <button type="button" data-clear>clear them all</button>.</p></div>';
     grid.setAttribute('aria-busy', 'false');
     /* counts */
