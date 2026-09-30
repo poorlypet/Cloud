@@ -694,5 +694,11 @@ function initC(){
   run();
 }
 
+/* Add to basket on the product card: header count and a short "Added" on the button (prototype) */
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.pk [data-add]');if(!b)return;
+  $$('.cnt').forEach(function(c){var v=(parseInt(c.textContent,10)||0)+1;c.textContent=v;c.setAttribute('data-n',v)});
+  var o=b.getAttribute('data-o')||b.textContent;b.setAttribute('data-o',o);b.textContent='Added';clearTimeout(b._t);b._t=setTimeout(function(){b.textContent=o},1600);
+});
 if(V==='a')initA();else if(V==='b')initB();else if(V==='c')initC();
 })();
