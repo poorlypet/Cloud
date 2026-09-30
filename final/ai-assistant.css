@@ -1,0 +1,311 @@
+/* Poorly Pet: AI Support Assistant (ai-assistant-a/-b/-c.html). Prefix: aia-
+   Built on css/home.css + css/site.css. Product cards are the homepage .pk. */
+
+.aia{--aia-pale:#E4EED6}
+.aia h1{font:400 52px/1.06 var(--serif);color:var(--teal);margin:0 0 12px;letter-spacing:-.01em;text-wrap:balance}
+.aia h1 em{font-weight:700;font-style:normal}
+.aia-lead{font:400 18px/1.45 var(--sans);color:var(--mute);max-width:600px;margin:0}
+
+/* intro (white, breadcrumb) as track-my-order */
+.aia-hero{padding-top:16px;padding-bottom:28px}
+.aia-crumb ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0 0 18px;padding:0;font:400 14px/1.3 var(--sans);color:var(--mute)}
+.aia-crumb li+li:before{content:"/";margin-right:6px;color:var(--line2)}
+.aia-crumb a{color:var(--teal);text-decoration:underline;text-underline-offset:2px}
+
+/* intro (teal band) as contact-us */
+.aia-band{background:var(--teal);color:#fff}
+.aia-band .aia-bh{padding-top:48px;padding-bottom:44px}
+.aia-band h1{color:#fff}
+.aia-band h1 em{color:var(--lime)}
+.aia-band .aia-lead{color:rgba(255,255,255,.82)}
+.aia-band :focus-visible{outline-color:var(--lime)}
+
+/* ============ the chat ============ */
+.aia-chat{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--rp);overflow:hidden;min-width:0;height:680px}
+.aia-ch{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);background:#fff}
+.aia-av{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--lime);display:inline-flex;align-items:center;justify-content:center;font:700 15px/1 var(--serif)}
+.aia-cht{flex:1;min-width:0}
+.aia-chn{font:700 17px/1.2 var(--serif);color:var(--teal);margin:0}
+.aia-cht span{display:block;font:400 13px/1.3 var(--sans);color:var(--mute);margin-top:2px}
+.aia-mail{flex:0 0 auto;min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:var(--r);background:#fff;color:var(--teal);font:600 14px/1 var(--sans);cursor:pointer}
+.aia-mail:hover{background:var(--pale)}
+.aia-x{flex:0 0 auto;width:40px;height:40px;border:0;border-radius:var(--r);background:transparent;color:var(--teal);font:400 30px/1 var(--sans);cursor:pointer}
+.aia-x:hover{background:var(--pale)}
+
+.aia-log{position:relative;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px;display:flex;flex-direction:column;gap:12px;background:#fff;scroll-padding:12px}
+.aia-log:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.aia-m{max-width:min(86%,560px);font:400 15px/1.5 var(--sans);color:var(--ink);border-radius:16px;padding:12px 15px;animation:aia-in .22s ease both}
+.aia-m p{margin:0}
+.aia-m p+p,.aia-m p+div,.aia-m div+p{margin-top:8px}
+.aia-m.bot{align-self:flex-start;background:var(--pale);border-bottom-left-radius:4px}
+.aia-m.me{align-self:flex-end;background:var(--teal);color:#fff;border-bottom-right-radius:4px}
+.aia-m.aia-wide{max-width:100%;width:100%}
+.aia-m.aia-card{background:#fff;border:1px solid var(--line2)}
+.aia-m a{color:var(--teal);font-weight:600}
+.aia-q{font:700 16px/1.3 var(--serif);color:var(--teal)}
+.aia-a table{border-collapse:collapse;width:100%;margin:6px 0 4px;font-size:14px}
+.aia-a th,.aia-a td{text-align:left;vertical-align:top;padding:7px 8px;border-bottom:1px solid var(--line2)}
+.aia-a th{font-weight:600;color:var(--ink);white-space:nowrap}
+.aia-a ul,.aia-a ol,.aia-qa ul,.aia-qa ol{margin:6px 0 0;padding-left:20px}
+.aia-more{display:inline-block;margin-top:10px;font:600 14px/1.3 var(--sans);color:var(--teal);text-decoration:none}
+.aia-more:hover{text-decoration:underline}
+.aia-small{font:400 13px/1.45 var(--sans);color:var(--mute)}
+.aia-hand{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:10px}
+.aia-hand .btn{margin:0}
+.aia-link{border:0;background:none;padding:6px 0;color:var(--teal);font:600 14px/1.2 var(--sans);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+@keyframes aia-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* typing indicator */
+.aia-typing{align-self:flex-start;display:inline-flex;gap:5px;padding:14px 16px;background:var(--pale);border-radius:16px;border-bottom-left-radius:4px}
+.aia-typing i{width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:.35;animation:aia-dot 1s infinite ease-in-out}
+.aia-typing i:nth-child(2){animation-delay:.15s}.aia-typing i:nth-child(3){animation-delay:.3s}
+@keyframes aia-dot{0%,80%,100%{opacity:.25;transform:none}40%{opacity:1;transform:translateY(-3px)}}
+
+/* suggestions + input */
+.aia-foot{border-top:1px solid var(--line);padding:12px 18px 12px;background:#fff}
+.aia-sugg{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 10px;margin:0 -2px}
+.aia-sugg::-webkit-scrollbar{display:none}
+.aia-sugg:empty{display:none}
+.aia-chip{flex:0 0 auto;min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--teal);font:600 14px/1.2 var(--sans);cursor:pointer;white-space:nowrap}
+.aia-chip:hover{background:var(--pale);border-color:var(--teal)}
+.aia-chip-mail{background:var(--pale)}
+.aia-form{display:flex;gap:8px}
+.aia-form input{flex:1;min-width:0;height:48px;border:1px solid var(--line2);border-radius:var(--r);padding:0 14px;font:400 16px/1 var(--sans);color:var(--ink);background:#fff}
+.aia-form input:focus{outline:2px solid var(--teal);outline-offset:0;border-color:var(--teal)}
+.aia-form .btn{margin:0;flex:0 0 auto}
+.aia-fine{margin:8px 0 0;font:400 12px/1.4 var(--sans);color:var(--mute)}
+
+/* product rail inside the chat: homepage .pk, sized for the chat width */
+.aia-rw{margin-top:12px}
+.aia-rw .prail .pk{width:220px;flex:0 0 220px}
+.aia-rw.aia-fit .scroller{display:none}
+.aia-rw .scroller{margin-top:10px}
+.pk .btn.aia-added{background:var(--teal);color:#fff}
+.aia-noimg{display:block;width:100%;height:100%;min-height:120px;border-radius:12px;background:var(--aia-pale,#E4EED6)}
+
+/* health answers in the chat */
+.aia-ul{margin:4px 0 0;padding-left:20px;list-style:disc}
+.aia-ul li+li{margin-top:2px}
+.aia-plead{margin-top:12px!important;font-weight:600;color:var(--teal)}
+.aia-links2{display:flex;flex-wrap:wrap;gap:4px 18px}
+.aia-links2 .aia-more{margin-top:8px}
+.aia-health .aia-rw{margin-top:8px}
+/* rail inside the pop-up panel: the same card at 220px */
+.aia-panel .aia-rw .prail{gap:12px}
+.aia-panel .aia-rw .prail .pk{width:220px;flex:0 0 220px}
+.aia-panel .aia-rw .scroller{margin-top:8px}
+
+/* order result in the chat */
+.aia-ord{margin-top:10px;background:#fff;border:1px solid var(--line2);border-radius:12px;padding:16px}
+.aia-ex{font:400 13px/1.45 var(--sans);color:var(--ink);background:#FFF8D6;border-radius:8px;padding:8px 10px;margin:0 0 12px!important}
+.aia-lbl{display:block;font:600 13px/1.3 var(--sans);color:var(--mute)}
+.aia-oh{display:block;font:700 19px/1.25 var(--serif);color:var(--teal);margin-top:4px}
+.aia-eta{display:block;font:400 14px/1.4 var(--sans);color:var(--ink);margin-top:4px}
+.aia-steps{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;counter-reset:s}
+.aia-steps li{position:relative;display:flex;flex-direction:column;gap:6px;font:600 12px/1.25 var(--sans);color:var(--mute);padding-top:2px}
+.aia-steps li:before{content:"";position:absolute;top:8px;left:18px;right:-4px;height:3px;background:var(--line)}
+.aia-steps li:last-child:before{display:none}
+.aia-steps li.is-done:before{background:var(--teal)}
+.aia-dot{position:relative;z-index:1;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--line2)}
+.aia-steps .is-done .aia-dot{background:var(--teal);border-color:var(--teal)}
+.aia-steps .is-now .aia-dot{border-color:var(--teal);background:var(--lime)}
+.aia-steps .is-done,.aia-steps .is-now{color:var(--ink)}
+.aia-trk{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding:12px;background:var(--pale);border-radius:8px}
+.aia-trk b{font:700 15px/1.3 var(--sans);letter-spacing:.02em;word-break:break-all}
+.aia-trk .btn{margin:0}
+.aia-items{list-style:none;margin:12px 0 0;padding:0;font:400 14px/1.4 var(--sans)}
+.aia-items li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line)}
+.aia-items li span:last-child{color:var(--mute);white-space:nowrap}
+
+/* ============ page sections ============ */
+.aia-sec{padding:44px 0 8px}
+.aia .sec-h h2 em{font-style:normal;font-weight:700}
+
+/* A: topics + chat inside a pale panel */
+.aia-a-panel{background:var(--pale);border-radius:var(--rl);padding:24px;display:grid;grid-template-columns:280px minmax(0,1fr);gap:24px}
+.aia-topics h2{font:700 20px/1.2 var(--serif);color:var(--teal);margin:4px 0 12px}
+.aia-tlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.aia-tlist button{width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:var(--r);cursor:pointer;font:700 15px/1.25 var(--sans);color:var(--teal)}
+.aia-tlist button span{font:400 13px/1.35 var(--sans);color:var(--mute)}
+.aia-tlist button:hover{border-color:var(--teal)}
+.aia-tmail{margin-top:16px;padding:16px;border-radius:var(--r);background:var(--teal);color:#fff}
+.aia-tmail b{display:block;font:700 16px/1.3 var(--sans)}
+.aia-tmail p{margin:4px 0 0;font:400 14px/1.45 var(--sans);color:rgba(255,255,255,.85)}
+.aia-tmail a:not(.btn){color:var(--lime);font-weight:600}
+.aia-tmail .btn{margin-top:12px}
+
+/* B: quick actions + chat beside popular questions */
+.aia-qa4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.aia-qa4 button,.aia-qa4 a{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;text-align:left;background:#fff;border:0;border-left:1px solid var(--line);cursor:pointer;text-decoration:none;transition:background .15s}
+.aia-qa4 > :first-child{border-left:0}
+.aia-qa4 button:hover,.aia-qa4 a:hover{background:var(--pale)}
+.aia-qa4 b{font:700 17px/1.25 var(--sans);color:var(--teal)}
+.aia-qa4 span{font:400 14px/1.4 var(--sans);color:var(--mute)}
+.aia-b-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+.aia-side{display:flex;flex-direction:column;gap:16px}
+.aia-box{border:1px solid var(--line);border-radius:var(--rp);padding:20px}
+.aia-box h2{font:700 20px/1.2 var(--serif);color:var(--teal);margin:0 0 8px}
+.aia-box.pale{background:var(--pale);border-color:var(--pale)}
+.aia-pop{list-style:none;margin:0;padding:0}
+.aia-pop li+li{border-top:1px solid var(--line)}
+.aia-pop button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;min-height:48px;background:none;border:0;text-align:left;cursor:pointer;font:600 15px/1.35 var(--sans);color:var(--ink)}
+.aia-pop button:hover span{color:var(--teal);text-decoration:underline}
+.aia-pop i{font-style:normal;color:var(--teal);font-size:20px}
+.aia-dl{margin:0;font:400 14px/1.4 var(--sans)}
+.aia-dl div{display:grid;grid-template-columns:90px 1fr;gap:10px;padding:8px 0;border-top:1px solid rgba(15,76,72,.12)}
+.aia-dl div:first-child{border-top:0}
+.aia-dl dt{font-weight:600;color:var(--mute)}
+.aia-dl dd{margin:0;color:var(--ink)}
+
+/* B final: health topics (6), small order-help row, ask box on the teal band */
+.aia-ht{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.aia-ht button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;min-height:92px;text-align:left;background:#fff;border:0;border-left:1px solid var(--line);border-top:1px solid var(--line);cursor:pointer;transition:background .15s}
+.aia-ht button:nth-child(3n+1){border-left:0}
+.aia-ht button:nth-child(-n+3){border-top:0}
+.aia-ht button:hover{background:var(--pale)}
+.aia-ht b{font:700 17px/1.25 var(--sans);color:var(--teal)}
+.aia-ht span{font:400 14px/1.4 var(--sans);color:var(--mute)}
+.aia-ht button:after{content:"Ask ›";margin-top:auto;padding-top:6px;font:600 14px/1 var(--sans);color:var(--teal)}
+.aia-sub{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:16px}
+.aia-sub>span{font:600 14px/1.3 var(--sans);color:var(--mute);margin-right:4px}
+.aia-sub button{min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:#fff;color:var(--teal);font:600 14px/1.2 var(--sans);cursor:pointer}
+.aia-sub button:hover{background:var(--pale);border-color:var(--teal)}
+.aia-popq{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;border-top:1px solid var(--line)}
+.aia-popq li{border-bottom:1px solid var(--line)}
+.aia-popq button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:14px 0;background:none;border:0;text-align:left;cursor:pointer;font:600 16px/1.35 var(--sans);color:var(--ink)}
+.aia-popq button:hover span{color:var(--teal);text-decoration:underline}
+.aia-popq i{font-style:normal;color:var(--teal);font-size:20px}
+.aia-band .aia-ask{margin-top:24px}
+.aia-band .aia-ask input{border-color:#fff}
+.aia-band .aia-ask input:focus{outline:3px solid var(--lime);outline-offset:1px;border-color:#fff}
+.aia-eg{margin:12px 0 0;font:400 14px/1.4 var(--sans);color:rgba(255,255,255,.8)}
+.aia-eg button{border:0;background:none;padding:4px 0;color:#fff;font:600 14px/1.4 var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.aia-eg button:hover{color:var(--lime)}
+
+/* C: help page + floating widget */
+.aia-ask{display:flex;gap:8px;max-width:640px;margin-top:22px}
+.aia-ask input{flex:1;min-width:0;height:52px;border:1px solid var(--line2);border-radius:var(--r);padding:0 16px;font:400 16px/1 var(--sans);color:var(--ink)}
+.aia-ask input:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.aia-ask .btn{margin:0;min-height:52px}
+.aia-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.aia-links a{display:flex;flex-direction:column;gap:4px;padding:20px 22px;text-decoration:none;border-left:1px solid var(--line);transition:background .15s}
+.aia-links a:first-child{border-left:0}
+.aia-links a:hover{background:var(--pale)}
+.aia-links b{font:700 17px/1.25 var(--sans);color:var(--teal)}
+.aia-links span{font:400 14px/1.4 var(--sans);color:var(--mute)}
+.aia-acc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}
+.aia-acc .aia-q{border-bottom:1px solid var(--line);font:inherit}
+.aia-acc summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 0;cursor:pointer;font:600 16px/1.35 var(--sans);color:var(--ink)}
+.aia-acc summary::-webkit-details-marker{display:none}
+.aia-acc summary:after{content:"";flex:0 0 auto;width:10px;height:10px;border:solid var(--teal);border-width:0 2.5px 2.5px 0;transform:translateY(-3px) rotate(45deg);transition:transform .18s}
+.aia-acc details[open] summary:after{transform:translateY(3px) rotate(-135deg)}
+.aia-qa{padding:0 0 18px;font:400 15px/1.55 var(--sans);color:var(--ink)}
+.aia-qa p{margin:0 0 8px}
+.aia-qa table{border-collapse:collapse;margin:4px 0 8px;font-size:14px}
+.aia-qa th,.aia-qa td{text-align:left;padding:6px 12px 6px 0;border-bottom:1px solid var(--line)}
+.aia-qa a{color:var(--teal);font-weight:600}
+.aia-wpromo{display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--teal);color:#fff;border-radius:var(--rl);padding:28px 32px}
+.aia-wpromo h2{font:400 30px/1.15 var(--serif);color:#fff;margin:0 0 6px}
+.aia-wpromo h2 em{color:var(--lime);font-style:normal;font-weight:700}
+.aia-wpromo p{margin:0;font:400 16px/1.45 var(--sans);color:rgba(255,255,255,.85)}
+.aia-wpromo .btn{margin:0;flex:0 0 auto}
+
+.aia-launch{position:fixed;z-index:92;right:24px;bottom:24px;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px 0 18px;border:0;border-radius:999px;background:var(--teal);color:#fff;font:700 16px/1 var(--sans);cursor:pointer;box-shadow:0 6px 18px rgba(10,58,55,.28)}
+.aia-launch:hover{background:var(--deep)}
+.aia-launch:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.aia-bub{position:relative;width:22px;height:17px;border-radius:6px;background:var(--lime)}
+.aia-bub:after{content:"";position:absolute;left:4px;bottom:-5px;border:5px solid transparent;border-top-color:var(--lime);border-left-color:var(--lime);border-width:5px 4px}
+.aia-launch.is-open .aia-lt{display:none}
+.aia-launch .aia-lc{display:none}
+.aia-launch.is-open .aia-lc{display:inline}
+.aia-panel{position:fixed;z-index:93;right:24px;bottom:92px;width:440px;max-width:calc(100vw - 32px);opacity:0;transform:translateY(12px);transition:opacity .18s ease,transform .18s ease}
+.aia-panel.is-open{opacity:1;transform:none}
+.aia-panel .aia-chat{height:min(640px,calc(100vh - 120px));box-shadow:0 12px 40px rgba(10,58,55,.22);border-color:var(--line2)}
+.aia-panel .aia-m{max-width:92%}
+.aia-panel .aia-m.aia-wide{max-width:100%}
+.aia-panel .aia-mail{display:none}
+
+/* Still need help: last section, runs into the footer */
+.aia-contact{padding:44px 0 48px!important}
+.aia-cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line2)}
+.aia-cgrid>div{display:flex;flex-direction:column;align-items:flex-start;padding:24px 32px 8px 0}
+.aia-cgrid>div+div{padding-left:32px;border-left:1px solid var(--line2)}
+.aia-cgrid h3{font:700 18px/1.3 var(--sans);color:var(--ink);margin:0 0 6px}
+.aia-cgrid p{font:400 15px/1.5 var(--sans);color:var(--mute);margin:0 0 20px}
+.aia-cgrid p a{color:var(--teal);font-weight:600}
+.aia-cgrid .btn{margin-top:auto}
+.aia-note{margin:28px 0 0;font:400 13px/1.5 var(--sans);color:var(--mute)}
+
+/* ============ responsive ============ */
+@media (max-width:1180px){
+  .aia-b-grid{grid-template-columns:minmax(0,1fr) 320px}
+}
+@media (max-width:1023px){
+  .aia-a-panel{grid-template-columns:minmax(0,1fr);padding:16px}
+  .aia-tlist{flex-direction:row;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 2px}
+  .aia-tlist::-webkit-scrollbar{display:none}
+  .aia-tlist li{flex:0 0 auto}
+  .aia-tlist button{width:auto;min-height:44px;padding:10px 14px;white-space:nowrap}
+  .aia-tlist button span{display:none}
+  .aia-topics h2,.aia-tmail{display:none}
+  .aia-b-grid{grid-template-columns:minmax(0,1fr)}
+  .aia-qa4,.aia-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aia-qa4 > :nth-child(3),.aia-links a:nth-child(3){border-left:0}
+  .aia-qa4 > :nth-child(n+3),.aia-links a:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:899px){
+  .aia-sec{padding-top:32px}
+  .aia-ht{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aia-ht button{border-top:1px solid var(--line)!important;border-left:1px solid var(--line)!important}
+  .aia-ht button:nth-child(2n+1){border-left:0!important}
+  .aia-ht button:nth-child(-n+2){border-top:0!important}
+  .aia-popq{grid-template-columns:minmax(0,1fr)}
+  .aia h1{font-size:40px}
+  .aia-acc{grid-template-columns:minmax(0,1fr)}
+  .aia-cgrid{grid-template-columns:minmax(0,1fr)}
+  .aia-cgrid>div,.aia-cgrid>div+div{padding:20px 0;border-left:0}
+  .aia-cgrid>div+div{border-top:1px solid var(--line2)}
+  .aia-wpromo{flex-direction:column;align-items:flex-start;padding:24px}
+}
+@media (max-width:599px){
+  .aia h1{font-size:34px}
+  .aia-lead{font-size:16px}
+  .aia-hero{padding-top:8px;padding-bottom:20px}
+  .aia-band .aia-bh{padding-top:28px;padding-bottom:24px}
+  .aia-chat{height:min(620px,calc(100svh - 110px))}
+  .aia-ch{padding:12px 14px}
+  .aia-mail{padding:0 10px;font-size:13px}
+  .aia-log{padding:14px}
+  .aia-foot{padding:10px 14px}
+  .aia-m{max-width:92%}
+  .aia-fine{display:none}
+  .aia-rw .prail .pk,.aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 min(220px,72%)}
+  .aia-steps li{font-size:11px}
+  .aia-qa4 button,.aia-qa4 a,.aia-links a{padding:16px}
+  .aia-qa4 b,.aia-links b{font-size:15px}
+  .aia-ask{flex-direction:column}
+  .aia-launch{right:16px;bottom:16px}
+  .aia-ht button{padding:16px;min-height:0}
+  .aia-ht b{font-size:15px}
+  .aia-ht span{font-size:13px}
+  .aia-ht button:after{display:none}
+  .aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 min(220px,72%)}
+  .aia-panel .aia-fine{display:block}
+  .aia-panel{inset:0;width:auto;max-width:none;bottom:0;right:0}
+  .aia-panel .aia-chat{height:100%;border-radius:0;border:0}
+  html.aia-lock,html.aia-lock body{overflow:hidden}
+  .aia-launch.is-open{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .aia-m{animation:none}
+  .aia-typing i{animation:none;opacity:.6}
+  .aia-panel{transition:none}
+}
+/* the last section runs into the footer on white */
+main > .aia > section.aia-contact:last-of-type{padding-bottom:48px!important}
+@media (max-width:599px){
+  .aia-cht span{display:none}
+  .aia-ask input{flex:none;width:100%}
+  .aia-ask .btn{width:100%}
+  .aia-a-panel{margin:0 -8px;padding:12px}
+}
