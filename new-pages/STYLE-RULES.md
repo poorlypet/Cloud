@@ -54,3 +54,10 @@ Load `offers.js` after `products.js`. On every `.pk` card:
 Nothing else on the card changes.
 
 - The owner removed "Double Club points" as an offer. Never show double points anywhere.
+
+## ONE product card everywhere (owner, round 9): replaces the card notes above
+Every product on every page is rendered by `PPCard.html(p, {tab, helps, href})` from `card.js`, styled by `css/card.css`
+(load order: css/home.css, css/card.css, css/site.css; scripts: products.js, offers.js, card.js, then the page JS).
+Rows are fixed so cards line up with no loose gaps: one badge (offer in lime, else category in teal) / white image well /
+brand / 2-line name / rating stars + count, or "No reviews yet" / one info line (offer line, else "For ...") / price (+was) /
+Add to basket. Do not add rows, change heights, or build any other product card. See `_card-test.html`.

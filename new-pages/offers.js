@@ -18,7 +18,7 @@
 
   var ALL = [
     { id: 'two-supps', name: 'Two supplements, 10% off', short: '2 for 10% off', test: isSupplement,
-      line: function () { return 'Buy 2 supplements, save 10%. Buy 3, save 15%'; } },
+      line: function () { return '2 for 10% off, 3 for 15% off'; } },
     { id: 'three-supps', name: 'Three supplements, 15% off', short: '3 for 15% off', test: isSupplement, line: null },
     { id: 'wheelchair-fitting', name: 'Free wheelchair fitting', short: 'Free fitting', test: isWheelchair,
       line: function () { return 'Free wheelchair fitting'; } },
