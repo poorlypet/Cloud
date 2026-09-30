@@ -1,0 +1,26 @@
+# Poorly Pet brand explainer: storyboard
+
+The format is 1080x1920 (9:16), 30 fps, 30 s, with a beat grid at 120 BPM (a beat every 0.5 s, a bar every 2 s).
+The source of truth is www.poorly-pet.com, captured on 30 Sep 2026 at phone size (432 CSS px wide, device scale 3).
+Every UI element on screen is a raster capture of the live site. Nothing is redrawn.
+
+The palette is the live site's: deep green `#0E3E33`, darker green `#0B2E26`, rust `#A8542F`, mint `#9FE8C9`, paper `#F6F4EE`, ink `#101B17` and mute `#5E6E66`.
+Type is also the site's: Fraunces for display (with an italic accent word, as the site does) and Inter for UI.
+The brief's palette (`#0F6B4D`, `#FF6B6B`, ...) is not what the live site uses, so the site wins.
+
+| Time | Screen content | Source | Animation | On-screen text | Audio |
+|---|---|---|---|---|---|
+| 0.0–4.0 | **What is it.** The real header (logo, account, basket) and the promo bar are on screen at frame 0. The hero search bar rises, then the three real hero route buttons stack in. The "I know the condition" button is pressed. | Homepage header and hero | The header drops (snappy). Headline words rise (heavy). Buttons stagger in (default). Button press (snappy). | "Pet health. *Made easier.*" / "Poorly Pet, the UK's pet health & recovery specialist" | The pad starts at 0.0. Soft tick at 2.0. Click at 3.5. |
+| 4.0–9.0 | **Shop by condition.** The deep-green condition hero pushes the homepage up. Real condition cards (Arthritis / Osteoarthritis, Hip Dysplasia, IVDD, Cruciate Ligament (ACL/CCL), Back Pain / Spinal Issues) deal in. Arthritis is picked and the others clear. The real Arthritis collection header and product cards (salmon oil, Flagline harness, collagen powder, rear support harness) fill a 2x2 grid. | /pages/shop-by-condition, /collections/arthritis | Panel push (default). Cards deal in (default, staggered). Selection (snappy). Grid (default). | "Shop by condition" / "Know the diagnosis? *Go straight there.*" | Drums enter at 4.0. A card swish on each card. Select at 6.0. |
+| 9.0–14.0 | **Shop by symptom.** A paper panel pushes the condition scene off to the left, reading as the other route. The 8 real body-area tiles pop in. Legs & paws becomes active and the others clear. The real symptom rows (Limping or favouring a leg, Stiffness after rest, Slow to get up) slide in. "Limping..." is picked and its real product cards fan in. | /pages/shop-by-symptom, /collections/limping-or-favouring-a-leg | Lateral push (default). Tiles (snappy, staggered). Rows (default). Pick (snappy). | "Shop by symptom" / "Not sure? *Start with what you're seeing.*" | Tile ticks. Select at 11.0. Click at 12.0. |
+| 14.0–20.0 | **AI support.** The real Care assistant hero drops in. The chat card rises with its real greeting. The question is typed into the real input (a clip reveal of the captured field). The real user bubble sends, the real typing dots show, then the real reply and the "View support products 3" button arrive, followed by the real disclaimer. | /pages/ai-support-assistant, live chat run on 30 Sep 2026 | Drop (default). Bubbles (snappy). Reply (default). | "AI support" / Q: "What could help my dog with mobility problems?" / A: the assistant's real reply | Drums thin out. Typing ticks. Send whoosh at 16.0. Response chime at 17.0. Confirm at 18.0. |
+| 20.0–24.0 | **AI symptom scanner.** The real Poorly Pet Vision hero rises and "Start a scan" is pressed. The real homepage scanner card (upload area) comes up. The three real steps, Capture → Analyse → Act, snap in on the beat. The real "Not a diagnosis" card closes the scene. | /pages/symptom-scanner, homepage scanner card | Rise (default). Press (snappy). Steps on beats (snappy). | "AI symptom scanner" / Capture → Analyse → Act / "Not a diagnosis" | Click at 20.5. Step ticks at 21.0, 21.75 and 22.5. Confirm at 23.0. |
+| 24.0–28.0 | **Products + reviews.** A strip of real product cards ticks along on the half-beat. The real Judge.me summary (4.6/5, 101 verified reviews) lands. Two real review cards stack: Lisa Wellington's "Elbow support" and robert atkinson's "Exactly as I ordered...". Both are verbatim. | Collections, /pages/reviews | Carousel steps (snappy). Summary (heavy). Reviews (default). | "Trusted products." / "*Real* customers." | The full groove returns. Star shimmer at 25.5. |
+| 28.0–30.0 | **Brand lockup.** Everything collapses. The real logo (horizontal lockup PNG from the site) lands, then the line and the URL. | Site logo | Collapse (default). Logo (heavy). Text (heavy). | "Helping you find the right support for your pet." / poorly-pet.com | The drums stop. The final chord resolves at 28.0. |
+
+## Rules kept
+
+- There are no dogs, cats, people or clinics. Products whose photos or packaging show an animal are left out (for example Canine Prime, and Balto braces photographed on a dog). The assistant's recommended products all show dogs, so the AI scene stops at the "View support products 3" button.
+- Reviews are shown as captures of the real review cards and are never retyped.
+- Assistant wording comes from a real run of the live assistant. The site's own disclaimers are shown in full.
+- Scanner terms are the scanner page's own: Capture, Analyse, Act, "Not a diagnosis".

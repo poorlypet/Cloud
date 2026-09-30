@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poorly Pet Film</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 700;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#092B23;--green:#0C342A;--rust:#A8542F;--mint:#9FE8C9;--paper:#FAF9F6;--ink:#101B17;--mute:#5E6E66}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+#world{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 900px}
+.L{position:absolute;left:0;top:0;display:none;transform-origin:0 0}
+img.L{image-rendering:auto}
+.rect{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.eyebrow{font:600 38px/1 Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap}
+.disp{font-family:Fraunces,serif;font-weight:520;font-optical-sizing:auto;letter-spacing:-.01em;line-height:1;white-space:nowrap;color:var(--ink)}
+.disp em{font-style:italic;font-weight:480;color:var(--rust)}
+.dark .disp,.disp.onDark{color:#fff}
+.disp.onDark em{color:var(--mint)}
+.sub{font:500 44px/1.3 Inter,sans-serif;color:var(--mute);width:940px}
+.w{display:inline-block}
+#chat{overflow:hidden;background:#fff}
+#chatBody{position:absolute;left:0;top:0;width:1077px}
+.word{font-family:Fraunces,serif;font-weight:520;font-size:88px;line-height:1;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"><div id="world"></div></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1080, H = 1920, S = 1080 / 1296, C = 0.86, HEAD = 291 * S;
+const DUR = 30, FPS = 30;
+const world = document.getElementById('world');
+
+/* ---------- layers ---------- */
+const A = {};
+const IMGS = ['header', 'hero-search', 'btn-condition', 'btn-symptom', 'btn-scan', 'hero-trust',
+  'cond-hero', 'c-arthritis', 'c-hip', 'c-ivdd', 'c-cruciate', 'c-back', 'pa-top', 'pa-card-0', 'pa-card-1', 'pa-card-5', 'pa-card-15',
+  't-legs', 't-legs-off', 't-skin', 't-tummy', 't-ears', 't-mouth', 't-back', 't-behaviour', 't-whole', 'legs-head', 'r-limping', 'r-stiff', 'r-slow',
+  'pl-top', 'pl-card-3', 'pl-card-6', 'pl-card-17', 'pl-card-4',
+  'ai-pill', 'ai-hero', 'ai-part-0', 'ai-part-3', 'ai-input-empty', 'ai-input-blank', 'ai-input-typed', 'ai-msg-0', 'ai-msg-1', 'ai-msg-2', 'ai-typing', 'ai-viewbtn',
+  'sc-hero', 'sc-btn', 'scan-card', 'sc-capture', 'sc-analyse', 'sc-act', 'sc-notdiag',
+  'pa-card-9', 'pa-card-11', 'pa-card-14', 'pa-card-13', 'pl-card-6b', 'pa-card-1b', 'rv-summary', 'rv-elbow', 'rv-exactly', 'logo'];
+function mk(tag, cls, parent = world) { const e = document.createElement(tag); e.className = cls; parent.appendChild(e); return e; }
+for (const n of IMGS) { const e = mk('img', 'L'); e.src = 'assets/' + n.replace(/b$/, '') + '.png'; A[n] = e; }
+// plain colour panels (page backgrounds, not UI)
+const R = {};
+for (const [n, c] of [['bg2', 'var(--paper)'], ['bg3', 'var(--paper)'], ['sheetA', 'var(--paper)'], ['sheetL', 'var(--paper)'], ['bgAI', 'var(--deep)'], ['bg5', '#0C342A'], ['sheetS', 'var(--paper)'], ['bg6', 'var(--paper)']]) {
+  const e = mk('div', 'L rect'); e.style.background = c; R[n] = e;
+}
+// chat body viewport (white, like the real panel body)
+const chat = mk('div', 'L'); chat.id = 'chat'; chat.style.width = '1077px';
+const chatBody = mk('div', '', chat); chatBody.id = 'chatBody';
+for (const n of ['ai-msg-0', 'ai-msg-1', 'ai-typing', 'ai-msg-2', 'ai-viewbtn']) chatBody.appendChild(A[n]);
+
+// text
+function text(html, cls, style = '') { const e = mk('div', 'L ' + cls); e.innerHTML = html; e.style.cssText += style; return e; }
+const X = {
+  h1a: text('<span class="w">Pet</span> <span class="w">health.</span>', 'disp', 'font-size:156px'),
+  h1b: text('<span class="w">Made</span> <span class="w"><em>easier.</em></span>', 'disp', 'font-size:156px'),
+  sub1: text("Poorly Pet is the UK's pet health &amp; recovery specialist, online.", 'sub'),
+  eb2: text('Shop by condition', 'eyebrow', 'color:var(--rust)'),
+  h2a: text('Know the diagnosis?', 'disp', 'font-size:98px'),
+  h2b: text('<em>Go straight there.</em>', 'disp', 'font-size:98px'),
+  eb3: text('Shop by symptom', 'eyebrow', 'color:var(--rust)'),
+  h3a: text('Not sure?', 'disp', 'font-size:96px'),
+  h3b: text('<em>Start with what</em>', 'disp', 'font-size:96px'),
+  h3c: text("<em>you're seeing.</em>", 'disp', 'font-size:96px'),
+  eb4: text('AI support', 'eyebrow', 'color:var(--mint)'),
+  eb5: text('AI symptom scanner', 'eyebrow', 'color:var(--mint)'),
+  flow: text('<span>Capture</span> <span>→</span> <span>Analyse</span> <span>→</span> <span>Act</span>', 'word'),
+  eb6: text('Products &amp; reviews', 'eyebrow', 'color:var(--rust)'),
+  h6a: text('<em>Trusted</em> products.', 'disp', 'font-size:110px'),
+  h6b: text('<em>Real</em> customers.', 'disp', 'font-size:110px'),
+  end1: text('Helping you find the', 'disp', 'font-size:66px;font-weight:460'),
+  end2: text('<em>right support</em> for your pet.', 'disp', 'font-size:66px;font-weight:460'),
+  url: text('poorly-pet.com', '', 'font:600 44px/1 Inter,sans-serif;color:#0C342A;letter-spacing:.02em'),
+};
+const stage = document.getElementById('stage');
+// logo and end line live outside the collapsing world
+for (const k of ['end1', 'end2', 'url']) stage.appendChild(X[k]);
+stage.appendChild(A.logo);
+
+/* ---------- helpers ---------- */
+let Z = 0;
+function put(e, { x = 0, y = 0, s = 1, o = 1, z = 1, clip = null, ox = 0, oy = 0 } = {}) {
+  if (o <= 0.002) return;
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) scale(${s})`;
+  e.style.transformOrigin = `${ox}px ${oy}px`;
+  e.style.opacity = Math.min(1, o);
+  e.style.zIndex = z;
+  e.style.clipPath = clip || 'none';
+}
+const nat = n => [A[n].naturalWidth, A[n].naturalHeight];
+// scale an image to width w; returns its height
+const hAt = (n, s) => nat(n)[1] * s;
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'default') => sp(t - t0, p);
+const press = (t, t0, depth = 0.955) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.13, 1, 'snappy']]);
+// centre-scaled image put
+function putC(n, x, y, base, s, o = 1, z = 1) {
+  const [w, h] = nat(n);
+  put(A[n], { x, y, s: base * s, o, z, ox: w / 2, oy: h / 2 });
+}
+function words(el, t, starts, p = 'heavy', d = 90) {
+  [...el.querySelectorAll('.w')].forEach((w, i) => {
+    const k = sp(t - starts[i], p);
+    w.style.transform = `translateY(${d * (1 - k)}px)`;
+    w.style.opacity = Math.min(1, k * 1.4);
+  });
+}
+
+/* ---------- scenes ---------- */
+function header(t) {
+  if (t > 28.6) return;
+  put(A.header, { y: T(t, -70, [[-0.06, 0, 'snappy']]), s: S, z: 95 });
+}
+
+function scene1(t) {
+  if (t > 4.9) return;
+  const gy = T(t, 0, [[4.0, -620, 'default']]);
+  put(X.h1a, { x: 64, y: 440 + gy, z: 5 }); words(X.h1a, t, [-0.14, -0.02]);
+  put(X.h1b, { x: 64, y: 620 + gy, z: 5 }); words(X.h1b, t, [0.3, 0.42]);
+  put(X.sub1, { x: 68, y: 832 + gy + rise(t, 0.45, 50), o: op(t, 0.45), z: 5 });
+  put(A['hero-search'], { x: 40, y: 1040 + gy + rise(t, 0.375, 180), s: C, o: op(t, 0.375), z: 6 });
+  ['btn-condition', 'btn-symptom', 'btn-scan'].forEach((n, i) => {
+    const t0 = 0.875 + i * 0.125, y = 1250 + i * 145 + gy + rise(t, t0, 160);
+    const k = i === 0 ? press(t, 3.44) : 1;
+    putC(n, 40, y, C, k, op(t, t0), 7);
+  });
+  put(A['hero-trust'], { x: 40, y: 1705 + gy + rise(t, 1.375, 80), s: C, o: op(t, 1.375), z: 5 });
+}
+
+function scene2(t) {
+  if (t < 3.9 || t > 9.9) return;
+  const gx = T(t, 0, [[9.0, -1080, 'default']]);
+  const panelY = HEAD + T(t, 1700, [[3.98, 0, 'default']]);
+  put(R.bg2, { x: gx, y: panelY, z: 10 });
+  put(A['cond-hero'], { x: gx, y: panelY + T(t, 0, [[4.9, -1420, 'default']]), s: S, z: 14 });
+  put(X.eb2, { x: 64 + gx, y: 300 + rise(t, 4.95, 50, 'heavy'), o: op(t, 4.95), z: 11 });
+  put(X.h2a, { x: 60 + gx, y: 350 + rise(t, 5.0, 70, 'heavy'), o: op(t, 5.0), z: 11 });
+  put(X.h2b, { x: 60 + gx, y: 458 + rise(t, 5.1, 70, 'heavy'), o: op(t, 5.1), z: 11 });
+  const cards = ['c-arthritis', 'c-hip', 'c-ivdd', 'c-cruciate', 'c-back'];
+  cards.forEach((n, i) => {
+    const t0 = 5.0 + i * 0.125;
+    let y = 610 + i * 175 + rise(t, t0, 1150);
+    if (i > 0) y += T(t, 0, [[6.0 + (i - 1) * 0.04, 1300, 'snappy']]);
+    const k = i === 0 ? press(t, 5.94, 0.96) : 1;
+    putC(n, 40 + gx, y, C, k, op(t, t0, 'snappy'), 12 + i);
+  });
+  // Arthritis collection
+  const topY = HEAD + T(t, 1700, [[6.5, 0, 'default']]);
+  put(A['pa-top'], { x: gx, y: topY, s: S, z: 24, clip: t > 7.3 ? `inset(0 0 ${1572 - 418}px 0)` : null });
+  const sheetY = T(t, 1920, [[7.0, 590, 'default']]);
+  put(R.sheetA, { x: gx, y: sheetY, z: 21 });
+  const scroll = T(t, 0, [[8.0, -800, 'default']]);
+  ['pa-card-0', 'pa-card-1', 'pa-card-5', 'pa-card-15'].forEach((n, i) => {
+    const t0 = 7.0 + i * 0.125, col = i % 2, row = (i / 2) | 0;
+    put(A[n], { x: 59 + col * 511 + gx, y: 630 + row * 810 + scroll + rise(t, t0, 1100), s: 0.8, o: op(t, t0, 'snappy'), z: 22 });
+  });
+}
+
+function scene3(t) {
+  if (t < 8.9 || t > 14.9) return;
+  const gx = T(t, 1080, [[9.0, 0, 'default']]);
+  put(R.bg3, { x: gx, y: 0, z: 30 });
+  put(X.eb3, { x: 64 + gx, y: 300 + rise(t, 9.1, 50, 'heavy'), o: op(t, 9.1), z: 31 });
+  put(X.h3a, { x: 60 + gx, y: 348 + rise(t, 9.15, 70, 'heavy'), o: op(t, 9.15), z: 31 });
+  put(X.h3b, { x: 60 + gx, y: 452 + rise(t, 9.25, 70, 'heavy'), o: op(t, 9.25), z: 31 });
+  put(X.h3c, { x: 60 + gx, y: 556 + rise(t, 9.35, 70, 'heavy'), o: op(t, 9.35), z: 31 });
+  const tiles = ['t-legs', 't-skin', 't-tummy', 't-ears', 't-mouth', 't-back', 't-behaviour', 't-whole'];
+  tiles.forEach((n, i) => {
+    const t0 = 9.5 + i * 0.125, col = i % 2, row = (i / 2) | 0;
+    let x = 190 + col * 365 + gx, y = 700 + row * 285 + rise(t, t0, 70, 'snappy');
+    let k = T(t, 0.82, [[t0, 1, 'snappy']]);
+    let name = n;
+    if (i === 0) { name = t < 10.95 ? 't-legs-off' : 't-legs'; k *= press(t, 10.86, 0.93); x += T(t, 0, [[11.2, -700, 'default']]); }
+    else y += T(t, 0, [[11.0 + i * 0.03, 1300, 'default']]);
+    putC(name, x, y, 0.6, k, op(t, t0, 'snappy'), 32);
+  });
+  put(A['legs-head'], { x: 40 + gx, y: 700 + rise(t, 11.2, 40), s: C, o: op(t, 11.2), z: 33 });
+  ['r-limping', 'r-stiff', 'r-slow'].forEach((n, i) => {
+    const t0 = 11.25 + i * 0.125;
+    putC(n, 40 + gx + T(t, 1100, [[t0, 0, 'default']]), 780 + i * 332, C, i === 0 ? press(t, 11.94, 0.965) : 1, 1, 34);
+  });
+  // Limping collection
+  put(A['pl-top'], { x: gx, y: HEAD + T(t, 1700, [[12.4, 0, 'default']]), s: S, z: 40 });
+  put(R.sheetL, { x: gx, y: T(t, 1920, [[12.9, 590, 'default']]), z: 41 });
+  const car = T(t, 0, [[13.5, -515, 'snappy']]);
+  ['pl-card-3', 'pl-card-6', 'pl-card-17', 'pl-card-4'].forEach((n, i) => {
+    const t0 = 12.9 + i * 0.125;
+    put(A[n], { x: 60 + i * 515 + car + gx, y: 650 + rise(t, t0, 1100), s: C, o: op(t, t0, 'snappy'), z: 42 });
+  });
+}
+
+function scene4(t) {
+  if (t < 13.5 || t > 21.2) return;
+  const gy = T(t, 0, [[19.8, -1920, 'default']]);
+  // the real floating "Care assistant" button, pressed to open the assistant
+  const pk = press(t, 13.95, 0.9);
+  const pillO = t < 14.25 ? op(t, 13.6, 'snappy') : 0;
+  putC('ai-pill', 1080 - 355 - 44, 1716 + rise(t, 13.6, 200, 'snappy'), 0.7, pk, pillO, 50);
+  // assistant page opens out of the button
+  const k = sp(t - 14.05, 'default');
+  const L = 681 * (1 - k), Rr = 44 * (1 - k), Tt = (1716 - HEAD) * (1 - k), B = 86 * (1 - k), rad = 60 * (1 - k);
+  const clip = `inset(${Tt}px ${Rr}px ${B}px ${L}px round ${rad}px)`;
+  if (t > 14.05) {
+    put(R.bgAI, { y: HEAD + gy, z: 47, clip });
+    put(A['ai-hero'], { y: HEAD + 40 + gy + rise(t, 14.05, 160) + T(t, 0, [[15.0, -1040, 'default']]), s: S, z: 49, clip });
+    put(X.eb4, { x: 64, y: 300 + gy + rise(t, 14.3, 40, 'heavy'), o: op(t, 14.3), z: 48 });
+  }
+  // chat card: header, body, input, disclaimer (all real captures)
+  const cy = 390 + gy + T(t, 1600, [[15.0, 0, 'default']]);
+  if (t > 14.9) {
+    const Q = 0.93, hh = hAt('ai-part-0', Q), bodyH = 840, ih = hAt('ai-input-empty', Q);
+    put(A['ai-part-0'], { x: 1.5, y: cy, s: Q, z: 52 });
+    chat.style.height = bodyH + 'px';
+    put(chat, { x: 1.5, y: cy + hh, z: 52 });
+    // input: placeholder -> typing -> placeholder after send
+    const iy = cy + hh + bodyH;
+    if (t < 15.25 || t >= 16.0) put(A['ai-input-empty'], { x: 1.5, y: iy, s: Q, z: 52 });
+    else {
+      put(A['ai-input-blank'], { x: 1.5, y: iy, s: Q, z: 52 });
+      const n = Math.min(46, Math.floor((t - 15.25) / 0.0135) + 1);
+      const shown = 60 + (829 - 60) * n / 46;
+      put(A['ai-input-typed'], { x: 1.5, y: iy, s: Q, z: 53, clip: `inset(0 ${1158 - shown}px 0 0)` });
+    }
+    put(A['ai-part-3'], { x: 1.5, y: iy + ih, s: Q, z: 52 });
+    // messages inside the body, in content coordinates
+    const scroll = T(t, 0, [[17.05, -479, 'default'], [18.0, -626, 'default']]);
+    chatBody.style.transform = `translateY(${scroll}px)`;
+    const m0 = hAt('ai-msg-0', Q), m1 = hAt('ai-msg-1', Q), m2 = hAt('ai-msg-2', Q);
+    put(A['ai-msg-0'], { x: 36, y: 30, s: Q });
+    const y1 = 30 + m0 + 26;
+    const [w1] = nat('ai-msg-1');
+    if (t >= 16.0) putC('ai-msg-1', 1077 - w1 * Q - 36, y1 + rise(t, 16.0, 90, 'snappy'), Q, T(t, 0.9, [[16.0, 1, 'snappy']]), op(t, 16.0, 'snappy'));
+    const y2 = y1 + m1 + 26;
+    if (t >= 16.45 && t < 17.0) put(A['ai-typing'], { x: 36, y: y2 + rise(t, 16.45, 30, 'snappy'), s: Q, o: op(t, 16.45, 'snappy') });
+    if (t >= 17.0) put(A['ai-msg-2'], { x: 36, y: y2 + rise(t, 17.0, 80), s: Q, o: op(t, 17.0) });
+    if (t >= 18.0) putC('ai-viewbtn', 60, y2 + m2 + 24 + rise(t, 18.0, 40, 'snappy'), Q, T(t, 0.9, [[18.0, 1, 'snappy']]), op(t, 18.0, 'snappy'));
+  }
+}
+
+function scene5(t) {
+  if (t < 19.7 || t > 25.2) return;
+  const gy = T(t, 1920, [[19.8, 0, 'default']]) + T(t, 0, [[24.0, -1920, 'default']]);
+  put(R.bg5, { y: HEAD + gy, z: 70 });
+  put(A['sc-hero'], { y: HEAD + gy, s: S, z: 71 });
+  put(X.eb5, { x: 64, y: 300 + gy + rise(t, 20.1, 40, 'heavy'), o: op(t, 20.1), z: 79 });
+  putC('sc-btn', 364 * S, HEAD + 880 * S + gy, S, press(t, 20.44, 0.93), 1, 72);
+  // paper section rises with the upload card; the real steps follow as a carousel on the beat
+  const sheetY = 720 + gy + rise(t, 20.75, 1300);
+  put(R.sheetS, { y: sheetY, z: 73 });
+  const active = T(t, 0, [[21.5, 1, 'default'], [22.0, 2, 'default'], [22.5, 3, 'default']]);
+  put(A['scan-card'], { x: 40 - active * 1080, y: sheetY + 44, s: C, z: 74 });
+  ['sc-capture', 'sc-analyse', 'sc-act'].forEach((n, i) => {
+    put(A[n], { x: 40 + (i + 1 - active) * 1080, y: sheetY + 60, s: C, z: 74 });
+  });
+  // Capture -> Analyse -> Act, each lit on its beat
+  const lit = [21.5, 21.75, 22.0, 22.25, 22.5];
+  [...X.flow.children].forEach((e, i) => { e.style.color = mix([205, 211, 207], i % 2 ? [94, 110, 102] : [168, 84, 47], sp(t - lit[i], 'snappy')); });
+  put(X.flow, { x: 540 - +X.flow.dataset.w / 2, y: sheetY + 660 + rise(t, 21.35, 60, 'heavy'), o: op(t, 21.35), z: 75 });
+  put(A['sc-notdiag'], { x: 40, y: sheetY + 790 + rise(t, 23.0, 500), s: C, o: op(t, 23.0), z: 76 });
+}
+
+function scene6(t) {
+  if (t < 23.9) return;
+  const gy = T(t, 1920, [[24.0, 0, 'default']]);
+  put(R.bg6, { y: gy, z: 80 });
+  put(X.eb6, { x: 64, y: 300 + gy + rise(t, 24.15, 40, 'heavy') + T(t, 0, [[26.2, -520, 'default']]), o: op(t, 24.15), z: 81 });
+  put(X.h6a, { x: 60, y: 350 + gy + rise(t, 24.2, 80, 'heavy') + T(t, 0, [[25.45, -700, 'heavy']]), o: op(t, 24.2), z: 81 });
+  const strip = ['pa-card-9', 'pa-card-11', 'pa-card-14', 'pa-card-13', 'pl-card-6b', 'pa-card-1b'];
+  const car = T(t, 0, [[24.75, -481, 'snappy'], [25.0, -962, 'snappy'], [25.25, -1443, 'snappy']]);
+  const up = T(t, 0, [[25.5, -1500, 'default']]);
+  strip.forEach((n, i) => {
+    const t0 = 24.2 + i * 0.07;
+    put(A[n], { x: 59 + i * 481 + car, y: 540 + gy + up + rise(t, t0, 1000), s: 0.8, o: op(t, t0, 'snappy'), z: 82 });
+  });
+  put(X.h6b, { x: 60, y: 350 + rise(t, 25.5, 120, 'heavy') + T(t, 0, [[26.2, -520, 'default']]), o: op(t, 25.5), z: 81 });
+  // Judge.me summary lands, then settles into a compact badge at the top
+  if (t >= 25.45) {
+    const s = T(t, 0.9, [[25.5, 1, 'heavy'], [26.25, 0.62, 'default']]);
+    const y = T(t, 520, [[26.25, 262, 'default']]) + rise(t, 25.5, 200, 'heavy');
+    putC('rv-summary', 40, y, C, s, op(t, 25.5), 83);
+  }
+  put(A['rv-elbow'], { x: 40 + T(t, 1100, [[26.25, 0, 'default']]), y: 730, s: C, z: 84 });
+  put(A['rv-exactly'], { x: 40 + T(t, 1100, [[27.0, 0, 'default']]), y: 1321, s: C, z: 85 });
+}
+
+function lockup(t) {
+  // everything collapses into the centre, the real logo lands
+  const k = sp(t - 28.0, 'default');
+  const s = 1 - 0.94 * k;
+  world.style.transform = `scale(${s})`;
+  world.style.opacity = 1 - sp(t - 28.12, 'snappy');
+  if (t < 28.15) return;
+  const [lw, lh] = nat('logo');
+  const ls = T(t, 0.55, [[28.2, 1.1, 'heavy']]);
+  put(A.logo, { x: (W - lw) / 2, y: 700, s: ls, ox: lw / 2, oy: lh / 2, o: op(t, 28.2, 'snappy'), z: 90 });
+  put(X.end1, { x: 540 - X.end1.dataset.w / 2, y: 960 + rise(t, 28.55, 50, 'heavy'), o: op(t, 28.55, 'heavy'), z: 90 });
+  put(X.end2, { x: 540 - X.end2.dataset.w / 2, y: 1040 + rise(t, 28.65, 50, 'heavy'), o: op(t, 28.65, 'heavy'), z: 90 });
+  put(X.url, { x: 540 - X.url.dataset.w / 2, y: 1190 + rise(t, 28.9, 30, 'heavy'), o: op(t, 28.9, 'heavy'), z: 90 });
+}
+
+const ALL = [...Object.values(A), ...Object.values(R), ...Object.values(X), chat];
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  for (const e of chatBody.children) e.style.display = 'none';
+  header(t); scene1(t); scene2(t); scene3(t); scene4(t); scene5(t); scene6(t); lockup(t);
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+
+// centre the lockup text lines on their real measured widths once fonts are in
+function centre() { for (const k of ['end1', 'end2', 'url', 'flow']) { X[k].style.display = 'block'; X[k].dataset.w = X[k].offsetWidth; X[k].style.display = 'none'; } }
+
+window.ready = Promise.all([document.fonts.load('520 100px Fraunces'), document.fonts.load('italic 480 100px Fraunces'), document.fonts.load('600 40px Inter'),
+  ...IMGS.map(n => A[n].decode())]).then(() => { centre(); return true; });
+
+const render = new URLSearchParams(location.search).has('render');
+if (!render) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>

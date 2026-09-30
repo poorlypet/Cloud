@@ -1,0 +1,331 @@
+{
+ "header": {
+  "w": 1296,
+  "h": 291,
+  "src": "https://www.poorly-pet.com/"
+ },
+ "hero-search": {
+  "w": 1164,
+  "h": 193,
+  "src": "https://www.poorly-pet.com/",
+  "text": "Search"
+ },
+ "btn-condition": {
+  "w": 1164,
+  "h": 157,
+  "src": "https://www.poorly-pet.com/",
+  "text": "I know the condition"
+ },
+ "btn-symptom": {
+  "w": 1164,
+  "h": 157,
+  "src": "https://www.poorly-pet.com/",
+  "text": "I'm not sure what's wrong"
+ },
+ "btn-scan": {
+  "w": 1164,
+  "h": 151,
+  "src": "https://www.poorly-pet.com/",
+  "text": "Scan my dog's symptoms"
+ },
+ "hero-trust": {
+  "w": 1164,
+  "h": 167,
+  "src": "https://www.poorly-pet.com/",
+  "text": "from 101+ owners"
+ },
+ "scan-card": {
+  "w": 1164,
+  "h": 1194,
+  "src": "https://www.poorly-pet.com/",
+  "text": "Poorly Pet Symptom Scanner"
+ },
+ "cond-hero": {
+  "w": 1296,
+  "h": 1657,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "Shop by your"
+ },
+ "c-arthritis": {
+  "w": 1164,
+  "h": 767,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "Arthritis / Osteoarthritis"
+ },
+ "c-hip": {
+  "w": 1164,
+  "h": 767,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "Hip Dysplasia"
+ },
+ "c-ivdd": {
+  "w": 1164,
+  "h": 767,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "IVDD"
+ },
+ "c-cruciate": {
+  "w": 1164,
+  "h": 767,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "Cruciate Ligament"
+ },
+ "c-back": {
+  "w": 1164,
+  "h": 767,
+  "src": "https://www.poorly-pet.com/pages/shop-by-condition",
+  "text": "Back Pain / Spinal Issues"
+ },
+ "pa-card-0": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "100% Natural Scottish Salmon Oil for Dogs & Cats"
+ },
+ "pa-card-1": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Flagline Lightweight Dog Harness with Handle & 3 Clip Points"
+ },
+ "pa-card-5": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Collagen Powder for Dogs & Cats - Joint, Tendon & Coat Support 250g"
+ },
+ "pa-card-9": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Zesty Paws Hip & Joint Chews - Turkey"
+ },
+ "pa-card-11": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Hemp Seed Oil for Dogs - Natural Calming & Coat Support"
+ },
+ "pa-card-13": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Supernature Pumpkinz Dried Pumpkin Powder with Turmeric"
+ },
+ "pa-card-14": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Adjustable Double Diner Bowl Set with Slow Feeder for Dogs"
+ },
+ "pa-card-15": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/arthritis",
+  "text": "Rear Support Harness for Dogs with Hip & Mobility Issues"
+ },
+ "pa-top": {
+  "w": 1296,
+  "h": 1571.25,
+  "src": "https://www.poorly-pet.com/collections/arthritis"
+ },
+ "pl-card-3": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/limping-or-favouring-a-leg",
+  "text": "Dog Carpal Wrap for Wrist Support & Joint Protection"
+ },
+ "pl-card-4": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/limping-or-favouring-a-leg",
+  "text": "Hind Leg Recovery Shirt for Dogs & Cats - Two-Sleeve"
+ },
+ "pl-card-6": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/limping-or-favouring-a-leg",
+  "text": "Dog Elbow Pads - Support Brace for Hygromas & Dysplasia"
+ },
+ "pl-card-17": {
+  "w": 564,
+  "h": 985,
+  "src": "https://www.poorly-pet.com/collections/limping-or-favouring-a-leg",
+  "text": "Rear Leg Splint for Dogs & Cats - Hock & Paw Immobiliser"
+ },
+ "pl-top": {
+  "w": 1296,
+  "h": 1650.890625,
+  "src": "https://www.poorly-pet.com/collections/limping-or-favouring-a-leg"
+ },
+ "t-legs": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Legs & paws"
+ },
+ "t-skin": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Skin & coat"
+ },
+ "t-tummy": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Tummy & gut"
+ },
+ "t-ears": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Ears & eyes"
+ },
+ "t-mouth": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Mouth & teeth"
+ },
+ "t-back": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Back & spine"
+ },
+ "t-behaviour": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Behaviour & mood"
+ },
+ "t-whole": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Whole body"
+ },
+ "r-limping": {
+  "w": 1164,
+  "h": 368,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Limping or favouring a leg"
+ },
+ "r-stiff": {
+  "w": 1164,
+  "h": 368,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Stiffness after rest"
+ },
+ "r-slow": {
+  "w": 1164,
+  "h": 368,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Slow to get up"
+ },
+ "legs-head": {
+  "w": 1164,
+  "h": 65,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Often points to"
+ },
+ "t-legs-off": {
+  "w": 558,
+  "h": 441,
+  "src": "https://www.poorly-pet.com/pages/shop-by-symptom",
+  "text": "Legs & paws"
+ },
+ "sc-hero": {
+  "w": 1296,
+  "h": 2041,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "See what your dog"
+ },
+ "sc-capture": {
+  "w": 1164,
+  "h": 643,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "Capture"
+ },
+ "sc-analyse": {
+  "w": 1164,
+  "h": 643,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "Analyse"
+ },
+ "sc-act": {
+  "w": 1164,
+  "h": 643,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "Act"
+ },
+ "sc-notdiag": {
+  "w": 1164,
+  "h": 404,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "Not a diagnosis"
+ },
+ "sc-btn": {
+  "w": 564,
+  "h": 181,
+  "src": "https://www.poorly-pet.com/pages/symptom-scanner",
+  "text": "Start a scan"
+ },
+ "rv-summary": {
+  "w": 1164,
+  "h": 645,
+  "src": "https://www.poorly-pet.com/pages/reviews",
+  "text": "Based on"
+ },
+ "rv-elbow": {
+  "w": 1164,
+  "h": 757,
+  "src": "https://www.poorly-pet.com/pages/reviews",
+  "text": "Elbow support"
+ },
+ "rv-exactly": {
+  "w": 1164,
+  "h": 739,
+  "src": "https://www.poorly-pet.com/pages/reviews",
+  "text": "Exactly as I ordered"
+ },
+ "ai-hero": {
+  "w": 1296,
+  "h": 1169,
+  "src": "https://www.poorly-pet.com/pages/ai-support-agent",
+  "text": "Tell us what"
+ },
+ "ai-msg-0": {
+  "w": 861.796875,
+  "h": 391.828125,
+  "text": "Hello - I'm Poorly Pet AI. Describe what your dog is experiencing in your own words and I'll map it to likely causes with information and matched support."
+ },
+ "ai-msg-1": {
+  "w": 861.796875,
+  "h": 197.53125,
+  "text": "What could help my dog with mobility problems?"
+ },
+ "ai-msg-2": {
+  "w": 861.796875,
+  "h": 705.65625,
+  "text": "Mobility problems in dogs can come from lots of different things - joint wear, weakness, nerve issues, past injuries, or just getting older. Without knowing exactly what's affecting your pup, I'd like to help you narrow it down a bit. Tell me a bit more: is it the back legs that are struggling, the front, or all of them? And is your dog limping, stiff, or more generally weak?"
+ },
+ "ai-part-0": {
+  "w": 1158,
+  "h": 336.515625,
+  "src": "https://www.poorly-pet.com/pages/ai-support-agent"
+ },
+ "ai-part-3": {
+  "w": 1158,
+  "h": 183.5625,
+  "src": "https://www.poorly-pet.com/pages/ai-support-agent"
+ },
+ "ai-pill": {
+  "w": 506.859375,
+  "h": 168,
+  "src": "https://www.poorly-pet.com/",
+  "x": 251.046875,
+  "y": 852
+ }
+}
