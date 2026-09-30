@@ -134,7 +134,6 @@
 .hq-kit-l .btn{width:100%;min-height:56px;font-size:17px}
 .hq-kit-note{margin:14px 0 0;font:400 14px/1.4 var(--sans);opacity:.85}
 .hq-kit-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.hq-kit-cards .pk{border:0}
 
 /* ==========================================================================
    B: question card left, sticky "Your dog" profile card right

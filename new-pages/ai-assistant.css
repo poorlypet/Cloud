@@ -78,11 +78,8 @@
 /* product rail inside the chat: homepage .pk, sized for the chat width */
 .aia-rw{margin-top:12px}
 .aia-rw .prail .pk{width:220px;flex:0 0 220px}
-.aia-rw .pk .well{height:180px}
 .aia-rw.aia-fit .scroller{display:none}
 .aia-rw .scroller{margin-top:10px}
-.pk .tab.aia-otab{background:var(--lime);color:var(--teal)}
-.pk .aia-oline{font:600 13px/1.35 var(--sans);color:var(--teal);margin:-4px 0 0}
 .pk .btn.aia-added{background:var(--teal);color:#fff}
 .aia-noimg{display:block;width:100%;height:100%;min-height:120px;border-radius:12px;background:var(--aia-pale,#E4EED6)}
 
@@ -93,10 +90,9 @@
 .aia-links2{display:flex;flex-wrap:wrap;gap:4px 18px}
 .aia-links2 .aia-more{margin-top:8px}
 .aia-health .aia-rw{margin-top:8px}
-/* compact rail inside the pop-up panel (homepage .pk, only the width and image well are sized) */
+/* rail inside the pop-up panel: the same card at 220px */
 .aia-panel .aia-rw .prail{gap:12px}
-.aia-panel .aia-rw .prail .pk{width:184px;flex:0 0 184px}
-.aia-panel .aia-rw .pk .well{height:140px;padding:16px 14px 10px}
+.aia-panel .aia-rw .prail .pk{width:220px;flex:0 0 220px}
 .aia-panel .aia-rw .scroller{margin-top:8px}
 
 /* order result in the chat */
@@ -283,8 +279,7 @@
   .aia-foot{padding:10px 14px}
   .aia-m{max-width:92%}
   .aia-fine{display:none}
-  .aia-rw .prail .pk,.aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 72%}
-  .aia-rw .pk .well{height:150px}
+  .aia-rw .prail .pk,.aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 min(220px,72%)}
   .aia-steps li{font-size:11px}
   .aia-qa4 button,.aia-qa4 a,.aia-links a{padding:16px}
   .aia-qa4 b,.aia-links b{font-size:15px}
@@ -294,7 +289,7 @@
   .aia-ht b{font-size:15px}
   .aia-ht span{font-size:13px}
   .aia-ht button:after{display:none}
-  .aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 62%}
+  .aia-panel .aia-rw .prail .pk{width:auto;flex:0 0 min(220px,72%)}
   .aia-panel .aia-fine{display:block}
   .aia-panel{inset:0;width:auto;max-width:none;bottom:0;right:0}
   .aia-panel .aia-chat{height:100%;border-radius:0;border:0}

@@ -204,7 +204,7 @@ function fromWords(text){
   return {source:'words',summary:items.length?'Matched from your description, closest first.':'',items:items,products:pr.list,why:pr.why,empty:!items.length};
 }
 
-/* ------------------------------------------------------------ the site's product card (.pk) and rail, as on the homepage */
+/* ------------------------------------------------------------ the one site product card (PPCard, card.js + css/card.css) in the homepage rail */
 function catTab(p){
   var t=(p.productType||'').toLowerCase()+' '+(p.title||'').toLowerCase();
   if(/bundle|gift set/.test(t))return 'Care kit';
@@ -227,14 +227,7 @@ function rev(p){
   return '<a class="rev" href="#">'+stars(p.rating)+'<span>'+(Math.round(p.rating*10)/10).toFixed(1)+' <em>('+n+' review'+(n===1?'':'s')+')</em></span></a>';
 }
 function pk(p,helps){
-  var badge=OFF?OFF.badge(p):null,line=OFF?(OFF.lines(p)[0]||''):'',tab=catTab(p),sale=p.compareAt&&p.compareAt>p.price,src=p.img||'';
-  return '<article class="pk">'+(badge?'<span class="tab sale">'+esc(badge)+'</span>':tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-    '<a class="well" href="#">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy" data-ss-img>':'')+'</a>'+
-    '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(p.title)+'</a>'+rev(p)+
-    (helps?'<span class="helps">'+esc(helps)+'</span>':'')+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span>':'')+'</div>'+
-    (line?'<span class="ss-offer">'+esc(line)+'</span>':'')+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+  return PPCard.html(p,{tab:catTab(p),helps:helps||''});
 }
 /* image error fallback: drop the photo and leave the plain well */
 document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.hasAttribute('data-ss-img'))t.remove()},true);

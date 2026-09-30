@@ -156,9 +156,9 @@ var FAQS=[
 // src: [CLUB] home.html club section "Free to join. Points on every order, money off the next one."
 {c:'club',pop:1,q:'What is the Poorly Pet Club?',
  a:'<p>Our free rewards scheme. You earn points on every order and spend them as money off the next one. Join free from the Club button at the top of any page.</p>'},
-// src: [CLUB] drawer "How you earn" + club section "Double points on your first order"
+// src: [CLUB] drawer "How you earn" (first-order bonus removed by the owner)
 {c:'club',pop:1,q:'How do I earn points?',
- a:'<table class="fq-t"><tr><th scope="row">Shopping</th><td>5 points for every £1, added the day your order ships</td></tr><tr><th scope="row">First order</th><td>Double points</td></tr><tr><th scope="row">Reviews</th><td>50 points for a verified Judge.me review</td></tr><tr><th scope="row">Referrals</th><td>500 points when a friend places their first order</td></tr><tr><th scope="row">Birthday</th><td>250 points on your dog’s birthday (set it in your account)</td></tr></table>'},
+ a:'<table class="fq-t"><tr><th scope="row">Shopping</th><td>5 points for every £1, added the day your order ships</td></tr><tr><th scope="row">Reviews</th><td>50 points for a verified Judge.me review</td></tr><tr><th scope="row">Referrals</th><td>500 points when a friend places their first order</td></tr><tr><th scope="row">Birthday</th><td>250 points on your dog’s birthday (set it in your account)</td></tr></table>'},
 // src: [CLUB] drawer "Spend on any order: 500 points is £5 off, 1,000 is £10 off, no minimum spend"
 {c:'club',pop:1,q:'How do I spend my points?',
  a:'<p>500 points is £5 off and 1,000 points is £10 off. You can use them on any order and there is no minimum spend.</p>'},

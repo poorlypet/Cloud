@@ -644,6 +644,13 @@ function initB(){
       return;
     }
     var x=pp(p.handle),pr=money(x);
+    if(x&&window.PPCard){
+      /* the one site product card (PPCard, card.js + css/card.css), with the review action under it */
+      panel.innerHTML='<div class="crv-ppc">'+PPCard.html(x,{tab:p.cat||'',helps:'From '+plural(p.count,'review')+' on Judge.me'})+
+        '<button type="button" class="crv-rt crv-rt--lg" data-crv-write="'+esc(p.handle)+'">Review this product</button></div>';
+      head.textContent='Reviews of this product';
+      return;
+    }
     panel.innerHTML='<div class="crv-pcard">'+
       '<div class="crv-well">'+(x&&x.img?'<img src="'+esc(x.img)+'" alt="'+esc(p.title)+'">':'<span class="crv-th crv-th--ph crv-th--xl" aria-hidden="true"><span>'+esc(initial(p.title))+'</span></span>')+'</div>'+
       '<div class="crv-pbody">'+(x&&x.brand?'<p class="crv-brand">'+esc(x.brand)+'</p>':'')+

@@ -37,7 +37,7 @@
   function inG(k){return k==='all'?ALL.slice():ALL.filter(function(p){return p._su[k]})}
   var BRANDS={};ALL.forEach(function(p){BRANDS[p.brand]=(BRANDS[p.brand]||0)+1});
 
-  /* ---------- the site's product card (.pk) ---------- */
+  /* ---------- the site's product card: PPCard (card.js, css/card.css) ---------- */
   function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<=5;i++){var f=r-(i-1);h+=f>=1?'<i class="on"></i>':f>0?'<i class="part" style="--f:'+Math.round(f*100)+'%"></i>':'<i></i>'}return h+'</span>'}
   function rev(p){
     if(!p.rating)return '<span class="rev none" aria-hidden="true"></span>';
@@ -46,12 +46,8 @@
   }
   function tabFor(p){for(var i=0;i<GROUPS.length;i++){if(p._su[GROUPS[i].k]&&GROUPS[i].k!=='natural')return GROUPS[i].n}return p._su.natural?'Natural':''}
   function pk(p){
-    var s=p.img||'',sale=p.compareAt&&p.compareAt>p.price,tab=tabFor(p);
-    return '<article class="pk">'+(tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-      '<a class="well" href="#" aria-label="'+esc(p.title)+'">'+(s?'<img src="'+esc(s)+'" alt="" loading="lazy" data-su-img>':'<span class="su-noimg" aria-hidden="true"></span>')+'</a>'+
-      '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(p.title)+'</a>'+rev(p)+
-      '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>':'')+'</div>'+
-      '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+    var why=GROUPS.filter(function(g){return p._su[g.k]}).map(function(g){return g.n});
+    return PPCard.html(p,{tab:tabFor(p),helps:why.join(', ')});
   }
   /* blocked or missing photos fall back to the flat placeholder */
   document.addEventListener('error',function(e){

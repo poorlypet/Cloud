@@ -172,7 +172,7 @@ function wasTotal(ps){return ps.reduce(function(a,p){return a+(p.compareAt&&p.co
 var HELPS={joints:'For stiff joints',back:'For back support',grip:'For grip and paws',skin:'For itchy skin',ears:'For ears and eyes',teeth:'For teeth and breath',tummy:'For a settled tummy',weight:'For a healthy weight',calm:'For calm and confidence',senior:'For older dogs',recovery:'For recovery',kidney:'For kidney support'};
 var KIND_TAB={supp:'Supplements',food:'Food & treats',home:'Support & comfort',care:'Care',kit:'Care kit'};
 
-/* ---------- the site's product card (.pk, from signed-off/home.html) ---------- */
+/* ---------- the site's product card: the one PPCard from card.js (styled by css/card.css) ---------- */
 function imgSrc(p){return p.img||p.cdn||''}
 function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<=5;i++){var f=r-(i-1);h+=f>=1?'<i class="on"></i>':f>0?'<i class="part" style="--f:'+Math.round(f*100)+'%"></i>':'<i></i>'}return h+'</span>'}
 function rev(p){
@@ -186,13 +186,8 @@ function well(p){
 }
 function pk(p,o){
   o=o||{};
-  var tab=o.tab!==undefined?o.tab:KIND_TAB[kind(p)],sale=p.compareAt&&p.compareAt>p.price;
-  return '<article class="pk">'+(tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-    '<a class="well" href="#">'+well(p)+'</a><div class="body"><span class="brand">'+esc(p.brand)+'</span>'+
-    '<a class="name" href="#">'+esc(cleanTitle(p.title))+'</a>'+rev(p)+
-    (o.helps?'<span class="helps">'+esc(o.helps)+'</span>':'')+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>':'')+'</div>'+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+  var tab=o.tab!==undefined?o.tab:KIND_TAB[kind(p)];
+  return PPCard.html(Object.assign({},p,{title:cleanTitle(p.title)}),{tab:tab||'',helps:o.helps||''});
 }
 /* a blocked or missing photo falls back to a plain placeholder */
 document.addEventListener('error',function(e){

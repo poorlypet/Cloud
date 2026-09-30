@@ -30,7 +30,7 @@ var RULES={
     {id:'regular',  name:'Regular',  from:150, rate:6, perks:['6 points per £1']},
     {id:'committed',name:'Committed',from:400, rate:8, perks:['8 points per £1']}
   ],
-  firstOrderMultiplier:2,
+  firstOrderMultiplier:1, /* no first-order bonus (removed by the owner) */
   review:50,
   referral:500,
   birthday:250,
@@ -43,7 +43,7 @@ function num(v){v=parseFloat(String(v==null?'':v).replace(/[^0-9.\-]/g,''));retu
 function tierFor(spend){var t=RULES.tiers[0];RULES.tiers.forEach(function(x){if(num(spend)>=x.from)t=x});return t}
 function nextTier(spend){var s=num(spend);for(var i=0;i<RULES.tiers.length;i++){if(RULES.tiers[i].from>s)return RULES.tiers[i]}return null}
 /* points for one order: whole pounds of the product subtotal (after discounts, before delivery)
-   x the rate of the tier held BEFORE the order, doubled on a first order */
+   x the rate of the tier held BEFORE the order */
 function pointsFor(subtotal,opt){
   opt=opt||{};
   var t=opt.tier?byId(opt.tier):tierFor(opt.spendBefore||0);
@@ -81,7 +81,7 @@ function dateLabel(iso){
 }
 
 /* ---------- EXAMPLE member (made up, for the prototype only) ----------
-   Ledger follows the rules above: #1018 first order doubled at Member rate,
+   Ledger follows the rules above: #1018 earned at the Member rate,
    #1031 took them past £150 (£162.91) so #1044 earned at the Regular rate. */
 var EXAMPLE={
   example:true,
@@ -97,7 +97,7 @@ var EXAMPLE={
     {date:'2026-05-14',label:'Swapped for a £5 voucher',points:-500,type:'redeem'},
     {date:'2026-05-02',label:'Order #1027',points:280,type:'order'},
     {date:'2026-03-20',label:'Verified Judge.me review',points:50,type:'review'},
-    {date:'2026-03-12',label:'Order #1018, first order double points',points:460,type:'order'}
+    {date:'2026-03-12',label:'Order #1018',points:230,type:'order'}
   ],
   vouchers:[
     {code:'PPC-7KQ2-M9XD',value:5,points:500,created:'2026-05-14',used:'2026-06-10',usedOn:'#1031'}
@@ -191,7 +191,7 @@ function bindCalc(root){
       note.textContent=s<=0?'Enter an amount to see your points.':
         (pts<500?'That is '+fmt(pts)+' of the 500 points you need for a £5 voucher. '+fmt(need)+' to go.':
         'Enough for '+(v.tens?v.tens+' × £10':'')+(v.tens&&v.fives?' and ':'')+(v.fives?v.fives+' × £5':'')+' off'+(v.left?', with '+fmt(v.left)+' points left over.':'.'))+
-        ' '+t.name+' rate: '+t.rate+' points per £1'+(first?', doubled on a first order.':'.');
+        ' '+t.name+' rate: '+t.rate+' points per £1'+'.';
     }
   }
   root.addEventListener('input',function(e){run(e.target)});
@@ -219,6 +219,8 @@ function bindCheck(root){
 }
 
 function init(){
+  /* static .pk markup on the Club pages is re-rendered through the one site card, PPCard (card.js) */
+  if(window.PPCard)document.querySelectorAll('.cl').forEach(function(c){PPCard.upgrade(c)});
   document.querySelectorAll('[data-club-calc]').forEach(bindCalc);
   document.querySelectorAll('[data-club-check]').forEach(bindCheck);
   /* in-page contents: highlight the section in view */

@@ -20,6 +20,13 @@
 var RM=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function $(s,el){return (el||document).querySelector(s)}
 function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s))}
+/* ---------- the one site product card: static .pk markup re-rendered through PPCard (card.js).
+   The subscription price becomes the card's info line (an offer line takes precedence, as everywhere). ---------- */
+if(window.PPCard)PPCard.upgrade(document,{helps:function(c,p){
+  var x=c.querySelector('.ss-subp'),t=x?x.textContent:'',m=t.match(/(\d+)%[^£]*(£[\d.]+)/);
+  return m?'Subscribe for '+m[2]+', save '+m[1]+'%':(c.querySelector('.helps')||{}).textContent||'';
+}});
+
 
 /* ---------- rails: homepage scroller (arrows + track), hidden when all cards fit ---------- */
 var ups=[];

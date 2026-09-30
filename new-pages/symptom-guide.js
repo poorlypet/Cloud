@@ -79,23 +79,12 @@ function scrollToEl(el,off){if(!el)return;var y=el.getBoundingClientRect().top+w
 function setHash(slug){try{history.replaceState(null,'',slug?'#'+slug:location.pathname+location.search)}catch(e){}}
 function hashSlug(){var h=decodeURIComponent((location.hash||'').slice(1));if(h.indexOf('/')>-1)h=h.split('/').pop();return BY[h]?h:null}
 
-/* ------------------------------------------------------------ product card (.pk from home.css) */
+/* ------------------------------------------------------------ product card: the one PPCard (card.js, css/card.css) */
 function stars(r){var h='';for(var i=1;i<=5;i++){if(r>=i)h+='<i class="on"></i>';else if(r>i-1)h+='<i class="part" style="--f:'+Math.round((r-i+1)*100)+'%"></i>';else h+='<i></i>'}return '<span class="stars" aria-hidden="true">'+h+'</span>'}
 function ph(p){return '<span class="sg-ph" aria-hidden="true"><span class="sg-ph-pack"><span>'+esc((p.brand||'P').charAt(0))+'</span></span></span>'}
-function card(p){
-  var url='#';
-  var img=p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy">':ph(p);
-  var rev=p.rating?'<span class="rev">'+stars(p.rating)+'<span>'+Number(p.rating).toFixed(1)+' <em>('+p.reviewCount+')</em></span></span>':'<span class="rev none" aria-hidden="true"></span>';
-  var price='<span class="now">'+money(p.price)+'</span>';
-  if(p.compareAt&&p.compareAt>p.price)price+='<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>';
-  return '<article class="pk sg-pk">'+(p.compareAt&&p.compareAt>p.price?'<span class="tab sale">Offer</span>':'')+
-    '<a class="well" href="'+url+'" tabindex="-1" aria-hidden="true">'+img+'</a>'+
-    '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="'+url+'">'+esc(p.title)+'</a>'+rev+
-    '<div class="price">'+price+'</div>'+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'"><span>Add to basket</span></button></div></article>';
+function card(p,s){
+  return PPCard.html(p,{helps:s?'For '+lower(s.name):''});
 }
-/* A missing local image falls back to the flat placeholder. */
-document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest&&t.closest('.sg-pk .well')){var b=t.closest('.sg-pk').querySelector('[data-add]');t.insertAdjacentHTML('afterend',ph(PBH[b&&b.getAttribute('data-add')]||{}));t.remove()}},true);
 
 /* ------------------------------------------------------------ shared content blocks */
 function explain(s){
@@ -107,7 +96,7 @@ function explain(s){
 }
 function shopAll(s){return '<a class="sg-all" href="#">Shop all '+esc(lower(s.name))+' products <span aria-hidden="true">›</span></a>'}
 function prodHead(s,n){return '<div class="sg-ph-h"><h3>Products that <em>help</em></h3><span>'+n+' picks for '+esc(lower(s.name))+'</span></div>'}
-function prodGrid(s){var ps=productsFor(s);return prodHead(s,ps.length)+'<div class="sg-grid">'+ps.map(card).join('')+'</div>'+shopAll(s)}
+function prodGrid(s){var ps=productsFor(s);return prodHead(s,ps.length)+'<div class="sg-grid">'+ps.map(function(p){return card(p,s)}).join('')+'</div>'+shopAll(s)}
 
 /* ------------------------------------------------------------ basket toast */
 var basketN=0,toastT;
@@ -117,8 +106,8 @@ function addToBasket(btn){
   var p=PBH[btn.getAttribute('data-add')];if(!p)return;
   basketN++;
   $$('.cnt').forEach(function(c){c.textContent=basketN;c.setAttribute('data-n',basketN)});
-  btn.classList.add('sg-added');btn.querySelector('span').textContent='Added';
-  setTimeout(function(){btn.classList.remove('sg-added');btn.querySelector('span').textContent='Add to basket'},1600);
+  btn.classList.add('sg-added');btn.textContent='Added';
+  setTimeout(function(){btn.classList.remove('sg-added');btn.textContent='Add to basket'},1600);
   toast.innerHTML='<span class="sg-toast-ic" aria-hidden="true"></span><span class="sg-toast-t"><b>Added to your basket</b><span>'+esc(p.title)+'</span></span><a class="sg-toast-a" href="#">Basket ('+basketN+')</a>';
   toast.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toast.classList.remove('show')},3800);
 }
@@ -330,7 +319,7 @@ function initC(root){
     pane.innerHTML='<div class="sgc-top"><h2 id="sgc-title" tabindex="-1">'+esc(s.name)+'</h2><p class="sgc-lead">'+esc(s.looks)+'</p></div>'+
       '<div class="sgc-two"><div class="sg-exb"><h3>Why it happens</h3><p>'+esc(s.why)+'</p></div><div class="sg-exb sg-helps"><h3>What helps</h3><ul>'+s.helps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div></div>'+
       '<div class="sgc-prods"><div class="sgc-ph">'+prodHead(s,ps.length)+'<div class="sgc-arrows"><button type="button" class="sgc-arr" data-dir="-1" aria-label="Previous products">‹</button><button type="button" class="sgc-arr" data-dir="1" aria-label="Next products">›</button></div></div>'+
-      '<div class="sgc-track" tabindex="0" role="region" aria-label="Products for '+esc(lower(s.name))+'">'+ps.map(card).join('')+'</div>'+
+      '<div class="sgc-track" tabindex="0" role="region" aria-label="Products for '+esc(lower(s.name))+'">'+ps.map(function(p){return card(p,s)}).join('')+'</div>'+
       '<div class="sgc-foot">'+shopAll(s)+'<button type="button" class="sgc-next" data-slug="'+nx.slug+'">Next in '+esc(AREA[s.area].name)+': '+esc(nx.name)+' <span aria-hidden="true">›</span></button></div></div>';
     animateIn(pane);updArrows();
     if(opts.hash!==false)setHash(slug);

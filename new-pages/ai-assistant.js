@@ -196,9 +196,9 @@ var FAQS=[
 // src: [CLUB] home.html club section "Free to join. Points on every order, money off the next one."
 {c:'club',pop:1,q:'What is the Poorly Pet Club?',
  a:'<p>Our free rewards scheme. You earn points on every order and spend them as money off the next one. Join free from the Club button at the top of any page.</p>'},
-// src: [CLUB] drawer "How you earn" (double points removed by the owner)
+// src: [CLUB] drawer "How you earn" (first-order bonus removed by the owner)
 {c:'club',pop:1,q:'How do I earn points?',
- a:'<table class="fq-t"><tr><th scope="row">Shopping</th><td>5 points for every £1, added the day your order ships</td></tr><tr><th scope="row">First order</th><td>Double points</td></tr><tr><th scope="row">Reviews</th><td>50 points for a verified Judge.me review</td></tr><tr><th scope="row">Referrals</th><td>500 points when a friend places their first order</td></tr><tr><th scope="row">Birthday</th><td>250 points on your dog’s birthday (set it in your account)</td></tr></table>'},
+ a:'<table class="fq-t"><tr><th scope="row">Shopping</th><td>5 points for every £1, added the day your order ships</td></tr><tr><th scope="row">Reviews</th><td>50 points for a verified Judge.me review</td></tr><tr><th scope="row">Referrals</th><td>500 points when a friend places their first order</td></tr><tr><th scope="row">Birthday</th><td>250 points on your dog’s birthday (set it in your account)</td></tr></table>'},
 // src: [CLUB] drawer "Spend on any order: 500 points is £5 off, 1,000 is £10 off, no minimum spend"
 {c:'club',pop:1,q:'How do I spend my points?',
  a:'<p>500 points is £5 off and 1,000 points is £10 off. You can use them on any order and there is no minimum spend.</p>'},
@@ -545,7 +545,7 @@ function healthTopic(text){
 }
 
 
-/* ---------- the site's product card (.pk, exactly as the homepage) ---------- */
+/* ---------- the one site product card (PPCard, card.js + css/card.css) ---------- */
 function cleanTitle(t){return String(t).replace(/\s*[|]\s*\d+\s*(g|ml|kg)\b.*$/i,'')}
 function kindTab(p){
   var t=(p.productType||'').toLowerCase()+' '+(p.title||'').toLowerCase();
@@ -566,14 +566,7 @@ function rev(p){
   return '<a class="rev" href="#">'+stars(p.rating)+'<span>'+(Math.round(p.rating*10)/10)+' <em>('+n+' review'+(n===1?'':'s')+')</em></span></a>';
 }
 function pk(p,helps){
-  var badge=OFF.badge(p),line=OFF.lines(p)[0],tab=kindTab(p),sale=p.compareAt&&p.compareAt>p.price,src=p.img||'';
-  return '<article class="pk">'+(badge?'<span class="tab aia-otab">'+esc(badge)+'</span>':tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-    '<a class="well" href="#">'+(src?'<img src="'+esc(src)+'" alt="" loading="lazy" data-aia-img>':'<span class="aia-noimg" aria-hidden="true"></span>')+'</a>'+
-    '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(cleanTitle(p.title))+'</a>'+rev(p)+
-    (helps?'<span class="helps">'+esc(helps)+'</span>':'')+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>':'')+'</div>'+
-    (line?'<p class="aia-oline">'+esc(line)+'</p>':'')+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+  return PPCard.html(Object.assign({},p,{title:cleanTitle(p.title)}),{tab:kindTab(p)||'',helps:helps||''});
 }
 function rail(ps,helps,label){
   return '<div class="railwrap aia-rw"><div class="rail prail" tabindex="0" aria-label="'+esc(label||'Products')+'">'+

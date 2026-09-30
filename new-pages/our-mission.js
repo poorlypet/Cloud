@@ -6,6 +6,8 @@
    All content is in the HTML, so nothing is lost if the script does not run. */
 (function(){
   var root=document.querySelector('.om');if(!root)return;
+  /* static .pk markup (the no-JS fallback) is re-rendered through the one site card, PPCard (card.js) */
+  if(window.PPCard)PPCard.upgrade(root);
   var mq=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):null;
   var reduce=!!(mq&&mq.matches);
   var $=function(s,c){return (c||document).querySelector(s)};

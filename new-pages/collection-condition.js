@@ -194,7 +194,7 @@ function filtered(){
 }
 function activeCount(){return S.type.length+S.brand.length+S.price.length+(S.rating?1:0)+(S.offer?1:0)}
 
-/* ---------- the site's product card (.pk, exactly as the homepage) ---------- */
+/* ---------- the one site product card (PPCard, card.js + css/card.css) ---------- */
 function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<=5;i++){var f=r-(i-1);h+=f>=1?'<i class="on"></i>':f>0?'<i class="part" style="--f:'+Math.round(f*100)+'%"></i>':'<i></i>'}return h+'</span>'}
 function rev(p){
   if(!p.rating)return '<span class="rev none" aria-hidden="true"></span>';
@@ -203,15 +203,7 @@ function rev(p){
 }
 function img(p,cls){return p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy" data-cc-img'+(cls?' class="'+cls+'"':'')+'>':'<span class="cc-noimg" aria-hidden="true"></span>'}
 function pk(p){
-  var badge=OF?OF.badge(p):null,lines=OF?OF.lines(p):[],sale=p.compareAt&&p.compareAt>p.price;
-  var tabs='<span class="cc-tabs"><span class="tab cc-cat">'+esc(TYPE_NAME[group(p)])+'</span>'+(badge?'<span class="tab sale">'+esc(badge)+'</span>':'')+'</span>';
-  return '<article class="pk'+(badge?' cc-hasoff':'')+'">'+tabs+
-    '<a class="well" href="#">'+img(p)+'</a><div class="body"><span class="brand">'+esc(p.brand)+'</span>'+
-    '<a class="name" href="#">'+esc(cleanTitle(p.title))+'</a>'+rev(p)+
-    '<span class="helps">'+esc(CFG.helps)+'</span>'+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span><span class="save">Save '+Math.round((1-p.price/p.compareAt)*100)+'%</span>':'')+'</div>'+
-    (lines.length?'<span class="cc-offl">'+esc(lines[0])+'</span>':'')+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+  return PPCard.html(Object.assign({},p,{title:cleanTitle(p.title)}),{tab:TYPE_NAME[group(p)]||'',helps:CFG.helps||''});
 }
 /* a blocked or missing photo falls back to the plain well */
 document.addEventListener('error',function(e){

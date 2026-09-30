@@ -72,7 +72,7 @@ function initial(n){return (String(n||'?').trim().charAt(0)||'?').toUpperCase()}
 function plural(n,w){return n+' '+w+(n===1?'':'s')}
 
 /* ==========================================================================
-   The homepage product card (.pk) and rail, markup copied from _home-ref.html.
+   The one site product card (PPCard, card.js + css/card.css) in the homepage rail.
    ========================================================================== */
 function tabFor(p){
   var t=(p.productType||'').toLowerCase();
@@ -85,14 +85,8 @@ function tabFor(p){
 }
 function stars(r){var h='<span class="stars" aria-hidden="true">';for(var i=1;i<=5;i++){var f=r-(i-1);h+=f>=1?'<i class="on"></i>':f>0?'<i class="part" style="--f:'+Math.round(f*100)+'%"></i>':'<i></i>'}return h+'</span>'}
 function pk(p,o){
-  o=o||{};var tab=o.tab!==undefined?o.tab:tabFor(p),n=p.reviewCount||0,sale=p.compareAt&&p.compareAt>p.price;
-  return '<article class="pk">'+(tab?'<span class="tab">'+esc(tab)+'</span>':'')+
-    '<a class="well" href="#">'+(p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy" data-ac-img>':'')+'</a>'+
-    '<div class="body"><span class="brand">'+esc(p.brand)+'</span><a class="name" href="#">'+esc(cleanTitle(p.title))+'</a>'+
-    (p.rating?'<a class="rev" href="#">'+stars(p.rating)+'<span>'+(Math.round(p.rating*10)/10)+' <em>('+n+' review'+(n===1?'':'s')+')</em></span></a>':'<span class="rev none" aria-hidden="true"></span>')+
-    '<span class="helps">'+esc(o.helps||'')+'</span>'+
-    '<div class="price"><span class="now">'+money(p.price)+'</span>'+(sale?'<span class="was">'+money(p.compareAt)+'</span>':'')+'</div>'+
-    '<button class="btn" type="button" data-add="'+esc(p.handle)+'">Add to basket</button></div></article>';
+  o=o||{};var tab=o.tab!==undefined?o.tab:tabFor(p);
+  return PPCard.html(Object.assign({},p,{title:cleanTitle(p.title)}),{tab:tab||'',helps:o.helps||''});
 }
 function rail(items,label){
   return '<div class="railwrap"><div class="rail prail" tabindex="0" aria-label="'+esc(label)+'">'+items.join('')+'</div>'+
