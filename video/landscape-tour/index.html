@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poorly Pet Tour</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+.g{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.L{position:absolute;left:0;top:0;display:none}
+.disp{font-family:Fraunces,serif;font-weight:540;font-optical-sizing:auto;letter-spacing:-.015em;line-height:1;white-space:nowrap}
+.disp em{font-style:italic;font-weight:470;color:var(--rust)}
+.ui{font-family:Inter,sans-serif}
+.eyebrow{font:700 30px/1 Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:var(--rust)}
+.caret{display:inline-block;width:.06em;height:.8em;margin-left:.05em;background:var(--rust);vertical-align:-.05em}
+.w{display:inline-block}
+.mk{position:relative;overflow:hidden;display:flex}
+.in{position:relative}
+.hl{padding:.14em .32em .26em 0;margin:-.14em 0 -.26em 0}
+.ebm{padding:10px 20px 12px 0;margin:-10px 0 -12px 0}
+.sbm{padding:8px 20px 12px 0;margin:-8px 0 -12px 0}
+.sub{font:500 36px/1.32 Inter,sans-serif;color:var(--mute);width:690px}
+.note{font:500 30px/1.35 Inter,sans-serif;color:var(--mute);width:560px}
+.pill{font:600 30px/1 Inter,sans-serif;padding:16px 26px;border-radius:999px;white-space:nowrap;box-sizing:border-box}
+.bar{position:absolute;height:14px;border-radius:7px;background:#DCE3DF}
+.tile{border-radius:22px;background:var(--pale);box-sizing:border-box}
+.tl{position:absolute;left:20px;right:12px;bottom:20px;font:700 30px/1.12 Inter,sans-serif;color:var(--ink)}
+.ic{position:absolute;left:22px;top:22px;width:72px;height:72px;border-radius:36px;background:#fff}
+.ic svg{position:absolute;left:12px;top:12px}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1920, H = 1080, DUR = 30, FPS = 30, BEAT = 60 / window.BPM, TL = window.TL;
+const b = x => x * BEAT;           // beats -> seconds
+const at = k => b(TL[k]);          // named moment -> seconds
+const C = { deep: [11, 42, 35], mint: [159, 232, 201], paper: [250, 249, 246], pale: [237, 241, 236], rust: [168, 84, 47], ink: [16, 27, 23], mute: [94, 110, 102], white: [255, 255, 255], dim: [190, 200, 195], line: [227, 232, 230] };
+const stage = document.getElementById('stage');
+
+/* ---------------- building blocks ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function group(z) { const g = document.createElement('div'); g.className = 'g'; g.style.zIndex = z; stage.appendChild(g); g.style.display = 'none'; ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, o: op = 1, z = null, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+  if (z !== null) e.style.zIndex = z;
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => sp(t - t0, p);
+const out = (t, t0, p = 'snappy') => 1 - sp(t - t0, p);
+const press = (t, t0, depth = 0.93) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.1, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+function typed(e, parts, t, t0, cps, caretFor = 0.7) {
+  const total = parts.reduce((a, p) => a + p[0].length, 0);
+  const n = Math.max(0, Math.min(total, Math.floor((t - t0) * cps + 1e-6)));
+  let left = n, html = '';
+  for (const [s, em] of parts) { const part = s.slice(0, Math.max(0, left)); left -= s.length; if (part) html += em ? `<em>${esc(part)}</em>` : esc(part); }
+  const done = t0 + total / cps;
+  const caret = t >= t0 && (t < done || (t < done + caretFor && Math.floor((t - done) * 3.2) % 2 === 0));
+  e.innerHTML = html + (caret ? '<span class="caret"></span>' : '');
+  return n / total;
+}
+function wrapWords(e) { e.innerHTML = e.innerHTML.replace(/(<em>)?([^\s<]+)(<\/em>)?/g, m => `<span class="w">${m}</span>`); }
+function words(e, t, t0, step = 0.04, d = 24, p = 'default') {
+  [...e.querySelectorAll('.w')].forEach((w, i) => { const k = sp(t - t0 - i * step, p); w.style.opacity = Math.min(1, k * 1.4); w.style.transform = `translateY(${d * (1 - k)}px)`; });
+}
+
+/* ---------------- icons (original line drawings) ---------------- */
+const ICON = {
+  search: '<circle cx="26" cy="26" r="16"/><path d="M38 38 L54 54"/>',
+  joint: '<path d="M22 6 L30 30 L22 58"/><circle cx="30" cy="30" r="6"/><path d="M40 8 L36 30 L42 58"/>',
+  hip: '<path d="M10 16 C18 32 46 32 54 16"/><circle cx="21" cy="38" r="7"/><circle cx="43" cy="38" r="7"/><path d="M19 45 L16 58 M45 45 L48 58"/>',
+  spine: '<rect x="22" y="6" width="20" height="10" rx="4"/><rect x="21" y="20" width="22" height="10" rx="4"/><rect x="21" y="34" width="22" height="10" rx="4"/><rect x="22" y="48" width="20" height="10" rx="4"/>',
+  knee: '<path d="M22 6 L29 26"/><path d="M30 38 L25 58"/><circle cx="30" cy="32" r="7"/><path d="M40 24 L44 20"/>',
+  back: '<path d="M12 56 C22 42 20 22 36 8"/><path d="M18 46 H30 M20 36 H32 M25 26 H37 M31 17 H42"/>',
+  patella: '<circle cx="32" cy="32" r="9"/><path d="M26 6 L29 22 M35 42 L32 58"/><path d="M14 32 H20 M44 32 H50"/>',
+  legs: '<path d="M18 8 C18 26 22 40 16 56 H28"/><path d="M40 8 C40 26 44 40 38 56 H50"/>',
+  skin: '<path d="M32 8 C22 24 16 32 16 40 a16 16 0 0 0 32 0 C48 32 42 24 32 8Z"/>',
+  tummy: '<path d="M32 12 a20 20 0 1 1 -19 14"/><path d="M32 24 a8 8 0 1 1 -8 8"/>',
+  eyes: '<path d="M6 32 C18 16 46 16 58 32 C46 48 18 48 6 32Z"/><circle cx="32" cy="32" r="7"/>',
+  tooth: '<path d="M18 12 C24 8 28 12 32 12 C36 12 40 8 46 12 C54 18 49 30 47 38 C45 48 43 56 39 56 C35 56 35 42 32 42 C29 42 29 56 25 56 C21 56 19 48 17 38 C15 30 10 18 18 12Z"/>',
+  mood: '<path d="M6 34 C12 18 20 18 24 32 S34 48 40 32 S52 16 58 32"/>',
+  pulse: '<path d="M4 32 H18 L25 14 L34 50 L41 32 H60"/>',
+  sparkle: '<path d="M32 6 C34 24 40 30 58 32 C40 34 34 40 32 58 C30 40 24 34 6 32 C24 30 30 24 32 6Z"/>',
+  camera: '<rect x="6" y="18" width="52" height="36" rx="8"/><path d="M22 18 L26 10 H38 L42 18"/><circle cx="32" cy="36" r="10"/>',
+  check: '<path d="M16 33 L27 44 L48 21"/>',
+  arrow: '<path d="M12 32 H50 M36 18 L50 32 L36 46"/>',
+  send: '<path d="M14 32 H48 M34 18 L48 32 L34 46"/>',
+  lock: '<rect x="14" y="28" width="36" height="28" rx="6"/><path d="M22 28 V20 a10 10 0 0 1 20 0 V28"/>',
+  info: '<circle cx="32" cy="32" r="24"/><path d="M32 29 V44"/><circle cx="32" cy="20" r="1.5"/>',
+  bottle: '<rect x="30" y="8" width="20" height="10" rx="3"/><path d="M33 18 V26 C24 30 22 36 22 44 V80 C22 86 26 88 32 88 H48 C54 88 58 86 58 80 V44 C58 36 56 30 47 26 V18"/><rect x="26" y="50" width="28" height="22" rx="4"/>',
+  tub: '<rect x="14" y="22" width="68" height="14" rx="5"/><path d="M18 36 V76 C18 84 24 86 30 86 H66 C72 86 78 84 78 76 V36"/><path d="M30 56 H66"/>',
+  harness: '<path d="M16 68 C16 38 80 38 80 68"/><path d="M34 44 C34 18 62 18 62 44"/><rect x="40" y="56" width="16" height="12" rx="3"/><path d="M16 68 V78 M80 68 V78"/>',
+  ramp: '<path d="M8 82 L60 40 H88 V82 Z"/><path d="M22 70 L28 76 M34 60 L40 66 M46 50 L52 56"/>',
+  brace: '<rect x="28" y="10" width="40" height="76" rx="14"/><path d="M20 30 H76 M20 50 H76 M20 70 H76"/>',
+};
+function icon(name, size, color, sw = 5) {
+  const v = ['bottle', 'tub', 'harness', 'ramp', 'brace'].includes(name) ? 96 : 64;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${v} ${v}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ICON[name]}</svg>`;
+}
+const STAR = s => `<svg width="${s}" height="${s}" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="#C9982E"/></svg>`;
+function mark(size, bg = '#C25E2E', fg = '#fff') {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${bg}"/><rect x="42" y="22" width="16" height="56" rx="6" fill="${fg}"/><rect x="22" y="42" width="56" height="16" rx="6" fill="${fg}"/></svg>`;
+}
+
+/* ================= LEFT COLUMN: eyebrow, heading, line, chapter index ================= */
+const LX = 120, LY = 292, LW = 640;
+const LEFT = group(20);
+const CH = [
+  { eb: 'Vet-informed care', lines: [[['Pet health.']], [['Made easier.', 1]]], sub: "The UK's pet health &amp; recovery specialist.", t0: 0, t1: TL.ch1 },
+  { eb: '01 — Shop by condition', lines: [[['Know the']], [['diagnosis?', 1]]], sub: '25 conditions. Vet-informed products.', t0: TL.ch1, t1: TL.ch2 },
+  { eb: '02 — Shop by symptom', lines: [[['Not sure']], [["what’s wrong?", 1]]], sub: '8 body areas. 40+ signs.', t0: TL.ch2, t1: TL.ch3 },
+  { eb: '03 — AI care assistant', lines: [[['Just']], [['describe it.', 1]]], sub: 'Instant, free, no sign-up.', note: 'General guidance only. It does not replace veterinary advice.', t0: TL.ch3, t1: TL.ch4 },
+  { eb: '04 — AI symptom scanner', lines: [[['See what they']], [['can’t tell you.', 1]]], sub: '40+ conditions. Under 10 seconds.', t0: TL.ch4, t1: TL.close },
+];
+const lineHTML = parts => parts.map(([s, em]) => em ? `<em>${esc(s)}</em>` : esc(s)).join('');
+CH.forEach(c => {
+  c.blk = el(LEFT, `<div class="mk ebm"><div class="in eyebrow">${c.eb}</div></div><div style="height:34px"></div>` +
+    c.lines.map(l => `<div class="mk hl"><div class="in disp" style="color:var(--ink)">${lineHTML(l)}</div></div>`).join('') +
+    `<div style="height:34px"></div><div class="mk sbm"><div class="in sub">${c.sub}</div></div>` +
+    (c.note ? `<div style="height:22px"></div><div class="mk sbm"><div class="in note">${c.note}</div></div>` : ''), '', `width:${LW + 80}px`);
+  c.ins = [...c.blk.querySelectorAll('.in')];
+});
+const IDX = el(LEFT, [1, 2, 3, 4].map(i => `<span class="ix" style="position:absolute;left:${(i - 1) * 96}px;top:0;font:700 30px/1 Inter;letter-spacing:.08em">0${i}</span>`).join('') +
+  `<div class="ixbar" style="position:absolute;left:0;top:48px;width:44px;height:4px;border-radius:2px;background:var(--rust)"></div><div style="position:absolute;left:0;top:48px;width:332px;height:2px;margin-top:1px;background:var(--line);z-index:-1"></div>`, '', 'width:340px;height:56px');
+
+function sceneLeft(t) {
+  if (t > b(TL.close) + 1.2) return;
+  put(LEFT);
+  CH.forEach((c, ci) => {
+    const t0 = b(c.t0), t1 = b(c.t1);
+    if (t < t0 - 0.05 || t > t1 + 1.0) return;
+    put(c.blk, { x: LX, y: LY });
+    c.ins.forEach((e, i) => {
+      const h = e.parentElement.offsetHeight + 8;
+      const isHead = e.classList.contains('disp');
+      const tin = ci === 0 ? (i === 0 ? 0 : -1) : t0 + 0.24 + (i === 0 ? 0 : 0.05 + i * 0.08);
+      const tout = t1 + i * 0.05;
+      const y = T(t, h, [[tin, 0, isHead ? 'heavy' : 'default'], [tout, -h, 'default']]);
+      e.style.transform = `translateY(${y}px)`;
+      e.style.visibility = Math.abs(y) >= h - 2 ? 'hidden' : 'visible';
+    });
+    if (ci === 0) { // the intro heading is typed, then its line is written out word by word
+      const [l1, l2] = c.ins.filter(e => e.classList.contains('disp'));
+      const cps = 1 / b(0.125), t1a = b(TL.type0), t2a = t1a + 11 / cps + b(0.125);
+      typed(l1, [['Pet health.']], t, t1a, cps, 0); if (t >= t2a) l1.innerHTML = 'Pet health.';
+      if (t < t2a) l2.innerHTML = '&nbsp;'; else typed(l2, [['Made easier.', 1]], t, t2a, cps, 0.9);
+      const sub = c.ins[3];
+      const sh = sub.parentElement.offsetHeight + 8;
+      const syy = T(t, sh, [[b(TL.feats), 0, 'default'], [b(c.t1) + 0.15, -sh, 'default']]);
+      sub.style.transform = `translateY(${syy}px)`; sub.style.visibility = Math.abs(syy) >= sh - 2 ? 'hidden' : 'visible';
+    }
+  });
+  // chapter index 01-04
+  if (t > b(TL.ch1) - 0.05) {
+    const k = sp(t - b(TL.ch1) - 0.2, 'default'), ko = sp(t - b(TL.close), 'default');
+    put(IDX, { x: LX, y: 880 + 30 * (1 - k) + 40 * ko, o: Math.min(k * 1.3, 1) * (1 - ko) });
+    const pos = T(t, 0, [[b(TL.ch2), 1, 'default'], [b(TL.ch3), 2, 'default'], [b(TL.ch4), 3, 'default']]);
+    IDX.querySelector('.ixbar').style.transform = `translateX(${pos * 96}px)`;
+    IDX.querySelectorAll('.ix').forEach((s, i) => s.style.color = mix([168, 180, 174], C.ink, Math.max(0, 1 - Math.abs(pos - i))));
+  }
+}
+
+/* ================= RIGHT COLUMN: the browser ================= */
+const BX = 840, BY = 130, BW = 980, BH = 820, CHR = 72, VH = BH - CHR, HDH = 100, CTH = VH - HDH, PAD = 44, IW = BW - 2 * PAD;
+const RIGHT = group(30);
+const BR = el(RIGHT, '', '', `width:${BW}px;height:${BH}px`);
+const brFill = el(BR, '', '', `width:${BW}px;height:${BH}px;border-radius:22px;background:#fff;box-shadow:0 40px 80px -40px rgba(16,27,23,.22)`);
+const VP = el(BR, '', '', `width:${BW}px;height:${VH}px;overflow:hidden;border-radius:0 0 22px 22px`);
+const brDots = [0, 1, 2].map(i => el(BR, '', '', 'width:16px;height:16px;border-radius:8px;background:#D5DCD8'));
+const brAddr = el(BR, `<span style="position:absolute;left:22px;top:12px">${icon('lock', 26, '#5E6E66', 6)}</span><span style="position:absolute;left:62px;top:10px;font:500 30px/30px Inter;color:#3E4C46;white-space:nowrap">poorly-pet.com</span>`,
+  '', 'width:320px;height:50px;border-radius:25px;background:var(--pale)');
+const brOutline = el(BR, `<svg width="${BW}" height="${BH}" viewBox="0 0 ${BW} ${BH}" fill="none" stroke="#101B17" stroke-width="3" stroke-linecap="round">
+  <path class="o1" d="M22 1.5 H${BW - 22} Q${BW - 1.5} 1.5 ${BW - 1.5} 22 V${BH - 22} Q${BW - 1.5} ${BH - 1.5} ${BW - 22} ${BH - 1.5} H22 Q1.5 ${BH - 1.5} 1.5 ${BH - 22} V22 Q1.5 1.5 22 1.5Z"/>
+  <path class="o2" d="M1.5 ${CHR} H${BW - 1.5}" stroke="#E3E8E6" stroke-width="2"/></svg>`, '', `width:${BW}px;height:${BH}px`);
+
+// site header (sticky)
+const HD = el(VP, '', '', `width:${BW}px;height:${HDH}px;background:#fff;border-bottom:2px solid var(--line);box-sizing:border-box;z-index:5`);
+const hdMark = el(HD, mark(52), '', 'width:52px;height:52px');
+const hdWord = el(HD, 'Poorly Pet', 'ui', 'font:800 36px/40px Inter;letter-spacing:-.02em;color:var(--ink);white-space:nowrap');
+const hdSearch = el(HD, `<span style="position:absolute;left:20px;top:13px">${icon('search', 30, '#5E6E66', 6)}</span><span class="ph" style="position:absolute;left:64px;top:13px;font:500 30px/30px Inter;color:#7C8A83;white-space:nowrap">Search conditions or symptoms</span>`,
+  '', 'height:56px;border-radius:28px;background:var(--pale);overflow:hidden');
+const SEARCH_W = 600;
+
+// content area and pages
+const CT = el(VP, '', '', `width:${BW}px;height:${CTH}px;overflow:hidden`);
+const PG = [0, 1, 2, 3].map(() => el(CT, '', '', `width:${BW}px;height:${CTH}px`));
+
+// page 0: home
+const p0Hero = el(PG[0], `<div class="disp" style="position:absolute;left:44px;top:40px;font-size:58px;color:var(--ink)">Find the right support<br><em>for your dog.</em></div>
+  <div class="ui" style="position:absolute;left:44px;top:186px;width:560px;font:500 30px/1.3 Inter;color:var(--mute)">Vet-informed care for symptoms, ailments &amp; recovery</div>
+  <div style="position:absolute;left:660px;top:40px;width:200px;height:200px;border-radius:100px;background:#fff"><div style="position:absolute;left:44px;top:44px">${icon('harness', 112, '#A8542F', 5)}</div></div>`,
+  'tile', `width:${IW}px;height:300px`);
+const FEATS = [['joint', 'Shop by<br>condition'], ['pulse', 'Shop by<br>symptom'], ['sparkle', 'AI care<br>assistant'], ['camera', 'AI symptom<br>scanner']];
+const FW = (IW - 3 * 16) / 4;
+const p0Feats = FEATS.map(([ic, l]) => el(PG[0], `<div class="ic">${icon(ic, 48, '#101B17', 5)}</div><div class="tl" style="white-space:nowrap;left:18px">${l}</div>`, 'tile', `width:${FW}px;height:216px;background:#fff;border:2px solid var(--line)`));
+
+// page 1: shop by condition
+const p1Title = el(PG[1], 'Know the diagnosis? <em>Go straight there.</em>', 'disp', 'font-size:44px;color:var(--ink)');
+const CONDS = [['joint', 'Arthritis'], ['hip', 'Hip dysplasia'], ['spine', 'IVDD'], ['knee', 'Cruciate ligament'], ['back', 'Back pain'], ['patella', 'Luxating patella']];
+const CW = (IW - 2 * 20) / 3, CHh = 196;
+const p1Cards = CONDS.map(([ic, n]) => el(PG[1], `<div class="ic">${icon(ic, 48, '#101B17', 5)}</div><div class="tl" style="font-size:32px">${n}</div>`, 'tile', `width:${CW}px;height:${CHh}px`));
+const p1Count = el(PG[1], '25 conditions · 8 care areas', 'ui', 'font:600 30px/1 Inter;color:var(--mute);white-space:nowrap');
+const p1Banner = el(PG[1], `<div class="ic" style="left:28px;top:29px;background:#fff">${icon('joint', 48, '#A8542F', 5)}</div><div class="disp" style="position:absolute;left:128px;top:36px;font-size:58px;color:var(--ink)">Arthritis</div>
+  <div class="ui br" style="position:absolute;right:32px;top:50px;font:600 30px/30px Inter;color:var(--mute);white-space:nowrap">Shop by condition</div>`, 'tile', '');
+const p1SignsL = el(PG[1], 'Signs to look for', 'eyebrow', '');
+const SIGNS = ['Stiffness after rest', 'Slow to get up', 'Limping'];
+const p1Chips = SIGNS.map(s => el(PG[1], s, 'pill', 'background:#fff;border:2px solid var(--ink);color:var(--ink)'));
+const p1ProdL = el(PG[1], 'Matched support', 'eyebrow', '');
+const PRODS = ['tub', 'bottle', 'harness', 'ramp'];
+const PW = (IW - 3 * 20) / 4;
+const p1Prods = PRODS.map((p, i) => el(PG[1], `<div style="position:absolute;left:${(PW - 104) / 2}px;top:22px">${icon(p, 104, i % 2 ? '#A8542F' : '#101B17', 5)}</div>
+  <div class="bar" style="left:22px;top:150px;width:${PW - 60}px"></div><div class="bar" style="left:22px;top:176px;width:${PW - 110}px"></div><div class="bar" style="left:22px;top:208px;width:60px;background:#C9B3A6"></div>`, 'tile', `width:${PW}px;height:240px`));
+
+// page 2: shop by symptom
+const p2Title = el(PG[2], 'Not sure? <em>Start with what you’re seeing.</em>', 'disp', 'font-size:44px;color:var(--ink)');
+const AREAS = [['legs', 'Legs & paws', 'Knees, hips, movement'], ['skin', 'Skin & coat'], ['tummy', 'Tummy & gut'], ['eyes', 'Ears & eyes'], ['tooth', 'Mouth & teeth'], ['spine', 'Back & spine'], ['mood', 'Behaviour & mood'], ['pulse', 'Whole body']];
+const AW = (IW - 3 * 18) / 4, AH = 200;
+const p2Tiles = AREAS.map(([ic, n]) => el(PG[2], `<div class="bgt" style="position:absolute;inset:0;border-radius:22px;background:var(--pale)"></div><div class="ic">${icon(ic, 48, '#101B17', 5)}</div><div class="tl" style="font-size:32px">${esc(n)}</div>`, '', `width:${AW}px;height:${AH}px`));
+const p2Count = el(PG[2], '8 body areas · 40+ signs', 'ui', 'font:600 30px/1 Inter;color:var(--mute);white-space:nowrap');
+const p2Crumb = el(PG[2], `Shop by symptom <span style="color:#A8B4AE">/</span> <span style="color:var(--ink)">Legs &amp; paws</span>`, 'ui', 'font:600 30px/1 Inter;color:var(--mute);white-space:nowrap');
+const p2Head = el(PG[2], 'Legs &amp; paws', 'disp', 'font-size:60px;color:var(--ink)');
+const p2HeadSub = el(PG[2], 'Knees, hips, movement', 'ui', 'font:500 30px/1 Inter;color:var(--mute);white-space:nowrap');
+const SYMS = [['Limping or favouring a leg', 'Often arthritis, a cruciate injury or a sore paw.'], ['Stiffness after rest', 'A classic early sign of arthritis or joint wear.'], ['Slow to get up', 'Joint or hip discomfort, common with age.']];
+const RW = 820;
+const p2Rows = SYMS.map(([a, c]) => el(PG[2], `<i style="position:absolute;left:28px;top:34px;width:16px;height:16px;border-radius:8px;background:var(--rust)"></i>
+  <div class="ui" style="position:absolute;left:62px;top:20px;font:700 34px/1.15 Inter;color:var(--ink);white-space:nowrap">${a}</div>
+  <div class="ui" style="position:absolute;left:62px;top:68px;font:500 30px/1.15 Inter;color:var(--mute);white-space:nowrap">${c}</div>`, 'tile', `width:${RW}px;height:116px`));
+
+// chat launcher and panel (the only deep green on the page)
+const BUB = 84, BUBX = BW - 24 - BUB, BUBY = VH - 24 - BUB;
+const chBubble = el(VP, `<div style="position:absolute;left:18px;top:18px">${icon('sparkle', 48, '#9FE8C9', 4)}</div>`, '', `width:${BUB}px;height:${BUB}px;border-radius:42px;background:var(--deep);z-index:8`);
+const chPanel = el(VP, '', '', `overflow:hidden;background:var(--deep);z-index:9`);
+const chHead = el(chPanel, `<div style="position:absolute;left:36px;top:20px;width:64px;height:64px;border-radius:32px;background:var(--mint)"><div style="position:absolute;left:12px;top:12px">${icon('sparkle', 40, '#0B2A23', 4)}</div></div>
+  <div class="disp" style="position:absolute;left:120px;top:16px;font-size:40px;color:#fff">Poorly Pet AI</div>
+  <div class="ui" style="position:absolute;left:120px;top:64px;font:500 30px/30px Inter;color:var(--mint);white-space:nowrap">Vet-informed guidance</div>
+  <div class="ui" style="position:absolute;right:36px;top:27px;padding:10px 20px;border-radius:26px;border:2px solid rgba(159,232,201,.5);font:600 30px/30px Inter;color:#fff;white-space:nowrap">225+ products matched</div>
+  <div style="position:absolute;left:0;right:0;top:104px;height:2px;background:rgba(255,255,255,.12)"></div>`, '', `width:${BW}px;height:106px`);
+const chInput = el(chPanel, `<div class="cin ui" style="position:absolute;left:30px;top:21px;font:500 30px/30px Inter;color:#fff;white-space:nowrap"></div>
+  <div class="csend" style="position:absolute;right:8px;top:8px;width:56px;height:56px;border-radius:28px;background:var(--mint)"><div style="position:absolute;left:12px;top:12px">${icon('send', 32, '#0B2A23', 7)}</div></div>`,
+  '', `width:${BW - 72}px;height:72px;border-radius:36px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);box-sizing:border-box`);
+const chIn = chInput.querySelector('.cin');
+const QUESTION = 'My dog is stiff after walks. What could help?';
+const chUser = el(chPanel, esc(QUESTION), 'ui', 'width:560px;padding:20px 28px;border-radius:28px 28px 8px 28px;background:var(--mint);color:var(--deep);font:600 32px/1.3 Inter;box-sizing:border-box');
+const chDots = el(chPanel, [0, 1, 2].map(i => `<i class="dt" style="position:absolute;left:${28 + i * 32}px;top:30px;width:18px;height:18px;border-radius:9px;background:#5E6E66"></i>`).join(''), '', 'width:148px;height:78px;border-radius:28px 28px 28px 8px;background:var(--paper)');
+const chReply = el(chPanel, "Stiffness after rest is often linked to joint wear. Here’s what can help at home, and when to see your vet.", 'ui', 'width:720px;padding:22px 30px;border-radius:28px 28px 28px 8px;background:var(--paper);color:var(--ink);font:500 30px/1.36 Inter;box-sizing:border-box');
+const SUGG = [['tub', 'Joint support'], ['ramp', 'Ramps'], ['harness', 'Lift harness']];
+const chSugg = SUGG.map(([ic, l]) => el(chPanel, `<div style="position:absolute;left:20px;top:20px">${icon(ic, 52, '#9FE8C9', 6)}</div><div class="ui" style="position:absolute;left:20px;bottom:18px;font:600 30px/30px Inter;color:#fff;white-space:nowrap">${l}</div>`,
+  '', 'width:250px;height:144px;border-radius:22px;background:rgba(255,255,255,.07);border:2px solid rgba(159,232,201,.35);box-sizing:border-box'));
+
+// page 3: AI symptom scanner
+const VF = 390;
+const p3Eye = el(PG[3], 'Poorly Pet Vision', 'eyebrow', '');
+const p3Title = el(PG[3], 'See what your dog<br><em>can’t tell you.</em>', 'disp', 'font-size:48px;color:var(--ink)');
+const p3VF = el(PG[3], `<div style="position:absolute;inset:0;border-radius:26px;background:#DDE6E0;overflow:hidden">
+    <div class="phot" style="position:absolute;inset:0">
+      <div style="position:absolute;left:30px;top:60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(250,249,246,.9),rgba(250,249,246,0) 70%)"></div>
+      <div style="position:absolute;left:170px;top:170px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(194,94,46,.30),rgba(194,94,46,0) 70%)"></div>
+      <div style="position:absolute;left:120px;top:10px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(19,74,61,.18),rgba(19,74,61,0) 70%)"></div>
+    </div>
+    <div class="dots" style="position:absolute;inset:0"></div>
+    <div class="band" style="position:absolute;left:0;right:0;height:80px;background:linear-gradient(rgba(159,232,201,0),rgba(159,232,201,.55))"></div>
+    <div class="line" style="position:absolute;left:0;right:0;height:5px;background:#134A3D"></div>
+    <div class="flash" style="position:absolute;inset:0;background:#fff;opacity:0"></div>
+  </div>
+  <svg class="corners" width="${VF}" height="${VF}" viewBox="0 0 ${VF} ${VF}" style="position:absolute;left:0;top:0" fill="none" stroke="#101B17" stroke-width="8" stroke-linecap="round">
+    <path d="M14 84 V34 Q14 14 34 14 H84"/><path d="M${VF - 84} 14 H${VF - 34} Q${VF - 14} 14 ${VF - 14} 34 V84"/><path d="M${VF - 14} ${VF - 84} V${VF - 34} Q${VF - 14} ${VF - 14} ${VF - 34} ${VF - 14} H${VF - 84}"/><path d="M84 ${VF - 14} H34 Q14 ${VF - 14} 14 ${VF - 34} V${VF - 84}"/></svg>
+  <div class="shut" style="position:absolute;left:${VF / 2 - 36}px;top:${VF - 96}px;width:72px;height:72px;border-radius:36px;background:#fff;box-shadow:0 0 0 6px rgba(16,27,23,.85) inset"></div>`, '', `width:${VF}px;height:${VF}px`);
+const vfDots = p3VF.querySelector('.dots');
+for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) { const d = document.createElement('i'); d.style.cssText = `position:absolute;left:${48 + c * 60}px;top:${48 + r * 60}px;width:10px;height:10px;border-radius:5px;background:#134A3D;opacity:0`; d.dataset.r = r; vfDots.appendChild(d); }
+const p3Count = el(PG[3], '', 'ui', 'font:600 30px/1 Inter;color:var(--ink);white-space:nowrap');
+const STEPS = [['camera', 'Capture', 'Upload a clear photo'], ['sparkle', 'Analyse', 'Weighs 40+ conditions'], ['check', 'Act', 'See what to do next']];
+const p3Steps = STEPS.map(([ic, a, c]) => el(PG[3], `<div class="sc" style="position:absolute;left:0;top:0;width:64px;height:64px;border-radius:32px;background:var(--pale)"><div class="si" style="position:absolute;left:14px;top:14px">${icon(ic, 36, '#101B17', 6)}</div></div>
+  <div class="ui sa" style="position:absolute;left:90px;top:0;font:700 34px/1 Inter;color:var(--ink);white-space:nowrap">${a}</div>
+  <div class="ui" style="position:absolute;left:90px;top:44px;font:500 30px/1 Inter;color:var(--mute);white-space:nowrap">${c}</div>`, '', 'width:460px;height:80px'));
+const p3Link = el(PG[3], '<svg width="4" height="220" viewBox="0 0 4 220"><path d="M2 0 V220" stroke="#E3E8E6" stroke-width="4"/><path class="lk" d="M2 0 V220" stroke="#A8542F" stroke-width="4"/></svg>', '', 'width:4px;height:220px');
+const p3Disc = el(PG[3], `<span style="position:absolute;left:24px;top:17px">${icon('info', 34, '#A8542F', 5)}</span><span style="position:absolute;left:74px;top:17px;font:700 32px/34px Inter;color:var(--ink);white-space:nowrap">Decision support, not a diagnosis.</span>`,
+  'tile', `width:${IW}px;height:68px;background:#FAEEE6;border-radius:16px`);
+
+function sceneRight(t) {
+  if (t > b(TL.close) + 1.4) return;
+  put(RIGHT);
+  const bx = T(t, 0, [[b(TL.close), 1250, 'default']]);
+  put(BR, { x: BX + bx, y: BY, ox: 0, oy: 0 });
+  // the frame draws itself, then fills
+  setDraw(brOutline.querySelector('.o1'), sp(t + 0.03, 'heavy') * 1.02);
+  setDraw(brOutline.querySelector('.o2'), sp(t - b(0.75), 'default'));
+  put(brOutline);
+  const fk = sp(t - b(0.75), 'heavy');
+  put(brFill, { o: fk });
+  brDots.forEach((d, i) => put(d, { x: 28 + i * 28, y: 28, s: pop(t, b(1 + i * 0.125), 0, 'snappy'), o: op(t, b(1 + i * 0.125)) }));
+  put(brAddr, { x: BW / 2 - 160, y: 11 + rise(t, b(1.5), 16), o: op(t, b(1.5)) });
+  put(VP, { y: CHR, o: fk });
+  if (fk < 0.01) return;
+
+  // header and pages (skipped while the chat panel covers the whole viewport)
+  const covered = sp(t - b(TL.ch3) - 0.03, 'default') > 0.995 && t < b(TL.ch4);
+  if (!covered) put(HD);
+  put(hdMark, { x: 36, y: 24, s: pop(t, b(TL.mark), 0, 'default'), o: op(t, b(TL.mark)) * (t < b(TL.close) ? 1 : 0) });
+  put(hdWord, { x: 102, y: 30, o: op(t, b(2.25)) * (t < b(TL.close) ? 1 : 0) });
+  hdWord.style.clipPath = `inset(-10% ${100 - 100 * sp(t - b(2.25), 'default')}% -10% 0)`;
+  const sw = SEARCH_W * sp(t - b(2.5), 'default');
+  hdSearch.style.width = Math.max(56, sw) + 'px';
+  put(hdSearch, { x: BW - 36 - SEARCH_W, y: 22, o: op(t, b(2.5)) });
+  hdSearch.querySelector('.ph').style.opacity = sp(t - b(2.9), 'default');
+
+  // pages scroll
+  if (!covered) put(CT, { y: HDH });
+  const scroll = T(t, 0, [[b(TL.ch1), CTH, 'heavy'], [b(TL.ch2), 2 * CTH, 'heavy'], [b(TL.ch4) - 1.0, 3 * CTH, 'heavy']]);
+  PG.forEach((p, i) => { const y = i * CTH - scroll; if (y > -CTH + 2 && y < CTH - 2) { put(p, { y, ox: 0, oy: 0 }); p._on = true; } else p._on = false; });
+
+  // page 0
+  if (PG[0]._on) {
+    put(p0Hero, { x: PAD, y: 30 + rise(t, b(TL.hero), 50), o: op(t, b(TL.hero), 'default') });
+    p0Feats.forEach((f, i) => { const t0 = b(TL.feats + i * 0.25); put(f, { x: PAD + i * (FW + 16), y: 354 + rise(t, t0, 40, 'default'), s: pop(t, t0, 0.9), o: op(t, t0) }); });
+  }
+  // page 1
+  if (PG[1]._on) {
+    const m = b(TL.morph1), k = sp(t - m, 'default'), f = b(TL.tap1) + 0.12;
+    put(p1Title, { x: PAD, y: 28 - 40 * sp(t - f, 'default'), o: out(t, f) });
+    p1Cards.forEach((c, i) => {
+      if (i === 0) return;
+      const t0 = b(TL.cards + i * 0.25), col = i % 3, row = (i / 3) | 0;
+      put(c, { x: PAD + col * (CW + 20), y: 100 + row * (CHh + 20) + rise(t, t0, 40) + 90 * sp(t - f - i * 0.03, 'default'), s: pop(t, t0, 0.9), o: op(t, t0) * out(t, f + i * 0.03) });
+    });
+    put(p1Count, { x: PAD, y: 552 + rise(t, b(TL.count1), 20), o: op(t, b(TL.count1)) * out(t, f) });
+    // Arthritis: pressed, then its card grows into the collection banner
+    const c0 = p1Cards[0], t00 = b(TL.cards);
+    if (t < m + 0.12) put(c0, { x: PAD, y: 100 + rise(t, t00, 40), s: pop(t, t00, 0.9) * press(t, b(TL.tap1), 0.94), o: op(t, t00) * out(t, m + 0.02), z: 3 });
+    if (t >= m) {
+      const w = CW + (IW - CW) * k, h = CHh + (126 - CHh) * k;
+      p1Banner.style.width = w + 'px'; p1Banner.style.height = h + 'px';
+      p1Banner.style.background = mix(C.pale, [250, 238, 230], k);
+      put(p1Banner, { x: PAD, y: 100 + (22 - 100) * k, ox: 0, oy: 0, z: 2 });
+      [...p1Banner.children].forEach(e => e.style.opacity = sp(t - m - (e.classList.contains('br') ? 0.22 : 0.04), 'snappy'));
+    }
+    put(p1SignsL, { x: PAD, y: 184 + rise(t, b(TL.chips - 0.25), 20), o: op(t, b(TL.chips - 0.25)) });
+    let cx = PAD;
+    p1Chips.forEach((c, i) => { const t0 = b(TL.chips + i * 0.25); put(c, { x: cx, y: 230 + rise(t, t0, 24), s: pop(t, t0, 0.7), o: op(t, t0) }); cx += c._w + 14; });
+    put(p1ProdL, { x: PAD, y: 336 + rise(t, b(TL.prods - 0.25), 20), o: op(t, b(TL.prods - 0.25)) });
+    p1Prods.forEach((c, i) => { const t0 = b(TL.prods + i * 0.25); put(c, { x: PAD + i * (PW + 20), y: 382 + rise(t, t0, 60), o: op(t, t0) }); });
+  }
+  // page 2
+  if (PG[2]._on) {
+    const push = T(t, 0, [[b(TL.push2), -BW, 'default']]);
+    if (push > -BW + 2) {
+      put(p2Title, { x: PAD + push, y: 28 });
+      p2Tiles.forEach((c, i) => {
+        const t0 = b(TL.tiles + i * 0.25), col = i % 4, row = (i / 4) | 0;
+        if (i === 0) {
+          const hk = sp(t - b(TL.tap2) - 0.05, 'snappy');
+          c.querySelector('.bgt').style.background = mix(C.pale, [250, 238, 230], hk);
+          c.querySelector('.bgt').style.boxShadow = `inset 0 0 0 ${3 * hk}px #A8542F`;
+        }
+        put(c, { x: PAD + col * (AW + 18) + push, y: 100 + row * (AH + 18) + rise(t, t0, 40), s: pop(t, t0, 0.9) * (i === 0 ? press(t, b(TL.tap2), 0.94) : 1), o: op(t, t0) });
+      });
+      put(p2Count, { x: PAD + push, y: 552 + rise(t, b(TL.count2), 20), o: op(t, b(TL.count2)) });
+    }
+    const sx = push + BW;
+    if (sx < BW - 2) {
+      put(p2Crumb, { x: PAD + sx, y: 30 });
+      put(p2Head, { x: PAD + sx, y: 78 });
+      put(p2HeadSub, { x: PAD + sx + p2Head._w + 28, y: 104 });
+      p2Rows.forEach((r, i) => { const t0 = b(TL.rows + i * 0.5); put(r, { x: PAD + sx + rise(t, t0, 160), y: 164 + i * 126, o: op(t, t0, 'default') }); });
+    }
+  }
+  // chat launcher, then the panel grows out of it
+  const tb = b(TL.bubble), tc = b(TL.ch3) + 0.03;
+  const kc = sp(t - tc, 'default'), down = T(t, 0, [[b(TL.ch4), VH + 40, 'default']]);
+  if (t >= tb && t < tc + 0.03) put(chBubble, { x: BUBX, y: BUBY, s: pop(t, tb, 0, 'default') * press(t, b(TL.ch3) - 0.05, 0.9), o: op(t, tb) });
+  if (t >= tc && down < VH + 30) {
+    const w = BUB + (BW - BUB) * kc, h = BUB + (VH - BUB) * kc;
+    chPanel.style.width = w + 'px'; chPanel.style.height = h + 'px'; chPanel.style.borderRadius = 42 * (1 - Math.min(1, kc)) + 'px';
+    put(chPanel, { x: BUBX * (1 - kc), y: BUBY * (1 - kc) + down, ox: 0, oy: 0 });
+    const hk = b(TL.ch3) + 0.3;
+    put(chHead, { y: rise(t, hk, 20), o: op(t, hk, 'default') });
+    put(chInput, { x: 36, y: VH - 36 - 72 + rise(t, hk + 0.1, 30), o: op(t, hk + 0.1, 'default') });
+    const qs = b(TL.qtype), send = b(TL.send), cps = 1 / b(0.0625);
+    if (t >= qs && t < send) typed(chIn, [[QUESTION]], t, qs, cps, 0);
+    else chIn.innerHTML = '<span style="color:rgba(255,255,255,.55)">Describe what you’re seeing…</span>';
+    chInput.querySelector('.csend').style.transform = `scale(${press(t, send - 0.06, 0.82)})`;
+    const uy = T(t, VH - 36 - 72, [[send, 132, 'default']]);
+    put(chUser, { x: BW - 36 - 560, y: uy, s: pop(t, send, 0.85, 'snappy'), o: op(t, send), ox: 560, oy: chUser._h });
+    const ry = 132 + chUser._h + 22;
+    const td = b(TL.dots), tr = b(TL.reply);
+    if (t >= td && t < tr) {
+      put(chDots, { x: 36, y: ry, s: pop(t, td, 0.6, 'snappy'), o: op(t, td), ox: 0, oy: 78 });
+      chDots.querySelectorAll('.dt').forEach((d, i) => {
+        const keys = []; for (let n = 0; n < 5; n++) { const k0 = td + n * b(0.25) + i * 0.07; keys.push([k0, -9, 'snappy'], [k0 + 0.09, 0, 'snappy']); }
+        d.style.transform = `translateY(${T(t, 0, keys)}px)`;
+      });
+    }
+    if (t >= tr) { put(chReply, { x: 36, y: ry + rise(t, tr, 30), o: op(t, tr), ox: 0, oy: 0 }); words(chReply, t, tr, 0.03, 16, 'snappy'); }
+    const sy = ry + chReply._h + 22;
+    chSugg.forEach((c, i) => { const t0 = b(TL.sugg + i * 0.25); put(c, { x: 36 + i * 268, y: sy + rise(t, t0, 40), s: pop(t, t0, 0.8), o: op(t, t0) }); });
+  }
+  // page 3
+  if (PG[3]._on) {
+    put(p3Eye, { x: PAD, y: 32 });
+    put(p3VF, { x: PAD, y: 86 });
+    p3VF.querySelectorAll('.corners path').forEach((p, i) => setDraw(p, sp(t - b(TL.brackets) - i * 0.05, 'default')));
+    const ts = b(TL.shutter), tsc = b(TL.scan);
+    const shut = p3VF.querySelector('.shut');
+    shut.style.transform = `scale(${pop(t, b(34.25), 0, 'snappy') * press(t, ts, 0.82) * out(t, tsc + 0.1, 'default')})`;
+    p3VF.querySelector('.flash').style.opacity = Math.max(0, T(t, 0, [[ts + 0.02, 0.9, 'snappy'], [ts + 0.1, 0, 'default']]));
+    const scanY = T(t, -12, [[tsc, VF + 10, 'heavy']]);
+    const scanning = t > tsc - 0.02 && t < tsc + 0.8;
+    const ln = p3VF.querySelector('.line'), bd = p3VF.querySelector('.band');
+    ln.style.top = scanY + 'px'; bd.style.top = scanY - 80 + 'px'; ln.style.opacity = bd.style.opacity = scanning ? 1 : 0;
+    vfDots.querySelectorAll('i').forEach(d => { const ry = 48 + d.dataset.r * 60; const on = scanY > ry ? sp(t - tsc - d.dataset.r * 0.06, 'snappy') : 0; d.style.opacity = 0.85 * on; });
+    const n = Math.min(40, Math.round(40 * sp(t - tsc, 'heavy')));
+    p3Count.innerHTML = t < tsc ? 'Ready to scan' : `Screening <b style="color:var(--rust)">${n}${n >= 40 ? '+' : ''}</b> conditions`;
+    put(p3Count, { x: PAD, y: 500, o: op(t, b(34.5), 'default') });
+    put(p3Title, { x: 484, y: 86 });
+    const lit = [b(35.25), b(TL.step1), b(TL.step2)];
+    p3Steps.forEach((s, i) => {
+      const k = sp(t - lit[i], 'snappy');
+      s.querySelector('.sc').style.background = mix(C.pale, C.rust, k);
+      s.querySelector('.si svg').setAttribute('stroke', mix(C.ink, C.white, k));
+      s.querySelector('.sc').style.transform = `scale(${T(t, 1, [[lit[i], 1.12, 'snappy'], [lit[i] + 0.12, 1, 'default']])})`;
+      put(s, { x: 484, y: 238 + i * 110 + rise(t, b(TL.brackets + 0.25 + i * 0.25), 24), o: op(t, b(TL.brackets + 0.25 + i * 0.25), 'default') });
+    });
+    put(p3Link, { x: 484 + 30, y: 238 + 64, o: op(t, b(TL.brackets + 0.5), 'default') });
+    p3Link.style.height = '156px';
+    const lk = p3Link.querySelector('.lk');
+    setDraw(lk, (T(t, 0, [[lit[1] - 0.3, 0.5, 'default'], [lit[2] - 0.3, 1, 'default']])));
+    put(p3Disc, { x: PAD, y: 560 + rise(t, b(TL.disc), 30), o: op(t, b(TL.disc), 'default') });
+  }
+}
+
+/* ================= CLOSE: the lockup on deep green ================= */
+const CL = group(60);
+const clSheet = el(CL, '', '', 'width:1920px;height:1080px;background:var(--deep)');
+const clMark = el(CL, mark(120), '', 'width:120px;height:120px');
+const clWord = el(CL, 'Poorly Pet', 'ui', 'font:800 96px/120px Inter;letter-spacing:-.02em;color:#fff;white-space:nowrap');
+const clT1 = el(CL, 'Helping you find the right support', 'disp', 'font-size:84px;color:#fff');
+const clT2 = el(CL, '<em style="color:var(--mint)">for your pet.</em>', 'disp', 'font-size:84px;color:#fff');
+const clUrl = el(CL, 'poorly-pet.com', 'ui', 'font:700 44px/1 Inter;color:var(--mint);white-space:nowrap');
+const clStars = [0, 1, 2, 3, 4].map(() => el(CL, STAR(34), '', 'width:34px;height:34px'));
+const clTrust = el(CL, '<b style="color:#fff">4.6/5</b> from 101 verified reviews <span style="color:rgba(159,232,201,.7);padding:0 14px">·</span> Free UK delivery over £39', 'ui', 'font:500 32px/1 Inter;color:rgba(255,255,255,.86);white-space:nowrap');
+function sceneClose(t) {
+  const t0 = b(TL.close);
+  if (t < t0) return;
+  put(CL);
+  put(clSheet, { y: T(t, H, [[t0 + 0.08, 0, 'heavy']]), ox: 0, oy: 0 });
+  // the header mark and wordmark detach from the browser and settle into the lockup
+  const rowW = 120 + 32 + clWord._w, lx = W / 2 - rowW / 2, ly = 236, tf = b(TL.close + 0.25);
+  const mx = T(t, BX + 36, [[tf, lx, 'heavy']]), my = T(t, BY + CHR + 24, [[tf, ly, 'heavy']]), ms = T(t, 52 / 120, [[tf, 1, 'heavy']]);
+  put(clMark, { x: mx, y: my, s: ms * press(t, b(TL.logo), 0.94), ox: 0, oy: 0 });
+  const wx = T(t, BX + 102, [[tf + 0.05, lx + 152, 'heavy']]), wy = T(t, BY + CHR + 30 - 2.5, [[tf + 0.05, ly, 'heavy']]), ws = T(t, 36 / 96, [[tf + 0.05, 1, 'heavy']]);
+  put(clWord, { x: wx, y: wy, s: ws, ox: 0, oy: 0 });
+  clWord.style.color = mix(C.ink, C.white, sp(t - t0 - 0.25, 'default'));
+  const tg = b(TL.tag);
+  put(clT1, { x: W / 2 - clT1._w / 2, y: 424 + rise(t, tg, 50, 'heavy'), o: op(t, tg, 'default') });
+  put(clT2, { x: W / 2 - clT2._w / 2, y: 518 + rise(t, tg + 0.12, 50, 'heavy'), o: op(t, tg + 0.12, 'default') });
+  put(clUrl, { x: W / 2 - clUrl._w / 2, y: 672 + rise(t, b(TL.url), 24), o: op(t, b(TL.url), 'default') });
+  const trW = 5 * 40 + 20 + clTrust._w, trx = W / 2 - trW / 2;
+  clStars.forEach((s, i) => { const ts = b(TL.trust + i * 0.25); put(s, { x: trx + i * 40, y: 794, s: pop(t, ts, 0, 'default'), o: op(t, ts) }); });
+  put(clTrust, { x: trx + 220, y: 796 + rise(t, b(TL.trust + 0.75), 16), o: op(t, b(TL.trust + 0.75), 'default') });
+}
+
+/* ---------------- cursor (for the demo taps) ---------------- */
+const cursor = el(stage, '<svg width="60" height="60" viewBox="0 0 64 64"><path d="M14 6 L14 50 L25 40 L33 58 L41 54 L33 37 L48 37 Z" fill="#101B17" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>', '', 'width:60px;height:60px;z-index:100');
+const TAPS = [[TL.tap1, BX + PAD + CW / 2, BY + CHR + HDH + 100 + CHh / 2], [TL.tap2, BX + PAD + AW / 2, BY + CHR + HDH + 100 + AH / 2], [TL.ch3, BX + BUBX + BUB / 2, BY + CHR + BUBY + BUB / 2], [TL.shutter, BX + PAD + VF / 2, BY + CHR + HDH + 86 + VF - 60]];
+function cursorAt(t) {
+  const OFF = [1990, 1150];
+  let vis = false, x = OFF[0], y = OFF[1];
+  for (const [bt, px, py] of TAPS) {
+    const tp = b(bt), tin = tp - 0.75, tout = tp + 0.45;
+    if (t < tin - 0.02 || t > tout + 0.7) continue;
+    vis = true;
+    x = T(t, OFF[0], [[tin, px + 8, 'default'], [tout, OFF[0], 'default']]);
+    y = T(t, OFF[1], [[tin, py + 14, 'default'], [tout, OFF[1] - 120, 'default']]);
+    put(cursor, { x: x - 13, y: y - 6, s: press(t, tp - 0.05, 0.8), ox: 13, oy: 6 });
+  }
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  sceneLeft(t); sceneRight(t); sceneClose(t); cursorAt(t);
+}
+
+/* ---------------- layout that depends on real text widths ---------------- */
+function measure() {
+  for (const e of ALL) e.style.display = 'block';
+  // fit each chapter heading to the column
+  CH.forEach(c => {
+    const hs = [...c.blk.querySelectorAll('.hl')];
+    hs.forEach(h => h.style.fontSize = '120px');
+    const wmax = Math.max(...hs.map(h => h.firstElementChild.scrollWidth));
+    const f = Math.min(120, Math.floor(120 * LW / wmax));
+    hs.forEach(h => h.style.fontSize = f + 'px');
+    c.size = f;
+  });
+  for (const e of ALL) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  wrapWords(chReply); chReply._h = chReply.offsetHeight;
+  for (const e of ALL) e.style.display = 'none';
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('540 100px Fraunces'), document.fonts.load('italic 470 100px Fraunces'), document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('500 40px Inter'), document.fonts.load('600 40px Inter')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,${(innerHeight - H * k) / 2}px) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
