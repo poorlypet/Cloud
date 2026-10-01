@@ -1,0 +1,9 @@
+.seg{position:absolute;top:236px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.seg i{display:block;height:100%;width:100%;background:var(--teal);transform:scaleX(0);transform-origin:0 50%}
+#numwin{position:absolute;left:104px;top:380px;width:500px;height:560px;overflow:hidden}
+#numcol{position:absolute;left:0;top:0}
+#numcol div{height:560px;font:500 560px/560px var(--serif);letter-spacing:-.04em;color:var(--teal)}
+.sign{position:absolute;left:120px;top:1010px;width:840px;font-size:104px}
+.chip{position:absolute;display:flex;align-items:center;gap:14px;height:84px;padding:0 30px;border-radius:999px;border:2px solid rgba(255,255,255,.28);font:600 36px/1 var(--sans);color:#fff;white-space:nowrap;box-sizing:border-box}
+.chip i{width:14px;height:14px;border-radius:50%;background:var(--lime)}
+.pinfo{position:absolute;left:120px;width:840px}

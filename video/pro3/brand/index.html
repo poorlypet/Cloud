@@ -3,55 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Brand Intro Film</title>
+<title>Meet Poorly Pet Film</title>
 <link rel="stylesheet" href="../shared/kit.css">
 <style>
-#words{position:absolute;left:0;top:0;width:1080px;height:1350px}
-.wd{position:absolute;left:96px;width:888px;top:480px;font-size:180px;text-align:center}
-#orbit{position:absolute;left:0;top:0;width:1080px;height:1350px}
-.op{position:absolute;transform-origin:50% 100%}
-.op img{display:block;width:100%;height:100%}
-.tile{position:absolute;border-radius:28px;padding:40px;box-sizing:border-box;overflow:hidden}
-.tile .big{font:500 64px/1.05 var(--serif);letter-spacing:-.02em}
-.tile .sm{font:600 28px/1.3 var(--sans);margin-top:14px}
+.ch{position:absolute;display:flex;align-items:center;gap:12px;height:68px;padding:0 26px;border-radius:999px;background:#fff;box-shadow:0 18px 36px -24px rgba(14,42,40,.45);font:700 30px/1 var(--sans);color:var(--ink);white-space:nowrap}
+.ch i{width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(223,228,58,.3)}
+.teal .ch{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.16)}
+#slot{position:absolute;left:0;top:0;width:1080px}
+.sw{height:200px;text-align:center;font:500 150px/200px var(--serif);letter-spacing:-.025em;color:rgba(255,255,255,.22);white-space:nowrap}
+.sw.on{color:#fff}
+.step{position:absolute;left:96px;width:888px;height:220px;border-radius:32px;box-sizing:border-box;padding:0 56px;display:flex;align-items:center;gap:40px}
+.step b{font:500 120px/1 var(--serif);letter-spacing:-.04em}
+.step span{font:500 58px/1.1 var(--serif);letter-spacing:-.02em}
+.stat{position:absolute;border-radius:32px;padding:40px 44px;box-sizing:border-box;overflow:hidden}
+.stat .n{font:500 108px/1 var(--serif);letter-spacing:-.035em}
+.stat .l{font:600 30px/1.3 var(--sans);margin-top:16px}
 </style>
 </head>
 <body>
 <div id="stage">
 
-<!-- S1 condition words -->
+<!-- S1 slot of worries -->
 <section class="scene teal" id="s1" style="visibility:visible">
-  <canvas class="a" id="ring" width="1080" height="1350" style="left:0;top:0"></canvas>
-  <div id="words"></div>
-  <h2 class="hd" id="s1h" style="left:96px;width:888px;top:500px;font-size:96px;text-align:center">Whatever they’re<br><em>going through,</em></h2>
+  <div class="a" id="slotwin" style="left:0;top:0;width:1080px;height:1350px;overflow:hidden"><div id="slot"></div></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:420px;background:linear-gradient(var(--teal),rgba(15,76,72,0))"></div>
+  <div class="a" style="left:0;top:930px;width:1080px;height:420px;background:linear-gradient(rgba(15,76,72,0),var(--teal))"></div>
 </section>
 
-<!-- S2 products orbit the promise -->
+<!-- S2 meet Poorly Pet -->
 <section class="scene white" id="s2">
-  <div id="orbit"></div>
-  <h1 class="hd" id="s2h" style="left:96px;width:888px;top:170px;font-size:108px;text-align:center">find the<br><em>right support.</em></h1>
+  <div id="field2"></div>
+  <div class="a" id="s2card" style="left:96px;top:330px;width:888px;height:690px;border-radius:40px;background:#fff;box-shadow:0 40px 90px -50px rgba(14,42,40,.5)"></div>
+  <div class="a cap" id="s2c" style="left:96px;width:888px;top:430px;text-align:center;color:var(--mute)">Meet</div>
+  <h1 class="hd" id="s2h" style="left:96px;width:888px;top:480px;font-size:180px;text-align:center;line-height:1">Poorly<br><em>Pet.</em></h1>
+  <p class="sub" id="s2p" style="left:96px;width:888px;top:880px;text-align:center;font-size:36px">The UK’s pet health &amp; <b>recovery specialist.</b></p>
 </section>
 
-<!-- S3 what we are -->
+<!-- S3 the promise, with the word changing -->
 <section class="scene teal" id="s3">
-  <h2 class="hd" id="s3h" style="left:96px;top:150px;font-size:84px">Shop by condition.<br>By symptom.<br>By <em>product.</em></h2>
-  <div class="tile" id="t1" style="left:96px;top:560px;width:432px;height:300px;background:var(--lime);color:var(--teal)"><div class="big">4.6<span style="font-size:36px"> / 5</span></div><div id="t1s" style="margin-top:12px"></div><div class="sm">from 99 reviews<br>on Judge.me</div></div>
-  <div class="tile" id="t2" style="left:552px;top:560px;width:432px;height:300px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.14)"><div class="big">Free</div><div class="sm" style="color:rgba(255,255,255,.8)">UK delivery<br>over £39</div></div>
-  <div class="tile" id="t3" style="left:96px;top:884px;width:432px;height:300px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.14)"><div class="big">Before 2pm</div><div class="sm" style="color:rgba(255,255,255,.8)">ordered, packed the<br>same working day</div></div>
-  <div class="tile" id="t4" style="left:552px;top:884px;width:432px;height:300px;background:#fff;color:var(--teal)"><div class="big">5 points</div><div class="sm" style="color:var(--mute)">for every £1 in the<br>Poorly Pet Club</div></div>
+  <h2 class="hd" id="s3h" style="left:96px;width:888px;top:330px;font-size:104px;text-align:center">Find the right<br>support for<br>your dog’s</h2>
+  <div class="a" id="wwin" style="left:0;top:690px;width:1080px;height:180px;overflow:hidden"><div id="wcol" style="position:absolute;left:0;top:0;width:1080px"></div></div>
+  <p class="sub" id="s3p" style="left:96px;width:888px;top:930px;text-align:center;font-size:36px">From over 100 of the best brands.</p>
 </section>
 
-<!-- S4 end -->
+<!-- S4 how it works -->
 <section class="scene white" id="s4">
-  <h2 class="hd" id="s4h" style="left:96px;width:888px;top:150px;font-size:100px;text-align:center">Find the <em>right support</em><br>for your dog.</h2>
-  <div class="panel" id="tray" style="left:48px;top:420px;width:984px;height:400px;background:var(--pale2)"></div>
-  <div id="row"></div>
-  <div class="panel" id="offer" style="left:96px;top:860px;width:888px;height:296px;background:var(--teal);color:#fff">
-    <div class="a" style="left:48px;top:42px;font:800 34px/1.15 var(--sans)">10% off your<br>first order</div>
-    <div class="a" style="right:48px;top:44px;font:800 76px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--lime)">POORLY10</div>
-    <div class="btn" id="cta" style="left:48px;top:166px;width:792px;height:92px">Shop poorly-pet.com <span id="arr">→</span></div>
+  <h2 class="hd" id="s4h" style="left:96px;top:150px;font-size:100px">How it <em>works.</em></h2>
+  <div class="step" id="st1" style="top:390px;background:var(--pale2);color:var(--ink)"><b style="color:var(--teal)">1</b><span>Tell us what<br>you can see.</span></div>
+  <div class="step" id="st2" style="top:634px;background:var(--teal);color:#fff"><b style="color:var(--lime)">2</b><span>We match it to<br>the right products.</span></div>
+  <div class="step" id="st3" style="top:878px;background:var(--lime);color:var(--teal)"><b>3</b><span>Free UK delivery<br>over £39.</span></div>
+</section>
+
+<!-- S5 why people trust us -->
+<section class="scene teal" id="s5">
+  <h2 class="hd" id="s5h" style="left:96px;top:150px;font-size:96px">Why owners<br><em>trust us.</em></h2>
+  <div class="stat" id="t1" style="left:96px;top:450px;width:432px;height:330px;background:var(--lime);color:var(--teal)"><div class="n"><span id="cnt">0.0</span><span style="font-size:48px"> / 5</span></div><div id="t1s" style="margin-top:12px"></div><div class="l">from 99 reviews<br>on Judge.me</div></div>
+  <div class="stat" id="t2" style="left:552px;top:450px;width:432px;height:330px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.16)"><div class="n"><span id="cnt2">0</span>+</div><div class="l" style="color:rgba(255,255,255,.8)">of the best<br>brands</div></div>
+  <div class="stat" id="t3" style="left:96px;top:804px;width:432px;height:330px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.16)"><div class="n" style="font-size:96px">2pm</div><div class="l" style="color:rgba(255,255,255,.8)">Order before 2pm,<br>packed the same<br>working day</div></div>
+  <div class="stat" id="t4" style="left:552px;top:804px;width:432px;height:330px;background:#fff;color:var(--teal)"><div class="n">5<span style="font-size:48px"> pts</span></div><div class="l" style="color:var(--mute)">for every £1 in the<br>Poorly Pet Club</div></div>
+</section>
+
+<!-- S6 real people -->
+<section class="scene white" id="s6">
+  <div id="field6"></div>
+  <h2 class="hd" id="s6h" style="left:96px;width:888px;top:420px;font-size:128px;text-align:center;line-height:1.02">Real people,<br><em>not a chatbot.</em></h2>
+  <p class="sub" id="s6p" style="left:96px;width:888px;top:760px;text-align:center;font-size:36px">We answer every email<br><b>within one working day.</b></p>
+</section>
+
+<!-- S7 end -->
+<section class="scene teal" id="s7">
+  <div id="field7"></div>
+  <h2 class="hd" id="s7h" style="left:96px;width:888px;top:230px;font-size:150px;text-align:center;line-height:1">Poorly<br><em>Pet.</em></h2>
+  <p class="sub" id="s7p" style="left:96px;width:888px;top:580px;text-align:center;font-size:38px">Find the right support <b>for your dog.</b></p>
+  <div class="panel" id="offer" style="left:96px;top:720px;width:888px;height:300px;background:#fff;color:var(--teal)">
+    <div class="a" style="left:48px;top:44px;font:800 34px/1.15 var(--sans)">10% off your<br>first order</div>
+    <div class="a" style="right:48px;top:44px;font:800 76px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--teal)">POORLY10</div>
+    <div class="btn" id="cta" style="left:48px;top:168px;width:792px;height:96px">Explore poorly-pet.com <span id="arr">→</span></div>
   </div>
-  <div class="a" id="trust" style="left:96px;width:888px;top:1196px;text-align:center;font:600 28px/1.4 var(--sans);color:var(--mute)">The UK’s pet health &amp; recovery specialist</div>
 </section>
 
 </div>
@@ -61,93 +89,83 @@
 <script src="../shared/lib/DrawSVGPlugin.min.js"></script>
 <script src="../shared/kit.js"></script>
 <script>
-const { $, $$, tl, cue, fit, lines, out, blurIn, show, hide, product, shadow, stars, IM } = K;
-const DUR = 21, PRESS = 18.9; window.END = PRESS;
-const WORDS = ['Itchy <em>skin.</em>', 'A bad <em>back.</em>', 'Stiff <em>joints.</em>', '<em>Anxiety.</em>', 'Bad <em>breath.</em>', 'Hot <em>spots.</em>'];
-const ORB = [['salmon', 360], ['brace', 250], ['spray', 360], ['harness', 300], ['chews', 290], ['ramp', 220], ['drops', 360], ['knee', 300]];
+const { $, $$, tl, cue, fit, lines, out, blurIn, show, hide, stars } = K;
+const DUR = 26, PRESS = 24.0; window.END = PRESS;
+const WORRIES = ['Itchy skin?', 'Stiff joints?', 'Bad breath?', 'Anxious?', 'Upset tummy?', 'A bad back?', 'Hot spots?', 'Slowing down?', 'Itchy skin?', 'Stiff joints?'];
+const WORDS = ['upset tummy.', 'itchy skin.', 'anxiety.', 'stiff joints.', 'IVDD.'];
+const CONDS = ['Itchy skin', 'Arthritis', 'IVDD', 'Anxiety', 'Dental care', 'Hot spots', 'Hip dysplasia', 'Digestive health', 'Back pain', 'Knuckling', 'Cruciate ligament', 'Wound care', 'Senior support', 'Luxating patella', 'Post-surgery recovery', 'Noise fear'];
 
-function sheet(from, to, at) {
+// a field of condition chips floating in three depth layers
+function field(id, seed, dim = 1) {
+  const host = $('#' + id), sc = host.closest('.scene');
+  const r = (n => () => (n = (n * 9301 + 49297) % 233280) / 233280)(seed);
+  const chips = CONDS.map((c, i) => { const d = document.createElement('div'); d.className = 'ch'; d.innerHTML = `<i></i>${c}`;
+    const layer = i % 3; d._x = r() * 1180 - 100; d._y = r() * 1450 - 50; d._s = [0.7, 0.85, 1][layer]; d._v = [14, 24, 38][layer]; d._rot = (r() - 0.5) * 8;
+    d.style.opacity = [0.45, 0.7, 1][layer] * dim; d.style.filter = layer === 0 ? 'blur(2px)' : 'none'; sc.insertBefore(d, host); return d; });
+  K.frame(t => { if (sc.style.visibility === 'hidden') return; chips.forEach(d => { const y = ((d._y - t * d._v) % 1500 + 1500) % 1500 - 100;
+    d.style.transform = `translate(${d._x}px,${y}px) rotate(${d._rot + Math.sin(t * 0.6 + d._x) * 2}deg) scale(${d._s})`; }); });
+  return chips;
+}
+function sheet(from, to, at, dir = 1) {
   show(to, at);
-  tl.fromTo('#' + to, { yPercent: 100, borderRadius: 60 }, { yPercent: 0, borderRadius: 0, duration: 0.85, ease: 'power4.inOut' }, at);
-  tl.to('#' + from, { yPercent: -16, duration: 0.85, ease: 'power4.inOut' }, at); hide(from, at + 0.86);
+  tl.fromTo('#' + to, { yPercent: 100 * dir, borderRadius: 60 }, { yPercent: 0, borderRadius: 0, duration: 0.8, ease: 'power4.inOut' }, at);
+  tl.to('#' + from, { yPercent: -16 * dir, duration: 0.8, ease: 'power4.inOut' }, at); hide(from, at + 0.81);
   cue(at + 0.05, 'whoosh');
 }
 function build() {
-  $('#words').innerHTML = WORDS.map((w, i) => `<h2 class="hd wd" id="w${i}">${w}</h2>`).join('');
-  $('#orbit').innerHTML = ORB.map(([n, h], i) => `<div class="shadow osh"></div><div class="op" data-i="${i}"><img src="../shared/assets/${n}.png"></div>`).join('');
-  $$('.op').forEach((o, i) => { const im = IM[ORB[i][0]], h = ORB[i][1], w = im.naturalWidth * h / im.naturalHeight; o.style.width = w + 'px'; o.style.height = h + 'px'; o._w = w; o._h = h; });
+  $('#slot').innerHTML = WORRIES.map(w => `<div class="sw">${w}</div>`).join('');
+  $('#wcol').innerHTML = WORDS.map(w => `<div style="height:260px;text-align:center;font:700 120px/180px var(--serif);letter-spacing:-.02em;color:var(--lime)">${w}</div>`).join('');
   $('#t1s').innerHTML = stars(4.6, 34);
-  $('#row').outerHTML = ['salmon', 'brace', 'spray', 'harness', 'drops'].map((n, i) => `<div class="shadow rsh"></div><div class="prod rp" data-img="${n}" data-h="${[230, 160, 226, 214, 226][i]}" data-floor="760"></div>`).join('');
-  $$('.prod').forEach(product);
-  { const ps = $$('.rp'), gap = 34, tot = ps.reduce((a, p) => a + p.offsetWidth, 0) + gap * (ps.length - 1); let x = 540 - tot / 2;
-    ps.forEach((p, i) => { p.style.left = x + 'px'; x += p.offsetWidth + gap; shadow($$('.rsh')[i], p, 1.05, 26); }); }
+  field('field2', 7); field('field6', 21, 0.5); field('field7', 33, 0.4);
+  K.ambient('#s3', ['#11524D', '#0D4541', '#11524D'], 1); K.ambient('#s4', ['#F3F6F1', '#FFFFFF', '#E4EED6'], 2); K.ambient('#s5', ['#11524D', '#0D4541', '#11524D'], 3);
   $$('.hd').forEach(h => fit(h, 888));
 
-  // ===== S1: the words change on the beat (composed at frame 0) =====
-  const BEAT = 60 / 112 * 1; // one word per beat at 112 BPM
-  WORDS.forEach((w, i) => {
-    const el = $('#w' + i), at = i * BEAT;
-    if (i > 0) { tl.fromTo(el, { yPercent: 70, opacity: 0, filter: 'blur(14px)' }, { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.42, ease: 'expo.out' }, at); cue(at, 'pop' + i); }
-    tl.fromTo(el.querySelector('em') || el, { scale: 1 }, { scale: 1, duration: 0.01 }, at);
-    tl.to(el, { yPercent: -70, opacity: 0, filter: 'blur(14px)', duration: 0.3, ease: 'power3.in' }, at + BEAT - 0.24);
-  });
-  const W1 = WORDS.length * BEAT; // ~3.2
-  lines('#s1h', W1 + 0.05, { stagger: 0.06 });
-  window.RING = W1;
-  // ===== S2: products orbit the promise =====
-  sheet('s1', 's2', W1 + 1.4);
-  const S2 = W1 + 1.4;
-  lines('#s2h', S2 + 0.5, { stagger: 0.06 });
-  const orb = { r: 0, open: 0 }; window._orb = orb;
-  tl.fromTo(orb, { open: 0 }, { open: 1, duration: 1.6, ease: 'expo.out' }, S2 + 0.2);
-  tl.fromTo(orb, { r: -0.9 }, { r: 1.5, duration: 6.2, ease: 'none' }, S2);
-  cue(S2 + 0.3, 'reveal');
-  // ===== S3: what we are =====
-  const S3 = S2 + 5.6;
-  sheet('s2', 's3', S3);
-  lines('#s3h', S3 + 0.45, { stagger: 0.05 });
-  ['#t1', '#t2', '#t3', '#t4'].forEach((t, i) => { tl.from(t, { y: 90, scale: 0.92, opacity: 0, duration: 0.9, ease: 'expo.out' }, S3 + 1.4 + i * 0.16); cue(S3 + 1.4 + i * 0.16, 'card'); });
-  // ===== S4: end =====
-  const S4 = S3 + 5.0;
-  sheet('s3', 's4', S4);
-  lines('#s4h', S4 + 0.4, { stagger: 0.05 });
-  tl.from('#tray', { y: 60, opacity: 0, duration: 1.0, ease: 'expo.out' }, S4 + 0.6);
-  $$('.rp').forEach((p, i) => { tl.from(p, { y: 60, opacity: 0, duration: 0.9, ease: 'expo.out' }, S4 + 0.8 + i * 0.08); tl.from($$('.rsh')[i], { opacity: 0, duration: 0.9 }, S4 + 0.85 + i * 0.08); });
-  tl.from('#offer', { y: 80, opacity: 0, duration: 1.0, ease: 'expo.out' }, S4 + 1.2); cue(S4 + 1.2, 'card');
-  blurIn('#trust', S4 + 1.6);
+  // S1: worries roll past like a slot reel, faster and faster, then stop (composed at frame 0)
+  const ROW = 200, C0 = 575 - 0 * ROW;
+  gsap.set('#slot', { y: C0 });
+  const steps = [0.0, 0.55, 1.0, 1.35, 1.62, 1.84, 2.02, 2.18];
+  steps.forEach((at, i) => { if (!i) return; tl.to('#slot', { y: C0 - ROW * i, duration: Math.max(0.16, steps[i] - steps[i - 1]) * 0.9, ease: 'power2.inOut' }, at - 0.1); cue(at, 'tick'); });
+  K.frame(t => { const y = gsap.getProperty('#slot', 'y'); $$('.sw').forEach((w, i) => { const c = y + i * ROW + 100, d = Math.abs(c - 675); w.classList.toggle('on', d < 100); w.style.transform = `scale(${1 - Math.min(0.35, d / 1400)})`; }); });
+  tl.to('#slot', { y: C0 - ROW * 7 - 30, duration: 0.5, ease: 'back.out(3)' }, 2.25);
+  // S2: meet Poorly Pet
+  sheet('s1', 's2', 2.9);
+  tl.from('#s2card', { scale: 0.7, opacity: 0, duration: 1.0, ease: 'expo.out' }, 3.2); cue(3.2, 'reveal');
+  blurIn('#s2c', 3.5);
+  lines('#s2h', 3.6, { stagger: 0.08 });
+  lines('#s2p', 4.5, { stagger: 0.03 });
+  tl.to(['#s2card', '#s2h', '#s2c', '#s2p'], { scale: 1.04, duration: 3, ease: 'none' }, 4.2);
+  // S3: the promise
+  sheet('s2', 's3', 6.8);
+  lines('#s3h', 7.3, { stagger: 0.05 });
+  tl.from('#wwin', { opacity: 0, y: 40, duration: 0.6, ease: 'expo.out' }, 8.0);
+  WORDS.forEach((w, i) => { if (!i) return; tl.to('#wcol', { y: -260 * i, duration: 0.5, ease: 'expo.inOut' }, 8.1 + i * 0.62); cue(8.1 + i * 0.62, 'pop' + i); });
+  blurIn('#s3p', 9.0);
+  // S4: how it works
+  sheet('s3', 's4', 11.3);
+  lines('#s4h', 11.8);
+  ['#st1', '#st2', '#st3'].forEach((s, i) => { tl.from(s, { x: i % 2 ? -900 : 900, rotate: i % 2 ? -4 : 4, duration: 1.0, ease: 'expo.out' }, 12.3 + i * 0.55); cue(12.3 + i * 0.55, 'card'); });
+  tl.to(['#st1', '#st2', '#st3'], { scale: 1.02, duration: 0.25, yoyo: true, repeat: 1, stagger: 0.12, ease: 'power2.inOut' }, 14.3);
+  // S5: trust
+  sheet('s4', 's5', 15.4);
+  lines('#s5h', 15.9);
+  ['#t1', '#t2', '#t3', '#t4'].forEach((s, i) => { tl.from(s, { y: 120, scale: 0.85, opacity: 0, duration: 0.9, ease: 'back.out(1.4)' }, 16.4 + i * 0.18); cue(16.4 + i * 0.18, 'pop' + i); });
+  const c1 = { v: 0 }, c2 = { v: 0 }; tl.to(c1, { v: 4.6, duration: 1.0, ease: 'expo.out' }, 16.5); tl.to(c2, { v: 100, duration: 1.2, ease: 'expo.out' }, 16.7);
+  K.frame(() => { $('#cnt').textContent = (Math.round(c1.v * 10) / 10).toFixed(1); $('#cnt2').textContent = Math.round(c2.v); });
+  tl.from('#t1s .stars > span', { scale: 0, duration: 0.4, stagger: 0.07, ease: 'back.out(3)' }, 16.8);
+  // S6: real people
+  sheet('s5', 's6', 19.0);
+  lines('#s6h', 19.5, { stagger: 0.07 });
+  lines('#s6p', 20.4, { stagger: 0.03 });
+  // S7: end
+  sheet('s6', 's7', 21.6);
+  lines('#s7h', 22.0, { stagger: 0.08 });
+  lines('#s7p', 22.5, { stagger: 0.03 });
+  tl.from('#offer', { y: 90, opacity: 0, duration: 0.9, ease: 'expo.out' }, 22.8); cue(22.8, 'card');
   tl.to('#cta', { scale: 0.95, duration: 0.1, ease: 'power2.in' }, PRESS).to('#cta', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.5)' }, PRESS + 0.1);
   tl.to('#arr', { x: 12, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.inOut' }, PRESS + 0.05);
   cue(PRESS, 'click'); cue(PRESS + 0.02, 'confirm');
 }
-
-// S1 backdrop: a lime ring that pulses on each beat and opens out
-K.frame(t => {
-  const c = $('#ring'); if ($('#s1').style.visibility === 'hidden') return;
-  const g = c.getContext('2d'); g.clearRect(0, 0, 1080, 1350);
-  const beat = 60 / 112, ph = (t % beat) / beat, k = Math.min(1, t / 3.5);
-  const R = 360 + 30 * Math.exp(-ph * 5) + k * 120;
-  g.lineWidth = 3; g.strokeStyle = `rgba(223,228,58,${0.5 - 0.2 * ph})`;
-  g.beginPath(); g.arc(540, 640, R, 0, Math.PI * 2); g.stroke();
-  g.lineWidth = 1.5; g.strokeStyle = 'rgba(255,255,255,.14)';
-  g.beginPath(); g.arc(540, 640, R + 70 + ph * 40, 0, Math.PI * 2); g.stroke();
-});
-// S2 orbit: products on a tilted ring, depth sorted, back items smaller and softer
-K.frame(t => {
-  if ($('#s2').style.visibility === 'hidden') return;
-  const o = window._orb, n = ORB.length, cx = 540, cy = 990, RX = 450 * o.open, RY = 150 * o.open;
-  $$('.op').forEach((el, i) => {
-    const a = (i / n) * Math.PI * 2 + o.r * Math.PI * 2 / n * 2.2;
-    const z = Math.cos(a), x = cx + Math.sin(a) * RX, y = cy + z * RY;
-    const s = 0.62 + 0.38 * (z + 1) / 2;
-    el.style.left = (x - el._w / 2) + 'px'; el.style.top = (y - el._h) + 'px';
-    el.style.transform = `scale(${s * (0.6 + 0.4 * o.open)})`;
-    el.style.zIndex = Math.round(100 + z * 50);
-    el.style.filter = `blur(${Math.max(0, -z) * 2.2}px)`; el.style.opacity = Math.min(1, 0.45 + 0.55 * (z + 1) / 2 + 0.2) * Math.min(1, o.open * 2);
-    const sh = $$('.osh')[i], sw = el._w * s * 1.0;
-    Object.assign(sh.style, { width: sw + 'px', height: 26 * s + 'px', left: (x - sw / 2) + 'px', top: (y - 13 * s) + 'px', opacity: (0.3 + 0.7 * (z + 1) / 2) * o.open, zIndex: Math.round(99 + z * 50) });
-  });
-});
-K.start(1080, 1350, DUR, ['500 100px Domine', '700 100px Domine', '500 40px Figtree', '600 40px Figtree', '700 40px Figtree', '800 40px Figtree', '800 40px Inter'], ['salmon', 'brace', 'spray', 'harness', 'chews', 'ramp', 'drops', 'knee'], build);
+K.start(1080, 1350, DUR, ['500 100px Domine', '700 100px Domine', '500 40px Figtree', '600 40px Figtree', '700 40px Figtree', '800 40px Figtree', '800 40px Inter'], [], build);
 </script>
 </body>
 </html>
