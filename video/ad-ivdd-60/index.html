@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IVDD Field Notes</title>
+<style>
+@font-face{font-family:Caveat;font-weight:700;src:url(fonts/caveat-700.woff2) format('woff2')}
+@font-face{font-family:Kalam;font-weight:400;src:url(fonts/kalam-400.woff2) format('woff2')}
+@font-face{font-family:Kalam;font-weight:700;src:url(fonts/kalam-700.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--paper:#F7F0E1;--ink:#1D1B17;--coral:#E0735A;--mint:#9FE8C9;--mute:#6E665A;--deep:#0C342A;--mark:#C25E2E}
+html,body{margin:0;height:100%;background:#2A2722;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:#D9CFBC;transform-origin:0 0}
+.page{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;background-color:var(--paper);background-size:1080px 1920px;transform-origin:540px 960px}
+.sheen{position:absolute;inset:0;pointer-events:none;opacity:0}
+svg.art{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.t{position:absolute}
+.hand{font-family:Caveat,cursive;font-weight:700;color:var(--ink);line-height:.95;white-space:nowrap;filter:url(#boilT)}
+.print{font-family:Kalam,cursive;font-weight:400;color:var(--mute);line-height:1.15;filter:url(#boilT)}
+.print.b{font-weight:700}
+.wd{display:inline-block}
+.hl{position:relative;display:inline-block;z-index:0}
+.hl>i{position:absolute;left:-.1em;right:-.12em;top:.3em;bottom:.02em;z-index:-1;transform-origin:0 50%;transform:scaleX(0)}
+.hl>i>svg{display:block;width:100%;height:100%;overflow:visible}
+.coral{color:var(--coral)}
+.reg{font-family:Inter,sans-serif;font-weight:700;font-size:.36em;vertical-align:1.05em;margin-left:.08em;margin-right:.1em}
+/* paper objects: sticky note, index cards */
+.note{position:absolute;background:#C6F2DE;box-shadow:0 10px 22px rgba(60,45,20,.16),0 2px 4px rgba(60,45,20,.12);transform-origin:50% 0}
+.card{position:absolute;background:#FFFDF7;background-image:repeating-linear-gradient(180deg,transparent 0 83px,rgba(120,170,200,.28) 83px 85px);background-position:0 26px;
+  box-shadow:0 12px 26px rgba(60,45,20,.18),0 2px 4px rgba(60,45,20,.12);transform-origin:50% 0}
+.card::before{content:'';position:absolute;left:0;right:0;top:24px;height:3px;background:rgba(224,115,90,.55)}
+.tape{position:absolute;width:190px;height:54px;background:rgba(224,115,90,.42);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.22) 0 10px,transparent 10px 20px)}
+.stampbox{position:absolute;transform-origin:50% 50%}
+.stampbox svg{position:absolute;left:0;top:0;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="boil" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1480" height="2320">
+      <feTurbulence class="turb" type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="5.5"/>
+    </filter>
+    <filter id="boilT" x="-10%" y="-20%" width="120%" height="140%">
+      <feTurbulence class="turb" type="fractalNoise" baseFrequency="0.04" numOctaves="1" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.6"/>
+    </filter>
+  </svg>
+
+  <!-- HOOK -->
+  <div class="page" id="hook"><svg class="art"></svg>
+    <div class="t hand" data-k="l1" style="left:72px;top:236px;font-size:138px;line-height:1">If your dog has<br>a <span class="hl" data-k="hl"><i></i>long back,</span></div>
+    <div class="t hand" data-k="l2" style="left:72px;top:516px;font-size:138px;line-height:1"><span id="readthis">read this.</span></div>
+    <div class="t hand" data-k="ivdd" style="left:0;width:1080px;text-align:center;top:770px;font-size:300px;line-height:1">IVDD</div>
+    <div class="t print" data-k="full" style="left:0;width:1080px;text-align:center;top:1142px;font-size:44px">(Intervertebral Disc Disease)</div>
+    <div class="t hand coral" data-k="long" style="left:0;width:1080px;text-align:center;top:1388px;font-size:60px">long back</div>
+  </div>
+
+  <!-- RELATE: 4 signs -->
+  <div class="page" id="signs"><svg class="art"></svg>
+    <div class="t hand coral" data-k="sf" style="left:74px;top:222px;font-size:78px">Sound familiar?</div>
+    <div class="t hand" data-k="title" style="left:72px;top:306px;font-size:112px;line-height:.98"><span id="four">4</span> signs your dog's<br>back is hurting</div>
+    <div class="t hand row" data-k="s0" style="left:390px;font-size:80px">A hunched back</div>
+    <div class="t hand row" data-k="s1" style="left:390px;font-size:80px">A yelp when<br>picked up</div>
+    <div class="t hand row" data-k="s2" style="left:390px;font-size:80px">Won't jump or<br>do the stairs</div>
+    <div class="t hand row" data-k="s3" style="left:390px;font-size:80px">Wobbly back legs</div>
+  </div>
+
+  <!-- EDUCATE: what it is -->
+  <div class="page" id="what"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:240px;font-size:132px">What is <span id="whatI">IVDD?</span></div>
+    <div class="t print b" data-k="lc" style="left:84px;top:438px;font-size:40px;color:var(--deep)">spinal cord</div>
+    <div class="t print b coral" data-k="lb" style="left:560px;top:426px;font-size:42px">bulging disc</div>
+    <div class="t print b" data-k="lv" style="left:96px;top:742px;font-size:40px;color:var(--deep)">vertebra</div>
+    <div class="t print b" data-k="ld" style="left:740px;top:742px;font-size:40px;color:var(--deep)">disc</div>
+    <div class="t hand" data-k="def" style="left:72px;top:828px;font-size:82px;line-height:1.0">A disc in the spine bulging<br>or bursting and<br><span class="hl" data-k="hlp"><i></i>pressing on the cord.</span></div>
+    <div class="note" data-k="note" data-fx="none" style="left:118px;top:1112px;width:830px;height:350px">
+      <div class="tape" style="left:328px;top:-26px;transform:rotate(-3deg)"></div>
+      <div class="t print b" data-k="nt" style="left:46px;top:30px;font-size:46px;color:var(--deep)">Most at risk:</div>
+      <div class="t hand" data-k="breeds" style="left:44px;top:88px;font-size:84px;line-height:1">Dachshunds, Bassets,<br>Corgis and Beagles</div>
+      <div class="t print" data-k="any" style="left:46px;top:262px;font-size:46px;color:var(--deep)">…but any dog can get it.</div>
+    </div>
+  </div>
+
+  <!-- EDUCATE: what helps at home (1) -->
+  <div class="page" id="rest"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:238px;font-size:132px;line-height:1">What <span id="actually">actually</span><br>helps at home</div>
+    <div class="t hand coral" data-k="n1" data-fx="none" style="left:96px;top:528px;font-size:96px">1</div>
+    <div class="t hand" data-k="line" style="left:200px;top:520px;font-size:100px;line-height:1">Strict rest first,<br>weeks of it.</div>
+  </div>
+
+  <!-- EDUCATE: what helps at home (2-5) -->
+  <div class="page" id="helps"><svg class="art"></svg>
+    <div class="t hand coral num" data-k="n0" data-fx="none" style="font-size:84px">2</div>
+    <div class="t hand coral num" data-k="n1" data-fx="none" style="font-size:84px">3</div>
+    <div class="t hand coral num" data-k="n2" data-fx="none" style="font-size:84px">4</div>
+    <div class="t hand coral num" data-k="n3" data-fx="none" style="font-size:84px">5</div>
+    <div class="t hand row" data-k="h0" style="left:418px;font-size:80px">A back brace<br>to stop twisting</div>
+    <div class="t hand row" data-k="h1" style="left:418px;font-size:80px">Ramps so there<br>is no jumping</div>
+    <div class="t hand row" data-k="h2" style="left:418px;font-size:76px">Grip on hard floors</div>
+    <div class="t hand row" data-k="h3" style="left:418px;font-size:78px">A harness with<br>a handle for the<br>toilet trips</div>
+  </div>
+
+  <!-- PRODUCTS: the bundle -->
+  <div class="page" id="bundle"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:232px;font-size:140px">The <span class="hl" data-k="hl"><i></i>IVDD Bundle</span></div>
+    <div class="t print b" data-k="lab0" style="left:66px;width:440px;text-align:center;top:716px;font-size:40px;color:var(--ink)">Thermal Back Brace</div>
+    <div class="t print b" data-k="lab1" style="left:584px;width:360px;text-align:center;top:716px;font-size:40px;color:var(--ink)">Natural Calming Drops</div>
+    <div class="t hand" data-k="b0" style="left:156px;top:842px;font-size:78px">Supports Spine Recovery</div>
+    <div class="t hand" data-k="b1" style="left:156px;top:932px;font-size:78px">Thermal Muscle Relief</div>
+    <div class="t hand" data-k="b2" style="left:156px;top:1022px;font-size:78px">Calms and Settles</div>
+    <div class="t hand" data-k="price" style="left:150px;top:1196px;font-size:150px">£62.08</div>
+    <div class="t print" data-k="was" style="left:600px;top:1150px;font-size:50px;color:var(--mute)">was <span id="wasP">£68.98</span></div>
+    <div class="stampbox" data-k="stamp" data-fx="stamp" data-rot="-12" style="left:640px;top:1226px;width:270px;height:230px">
+      <svg width="270" height="230" class="stampring"></svg>
+      <div class="t print b coral" style="left:0;width:270px;text-align:center;top:44px;font-size:54px;line-height:1">SAVE</div>
+      <div class="t print b coral" style="left:0;width:270px;text-align:center;top:104px;font-size:76px;line-height:1">10%</div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS: ramp -->
+  <div class="page" id="ramp"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:230px;font-size:122px;line-height:1">Lightweight Folding<br>Dog Ramp</div>
+    <div class="t hand coral" data-k="note" style="left:76px;top:500px;font-size:66px;line-height:1">so there is<br>no jumping</div>
+    <div class="t hand" data-k="price" style="left:150px;top:1004px;font-size:150px">£79.99</div>
+    <div class="t hand" data-k="b0" style="left:156px;top:1226px;font-size:78px">Zero strain on their joints</div>
+    <div class="t hand" data-k="b1" style="left:156px;top:1318px;font-size:78px">Folds flat, under 5kg</div>
+  </div>
+
+  <!-- PRODUCTS: harness -->
+  <div class="page" id="harness"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:230px;font-size:122px;line-height:1">Balto<span class="reg">®</span> Body Lift<br>harness</div>
+    <div class="t hand coral" data-k="note" style="left:668px;top:470px;font-size:66px;line-height:1">for the<br>toilet trips</div>
+    <div class="t hand" data-k="price" style="left:508px;top:1012px;font-size:136px">£120.00</div>
+    <div class="t hand" data-k="b0" style="left:156px;top:1226px;font-size:78px">Supports the whole spine</div>
+    <div class="t hand" data-k="b1" style="left:156px;top:1318px;font-size:78px">Removable handles</div>
+  </div>
+
+  <!-- PRODUCTS: wheelchair -->
+  <div class="page" id="wheel"><svg class="art"></svg>
+    <div class="t hand" data-k="title" style="left:72px;top:230px;font-size:118px;line-height:1">When the back legs<br><span id="stopw">stop working</span></div>
+    <div class="t hand" data-k="name" style="left:72px;top:1000px;font-size:96px">FreedomRoll wheelchair</div>
+    <div class="t print b" data-k="price" style="left:150px;top:1172px;font-size:46px;color:var(--mute)">from <span class="hand" style="font-size:136px;color:var(--ink);filter:none;vertical-align:-.06em">£179.99</span></div>
+    <div class="t print b" data-k="rate" style="left:420px;top:1368px;font-size:46px;color:var(--ink)">4.8 <span style="font-weight:400;color:var(--mute)">from 19 reviews</span></div>
+  </div>
+
+  <!-- PROOF -->
+  <div class="page" id="proof"><svg class="art"></svg>
+    <div class="t hand" data-k="rating" style="left:70px;top:214px;font-size:190px">4.6/5</div>
+    <div class="t print b" data-k="sub" style="left:76px;top:400px;font-size:50px;color:var(--deep)">from 101 verified reviews</div>
+    <div class="card" data-k="card0" data-fx="none" style="left:76px;top:520px;width:868px;height:430px">
+      <div class="tape" style="left:340px;top:-24px;transform:rotate(2deg)"></div>
+      <div class="t hand" data-k="q0" style="left:44px;top:34px;width:790px;font-size:64px;line-height:1.3;white-space:normal">“My dachshund was diagnosed with IVDD… Seeing him wagging his tail on walks again has been amazing.”</div>
+      <div class="t print b" data-k="who0" style="left:48px;top:356px;font-size:40px;color:var(--ink)">Jamie T <span style="font-weight:400;color:var(--mute)">· wheelchair</span></div>
+    </div>
+    <div class="card" data-k="card1" data-fx="none" style="left:96px;top:1000px;width:848px;height:430px">
+      <div class="tape" style="left:300px;top:-24px;transform:rotate(-2deg)"></div>
+      <div class="t hand" data-k="q1" style="left:44px;top:34px;width:770px;font-size:64px;line-height:1.3;white-space:normal">“Was really pleased to see an IVDD bundle as the products add up when you buy them separate”</div>
+      <div class="t print b" data-k="who1" style="left:48px;top:356px;font-size:40px;color:var(--ink)">Danny <span style="font-weight:400;color:var(--mute)">· IVDD Bundle</span></div>
+    </div>
+  </div>
+
+  <!-- OFFER + CTA -->
+  <div class="page" id="offer"><svg class="art"></svg>
+    <div class="t hand" data-k="h" style="left:72px;top:226px;font-size:124px;line-height:1"><span id="ten">10%</span> off your<br>first order</div>
+    <div class="t print b" data-k="codelab" style="left:0;width:1080px;text-align:center;top:514px;font-size:40px;color:var(--mute)">use code</div>
+    <div class="stampbox" data-k="code" data-fx="stamp" data-rot="-3" style="left:140px;top:566px;width:800px;height:160px">
+      <div class="t print b" style="left:0;width:800px;text-align:center;top:6px;font-family:Inter,sans-serif;font-weight:800;font-size:104px;line-height:1.25;color:var(--ink);letter-spacing:.03em">POORLY10</div>
+    </div>
+    <div class="t hand" data-k="d0" style="left:166px;top:820px;font-size:80px">Free UK delivery over £39</div>
+    <div class="t hand" data-k="d1" style="left:166px;top:914px;font-size:80px">30-day guarantee</div>
+    <div class="t hand" data-k="cta" data-fx="btn" style="left:150px;top:1066px;font-size:80px">Shop the IVDD Bundle</div>
+    <div class="t print b" data-k="url" style="left:0;width:1080px;text-align:center;top:1222px;font-size:58px;color:var(--deep)">poorly-pet.com</div>
+    <div class="t" data-k="name" style="left:520px;top:1330px;font-family:Inter,sans-serif;font-weight:800;font-size:58px;letter-spacing:-.02em;color:var(--ink);white-space:nowrap">Poorly Pet</div>
+  </div>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring, track } = Motion;
+const TL = window.TL, FPS = 30, DUR = TL.DUR;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { ink: '#1D1B17', coral: '#E0735A', mint: '#9FE8C9', mintD: '#5FC9A0', deep: '#0C342A', mute: '#6E665A', mark: '#C25E2E', paper: '#F7F0E1', white: '#FFFFFF', note: '#C6F2DE', sand: '#EADFC6' };
+
+/* ---------- time helpers: every value is a spring of time ---------- */
+const crit = (dt, d) => dt <= 0 ? 0 : spring(dt, { w: 7 / Math.max(d, 0.04), z: 1 });
+const E = (pg, k) => TL.EV[pg][k];
+const P = (pg, k, t) => { const e = E(pg, k); return crit(t - e.t, e.d); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const f1 = v => (+v).toFixed(1);
+
+/* ---------- drawing helpers ---------- */
+function S(tag, parent, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function ink(g, d, w = 7, c = C.ink) { return S('path', g, { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }
+function setDraw(p, q, dyn = false) {
+  const L = dyn ? p.getTotalLength() + 2 : (p._L || (p._L = p.getTotalLength() + 2));
+  q = clamp(q > 0.993 ? 1 : q);
+  p.style.visibility = q <= 0.002 ? 'hidden' : 'visible';
+  p.style.strokeDasharray = `${L} ${L}`;
+  p.style.strokeDashoffset = L * (1 - q);
+}
+function drawSeq(items, q, dyn = false) {
+  const ws = items.map(p => Math.max(60, dyn ? p.getTotalLength() + 2 : (p._L || (p._L = p.getTotalLength() + 2))));
+  const tot = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  items.forEach((p, i) => { const a = acc / tot, b = (acc + ws[i]) / tot; acc += ws[i]; setDraw(p, (q - a) / (b - a), dyn); });
+}
+// A marker wash, off-register from its outline, revealed by a left-to-right swipe.
+let wid = 0;
+function wash(pg, g, d, color, off = [9, 7], op = 0.95) {
+  const id = `w${wid++}`;
+  const r = S('rect', S('clipPath', pg.defs, { id }), { x: 0, y: 0, width: 0, height: 0 });
+  const wg = S('g', g, { transform: `translate(${off[0]} ${off[1]})`, 'clip-path': `url(#${id})` });
+  const p = S('path', wg, { d, fill: color, opacity: op });
+  return {
+    p, set(q, dyn = false, cap = 1) {
+      const b = (!dyn && this.bb) || (this.bb = p.getBBox());
+      r.setAttribute('x', b.x - 14); r.setAttribute('y', b.y - 14); r.setAttribute('height', b.height + 28);
+      const qq = Math.min(cap, clamp(q > 0.993 ? 1 : q));
+      r.setAttribute('width', Math.max(0, (b.width + 28) * qq - (cap < 1 ? 14 : 0)));
+    },
+  };
+}
+const head = (x, y, a, s = 34) => `M ${f1(x + s * Math.cos(a + 2.55))} ${f1(y + s * Math.sin(a + 2.55))} L ${f1(x)} ${f1(y)} L ${f1(x + s * Math.cos(a - 2.55))} ${f1(y + s * Math.sin(a - 2.55))}`;
+// A hand-drawn rounded box whose stroke runs a little past its start.
+function box(x, y, w, h, r, j = [3, -4, 2, -3, 4, -2, 3, -3], over = 40) {
+  return `M ${x + r} ${y + j[0]} C ${x + w * .35} ${y + j[1]}, ${x + w * .65} ${y + j[2]}, ${x + w - r} ${y + j[3]} Q ${x + w} ${y}, ${x + w + j[4]} ${y + r}` +
+    ` C ${x + w + j[5]} ${y + h * .35}, ${x + w + j[6]} ${y + h * .65}, ${x + w} ${y + h - r} Q ${x + w} ${y + h}, ${x + w - r} ${y + h + j[7]}` +
+    ` C ${x + w * .65} ${y + h + j[0]}, ${x + w * .35} ${y + h + j[1]}, ${x + r} ${y + h} Q ${x} ${y + h}, ${x + j[2]} ${y + h - r}` +
+    ` C ${x + j[3]} ${y + h * .65}, ${x + j[4]} ${y + h * .35}, ${x} ${y + r} Q ${x} ${y}, ${x + r} ${y + j[0]}` + (over ? ` L ${x + r + over} ${y + j[0] - 4}` : '');
+}
+const closed = d => d.replace(/ L [^ ]+ [^ ]+$/, '') + ' Z';
+// A hand-drawn loop around something: an ellipse that overshoots its start, with fixed wobble.
+function loop(cx, cy, rx, ry, turns = 1.18, a0 = -2.6, wob = [0.03, -0.025, 0.02, -0.03, 0.025, -0.02]) {
+  let d = '';
+  const n = 64;
+  for (let i = 0; i <= n; i++) {
+    const u = i / n, a = a0 + u * turns * Math.PI * 2;
+    const k = 1 + wob[i % wob.length] * Math.sin(u * 9) + 0.06 * u;
+    d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rx * k) + ' ' + f1(cy + Math.sin(a) * ry * k);
+  }
+  return d;
+}
+// A five-point star, slightly hand-wobbled.
+function star(cx, cy, r, j = [1, .96, 1.03, .98, 1.02]) {
+  let d = '';
+  for (let i = 0; i < 10; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 5, rr = (i % 2 ? r * 0.44 : r) * j[(i >> 1) % 5];
+    d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rr) + ' ' + f1(cy + Math.sin(a) * rr);
+  }
+  return d + ' Z';
+}
+const tick = (x, y, s = 1) => `M ${x} ${y} L ${f1(x + 18 * s)} ${f1(y + 22 * s)} L ${f1(x + 56 * s)} ${f1(y - 34 * s)}`;
+const wavy = (x1, x2, y, a = 5, n = 6) => { let d = `M ${x1} ${y}`; const w = (x2 - x1) / n; for (let i = 0; i < n; i++) d += ` Q ${f1(x1 + w * (i + 0.5))} ${f1(y + (i % 2 ? a : -a))} ${f1(x1 + w * (i + 1))} ${y}`; return d; };
+// A luggage tag: pointed left end with a punched hole.
+function tagPath(x, y, w, h) {
+  const m = y + h / 2;
+  return `M ${x + 70} ${y + 2} C ${x + w * .4} ${y - 3}, ${x + w * .7} ${y + 4}, ${x + w - 18} ${y} Q ${x + w + 2} ${y + 2} ${x + w} ${y + 20}` +
+    ` C ${x + w + 4} ${y + h * .4}, ${x + w - 3} ${y + h * .7}, ${x + w} ${y + h - 20} Q ${x + w} ${y + h} ${x + w - 20} ${y + h + 2}` +
+    ` C ${x + w * .6} ${y + h + 4}, ${x + w * .3} ${y + h - 2}, ${x + 70} ${y + h} L ${x + 4} ${m + 6} Q ${x - 4} ${m} ${x + 4} ${m - 6} Z`;
+}
+const circ = (cx, cy, r) => `M ${cx - r} ${cy} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0`;
+const bez = (P0, P1, P2, P3, u) => { const m = 1 - u; return [0, 1].map(i => m * m * m * P0[i] + 3 * m * m * u * P1[i] + 3 * m * u * u * P2[i] + u * u * u * P3[i]); };
+const bezT = (P0, P1, P2, P3, u) => { const m = 1 - u; return [0, 1].map(i => 3 * m * m * (P1[i] - P0[i]) + 6 * m * u * (P2[i] - P1[i]) + 3 * u * u * (P3[i] - P2[i])); };
+// A paperclip, drawn as one wire.
+const clip = (x, y, s = 1) => `M ${x} ${y + 120 * s} L ${x} ${y + 20 * s} Q ${x} ${y} ${x + 16 * s} ${y} Q ${x + 32 * s} ${y} ${x + 32 * s} ${y + 20 * s} L ${x + 32 * s} ${y + 140 * s} Q ${x + 32 * s} ${y + 164 * s} ${x + 8 * s} ${y + 164 * s} Q ${x - 14 * s} ${y + 164 * s} ${x - 14 * s} ${y + 140 * s} L ${x - 14 * s} ${y + 40 * s}`;
+
+/* ---------- handwriting: words are revealed left to right at a steady writing pace ---------- */
+function splitWords(root) {
+  const words = [];
+  const walk = n => [...n.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(s => {
+        if (!s) return;
+        if (/^\s+$/.test(s)) { frag.appendChild(document.createTextNode(s)); return; }
+        const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = s; frag.appendChild(sp); words.push(sp);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1 && c.tagName !== 'I' && c.tagName !== 'BR') {
+      if (c.classList.contains('reg')) { c.classList.add('wd'); words.push(c); } else walk(c);
+    }
+  });
+  walk(root);
+  const total = words.reduce((a, w) => a + w.textContent.length, 0);
+  let acc = 0;
+  words.forEach(w => { w._a = acc / total; acc += w.textContent.length; w._b = acc / total; });
+  return words;
+}
+function writeWords(words, t, e) {
+  for (const w of words) {
+    const s = e.t + e.d * w._a, d = Math.max(0.05, e.d * (w._b - w._a));
+    const p = crit(t - s, d);
+    if (p <= 0.002) { w.style.visibility = 'hidden'; continue; }
+    w.style.visibility = 'visible';
+    w.style.clipPath = p > 0.99 ? 'none' : `inset(-60% ${f1((1 - p) * 136 - 22)}% -60% -22%)`;
+  }
+}
+
+/* ---------- paper: cream stock, faint dot grid, fibres (fixed pseudo-random, drawn once) ---------- */
+function paperTexture() {
+  const cv = document.createElement('canvas'); cv.width = 1080; cv.height = 1920;
+  const x = cv.getContext('2d');
+  x.fillStyle = '#F7F0E1'; x.fillRect(0, 0, 1080, 1920);
+  let s = 12345; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
+  // soft tonal blotches
+  for (let i = 0; i < 70; i++) {
+    const cx = rnd() * 1080, cy = rnd() * 1920, r = 120 + rnd() * 260;
+    const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
+    const dark = false;
+    g.addColorStop(0, dark ? 'rgba(200,175,130,0.022)' : 'rgba(255,253,245,0.07)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = g; x.fillRect(cx - r, cy - r, 2 * r, 2 * r);
+  }
+  // fibres and specks
+  for (let i = 0; i < 2600; i++) {
+    const px = rnd() * 1080, py = rnd() * 1920, a = rnd() * Math.PI, l = 2 + rnd() * 9;
+    x.strokeStyle = `rgba(${rnd() < 0.5 ? '150,128,90' : '255,255,250'},${(0.05 + rnd() * 0.12).toFixed(3)})`;
+    x.lineWidth = 0.8; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l); x.stroke();
+  }
+  // dot grid
+  x.fillStyle = 'rgba(150,132,104,0.38)';
+  for (let gy = 30; gy < 1920; gy += 48) for (let gx = 36; gx < 1080; gx += 48) { x.beginPath(); x.arc(gx, gy, 2.3, 0, Math.PI * 2); x.fill(); }
+  // margin rule
+  x.strokeStyle = 'rgba(224,115,90,0.38)'; x.lineWidth = 2.5; x.beginPath(); x.moveTo(44, 0); x.lineTo(44, 1920); x.stroke();
+  // a soft edge shade
+  const eg = x.createLinearGradient(0, 0, 1080, 0);
+  eg.addColorStop(0, 'rgba(120,95,60,0.07)'); eg.addColorStop(0.06, 'rgba(0,0,0,0)'); eg.addColorStop(0.94, 'rgba(0,0,0,0)'); eg.addColorStop(1, 'rgba(120,95,60,0.08)');
+  x.fillStyle = eg; x.fillRect(0, 0, 1080, 1920);
+  return cv.toDataURL('image/png');
+}
+
+/* ---------- pages ---------- */
+const pages = {};
+function page(id, build) {
+  const el = document.getElementById(id);
+  const svg = el.querySelector('svg.art');
+  svg.setAttribute('viewBox', '0 0 1080 1920');
+  const pg = { id, el, t0: TL.PAGES[id].t0, turn: TL.PAGES[id].turn, defs: S('defs', svg) };
+  pg.under = S('g', svg, { filter: 'url(#boil)' });  // washes, under the ink
+  pg.g = S('g', svg, { filter: 'url(#boil)' });
+  pg.texts = [...el.querySelectorAll('[data-k]')].filter(x => !x.classList.contains('hl')).map(x => ({ el: x, k: x.dataset.k, fx: x.dataset.fx || 'write' }));
+  pg.hls = [...el.querySelectorAll('.hl')].map(x => ({ i: x.firstElementChild, k: x.dataset.k, el: x }));
+  pg.hls.forEach(h => { h.i.innerHTML = `<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M 3 9 C 20 2, 60 5, 97 3 C 101 14, 99 28, 96 37 C 60 39, 25 36, 2 38 C -1 28, 0 16, 3 9 Z" fill="#9FE8C9"/></svg>`; });
+  const sh = document.createElement('div'); sh.className = 'sheen'; el.appendChild(sh); pg.sheen = sh;
+  pg.build = build;
+  pages[id] = pg;
+}
+function prepare() {
+  for (const pg of Object.values(pages)) {
+    pg.texts.forEach(tx => { if (tx.fx === 'write' || tx.fx === 'btn') tx.words = splitWords(tx.el); });
+    pg.update = pg.build(pg.g, pg);
+  }
+}
+function updatePage(pg, t) {
+  for (const tx of pg.texts) {
+    const e = E(pg.id, tx.k);
+    if (!e) continue;
+    if (tx.words) writeWords(tx.words, t, e);
+    else if (tx.fx === 'stamp') {
+      const o = crit(t - e.t, 0.06), s = track(t, 1.7, [[e.t, 1, { w: 30, z: 0.62 }]]), r = +(tx.el.dataset.rot || 0);
+      tx.el.style.visibility = o > 0.01 ? 'visible' : 'hidden';
+      tx.el.style.opacity = o.toFixed(3);
+      tx.el.style.transform = `rotate(${f1(r + 8 * (1 - o))}deg) scale(${s.toFixed(4)})`;
+    }
+  }
+  for (const h of pg.hls) {
+    const q = P(pg.id, h.k, t);
+    h.i.style.transform = `scaleX(${(q).toFixed(3)}) rotate(-1.2deg)`;
+  }
+  pg.update && pg.update(t);
+}
+const offs = (e, root) => { let x = 0, y = 0; for (let a = e; a && a !== root; a = a.offsetParent) { x += a.offsetLeft; y += a.offsetTop; } return [x, y]; };
+const rect = (e, root) => { const [x, y] = offs(e, root); return { x, y, w: e.offsetWidth, h: e.offsetHeight, cx: x + e.offsetWidth / 2, cy: y + e.offsetHeight / 2, r: x + e.offsetWidth, b: y + e.offsetHeight }; };
+const K = (pg, k) => pg.el.querySelector(`[data-k="${k}"]`);
+// an underline that sits under an element, hand-wobbled
+const under = (r, dy = 0.92, c = C.coral, w = 9) => `M ${f1(r.x - 4)} ${f1(r.y + r.h * dy)} C ${f1(r.x + r.w * .35)} ${f1(r.y + r.h * dy - 7)}, ${f1(r.x + r.w * .7)} ${f1(r.y + r.h * dy + 6)}, ${f1(r.r + 10)} ${f1(r.y + r.h * dy - 3)}`;
+// slide-in for paper objects (sticky note, cards): from below, rotated, landing with a small settle
+function landing(el, t, e, from = [60, 900, 8], rot = 0) {
+  const k = track(t, 0, [[e.t, 1, { w: 15, z: 0.74 }]]);
+  el.style.visibility = t >= e.t - 0.001 ? 'visible' : 'hidden';
+  el.style.transform = `translate(${f1(from[0] * (1 - k))}px,${f1(from[1] * (1 - k))}px) rotate(${f1(rot + from[2] * (1 - k))}deg)`;
+}
+
+/* ================= HOOK: "If your dog has a long back, read this." IVDD circled ================= */
+page('hook', (g, pg) => {
+  const rt = rect(document.getElementById('readthis'), pg.el);
+  const ul1 = ink(g, under(rt, 0.9), 10, C.coral), ul2 = ink(g, `M ${f1(rt.x + 20)} ${f1(rt.y + rt.h * 0.9 + 22)} C ${f1(rt.x + rt.w * .4)} ${f1(rt.y + rt.h * 0.9 + 14)}, ${f1(rt.x + rt.w * .7)} ${f1(rt.y + rt.h * 0.9 + 26)}, ${f1(rt.r - 30)} ${f1(rt.y + rt.h * 0.9 + 18)}`, 8, C.coral);
+  const iv = K(pg, 'ivdd'), ir = rect(iv, pg.el);
+  // measure the real glyph box of "IVDD"
+  const rg = document.createRange(); rg.selectNodeContents(iv); const gb = rg.getBoundingClientRect(), sb = pg.el.getBoundingClientRect();
+  const icx = (gb.left + gb.right) / 2 - sb.left, icy = ir.y + ir.h * 0.55;
+  const ring1 = ink(g, loop(icx, icy, 360, 172, 1.12, -2.75), 13, C.coral), ring2 = ink(g, loop(icx + 6, icy - 4, 378, 184, 0.62, -2.2, [0.02, -0.03, 0.025]), 8, C.coral);
+  // the long back: a row of vertebrae with a measuring line under it
+  const Y = 1290, segs = [], discs = [], x0 = 120, n = 8, step = (960 - x0) / n;
+  for (let i = 0; i < n; i++) {
+    const x = x0 + i * step + 8, w = step - 26;
+    segs.push(ink(g, box(x, Y, w, 56, 16, [2, -2, 1, -2, 2, -1, 2, -2], 0), 5));
+    if (i < n - 1) discs.push(ink(g, circ(x + w + 9, Y + 28, 8), 4, C.coral));
+  }
+  const segW = segs.map(s => null);
+  const dim = ink(g, `M 124 1372 L 956 1370`, 5, C.ink), h1 = ink(g, head(124, 1372, Math.PI, 26), 5), h2 = ink(g, head(956, 1370, 0, 26), 5);
+  return t => {
+    drawSeq([ul1, ul2], P('hook', 'ul', t));
+    drawSeq([ring1, ring2], P('hook', 'circ', t));
+    const q = P('hook', 'spine', t);
+    drawSeq([...segs, ...discs], q * 1.25);
+    drawSeq([dim, h1, h2], q * 2 - 1);
+    const e = E('hook', 'circ');
+    const sc = track(t, 1, [[e.t + e.d * 0.75, 1.045, 'snappy'], [e.t + e.d * 0.75 + 0.1, 1, 'default']]);
+    iv.style.transform = `scale(${sc.toFixed(4)})`;
+  };
+});
+
+/* ================= RELATE: 4 signs, ticked ================= */
+page('signs', (g, pg) => {
+  const four = rect(document.getElementById('four'), pg.el);
+  const c4 = ink(g, loop(four.cx + 2, four.cy + 6, four.w * 0.95, four.h * 0.5, 1.15, -2.4), 8, C.coral);
+  const ROW0 = 584, RH = 222, rows = [];
+  for (let i = 0; i < 4; i++) {
+    const y = ROW0 + i * RH, cy = y + RH / 2;
+    const tx = K(pg, `s${i}`); tx.style.top = f1(cy - tx.offsetHeight / 2 - 6) + 'px';
+    const bxd = box(76, cy - 40, 80, 80, 14, [2, -3, 2, -2, 3, -2, 2, -3], 18);
+    const bx = ink(g, bxd, 6);
+    const tk = ink(g, tick(84, cy + 2, 1.15), 12, C.coral);
+    const ig = S('g', g, { transform: `translate(190 ${cy - 75})` });
+    const ic = [];
+    let upd = null;
+    if (i === 0) { // hunched back: an arched spine with vertebra ticks
+      const A = [8, 128], B1 = [30, 6], B2 = [140, 6], D = [168, 128];
+      ic.push(S('path', ig, { d: 'M 8 140 L 168 140', fill: 'none', stroke: C.mute, 'stroke-width': 4, 'stroke-dasharray': '10 12', 'stroke-linecap': 'round' }));
+      for (let k = 0; k < 7; k++) { const u = (k + 0.5) / 7, [x, yy] = bez(A, B1, B2, D, u), [dx, dy] = bezT(A, B1, B2, D, u), a = Math.atan2(dy, dx) * 180 / Math.PI;
+        const v = S('g', ig, { transform: `translate(${f1(x)} ${f1(yy)}) rotate(${f1(a)})` }); ic.push(ink(v, box(-9, -11, 18, 22, 6, [1, -1, 1, -1, 1, -1, 1, -1], 0), 5)); }
+      ic.push(ink(ig, 'M 88 -26 L 88 14', 6, C.coral), ink(ig, head(88, 16, Math.PI / 2, 16), 6, C.coral));
+    } else if (i === 1) { // a yelp: a burst with "!", and a lift arrow
+      let d = ''; const J = [1, .9, 1.06, .94, 1.02, .9, 1.05, .95, 1, .92, 1.04, .96];
+      for (let k = 0; k < 20; k++) { const a = -Math.PI / 2 + k / 20 * Math.PI * 2, r = (k % 2 ? 44 : 70) * J[k % 12]; d += (k ? ' L ' : 'M ') + f1(78 + Math.cos(a) * r) + ' ' + f1(78 + Math.sin(a) * r); }
+      const w = wash(pg, ig, d + ' Z', C.coral, [6, 5], 0.55); upd = q => w.set(q * 1.4 - 0.3);
+      ic.push(ink(ig, d + ' Z', 6), ink(ig, 'M 78 52 L 76 92', 10), ink(ig, 'M 77 110 L 77 112', 13), ink(ig, 'M 168 150 L 168 34', 7, C.deep), ink(ig, head(168, 32, -Math.PI / 2, 24), 7, C.deep));
+    } else if (i === 2) { // stairs, crossed out
+      ic.push(ink(ig, 'M 4 146 L 4 116 L 46 116 L 46 84 L 88 84 L 88 52 L 130 52 L 130 20 L 172 20', 7));
+      ic.push(ink(ig, 'M 40 30 L 150 136', 11, C.coral), ink(ig, 'M 150 30 L 40 136', 11, C.coral));
+    } else { // wobbly back legs: two wavering lines and wobble marks
+      const l1 = ink(ig, '', 9), l2 = ink(ig, '', 9);
+      const m = [ink(ig, 'M 22 50 C 8 70, 8 100, 22 120', 5, C.coral), ink(ig, 'M 154 50 C 168 70, 168 100, 154 120', 5, C.coral)];
+      ic.push(l1, l2, ...m);
+      const leg = (x, ph, A) => { let d = ''; for (let k = 0; k <= 24; k++) { const yy = 10 + k * 6, xx = x + A * Math.sin(k / 24 * Math.PI * 2.2 + ph) * (k / 24); d += (k ? ' L ' : 'M ') + f1(xx) + ' ' + f1(yy); } return d; };
+      upd = (q, t) => { const wob = clamp(q * 2 - 1), ph = 7 * t; l1.setAttribute('d', leg(64, ph, 12 + 14 * wob)); l2.setAttribute('d', leg(112, ph + 2, 12 + 14 * wob)); };
+      l1.setAttribute('d', leg(64, 0, 12)); l2.setAttribute('d', leg(112, 2, 12));
+    }
+    rows.push({ bx, tk, ic, upd, ig });
+  }
+  return t => {
+    setDraw(c4, P('signs', 'c4', t));
+    rows.forEach((r, i) => {
+      setDraw(r.bx, P('signs', `box${i}`, t));
+      const q = P('signs', `ic${i}`, t);
+      if (r.upd) r.upd(q, t);
+      drawSeq(r.ic, q, i === 3);
+      setDraw(r.tk, P('signs', `tk${i}`, t));
+      const e = E('signs', `tk${i}`), s = track(t, 1, [[e.t + e.d * 0.6, 1.12, 'snappy'], [e.t + e.d * 0.6 + 0.1, 1, 'default']]);
+      r.bx.setAttribute('transform', `translate(116 ${584 + i * 222 + 111}) scale(${s.toFixed(4)}) translate(-116 ${-(584 + i * 222 + 111)})`);
+      r.tk.setAttribute('transform', r.bx.getAttribute('transform'));
+    });
+  };
+});
+
+/* ================= EDUCATE: what IVDD is ================= */
+page('what', (g, pg) => {
+  const wr = rect(document.getElementById('whatI'), pg.el);
+  const ul = ink(g, under(wr, 0.93), 10, C.coral);
+  const Y = 600, BW = 130, BH = 118, STEP = 182, X0 = 96;
+  const blocks = [], discs = [], bw = [];
+  for (let i = 0; i < 5; i++) {
+    const x = X0 + i * STEP, j = [[2, -3, 3, -2, 3, -3, 2, -4], [-3, 2, -2, 3, -2, 4, -3, 2]][i % 2];
+    bw.push(wash(pg, pg.under, closed(box(x, Y, BW, BH, 26, j, 0)), C.sand, [7, 6], 1));
+    blocks.push(ink(g, box(x, Y, BW, BH, 26, j, 22), 6));
+    if (i < 4) {
+      const cx = x + BW + (STEP - BW) / 2, cy = Y + BH / 2;
+      const d = `M ${cx - 20} ${cy} a 20 50 0 1 0 40 0 a 20 50 0 1 0 -40 0`;
+      if (i !== 1) bw.push(wash(pg, pg.under, d, C.mint, [5, 4], 1));
+      discs.push(ink(g, d, 5));
+    }
+  }
+  const bcx = X0 + BW + (STEP - BW) / 2; // the bulging disc sits between blocks 0 and 1
+  const cordW = S('path', pg.under, { d: '', fill: 'none', stroke: C.mint, 'stroke-width': 34, 'stroke-linecap': 'round', opacity: 0.9 });
+  const cordA = ink(g, '', 6, C.deep), cordB = ink(g, '', 6, C.deep);
+  const cordD = (k, off) => { const y = 538 + off, b = y - 42 * k; return `M 70 ${y} L ${bcx - 100} ${y} C ${bcx - 50} ${y}, ${bcx - 46} ${f1(b)}, ${bcx} ${f1(b)} C ${bcx + 46} ${f1(b)}, ${bcx + 50} ${y}, ${bcx + 100} ${y} L 1010 ${y}`; };
+  const bulgeW = wash(pg, pg.under, '', C.coral, [4, 3], 0.95), bulge = ink(g, '', 5);
+  const bulgeD = k => { const top = 600 - 50 * k; return `M ${bcx - 22} ${Y + 40} C ${bcx - 24} ${f1(top + 12)}, ${bcx - 10} ${f1(top)}, ${bcx} ${f1(top)} C ${bcx + 10} ${f1(top)}, ${bcx + 24} ${f1(top + 12)}, ${bcx + 22} ${Y + 40} C ${bcx + 22} ${Y + 100}, ${bcx - 22} ${Y + 100}, ${bcx - 22} ${Y + 40} Z`; };
+  // leader lines for the labels
+  const lb = rect(K(pg, 'lb'), pg.el);
+  const lbA = ink(g, `M ${f1(lb.x - 10)} ${f1(lb.cy + 4)} C ${f1(lb.x - 60)} ${f1(lb.cy + 10)}, ${bcx + 40} ${f1(lb.cy + 20)}, ${bcx + 20} 522`, 6, C.coral), lbH = ink(g, head(bcx + 20, 522, 1.9, 24), 6, C.coral);
+  const lv = rect(K(pg, 'lv'), pg.el), ld = rect(K(pg, 'ld'), pg.el);
+  const lvA = ink(g, `M ${f1(lv.x + 40)} ${f1(lv.y + 6)} L ${X0 + 60} ${Y + BH + 8}`, 4, C.deep);
+  const dcx = X0 + 3 * STEP + BW + (STEP - BW) / 2;
+  const ldA = ink(g, `M ${f1(ld.x + 30)} ${f1(ld.y + 6)} L ${dcx} ${Y + BH / 2 + 50}`, 4, C.deep);
+  const lc = rect(K(pg, 'lc'), pg.el);
+  const lcA = ink(g, `M ${f1(lc.r + 8)} ${f1(lc.cy + 8)} C ${f1(lc.r + 40)} ${f1(lc.cy + 30)}, ${f1(lc.r + 30)} 530, ${f1(lc.r + 60)} 536`, 4, C.deep);
+  // the sticky note
+  const note = K(pg, 'note');
+  // a coffee ring in the corner, off the safe area
+  const ring = S('path', pg.under, { d: loop(1010, 1720, 150, 146, 1.02, 0.4, [0.01, -0.012, 0.008]), fill: 'none', stroke: 'rgba(150,110,60,0.16)', 'stroke-width': 16 });
+  return t => {
+    setDraw(ul, P('what', 'ul', t));
+    const q = P('what', 'spine', t), k = P('what', 'bulge', t);
+    cordA.setAttribute('d', cordD(k, -18)); cordB.setAttribute('d', cordD(k, 18));
+    cordW.setAttribute('d', cordD(k, 0));
+    drawSeq([cordA, cordB, ...blocks, ...discs], q, true);
+    setDraw(cordW, q * 1.5 - 0.2, true);
+    bw.forEach((w, i) => w.set((q - 0.3 - i * 0.04) * 2.4));
+    const bd = bulgeD(k); bulge.setAttribute('d', bd); bulgeW.p.setAttribute('d', bd);
+    setDraw(bulge, (q - 0.6) * 3, true); bulgeW.set(k * 1.3, true);
+    drawSeq([lbA, lbH], P('what', 'lb', t) * 1.3);
+    setDraw(lvA, P('what', 'lv', t) * 1.4); setDraw(ldA, P('what', 'ld', t) * 1.4); setDraw(lcA, P('what', 'lc', t) * 1.4);
+    landing(note, t, E('what', 'note'), [-40, 980, -9], -1.4);
+  };
+});
+
+/* ================= EDUCATE: strict rest, weeks of it ================= */
+page('rest', (g, pg) => {
+  const ar = rect(document.getElementById('actually'), pg.el);
+  const ul = ink(g, under(ar, 0.95), 10, C.coral);
+  const n1 = K(pg, 'n1'), nr = rect(n1, pg.el);
+  const ring = ink(g, loop(nr.cx + 2, nr.cy + 6, 56, 56, 1.15, -2.2), 8, C.coral);
+  const X = 150, Yt = 800, W = 780, HH = 108, ROWS = 4, CH = 132, CW = W / 7;
+  const frame = box(X, Yt, W, HH + ROWS * CH, 28, [3, -4, 2, -3, 4, -2, 3, -3], 40);
+  const hw = wash(pg, pg.under, `M ${X} ${Yt + 28} Q ${X} ${Yt} ${X + 28} ${Yt} L ${X + W - 28} ${Yt} Q ${X + W} ${Yt} ${X + W} ${Yt + 28} L ${X + W} ${Yt + HH} L ${X} ${Yt + HH} Z`, C.mint, [8, 6]);
+  const parts = [ink(g, frame, 7), ink(g, `M ${X} ${Yt + HH} C ${X + 250} ${Yt + HH + 4}, ${X + 500} ${Yt + HH - 4}, ${X + W} ${Yt + HH}`, 6)];
+  for (let i = 1; i < 7; i++) parts.push(ink(g, `M ${f1(X + i * CW)} ${Yt + HH} L ${f1(X + i * CW + (i % 2 ? 3 : -3))} ${Yt + HH + ROWS * CH}`, 3.5, C.mute));
+  for (let r = 1; r < ROWS; r++) parts.push(ink(g, `M ${X} ${Yt + HH + r * CH} L ${X + W} ${Yt + HH + r * CH + (r % 2 ? 3 : -3)}`, 3.5, C.mute));
+  parts.push(ink(g, `M ${X + 170} ${Yt - 36} L ${X + 170} ${Yt + 36}`, 11), ink(g, `M ${X + W - 170} ${Yt - 36} L ${X + W - 170} ${Yt + 36}`, 11));
+  // "zzz" in the header
+  const z = [0, 1, 2].map(i => { const x = X + 330 + i * 46, y = Yt + 70 - i * 14, s = 16 - i * 2; return ink(g, `M ${x - s} ${y - s} L ${x + s} ${y - s} L ${x - s} ${y + s} L ${x + s} ${y + s}`, 5, C.deep); });
+  const xs = [];
+  const JX = [4, -6, 2, 7, -3, 5, -5], JY = [-5, 3, 6, -2, 4, -6, 2];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < 7; c++) {
+    const cx = X + c * CW + CW / 2 + JX[(r + c) % 7], cy = Yt + HH + r * CH + CH / 2 + JY[(r * 3 + c) % 7], s = 26;
+    xs.push(ink(g, `M ${f1(cx - s)} ${f1(cy - s)} L ${f1(cx + s)} ${f1(cy + s)}`, 7, C.coral), ink(g, `M ${f1(cx + s)} ${f1(cy - s)} L ${f1(cx - s)} ${f1(cy + s)}`, 7, C.coral));
+  }
+  return t => {
+    setDraw(ul, P('rest', 'ul', t));
+    const nq = P('rest', 'n1', t);
+    setDraw(ring, nq); n1.style.visibility = nq > 0.05 ? 'visible' : 'hidden';
+    const q = P('rest', 'cal', t);
+    drawSeq([...parts, ...z], q); hw.set(q * 1.4 - 0.3);
+    const xq = P('rest', 'x', t);
+    xs.forEach((p, i) => setDraw(p, xq * xs.length - i));
+  };
+});
+
+/* ================= EDUCATE: 2-5 ================= */
+page('helps', (g, pg) => {
+  const ROW0 = 236, RH = 300, rows = [];
+  for (let i = 0; i < 4; i++) {
+    const y = ROW0 + i * RH, cy = y + RH / 2;
+    const tx = K(pg, `h${i}`); tx.style.top = f1(cy - tx.offsetHeight / 2 - 4) + 'px';
+    const nm = K(pg, `n${i}`); nm.style.left = (110 - nm.offsetWidth / 2) + 'px'; nm.style.top = f1(cy - nm.offsetHeight / 2 - 4) + 'px';
+    const ring = ink(g, loop(112, cy + 2, 48, 50, 1.12, -2.3 + i * 0.3), 7, C.coral);
+    const ig = S('g', g, { transform: `translate(178 ${cy - 100})` }), ug = S('g', pg.under, { transform: `translate(178 ${cy - 100})` });
+    const ic = []; let w = null, upd = null;
+    if (i === 0) { // brace, stopping a twist
+      const band = 'M 14 92 C 70 58, 150 58, 206 92 L 206 156 C 150 124, 70 124, 14 156 Z';
+      w = wash(pg, ug, band, C.mint, [7, 6]);
+      ic.push(ink(ig, band, 7), ink(ig, 'M 40 104 C 90 80, 130 80, 180 104', 4, C.deep), ink(ig, 'M 60 140 L 60 170 M 160 140 L 160 170', 6));
+      ic.push(ink(ig, 'M 48 40 C 80 6, 140 6, 172 40', 6, C.ink), ink(ig, head(172, 40, 0.9, 20), 6), ink(ig, 'M 70 4 L 150 60', 9, C.coral));
+    } else if (i === 1) { // ramp up to a sofa
+      const sofa = 'M 140 186 L 140 110 Q 140 100 150 100 L 186 100 L 186 46 Q 186 36 196 36 L 214 36 L 214 186 Z';
+      w = wash(pg, ug, sofa, C.sand, [7, 5]);
+      ic.push(ink(ig, 'M 0 188 C 70 191, 150 186, 220 188', 6), ink(ig, sofa, 7), ink(ig, 'M 6 182 L 148 104', 22), ink(ig, 'M 6 182 L 148 104', 11, C.mint));
+      [0.25, 0.45, 0.65].forEach(u => { const x = 6 + 142 * u, yy = 182 - 78 * u; ic.push(ink(ig, `M ${f1(x - 5)} ${f1(yy - 9)} L ${f1(x + 5)} ${f1(yy + 9)}`, 4)); });
+    } else if (i === 2) { // a grippy mat on slippery boards
+      const mat = 'M 30 96 L 196 96 L 210 168 L 16 168 Z';
+      w = wash(pg, ug, mat, C.mint, [6, 6]);
+      ic.push(ink(ig, 'M 0 60 L 220 60 M 0 186 L 220 186', 5, C.mute), ink(ig, 'M 40 60 L 20 186 M 110 60 L 104 186 M 180 60 L 190 186', 4, C.mute), ink(ig, mat, 7));
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 6; c++) ic.push(ink(ig, `M ${36 + c * 28 + r * 4} ${110 + r * 20} l 0.5 0.5`, 7, C.deep));
+      ic.push(ink(ig, 'M 8 30 l 20 0 M 60 22 l 22 0', 5, C.coral));
+    } else { // harness with a handle, lifting
+      const body = 'M 24 110 C 24 82, 196 82, 196 110 L 196 150 C 196 172, 24 172, 24 150 Z';
+      w = wash(pg, ug, body, C.coral, [7, 6], 0.8);
+      ic.push(ink(ig, body, 7), ink(ig, 'M 80 92 C 76 20, 144 20, 140 92', 12), ink(ig, 'M 60 168 C 56 196, 90 200, 98 178 M 160 168 C 164 196, 130 200, 122 178', 6),
+        ink(ig, 'M 216 120 L 216 30', 6, C.deep), ink(ig, head(216, 28, -Math.PI / 2, 20), 6, C.deep));
+    }
+    rows.push({ ring, ic, w, ig, ug });
+  }
+  return t => {
+    rows.forEach((r, i) => {
+      const nq = P('helps', `n${i}`, t);
+      setDraw(r.ring, nq); K(pg, `n${i}`).style.visibility = nq > 0.05 ? 'visible' : 'hidden';
+      const q = P('helps', `ic${i}`, t);
+      drawSeq(r.ic, q); r.w.set(q * 1.4 - 0.35);
+      if (i === 3) { const e = E('helps', 'ic3'); const y = track(t, 0, [[e.t + e.d, -18, 'default'], [e.t + e.d + 0.45, 0, 'heavy']]); const tr = `translate(178 ${f1(ROW0 + 3 * RH + RH / 2 - 100 + y)})`; r.ig.setAttribute('transform', tr); r.ug.setAttribute('transform', tr); }
+    });
+  };
+});
+
+/* shared: a price tag with a paperclip */
+function priceTag(pg, g, x, y, w, h, rot = -3) {
+  const tg = S('g', g, { transform: `rotate(${rot} ${x + w / 2} ${y + h / 2})` }), ug = S('g', pg.under, { transform: `rotate(${rot} ${x + w / 2} ${y + h / 2})` });
+  const d = tagPath(x, y, w, h);
+  const w0 = wash(pg, ug, d, C.white, [6, 6], 0.9);
+  const parts = [ink(tg, d, 6), ink(tg, circ(x + 34, y + h / 2, 11), 5), ink(tg, `M ${x + 34} ${y + h / 2} C ${x - 10} ${y + h / 2 - 30}, ${x - 30} ${y + 10}, ${x - 6} ${y - 30}`, 4, C.mute)];
+  const cl = ink(tg, clip(x + w - 62, y - 46, 0.7), 5, '#8A8478');
+  return q => { drawSeq([...parts, cl], q); w0.set(q * 1.3 - 0.2); };
+}
+// shared: ticked bullets
+function bullets(pg, g, keys, ticks) {
+  return keys.map((k, i) => { const r = rect(K(pg, k), pg.el); return ink(g, tick(84, r.cy + 6, 0.95), 10, C.coral); });
+}
+
+/* ================= PRODUCTS: IVDD Bundle ================= */
+page('bundle', (g, pg) => {
+  // brace: a curved thermal wrap with quilting, straps and warmth lines
+  const bg = S('g', g, { transform: 'translate(86 400)' }), bu = S('g', pg.under, { transform: 'translate(86 400)' });
+  const band = 'M 20 130 C 120 60, 270 60, 370 130 L 370 236 C 270 170, 120 170, 20 236 Z';
+  const bw = wash(pg, bu, band, C.coral, [9, 7], 0.85);
+  const brace = [ink(bg, band, 7), ink(bg, 'M 46 150 C 130 98, 260 98, 344 150', 4, C.ink), ink(bg, 'M 46 212 C 130 160, 260 160, 344 212', 4, C.ink),
+    ...[100, 160, 230, 290].map(x => ink(bg, `M ${x} ${x < 195 ? 118 - (x - 100) * 0.4 : 94 + (x - 230) * 0.4} L ${x} ${x < 195 ? 196 - (x - 100) * 0.38 : 172 + (x - 230) * 0.38}`, 3, C.ink)),
+    ink(bg, 'M 20 150 L -6 154 L -6 214 L 20 216', 6), ink(bg, 'M 370 150 L 396 154 L 396 214 L 370 216', 6),
+    ...[130, 195, 260].map(x => ink(bg, `M ${x} 56 C ${x - 14} 42, ${x + 14} 30, ${x} 14 C ${x - 14} 0, ${x + 14} -10, ${x} -24`, 6, C.coral))];
+  // dropper bottle with a label
+  const og = S('g', g, { transform: 'translate(650 392)' }), ou = S('g', pg.under, { transform: 'translate(650 392)' });
+  const body = 'M 40 150 Q 40 120 70 116 L 210 116 Q 240 120 240 150 L 240 300 Q 240 318 222 318 L 58 318 Q 40 318 40 300 Z';
+  const ow = wash(pg, ou, body, '#B98A5E', [8, 6], 0.55), lw = wash(pg, ou, 'M 56 176 L 224 176 L 224 270 L 56 270 Z', C.mint, [5, 4], 1);
+  const bottle = [ink(og, body, 7), ink(og, 'M 96 116 L 96 78 L 184 78 L 184 116', 7), ink(og, 'M 108 78 L 108 34 Q 108 0 140 0 Q 172 0 172 34 L 172 78', 7),
+    ink(og, 'M 104 92 L 176 92 M 104 104 L 176 104', 3), ink(og, 'M 56 176 L 224 176 L 224 270 L 56 270 Z', 5), ink(og, 'M 80 206 L 200 206 M 80 236 L 170 236', 4, C.deep),
+    ink(og, 'M 186 216 C 196 196, 214 196, 214 214 C 200 214, 192 220, 186 230', 4, C.deep)];
+  const plus = [ink(g, 'M 556 520 L 556 600', 9), ink(g, 'M 516 561 L 596 559', 9)];
+  const ticks = bullets(pg, g, ['b0', 'b1', 'b2']);
+  const tag = priceTag(pg, g, 92, 1168, 468, 236, -3);
+  const pr = K(pg, 'price'); pr.style.transformOrigin = '50% 60%';
+  const wp = rect(document.getElementById('wasP'), pg.el);
+  const strike = ink(g, `M ${f1(wp.x - 8)} ${f1(wp.cy + 6)} C ${f1(wp.x + wp.w * .4)} ${f1(wp.cy)}, ${f1(wp.x + wp.w * .7)} ${f1(wp.cy + 8)}, ${f1(wp.r + 10)} ${f1(wp.cy + 2)}`, 5, C.coral);
+  // the stamp ring
+  const st = pg.el.querySelector('.stampring');
+  const ring1 = S('path', st, { d: loop(135, 115, 128, 104, 1.03, 0, [0.006, -0.008, 0.005]), fill: 'none', stroke: C.coral, 'stroke-width': 7 });
+  const ring2 = S('path', st, { d: loop(135, 115, 112, 90, 1.03, 1, [0.006, -0.008, 0.005]), fill: 'none', stroke: C.coral, 'stroke-width': 3.5 });
+  return t => {
+    const q = P('bundle', 'brace', t); drawSeq(brace, q); bw.set(q * 1.4 - 0.3);
+    const o = P('bundle', 'bottle', t); drawSeq(bottle, o); ow.set(o * 1.4 - 0.3); lw.set(o * 1.6 - 0.5);
+    drawSeq(plus, P('bundle', 'plus', t));
+    ticks.forEach((tk, i) => setDraw(tk, P('bundle', `k${i}`, t)));
+    tag(P('bundle', 'tag', t));
+    const e = E('bundle', 'price'), s = track(t, 1, [[e.t + e.d, 1.08, 'snappy'], [e.t + e.d + 0.1, 1, 'default']]);
+    pr.style.transform = `rotate(-3deg) scale(${s.toFixed(4)})`;
+    setDraw(strike, P('bundle', 'strike', t));
+  };
+});
+
+/* ================= PRODUCTS: ramp ================= */
+page('ramp', (g, pg) => {
+  const ag = S('g', g), au = S('g', pg.under);
+  const car = 'M 600 820 L 600 600 C 600 560, 640 520, 700 470 L 940 450 L 1000 450 L 1000 820 Z';
+  const cw = wash(pg, au, car, C.sand, [9, 7], 1);
+  const parts = [ink(ag, 'M 60 872 C 300 878, 700 866, 1020 872', 7), ink(ag, car, 7), ink(ag, 'M 610 640 L 1000 640', 5),
+    ink(ag, 'M 700 470 L 640 360 L 940 344 L 940 450', 6), ink(ag, circ(860, 830, 56), 7), ink(ag, circ(860, 830, 18), 5),
+    ink(ag, 'M 636 600 L 690 600 L 690 640', 5, C.mute)];
+  const plank = [ink(ag, 'M 150 866 L 612 644', 34), ink(ag, 'M 150 866 L 612 644', 18, C.mint), ink(ag, circ(381, 755, 12), 5)];
+  for (let u = 0.12; u < 0.95; u += 0.12) { if (Math.abs(u - 0.5) < 0.05) continue; const x = 150 + 462 * u, y = 866 - 222 * u; plank.push(ink(ag, `M ${f1(x - 8)} ${f1(y - 14)} L ${f1(x + 8)} ${f1(y + 14)}`, 5)); }
+  // the note's arrow, from "no jumping" down to the ramp
+  const nr = rect(K(pg, 'note'), pg.el);
+  const arrow = ink(g, `M ${f1(nr.cx + 40)} ${f1(nr.b + 14)} C ${f1(nr.cx + 60)} ${f1(nr.b + 90)}, 300 760, 330 780`, 7, C.coral), ah = ink(g, head(330, 780, 0.6, 26), 7, C.coral);
+  const tag = priceTag(pg, g, 92, 976, 468, 236, -2.5);
+  const pr = K(pg, 'price'); pr.style.transformOrigin = '50% 60%';
+  const ticks = bullets(pg, g, ['b0', 'b1']);
+  return t => {
+    const q = P('ramp', 'art', t);
+    drawSeq([...parts, ...plank], q); cw.set(q * 1.5 - 0.4);
+    drawSeq([arrow, ah], P('ramp', 'arrow', t));
+    tag(P('ramp', 'tag', t));
+    const e = E('ramp', 'price'), s = track(t, 1, [[e.t + e.d, 1.08, 'snappy'], [e.t + e.d + 0.1, 1, 'default']]);
+    pr.style.transform = `rotate(-2.5deg) scale(${s.toFixed(4)})`;
+    ticks.forEach((tk, i) => setDraw(tk, P('ramp', `k${i}`, t)));
+  };
+});
+
+/* ================= PRODUCTS: harness ================= */
+page('harness', (g, pg) => {
+  const hg = S('g', g), hu = S('g', pg.under);
+  const body = 'M 100 700 C 100 640, 600 640, 600 700 L 600 800 C 600 850, 100 850, 100 800 Z';
+  const w = wash(pg, hu, body, C.mint, [9, 7], 1);
+  const parts = [ink(hg, body, 8), ink(hg, 'M 130 720 C 300 690, 400 690, 570 720', 4, C.deep), ink(hg, 'M 130 760 C 300 730, 400 730, 570 760', 4, C.deep),
+    ink(hg, 'M 180 680 C 172 560, 290 560, 282 676', 16), ink(hg, 'M 420 676 C 412 560, 530 560, 522 680', 16),
+    ink(hg, 'M 170 836 C 160 900, 230 912, 248 856 M 530 836 C 540 900, 470 912, 452 856', 7),
+    ink(hg, 'M 96 740 L 40 760 L 40 800 L 100 790', 6), ink(hg, 'M 604 740 L 660 752 L 660 792 L 600 790', 6),
+    ink(hg, 'M 326 712 L 374 712 L 374 744 L 326 744 Z', 5)];
+  const up = [ink(hg, 'M 350 590 L 350 528', 7, C.deep), ink(hg, head(350, 526, -Math.PI / 2, 22), 7, C.deep)];
+  const nr = rect(K(pg, 'note'), pg.el);
+  const arrow = ink(g, `M ${f1(nr.x - 14)} ${f1(nr.cy + 20)} C ${f1(nr.x - 80)} ${f1(nr.cy + 40)}, 560 620, 528 612`, 7, C.coral), ah = ink(g, head(528, 612, 3.6, 26), 7, C.coral);
+  const tag = priceTag(pg, g, 436, 976, 500, 236, 2.5);
+  const pr = K(pg, 'price'); pr.style.transformOrigin = '50% 60%';
+  const ticks = bullets(pg, g, ['b0', 'b1']);
+  return t => {
+    const q = P('harness', 'art', t);
+    drawSeq(parts, q); w.set(q * 1.4 - 0.3);
+    const e = E('harness', 'lift'); drawSeq(up, crit(t - e.t, e.d));
+    const y = track(t, 0, [[e.t, -34, 'default'], [e.t + 0.5, -10, 'heavy']]);
+    hg.setAttribute('transform', `translate(0 ${f1(y)})`); hu.setAttribute('transform', `translate(0 ${f1(y)})`);
+    drawSeq([arrow, ah], P('harness', 'arrow', t));
+    tag(P('harness', 'tag', t));
+    const ep = E('harness', 'price'), s = track(t, 1, [[ep.t + ep.d, 1.08, 'snappy'], [ep.t + ep.d + 0.1, 1, 'default']]);
+    pr.style.transform = `rotate(2.5deg) scale(${s.toFixed(4)})`;
+    ticks.forEach((tk, i) => setDraw(tk, P('harness', `k${i}`, t)));
+  };
+});
+
+/* ================= PRODUCTS: wheelchair ================= */
+page('wheel', (g, pg) => {
+  const sw = rect(document.getElementById('stopw'), pg.el);
+  const ul = ink(g, under(sw, 0.95), 9, C.coral);
+  const wg = S('g', g), wu = S('g', pg.under);
+  const W1 = [330, 790], W2 = [770, 790], R = 128;
+  const sling = 'M 330 610 C 380 700, 720 700, 770 610 L 770 640 C 720 730, 380 730, 330 640 Z';
+  const sw0 = wash(pg, wu, sling, C.mint, [8, 6], 1);
+  const parts = [];
+  [W1, W2].forEach(([x, y]) => {
+    parts.push(ink(wg, circ(x, y, R), 9), ink(wg, circ(x, y, R - 22), 4, C.mute), ink(wg, circ(x, y, 14), 6));
+    for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4 + 0.2; parts.push(ink(wg, `M ${f1(x + Math.cos(a) * 16)} ${f1(y + Math.sin(a) * 16)} L ${f1(x + Math.cos(a) * (R - 24))} ${f1(y + Math.sin(a) * (R - 24))}`, 3, C.mute)); }
+  });
+  parts.push(ink(wg, 'M 330 790 L 360 600 M 770 790 L 740 600', 9), ink(wg, 'M 260 600 L 860 600', 10), ink(wg, sling, 6),
+    ink(wg, 'M 260 600 C 220 600, 210 560, 236 540', 8), ink(wg, 'M 860 600 C 900 600, 910 560, 884 540', 8));
+  const tag = priceTag(pg, g, 92, 1150, 700, 196, -2);
+  const pr = K(pg, 'price'); pr.style.transformOrigin = '30% 60%';
+  const stars = [], sfill = [];
+  for (let i = 0; i < 5; i++) { const d = star(110 + i * 64, 1394, 28); sfill.push(wash(pg, pg.under, d, C.coral, [4, 3], 0.95)); stars.push(ink(g, d, 4)); }
+  return t => {
+    setDraw(ul, P('wheel', 'title', t) * 1.2 - 0.2);
+    const q = P('wheel', 'art', t); drawSeq(parts, q); sw0.set(q * 1.5 - 0.4);
+    tag(P('wheel', 'tag', t));
+    const e = E('wheel', 'price'), s = track(t, 1, [[e.t + e.d, 1.08, 'snappy'], [e.t + e.d + 0.1, 1, 'default']]);
+    pr.style.transform = `rotate(-2deg) scale(${s.toFixed(4)})`;
+    const sq = P('wheel', 'stars', t);
+    stars.forEach((p, i) => { setDraw(p, sq * 5 - i); sfill[i].set(sq * 5 - i - 0.3, false, i === 4 ? 0.8 : 1); });
+  };
+});
+
+/* ================= PROOF ================= */
+page('proof', (g, pg) => {
+  const stars = [], sfill = [];
+  for (let i = 0; i < 5; i++) { const d = star(560 + i * 90, 302, 40, [1, .97, 1.03, .98, 1.02].map((v, k) => v + (i % 2 ? 0.01 : -0.01) * k)); sfill.push(wash(pg, pg.under, d, C.coral, [5, 4], 0.95)); stars.push(ink(g, d, 5)); }
+  const cards = [0, 1].map(i => {
+    const c = K(pg, `card${i}`), who = K(pg, `who${i}`);
+    const sv = S('svg', c, { width: 400, height: 60, style: `position:absolute;left:${who.offsetLeft + who.offsetWidth + 22}px;top:${who.offsetTop + 2}px;overflow:visible;filter:url(#boil)` });
+    const n = i === 0 ? 5 : 4, ss = [], ff = [];
+    const dd = S('defs', sv);
+    for (let k = 0; k < n; k++) { const d = star(26 + k * 52, 28, 22); const p = S('path', sv, { d, fill: C.coral, opacity: 0 }); ff.push(p); ss.push(ink(sv, d, 3.5)); }
+    return { c, ss, ff };
+  });
+  return t => {
+    const q = P('proof', 'stars', t);
+    stars.forEach((p, i) => { setDraw(p, q * 5 - i); sfill[i].set(q * 5 - i - 0.3, false, i === 4 ? 0.6 : 1); });
+    cards.forEach((cd, i) => {
+      landing(cd.c, t, E('proof', `card${i}`), [i ? 260 : -260, 1100, i ? 10 : -10], i ? 1.1 : -1.2);
+      const sq = P('proof', `st${i}`, t);
+      cd.ss.forEach((p, k) => { setDraw(p, sq * cd.ss.length - k); cd.ff[k].setAttribute('opacity', clamp((sq * cd.ss.length - k) * 1.5 - 0.3).toFixed(2)); });
+    });
+  };
+});
+
+/* ================= OFFER + CTA ================= */
+page('offer', (g, pg) => {
+  const tr = rect(document.getElementById('ten'), pg.el);
+  const ring = ink(g, loop(tr.cx + 4, tr.cy + 8, tr.w * 0.68, tr.h * 0.52, 1.16, -2.6), 10, C.coral);
+  const tw = wash(pg, pg.under, closed(box(tr.x - 14, tr.y + tr.h * 0.3, tr.w + 28, tr.h * 0.62, 20, undefined, 0)), C.mint, [6, 5], 1);
+  // the coupon: a ticket with notches, a dashed cut line and scissors
+  const X = 96, Y = 486, W = 888, H = 266, m = Y + H / 2;
+  const tk = `M ${X + 20} ${Y} L ${X + W - 20} ${Y} Q ${X + W} ${Y} ${X + W} ${Y + 20} L ${X + W} ${m - 30} C ${X + W - 40} ${m - 30}, ${X + W - 40} ${m + 30}, ${X + W} ${m + 30} L ${X + W} ${Y + H - 20} Q ${X + W} ${Y + H} ${X + W - 20} ${Y + H} L ${X + 20} ${Y + H} Q ${X} ${Y + H} ${X} ${Y + H - 20} L ${X} ${m + 30} C ${X + 40} ${m + 30}, ${X + 40} ${m - 30}, ${X} ${m - 30} L ${X} ${Y + 20} Q ${X} ${Y} ${X + 20} ${Y} Z`;
+  const cw = wash(pg, pg.under, tk, '#FFF8E6', [7, 6], 1);
+  const outline = ink(g, tk, 6);
+  const dash = S('path', g, { d: box(X + 54, Y + 22, W - 108, H - 44, 14, [1, -1, 1, -1, 1, -1, 1, -1], 0), fill: 'none', stroke: C.coral, 'stroke-width': 4, 'stroke-dasharray': '16 12', 'stroke-linecap': 'round' });
+  const dclip = S('rect', S('clipPath', pg.defs, { id: 'dashclip' }), { x: X, y: Y - 40, width: 0, height: H + 80 });
+  dash.setAttribute('clip-path', 'url(#dashclip)');
+  const sc = S('g', g);
+  [ink(sc, circ(-16, -12, 11), 5), ink(sc, circ(-16, 14, 11), 5), ink(sc, 'M -6 -6 L 30 10 M -6 8 L 30 -8', 5)];
+  // the checks
+  const ticks = bullets(pg, g, ['d0', 'd1']);
+  // the button
+  const cta = K(pg, 'cta'), cr = rect(cta, pg.el);
+  const arrowW = 74, gap = 22, bwid = cr.w + gap + arrowW + 92, bx = (1080 - bwid) / 2;
+  cta.style.left = (bx + 48) + 'px';
+  const ax = bx + 48 + cr.w + gap, ay = cr.y + cr.h * 0.58;
+  const btn = S('g', g), bu = S('g', pg.under);
+  const BY = cr.y - 26, BH = cr.h + 52;
+  const bd = box(bx, BY, bwid, BH, 56, [3, -4, 3, -3, 4, -3, 3, -4], 40);
+  const bw = wash(pg, bu, closed(bd), C.mint, [8, 7], 1), bk = ink(btn, bd, 7);
+  const ar = ink(btn, `M ${f1(ax)} ${f1(ay)} L ${f1(ax + arrowW)} ${f1(ay - 3)}`, 8), arh = ink(btn, head(ax + arrowW, ay - 3, 0, 28), 8);
+  const bcx = bx + bwid / 2, bcy = BY + BH / 2;
+  // logo lockup: mark + wordmark, centred
+  const nm = K(pg, 'name'), MS = 76, lw = MS + 22 + nm.offsetWidth, lx = (1080 - lw) / 2, ly = 1322;
+  nm.style.left = (lx + MS + 22) + 'px'; nm.style.top = (ly + MS / 2 - nm.offsetHeight / 2) + 'px';
+  const mk = box(lx, ly, MS, MS, MS * 0.24, [1, -1, 1, -1, 1, -1, 1, -1], 0);
+  const mw = wash(pg, pg.under, mk + ' Z', C.mark, [3, 3], 1), me = ink(g, box(lx, ly, MS, MS, MS * 0.24, [1, -1, 1, -1, 1, -1, 1, -1], 14), 4);
+  const pv = ink(g, `M ${lx + MS / 2} ${ly + 18} L ${lx + MS / 2} ${ly + MS - 18}`, 12, C.white), ph = ink(g, `M ${lx + 18} ${ly + MS / 2} L ${lx + MS - 18} ${ly + MS / 2}`, 12, C.white);
+  return t => {
+    setDraw(ring, P('offer', 'hl', t)); tw.set(P('offer', 'hl', t) * 1.2 - 0.1);
+    const q = P('offer', 'coupon', t);
+    setDraw(outline, q); cw.set(q * 1.3 - 0.2);
+    const ce = E('offer', 'cut'), cq = crit(t - ce.t, ce.d);
+    dclip.setAttribute('width', f1((W + 20) * cq));
+    const sx = X + 40 + (W - 80) * cq;
+    sc.setAttribute('transform', `translate(${f1(sx)} ${Y + 22}) rotate(${f1(Math.sin(t * 28) * 10 * (cq > 0.02 && cq < 0.97 ? 1 : 0))})`);
+    sc.style.visibility = cq > 0.01 && t < ce.t + ce.d + 0.5 ? 'visible' : 'hidden';
+    ticks.forEach((tk2, i) => setDraw(tk2, P('offer', `dk${i}`, t)));
+    const bq = P('offer', 'btn', t);
+    bw.set(bq); setDraw(bk, bq * 1.15);
+    drawSeq([ar, arh], P('offer', 'arrowR', t));
+    const e = E('offer', 'press'), s = track(t, 1, [[e.t, 0.93, 'snappy'], [e.t + 0.13, 1, 'default']]);
+    const trn = `translate(${bcx} ${bcy}) scale(${s.toFixed(4)}) translate(${-bcx} ${-bcy})`;
+    btn.setAttribute('transform', trn); bu.setAttribute('transform', trn);
+    cta.style.transformOrigin = `${f1(bcx - bx - 48)}px ${f1(bcy - cr.y)}px`; cta.style.transform = `scale(${s.toFixed(4)})`;
+    const mq = P('offer', 'mark', t);
+    mw.set(mq); setDraw(me, mq * 1.2); drawSeq([pv, ph], mq * 1.4 - 0.4);
+  };
+});
+
+/* ---------- page turns: the sheet lifts, catches the light, and slides away ---------- */
+const LIFT = { hook: [-1, -0.12, -8], signs: [1, -0.08, 7], what: [-1, 0.06, -6], rest: [0.1, -1, -3], helps: [1, -0.1, 7], bundle: [-1, -0.08, -6],
+  ramp: [1, 0.05, 6], harness: [-1, -0.1, -7], wheel: [0.08, -1, 3], proof: [-1, -0.06, -6] };
+function renderFrame(t) {
+  const seed = 1 + Math.floor(t * FPS / 4) % 8; // line boil: a new fixed noise seed every 4 frames
+  document.querySelectorAll('.turb').forEach(f => f.setAttribute('seed', seed));
+  TL.ORDER.forEach((id, i) => {
+    const pg = pages[id], nid = TL.ORDER[i + 1], nx = nid ? TL.PAGES[nid] : null;
+    const T = nx ? nx.t0 : Infinity;
+    const on = (i === 0 || t >= pg.t0 - 0.15) && t < T + 1.0;
+    if (!on) { pg.el.style.display = 'none'; return; }
+    pg.el.style.display = 'block';
+    pg.el.style.zIndex = 100 - i;
+    if (t >= T - 0.12) {
+      const [dx, dy, dr] = LIFT[id];
+      const k = spring(t - T - 0.02, { w: 9.0, z: 0.9 });
+      const lift = track(t, 0, [[T - 0.12, 1, 'snappy'], [T + 0.3, 0.4, 'default']]);
+      pg.el.style.transform = `translate(${f1(dx * 1560 * k)}px,${f1(dy * 2200 * k - 22 * lift)}px) rotate(${(dr * k + dr * 0.25 * lift).toFixed(3)}deg) scale(${(1 + 0.025 * lift).toFixed(4)})`;
+      pg.el.style.boxShadow = `${f1(-dx * 10)}px ${f1(16 + 30 * lift)}px ${f1(40 + 40 * lift)}px rgba(60,40,15,${(0.32 * clamp(k * 5 + lift)).toFixed(3)})`;
+      const dir = dx < -0.5 ? 'to left' : dx > 0.5 ? 'to right' : 'to top';
+      pg.sheen.style.background = `linear-gradient(${dir}, rgba(255,255,255,0.35), rgba(255,255,255,0) 40%, rgba(80,60,30,0.10))`;
+      pg.sheen.style.opacity = clamp(lift + k).toFixed(3);
+    } else { pg.el.style.transform = 'none'; pg.el.style.boxShadow = 'none'; pg.sheen.style.opacity = 0; }
+    updatePage(pg, t);
+  });
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all(['700 100px Caveat', '400 40px Kalam', '700 40px Kalam', '800 40px Inter', '700 40px Inter'].map(f => document.fonts.load(f)))
+  .then(() => document.fonts.ready).then(() => {
+    const tex = paperTexture();
+    Object.values(pages).forEach(pg => { pg.el.style.backgroundImage = `url(${tex})`; pg.el.style.display = 'block'; });
+    prepare();
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'none'; });
+    return true;
+  });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const stage = document.getElementById('stage');
+  const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `translate(${(innerWidth - 1080 * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { window.renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
