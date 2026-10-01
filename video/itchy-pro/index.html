@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Itchy Skin Film</title>
+<style>
+@font-face{font-family:Domine;font-weight:400 700;src:url(fonts/domine-normal.woff2) format('woff2')}
+@font-face{font-family:Figtree;font-style:normal;font-weight:300 900;src:url(fonts/figtree-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 900;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 900;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--dark);transform-origin:0 0;font-family:var(--sans);color:var(--ink)}
+/* ---------- themes ---------- */
+.t-new{--btnr:14px;--dark:#0F4C48;--deep:#0A3A37;--light:#FFFFFF;--pale:#E4EED6;--pale2:#F3F6F1;--accent:#DFE43A;--accent2:#DFE43A;--ink:#0E2A28;--mute:#5B6B69;--line:#E3E8E6;--plinth:#155A54;--plinth2:#0C403C;--gold:#F2B418;
+  --serif:Domine,serif;--sans:Figtree,sans-serif;--hw:500;--emw:700;--ems:normal;--emLight:var(--dark);--emDark:var(--accent);--track:-.02em;--dot:var(--dark)}
+.t-old{--btnr:999px;--dark:#0B2A23;--deep:#071F1A;--light:#FAF9F6;--pale:#EDF1EC;--pale2:#F3F0E8;--accent:#9FE8C9;--accent2:#C25E2E;--ink:#101B17;--mute:#5E6E66;--line:#E6E2D8;--plinth:#133A31;--plinth2:#0A231D;--gold:#C9982E;
+  --serif:Fraunces,serif;--sans:Inter,sans-serif;--hw:560;--emw:500;--ems:italic;--emLight:#A8542F;--emDark:var(--accent);--track:-.01em;--dot:#C25E2E}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;visibility:hidden}
+.scene.dark{background:var(--dark);color:#fff}
+.scene.light{background:var(--light)}
+.scene.pale{background:var(--pale2)}
+.cam{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px}
+.a{position:absolute}
+.hd{position:absolute;left:120px;width:840px;margin:0;white-space:nowrap;font-family:var(--serif);font-weight:var(--hw);letter-spacing:var(--track);line-height:1.04;font-size:120px;color:var(--ink)}
+.dark .hd{color:#fff}
+.hd em{font-style:var(--ems);font-weight:var(--emw);color:var(--emLight)}
+.dark .hd em{color:var(--emDark)}
+.hd em{position:relative;z-index:0}
+.t-old .hd,.t-old #s7num,.t-old #s7of,.t-old .rw,.t-old .serifx{font-variation-settings:'opsz' 72}
+.t-old .hd em,.t-old #s3c,.t-old .s7q,.t-old .s4n{font-variation-settings:'opsz' 9}
+.ln-mask{padding:.12em 0 .3em;margin:-.12em 0 -.3em}
+#s1{visibility:visible}
+.mk{position:absolute;left:-.12em;right:-.12em;top:.12em;bottom:.02em;border-radius:.16em;background:var(--accent);z-index:-1;transform-origin:0 50%}
+.t-old .mk{top:auto;bottom:.02em;height:.07em;border-radius:.04em;background:var(--accent2)}
+.dark .mk{display:none}
+.sub{position:absolute;left:120px;width:840px;margin:0;font:500 46px/1.32 var(--sans);color:var(--mute)}
+.dark .sub{color:rgba(255,255,255,.82)}
+.sub b{color:var(--ink);font-weight:700}
+.dark .sub b{color:var(--emDark)}
+.cap{font:800 26px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.panel{position:absolute;border-radius:28px;overflow:hidden}
+.card{position:absolute;background:#fff;border-radius:28px;box-shadow:0 1px 0 rgba(14,42,40,.05),0 26px 50px -30px rgba(14,42,40,.35)}
+.pill{display:inline-flex;align-items:center;font:800 24px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;border-radius:999px;white-space:nowrap}
+canvas{display:block}
+.prod{position:absolute;transform-origin:50% 100%}
+.prod canvas{position:absolute;left:0;top:0}
+.shadow{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0));transform-origin:50% 50%}
+.light .shadow,.pale .shadow{background:radial-gradient(closest-side,rgba(14,42,40,.32),rgba(14,42,40,0))}
+.mask-line{overflow:hidden;padding:.12em 0 .16em;margin:-.12em 0 -.16em}
+#grain{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;opacity:.07;mix-blend-mode:overlay;z-index:90}
+#vig{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;z-index:89;background:radial-gradient(1400px 1900px at 540px 900px,rgba(0,0,0,0) 55%,rgba(0,0,0,.16) 100%)}
+#wipe{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;z-index:80;overflow:hidden}
+#wipe div{position:absolute;left:-900px;width:2900px;transform-origin:50% 50%}
+.logo-old{display:flex;align-items:center;gap:16px}
+.logo-new{display:inline-block;font:700 46px/1 Domine,serif;color:#fff;border:3px solid var(--accent);border-radius:14px;padding:8px 16px 12px}
+.check{display:flex;align-items:center;gap:22px;font:600 40px/1.15 var(--sans)}
+.check i{flex:none;width:56px;height:56px;border-radius:50%;background:var(--accent);position:relative}
+.check i:after{content:'';position:absolute;left:19px;top:13px;width:12px;height:22px;border:solid var(--dark);border-width:0 6px 6px 0;transform:rotate(45deg)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============ S1 HOOK ============ -->
+<section class="scene dark" id="s1"><div class="cam">
+  <canvas class="a" id="s1glow" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <div class="a logo" style="left:120px;top:236px"></div>
+  <svg class="a" id="s1slash" style="left:0;top:0" width="1080" height="1920">
+    <path d="M590 1010 C628 880 690 700 772 512 C724 708 664 884 590 1010 Z"/><path d="M694 1034 C732 900 796 716 874 534 C830 724 768 904 694 1034 Z"/><path d="M798 1058 C834 926 884 760 934 596 C902 762 856 928 798 1058 Z"/>
+  </svg>
+  <div class="a" id="s1hx" style="left:0;top:0;width:1080px;height:1920px">
+    <h1 class="hd" id="s1h" style="top:600px;font-size:176px;line-height:.98">Scratching<br><em>all night?</em></h1>
+  </div>
+  <div class="plinth" id="s1plinth" data-cx="540" data-top="1452" data-rx="400" data-body="40"></div>
+  <div class="shadow s1sh"></div><div class="shadow s1sh"></div><div class="shadow s1sh"></div><div class="shadow s1sh"></div>
+  <div class="prod s1p" data-img="salmon" data-h="268" data-floor="1452"></div>
+  <div class="prod s1p" data-img="chews" data-h="152" data-floor="1452"></div>
+  <div class="prod s1p" data-img="balm" data-h="128" data-floor="1452"></div>
+  <div class="prod s1p" data-img="spray" data-h="254" data-floor="1452"></div>
+  <p class="sub" id="s1p" style="top:1012px">What’s really going on,<br>and what actually <b>helps.</b></p>
+</div></section>
+
+<!-- ============ S2 CAUSE ============ -->
+<section class="scene light" id="s2"><div class="cam">
+  <h2 class="hd" id="s2h" style="top:250px;font-size:112px">An over-reaction<br>to something<br><em>ordinary.</em></h2>
+  <div class="panel" id="s2panel" style="left:120px;top:690px;width:840px;height:700px;background:var(--pale);box-shadow:inset 0 0 0 1.5px rgba(14,42,40,.08)">
+    <canvas class="a" id="s2fx" width="840" height="700" style="left:0;top:0"></canvas>
+    <div class="a" id="s2dark" style="left:0;top:0;width:100%;height:100%;background:var(--dark);clip-path:circle(0px at 420px 310px)"></div>
+    <div class="a cap" id="s2num" style="left:56px;top:56px;color:var(--mute)">01 / 04</div>
+    <div class="a" id="s2rot" style="left:0;top:255px;width:840px;height:190px;overflow:hidden">
+      <div id="s2words" style="position:absolute;left:0;top:0;width:840px">
+        <div class="rw">Pollen.</div><div class="rw">Grass.</div><div class="rw">Dust mites.</div><div class="rw">A food.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ S3 CYCLE ============ -->
+<section class="scene dark" id="s3"><div class="cam">
+  <h2 class="hd" id="s3h" style="top:250px;font-size:112px">Then it turns<br>into a <em>loop.</em></h2>
+  <svg class="a" id="s3ring" style="left:0;top:0" width="1080" height="1920">
+    <defs><path id="ringp" d="M540 970 m-318 0 a318 318 0 1 1 636 0 a318 318 0 1 1 -636 0"/></defs>
+    <circle id="s3track" cx="540" cy="970" r="268" fill="none" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round"/>
+    <g id="s3rot"><text id="s3text" font-size="37" font-weight="800" letter-spacing="5" textLength="1975" lengthAdjust="spacing"><textPath href="#ringp" startOffset="0">SKIN GETS INFLAMED  •  YOUR DOG SCRATCHES  •  THE SCRATCHING MAKES IT WORSE  •  </textPath></text></g>
+    <circle id="s3disc" cx="540" cy="970" r="200"/>
+    <g id="s3arrow"><path d="M0 -268 a268 268 0 0 1 120 28" fill="none" stroke-width="10" stroke-linecap="round"/><path d="M98 -262 L126 -236 L92 -224" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </svg>
+  <div class="a" id="s3c" style="left:340px;width:400px;top:916px;text-align:center;font:var(--emw) 82px/1 var(--serif);font-style:var(--ems);letter-spacing:-.02em">on repeat</div>
+  <p class="sub" id="s3p" style="top:1352px">Help break it from the <b>inside</b><br>and the <b>outside.</b></p>
+</div></section>
+
+<!-- ============ S4 SIGNS ============ -->
+<section class="scene pale" id="s4"><div class="cam" style="perspective:1400px">
+  <h2 class="hd" id="s4h" style="top:250px;font-size:128px">Sound<br><em>familiar?</em></h2>
+  <div id="s4cards"></div>
+  <p class="sub" id="s4p" style="top:1372px">You’re not alone. <b>Here’s where to start.</b></p>
+</div></section>
+
+<!-- ============ S5 ROUTINE ============ -->
+<section class="scene light" id="s5"><div class="cam">
+  <h2 class="hd" id="s5h" style="top:250px;font-size:112px">What actually<br><em>helps.</em></h2>
+  <div class="panel" id="s5a" style="left:120px;top:560px;width:840px;height:420px;background:var(--dark);color:#fff;overflow:visible">
+    <div class="a cap" style="left:56px;top:60px;color:var(--accent)">01 · Inside</div>
+    <div class="a" style="left:56px;top:110px;font:var(--hw) 70px/1.06 var(--serif);letter-spacing:var(--track)">Omega 3<br>every day.</div>
+    <div class="a" style="left:56px;top:300px;width:420px;font:500 32px/1.3 var(--sans);color:rgba(255,255,255,.8)">To calm the skin<br>from inside.</div>
+    <div class="shadow" id="s5ssh" style="left:600px;top:376px;width:200px;height:28px"></div>
+    <div class="prod" id="s5salmon" data-img="salmon" data-h="640" style="left:612px;top:32px;transform-origin:0 0"></div>
+  </div>
+  <div class="panel" id="s5b" style="left:120px;top:1004px;width:408px;height:344px;background:var(--pale)">
+    <div class="a cap" style="left:40px;top:44px;color:var(--emLight)">02 · Outside</div>
+    <div class="a" style="left:40px;top:92px;font:var(--hw) 46px/1.1 var(--serif);letter-spacing:var(--track);color:var(--ink)">A gentle wash<br>and a balm.</div>
+    <div class="shadow" id="s5bsh" style="left:218px;top:318px;width:170px;height:22px"></div>
+    <div class="prod" id="s5balm" data-img="balm" data-h="128" style="left:244px;top:200px"></div>
+  </div>
+  <div class="panel" id="s5c" style="left:552px;top:1004px;width:408px;height:344px;background:var(--accent)">
+    <div class="a cap" style="left:40px;top:44px;color:var(--dark)">03 · Routine</div>
+    <div class="a serifx" style="left:40px;top:92px;white-space:nowrap;font:var(--hw) 42px/1.12 var(--serif);letter-spacing:var(--track);color:var(--dark)">A flea routine<br>underneath<br>it all.</div>
+  </div>
+  <div class="a" id="s5pill" style="left:120px;top:1372px;width:840px;height:96px;border-radius:999px;background:var(--pale2);display:flex;align-items:center;justify-content:space-between;padding:0 44px;box-sizing:border-box">
+    <span style="font:600 34px/1 var(--sans);color:var(--ink)">Most dogs settle in <b style="font-weight:800">2–3 weeks</b></span>
+    <span style="font:800 26px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--emLight)">Give it time</span>
+  </div>
+</div></section>
+
+<!-- ============ S6a INSIDE ============ -->
+<section class="scene dark" id="s6a"><div class="cam">
+  <canvas class="a" id="s6aglow" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <h2 class="hd" id="s6ah" style="top:250px;font-size:112px">Calm the skin<br>from the <em>inside.</em></h2>
+  <div class="plinth" id="s6aplinth" data-cx="540" data-top="1250" data-rx="420" data-body="70"></div>
+  <div class="shadow" id="s6ash1"></div><div class="shadow" id="s6ash2"></div>
+  <div class="prod" id="s6asalmon" data-img="salmon" data-h="640" data-cx="324" data-floor="1250"></div>
+  <div class="prod" id="s6achews" data-img="chews" data-h="356" data-cx="756" data-floor="1250"></div>
+  <div class="card plaque" id="s6ap1" style="left:120px;top:1360px;width:408px;height:116px"><div class="a" style="left:32px;top:24px;font:700 30px/1.15 var(--sans);color:var(--ink)">Scottish<br>Salmon Oil</div><div class="a" style="right:32px;top:32px;font:800 52px/1 var(--sans);color:var(--ink);letter-spacing:-.02em">£9.99</div></div>
+  <div class="card plaque" id="s6ap2" style="left:552px;top:1360px;width:408px;height:116px"><div class="a" style="left:32px;top:24px;font:700 30px/1.15 var(--sans);color:var(--ink)">Itch Relief<br>Chews</div><div class="a" style="right:32px;top:32px;font:800 52px/1 var(--sans);color:var(--ink);letter-spacing:-.02em">£29.99</div></div>
+  <div class="a pill" id="s6ab1" style="left:152px;top:1340px;background:var(--accent);color:var(--dark)">Best seller</div>
+  <div class="a pill" id="s6ab2" style="left:584px;top:1340px;background:#fff;color:var(--dark)">Made in the UK</div>
+</div></section>
+
+<!-- ============ S6b OUTSIDE ============ -->
+<section class="scene light" id="s6b"><div class="cam">
+  <canvas class="a" id="s6bglow" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <h2 class="hd" id="s6bh" style="top:250px;font-size:112px">Soothe the<br><em>sore bits.</em></h2>
+  <div class="shadow" id="s6bsh"></div><div class="shadow" id="s6bsh2" style="left:262px;top:1080px;width:340px;height:30px;opacity:.6"></div>
+  <div class="prod" id="s6bbalm" data-img="balm" data-h="540" data-cx="540" data-floor="1236" data-reflect="1"></div>
+  <svg class="a" id="s6blead" style="left:0;top:0" width="1080" height="1920" fill="none"></svg>
+  <div class="a chipx" id="s6bc1" style="left:120px;top:540px" data-to="318,742">Natural<br>&amp; organic</div>
+  <div class="a chipx" id="s6bc2" style="right:120px;top:600px" data-to="500,950">Chamomile</div>
+  <div class="a chipx" id="s6bc3" style="right:120px;top:810px" data-to="808,1172">Soothes<br>redness</div>
+  <div class="card" id="s6bp" style="left:120px;top:1320px;width:840px;height:148px">
+    <div class="a" style="left:40px;top:36px;font:700 34px/1 var(--sans);color:var(--ink)">Itch Relief Skin Balm</div>
+    <div class="a" style="left:40px;top:88px;font:600 28px/1 var(--sans);color:var(--emLight)">£8.49 on subscribe &amp; save</div>
+    <div class="a" style="right:40px;top:42px;font:800 68px/1 var(--sans);color:var(--ink);letter-spacing:-.02em">£9.99</div>
+  </div>
+</div></section>
+
+<!-- ============ S6c HOT SPOTS ============ -->
+<section class="scene dark" id="s6c"><div class="cam">
+  <canvas class="a" id="s6cglow" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <h2 class="hd" id="s6ch" style="top:250px;font-size:112px">Hot spots?<br><em>Spray. Leave.</em></h2>
+  <div class="plinth" id="s6cplinth" data-cx="660" data-top="1290" data-rx="300" data-body="60"></div>
+  <div class="shadow" id="s6csh"></div>
+  <div class="prod" id="s6cspray" data-img="spray" data-h="740" data-cx="626" data-floor="1290"></div>
+  <canvas class="a" id="s6cmist" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <div class="a" id="s6cchecks" style="left:120px;top:880px;display:flex;flex-direction:column;gap:34px;color:#fff">
+    <div class="check"><i></i><span>No steroids</span></div>
+    <div class="check"><i></i><span>No rinse</span></div>
+    <div class="check"><i></i><span>Gentle on<br>sensitive skin</span></div>
+  </div>
+  <div class="card" id="s6cp" style="left:120px;top:1360px;width:840px;height:116px">
+    <div class="a" style="left:40px;top:26px;font:700 34px/1 var(--sans);color:var(--ink)">Hot Spot &amp; Itch Relief Spray</div>
+    <div class="a" style="left:40px;top:72px;font:600 28px/1 var(--sans);color:var(--mute)">250ml</div>
+    <div class="a" style="right:40px;top:26px;font:800 66px/1 var(--sans);color:var(--ink);letter-spacing:-.02em">£12.99</div>
+  </div>
+</div></section>
+
+<!-- ============ S7 PROOF ============ -->
+<section class="scene light" id="s7"><div class="cam">
+  <div class="a" id="s7num" style="left:114px;top:236px;font:var(--hw) 300px/1 var(--serif);letter-spacing:-.04em;color:var(--ink)">4.6</div>
+  <div class="a" id="s7of" style="left:600px;top:396px;font:var(--hw) 84px/1 var(--serif);color:var(--mute)">/5</div>
+  <div class="a" id="s7stars" style="left:120px;top:580px;display:flex;gap:14px"></div>
+  <div class="a" id="s7cnt" style="left:120px;top:690px;font:600 38px/1 var(--sans);color:var(--mute)"></div>
+  <div class="a" id="s7rail" style="left:120px;top:800px;height:600px;display:flex;gap:120px"></div>
+</div></section>
+
+<!-- ============ S8 END ============ -->
+<section class="scene dark" id="s8"><div class="cam">
+  <canvas class="a" id="s8glow" width="1080" height="1920" style="left:0;top:0"></canvas>
+  <div class="a logo" id="s8logo" style="top:232px"></div>
+  <h2 class="hd" id="s8h" style="top:318px;font-size:76px;text-align:center">Find the right support<br>for your dog’s<br><em>itchy skin.</em></h2>
+  <div class="a" id="s8sub" style="left:120px;width:840px;top:604px;text-align:center;font:600 30px/1 var(--sans);color:rgba(255,255,255,.75)">The UK’s pet health &amp; recovery specialist</div>
+  <div class="plinth" id="s8plinth" data-cx="540" data-top="1010" data-rx="420" data-body="36"></div>
+  <div class="shadow s8sh"></div><div class="shadow s8sh"></div><div class="shadow s8sh"></div><div class="shadow s8sh"></div>
+  <div class="prod s8p" data-img="salmon" data-h="345" data-floor="1010"></div>
+  <div class="prod s8p" data-img="chews" data-h="195" data-floor="1010"></div>
+  <div class="prod s8p" data-img="balm" data-h="165" data-floor="1010"></div>
+  <div class="prod s8p" data-img="spray" data-h="327" data-floor="1010"></div>
+  <div class="a" id="s8tk" style="left:120px;top:1124px;width:840px;height:112px;border-radius:20px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)">
+    <div class="a" style="left:40px;top:26px;font:800 30px/1.1 var(--sans);color:#fff">10% off your<br>first order</div>
+    <div class="a" style="left:452px;top:24px;width:2px;height:64px;background:rgba(255,255,255,.18)"></div>
+    <div class="a" style="right:40px;top:22px;font:800 68px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--accent)">POORLY10</div>
+  </div>
+  <div class="a" id="s8btn" style="left:120px;top:1260px;width:840px;height:104px;border-radius:var(--btnr);background:var(--accent);overflow:hidden">
+    <div class="a" style="left:0;width:840px;top:28px;text-align:center;font:800 48px/1 var(--sans);color:var(--dark)">Shop itchy skin <span id="s8arr" style="display:inline-block">→</span></div>
+    <div class="a" id="s8rip" style="border-radius:50%;background:rgba(255,255,255,.55)"></div>
+  </div>
+  <div class="a" id="s8trust" style="left:120px;width:840px;top:1388px;text-align:center;font:600 28px/1.35 var(--sans);color:rgba(255,255,255,.8)"></div>
+  <div class="a" id="s8url" style="left:120px;width:840px;top:1530px;text-align:center;font:700 38px/1 var(--sans);color:#fff">poorly-pet.com</div>
+  <div class="a" id="s8band" style="left:0;top:1800px;width:1080px;height:120px;background:var(--deep)"><canvas id="s8mq" width="1080" height="120"></canvas></div>
+</div></section>
+
+<div id="wipe"><div id="w1"></div><div id="w2"></div><div id="w3"></div></div>
+<svg width="0" height="0" style="position:absolute"><filter id="mb" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbg" stdDeviation="0 0" edgeMode="duplicate"/></filter></svg>
+<div id="vig"></div>
+<svg id="grain" viewBox="0 0 1080 1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1.4 -.2"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+</div>
+
+<script src="lib/gsap.min.js"></script>
+<script src="lib/SplitText.min.js"></script>
+<script src="lib/CustomEase.min.js"></script>
+<script src="lib/DrawSVGPlugin.min.js"></script>
+<script>
+gsap.registerPlugin(SplitText, CustomEase, DrawSVGPlugin);
+const Q = new URLSearchParams(location.search);
+const THEME = Q.get('theme') === 'old' ? 'old' : 'new';
+const W = 1080, H = 1920, FPS = 30, DUR = 58, PRESS = 56.0;
+const stage = document.getElementById('stage');
+stage.classList.add('t-' + THEME);
+const css = n => getComputedStyle(stage).getPropertyValue(n).trim();
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+/* ---------- per-theme copy ---------- */
+const COPY = {
+  new: { rating: 'from 99 reviews on Judge.me', trust: 'Free UK delivery over £39<br>Ordered before 2pm, packed the same working day' },
+  old: { rating: 'from 101 verified reviews', trust: 'Free UK delivery over £39  ·  30-day guarantee<br>Subscribe &amp; save up to 15%' },
+}[THEME];
+const SIGNS = [['Scratching that', 'wakes them at night'], ['One paw licked', 'rusty brown'], ['Pink skin on the', 'belly and armpits'], ['Flakes on', 'the bed']];
+const REVIEWS = [
+  ['…my dogs skin is so much better, less flaky which means less itching', 'Amie F.', 4],
+  ['…finding the right support was overwhelming, but Poorly Pet made it so much easier.', 'John C.', 5],
+];
+const CONDITIONS = ['Itchy skin', 'Hot spots', 'Arthritis', 'Hip dysplasia', 'IVDD', 'Anxiety', 'Dental care', 'Digestive health', 'Cruciate ligament', 'Back pain', 'Knuckling', 'Wound care'];
+
+/* ---------- sound cues (collected while the timeline is built) ---------- */
+const CUES = [];
+const cue = (t, k) => CUES.push([+t.toFixed(3), k]);
+window.CUES = CUES;
+
+/* ---------- deterministic noise ---------- */
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+/* ---------- static build (logos, cards, plinths, stars) ---------- */
+function logoHTML(onDark) {
+  if (THEME === 'new') return `<span class="logo-new" style="${onDark ? '' : 'color:var(--dark)'}">poorlypet</span>`;
+  return `<span class="logo-old"><svg width="64" height="64" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#C25E2E"/><rect x="42" y="22" width="16" height="56" rx="6" fill="#fff"/><rect x="22" y="42" width="56" height="16" rx="6" fill="#fff"/></svg><span style="font:800 48px/1 Inter;color:${onDark ? '#fff' : 'var(--ink)'};letter-spacing:-.02em">Poorly Pet</span></span>`;
+}
+$$('.logo').forEach(l => l.innerHTML = logoHTML(true));
+
+$('#s4cards').outerHTML = SIGNS.map(([a, b], i) => `
+  <div class="card s4c" style="left:120px;top:${570 + i * 192}px;width:840px;height:172px;transform-origin:50% 0%">
+    <div class="a" style="left:44px;top:42px;font:var(--emw) 84px/1 var(--serif);font-style:var(--ems);color:var(--emLight)">${i + 1}</div>
+    <div class="a" style="left:150px;top:40px;font:600 40px/1.18 var(--sans);color:var(--ink)">${a}<br><span class="hl">${b}</span></div>
+    <div class="a s4tick" style="right:44px;top:50px;width:72px;height:72px;border-radius:50%;background:var(--accent)">
+      <svg width="72" height="72" viewBox="0 0 72 72"><path d="M22 37 L32 47 L51 26" fill="none" stroke="var(--dark)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>`).join('');
+
+$('#s7stars').innerHTML = [0, 1, 2, 3, 4].map(() => `<span class="st" style="position:relative;display:block;width:80px;height:80px">
+  <svg class="a" width="80" height="80" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="#E2E6E2"/></svg>
+  <span class="a fill" style="left:0;top:0;height:80px;width:0;overflow:hidden"><svg width="80" height="80" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="var(--gold)"/></svg></span></span>`).join('');
+$('#s7cnt').textContent = COPY.rating;
+$('#s7rail').innerHTML = REVIEWS.map(([q, who, n]) => `
+  <div class="s7card" style="position:relative;flex:none;width:840px;height:580px;border-radius:32px;background:var(--pale2);box-sizing:border-box;padding:60px 56px">
+    <svg width="64" height="50" viewBox="0 0 70 56"><path d="M0 56 V30 C0 12 10 2 28 0 V12 C18 14 14 20 14 28 H28 V56 Z M40 56 V30 C40 12 50 2 68 0 V12 C58 14 54 20 54 28 H68 V56 Z" fill="var(--emLight)"/></svg>
+    <div class="s7q" style="margin-top:28px;font:var(--emw) 60px/1.16 var(--serif);font-style:var(--ems);letter-spacing:-.01em;color:var(--ink)">${q}</div>
+    <div style="position:absolute;left:56px;bottom:56px;font:600 32px/1 var(--sans);color:var(--mute)"><span style="color:var(--gold);letter-spacing:.08em">${'★'.repeat(n)}</span>&nbsp;&nbsp;${who} · Verified review</div>
+  </div>`).join('');
+$('#s8trust').innerHTML = COPY.trust;
+
+$$('.chipx').forEach(c => { c.className = 'a chipx card'; c.style.cssText += ';padding:20px 28px;border-radius:22px;font:700 34px/1.15 var(--sans);color:var(--ink);white-space:nowrap'; });
+
+// plinth: a lit cylinder the products stand on (top ellipse + front body)
+$$('.plinth').forEach(p => {
+  const cx = +p.dataset.cx, top = +p.dataset.top, rx = +p.dataset.rx, ry = Math.round(rx * 0.15), body = +(p.dataset.body || 420);
+  p.outerHTML = `<svg class="a plinthsvg" id="${p.id}" style="left:0;top:0;overflow:visible" width="1080" height="1920">
+    <defs><linearGradient id="${p.id}g" x1="0" x2="1"><stop offset="0" stop-color="var(--plinth2)"/><stop offset=".45" stop-color="var(--plinth)"/><stop offset="1" stop-color="var(--plinth2)"/></linearGradient>
+    <linearGradient id="${p.id}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="var(--dark)" stop-opacity="1"/></linearGradient>
+    <radialGradient id="${p.id}t" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <path d="M${cx - rx} ${top} V${top + body} H${cx + rx} V${top} Z" fill="url(#${p.id}g)"/>
+    <rect x="${cx - rx}" y="${top + body - Math.min(260, body)}" width="${rx * 2}" height="${Math.min(260, body) + 2}" fill="url(#${p.id}f)"/>
+    ${body < 200 ? `<ellipse cx="${cx}" cy="${top + body}" rx="${rx}" ry="${ry}" fill="var(--plinth2)"/>` : ''}
+    <ellipse cx="${cx}" cy="${top}" rx="${rx}" ry="${ry}" fill="var(--plinth)"/>
+    <ellipse cx="${cx}" cy="${top}" rx="${rx}" ry="${ry}" fill="url(#${p.id}t)"/>
+    <ellipse cx="${cx}" cy="${top}" rx="${rx - 1}" ry="${ry - 1}" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2"/>
+  </svg>`;
+});
+
+/* ---------- images ---------- */
+const IMGS = {};
+const load = n => new Promise(r => { const im = new Image(); im.onload = () => { IMGS[n] = im; r(); }; im.src = `assets/${n}.png`; });
+
+// a product = canvas packshot (with light sweep) + optional reflection, sized by height, standing on data-floor at data-cx
+function setupProducts() {
+  $$('.prod').forEach(p => {
+    const im = IMGS[p.dataset.img], h = +p.dataset.h, w = Math.round(im.naturalWidth * h / im.naturalHeight);
+    p.style.width = w + 'px'; p.style.height = h + 'px';
+    if (p.dataset.floor) p.style.top = (+p.dataset.floor - h) + 'px';
+    if (p.dataset.cx) p.style.left = (+p.dataset.cx - w / 2) + 'px';
+    const c = document.createElement('canvas'); c.width = w; c.height = h; p.appendChild(c); p._c = c; p._im = im;
+    if (p.dataset.reflect) {
+      const r = document.createElement('canvas'); r.width = w; r.height = h; r.style.cssText = `position:absolute;left:0;top:${h}px;transform:scaleY(-1);opacity:.14;-webkit-mask:linear-gradient(to top,#000,transparent 34%)`;
+      r.getContext('2d').drawImage(im, 0, 0, w, h); p.appendChild(r);
+    }
+    paint(p, -1);
+  });
+}
+function paint(p, sweep) {
+  const c = p._c, g = c.getContext('2d'), w = c.width, h = c.height;
+  g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, w, h); g.drawImage(p._im, 0, 0, w, h);
+  if (sweep <= 0 || sweep >= 1) return;
+  const x = -w * 0.7 + sweep * w * 2.4;
+  const gr = g.createLinearGradient(x - w * 0.3, 0, x + w * 0.3, h * 0.3);
+  gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.5, 'rgba(255,255,255,.5)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.globalCompositeOperation = 'source-atop'; g.fillStyle = gr; g.fillRect(0, 0, w, h);
+}
+function placeShadow(sh, prod, spread = 1.25, ht = 46) {
+  const w = prod.offsetWidth * spread, cx = prod.offsetLeft + prod.offsetWidth / 2, fl = prod.offsetTop + prod.offsetHeight;
+  sh.style.width = w + 'px'; sh.style.height = ht + 'px'; sh.style.left = (cx - w / 2) + 'px'; sh.style.top = (fl - ht / 2 - 2) + 'px';
+}
+
+/* ---------- ambient canvases ---------- */
+function glow(id, spots, t) {
+  const c = document.getElementById(id); if (!c) return;
+  const g = c.getContext('2d'); g.clearRect(0, 0, W, H);
+  spots.forEach(([x, y, r, col, a, ph]) => {
+    const dx = Math.sin(t * 0.3 + ph) * 60, dy = Math.cos(t * 0.24 + ph * 1.7) * 50;
+    const gr = g.createRadialGradient(x + dx, y + dy, 0, x + dx, y + dy, r);
+    gr.addColorStop(0, col.replace('A', a)); gr.addColorStop(1, col.replace('A', 0));
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  });
+}
+const P2 = (() => { const r = rng(11); return Array.from({ length: 110 }, () => ({ x: r() * 840, y: r() * 700, s: 1.5 + r() * 3.2, v: 8 + r() * 26, ph: r() * 6.28, k: r() })); })();
+function s2fx(t, mode) {
+  const c = $('#s2fx'), g = c.getContext('2d'); g.clearRect(0, 0, 840, 700);
+  const cols = { 0: [223, 196, 58], 1: [120, 170, 90], 2: [140, 140, 140], 3: [200, 120, 80] };
+  P2.forEach((p, i) => {
+    const m = Math.floor(mode), f = mode - m, col = cols[m] || cols[3], col2 = cols[Math.min(3, m + 1)];
+    const cc = col.map((v, j) => Math.round(v + (col2[j] - v) * f));
+    const x = (p.x + Math.sin(t * 0.6 + p.ph) * 18 + t * p.v * 0.4) % 860 - 10, y = (p.y - t * p.v + 1400) % 720 - 10;
+    g.fillStyle = `rgba(${cc},${0.22 + 0.3 * p.k})`; g.beginPath(); g.arc(x, y, p.s, 0, 7); g.fill();
+  });
+}
+// spray mist: droplets leave the nozzle in a cone to the left
+const MIST = (() => { const r = rng(5); return Array.from({ length: 900 }, () => ({ b: r() * 0.45, a: (Math.PI + 0.08 + (r() - 0.5) * 0.36), v: 260 + r() * 520, s: 1 + r() * 2.5, dr: r() })); })();
+function mist(t0, t) {
+  const c = $('#s6cmist'), g = c.getContext('2d'); g.clearRect(0, 0, W, H);
+  if (t < t0 || t > t0 + 1.4) return;
+  const sp = $('#s6cspray'), k = sp.offsetHeight / 650;
+  const nx = sp.offsetLeft + 57 * k - 4, ny = sp.offsetTop + 31 * k + (sp._dy || 0);
+  // soft cone of haze attached to the nozzle
+  const hz = Math.max(0, 1 - Math.abs(t - t0 - 0.25) / 0.45);
+  if (hz > 0) { const gr = g.createRadialGradient(nx - 70, ny + 6, 0, nx - 70, ny + 6, 150); gr.addColorStop(0, `rgba(255,255,255,${0.22 * hz})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.ellipse(nx - 90, ny + 8, 170, 60, 0.08, 0, 7); g.fill(); }
+  MIST.forEach(p => {
+    const age = t - t0 - p.b * 0.5; if (age <= 0) return;
+    const life = 0.45 + p.dr * 0.35; if (age > life) return;
+    const d = p.v * (1 - Math.exp(-age * 3.2)) / 3.2, vel = p.v * Math.exp(-age * 3.2);
+    const x = nx + Math.cos(p.a) * d, y = ny + Math.sin(p.a) * d + age * age * 60;
+    const al = (1 - age / life) * 0.8, st = Math.min(14, vel * 0.012);
+    g.strokeStyle = `rgba(255,255,255,${al})`; g.lineWidth = p.s; g.lineCap = 'round';
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x - Math.cos(p.a) * st, y - Math.sin(p.a) * st); g.stroke();
+  });
+}
+function marquee(id, text, t, opt) {
+  const c = document.getElementById(id), g = c.getContext('2d');
+  g.clearRect(0, 0, c.width, c.height);
+  g.font = opt.font; g.textBaseline = 'middle';
+  if (opt.ls) g.letterSpacing = opt.ls;
+  const unit = g.measureText(text).width;
+  let x = -((t * opt.speed) % unit);
+  while (x < c.width) {
+    if (opt.stroke) { g.strokeStyle = opt.stroke; g.lineWidth = opt.lw || 2; g.strokeText(text, x, c.height / 2); }
+    else { g.fillStyle = opt.fill; g.fillText(text, x, c.height / 2); }
+    x += unit;
+  }
+}
+
+/* ---------- timeline ---------- */
+CustomEase.create('pro', 'M0,0 C0.16,1 0.3,1 1,1');
+CustomEase.create('whip', 'M0,0 C0.7,0 0.2,1 1,1');
+const tl = gsap.timeline({ paused: true, defaults: { ease: 'pro' } });
+const SC = { s1: [0, 4.6], s2: [4.6, 11.0], s3: [11.0, 17.2], s4: [17.2, 23.2], s5: [23.2, 28.8], s6a: [28.8, 34.6], s6b: [34.6, 40.4], s6c: [40.4, 46.2], s7: [46.2, 50.6], s8: [50.6, DUR] };
+
+function lines(el, at, o = {}) {
+  const st = SplitText.create(el, { type: 'lines,words', mask: 'lines', linesClass: 'ln', wordsClass: 'w' });
+  tl.from(st.words, { yPercent: 115, rotate: o.rot ?? 4, transformOrigin: '0% 100%', duration: o.dur ?? 1.05, stagger: o.stagger ?? 0.055, ease: 'expo.out' }, at);
+  if (!el.closest('.dark')) {
+    // highlighter (new brand: lime marker behind the word; old brand: rust underline), drawn on each word
+    const words = [...el.querySelectorAll('em .w')];
+    const sz = THEME === 'new' ? '74%' : '7%', pos = THEME === 'new' ? '0 62%' : '0 94%', col = THEME === 'new' ? 'var(--accent)' : 'var(--accent2)';
+    words.forEach(w => Object.assign(w.style, { backgroundImage: `linear-gradient(${col},${col})`, backgroundRepeat: 'no-repeat', backgroundPosition: pos, padding: '0 .06em', margin: '0 -.06em', borderRadius: '.1em' }));
+    if (words.length) tl.fromTo(words, { backgroundSize: `0% ${sz}` }, { backgroundSize: `100% ${sz}`, duration: 0.55, stagger: 0.12, ease: 'expo.inOut' }, at + (o.mk ?? 0.6));
+  }
+  if (!o.silent) cue(at + 0.05, 'swish');
+  return st;
+}
+function blurIn(el, at, o = {}) {
+  tl.from(el, { opacity: 0, y: o.y ?? 30, filter: 'blur(14px)', duration: o.dur ?? 0.9, ease: 'power3.out' }, at);
+}
+function popIn(el, at, o = {}) {
+  tl.from(el, { opacity: 0, scale: o.s ?? 0.8, y: o.y ?? 0, duration: o.dur ?? 0.8, ease: o.ease ?? 'back.out(1.6)' }, at);
+  if (o.cue !== false) cue(at, o.cue || 'pop');
+}
+function show(id, at) { tl.set('#' + id, { visibility: 'visible' }, at); }
+function hide(id, at) { tl.set('#' + id, { visibility: 'hidden' }, at); }
+function camera(id, from = 1, to = 1.012) { to = Math.min(to, 1.012); const [a, b] = SC[id]; tl.fromTo(`#${id} .cam`, { scale: from }, { scale: to, duration: b - a + 1, ease: 'none' }, a); }
+
+function fitHeads() {
+  $$('.hd').forEach(h => { let fs = parseFloat(getComputedStyle(h).fontSize);
+    while (h.scrollWidth > 841 && fs > 40) { fs -= 2; h.style.fontSize = fs + 'px'; } });
+}
+function build() {
+  fitHeads();
+  setupProducts();
+  ['s6asalmon', 's6achews'].forEach((id, i) => placeShadow($('#s6ash' + (i + 1)), $('#' + id), 1.15, 44));
+  placeShadow($('#s6bsh'), $('#s6bbalm'), 0.95, 60);
+  placeShadow($('#s6csh'), $('#s6cspray'), 1.5, 44); $('#s6csh').style.left = (parseFloat($('#s6csh').style.left) + 34) + 'px';
+  lineup('.s8p', '.s8sh', 34);
+  $('#s8sub').style.top = ($('#s8h').offsetTop + $("#s8h").offsetHeight + 30) + "px";
+  $('#s8logo').style.left = (540 - $('#s8logo').offsetWidth / 2) + 'px';
+  // leader lines for the balm callouts
+  const lead = $('#s6blead');
+  lead.innerHTML = $$('#s6b .chipx').map(c => {
+    const [tx, ty] = c.dataset.to.split(',').map(Number);
+    const L = c.offsetLeft, R = L + c.offsetWidth, cy = c.offsetTop + c.offsetHeight / 2, sx = tx > R ? R : L;
+    const ex = sx + (tx > sx ? 1 : -1) * Math.max(48, Math.abs(tx - sx) * 0.4);
+    return `<path d="M${sx} ${cy} L${ex} ${cy} L${tx} ${ty}" stroke="var(--ink)" stroke-opacity=".55" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${tx}" cy="${ty}" r="13" fill="#fff" stroke="var(--dot)" stroke-width="3"/><circle cx="${tx}" cy="${ty}" r="5" fill="var(--dot)"/>`;
+  }).join('');
+  // theme colours for SVG bits
+  $$('#s1slash path').forEach(p => p.setAttribute('fill', css('--accent2')));
+  lineup('.s1p', '.s1sh', 30);
+  $('#s3track').setAttribute('stroke', 'rgba(255,255,255,.28)');
+  $('#s3text').setAttribute('fill', css('--accent')); $('#s3text').setAttribute('font-family', css('--sans'));
+  $('#s3disc').setAttribute('fill', css('--deep'));
+  $$('#s3arrow path').forEach(p => p.setAttribute('stroke', css('--accent2')));
+  $('#s3c').style.color = css('--accent');
+  $$('#s5dots i').forEach(i => i.style.cssText = 'display:block;width:26px;height:26px;border-radius:50%;background:var(--line)');
+  $$('#s2words .rw').forEach(r => r.style.cssText = `height:190px;text-align:center;font:var(--hw) 150px/190px var(--serif);letter-spacing:var(--track);color:var(--ink)`);
+
+  // ===== S1 HOOK (frame 0 already composed) =====
+  camera('s1', 1, 1.06);
+  // scratch marks rip across the headline and slice it
+  $$('#s1slash path').forEach((p, i) => { tl.fromTo(p, { scaleY: 0, svgOrigin: p.getAttribute('d').match(/M(\d+) (\d+)/).slice(1).join(' ') }, { scaleY: 1, duration: 0.24, ease: 'power3.in' }, 0.35 + i * 0.14); cue(0.35 + i * 0.14, 'scratch'); });
+  tl.to('#s1hx', { x: -12, y: 5, skewX: -3, duration: 0.06, ease: 'none' }, 0.62).to('#s1hx', { x: 0, y: 0, skewX: 0, duration: 0.7, ease: 'elastic.out(1,0.4)' }, 0.68);
+  tl.from('#s1plinth', { y: 220, opacity: 0, duration: 1.0, ease: 'expo.out' }, 1.9);
+  $$('.s1p').forEach((p, i) => dropIn(p, $$('.s1sh')[i], 2.2 + i * 0.14, true));
+  lines($('#s1p'), 1.55, { stagger: 0.04 });
+  // exit: three diagonal bands sweep across
+  // exit: the three claw marks tear open, wider and wider, until the light scene shows through
+  const wl = [css('--accent2'), css('--pale'), css('--light')];
+  ['#w1', '#w2', '#w3'].forEach((w, i) => { const el = $(w); el.style.background = wl[i]; el.style.height = '3400px'; el.style.width = '160px'; el.style.left = (430 + i * 110) + 'px'; el.style.top = '-740px'; el.style.borderRadius = '80px'; });
+  gsap.set('#wipe div', { rotate: 20, scaleX: 0, transformOrigin: '50% 50%' });
+  tl.to('#w1', { scaleX: 16, duration: 0.9, ease: 'expo.in' }, 3.95).to('#w2', { scaleX: 16, duration: 0.9, ease: 'expo.in' }, 4.03).to('#w3', { scaleX: 16, duration: 0.9, ease: 'expo.in' }, 4.11);
+  tl.set('#wipe div', { opacity: 0 }, 5.05);
+  cue(4.0, 'scratch'); cue(4.3, 'whoosh');
+  hide('s1', 4.95);
+
+  // ===== S2 CAUSE =====
+  show('s2', 4.95); camera('s2', 1.0, 1.04);
+  lines($('#s2h'), 5.05);
+  tl.from('#s2panel', { y: 160, opacity: 0, duration: 1.0, ease: 'expo.out' }, 5.6); cue(5.6, 'card');
+  const rotY = [0, -190, -380, -570];
+  tl.from('#s2words', { yPercent: 30, opacity: 0, filter: 'blur(10px)', duration: 0.8, ease: 'expo.out' }, 6.0); cue(6.0, 'pop0');
+  [7.1, 8.1, 9.1].forEach((t, i) => { tl.to('#s2words', { y: rotY[i + 1], duration: 0.6, ease: 'expo.inOut' }, t); cue(t + 0.15, 'pop' + (i + 1)); });
+  const s2m = { v: 0 }; tl.to(s2m, { v: 3, duration: 2.4, ease: 'none' }, 6.9); window._s2m = s2m;
+  // exit: the panel grows to fill the screen and darkens into the next scene
+  tl.to('#s2panel', { left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, duration: 0.85, ease: 'power4.inOut' }, 10.4);
+  tl.to('#s2dark', { clipPath: 'circle(1500px at 420px 310px)', duration: 0.85, ease: 'power3.in' }, 10.45);
+  tl.to(['#s2rot', '#s2num', '#s2fx'], { y: 330, duration: 0.85, ease: 'power4.inOut' }, 10.4);
+  tl.to('#s2h', { y: -160, opacity: 0, duration: 0.55, ease: 'power3.in' }, 10.4);
+  cue(10.5, 'reveal');
+  hide('s2', 11.35);
+
+  // ===== S3 CYCLE =====
+  show('s3', 11.3); camera('s3', 1.0, 1.05);
+  lines($('#s3h'), 11.4);
+  tl.from('#s3track', { opacity: 0, rotate: -40, svgOrigin: '540 970', duration: 1.4, ease: 'expo.out' }, 12.0);
+  tl.from('#s3text', { opacity: 0, duration: 0.8 }, 12.4); cue(12.4, 'draw');
+  tl.from('#s3disc', { scale: 0, svgOrigin: '540 970', duration: 1.0, ease: 'expo.out' }, 12.6);
+  tl.from('#s3c', { scale: 0.6, opacity: 0, filter: 'blur(10px)', duration: 0.9, ease: 'expo.out' }, 12.9); cue(12.9, 'pop5');
+  tl.from('#s3arrow', { opacity: 0, duration: 0.5 }, 13.3);
+  lines($('#s3p'), 14.4, { stagger: 0.04 });
+  // exit: zoom through the centre of the loop
+  tl.to('#s3 .cam', { scale: 7, duration: 0.85, ease: 'power4.in' }, 16.5);
+  tl.to(['#s3h', '#s3p'], { opacity: 0, duration: 0.3 }, 16.5);
+  tl.to('#s3c', { opacity: 0, duration: 0.15 }, 16.92);
+  tl.set('#s3disc', { fill: css('--pale2') }, 17.0);
+  cue(16.6, 'whoosh');
+  hide('s3', 17.36);
+
+  // ===== S4 SIGNS =====
+  show('s4', 17.35); camera('s4', 1.0, 1.04);
+  lines($('#s4h'), 17.45);
+  $$('.s4c').forEach((c, i) => {
+    const at = 18.3 + i * 0.5;
+    tl.from(c, { rotateX: -78, y: 240, opacity: 0, duration: 1.1, ease: 'expo.out' }, at); cue(at, 'card');
+    tl.from(c.querySelector('.s4tick'), { scale: 0, rotate: -90, duration: 0.6, ease: 'back.out(2.2)' }, at + 0.55); cue(at + 0.55, 'check' + i);
+  });
+  lines($('#s4p'), 20.9, { stagger: 0.04 });
+  tl.to('.s4c', { y: -260, rotateX: 40, opacity: 0, duration: 0.7, stagger: 0.06, ease: 'power3.in' }, 22.55);
+  tl.to(['#s4h', '#s4p'], { opacity: 0, y: -60, duration: 0.5, ease: 'power3.in' }, 22.55);
+  cue(22.6, 'whoosh');
+  hide('s4', 23.4);
+
+  // ===== S5 ROUTINE =====
+  show('s5', 23.3); camera('s5', 1.0, 1.03);
+  lines($('#s5h'), 23.4);
+  tl.from('#s5a', { y: 200, opacity: 0, duration: 1.0, ease: 'expo.out' }, 24.0); cue(24.0, 'card');
+  gsap.set('#s5salmon', { scale: 340 / 640 });
+  tl.from('#s5salmon', { y: 260, opacity: 0, duration: 1.1, ease: 'expo.out' }, 24.25);
+  tl.from('#s5ssh', { opacity: 0, scaleX: 0.4, duration: 1.0 }, 24.5);
+  tl.from('#s5b', { y: 200, opacity: 0, duration: 1.0, ease: 'expo.out' }, 24.6); cue(24.6, 'card');
+  tl.from('#s5balm', { y: 160, opacity: 0, duration: 1.1, ease: 'expo.out' }, 24.8);
+  tl.from('#s5bsh', { opacity: 0, scaleX: 0.4, duration: 1.0 }, 25.0);
+  tl.from('#s5c', { y: 200, opacity: 0, duration: 1.0, ease: 'expo.out' }, 25.2); cue(25.2, 'card');
+  tl.from('#s5pill', { y: 80, opacity: 0, duration: 0.9, ease: 'expo.out' }, 25.9); cue(25.9, 'pop2');
+  // exit: the INSIDE panel grows to fill the screen
+  // exit: the INSIDE card grows to fill the screen and the bottle grows with it to its place in the next scene
+  tl.to('#s5a', { left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, duration: 0.85, ease: 'power4.inOut' }, 28.3);
+  tl.to('#s5a > :not(#s5salmon)', { opacity: 0, duration: 0.25 }, 28.3);
+  tl.to('#s5salmon', { left: 324 - $('#s5salmon').offsetWidth / 2, top: 1250 - 640, scale: 1, duration: 0.85, ease: 'power4.inOut' }, 28.3);
+  tl.to(['#s5h', '#s5b', '#s5c', '#s5pill'], { opacity: 0, y: 80, duration: 0.45, ease: 'power3.in' }, 28.3);
+  cue(28.35, 'reveal');
+  hide('s5', 29.2);
+
+  // ===== S6a INSIDE: salmon oil + chews on a plinth =====
+  show('s6a', 29.15); camera('s6a', 1.0, 1.04);
+  lines($('#s6ah'), 29.3);
+  tl.from('#s6aplinth', { y: 420, duration: 0.9, ease: 'expo.out' }, 29.0);
+  tl.from('#s6ash1', { opacity: 0, scaleX: 0.5, duration: 0.6 }, 29.4);
+  dropIn('#s6achews', '#s6ash2', 29.9);
+  tl.from(['#s6ap1', '#s6ap2'], { y: 120, opacity: 0, duration: 0.9, stagger: 0.15, ease: 'expo.out' }, 31.0); cue(31.0, 'card'); cue(31.2, 'ding');
+  tl.from(['#s6ab1', '#s6ab2'], { scale: 0, duration: 0.6, stagger: 0.15, ease: 'back.out(2)' }, 31.4); cue(31.4, 'pop6');
+  // exit: whip pan left
+  whip('#s6a', '#s6b', 34.25, 'x');
+  hide('s6a', 35.2);
+
+  // ===== S6b OUTSIDE: balm with callouts =====
+  show('s6b', 34.25); camera('s6b', 1.0, 1.04);
+  lines($('#s6bh'), 34.7);
+  tl.from('#s6bbalm', { x: 260, rotate: 6, duration: 1.4, ease: 'expo.out' }, 34.4);
+  tl.from('#s6bsh', { opacity: 0, scaleX: 0.5, duration: 1.2 }, 34.6);
+  $$('#s6blead path').forEach((p, i) => tl.from(p, { drawSVG: '0%', duration: 0.6, ease: 'power2.out' }, 35.9 + i * 0.3));
+  $$('#s6blead circle').forEach((c, i) => tl.from(c, { scale: 0, transformOrigin: 'center', duration: 0.4, ease: 'back.out(3)' }, 36.1 + Math.floor(i / 2) * 0.3));
+  tl.from('#s6bsh2', { opacity: 0, duration: 1.0 }, 34.8);
+  $$('#s6b .chipx').forEach((c, i) => popIn(c, 35.8 + i * 0.3, { s: 0.7, cue: 'pop' + (3 + i) }));
+  tl.from('#s6bp', { y: 120, opacity: 0, duration: 0.9, ease: 'expo.out' }, 36.9); cue(36.9, 'card'); cue(37.1, 'ding');
+  whip('#s6b', '#s6c', 40.05, 'y');
+  hide('s6b', 41.0);
+
+  // ===== S6c HOT SPOTS: spray with mist =====
+  show('s6c', 40.05); camera('s6c', 1.0, 1.04);
+  lines($('#s6ch'), 40.6);
+  tl.from('#s6cplinth', { y: 300, duration: 1.1, ease: 'expo.out' }, 40.3);
+  dropIn('#s6cspray', '#s6csh', 40.7);
+  const pump = { v: 0 }; window._pump = pump;
+  tl.to(pump, { v: 1, duration: 0.12, ease: 'power2.in' }, 41.95).to(pump, { v: 0, duration: 0.4, ease: 'elastic.out(1,0.5)' }, 42.07);
+  cue(42.05, 'spray');
+  $$('#s6cchecks .check').forEach((c, i) => { tl.from(c, { x: -60, opacity: 0, duration: 0.8, ease: 'expo.out' }, 42.9 + i * 0.35); tl.from(c.querySelector('i'), { scale: 0, duration: 0.5, ease: 'back.out(2.5)' }, 43.0 + i * 0.35); cue(43.0 + i * 0.35, 'check' + i); });
+  tl.from('#s6cp', { y: 120, opacity: 0, duration: 0.9, ease: 'expo.out' }, 44.0); cue(44.0, 'card'); cue(44.2, 'ding');
+  // exit: a second burst of mist washes the screen to light
+  tl.to('#s6c .cam', { scale: 1.25, duration: 0.9, ease: 'expo.in' }, 45.6);
+  tl.to('#s6c', { backgroundColor: css('--light'), duration: 0.6, ease: 'power2.in' }, 45.75);
+  tl.to('#s6c .cam > *', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 45.8);
+  cue(45.65, 'spray');
+  hide('s6c', 46.5);
+
+  // ===== S7 PROOF =====
+  show('s7', 46.35); camera('s7', 1.0, 1.03);
+  const cnt = { v: 0 }; window._cnt = cnt;
+  $('#s7of').style.left = ($('#s7num').offsetLeft + $('#s7num').offsetWidth + 14) + 'px';
+  tl.from(['#s7num', '#s7of'], { opacity: 0, y: 60, duration: 0.9, ease: 'expo.out', stagger: 0.1 }, 46.5);
+  tl.to(cnt, { v: 4.6, duration: 1.0, ease: 'expo.out' }, 46.55);
+  for (let i = 0; i < 9; i++) cue(46.55 + i * 0.06, 'count' + i);
+  [0, 1, 2, 3, 4].forEach(i => cue(46.7 + i * 0.12, 'star' + i));
+  blurIn('#s7cnt', 47.1);
+  tl.from('#s7rail', { x: 400, opacity: 0, duration: 1.1, ease: 'expo.out' }, 47.3); cue(47.3, 'card');
+  tl.to('#s7rail', { x: -960, duration: 0.9, ease: 'power4.inOut' }, 48.9); cue(48.95, 'whoosh');
+
+  // ===== S8 END: about Poorly Pet + offer =====
+  show('s8', 50.25);
+  tl.fromTo('#s8', { y: 1920 }, { y: 0, duration: 0.9, ease: 'expo.out' }, 50.25);
+  tl.fromTo('#s8', { borderRadius: 60 }, { borderRadius: 0, duration: 0.9, ease: 'expo.out' }, 50.25);
+  cue(50.25, 'reveal');
+  hide('s7', 51.2);
+  tl.from('#s8logo', { opacity: 0, y: -30, duration: 0.8, ease: 'expo.out' }, 50.7);
+  lines($('#s8h'), 50.45, { stagger: 0.05 });
+  tl.from('#s8plinth', { y: 260, duration: 1.0, ease: 'expo.out' }, 50.6);
+  $$('.s8p').forEach((p, i) => dropIn(p, $$('.s8sh')[i], 50.9 + i * 0.14, true));
+  tl.from('#s8tk', { y: 80, opacity: 0, duration: 0.9, ease: 'expo.out' }, 52.7); cue(52.7, 'stamp');
+  tl.from('#s8btn', { y: 80, opacity: 0, duration: 0.9, ease: 'expo.out' }, 53.0); cue(53.0, 'pop4');
+  blurIn('#s8trust', 53.4); blurIn('#s8url', 53.6); blurIn('#s8sub', 51.7);
+  tl.from('#s8band', { y: 140, duration: 1.0, ease: 'expo.out' }, 51.0);
+  tl.to('#s8btn', { scale: 0.94, duration: 0.1, ease: 'power2.in' }, PRESS).to('#s8btn', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.5)' }, PRESS + 0.1);
+  gsap.set('#s8rip', { opacity: 0 });
+  tl.fromTo('#s8rip', { width: 40, height: 40, left: 600, top: 32, opacity: 0.9 }, { width: 900, height: 900, left: 170, top: -398, opacity: 0, duration: 0.8, ease: 'power2.out', immediateRender: false }, PRESS);
+  tl.to('#s8arr', { x: 14, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.inOut' }, PRESS + 0.05);
+  cue(PRESS, 'click'); cue(PRESS + 0.02, 'confirm');
+  tl.set({}, {}, DUR);
+}
+
+// a row of products standing on one floor: evenly spaced, centred on x 540 (measured on the visible pixels)
+function lineup(sel, shSel, gap) {
+  const ps = $$(sel), tot = ps.reduce((a, p) => a + p.offsetWidth, 0) + gap * (ps.length - 1); let x = 540 - tot / 2;
+  ps.forEach((p, i) => { p.style.left = x + 'px'; x += p.offsetWidth + gap; placeShadow($$(shSel)[i], p, 1.2, 26); });
+}
+// a product drops onto its surface: squash on landing, shadow tightens as it lands
+function dropIn(sel, shSel, at, small) {
+  const p = typeof sel === 'string' ? $(sel) : sel, sh = typeof shSel === 'string' ? $(shSel) : shSel;
+  const h = small ? 260 : 520;
+  tl.fromTo(p, { y: -h, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power3.in' }, at)
+    .to(p, { scaleY: 0.955, scaleX: 1.025, duration: 0.09, ease: 'power1.out' }, at + 0.55)
+    .to(p, { scaleY: 1, scaleX: 1, duration: 0.7, ease: 'elastic.out(1,0.45)' }, at + 0.64);
+  tl.fromTo(sh, { opacity: 0, scaleX: 0.35 }, { opacity: 1, scaleX: 1, duration: 0.6, ease: 'power3.in' }, at);
+  cue(at + 0.55, 'thud');
+}
+// whip pan between two scenes: both move together, with a blur that peaks mid-move
+function whip(fromSel, toSel, at, axis) {
+  const d = axis === 'x' ? W : H, prop = axis === 'x' ? 'x' : 'y';
+  tl.fromTo(fromSel, { [prop]: 0 }, { [prop]: -d, duration: 0.75, ease: 'whip' }, at);
+  tl.fromTo(toSel, { [prop]: d }, { [prop]: 0, duration: 0.75, ease: 'whip' }, at);
+  tl.set([fromSel + ' .cam', toSel + ' .cam'], { filter: 'url(#mb)' }, at).set([fromSel + ' .cam', toSel + ' .cam'], { filter: 'none' }, at + 0.76);
+  const b = axis === 'x' ? ['0 0', '46 0'] : ['0 0', '0 46'];
+  tl.fromTo('#mbg', { attr: { stdDeviation: b[0] } }, { attr: { stdDeviation: b[1] }, duration: 0.3, ease: 'power2.in', yoyo: true, repeat: 1 }, at + 0.08);
+  tl.set(stage, { backgroundColor: getComputedStyle($(toSel)).backgroundColor }, at).set(stage, { backgroundColor: css('--dark') }, at + 0.8);
+  cue(at + 0.1, 'whoosh');
+}
+
+/* ---------- per-frame procedural layers ---------- */
+function renderFrame(t) {
+  tl.seek(Math.min(t, DUR), false);
+  const vis = id => document.getElementById(id).style.visibility === 'visible';
+  if (vis('s1')) $$('.s1p').forEach((p, i) => sweep(p, t, 3.0 + i * 0.12));
+  if (vis('s1')) glow('s1glow', [[880, 420, 900, `rgba(${THEME === 'new' ? '223,228,58' : '159,232,201'},A)`, 0.12, 0], [200, 1500, 1000, `rgba(${THEME === 'new' ? '223,228,58' : '194,94,46'},A)`, THEME === 'new' ? 0.08 : 0.2, 2]], t);
+  if (vis('s2')) {
+    s2fx(t, window._s2m.v);
+    $('#s2num').textContent = `0${Math.min(4, 1 + Math.round(-gsap.getProperty('#s2words', 'y') / 190))} / 04`;
+  }
+  if (vis('s3')) { $('#s3rot').setAttribute('transform', `rotate(${t * 14} 540 970)`); $('#s3arrow').setAttribute('transform', `translate(540 970) rotate(${t * 14 + 30})`); }
+  if (vis('s6a')) {
+    glow('s6aglow', [[540, 900, 760, 'rgba(255,255,255,A)', 0.10, 1]], t);
+    sweep('#s6asalmon', t, 30.8); sweep('#s6achews', t, 31.0);
+  }
+  if (vis('s6b')) { glow('s6bglow', [[540, 900, 800, `rgba(${THEME === 'new' ? '228,238,214' : '237,241,236'},A)`, 0.9, 1]], t); sweep('#s6bbalm', t, 35.8); }
+  if (vis('s6c')) {
+    glow('s6cglow', [[690, 800, 800, 'rgba(255,255,255,A)', 0.09, 2]], t);
+    const sp = $('#s6cspray'); sp._dy = window._pump.v * 10; sweep('#s6cspray', t, 41.4);
+    mist(42.0, t);
+  }
+  if (vis('s7')) {
+    const v = window._cnt.v;
+    $('#s7num').textContent = (Math.round(v * 10) / 10).toFixed(1);
+    $$('#s7stars .fill').forEach((f, i) => f.style.width = (80 * Math.max(0, Math.min(1, v - i))) + 'px');
+  }
+  if (vis('s8')) {
+    glow('s8glow', [[540, 820, 820, 'rgba(255,255,255,A)', 0.10, 3]], t);
+    marquee('s8mq', CONDITIONS.map(c => c.toUpperCase()).join('   ·   ') + '   ·   ', t, { font: `700 30px ${css('--sans')}`, fill: 'rgba(255,255,255,.85)', ls: '4px', speed: 60 });
+    $$('.s8p').forEach((p, i) => sweep(p, t, 52.4 + i * 0.12));
+  }
+}
+function sweep(sel, t, at) { const p = typeof sel === 'string' ? $(sel) : sel; paint(p, (t - at) / 1.2); }
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([
+  ...['400 100px Domine', '700 100px Domine', '500 40px Figtree', '700 40px Figtree', '800 40px Figtree', '560 100px Fraunces', 'italic 500 100px Fraunces', '600 40px Inter', '800 40px Inter'].map(f => document.fonts.load(f)),
+  ...['salmon', 'balm', 'spray', 'chews'].map(load),
+]).then(() => { build(); renderFrame(0); return true; });
+
+if (!Q.has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
