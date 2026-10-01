@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 Signs Your Dog Has IVDD</title>
+<style>
+@font-face{font-family:PM;font-weight:400;src:url(fonts/permanent-marker.woff2) format('woff2')}
+@font-face{font-family:Kalam;font-weight:700;src:url(fonts/kalam-700.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FBFAF6;--ink:#101B17;--mute:#5E6E66;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+.g{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.L{position:absolute;left:0;top:0;display:none}
+.mk{font-family:PM,cursive;font-weight:400;line-height:1.02;color:var(--ink);white-space:nowrap}
+.hand{font-family:Kalam,cursive;font-weight:700;line-height:1.28;color:var(--ink)}
+.pr{font-family:Inter,sans-serif;font-weight:800;letter-spacing:-.02em;white-space:nowrap;line-height:1}
+.w{display:inline-block}
+.hl{background:var(--mint);border-radius:22px 46px 26px 40px/34px 24px 40px 22px}
+svg{display:block;overflow:visible}
+.ink{fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round}
+.rs{fill:none;stroke:var(--mark);stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="rough" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1600" height="1600">
+      <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="1" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+</div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1080, H = 1920, FPS = 30, TL = window.TL, DUR = TL.end;
+const stage = document.getElementById('stage');
+const turb = document.getElementById('turb');
+const SX = 64, SW = 876; // safe area x 64-940
+
+/* ---------------- building blocks ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function group(z) { const g = document.createElement('div'); g.className = 'g'; g.style.zIndex = z; stage.appendChild(g); g.style.display = 'none'; ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, z = null, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+  if (z !== null) e.style.zIndex = z;
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => Math.min(1, sp(t - t0, p) * 2.5);
+const press = (t, t0, depth = 0.93) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.12, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const slam = (t, t0, from = 2.2) => T(t, from, [[t0, 1, 'snappy']]);
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 4); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.002 ? 'hidden' : 'visible'; }
+// draw every path with class d inside e, one after another
+function drawSeq(e, t, t0, step = 0.14, p = 'default', sel = '.d') { e.querySelectorAll(sel).forEach((q, i) => setDraw(q, sp(t - t0 - i * step, p))); }
+// words written on: each word is wiped in left to right, one after another
+function wrapWords(e) { e.innerHTML = e.innerHTML.replace(/(<b[^>]*>)?([^\s<]+)(<\/b>)?/g, m => `<span class="w">${m}</span>`); }
+function write(e, t, t0, step = 0.06, p = 'snappy') {
+  e.querySelectorAll('.w').forEach((w, i) => { const k = sp(t - t0 - i * step, p); w.style.clipPath = `inset(-40% ${(100 * (1 - Math.min(1, k * 1.05))).toFixed(1)}% -40% -12%)`; w.style.visibility = k < 0.01 ? 'hidden' : 'visible'; });
+}
+// marker words slam in one by one
+function slamWords(e, t, t0, step = 0.0625) {
+  e.querySelectorAll('.w').forEach((w, i) => { const tw = t0 + i * step; const k = sp(t - tw, 'snappy');
+    w.style.opacity = Math.min(1, k * 3); w.style.transform = `scale(${T(t, 1.9, [[tw, 1, 'snappy']])}) rotate(${-8 * (1 - k)}deg)`; });
+}
+
+/* ---------------- hand-drawn geometry (seeded, so every frame is identical) ---------------- */
+function R(seed) { let s = (seed * 2654435761) >>> 0 || 7; return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
+const f1 = v => v.toFixed(1);
+function smooth(P) {
+  let d = `M${f1(P[0][0])} ${f1(P[0][1])}`;
+  for (let i = 0; i < P.length - 1; i++) {
+    const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+    d += ` C${f1(p1[0] + (p2[0] - p0[0]) / 6)} ${f1(p1[1] + (p2[1] - p0[1]) / 6)} ${f1(p2[0] - (p3[0] - p1[0]) / 6)} ${f1(p2[1] - (p3[1] - p1[1]) / 6)} ${f1(p2[0])} ${f1(p2[1])}`;
+  }
+  return d;
+}
+// a confident circle: a little more than one turn, opening outwards at the end
+function scribCircle(cx, cy, rx, ry, seed, turns = 1.14, start = -2.3) {
+  const r = R(seed), P = [], n = Math.round(40 * turns);
+  for (let i = 0; i <= n; i++) { const a = start + i / n * turns * 2 * Math.PI, k = 0.97 + (r() - 0.5) * 0.035 + 0.08 * (i / n); P.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k]); }
+  return smooth(P);
+}
+function roughRect(x, y, w, h, seed, j = 5) {
+  const r = R(seed), P = [];
+  const seg = (ax, ay, bx, by) => { const n = Math.max(2, Math.round(Math.hypot(bx - ax, by - ay) / 140)); for (let i = 0; i < n; i++) { const k = i / n; P.push([ax + (bx - ax) * k + (r() - 0.5) * j, ay + (by - ay) * k + (r() - 0.5) * j]); } };
+  seg(x, y, x + w, y); seg(x + w, y, x + w, y + h); seg(x + w, y + h, x, y + h); seg(x, y + h, x, y); P.push([x + 36, y - 4]);
+  return P.map((p, i) => (i ? 'L' : 'M') + f1(p[0]) + ' ' + f1(p[1])).join(' ');
+}
+const tickPath = (x, y, w, h) => `M${x} ${y + h * 0.52} C${x + w * 0.1} ${y + h * 0.6} ${x + w * 0.24} ${y + h * 0.82} ${x + w * 0.36} ${y + h} C${x + w * 0.52} ${y + h * 0.62} ${x + w * 0.74} ${y + h * 0.22} ${x + w} ${y - h * 0.05}`;
+const arrowSvg = (w, col, sw = 12) => `<svg width="${w}" height="${w * 0.6}" viewBox="0 0 100 60"><path class="d" d="M6 34 C30 30 56 28 88 30" stroke="${col}" stroke-width="${sw}" fill="none" stroke-linecap="round"/><path class="d" d="M66 10 L90 30 L64 50" stroke="${col}" stroke-width="${sw}" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function setHL(e, w, h) { e.style.width = w + 'px'; e.style.height = h + 'px'; const r = h * 0.42;
+  e.innerHTML = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="M${f1(r)} ${f1(h * 0.56)} C${f1(w * 0.3)} ${f1(h * 0.44)} ${f1(w * 0.7)} ${f1(h * 0.5)} ${f1(w - r)} ${f1(h * 0.44)}" stroke="#9FE8C9" stroke-width="${f1(h * 0.88)}" stroke-linecap="round" fill="none"/></svg>`; }
+function mark(size) { return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#C25E2E"/><rect x="42" y="22" width="16" height="56" rx="6" fill="#fff"/><rect x="22" y="42" width="56" height="16" rx="6" fill="#fff"/></svg>`; }
+function star(size, filled) { const P = []; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? 19 : 44; P.push(`${f1(50 + Math.cos(a) * rr)} ${f1(52 + Math.sin(a) * rr)}`); }
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><path d="M${P.join(' L')} Z" fill="${filled ? '#C9982E' : 'none'}" stroke="#101B17" stroke-width="7" stroke-linejoin="round"/></svg>`; }
+
+/* ---------------- doodles: original, abstract, no animals ---------------- */
+const SW_INK = 18, SW_RUST = 20;
+function burst(cx, cy, rx, ry, n, seed) { const r = R(seed), P = []; for (let i = 0; i <= n * 2; i++) { const a = -Math.PI / 2 + i * Math.PI / n, k = i % 2 ? 0.66 + r() * 0.08 : 1 + (r() - 0.5) * 0.12; P.push(`${f1(cx + Math.cos(a) * rx * k)} ${f1(cy + Math.sin(a) * ry * k)}`); } return 'M' + P.join(' L') + ' Z'; }
+const DOODLE = {
+  // an arched back line over the ground, with arrows at the hump
+  arch: `<path class="d ink" stroke-width="${SW_INK}" d="M30 330 C170 324 380 334 535 326"/>
+         <path class="d ink" stroke-width="26" d="M60 300 C110 302 150 120 280 110 C410 120 450 302 500 300"/>
+         <path class="d rs" stroke-width="${SW_RUST}" d="M90 60 C130 26 190 30 222 82"/><path class="d rs" stroke-width="${SW_RUST}" d="M188 74 L224 86 L232 48"/>
+         <path class="d rs" stroke-width="${SW_RUST}" d="M470 60 C430 26 370 30 338 82"/><path class="d rs" stroke-width="${SW_RUST}" d="M372 74 L336 86 L328 48"/>`,
+  // a speech burst (the YELP! word sits on top as text)
+  burst: `<path class="d ink" stroke-width="${SW_INK}" fill="#fff" d="${burst(280, 180, 250, 165, 11, 5)}"/>
+          <path class="d rs" stroke-width="${SW_RUST}" d="M20 40 L-20 10"/><path class="d rs" stroke-width="${SW_RUST}" d="M8 120 L-40 112"/>
+          <path class="d rs" stroke-width="${SW_RUST}" d="M540 40 L580 10"/><path class="d rs" stroke-width="${SW_RUST}" d="M552 120 L600 112"/>`,
+  // stairs with a big X
+  stairs: `<path class="d ink" stroke-width="22" d="M30 335 H130 V268 H230 V201 H330 V134 H430 V67 H530"/>
+           <path class="d rs" stroke-width="30" d="M150 30 C250 130 370 240 470 335"/><path class="d rs" stroke-width="30" d="M470 30 C370 130 250 240 150 335"/>`,
+  // wobble marks: two wavy lines that cross, with shake marks either side
+  wobble: `<path class="d ink" stroke-width="22" d="M210 10 C140 80 330 130 270 190 C210 250 300 300 350 350"/>
+           <path class="d ink" stroke-width="22" d="M350 10 C420 80 230 130 290 190 C350 250 260 300 210 350"/>
+           <path class="d rs" stroke-width="${SW_RUST}" d="M120 110 C90 160 90 210 120 260"/><path class="d rs" stroke-width="${SW_RUST}" d="M60 80 C20 150 20 230 60 300"/>
+           <path class="d rs" stroke-width="${SW_RUST}" d="M440 110 C470 160 470 210 440 260"/><path class="d rs" stroke-width="${SW_RUST}" d="M500 80 C540 150 540 230 500 300"/>`,
+  // an alert sign
+  alert: `<path class="d ink" stroke-width="22" fill="#fff" d="M280 18 C300 18 312 40 322 58 L512 300 C530 330 512 346 480 346 L80 346 C48 346 30 330 48 300 L238 58 C248 40 260 18 280 18 Z"/>
+          <path class="d rs" stroke-width="34" d="M280 120 L280 230"/><path class="d rs" stroke-width="36" d="M280 290 L280 292"/>
+          <path class="d rs" stroke-width="${SW_RUST}" d="M90 150 L30 120"/><path class="d rs" stroke-width="${SW_RUST}" d="M470 150 L530 120"/><path class="d rs" stroke-width="${SW_RUST}" d="M130 70 L90 20"/><path class="d rs" stroke-width="${SW_RUST}" d="M430 70 L470 20"/>`,
+};
+
+/* ---------------- product illustrations (original drawings, no animals) ---------------- */
+const P_BRACE = `<g stroke="#101B17" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M40 150 C120 118 250 118 330 150 L330 262 C250 232 120 232 40 262 Z" fill="#9FE8C9"/>
+  <path d="M0 158 L40 150 L40 262 L0 252 Z" fill="#C25E2E"/><path d="M370 158 L330 150 L330 262 L370 252 Z" fill="#C25E2E"/>
+  <rect x="150" y="140" width="22" height="96" rx="10" fill="#fff"/><rect x="198" y="140" width="22" height="96" rx="10" fill="#fff"/>
+  <path d="M60 198 C140 176 230 176 312 198" fill="none" stroke-dasharray="4 16"/>
+  <path d="M110 92 C96 72 124 58 110 36" fill="none" stroke="#C25E2E"/><path d="M186 86 C172 66 200 52 186 30" fill="none" stroke="#C25E2E"/><path d="M262 92 C248 72 276 58 262 36" fill="none" stroke="#C25E2E"/>
+</g>`;
+const P_BOTTLE = `<g stroke="#101B17" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M40 8 C40 -4 64 -4 64 8 L64 40 L40 40 Z" fill="#101B17"/>
+  <rect x="30" y="40" width="44" height="22" rx="4" fill="#fff"/>
+  <path d="M22 70 C22 62 30 62 36 62 L68 62 C74 62 82 62 82 70 L82 172 C82 180 76 184 70 184 L34 184 C28 184 22 180 22 172 Z" fill="#C25E2E"/>
+  <rect x="30" y="94" width="44" height="58" rx="6" fill="#FBFAF6"/>
+  <path d="M52 108 V138 M37 123 H67" stroke="#C25E2E" stroke-width="9"/>
+</g>`;
+const P_RAMP = `<g stroke="#101B17" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M10 196 L292 52 L306 76 L24 220 Z" fill="#9FE8C9"/>
+  <path d="M60 184 L72 206 M106 160 L118 182 M152 137 L164 159 M198 113 L210 135 M244 90 L256 112" fill="none"/>
+  <circle cx="158" cy="136" r="11" fill="#C25E2E"/>
+  <path d="M292 76 L292 226 M266 89 L266 226" fill="none"/><path d="M250 226 H312" fill="none"/>
+  <path d="M0 228 H330" fill="none" stroke-width="7"/>
+</g>`;
+const P_LIFT = `<g stroke="#101B17" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M80 70 C80 18 130 18 130 70" fill="none" stroke-width="12"/><path d="M200 70 C200 18 250 18 250 70" fill="none" stroke-width="12"/>
+  <path d="M18 92 C18 74 30 66 48 66 L282 66 C300 66 312 74 312 92 L312 150 C312 170 300 178 282 178 L48 178 C30 178 18 170 18 150 Z" fill="#9FE8C9"/>
+  <path d="M40 92 H290" fill="none" stroke="#C25E2E" stroke-dasharray="20 14"/>
+  <path d="M64 178 L56 226 M165 178 L165 230 M266 178 L274 226" fill="none"/>
+  <rect x="150" y="196" width="30" height="22" rx="4" fill="#C25E2E"/><rect x="44" y="196" width="26" height="20" rx="4" fill="#C25E2E"/><rect x="262" y="196" width="26" height="20" rx="4" fill="#C25E2E"/>
+</g>`;
+
+/* ================= the tracker: five hand-drawn boxes ================= */
+const TR = group(60);
+const BOX = 108, BX = i => SX + i * ((SW - BOX) / 4);
+const trBand = el(TR, '', '', 'width:1080px;height:560px;background:var(--paper)');
+const trFill = [0, 1, 2, 3, 4].map(i => el(TR, '', 'hl', `width:${BOX - 8}px;height:${BOX - 8}px`));
+const trSvg = el(TR, `<svg width="1080" height="200" viewBox="0 0 1080 200">${[0, 1, 2, 3, 4].map(i => `<path class="bx ink" stroke-width="9" d="${roughRect(BX(i), 40, BOX, BOX, 30 + i, 7)}"/>`).join('')}</svg>`, '', 'width:1080px;height:200px');
+const trNum = [0, 1, 2, 3, 4].map(i => el(TR, String(i + 1), 'mk', 'font-size:66px;color:#101B17'));
+const trTick = el(TR, `<svg width="1080" height="200" viewBox="0 0 1080 200">${[0, 1, 2, 3, 4].map(i => `<path class="tk rs" stroke-width="18" d="${tickPath(BX(i) + 16, 46, BOX - 8, BOX - 34)}" filter="url(#rough)"/>`).join('')}</svg>`, '', 'width:1080px;height:200px');
+function tracker(t) {
+  if (t > TL.prod + 0.6) return;
+  const y0 = 196 + T(t, 1145, [[TL.items[0] - 0.25, 0, 'snappy']]) + T(t, 0, [[TL.prod - 0.15, -2050, 'default']]);
+  put(TR, { y: y0, ox: 0, oy: 0 });
+  put(trSvg, { x: 0, y: 0 }); put(trTick, { x: 0, y: 0 });
+  put(trBand, { x: 0, y: -400, o: t > 2.2 ? 1 : 0 }); // paper band: pushed pages slide under the tracker
+  const boxes = trSvg.querySelectorAll('.bx'), ticks = trTick.querySelectorAll('.tk');
+  [0, 1, 2, 3, 4].forEach(i => {
+    const tp = 0.875 + i * 0.125, s = pop(t, tp, 0, 'default');
+    const cur = TL.items[i], done = cur + 2.5;
+    const active = t >= cur - 0.1 && t < (TL.items[i + 1] ?? TL.helps) - 0.1;
+    const big = active ? 1 + 0.14 * sp(t - cur + 0.1, 'snappy') : 1 + 0.14 * (t > cur ? 1 - sp(t - ((TL.items[i + 1] ?? TL.helps) - 0.1), 'snappy') : 0);
+    boxes[i].style.opacity = t < tp ? 0 : 1;
+    boxes[i].style.transform = `translate(${BX(i) + BOX / 2}px,${40 + BOX / 2}px) scale(${s * big}) translate(${-(BX(i) + BOX / 2)}px,${-(40 + BOX / 2)}px)`;
+    const fk = sp(t - cur + 0.05, 'snappy');
+    if (t > cur - 0.05) put(trFill[i], { x: BX(i) + 4 + (BOX - 8) / 2 * (1 - big), y: 44, sx: fk * big, sy: big, ox: 0, oy: (BOX - 8) / 2 });
+    put(trNum[i], { x: BX(i) + BOX / 2 - trNum[i]._w / 2, y: 40 + BOX / 2 - trNum[i]._h / 2 + 4, s: s * big, o: t < tp ? 0 : 1 - 0.75 * sp(t - done, 'snappy') });
+    setDraw(ticks[i], sp(t - done, 'default'));
+    ticks[i].style.transform = `translate(${BX(i) + BOX / 2}px,${40 + BOX / 2}px) scale(${big}) translate(${-(BX(i) + BOX / 2)}px,${-(40 + BOX / 2)}px)`;
+  });
+}
+
+/* ================= sheets and their pushes ================= */
+function pose(t, tin, din, tout, dout) {
+  let x = 0, y = 0, r = 0, s = 1, o = 1;
+  if (tin != null) { const k = sp(t - tin, 'default');
+    if (din === 'R') { x += 1250 * (1 - k); r += 7 * (1 - k); }
+    if (din === 'B') { y += 2050 * (1 - k); r -= 4 * (1 - k); }
+    if (din === 'S') { s *= T(t, 1.7, [[tin, 1, 'snappy']]); r -= 6 * (1 - sp(t - tin, 'snappy')); o = t >= tin ? 1 : 0; } }
+  if (tout != null) { const k = sp(t - tout, 'default');
+    if (dout === 'L') { x -= 1250 * k; r -= 7 * k; }
+    if (dout === 'U') { y -= 2050 * k; r += 4 * k; } }
+  return { x, y, r, s, o, ox: 540, oy: 960 };
+}
+const live = (t, a, b) => t >= a - 0.02 && t <= b + 0.6;
+
+/* ================= HOOK ================= */
+const HK = group(10);
+const hkL1 = el(HK, '<span class="w">5</span> <span class="w k">SIGNS</span>', 'mk');
+const hkL2 = el(HK, 'YOUR DOG', 'mk');
+const hkL3 = el(HK, 'HAS', 'mk');
+const hkL4 = el(HK, '<span class="iv" style="color:#C25E2E">IVDD</span>', 'mk');
+const hkPoint = el(HK, `<svg width="380" height="300" viewBox="0 0 380 300"><path class="d ink" stroke-width="18" d="M40 60 C200 20 330 80 300 230" filter="url(#rough)"/><path class="d ink" stroke-width="18" d="M250 190 L300 240 L344 180" filter="url(#rough)"/></svg>`, '', 'width:380px;height:300px');
+const hkGhost = el(HK, '5', 'mk', 'font-size:1300px;line-height:1;color:#E6F7EF');
+const hkHL = el(HK, '', '');
+const hkCirc = el(HK, '<svg width="1080" height="1920"><path class="d ink" stroke-width="16" filter="url(#rough)"/></svg>', '', 'width:1080px;height:1920px;pointer-events:none');
+const hkLoop = el(HK, 'Watch till <b style="color:#C25E2E">#5</b>', 'hand', 'font-size:112px;white-space:nowrap');
+const hkArrow = el(HK, `<svg width="150" height="150" viewBox="0 0 150 150"><path class="d rs" stroke-width="16" d="M20 20 C60 30 100 60 110 120" filter="url(#rough)"/><path class="d rs" stroke-width="16" d="M78 96 L110 126 L132 88" filter="url(#rough)"/></svg>`, '', 'width:150px;height:150px');
+function sceneHook(t) {
+  if (!live(t, 0, TL.items[0])) return;
+  put(HK, pose(t, null, null, TL.items[0] - 0.25, 'L'));
+  put(hkGhost, { x: 560, y: 1180, r: -8, z: -1 });
+  const settle = T(t, 1.05, [[0, 1, 'heavy']]); // already readable at frame 0, settling as it lands
+  const beat = 1 + 0.025 * Math.exp(-((t % 0.5) * 12));
+  put(hkL1, { x: hkL1._x, y: hkL1._y, s: settle * beat, ox: 0, oy: hkL1._h });
+  put(hkHL, { x: hkHL._x, y: hkHL._y, sx: sp(t - 0.375, 'default'), ox: 0, oy: hkHL._h / 2, o: t > 0.375 ? 1 : 0, z: -1 });
+  put(hkL2, { x: hkL2._x, y: hkL2._y, s: settle, ox: 0, oy: hkL2._h });
+  put(hkL3, { x: hkL3._x, y: hkL3._y, s: settle, ox: 0, oy: hkL3._h });
+  put(hkL4, { x: hkL4._x, y: hkL4._y, s: settle * beat, ox: 0, oy: hkL4._h / 2 });
+  put(hkPoint, { x: hkL3._x + hkL3._w + 30, y: hkL3._y + 10 }); drawSeq(hkPoint, t, 0.5, 0.18, 'default');
+  put(hkCirc, { x: 0, y: 0 }); setDraw(hkCirc.querySelector('path'), sp(t + 0.14, 'default') * (t >= 0 ? 1 : 0));
+  put(hkLoop, { x: hkLoop._x, y: hkLoop._y }); write(hkLoop, t, 0.5, 0.09);
+  put(hkArrow, { x: hkLoop._x + hkLoop._w + 10, y: hkLoop._y - 30 }); drawSeq(hkArrow, t, 0.75, 0.16, 'snappy');
+}
+
+/* ================= THE FIVE SIGNS ================= */
+const ITEMS = [
+  { name: 'A HUNCHED BACK', br: ['A HUNCHED|BACK', 'A|HUNCHED|BACK'], key: ['HUNCHED'], line: 'Their back arches up like a bridge.', dood: 'arch' },
+  { name: 'A YELP WHEN PICKED UP', br: ['A YELP|WHEN PICKED UP', 'A YELP WHEN|PICKED UP', 'A YELP|WHEN|PICKED UP'], key: ['YELP'], line: 'A sudden cry the moment you lift them.', dood: 'burst' },
+  { name: "WON'T JUMP OR DO THE STAIRS", br: ["WON'T JUMP|OR DO THE|STAIRS", "WON'T JUMP|OR DO|THE STAIRS", "WON'T JUMP OR|DO THE STAIRS"], key: ['JUMP'], line: 'They hang back at the sofa, car or steps.', dood: 'stairs' },
+  { name: 'BACK LEGS THAT WOBBLE OR CROSS', br: ['BACK LEGS|THAT WOBBLE|OR CROSS', 'BACK LEGS THAT|WOBBLE OR CROSS'], key: ['WOBBLE'], line: 'Unsteady steps, or paws that cross over.', dood: 'wobble' },
+  { name: 'BACK LEGS THAT SUDDENLY STOP WORKING', br: ['BACK LEGS THAT|SUDDENLY|STOP WORKING', 'BACK LEGS|THAT SUDDENLY|STOP WORKING'], key: ['STOP', 'WORKING'], line: "Back legs drag, or won't hold them up.", dood: 'alert' },
+];
+const DIN = ['R', 'B', 'R', 'B', 'S'], DOUT = ['U', 'L', 'U', 'L', 'L'];
+const items = ITEMS.map((it, k) => {
+  const g = group(20 + k);
+  const o = { g, it };
+  o.ghost = el(g, String(k + 1), 'mk', 'font-size:1300px;line-height:1;color:#E6F7EF');
+  o.circ = el(g, `<svg width="480" height="480" viewBox="0 0 480 480"><path class="d rs" stroke-width="22" filter="url(#rough)" d="${scribCircle(240, 240, 180, 196, 11 + k * 7)}"/></svg>`, '', 'width:480px;height:480px');
+  o.num = el(g, String(k + 1), 'mk', 'font-size:460px;line-height:1;color:#101B17');
+  o.dood = el(g, `<svg width="560" height="360" viewBox="0 0 560 360"><g filter="url(#rough)">${DOODLE[it.dood]}</g></svg>`, '', 'width:560px;height:360px');
+  if (it.dood === 'burst') o.yelp = el(g, 'YELP!', 'mk', 'font-size:120px;color:#C25E2E');
+  o.name = el(g, it.name.split(' ').map(w => `<span class="w${it.key.includes(w) ? ' k' : ''}">${w}</span>`).join(' '), 'mk', `width:${SW}px;white-space:normal`);
+  o.arrow = el(g, arrowSvg(84, '#C25E2E', 13), '', 'width:84px;height:50px');
+  o.line = el(g, it.line, 'hand', 'width:800px;font-size:74px;line-height:1.16');
+  o.hls = [];
+  return o;
+});
+function sceneItem(t, k) {
+  const o = items[k], t0 = TL.items[k], tEnd = TL.items[k + 1] ?? TL.helps;
+  if (!live(t, t0 - 0.2, tEnd)) return;
+  put(o.g, pose(t, t0 - (k ? 0.15 : 0.25), DIN[k], tEnd - 0.15, DOUT[k]));
+  put(o.ghost, { x: 520, y: 1180, r: -8, o: op(t, t0 - 0.1), ox: 0, oy: 0, z: -1 });
+  // the giant numeral slams on the downbeat, then pulses on every beat
+  const beat = 1 + 0.035 * Math.exp(-(((t - t0) % 0.5 + 0.5) % 0.5) * 10) * (t > t0 + 0.4 ? 1 : 0);
+  put(o.num, { x: 250 - o.num._w / 2, y: 616 - o.num._h / 2, s: slam(t, t0 - 0.08, 1.8) * beat, r: T(t, -16, [[t0 - 0.08, -4, 'default']]), o: t >= t0 - 0.08 ? 1 : 0 });
+  put(o.circ, { x: 250 - 240, y: 610 - 240 }); setDraw(o.circ.querySelector('path'), sp(t - t0 - 0.1, 'default'));
+  put(o.dood, { x: 480, y: 425, s: 0.98, ox: 0, oy: 0 }); drawSeq(o.dood, t, t0 + 0.75, 0.12, 'default', '.ink'); drawSeq(o.dood, t, t0 + 2.75, 0.06, 'snappy', '.rs');
+  if (o.yelp) put(o.yelp, { x: 480 + 274 - o.yelp._w / 2, y: 425 + 176 - o.yelp._h / 2, s: slam(t, t0 + 1.0, 2.2), r: -6, o: op(t, t0 + 1.0) });
+  o.hls.forEach((h, i) => put(h, { x: h._x, y: h._y, sx: sp(t - t0 - 1.25 - i * 0.08, 'default'), ox: 0, oy: h._h / 2, o: t > t0 + 1.25 ? 1 : 0, z: 0 }));
+  put(o.name, { x: SX, y: o.name._y, z: 1 }); slamWords(o.name, t, t0 + 0.25);
+  put(o.arrow, { x: SX - 2, y: o.line._y + 34, z: 1 }); drawSeq(o.arrow, t, t0 + 1.7, 0.1, 'snappy');
+  put(o.line, { x: SX + 106, y: o.line._y, z: 1 }); write(o.line, t, t0 + 1.8, 0.07);
+}
+
+/* ================= WHAT HELPS AT HOME ================= */
+const HP = group(30);
+const hpL1 = el(HP, 'WHAT HELPS', 'mk');
+const hpL2 = el(HP, '<span class="w k">AT HOME</span>', 'mk');
+const hpHL = el(HP, '', '');
+const hpGhost = el(HP, '<svg width="800" height="600" viewBox="0 0 800 600"><path d="M40 300 C120 360 200 450 260 560 C380 330 560 140 760 30" fill="none" stroke="#E6F7EF" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"/></svg>', '', 'width:800px;height:600px');
+const HELPS = ['Strict rest', 'A back brace', 'Ramps (no jumping)', 'A harness with a handle'];
+const hpRows = HELPS.map((h, i) => el(HP, `<svg width="124" height="124" viewBox="0 0 124 124" style="position:absolute;left:0;top:0"><path class="ink" stroke-width="10" d="${roughRect(6, 6, 112, 112, 50 + i, 6)}"/><path class="tk rs" stroke-width="22" filter="url(#rough)" d="${tickPath(20, 8, 110, 80)}"/></svg>
+  <div class="hand tx" style="position:absolute;left:150px;top:0;white-space:nowrap">${h}</div>`, '', 'width:876px;height:126px'));
+function sceneHelps(t) {
+  const t0 = TL.helps;
+  if (!live(t, t0 - 0.2, TL.prod)) return;
+  put(HP, pose(t, t0 - 0.15, 'R', TL.prod - 0.15, 'U'));
+  put(hpL1, { x: SX, z: 1, y: hpL1._y, s: slam(t, t0 - 0.05, 2.0), o: op(t, t0 - 0.05), ox: 0, oy: hpL1._h });
+  put(hpGhost, { x: 300, y: 1330, z: -1 }); setDraw(hpGhost.querySelector('path'), sp(t - t0 - 0.3, 'heavy'));
+  put(hpHL, { x: hpHL._x, y: hpHL._y, sx: sp(t - t0 - 0.25, 'default'), ox: 0, oy: hpHL._h / 2, o: t > t0 + 0.25 ? 1 : 0, z: 0 });
+  put(hpL2, { x: SX, z: 1, y: hpL2._y, s: slam(t, t0 + 0.1, 2.0), o: op(t, t0 + 0.1), ox: 0, oy: hpL2._h });
+  hpRows.forEach((r, i) => { const tr = t0 + [0.5, 0.875, 1.25, 1.625][i];
+    put(r, { x: SX + rise(t, tr - 0.08, 160, 'snappy'), y: r._y, o: op(t, tr - 0.08) });
+    setDraw(r.querySelector('.tk'), sp(t - tr, 'default')); });
+}
+
+/* ================= PRODUCTS ================= */
+const PR = group(40);
+const prGhost = el(PR, '£', 'mk', 'font-size:1100px;line-height:1;color:#E6F7EF');
+const prHead = el(PR, '<span class="w">GET</span> <span class="w">ALL</span> <span class="w">OF</span> <span class="w">IT</span>', 'mk');
+const prUnder = el(PR, '<svg width="880" height="40" viewBox="0 0 880 40"><path class="d rs" stroke-width="16" filter="url(#rough)" d="M6 22 C200 8 560 10 870 18"/></svg>', '', 'width:880px;height:40px');
+const bun = el(PR, `<svg width="876" height="560" viewBox="0 0 876 560" style="position:absolute;left:0;top:0"><path class="ink" stroke-width="10" d="${roughRect(4, 4, 868, 552, 71, 7)}"/></svg>
+  <div style="position:absolute;left:30px;top:150px"><svg width="380" height="290" viewBox="-6 0 380 290">${P_BRACE}</svg></div>
+  <div style="position:absolute;left:300px;top:250px"><svg width="110" height="200" viewBox="0 -6 104 190">${P_BOTTLE}</svg></div>
+  <div class="bname mk" style="position:absolute;left:440px;top:34px;font-size:92px;line-height:.98">IVDD<br>BUNDLE</div>
+  <div class="bprice pr" style="position:absolute;left:440px;top:236px;font-size:118px;color:#101B17">£62.08</div>
+  <div class="bwas pr" style="position:absolute;left:444px;top:378px;font-size:60px;font-weight:700;color:#5E6E66">was <span class="wp">£68.98</span></div>
+  <div class="hand" style="position:absolute;left:0;right:0;top:470px;text-align:center;font-size:46px;white-space:nowrap">Thermal Back Brace + Calming Drops</div>`, '', 'width:876px;height:560px;background:#fff;border-radius:10px');
+const bunStrike = el(PR, '<svg width="320" height="60" viewBox="0 0 320 60"><path class="d rs" stroke-width="12" d="M4 40 C90 24 200 30 316 14"/></svg>', '', 'width:320px;height:60px');
+const bunCirc = el(PR, '<svg width="1080" height="1920"><path class="d rs" stroke-width="12" filter="url(#rough)"/></svg>', '', 'width:1080px;height:1920px');
+const stamp = el(PR, `<svg width="210" height="210" viewBox="0 0 210 210" style="position:absolute;left:0;top:0"><circle cx="105" cy="105" r="98" fill="#C25E2E"/><path class="ink" stroke="#fff" stroke-width="6" d="${scribCircle(105, 105, 84, 84, 3, 1.05)}"/></svg>
+  <div class="pr" style="position:absolute;left:0;width:210px;top:46px;text-align:center;font-size:42px;color:#fff">SAVE</div>
+  <div class="pr" style="position:absolute;left:0;width:210px;top:92px;text-align:center;font-size:72px;color:#fff">10%</div>`, '', 'width:210px;height:210px;border-radius:105px');
+function smallCard(svg, vb, name, price, seed) {
+  return el(PR, `<svg width="428" height="470" viewBox="0 0 428 470" style="position:absolute;left:0;top:0"><path class="ink" stroke-width="10" d="${roughRect(4, 4, 420, 462, seed, 7)}"/></svg>
+    <div style="position:absolute;left:44px;top:26px"><svg width="340" height="232" viewBox="${vb}">${svg}</svg></div>
+    <div class="mk" style="position:absolute;left:0;right:0;top:268px;text-align:center;font-size:58px;line-height:.98">${name}</div>
+    <div class="pr" style="position:absolute;left:0;right:0;top:384px;text-align:center;font-size:76px;color:#C25E2E">${price}</div>`, '', 'width:428px;height:470px;background:#fff;border-radius:10px');
+}
+const ramp = smallCard(P_RAMP, '-6 30 340 210', 'FOLDING<br>RAMP', '£79.99', 81);
+const lift = smallCard(P_LIFT, '0 0 330 232', 'BALTO® <br>BODY LIFT', '£120.00', 91);
+function sceneProd(t) {
+  const t0 = TL.prod;
+  if (!live(t, t0 - 0.2, TL.offer)) return;
+  put(PR, pose(t, t0 - 0.15, 'B', TL.offer - 0.15, 'L'));
+  put(prGhost, { x: 330, y: 1240, r: -8, z: -1 });
+  put(prHead, { x: SX, y: 236 }); slamWords(prHead, t, t0 + 0.125);
+  put(prUnder, { x: SX - 4, y: 236 + prHead._h - 6 }); drawSeq(prUnder, t, t0 + 0.4, 0.1);
+  put(bun, { x: SX, y: 410, s: slam(t, t0 - 0.06, 1.35), r: T(t, -5, [[t0 - 0.06, 0, 'default']]), o: op(t, t0 - 0.06) });
+  const bp = bun.querySelector('.bprice'); bp.style.transform = `scale(${slam(t, t0 + 0.2, 1.35)})`; bp.style.transformOrigin = '0 50%'; bp.style.opacity = Math.min(1, sp(t - t0 - 0.2, 'snappy') * 3);
+  put(bunStrike, { x: SX + 444 + bunStrike._sx - 8, y: 410 + 378 }); drawSeq(bunStrike, t, t0 + 0.5, 0.1, 'snappy');
+  bunStrike.style.width = bunStrike._sw + 'px';
+  put(stamp, { x: SX + 22, y: 424, s: slam(t, t0 + 0.95, 2.6), r: T(t, -40, [[t0 + 0.95, -12, 'default']]), o: op(t, t0 + 0.95) });
+  put(ramp, { x: SX, y: 1000, s: slam(t, t0 + 1.45, 1.3), r: T(t, 8, [[t0 + 1.45, -1.5, 'default']]), o: op(t, t0 + 1.45) });
+  put(lift, { x: SX + 448, y: 1000, s: slam(t, t0 + 1.95, 1.3), r: T(t, -8, [[t0 + 1.95, 1.5, 'default']]), o: op(t, t0 + 1.95) });
+  put(bunCirc, { x: 0, y: 0 }); setDraw(bunCirc.querySelector('path'), sp(t - t0 - 2.5, 'default'));
+}
+
+/* ================= OFFER + CTA ================= */
+const OF = group(50);
+const ofGhost = el(OF, '<svg width="800" height="600" viewBox="0 0 800 600"><path d="M40 300 C120 360 200 450 260 560 C380 330 560 140 760 30" fill="none" stroke="#E6F7EF" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"/></svg>', '', 'width:800px;height:600px');
+const QUOTE = '“Was really pleased to see an IVDD bundle as the products add up when you buy them separate”';
+const rev = el(OF, `<svg class="rb" width="876" height="460" style="position:absolute;left:0;top:0"><path class="ink" stroke-width="10"/></svg>
+  <div class="stars" style="position:absolute;left:36px;top:30px;display:flex;gap:6px">${[1, 1, 1, 1, 0].map(f => `<span class="st" style="display:inline-block">${star(96, f)}</span>`).join('')}</div>
+  <div class="pr" style="position:absolute;left:560px;top:52px;font-size:58px;color:#101B17">4/5</div>
+  <div class="q hand" style="position:absolute;left:40px;top:140px;width:800px;font-size:60px;line-height:1.2">${QUOTE}</div>
+  <div class="by hand" style="position:absolute;left:40px;font-size:46px;color:#5E6E66;white-space:nowrap">Danny, on the IVDD Bundle</div>`, '', 'width:876px;background:#fff;border-radius:10px');
+const revQ = rev.querySelector('.q');
+const cpn = el(OF, `<svg class="cb" width="876" height="290" style="position:absolute;left:0;top:0"><path class="ink" stroke-width="8" stroke-dasharray="26 16"/></svg>
+  <div class="pr" style="position:absolute;left:0;right:0;top:40px;text-align:center;font-size:46px;color:#101B17">10% OFF YOUR FIRST ORDER</div>
+  <div class="code pr" style="position:absolute;left:0;right:0;top:110px;text-align:center;font-size:146px;letter-spacing:.01em;color:#101B17">POORLY10</div>`, '', 'width:876px;height:290px;background:#9FE8C9;border-radius:10px');
+const del = el(OF, `<svg width="96" height="80" viewBox="0 0 96 80" style="position:absolute;left:0;top:6px"><path class="d rs" stroke-width="16" filter="url(#rough)" d="${tickPath(6, 8, 84, 62)}"/></svg>
+  <div class="hand" style="position:absolute;left:110px;top:0;font-size:64px;white-space:nowrap">Free UK delivery over £39</div>`, '', 'width:876px;height:84px');
+const btnShadow = el(OF, '', '', 'width:876px;height:170px;border-radius:85px;background:#101B17');
+const btn = el(OF, `<div class="face" style="position:absolute;left:0;top:0;width:876px;height:170px;border-radius:85px;background:#C25E2E">
+    <div class="bt mk" style="position:absolute;left:0;right:0;top:36px;text-align:center;font-size:72px;color:#fff">Shop the IVDD Bundle <span style="display:inline-block;vertical-align:-4px">${arrowSvg(84, '#fff', 13)}</span></div></div>`, '', 'width:876px;height:182px');
+const btnCirc = el(OF, '<svg width="1080" height="1920"><path class="d ink" stroke-width="14" filter="url(#rough)"/></svg>', '', 'width:1080px;height:1920px');
+const url = el(OF, `<span style="display:inline-block;vertical-align:-14px;margin-right:22px">${mark(78)}</span><span class="pr" style="font-size:74px;color:#101B17">poorly-pet.com</span>`, '', 'white-space:nowrap');
+const urlUnder = el(OF, '<svg width="560" height="30" viewBox="0 0 560 30"><path class="d rs" stroke-width="12" filter="url(#rough)" d="M4 16 C150 6 380 8 556 14"/></svg>', '', 'width:560px;height:30px');
+const cursor = el(OF, '<svg width="96" height="96" viewBox="0 0 64 64"><path d="M14 6 L14 50 L25 40 L33 58 L41 54 L33 37 L48 37 Z" fill="#101B17" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>', '', 'width:96px;height:96px');
+function sceneOffer(t) {
+  const t0 = TL.offer;
+  if (t < t0 - 0.2) return;
+  put(OF, pose(t, t0 - 0.15, 'R', null, null));
+  put(ofGhost, { x: 300, y: 1420, z: -1 }); setDraw(ofGhost.querySelector('path'), sp(t - TL.press - 0.2, 'heavy'));
+  put(rev, { x: SX, y: rev._y, s: slam(t, t0 - 0.05, 1.3), r: T(t, 4, [[t0 - 0.05, 0, 'default']]), o: op(t, t0 - 0.05) });
+  rev.querySelectorAll('.st').forEach((s, i) => { s.style.transform = `scale(${pop(t, t0 + 0.25 + i * 0.0625, 0, 'default')}) rotate(${-30 * (1 - sp(t - t0 - 0.25 - i * 0.0625, 'default'))}deg)`; });
+  write(revQ, t, t0 + 0.375, 0.045);
+  rev.querySelector('.by').style.opacity = sp(t - t0 - 1.3, 'snappy');
+  put(cpn, { x: SX, y: cpn._y, s: slam(t, t0 + 1.45, 1.8), r: T(t, -6, [[t0 + 1.45, -1.2, 'default']]), o: op(t, t0 + 1.45) });
+  put(del, { x: SX, y: del._y + rise(t, t0 + 1.95, 60, 'snappy'), o: op(t, t0 + 1.95) }); drawSeq(del, t, t0 + 2.0, 0.1);
+  const pr = t >= TL.press ? T(t, 0, [[TL.press, 12, 'snappy'], [TL.press + 0.14, 0, 'snappy']]) : 0;
+  const bs = pop(t, t0 + 2.45, 0.3, 'default');
+  put(btnShadow, { x: SX + 10, y: btn._y + 12, s: bs, o: op(t, t0 + 2.45) });
+  put(btn, { x: SX, y: btn._y, s: bs, o: op(t, t0 + 2.45) });
+  btn.querySelector('.face').style.transform = `translate(${pr * 0.8}px,${pr}px)`;
+  drawSeq(btn, t, t0 + 2.6, 0.08, 'snappy');
+  put(url, { x: 540 - url._w / 2, y: url._y + rise(t, t0 + 2.95, 50, 'snappy'), o: op(t, t0 + 2.95) });
+  put(urlUnder, { x: 540 - url._w / 2 + 96, y: url._y + url._h - 4 }); drawSeq(urlUnder, t, t0 + 3.0, 0.1);
+  put(btnCirc, { x: 0, y: 0 }); setDraw(btnCirc.querySelector('path'), sp(t - TL.press - 0.12, 'default'));
+  // cursor taps the button
+  if (t > TL.press - 0.6) {
+    const cx = T(t, 1150, [[TL.press - 0.55, 820, 'default']]), cy = T(t, 1880, [[TL.press - 0.55, btn._y + 122, 'default']]);
+    put(cursor, { x: cx, y: cy, s: press(t, TL.press - 0.02, 0.8), ox: 20, oy: 8, z: 30 });
+  }
+}
+
+/* ---------------- layout that depends on real text widths ---------------- */
+function fit(e, maxW, maxSize) { e.style.fontSize = maxSize + 'px'; const w = e.offsetWidth; if (w > maxW) e.style.fontSize = Math.floor(maxSize * maxW / w) + 'px'; e._w = e.offsetWidth; e._h = e.offsetHeight; return parseFloat(e.style.fontSize); }
+function hlFor(parent, host, hx, hy, size, pad = 16) {
+  // one mint highlighter swipe per line of key words
+  const ks = [...host.querySelectorAll('.k')]; const lines = {};
+  ks.forEach(k => { const top = k.offsetTop; (lines[top] = lines[top] || []).push(k); });
+  return Object.values(lines).map(ws => { const l = ws[0].offsetLeft, r = ws[ws.length - 1].offsetLeft + ws[ws.length - 1].offsetWidth;
+    const h = el(parent, '', ''); setHL(h, r - l + pad * 2, Math.round(size * 0.74));
+    h._x = hx + l - pad; h._y = hy + ws[0].offsetTop + size * 0.2; h._w = r - l + pad * 2; h._h = size * 0.74; parent.insertBefore(h, host); return h; });
+}
+function layout() {
+  for (const e of ALL) e.style.display = 'block';
+  for (const e of ALL) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  // hook title: each line as big as it can be inside the safe width (max 230 px)
+  const s1 = fit(hkL1, SW, 230), s2 = fit(hkL2, SW, 230), s3 = fit(hkL3, SW, 230), s4 = fit(hkL4, SW, 230);
+  hkL1._x = SX; hkL1._y = 236; hkL2._x = SX; hkL2._y = hkL1._y + s1 * 1.0; hkL3._x = SX; hkL3._y = hkL2._y + s2 * 1.04; hkL4._x = SX; hkL4._y = hkL3._y + s3 * 1.0;
+  const kk = hkL1.querySelector('.k'); setHL(hkHL, kk.offsetWidth + 40, s1 * 0.72);
+  hkHL._x = SX + kk.offsetLeft - 20; hkHL._y = hkL1._y + s1 * 0.32; hkHL._w = kk.offsetWidth + 40; hkHL._h = s1 * 0.72;
+  const iv = hkL4.querySelector('.iv');
+  const icx = SX + iv.offsetLeft + iv.offsetWidth / 2, icy = hkL4._y + hkL4._h * 0.5;
+  hkCirc.querySelector('path').setAttribute('d', scribCircle(icx, icy, iv.offsetWidth / 2 + 50, s4 * 0.5, 21, 1.12, -2.6));
+  hkLoop._x = SX + 4; hkLoop._y = hkL4._y + hkL4._h + 10; wrapWords(hkLoop); hkLoop._w = hkLoop.offsetWidth;
+  // the signs: name as big as fits in 3 lines, then the supporting line; the block fills the space under the numeral
+  items.forEach(o => {
+    o.line._h = o.line.offsetHeight;
+    const top = 850, bottom = 1474, maxH = bottom - top - 30 - o.line._h;
+    // try each set of line breaks and keep the one that sets the name biggest
+    const html = b => b.split('|').map(l => l.split(' ').map(w => `<span class="w${o.it.key.includes(w) ? ' k' : ''}">${w}</span>`).join(' ')).join('<br>');
+    let best = null;
+    o.name.style.whiteSpace = 'nowrap'; o.name.style.width = 'auto'; o.name.style.lineHeight = '1.0';
+    for (const b of o.it.br) { o.name.innerHTML = html(b); o.name.style.fontSize = '100px';
+      const sz = Math.min(160, Math.floor(100 * SW / o.name.offsetWidth), Math.floor(100 * maxH / o.name.offsetHeight));
+      if (!best || sz > best[1]) best = [b, sz]; }
+    o.name.innerHTML = html(best[0]); o.name.style.fontSize = best[1] + 'px';
+    const size = best[1]; o.size = size; o.name._h = o.name.offsetHeight;
+    const block = o.name._h + 30 + o.line._h;
+    o.name._y = top + Math.max(0, (bottom - top - block) / 2); o.line._y = o.name._y + o.name._h + 30;
+    o.hls = hlFor(o.g, o.name, SX, o.name._y, size);
+    wrapWords(o.line);
+    o.num._w = o.num.offsetWidth; o.num._h = o.num.offsetHeight;
+    if (o.yelp) { o.yelp._w = o.yelp.offsetWidth; o.yelp._h = o.yelp.offsetHeight; }
+  });
+  // what helps
+  const h1 = fit(hpL1, SW, 156); hpL1._y = 370; const h2 = fit(hpL2, SW, 156); hpL2._y = hpL1._y + h1 * 1.02;
+  const kh = hpL2.querySelector('.k'); setHL(hpHL, kh.offsetWidth + 40, h2 * 0.74);
+  hpHL._x = SX + kh.offsetLeft - 20; hpHL._y = hpL2._y + h2 * 0.3; hpHL._w = kh.offsetWidth + 40; hpHL._h = h2 * 0.74;
+  let ry = hpL2._y + h2 * 1.08 + 20;
+  const hs = Math.min(...hpRows.map(r => fit(r.querySelector('.tx'), SW - 150, 80)));
+  hpRows.forEach(r => { const tx = r.querySelector('.tx'); tx.style.fontSize = hs + 'px'; tx.style.lineHeight = '1.08';
+    const th = tx.offsetHeight; tx.style.top = th < 124 ? (124 - th) / 2 + 'px' : '0px'; r._h = Math.max(124, th); r.style.height = r._h + 'px'; r._y = ry; ry += r._h + 44; });
+  // products
+  fit(prHead, SW, 150);
+  const wp = bun.querySelector('.wp'); bunStrike._sw = wp.offsetWidth + 16; bunStrike._sx = wp.offsetLeft; bunStrike.style.width = bunStrike._sw + 'px';
+  bunStrike.querySelector('svg').setAttribute('width', bunStrike._sw); bunStrike.querySelector('svg').setAttribute('preserveAspectRatio', 'none');
+  const bpr = bun.querySelector('.bprice');
+  bunCirc.querySelector('path').setAttribute('d', scribCircle(SX + 440 + bpr.offsetWidth / 2, 410 + 236 + bpr.offsetHeight / 2, bpr.offsetWidth / 2 + 30, bpr.offsetHeight / 2 + 16, 44, 1.1, -2.8));
+  // offer: stack the blocks, then centre the stack in the safe area
+  const by = rev.querySelector('.by'); by.style.top = 140 + revQ.offsetHeight + 12 + 'px';
+  const rh = 140 + revQ.offsetHeight + 12 + 60 + 30; rev.style.height = rh + 'px'; rev._h = rh;
+  rev.querySelector('.rb').setAttribute('height', rh); rev.querySelector('.rb path').setAttribute('d', roughRect(4, 4, 868, rh - 8, 61, 7));
+  cpn.querySelector('.cb path').setAttribute('d', roughRect(8, 8, 860, 274, 62, 4));
+  fit(cpn.querySelector('.code'), 820, 146); cpn.querySelector('.code').style.width = '';
+  wrapWords(revQ);
+  url._w = url.offsetWidth; url._h = url.offsetHeight;
+  const gap = 28, stack = [rev, cpn, del, btn, url], tot = stack.reduce((a, e) => a + e._h, 0) + gap * (stack.length - 1) + 14;
+  let y = 236 + Math.max(0, (1474 - 236 - tot) / 2); stack.forEach(e => { if (e === btn) y += 14; e._y = y; y += e._h + gap; });
+  const bt = btn.querySelector('.bt'); bt.style.right = 'auto'; bt.style.left = '0'; fit(bt, 800, 72); bt.style.left = (876 - bt.offsetWidth) / 2 + 'px'; bt.style.top = (170 - bt.offsetHeight) / 2 + 4 + 'px';
+  btnCirc.querySelector('path').setAttribute('d', scribCircle(SX + 438, btn._y + 88, 468, 118, 33, 1.1, -2.9));
+  for (const e of ALL) e.style.display = 'none';
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  turb.setAttribute('seed', 1 + (Math.floor(t * 8) % 4)); // marker line boil, 8 times a second
+  sceneHook(t); items.forEach((_, k) => sceneItem(t, k)); sceneHelps(t); sceneProd(t); sceneOffer(t); tracker(t);
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('400 100px PM'), document.fonts.load('700 60px Kalam'), document.fonts.load('800 60px Inter'), document.fonts.load('700 60px Inter')])
+  .then(() => document.fonts.ready).then(() => { layout(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fitView = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fitView); fitView();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>

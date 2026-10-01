@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 Things for Stiff Joints</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:100 800;src:url(fonts/jetbrains-mono.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+#world{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.g{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+.L{position:absolute;left:0;top:0;display:none}
+.full{width:1080px;height:1920px}
+.ruled{background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0 78px,#E6EBE8 78px 80px)}
+.serif{font-family:Fraunces,serif;font-weight:620;font-optical-sizing:auto;letter-spacing:-.02em;line-height:.9;white-space:nowrap}
+.serif em,.serif .em{font-style:italic;font-weight:560}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:800;white-space:pre;line-height:1.3}
+.ui{font-family:Inter,sans-serif}
+.gh{color:transparent!important}
+.cw{position:relative}
+.cw::after{content:'';position:absolute;left:.02em;top:.2em;width:.5em;height:.8em;background:var(--cc,#A8542F)}
+.mono .cw::after{left:0;top:.04em;width:.6em;height:1.2em}
+.serif .cw::after{top:.24em;height:.76em;width:.42em}
+.hlr{position:absolute;background:var(--mint);border-radius:6px}
+.box{position:absolute;box-sizing:border-box;border-radius:10px}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage"><div id="world"></div></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const W = 1080, H = 1920, FPS = 30, DUR = EV.DUR, B = EV.B;
+const C = { deep: [11, 42, 35], tile: [19, 74, 61], mint: [159, 232, 201], paper: [250, 249, 246], rust: [168, 84, 47], ink: [16, 27, 23], mute: [94, 110, 102], white: [255, 255, 255], line: [227, 232, 230] };
+const INK = '#101B17', RUST = '#A8542F', MINT = '#9FE8C9', TILE = '#134A3D', PAPER = '#FAF9F6', DEEP = '#0B2A23';
+const stage = document.getElementById('stage'), world = document.getElementById('world');
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ---------------- building blocks (as in the approved ad) ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function page(z, cls = '') { const g = document.createElement('div'); g.className = 'g ' + cls; g.style.zIndex = z; world.appendChild(g); g.style.display = 'none'; ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, z = null, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+  if (z !== null) e.style.zIndex = z;
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => sp(t - t0, p);
+const press = (t, t0, depth = 0.93) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.12, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const slam = (t, t0, from = 1.7) => T(t, from, [[t0, 1, 'snappy']]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - clamp(k, 0, 1)); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+// a damped kick for slams: pure function of the time since each hit
+const kick = (t, times, a = 10) => times.reduce((v, ti) => v + (t > ti ? a * Math.exp(-(t - ti) * 16) * Math.sin((t - ti) * 55) : 0), 0);
+// caret blinks on 8th notes of the 112 BPM grid
+const blinkOn = (t, from) => Math.floor((t - from) / (B / 2)) % 2 === 0;
+
+/* typed text with a chunky block caret. segs: [[text, cls]], '\n' breaks a line.
+   The untyped rest stays in the layout as transparent text, so nothing reflows while typing. */
+function typed(e, segs, t, t0, cps, caretFor = 0) {
+  const toks = [];
+  for (const [s, cls = ''] of segs) for (const ch of s) toks.push([ch, cls]);
+  const total = toks.filter(k => k[0] !== '\n').length;
+  const n = clamp(Math.floor((t - t0) * cps), 0, total);
+  const done = t0 + total / cps;
+  const caret = t >= t0 && (t < done || (t < done + caretFor && blinkOn(t, done)));
+  let html = '', cur = null, buf = '', seen = 0, caretPut = false;
+  const flush = () => { if (buf) html += cur[1] === null ? buf : `<span class="${cur[0]}${cur[1] ? ' gh' : ''}">${buf}</span>`; buf = ''; };
+  for (const [ch, cls] of toks) {
+    const ghost = seen >= n;
+    if (ghost && !caretPut) { flush(); cur = null; if (caret) html += '<span class="cw"></span>'; caretPut = true; }
+    if (ch === '\n') { flush(); cur = null; html += '<br>'; continue; }
+    const key = [cls, ghost];
+    if (!cur || cur[0] !== key[0] || cur[1] !== key[1]) { flush(); cur = key; }
+    buf += esc(ch); seen++;
+  }
+  flush();
+  if (!caretPut && caret) html += '<span class="cw"></span>';
+  if (e._last !== html) { e.innerHTML = html; e._last = html; }
+  return n / total;
+}
+// a mint selection rectangle that sweeps across [row, col, len] of a mono block
+function sweep(r, t, t0, cw, lh, row, col, len, padY = 4) {
+  const k = sp(t - t0, 'snappy');
+  if (k < 0.01) { r.style.display = 'none'; return; }
+  r.style.display = 'block';
+  r.style.left = col * cw - 6 + 'px'; r.style.top = row * lh + padY + 'px';
+  r.style.width = (len * cw + 12) * k + 'px'; r.style.height = lh - padY * 2 + 'px';
+}
+
+/* ---------------- product drawings (original, simple, no animals) ---------------- */
+const SW = 'stroke="#101B17" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"';
+const plus = (x, y, s = 16, c = RUST) => `<path d="M${x - s} ${y} H${x + s} M${x} ${y - s} V${y + s}" stroke="${c}" stroke-width="8" stroke-linecap="round"/>`;
+const ILL = {
+  tub: `<g ${SW}>
+    <path d="M150 128 H392 V300 Q392 336 356 336 H186 Q150 336 150 300 Z" fill="#fff"/>
+    <rect x="132" y="74" width="278" height="58" rx="16" fill="${RUST}"/>
+    <rect x="174" y="166" width="194" height="128" rx="12" fill="${MINT}" stroke-width="6"/>
+    <path d="M420 300 Q420 336 462 336 Q504 336 504 300 Z" fill="#fff"/>
+    <path d="M428 300 Q440 270 462 274 Q486 270 498 300" fill="#fff" stroke-width="6"/>
+    <path d="M462 300 L520 214" stroke-width="12"/></g>
+    <text x="271" y="236" text-anchor="middle" font-family="Fraunces" font-weight="640" font-size="64" fill="${INK}">MSM</text>
+    <text x="271" y="276" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="26" fill="${INK}">300g</text>
+    ${plus(70, 120)}${plus(470, 120, 12, INK)}${plus(90, 270, 10, INK)}`,
+  pouch: `<g ${SW}>
+    <path d="M176 52 H366 L378 86 Q394 200 386 312 Q384 336 360 336 H182 Q158 336 156 312 Q148 200 164 86 Z" fill="#fff"/>
+    <path d="M168 104 H374" stroke-width="6"/>
+    <rect x="190" y="150" width="162" height="138" rx="12" fill="${MINT}" stroke-width="6"/>
+    <path d="M410 336 Q440 286 470 290 Q502 286 528 336 Z" fill="#fff" stroke-width="6"/></g>
+    <text x="271" y="214" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="27" fill="${INK}">COLLAGEN</text>
+    <text x="271" y="262" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="24" fill="${INK}">250g</text>
+    <circle cx="452" cy="314" r="5" fill="${INK}"/><circle cx="480" cy="306" r="5" fill="${INK}"/><circle cx="500" cy="322" r="5" fill="${INK}"/>
+    ${plus(80, 110)}${plus(460, 120, 12, INK)}${plus(96, 280, 10, INK)}`,
+  coat: `<g ${SW}>
+    <path class="heat" d="M190 96 q-18 -18 0 -36 q18 -18 0 -36" fill="none" stroke="${RUST}" stroke-width="10"/>
+    <path class="heat" d="M270 92 q-18 -18 0 -36 q18 -18 0 -36" fill="none" stroke="${RUST}" stroke-width="10"/>
+    <path class="heat" d="M350 96 q-18 -18 0 -36 q18 -18 0 -36" fill="none" stroke="${RUST}" stroke-width="10"/>
+    <path d="M110 150 Q270 104 440 140 Q478 210 446 286 Q300 312 132 286 Q98 220 110 150 Z" fill="${TILE}"/>
+    <path d="M160 140 L150 290 M230 124 L222 300 M300 118 L296 304 M370 124 L370 300" stroke="${MINT}" stroke-width="5" stroke-dasharray="2 14"/>
+    <path d="M110 150 Q72 200 92 270" fill="none" stroke="${RUST}" stroke-width="22"/>
+    <rect x="252" y="286" width="44" height="54" rx="8" fill="${RUST}"/>
+    <rect x="140" y="270" width="40" height="66" rx="8" fill="${RUST}"/></g>
+    ${plus(480, 80, 12, INK)}${plus(60, 110)}`,
+  ramp: `<g ${SW}>
+    <path d="M24 336 H528" stroke-width="8"/>
+    <rect x="392" y="120" width="136" height="216" rx="14" fill="${MINT}"/>
+    <path d="M410 160 H510 M410 196 H510" stroke-width="6"/>
+    <g class="r1"><path d="M48 330 L228 236 L240 258 L60 352 Z" fill="${TILE}"/>
+      <path d="M86 322 L80 310 M122 303 L116 291 M158 284 L152 272 M194 265 L188 253" stroke="${MINT}" stroke-width="6"/></g>
+    <g class="r2"><path d="M228 236 L398 128 L410 150 L240 258 Z" fill="${TILE}"/>
+      <path d="M268 222 L262 210 M304 199 L298 187 M340 176 L334 164 M376 153 L370 141" stroke="${MINT}" stroke-width="6"/></g>
+    <circle cx="234" cy="247" r="14" fill="${RUST}"/></g>
+    ${plus(90, 110)}${plus(300, 60, 12, INK)}`,
+  harness: `<g class="lift"><g ${SW}>
+    <path d="M150 120 L226 52 M392 120 L316 52" stroke-width="16"/>
+    <rect x="196" y="26" width="150" height="50" rx="25" fill="${RUST}"/>
+    <path d="M136 150 Q271 360 406 150" fill="none" stroke="${INK}" stroke-width="64"/>
+    <path d="M136 150 Q271 360 406 150" fill="none" stroke="${TILE}" stroke-width="48"/>
+    <path d="M150 158 Q271 330 392 158" fill="none" stroke="${MINT}" stroke-width="5" stroke-dasharray="4 14"/>
+    <circle cx="150" cy="128" r="16" fill="#fff"/><circle cx="392" cy="128" r="16" fill="#fff"/></g></g>
+    ${plus(70, 110)}${plus(480, 90, 12, INK)}${plus(470, 300, 10, INK)}`,
+};
+// bundle contents, 240 x 240
+const PART = {
+  chews: `<g ${SW}><rect x="56" y="40" width="128" height="36" rx="10" fill="${RUST}"/><path d="M64 76 H176 V196 Q176 214 158 214 H82 Q64 214 64 196 Z" fill="#fff"/>
+    <rect x="82" y="104" width="76" height="84" rx="10" fill="${MINT}" stroke-width="6"/></g>
+    <g stroke="${INK}" stroke-width="6" fill="${PAPER}"><rect x="186" y="170" width="44" height="30" rx="14"/><rect x="10" y="182" width="44" height="30" rx="14"/></g>`,
+  pad: `<g ${SW}><path class="heat" d="M84 70 q-12 -12 0 -24 q12 -12 0 -24" fill="none" stroke="${RUST}" stroke-width="9"/><path class="heat" d="M156 70 q-12 -12 0 -24 q12 -12 0 -24" fill="none" stroke="${RUST}" stroke-width="9"/>
+    <rect x="20" y="92" width="200" height="124" rx="30" fill="${MINT}"/>
+    <path d="M86 92 V216 M154 92 V216 M20 154 H220" stroke-width="5" stroke-dasharray="3 12"/></g>`,
+  oil: `<g ${SW}><path d="M110 18 H150 V40 H110 Z" fill="${INK}"/><path d="M150 26 H186 V40" fill="none"/><rect x="116" y="40" width="28" height="26" fill="#fff"/>
+    <path d="M100 66 H160 Q186 80 186 108 V200 Q186 220 166 220 H94 Q74 220 74 200 V108 Q74 80 100 66 Z" fill="${RUST}"/>
+    <rect x="90" y="118" width="80" height="70" rx="10" fill="#fff" stroke-width="6"/></g>
+    <path d="M210 120 Q226 146 210 158 Q194 146 210 120 Z" fill="${RUST}" stroke="${INK}" stroke-width="6" stroke-linejoin="round"/>`,
+};
+const STAR = (s, c = '#C9982E') => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" style="display:inline-block;vertical-align:-.1em"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="${c}"/></svg>`;
+const ARROW = (s, c) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" style="display:inline-block;vertical-align:-.12em" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 32 H54 M36 14 L54 32 L36 50"/></svg>`;
+// receipt paper with a torn (zigzag) bottom edge
+function receiptSVG(w, h, tooth = 22, fill = '#fff', stroke = INK) {
+  let d = `M2 2 H${w - 2} V${h - 14}`;
+  const n = Math.round((w - 4) / tooth);
+  for (let i = n; i >= 1; i--) { const x1 = 2 + (i - 0.5) * (w - 4) / n, x0 = 2 + (i - 1) * (w - 4) / n; d += ` L${x1.toFixed(1)} ${h - 2} L${x0.toFixed(1)} ${h - 14}`; }
+  d += ' Z';
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="position:absolute;left:0;top:0"><path d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/></svg>`;
+}
+
+/* ================= TRACKER (stays on top through the list) ================= */
+const TR = document.createElement('div'); TR.className = 'g'; TR.style.zIndex = 100; TR.style.pointerEvents = 'none'; stage.appendChild(TR);
+const trRail = el(TR, '<div class="fill" style="position:absolute;left:0;top:0;height:8px;border-radius:4px"></div>', '', 'width:876px;height:8px;border-radius:4px');
+const trSel = el(TR, '', '', 'width:150px;height:84px;border-radius:14px;background:var(--mint)');
+const trSegs = [0, 1, 2, 3, 4].map(i => el(TR, `<div class="bx box" style="left:0;top:0;width:62px;height:62px;border:6px solid"></div>
+  <div class="xx mono" style="position:absolute;left:0;top:0;width:62px;height:62px;font-size:48px;line-height:58px;text-align:center"></div>
+  <div class="lb mono" style="position:absolute;left:78px;top:2px;font-size:46px;line-height:58px">0${i + 1}</div>`, '', 'width:140px;height:62px'));
+const TRX = i => 64 + i * 179;
+function tracker(t) {
+  put(TR); TR.style.display = 'block';
+  const it = EV.items;
+  // colours: paper page -> deep green offer page
+  const dk = sp(t - EV.pOut, 'snappy');
+  const fg = mix(C.ink, C.paper, dk), muted = mix([150, 162, 156], [120, 160, 145], dk), railBg = mix(C.line, C.tile, dk), fillC = mix(C.rust, C.mint, dk);
+  put(trRail, { x: 64, y: 318 });
+  trRail.style.background = railBg;
+  const done = it.reduce((a, e) => a + sp(t - e.tick, 'default'), 0);
+  trRail.querySelector('.fill').style.width = 876 * done / 5 + 'px';
+  trRail.querySelector('.fill').style.background = fillC;
+  // the active item is selected in mint
+  let cur = -1; it.forEach((e, i) => { if (t >= e.land - 0.05 && t < e.end) cur = i; });
+  if (cur >= 0) {
+    const e = it[cur], k = sp(t - e.land, 'snappy');
+    put(trSel, { x: TRX(cur) - 12, y: 221, sx: k, sy: 1, ox: 0, oy: 42, o: 1 - sp(t - e.tick - 0.25, 'snappy') * 0.0 });
+  }
+  trSegs.forEach((s, i) => {
+    const e = it[i];
+    const ripple = T(t, 1, [[EV.hRail + i * B / 4, 1.28, 'snappy'], [EV.hRail + i * B / 4 + 0.09, 1, 'default']]);
+    const tk = sp(t - e.tick, 'snappy');
+    const landS = T(t, 1, [[e.land, 1.18, 'snappy'], [e.land + 0.1, 1, 'default']]);
+    put(s, { x: TRX(i), y: 232, s: ripple * landS * T(t, 1, [[e.tick, 1.25, 'snappy'], [e.tick + 0.1, 1, 'default']]), ox: 31, oy: 31 });
+    const active = i === cur;
+    const bx = s.querySelector('.bx'), xx = s.querySelector('.xx'), lb = s.querySelector('.lb');
+    bx.style.borderColor = active && tk < 0.5 ? (dk > 0.5 ? MINT : INK) : fg;
+    bx.style.background = tk > 0.02 ? (dk > 0.5 ? MINT : INK) : 'transparent';
+    xx.textContent = t >= e.tick ? 'x' : '';
+    xx.style.color = dk > 0.5 ? DEEP : MINT;
+    xx.style.transform = `scale(${T(t, 2.2, [[e.tick, 1, 'snappy']])})`;
+    lb.style.color = active ? INK : (t >= e.tick ? fg : muted);
+  });
+}
+
+/* ================= HOOK (title on screen at frame 0) ================= */
+const HP = page(10, 'ruled');
+const hHl = [el(HP, '', '', 'background:var(--mint);border-radius:10px'), el(HP, '', '', 'background:var(--mint);border-radius:10px')];
+const hR1 = el(HP, '<span style="color:var(--rust)">5</span> THINGS', 'serif', 'color:var(--ink)');
+const hR2 = el(HP, 'THAT HELP', 'mono', 'color:var(--ink);line-height:1');
+const hR3 = el(HP, '<em>STIFF</em>', 'serif', 'color:var(--rust)');
+const hR4 = el(HP, 'JOINTS', 'serif', 'color:var(--ink)');
+const hBox = [0, 1].map(() => el(HP, '<div class="xx mono" style="position:absolute;left:0;top:0;width:48px;height:48px;font-size:46px;line-height:48px;text-align:center;color:var(--mint)"></div>', 'box', 'width:60px;height:60px;border:6px solid var(--ink)'));
+const hL = [el(HP, '', 'mono', 'font-size:60px;color:var(--ink)'), el(HP, '', 'mono', 'font-size:60px;color:var(--ink)')];
+const HL_TXT = ['Stiff after rest?', 'Slowing on walks?'];
+const hStamp = el(HP, `WATCH TILL #5 <span style="display:inline-block;transform:rotate(90deg)">${ARROW(44, PAPER)}</span>`, 'mono', 'font-size:50px;line-height:1;color:var(--paper);background:var(--rust);padding:22px 30px;border-radius:12px');
+function hook(t, pos) {
+  put(HP, { x: pos.x, y: pos.y, ox: 0, oy: 0 });
+  const L = HP._lay;
+  put(hR1, { x: 60, y: L.y1 });
+  put(hR2, { x: 64, y: L.y2 });
+  put(hR3, { x: 52, y: L.y3 });
+  put(hR4, { x: 56, y: L.y4 });
+  // mint selection sweeps across STIFF and JOINTS on the first downbeat
+  [[hR3, L.y3], [hR4, L.y4]].forEach(([r, y], i) => {
+    const k = sp(t - EV.hSel - i * 0.07, 'snappy');
+    const hh = hHl[i]; hh.style.width = (r._w + 24) * k + 'px'; hh.style.height = L.hlH + 'px';
+    put(hh, { x: 44, y: y + L.hlOff, o: k > 0.01 ? 1 : 0, ox: 0, oy: 0 });
+  });
+  // the hook lines type in as a checklist
+  const ly = [L.y5, L.y5 + 86];
+  [[EV.h1, EV.h1x], [EV.h2, EV.h2x]].forEach(([t0, tx], i) => {
+    put(hBox[i], { x: 64, y: ly[i] + 9, s: T(t, 1, [[tx, 1.3, 'snappy'], [tx + 0.08, 1, 'default']]), ox: 30, oy: 30 });
+    hBox[i].style.background = t >= tx ? INK : 'transparent';
+    hBox[i].querySelector('.xx').textContent = t >= tx ? 'x' : '';
+    put(hL[i], { x: 150, y: ly[i] });
+    typed(hL[i], [[HL_TXT[i]]], t, t0, EV.FAST, i === 1 ? 2.5 : 0);
+  });
+  if (t < EV.h1) put(hL[1], { o: 0 });
+  put(hStamp, { x: 64, y: L.y6, s: slam(t, EV.hStamp, 1.9), r: -3 * sp(t - EV.hStamp, 'default'), o: op(t, EV.hStamp - 0.02), ox: 0, oy: hStamp._h / 2 });
+}
+
+/* ================= ITEMS ================= */
+const ITEMS = [
+  { name: [['MSM\n'], ['Powder', 'em']], line: 'Helps keep ageing\njoints supple', hl: [[1, 7, 6]], rc: 'MSM POWDER', price: '£14.99', sub: '4.9 from 9 reviews', star: 1, ill: 'tub' },
+  { name: [['Collagen\n'], ['Powder', 'em']], line: 'Joints, tendons &\na glossy coat', hl: [[1, 2, 11]], rc: 'COLLAGEN POWDER', price: '£27.99', sub: 'TOP SELLER · 250g', ill: 'pouch' },
+  { name: [['Thermal\n'], ['Coat', 'em']], line: 'Soothing infrared\nwarmth', hl: [[0, 9, 8], [1, 0, 6]], rc: 'THERMAL COAT', price: '£74.99', sub: 'Waterproof · drug-free', ill: 'coat' },
+  { name: [['Folding\n'], ['Dog Ramp', 'em']], line: 'Less strain on\ntheir joints', fix: 'ZERO', rc: 'FOLDING RAMP', price: '£79.99', sub: '75kg capacity · folds flat', ill: 'ramp' },
+  { name: [['Rear Support\n'], ['Harness', 'em']], line: 'Support to stand,\nwalk & stay active', hl: [[0, 11, 5], [1, 0, 4], [1, 7, 11]], rc: 'REAR HARNESS', price: '£39.99', sub: 'Quick on and off', ill: 'harness' },
+];
+const LFS = 60, LCW = LFS * 0.6, LLH = Math.round(LFS * 1.3);   // supporting line: mono 54px
+const RFS = 48, RCW = RFS * 0.6, COLS = 27;                      // receipt line: mono 48px, 27 columns
+const RW = 876, RH = 198;
+const IP = ITEMS.map((it, i) => {
+  const g = page(20 + i, 'ruled');
+  const o = { g, it };
+  o.num = el(g, `${i + 1}`, 'serif', 'font-size:420px;color:var(--rust);line-height:1');
+  o.of = el(g, '/5', 'mono', 'font-size:64px;color:var(--mute);font-weight:700;line-height:1');
+  o.ill = el(g, `<svg width="540" height="350" viewBox="0 0 540 350">${ILL[it.ill]}</svg>`, '', 'width:540px;height:350px');
+  o.name = el(g, '', 'serif', 'color:var(--ink);line-height:.94');
+  o.lineBox = el(g, '', '', `width:876px;height:${LLH * 2}px`);
+  o.hls = (it.hl || [[0, 0, 4]]).map(() => { const r = document.createElement('div'); r.className = 'hlr'; o.lineBox.appendChild(r); return r; });
+  o.line = document.createElement('div'); o.line.className = 'mono'; o.line.style.cssText = `position:absolute;left:0;top:0;font-size:${LFS}px;line-height:${LLH}px;color:var(--ink)`; o.lineBox.appendChild(o.line);
+  if (it.fix) { o.fix = document.createElement('div'); o.fix.className = 'mono'; o.fix.textContent = it.fix; o.fix.style.cssText = `position:absolute;left:0;top:0;font-size:${LFS}px;line-height:${LLH}px;color:var(--rust);transform-origin:${LCW * 2}px ${LLH / 2}px`; o.lineBox.appendChild(o.fix); }
+  o.slot = el(g, '', '', 'width:916px;height:16px;border-radius:8px;background:var(--ink)');
+  o.rc = el(g, receiptSVG(RW, RH) + `<div class="rl mono" style="position:absolute;left:36px;top:30px;font-size:${RFS}px;line-height:58px;color:var(--ink)"></div>
+    <div class="rp mono" style="position:absolute;right:36px;top:30px;font-size:${RFS}px;line-height:58px;color:var(--rust)">${it.price}</div>
+    <div class="rs mono" style="position:absolute;left:36px;top:110px;font-size:36px;line-height:48px;font-weight:600;color:var(--mute)"><span class="st" style="display:inline-block;transform-origin:50% 60%">${it.star ? STAR(36) : ''}</span><span class="rt"></span></div>`, '', `width:${RW}px;height:${RH}px`);
+  return o;
+});
+const RC_DOTS = it => COLS - it.rc.length - it.price.length - 2;
+function item(i, t, pos) {
+  const o = IP[i], it = o.it, e = EV.items[i], g = o.g, L = g._lay;
+  put(g, { x: pos.x, y: pos.y, ox: 0, oy: 0 });
+  if (pos.clip != null) g.style.clipPath = `inset(0 ${pos.clip}px 0 0)`; else g.style.clipPath = '';
+  // numeral slams in on the downbeat
+  put(o.num, { x: 52, y: L.numY, s: slam(t, e.out + 0.1, 1.8), o: op(t, e.out + 0.04), ox: o.num._w / 2, oy: o.num._h * 0.6 });
+  put(o.of, { x: 52 + o.num._w + 6, y: L.numY + L.ofDy, o: op(t, e.land + 0.05), s: pop(t, e.land + 0.05, 0.5) });
+  // drawing drops in, then reacts on the price
+  const bounce = T(t, 1, [[e.price, 1.07, 'snappy'], [e.price + 0.08, 1, 'default']]);
+  put(o.ill, { x: 400, y: L.illY + rise(t, e.out + 0.12, -160, 'default'), s: pop(t, e.out + 0.12, 0.55) * bounce, r: -6 * (1 - sp(t - e.out - 0.12, 'default')), o: op(t, e.out + 0.1), ox: 270, oy: 330 });
+  const svg = o.ill.querySelector('svg');
+  svg.querySelectorAll('.heat').forEach((p, k) => setDraw(p, sp(t - e.line - 0.15 - k * 0.07, 'heavy')));
+  if (it.ill === 'ramp') { const a = 180 * (1 - sp(t - e.land - 0.25, 'default')); svg.querySelector('.r2').setAttribute('transform', `rotate(${a.toFixed(2)} 234 247)`); }
+  if (it.ill === 'harness') svg.querySelector('.lift').setAttribute('transform', `translate(0 ${(-22 * sp(t - e.hl[2], 'default')).toFixed(2)})`);
+  // name types in huge
+  put(o.name, { x: 56, y: L.nameY });
+  typed(o.name, it.name, t, e.name, EV.CPS, 0);
+  // supporting line, then the selection
+  put(o.lineBox, { x: 64, y: L.lineY });
+  typed(o.line, [[it.line]], t, e.line, EV.FAST, it.fix ? 0.3 : 0.6);
+  if (it.fix) {
+    sweep(o.hls[0], t, e.sel, LCW, LLH, 0, 0, 4);
+    const fixed = t >= e.fix;
+    if (fixed) { o.line._last = null; const s = it.line; o.line.innerHTML = `<span class="gh">${esc(s.slice(0, 4))}</span>${esc(s.slice(4))}`; }
+    o.fix.style.display = fixed ? 'block' : 'none';
+    o.fix.style.transform = `scale(${slam(t, e.fix, 1.9)})`;
+    o.hls[0].style.opacity = fixed ? 1 - sp(t - e.fix - 0.3, 'snappy') : 1;
+  } else it.hl.forEach(([r, c, n], k) => sweep(o.hls[k], t, e.hl[Math.min(k, e.hl.length - 1)] + (e.hl.length === 1 ? k * 0.07 : 0), LCW, LLH, r, c, n));
+  // receipt prints out of the slot
+  const pk = sp(t - e.rc, 'default');
+  put(o.slot, { x: 82, y: L.rcY - 10, sx: pop(t, e.rc - 0.12, 0, 'snappy'), o: op(t, e.rc - 0.12), oy: 8 });
+  o.rc.style.clipPath = `inset(0 0 ${((1 - pk) * 100).toFixed(2)}% 0)`;
+  put(o.rc, { x: 64, y: L.rcY + rise(t, e.rc, -30, 'default'), o: t >= e.rc ? 1 : 0, ox: 0, oy: 0 });
+  const dots = RC_DOTS(it);
+  typed(o.rc.querySelector('.rl'), [[it.rc + ' '], ['.'.repeat(dots), 'dots']], t, e.rcName, EV.FAST, 0);
+  const rp = o.rc.querySelector('.rp');
+  rp.style.opacity = t >= e.price - 0.02 ? 1 : 0;
+  rp.style.transform = `scale(${slam(t, e.price, 2.0)})`; rp.style.transformOrigin = '100% 50%';
+  const rs = o.rc.querySelector('.rs');
+  typed(rs.querySelector('.rt'), it.star ? [[' ' + it.sub]] : [[it.sub]], t, e.sub, EV.FAST, 0);
+  if (it.star) rs.querySelector('.st').style.transform = `scale(${pop(t, e.sub, 0, 'snappy')})`;
+}
+
+/* ================= OFFER (deep green) ================= */
+const PP = page(40, '');
+PP.style.background = 'var(--deep)';
+const pSlot = el(PP, '', '', 'width:916px;height:16px;border-radius:8px;background:#06201a');
+const PRH = 488;
+const pRc = el(PP, receiptSVG(RW, PRH, 22, '#fff', '#06201a') + `
+  <div class="orget mono" style="position:absolute;left:40px;top:34px;font-size:40px;line-height:48px;color:var(--mute)"></div>
+  <div class="bn serif" style="position:absolute;left:36px;top:92px;font-size:112px;color:var(--ink)">Arthritis <em style="color:var(--rust)">Bundle</em></div>
+  <div style="position:absolute;left:40px;right:40px;top:222px;border-top:4px dashed #C9D2CE"></div>
+  <div class="was mono" style="position:absolute;left:40px;top:250px;font-size:46px;line-height:56px;color:var(--mute)"></div>
+  <div class="strk" style="position:absolute;left:150px;top:276px;height:7px;border-radius:4px;background:var(--rust)"></div>
+  <div class="now mono" style="position:absolute;left:40px;top:362px;font-size:48px;line-height:80px;color:var(--ink)">NOW <span style="color:#B5C0BB">.....</span></div>
+  <div class="np mono" style="position:absolute;right:40px;top:344px;font-size:104px;line-height:110px;color:var(--rust)">£49.47</div>`, '', `width:${RW}px;height:${PRH}px`);
+const pSave = el(PP, 'SAVE 10%', 'mono', 'font-size:50px;line-height:1;color:var(--rust);border:7px solid var(--rust);padding:10px 20px;border-radius:12px;background:#fff');
+const pInside = el(PP, 'IN THE BUNDLE:', 'mono', 'font-size:40px;color:var(--mint)');
+const PARTS = [['chews', 'Joint Care\nChews'], ['pad', 'Self-Heating\nPet Pad'], ['oil', 'Daily Joint\nSalmon Oil']];
+const pParts = PARTS.map(([k, l]) => el(PP, `<div style="position:absolute;inset:0;border-radius:28px;background:var(--tile)"></div>
+  <div style="position:absolute;left:24px;top:28px"><svg width="228" height="228" viewBox="0 0 240 240">${PART[k]}</svg></div>
+  <div class="mono" style="position:absolute;left:0;right:0;top:282px;text-align:center;font-size:34px;line-height:42px;color:var(--paper);font-weight:700">${esc(l).replace('\n', '<br>')}</div>`, '', 'width:276px;height:390px'));
+const pPlus = [0, 1].map(() => el(PP, '+', 'mono', 'font-size:64px;color:var(--mint);line-height:1'));
+const REVIEW = 'My dog Oscar has been having these for 3 months now and can see a real difference…';
+const pRev = el(PP, '', 'serif', 'font-size:48px;line-height:1.16;white-space:normal;width:876px;color:var(--paper);font-style:italic;font-weight:480;letter-spacing:-.01em;--cc:#9FE8C9');
+const pWho = el(PP, `<span style="color:var(--mint)">— Karen j</span> &nbsp;${[0, 1, 2, 3, 4].map(() => STAR(34)).join('')}`, 'mono', 'font-size:36px;color:var(--paper);font-weight:700');
+const pCode = el(PP, `<div style="position:absolute;inset:0;border:5px dashed var(--mint);border-radius:22px"></div>
+  <div class="ui" style="position:absolute;left:40px;top:22px;font:800 104px/112px Inter;color:var(--paper);letter-spacing:.01em">POORLY10</div>
+  <div class="mono" style="position:absolute;right:36px;top:30px;font-size:34px;line-height:46px;color:var(--mint);text-align:right;font-weight:800">10% OFF YOUR<br>FIRST ORDER</div>`, '', 'width:876px;height:156px');
+const pFree = el(PP, `<div class="box" style="left:0;top:4px;width:52px;height:52px;background:var(--mint);border:none"><div class="mono" style="position:absolute;left:0;top:0;width:52px;font-size:42px;line-height:50px;text-align:center;color:var(--deep)">x</div></div>
+  <div class="ft mono" style="position:absolute;left:76px;top:0;font-size:44px;line-height:60px;color:var(--paper);--cc:#9FE8C9"></div>`, '', 'width:876px;height:60px');
+const pBtn = el(PP, `<div class="bb" style="position:absolute;inset:0;border-radius:70px;background:var(--mint)"></div>
+  <div class="ui" style="position:absolute;left:0;right:0;top:0;text-align:center;font:800 52px/136px Inter;color:var(--deep);white-space:nowrap">Shop now ${ARROW(50, DEEP)} poorly-pet.com</div>`, '', 'width:876px;height:136px');
+function offer(t, pos) {
+  put(PP, { x: pos.x, y: pos.y, ox: 0, oy: 0 });
+  const L = PP._lay;
+  // the receipt prints, then compacts upward for the close
+  const pk = sp(t - EV.print, { w: 11, z: 1 });
+  put(pSlot, { x: 82, y: L.rcY - 10, sx: pop(t, EV.pay - 0.1, 0, 'snappy') });
+  pRc.style.clipPath = `inset(0 0 ${((1 - pk) * 100).toFixed(2)}% 0)`;
+  put(pRc, { x: 64, y: L.rcY + rise(t, EV.print, -40), ox: 0, oy: 0 });
+  typed(pRc.querySelector('.orget'), [['OR GET THE']], t, EV.orGet, EV.CPS, 0);
+  const bn = pRc.querySelector('.bn');
+  bn.style.opacity = t >= EV.bundle - 0.02 ? 1 : 0; bn.style.transform = `scale(${slam(t, EV.bundle, 1.5)})`; bn.style.transformOrigin = '0 60%';
+  typed(pRc.querySelector('.was'), [['WAS £54.97']], t, EV.was, EV.CPS, 0);
+  const sk = pRc.querySelector('.strk'); sk.style.width = 186 * sp(t - EV.strike, 'snappy') + 'px';
+  pRc.querySelector('.now').style.opacity = op(t, EV.now - 0.1);
+  const np = pRc.querySelector('.np'); np.style.opacity = t >= EV.now - 0.02 ? 1 : 0; np.style.transform = `scale(${slam(t, EV.now, 2.1)})`; np.style.transformOrigin = '100% 50%';
+  put(pSave, { x: 940 - pSave._w - 34, y: L.rcY + 236, s: slam(t, EV.save, 2.4), r: -7 * sp(t - EV.save, 'default'), o: op(t, EV.save - 0.02) });
+  // phase A: what is in the bundle
+  const out = (k) => T(t, 0, [[EV.swap + k * 0.05, -1150, 'snappy']]);
+  put(pInside, { x: 64 + out(0), y: L.insY, o: op(t, EV.parts[0] - 0.1) });
+  pParts.forEach((p, k) => put(p, { x: 64 + k * 300 + out(k), y: L.partY + rise(t, EV.parts[k], 120, 'snappy'), s: pop(t, EV.parts[k], 0.5), o: op(t, EV.parts[k]) }));
+  pPlus.forEach((p, k) => put(p, { x: 64 + 276 + k * 300 + 12 - p._w / 2 + 0 + out(k), y: L.partY + 150, o: op(t, EV.parts[k + 1]) }));
+  // phase B: proof, code, delivery, button
+  if (t >= EV.swap) {
+    put(pRev, { x: 64 + T(t, 1100, [[EV.swap + 0.05, 0, 'snappy']]), y: L.revY });
+    typed(pRev, [[REVIEW]], t, EV.review, EV.FAST, 0);
+    put(pWho, { x: 64, y: L.revY + pRev._h + 14 + rise(t, EV.review + 1.2, 30, 'snappy'), o: op(t, EV.review + 1.2) });
+  }
+  put(pCode, { x: 64, y: L.codeY, s: slam(t, EV.code, 1.6), r: 0, o: op(t, EV.code - 0.02) });
+  put(pFree, { x: 64, y: L.freeY, o: op(t, EV.free - 0.05) });
+  typed(pFree.querySelector('.ft'), [['Free UK delivery over £39']], t, EV.free, EV.FAST, 0);
+  put(pBtn, { x: 64, y: L.btnY, s: pop(t, EV.btn, 0.4) * press(t, EV.press, 0.92), o: op(t, EV.btn) });
+  pBtn.querySelector('.bb').style.background = mix(C.mint, C.paper, T(t, 0, [[EV.press, 1, 'snappy'], [EV.press + 0.15, 0, 'default']]));
+}
+
+/* ================= page choreography: push, wipe, push ================= */
+const sn = (t, t0) => sp(t - t0, 'snappy');
+const wipeBand = el(stage, '', '', 'width:220px;height:1920px;background:var(--mint);z-index:60');
+function pages(t) {
+  const I = EV.items;
+  // hook: leaves upward (line feed)
+  const k0 = sn(t, I[0].out);
+  if (k0 < 0.999) hook(t, { x: 0, y: -1920 * k0 });
+  // 1: up from below, leaves left (carriage return)
+  const k1 = sn(t, I[1].out);
+  if (t > I[0].out && k1 < 0.999) item(0, t, { x: -1080 * k1, y: 1920 * (1 - k0) });
+  // 2: in from the right, then covered by the wipe
+  const kw = sp(t - I[2].out, { w: 20, z: 1 });
+  if (t > I[1].out && kw < 0.999) item(1, t, { x: 1080 * (1 - k1), y: 0 });
+  // 3: revealed by a mint selection sweeping left to right; leaves downward
+  const edge = -220 + (1080 + 440) * kw;
+  const k3 = sn(t, I[3].out);
+  if (t > I[2].out && k3 < 0.999) item(2, t, { x: 0, y: 1920 * k3, clip: kw < 0.999 ? clamp(1080 - edge + 220, 0, 1080) : null });
+  if (t > I[2].out && kw < 0.999) put(wipeBand, { x: edge - 220, y: 0, ox: 0, oy: 0 });
+  // 4: a new sheet drops in from the top; leaves left
+  const k4 = sn(t, I[4].out);
+  if (t > I[3].out && k4 < 0.999) item(3, t, { x: -1080 * k4, y: -1920 * (1 - k3) });
+  // 5: in from the right; leaves upward
+  const kp = sn(t, EV.pOut);
+  if (t > I[4].out && kp < 0.999) item(4, t, { x: 1080 * (1 - k4), y: -1920 * kp });
+  if (t > EV.pOut) offer(t, { x: 0, y: 1920 * (1 - kp) });
+  // a short kick on each big landing
+  const hits = [...I.map(e => e.land), EV.pay, EV.now];
+  world.style.transform = `translateY(${kick(t, hits, 9).toFixed(2)}px)`;
+}
+
+/* ---------------- layout from real text sizes ---------------- */
+function fit(e, maxW, maxFs) { e.style.fontSize = '100px'; e.style.display = 'block'; const w = e.offsetWidth; const fs = Math.min(maxFs, Math.floor(100 * maxW / w)); e.style.fontSize = fs + 'px'; return fs; }
+function measure() {
+  for (const e of ALL) e.style.display = 'block';
+  // hook title
+  const f1 = fit(hR1, 876, 230), f2 = fit(hR2, 876, 170), f4 = fit(hR4, 876, 236);
+  hR3.style.fontSize = f4 + 'px';
+  HP._lay = { y1: 322 };
+  HP._lay.y2 = HP._lay.y1 + f1 * 0.9 + 14;
+  HP._lay.y3 = HP._lay.y2 + f2 * 1.0 + 10;
+  HP._lay.y4 = HP._lay.y3 + f4 * 0.9 + 4;
+  HP._lay.y5 = HP._lay.y4 + f4 * 0.9 + 24;
+  HP._lay.y6 = HP._lay.y5 + 86 * 2 + 22;
+  HP._lay.hlH = f4 * 0.84; HP._lay.hlOff = f4 * 0.07;
+  hL.forEach((e, i) => { e.textContent = HL_TXT[i]; });
+  // items
+  IP.forEach(o => {
+    o.name.innerHTML = o.it.name.map(([s, c]) => c ? `<em>${esc(s)}</em>` : esc(s).replace('\n', '<br>')).join('');
+    o.name.style.fontSize = '100px';
+    const w = o.name.offsetWidth; o.name.style.fontSize = Math.min(168, Math.floor(100 * 876 / w)) + 'px';
+    o.line.textContent = o.it.line;
+    o.rc.querySelector('.rl').textContent = o.it.rc + ' ' + '.'.repeat(RC_DOTS(o.it));
+    o.g._lay = { numY: 276, ofDy: 300, illY: 326, nameY: 700, lineY: 1028, rcY: 1252 };
+  });
+  pRev.textContent = REVIEW; pFree.querySelector('.ft').textContent = 'Free UK delivery over £39';
+  pRc.querySelector('.was').textContent = 'WAS £54.97';
+  for (const e of ALL) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  PP._lay = { rcY: 344, insY: 868, partY: 936, revY: 862 };
+  PP._lay.codeY = PP._lay.revY + pRev._h + 70;
+  PP._lay.freeY = PP._lay.codeY + 156 + 22;
+  PP._lay.btnY = PP._lay.freeY + 60 + 24;
+  IP.forEach(o => { o.line.textContent = ''; o.line._last = null; o.name._last = null; });
+  for (const e of ALL) e.style.display = 'none';
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  pages(t); tracker(t);
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('620 100px Fraunces'), document.fonts.load('italic 560 100px Fraunces'), document.fonts.load('italic 480 100px Fraunces'), document.fonts.load('800 40px Inter'),
+  document.fonts.load('800 40px "JetBrains Mono"'), document.fonts.load('600 40px "JetBrains Mono"'), document.fonts.load('700 40px "JetBrains Mono"')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fitView = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fitView); fitView();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
