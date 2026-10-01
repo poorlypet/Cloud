@@ -327,3 +327,4 @@ html.cl-lock,html.cl-lock body{overflow:hidden}
   .cl-hd .cl-dsc{font-size:15px}
   .cl-va[data-head] .cl-carw{margin-top:16px}
 }
+@media (max-width:899px){#cl-offer{display:none!important}}

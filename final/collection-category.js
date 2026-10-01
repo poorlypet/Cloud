@@ -329,7 +329,19 @@
     var rate = rc ? '<span class="cl-rt"><span class="cl-st" aria-hidden="true">★</span> ' + avg.toFixed(1) + ' <span class="cl-rc">(' + rc + ')</span><span class="sr"> average owner rating from ' + rc + ' reviews</span></span>' : '';
     var glink = C.guide ? '<a class="cl-gl" href="symptom-guide.html"><span>Guide:</span> ' + esc(C.guide) + ' <i aria-hidden="true">›</i></a>' : '';
     var sep = '<span class="cl-dot" aria-hidden="true">·</span>';
-    if (V === 'a') {
+    var HD = root.getAttribute('data-head');
+    var rline = rc ? '<span class="cl-rt"><span class="cl-st" aria-hidden="true">★★★★★</span> <b>' + avg.toFixed(1) + '</b> from ' + rc + ' review' + (rc === 1 ? '' : 's') + '</span>' : '';
+    var gtxt = C.guide ? '<a class="cl-gt" href="symptom-guide.html">' + esc(C.guide) + ' ›</a>' : '';
+    if (HD === '1') {
+      /* 1: plain title block, full description, rating and guide as one quiet line */
+      head.innerHTML = crumbs + '<div class="cl-hd cl-hd1"><h1>' + C.h1 + '</h1><p class="cl-dsc">' + esc(C.line) + '</p>' + ((rline || gtxt) ? '<p class="cl-sub">' + rline + (rline && gtxt ? sep : '') + gtxt + '</p>' : '') + '</div>';
+    } else if (HD === '2') {
+      /* 2: title with the rating beside it, description, guide as a small outlined button */
+      head.innerHTML = crumbs + '<div class="cl-hd cl-hd2"><div class="cl-t2"><h1>' + C.h1 + '</h1>' + rline + '</div><p class="cl-dsc">' + esc(C.line) + '</p>' + (C.guide ? '<a class="cl-gb" href="symptom-guide.html">' + esc(C.guide) + ' ›</a>' : '') + '</div>';
+    } else if (HD === '3') {
+      /* 3: title and description with a thin teal rule on the left; guide link in teal underneath */
+      head.innerHTML = crumbs + '<div class="cl-hd cl-hd3"><h1>' + C.h1 + '</h1><p class="cl-dsc">' + esc(C.line) + '</p>' + (gtxt ? '<p class="cl-sub">' + gtxt + '</p>' : '') + '</div>';
+    } else if (V === 'a') {
       /* A: one slim pale row: title + count left, rating + guide right; description clamped to one line */
       head.innerHTML = crumbs + '<div class="cl-hbox cl-ha"><div class="cl-hm"><div class="cl-h1r"><h1>' + C.h1 + '</h1><p class="cl-meta"><span>' + cnt + '</span>' + (rate ? sep + rate : '') + '</p></div>' +
         '<p class="cl-desc">' + esc(C.line) + '</p></div>' + (glink ? '<div class="cl-hr">' + glink + '</div>' : '') + '</div>';
