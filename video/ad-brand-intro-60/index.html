@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poorly Pet Chalkboard</title>
+<style>
+@font-face{font-family:'Cabin Sketch';font-weight:700;src:url(fonts/cabinsketch-700.woff2) format('woff2')}
+@font-face{font-family:'Patrick Hand';font-weight:400;src:url(fonts/patrickhand-400.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--chalk:#F3F0E8;--mint:#9FE8C9;--rust:#E0956A;--deep:#0B2A23}
+html,body{margin:0;height:100%;background:#06180F;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--deep);transform-origin:0 0}
+#world{position:absolute;left:0;top:0;width:6480px;height:1920px}
+canvas.board{position:absolute;top:0;width:1080px;height:1920px;z-index:0}
+.panel{position:absolute;top:0;width:1080px;height:1920px;display:none}
+svg.art{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.t{position:absolute;color:var(--chalk);filter:url(#chalkT);white-space:nowrap}
+.h{font-family:'Cabin Sketch',cursive;font-weight:700;line-height:1.08}
+.b{font-family:'Patrick Hand',cursive;font-weight:400;line-height:1.12}
+.w{font-family:Inter,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.wrap{white-space:normal}
+.c{text-align:center}
+.mint{color:var(--mint)}.rust{color:var(--rust)}
+.ghostq{color:rgba(243,240,232,.62)}
+.wd{display:inline-block}
+.stamp{border:7px solid var(--rust);border-radius:16px;padding:2px 20px 0;color:var(--rust);font-family:'Cabin Sketch',cursive;font-weight:700;line-height:1.1}
+.eraser{position:absolute;top:0;width:1080px;height:1920px;display:none}
+.eraser canvas,.eraser svg{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.eraser svg{overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <!-- chalk on text: grainy erosion plus a slightly rough edge (fixed seeds) -->
+      <filter id="chalkT" x="-6%" y="-12%" width="112%" height="124%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="7" result="g"/>
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.3 0 0 0 -0.88" result="ga"/>
+        <feComposite in="SourceGraphic" in2="ga" operator="in" result="e"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="w"/>
+        <feDisplacementMap in="e" in2="w" scale="4.5" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- chalk on drawn strokes and fills -->
+      <filter id="chalkS" filterUnits="userSpaceOnUse" x="-400" y="-200" width="1880" height="2320" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="3" result="g"/>
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.2 0 0 0 -0.9" result="ga"/>
+        <feComposite in="SourceGraphic" in2="ga" operator="in" result="e"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="5" result="w"/>
+        <feDisplacementMap in="e" in2="w" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- the eraser's smudge: streaky chalk haze along the sweep -->
+      <filter id="smudge" filterUnits="userSpaceOnUse" x="-400" y="-200" width="1880" height="2320" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0018 0.009" numOctaves="3" seed="8" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.95  0 0 0 0 0.92  1.3 0 0 0 -0.3" result="w"/>
+        <feComposite in="w" in2="SourceAlpha" operator="in" result="s"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="2" result="w2"/>
+        <feDisplacementMap in="s" in2="w2" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="rough" filterUnits="userSpaceOnUse" x="-400" y="-200" width="1880" height="2320">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="w"/>
+        <feDisplacementMap in="SourceGraphic" in2="w" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div id="world">
+    <!-- 0 · HOOK -->
+    <div class="panel" id="hook">
+      <svg class="art"></svg>
+      <div class="t h" data-k="h1" style="left:70px;top:285px;font-size:128px">Don't know<br>what's <span class="rust">wrong</span><br>with your dog?</div>
+      <div class="t h mint" data-k="alone" data-fit="860" style="left:72px;top:760px;font-size:104px">You're not alone.</div>
+    </div>
+
+    <!-- 1 · RELATE -->
+    <div class="panel" id="relate">
+      <svg class="art"></svg>
+      <div class="t h mint" data-k="head" style="left:70px;top:228px;font-size:104px">Sound familiar?</div>
+      <div class="t b" data-k="q0" style="left:186px;top:443px;font-size:72px">Is it serious?</div>
+      <div class="t b" data-k="q1" style="left:186px;top:633px;font-size:72px">What do I buy?</div>
+      <div class="t b" data-k="q2" data-fit="730" style="left:186px;top:823px;font-size:72px">Which one actually works?</div>
+      <div class="t b ghostq" data-k="g0" data-rot="-2" style="left:84px;top:985px;font-size:48px">why is my dog limping??</div>
+      <div class="t b ghostq" data-k="g1" data-rot="2.5" style="left:560px;top:1018px;font-size:48px">best joint supplement uk</div>
+      <div class="t b ghostq" data-k="g2" data-rot="1.5" style="left:150px;top:1068px;font-size:48px">is this normal?</div>
+      <div class="t b ghostq" data-k="g3" data-rot="-1.5" style="left:470px;top:1110px;font-size:48px">which harness actually fits?</div>
+      <div class="t b ghostq" data-k="g4" data-rot="-1" style="left:84px;top:1158px;font-size:48px">does it even work??</div>
+      <div class="t b ghostq" data-k="g5" data-rot="1.5" style="left:500px;top:1200px;font-size:48px">dog won't stop scratching</div>
+      <div class="t h" data-k="easy" data-fit="870" style="left:70px;top:1296px;font-size:92px">There's an <span class="mint" id="easier">easier way.</span></div>
+    </div>
+
+    <!-- 2 · ROUTE 1: the body-area mind map -->
+    <div class="panel" id="map">
+      <svg class="art"></svg>
+      <div class="t h" data-k="head" style="left:70px;top:218px;font-size:124px">Not sure?</div>
+      <div class="t b mint" data-k="sub" data-fit="870" style="left:74px;top:380px;font-size:68px">Start with what you're seeing.</div>
+      <div class="t h c" data-k="ctr" style="left:400px;width:280px;top:950px;font-size:58px;line-height:1">8 body<br>areas</div>
+      <div class="t b c" data-k="n0" style="left:410px;width:260px;top:566px;font-size:54px;line-height:1">Ears<br>&amp; eyes</div>
+      <div class="t b c" data-k="n1" style="left:622px;width:260px;top:680px;font-size:54px;line-height:1">Mouth<br>&amp; teeth</div>
+      <div class="t b c" data-k="n2" style="left:700px;width:260px;top:956px;font-size:54px;line-height:1">Legs<br>&amp; paws</div>
+      <div class="t b c" data-k="n3" style="left:622px;width:260px;top:1232px;font-size:54px;line-height:1">Back<br>&amp; spine</div>
+      <div class="t b c" data-k="n4" style="left:410px;width:260px;top:1346px;font-size:54px;line-height:1">Whole<br>body</div>
+      <div class="t b c" data-k="n5" style="left:198px;width:260px;top:1232px;font-size:54px;line-height:1">Tummy<br>&amp; gut</div>
+      <div class="t b c" data-k="n6" style="left:110px;width:260px;top:956px;font-size:54px;line-height:1">Skin<br>&amp; coat</div>
+      <div class="t b c" data-k="n7" style="left:198px;width:260px;top:680px;font-size:54px;line-height:1">Behaviour<br>&amp; mood</div>
+    </div>
+
+    <!-- 3 · ROUTE 1: one symptom, matched products -->
+    <div class="panel" id="match">
+      <svg class="art"></svg>
+      <div class="t b mint" data-k="chip" style="left:150px;top:282px;font-size:64px">Legs &amp; paws</div>
+      <div class="t h" data-k="sym" style="left:70px;top:418px;font-size:106px">Limping or<br>favouring a leg</div>
+      <div class="t b mint wrap" data-k="match" style="left:74px;top:668px;width:860px;font-size:56px">We'll match it to real products from our store.</div>
+      <div class="t b" data-k="nm0" style="left:280px;top:850px;font-size:54px">MSM Powder</div>
+      <div class="t b mint" data-k="bn0" style="left:282px;top:914px;font-size:46px">Supports supple joints</div>
+      <div class="t h rust" data-k="pr0" style="left:280px;top:960px;font-size:72px">£14.99</div>
+      <div class="t b" data-k="nm1" data-fit="650" style="left:280px;top:1052px;font-size:54px">Zesty Paws Hip &amp; Joint Chews</div>
+      <div class="t b mint" data-k="bn1" style="left:282px;top:1116px;font-size:46px">Helps ease stiff joints</div>
+      <div class="t h rust" data-k="pr1" style="left:280px;top:1162px;font-size:72px">£24.00</div>
+      <div class="t b" data-k="nm2" style="left:280px;top:1254px;font-size:54px">Rear Support Harness</div>
+      <div class="t b mint" data-k="bn2" style="left:282px;top:1318px;font-size:46px">Support to stand &amp; walk</div>
+      <div class="t h rust" data-k="pr2" style="left:280px;top:1364px;font-size:72px">£39.99</div>
+    </div>
+
+    <!-- 4 · ROUTE 2: shop by condition -->
+    <div class="panel" id="route2">
+      <svg class="art"></svg>
+      <div class="t h" data-k="head" data-fit="870" style="left:70px;top:222px;font-size:98px">Know the condition?</div>
+      <div class="t h mint" data-k="sub" style="left:72px;top:342px;font-size:92px">Go straight there.</div>
+      <div class="t b" data-k="c0" style="left:120px;top:512px;font-size:60px">Arthritis</div>
+      <div class="t b" data-k="c1" style="left:120px;top:598px;font-size:60px">IVDD</div>
+      <div class="t b" data-k="c2" style="left:120px;top:684px;font-size:60px">Hip Dysplasia</div>
+      <div class="t b" data-k="c3" style="left:120px;top:770px;font-size:60px">Itchy Skin</div>
+      <div class="t b" data-k="c4" style="left:530px;top:512px;font-size:60px">Anxiety &amp; Stress</div>
+      <div class="t b" data-k="c5" style="left:530px;top:598px;font-size:60px">Dental Disease</div>
+      <div class="t b" data-k="c6" data-fit="400" style="left:530px;top:684px;font-size:60px">Cruciate Ligament</div>
+      <div class="t b" data-k="c7" style="left:530px;top:770px;font-size:60px">Digestive Issues</div>
+      <div class="t b mint" data-k="more" style="left:120px;top:862px;font-size:54px">+ 17 more</div>
+      <div class="t h rust" data-k="n25" style="left:104px;top:1000px;font-size:250px;line-height:1">25</div>
+      <div class="t h" data-k="cond" style="left:470px;top:1040px;font-size:92px">conditions</div>
+      <div class="t h mint" data-k="areas" style="left:470px;top:1148px;font-size:92px">8 care areas</div>
+    </div>
+
+    <!-- 5 · BUNDLES -->
+    <div class="panel" id="bundles">
+      <svg class="art"></svg>
+      <div class="t h" data-k="head" data-fit="870" style="left:70px;top:212px;font-size:104px">Condition bundles</div>
+      <div class="t b mint wrap" data-k="sub" style="left:74px;top:338px;width:840px;font-size:56px">29 bundles across 8 categories,<br>all discounted.</div>
+      <div class="t h" data-k="nm0" style="left:344px;top:534px;font-size:64px">Arthritis Bundle</div>
+      <div class="t b mint" data-k="ct0" style="left:346px;top:616px;font-size:46px">Joint chews, self-heating pad<br>&amp; salmon oil</div>
+      <div class="t h" data-k="pr0" style="left:344px;top:722px;font-size:94px">£49.47</div>
+      <div class="t b" data-k="was0" style="left:640px;top:760px;font-size:58px;color:rgba(243,240,232,.8)">£54.97</div>
+      <div class="t stamp" data-k="save0" style="left:80px;top:780px;font-size:40px">SAVE 10%</div>
+      <div class="t h" data-k="nm1" style="left:344px;top:924px;font-size:64px">Itchy Skin Bundle</div>
+      <div class="t b mint" data-k="ct1" style="left:346px;top:1006px;font-size:46px">Itch chews, allergy drops<br>&amp; a soothing balm</div>
+      <div class="t h" data-k="pr1" style="left:344px;top:1112px;font-size:94px">£48.57</div>
+      <div class="t b" data-k="was1" style="left:640px;top:1150px;font-size:58px;color:rgba(243,240,232,.8)">£53.97</div>
+      <div class="t stamp" data-k="save1" style="left:80px;top:1170px;font-size:40px">SAVE 10%</div>
+      <div class="t b" data-k="less" data-fit="870" style="left:74px;top:1316px;font-size:64px">Less guesswork, one clear price.</div>
+    </div>
+
+    <!-- 6 · WHY A: the specialist, the brands -->
+    <div class="panel" id="whyA">
+      <svg class="art"></svg>
+      <div class="t h" data-k="head" style="left:70px;top:212px;font-size:100px">The UK's pet<br>health &amp; recovery<br><span class="rust" id="spec">specialist</span></div>
+      <div class="t b mint" data-k="trusted" style="left:74px;top:604px;font-size:64px">Trusted brands:</div>
+      <div class="t h" data-k="b0" style="left:160px;top:700px;font-size:82px">Balto</div>
+      <div class="t h" data-k="b1" style="left:160px;top:804px;font-size:82px">Ortocanis</div>
+      <div class="t h" data-k="b2" style="left:160px;top:908px;font-size:82px">Ruffwear</div>
+      <div class="t h" data-k="b3" style="left:160px;top:1012px;font-size:82px">Zesty Paws</div>
+      <div class="t h" data-k="b4" style="left:160px;top:1116px;font-size:82px">AniForte</div>
+    </div>
+
+    <!-- 7 · WHY B: subscribe & save, fast delivery -->
+    <div class="panel" id="whyB">
+      <svg class="art"></svg>
+      <div class="t h" data-k="head" style="left:70px;top:250px;font-size:100px">Subscribe &amp; save</div>
+      <div class="t h rust" data-k="pct" style="left:70px;top:372px;font-size:180px;line-height:1"><span style="font-size:.5em">up to</span> 15%</div>
+      <div class="t b mint" data-k="skip" style="left:74px;top:592px;font-size:60px">Skip, pause or cancel any time.</div>
+      <div class="t h" data-k="fast" style="left:360px;top:900px;font-size:92px">Fast delivery</div>
+      <div class="t b wrap" data-k="many" style="left:364px;top:1020px;width:570px;font-size:62px">Many items arrive in 1–3 business days.</div>
+    </div>
+
+    <!-- 8 · PROOF -->
+    <div class="panel" id="proof">
+      <svg class="art"></svg>
+      <div class="t h c" data-k="rating" style="left:0;width:1080px;top:200px;font-size:190px;line-height:1">4.6/5</div>
+      <div class="t b mint c" data-k="from" style="left:0;width:1080px;top:578px;font-size:64px">from 101 verified reviews</div>
+      <div class="t h rust" data-k="qm" style="left:62px;top:676px;font-size:200px;line-height:1">“</div>
+      <div class="t b wrap" data-k="q1" style="left:150px;top:712px;width:800px;font-size:62px">…finding the right support was overwhelming, but Poorly Pet made it so much easier.</div>
+      <div class="t b mint" data-k="john" style="left:640px;top:0;font-size:54px">John C.</div>
+      <div class="t b wrap" data-k="q2" style="left:150px;top:0;width:800px;font-size:66px">I love that places like this exist!</div>
+      <div class="t b mint" data-k="gee" style="left:640px;top:0;font-size:54px">Gee</div>
+    </div>
+
+    <!-- 9 · OFFER -->
+    <div class="panel" id="offer">
+      <svg class="art"></svg>
+      <div class="t h rust" data-k="pct" style="left:70px;top:196px;font-size:210px;line-height:1">10% off</div>
+      <div class="t h" data-k="first" style="left:74px;top:420px;font-size:92px">your first order</div>
+      <div class="t b mint c" data-k="use" style="left:0;width:1080px;top:604px;font-size:50px">use code</div>
+      <div class="t h c" data-k="code" style="left:0;width:1080px;top:656px;font-size:128px;line-height:1">POORLY10</div>
+      <div class="t b" data-k="free" style="left:170px;top:906px;font-size:66px">Free UK delivery over £39</div>
+      <div class="t b" data-k="guar" style="left:170px;top:1010px;font-size:66px">30-day guarantee</div>
+    </div>
+
+    <!-- 10 · END CARD -->
+    <div class="panel" id="end">
+      <svg class="art"></svg>
+      <div class="t w c" data-k="name" style="left:0;width:1080px;top:640px;font-size:124px">Poorly Pet</div>
+      <div class="t b mint c" data-k="tag" style="left:0;width:1080px;top:810px;font-size:72px;line-height:1.08">Find the right support<br>for your dog</div>
+      <div class="t h" data-k="cta" style="left:0;top:1046px;font-size:96px">Shop now</div>
+      <div class="t b c" data-k="url" style="left:0;width:1080px;top:1150px;font-size:76px">poorly-pet.com</div>
+      <div class="t b rust c" data-k="off1" style="left:0;width:1080px;top:1300px;font-size:56px">POORLY10 · 10% off your first order</div>
+      <div class="t b c" data-k="off2" data-fit="850" style="left:0;width:1080px;top:1378px;font-size:46px">Free UK delivery over £39 · 30-day guarantee</div>
+    </div>
+  </div>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring, track } = Motion;
+const TL = window.TL, FPS = 30, DUR = TL.DUR, B = TL.B;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { chalk: '#F3F0E8', mint: '#9FE8C9', rust: '#E0956A', mark: '#CF6733', dim: 'rgba(243,240,232,.55)' };
+const world = document.getElementById('world');
+
+/* ---------- time helpers: every value is a spring of time ---------- */
+// A critically damped spring used as progress: 0 before dt=0, ~0.99 at dt=d.
+const crit = (dt, d) => dt <= 0 ? 0 : spring(dt, { w: 7 / Math.max(d, 0.04), z: 1 });
+const E = (id, k) => TL.EV[id][k];
+const P = (id, k, t) => { const e = E(id, k); return crit(t - e.t, e.d); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const f1 = v => (+v).toFixed(1);
+const PAN = { w: 6.6, z: 0.96 };
+
+/* ---------- drawing helpers ---------- */
+function S(tag, parent, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function ink(g, d, w = 8, c = C.chalk) { return S('path', g, { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }
+function setDraw(p, q, dyn = false) {
+  const L = dyn ? p.getTotalLength() + 2 : (p._L || (p._L = p.getTotalLength() + 2));
+  q = clamp(q > 0.993 ? 1 : q);
+  p.style.visibility = q <= 0.002 ? 'hidden' : 'visible';
+  p.style.strokeDasharray = `${L} ${L}`;
+  p.style.strokeDashoffset = L * (1 - q);
+}
+// Draw strokes one after another, each weighted by its length.
+function drawSeq(items, q) {
+  const ws = items.map(p => Math.max(40, p._L || (p._L = p.getTotalLength() + 2)));
+  const tot = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  items.forEach((p, i) => { const a = acc / tot, b = (acc + ws[i]) / tot; acc += ws[i]; setDraw(p, (q - a) / (b - a)); });
+}
+// A rough rounded box whose stroke runs a little past its start, like chalk that did not stop.
+function box(x, y, w, h, r, j = [3, -4, 2, -3, 4, -2, 3, -3], over = 40) {
+  return `M ${x + r} ${y + j[0]} C ${x + w * .35} ${y + j[1]}, ${x + w * .65} ${y + j[2]}, ${x + w - r} ${y + j[3]} Q ${x + w} ${y}, ${x + w + j[4]} ${y + r}` +
+    ` C ${x + w + j[5]} ${y + h * .35}, ${x + w + j[6]} ${y + h * .65}, ${x + w} ${y + h - r} Q ${x + w} ${y + h}, ${x + w - r} ${y + h + j[7]}` +
+    ` C ${x + w * .65} ${y + h + j[0]}, ${x + w * .35} ${y + h + j[1]}, ${x + r} ${y + h} Q ${x} ${y + h}, ${x + j[2]} ${y + h - r}` +
+    ` C ${x + j[3]} ${y + h * .65}, ${x + j[4]} ${y + h * .35}, ${x} ${y + r} Q ${x} ${y}, ${x + r} ${y + j[0]}` + (over ? ` L ${x + r + over} ${y + j[0] - 3}` : '');
+}
+const closed = d => d.replace(/ L [^ ]+ [^ ]+$/, '') + ' Z';
+const head = (x, y, a, s = 34) => `M ${f1(x + s * Math.cos(a + 2.55))} ${f1(y + s * Math.sin(a + 2.55))} L ${f1(x)} ${f1(y)} L ${f1(x + s * Math.cos(a - 2.55))} ${f1(y + s * Math.sin(a - 2.55))}`;
+// A rough loop around a point (a little more than one turn, like a teacher circling an answer).
+function loop(cx, cy, rx, ry, turns = 1.12, a0 = -2.4, k = [1, .97, 1.04, .98, 1.03, .96]) {
+  let d = '';
+  const n = Math.round(48 * turns);
+  for (let i = 0; i <= n; i++) {
+    const u = i / n, a = a0 + u * turns * Math.PI * 2, f = k[i % k.length] * (1 + 0.06 * u);
+    d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rx * f) + ' ' + f1(cy + Math.sin(a) * ry * f);
+  }
+  return d;
+}
+// A wobbly line from a to b.
+function line(x0, y0, x1, y1, wob = 4, ph = 0) {
+  const n = 6; let d = `M ${f1(x0)} ${f1(y0)}`;
+  const L = Math.hypot(x1 - x0, y1 - y0) || 1, nx = -(y1 - y0) / L, ny = (x1 - x0) / L;
+  for (let i = 1; i <= n; i++) { const u = i / n, o = i < n ? wob * Math.sin(u * 5.3 + ph) : 0; d += ` L ${f1(x0 + (x1 - x0) * u + nx * o)} ${f1(y0 + (y1 - y0) * u + ny * o)}`; }
+  return d;
+}
+// Chalk colouring-in: a dense zigzag clipped to a shape, drawn on like a hand scribbling.
+let cid = 0;
+function scribble(pg, g, clipD, x, y, w, h, color, step = 22, sw = 26, lean = 0.3, op = 1, maxX = null) {
+  const id = `cl${cid++}`;
+  S('path', S('clipPath', pg.defs, { id }), { d: clipD });
+  let host = g;
+  if (maxX !== null) { const id2 = `cl${cid++}`; S('rect', S('clipPath', pg.defs, { id: id2 }), { x: x - 200, y: y - 200, width: maxX - x + 200, height: h + 400 }); host = S('g', g, { 'clip-path': `url(#${id2})` }); }
+  const gg = S('g', host, { 'clip-path': `url(#${id})`, opacity: op });
+  let d = '';
+  const n = Math.ceil((w + h * lean) / step) + 2;
+  for (let i = 0; i <= n; i++) {
+    const top = i % 2 === 0, xx = x - h * lean - step + i * step;
+    d += (i ? ' L ' : 'M ') + f1(top ? xx + h * lean : xx) + ' ' + f1(top ? y - 12 : y + h + 12);
+  }
+  return ink(gg, d, sw, color);
+}
+
+/* ---------- object doodles (no animals, no people) ---------- */
+const DOOD = {
+  tub(g, x, y, w, h, c = C.chalk, label) { // a supplement tub: lid, tapered body, label band
+    const lid = box(x, y, w, h * 0.2, 10, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const body = `M ${x + w * 0.05} ${y + h * 0.2} L ${x + w * 0.1} ${y + h * 0.94} Q ${x + w * 0.5} ${y + h * 1.03}, ${x + w * 0.9} ${y + h * 0.94} L ${x + w * 0.95} ${y + h * 0.2}`;
+    const band = `M ${x + w * 0.08} ${y + h * 0.42} C ${x + w * 0.4} ${y + h * 0.45}, ${x + w * 0.6} ${y + h * 0.45}, ${x + w * 0.92} ${y + h * 0.42} M ${x + w * 0.1} ${y + h * 0.74} C ${x + w * 0.4} ${y + h * 0.77}, ${x + w * 0.6} ${y + h * 0.77}, ${x + w * 0.9} ${y + h * 0.74}`;
+    return { lines: [ink(g, body, 7, c), ink(g, lid, 7, c), ink(g, band, 5, c)], lid: closed(lid), lidBox: [x, y, w, h * 0.2] };
+  },
+  pump(g, x, y, w, h, c = C.chalk) { // an oil bottle with a pump
+    const body = box(x, y + h * 0.32, w, h * 0.68, w * 0.22, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const neck = `M ${x + w * 0.35} ${y + h * 0.32} L ${x + w * 0.35} ${y + h * 0.2} L ${x + w * 0.65} ${y + h * 0.2} L ${x + w * 0.65} ${y + h * 0.32}`;
+    const pumpD = `M ${x + w * 0.5} ${y + h * 0.2} L ${x + w * 0.5} ${y + h * 0.06} M ${x + w * 0.3} ${y + h * 0.06} L ${x + w * 0.7} ${y + h * 0.06} L ${x + w * 0.98} ${y + h * 0.1}`;
+    const drop = `M ${x + w * 0.5} ${y + h * 0.55} C ${x + w * 0.38} ${y + h * 0.68}, ${x + w * 0.42} ${y + h * 0.78}, ${x + w * 0.5} ${y + h * 0.78} C ${x + w * 0.58} ${y + h * 0.78}, ${x + w * 0.62} ${y + h * 0.68}, ${x + w * 0.5} ${y + h * 0.55}`;
+    return { lines: [ink(g, body, 7, c), ink(g, neck, 6, c), ink(g, pumpD, 6, c), ink(g, drop, 5, C.mint)], body: closed(body) };
+  },
+  dropper(g, x, y, w, h, c = C.chalk) { // a dropper bottle with a rubber bulb
+    const body = box(x, y + h * 0.4, w, h * 0.6, w * 0.2, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const shoulder = `M ${x + w * 0.2} ${y + h * 0.4} L ${x + w * 0.3} ${y + h * 0.3} L ${x + w * 0.7} ${y + h * 0.3} L ${x + w * 0.8} ${y + h * 0.4}`;
+    const bulb = `M ${x + w * 0.36} ${y + h * 0.3} L ${x + w * 0.36} ${y + h * 0.12} C ${x + w * 0.36} ${y - h * 0.02}, ${x + w * 0.64} ${y - h * 0.02}, ${x + w * 0.64} ${y + h * 0.12} L ${x + w * 0.64} ${y + h * 0.3}`;
+    const lab = `M ${x + w * 0.15} ${y + h * 0.62} L ${x + w * 0.85} ${y + h * 0.62} M ${x + w * 0.15} ${y + h * 0.82} L ${x + w * 0.85} ${y + h * 0.82}`;
+    return { lines: [ink(g, body, 7, c), ink(g, shoulder, 6, c), ink(g, bulb, 6, c), ink(g, lab, 4, c)], bulb: bulb + ' Z' };
+  },
+  tin(g, x, y, w, h, c = C.chalk) { // a low balm tin
+    const top = `M ${x} ${y + h * 0.25} C ${x} ${y - h * 0.1}, ${x + w} ${y - h * 0.1}, ${x + w} ${y + h * 0.25} C ${x + w} ${y + h * 0.58}, ${x} ${y + h * 0.58}, ${x} ${y + h * 0.25} Z`;
+    const side = `M ${x} ${y + h * 0.25} L ${x} ${y + h * 0.72} C ${x} ${y + h * 1.08}, ${x + w} ${y + h * 1.08}, ${x + w} ${y + h * 0.72} L ${x + w} ${y + h * 0.25}`;
+    const rim = `M ${x} ${y + h * 0.42} C ${x} ${y + h * 0.78}, ${x + w} ${y + h * 0.78}, ${x + w} ${y + h * 0.42}`;
+    return { lines: [ink(g, top, 7, c), ink(g, side, 7, c), ink(g, rim, 5, c)], top };
+  },
+  pad(g, x, y, w, h, c = C.chalk) { // a quilted self-heating pad with warmth lines
+    const body = box(x, y + h * 0.45, w, h * 0.55, 22, [2, -3, 2, -2, 3, -2, 2, -3], 0);
+    const quilt = `M ${x + w * 0.33} ${y + h * 0.5} L ${x + w * 0.33} ${y + h * 0.96} M ${x + w * 0.66} ${y + h * 0.5} L ${x + w * 0.66} ${y + h * 0.96} M ${x + 8} ${y + h * 0.73} L ${x + w - 8} ${y + h * 0.73}`;
+    const heat = [0.25, 0.5, 0.75].map(u => `M ${x + w * u} ${y + h * 0.38} C ${x + w * u - 12} ${y + h * 0.3}, ${x + w * u + 12} ${y + h * 0.2}, ${x + w * u} ${y + h * 0.1}`).join(' ');
+    return { lines: [ink(g, body, 7, c), ink(g, quilt, 4, c), ink(g, heat, 6, C.rust)], body: closed(body) };
+  },
+  pouch(g, x, y, w, h, c = C.chalk) { // a stand-up chews pouch
+    const body = `M ${x + w * 0.06} ${y} L ${x + w * 0.94} ${y} L ${x + w} ${y + h * 0.93} Q ${x + w * 0.5} ${y + h * 1.03}, ${x} ${y + h * 0.93} Z`;
+    const zip = `M ${x + w * 0.08} ${y + h * 0.13} L ${x + w * 0.92} ${y + h * 0.13}`;
+    const label = box(x + w * 0.18, y + h * 0.36, w * 0.64, h * 0.4, 10, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const words = `M ${x + w * 0.28} ${y + h * 0.48} L ${x + w * 0.72} ${y + h * 0.48} M ${x + w * 0.28} ${y + h * 0.6} L ${x + w * 0.6} ${y + h * 0.6}`;
+    return { lines: [ink(g, body, 7, c), ink(g, zip, 5, c), ink(g, label, 6, C.rust), ink(g, words, 5, C.rust)], body };
+  },
+  harness(g, x, y, w, h, c = C.chalk) { // a rear support sling: band, two leg loops, a handle
+    const body = box(x, y + h * 0.38, w, h * 0.36, 20, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const quilt = `M ${x + 14} ${y + h * 0.56} L ${x + w - 14} ${y + h * 0.56}`;
+    const straps = `M ${x + w * 0.1} ${y + h * 0.72} C ${x + w * 0.04} ${y + h * 1.06}, ${x + w * 0.4} ${y + h * 1.08}, ${x + w * 0.36} ${y + h * 0.74}` +
+      ` M ${x + w * 0.9} ${y + h * 0.72} C ${x + w * 0.96} ${y + h * 1.06}, ${x + w * 0.6} ${y + h * 1.08}, ${x + w * 0.64} ${y + h * 0.74}`;
+    const handle = `M ${x + w * 0.3} ${y + h * 0.4} C ${x + w * 0.28} ${y - h * 0.04}, ${x + w * 0.72} ${y - h * 0.04}, ${x + w * 0.7} ${y + h * 0.4}`;
+    return { lines: [ink(g, body, 8, c), ink(g, quilt, 5, c), ink(g, straps, 7, c), ink(g, handle, 12, C.mint)], body: closed(body) };
+  },
+  parcel(g, x, y, w, h, c = C.chalk) { // a parcel with speed lines
+    const front = box(x + w * 0.25, y + h * 0.3, w * 0.62, h * 0.66, 6, [1, -2, 1, -1, 2, -1, 1, -2], 0);
+    const top = `M ${x + w * 0.25} ${y + h * 0.3} L ${x + w * 0.38} ${y + h * 0.12} L ${x + w} ${y + h * 0.12} L ${x + w * 0.87} ${y + h * 0.3} M ${x + w} ${y + h * 0.12} L ${x + w} ${y + h * 0.78} L ${x + w * 0.87} ${y + h * 0.96}`;
+    const tape = `M ${x + w * 0.56} ${y + h * 0.3} L ${x + w * 0.56} ${y + h * 0.96} M ${x + w * 0.56} ${y + h * 0.3} L ${x + w * 0.69} ${y + h * 0.12}`;
+    const speed = [0.42, 0.6, 0.78].map((v, i) => `M ${x + w * (0.02 + i * 0.03)} ${y + h * v} L ${x + w * 0.18} ${y + h * v}`).join(' ');
+    return { lines: [ink(g, front, 7, c), ink(g, top, 7, c), ink(g, tape, 5, C.rust), ink(g, speed, 6, C.mint)], front: closed(front) };
+  },
+};
+function star(cx, cy, R, r = R * 0.45) {
+  let d = '';
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r : R; d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rr) + ' ' + f1(cy + Math.sin(a) * rr); }
+  return d + ' Z';
+}
+const tick = (x, y, s) => `M ${x} ${y + s * 0.5} L ${x + s * 0.38} ${y + s * 0.88} L ${x + s} ${y}`;
+
+/* ---------- handwriting: words are revealed left to right at a steady writing pace ---------- */
+function splitWords(root) {
+  const words = [];
+  const walk = n => [...n.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(s => {
+        if (!s) return;
+        if (/^\s+$/.test(s)) { frag.appendChild(document.createTextNode(s)); return; }
+        const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = s; frag.appendChild(sp); words.push(sp);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+  });
+  walk(root);
+  const total = words.reduce((a, w) => a + w.textContent.length, 0);
+  let acc = 0;
+  words.forEach(w => { w._a = acc / total; acc += w.textContent.length; w._b = acc / total; });
+  return words;
+}
+function writeWords(words, t, e) {
+  for (const w of words) {
+    const s = e.t + e.d * w._a, d = Math.max(0.05, e.d * (w._b - w._a));
+    const p = crit(t - s, d);
+    if (p <= 0.002) { w.style.visibility = 'hidden'; continue; }
+    w.style.visibility = 'visible';
+    w.style.clipPath = p > 0.99 ? 'none' : `inset(-50% ${f1((1 - p) * 136 - 18)}% -50% -20%)`;
+  }
+}
+
+/* ---------- boards ---------- */
+const pages = {};
+function board(id, build) {
+  const el = document.getElementById(id);
+  const svg = el.querySelector('svg.art');
+  svg.setAttribute('viewBox', '0 0 1080 1920');
+  const b = TL.BOARDS[id];
+  const pg = { id, el, ...b, defs: S('defs', svg) };
+  el.style.left = (b.wx * 1080) + 'px';
+  pg.g = S('g', svg, { filter: 'url(#chalkS)' });
+  pg.texts = [...el.querySelectorAll('.t[data-k]')].map(x => ({ el: x, k: x.dataset.k, fx: x.dataset.fx || 'write' }));
+  pg.build = build;
+  pages[id] = pg;
+}
+const offs = (e, root) => { let x = 0, y = 0; for (let a = e; a && a !== root; a = a.offsetParent) { x += a.offsetLeft; y += a.offsetTop; } return [x, y]; };
+const rectOf = (pg, e) => { const [x, y] = offs(e, pg.el); return { x, y, w: e.offsetWidth, h: e.offsetHeight }; };
+const T = (pg, k) => pg.el.querySelector(`[data-k="${k}"]`);
+// The visible ink of a text box (its words), not the box: for underlines and strikes.
+function inkRect(pg, el) {
+  const ws = el.querySelectorAll('.wd');
+  if (!ws.length) return rectOf(pg, el);
+  let l = 1e9, r = -1e9, tp = 1e9, bt = -1e9;
+  ws.forEach(w => { const q = rectOf(pg, w); l = Math.min(l, q.x); r = Math.max(r, q.x + q.w); tp = Math.min(tp, q.y); bt = Math.max(bt, q.y + q.h); });
+  return { x: l, y: tp, w: r - l, h: bt - tp };
+}
+function fitText(el) {
+  const W = +el.dataset.fit; if (!W) return;
+  const keep = el.style.width; el.style.width = 'auto';
+  let fs = parseFloat(el.style.fontSize);
+  while (el.offsetWidth > W && fs > 20) { fs -= 1; el.style.fontSize = fs + 'px'; }
+  el.style.width = keep;
+}
+function prepare() {
+  for (const pg of Object.values(pages)) {
+    pg.texts.forEach(tx => fitText(tx.el));
+    pg.texts.forEach(tx => { if (tx.fx === 'write') tx.words = splitWords(tx.el); });
+    pg.update = pg.build(pg.g, pg);
+  }
+}
+function updatePage(pg, t) {
+  for (const tx of pg.texts) if (tx.words) writeWords(tx.words, t, E(pg.id, tx.k));
+  pg.update && pg.update(t);
+}
+
+/* ---------- 0 · hook: the question, written from frame 0 ---------- */
+board('hook', (g, pg) => {
+  const al = inkRect(pg, T(pg, 'alone'));
+  const y = al.y + al.h + 4;
+  const ul = [ink(g, line(al.x, y, al.x + al.w, y - 6, 3, 0.4), 9, C.rust), ink(g, line(al.x + 30, y + 22, al.x + al.w - 50, y + 16, 3, 1.7), 7, C.rust)];
+  // question marks: one big rust one, two smaller ones
+  const q = (cx, cy, s, c, w) => [ink(g, `M ${cx - 60 * s} ${cy - 70 * s} C ${cx - 62 * s} ${cy - 150 * s}, ${cx + 66 * s} ${cy - 160 * s}, ${cx + 64 * s} ${cy - 78 * s} C ${cx + 62 * s} ${cy - 26 * s}, ${cx + 2 * s} ${cy - 18 * s}, ${cx} ${cy + 40 * s}`, w, c),
+    ink(g, `M ${cx - 2 * s} ${cy + 98 * s} L ${cx + 2 * s} ${cy + 102 * s}`, w * 1.5, c)];
+  const qs = [...q(770, 1190, 2.0, C.rust, 22), ...q(300, 1260, 0.95, C.dim, 12), ...q(520, 1390, 0.6, C.mint, 10)];
+  return t => { drawSeq(qs, P('hook', 'qs', t)); drawSeq(ul, P('hook', 'ul', t)); };
+});
+
+/* ---------- 1 · relate: what owners search, written fast, then crossed out ---------- */
+board('relate', (g, pg) => {
+  const bars = [], strikes = [];
+  [0, 1, 2].forEach(i => {
+    const y = 420 + i * 190;
+    const bg = S('g', g);
+    bars.push([ink(bg, box(66, y, 874, 130, 64, [2, -3, 2, -2, 3, -2, 2, -3], 30), 6, C.chalk),
+      ink(bg, `M ${105} ${y + 65} a 24 24 0 1 0 48 0 a 24 24 0 1 0 -48 0`, 6, C.mint), ink(bg, `M ${147} ${y + 83} L ${166} ${y + 103}`, 7, C.mint)]);
+    const r = inkRect(pg, T(pg, `q${i}`)), yy = r.y + r.h * 0.55;
+    strikes.push(ink(g, line(r.x - 14, yy + 4, r.x + r.w + 16, yy - 6, 3, i), 10, C.rust));
+  });
+  // ghost queries: tilt each one, and a quick strike through each
+  const gs = [];
+  for (let i = 0; i < 6; i++) {
+    const el = T(pg, `g${i}`), rot = +el.dataset.rot;
+    el.style.transform = `rotate(${rot}deg)`;
+    const r = rectOf(pg, el), cx = r.x + r.w / 2, cy = r.y + r.h * 0.56, a = rot * Math.PI / 180, hw = r.w / 2 + 8;
+    gs.push(ink(g, line(cx - hw * Math.cos(a), cy - hw * Math.sin(a), cx + hw * Math.cos(a), cy + hw * Math.sin(a), 2, i), 6, C.rust));
+  }
+  const ea = inkRect(pg, document.getElementById('easier')), y = ea.y + ea.h + 2;
+  const eul = ink(g, line(ea.x, y, ea.x + ea.w, y - 5, 3, 1), 9, C.mint);
+  return t => {
+    bars.forEach((b, i) => drawSeq(b, P('relate', `bar${i}`, t)));
+    strikes.forEach((s, i) => setDraw(s, P('relate', `x${i}`, t)));
+    drawSeq(gs, P('relate', 'xg', t));
+    setDraw(eul, P('relate', 'eul', t));
+  };
+});
+
+/* ---------- 2 · route 1: the 8 body areas as a chalk mind map ---------- */
+board('map', (g, pg) => {
+  const CX = 540, CY = 1010, RX = 300, RY = 390;
+  const circ = ink(g, loop(CX, CY, 132, 128, 1.06, -1.9, [1, .98, 1.02, .99, 1.01, .97]), 8);
+  const lines = [];
+  for (let i = 0; i < 8; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 4, ux = Math.cos(a), uy = Math.sin(a);
+    const nx = CX + RX * ux, ny = CY + RY * uy, stop = 74 + 42 * Math.abs(ux);
+    const L = Math.hypot(nx - CX, ny - CY);
+    lines.push(ink(g, line(CX + ux * 150, CY + uy * 146, nx - (nx - CX) / L * stop, ny - (ny - CY) / L * stop, 3, i), 6, C.dim));
+  }
+  const sel = ink(g, loop(830, 1010, 128, 86, 1.15, -2.6), 9, C.rust);
+  // the arrow leaves the board to the right; the camera follows it to the next board
+  const A0 = [962, 1000], A1 = [1070, 990], A2 = [1080, 420], A3 = [1172, 334];
+  const arrow = ink(g, `M ${A0} C ${A1} ${A2} ${A3}`, 9, C.rust), ah = ink(g, head(A3[0], A3[1], Math.atan2(A3[1] - A2[1], A3[0] - A2[0]), 34), 9, C.rust);
+  const n2 = T(pg, 'n2');
+  return t => {
+    setDraw(circ, P('map', 'circ', t));
+    lines.forEach((l, i) => setDraw(l, P('map', `l${i}`, t)));
+    setDraw(sel, P('map', 'sel', t));
+    const e = E('map', 'pick'), s = track(t, 1, [[e.t, 1.12, 'snappy'], [e.t + 0.12, 1, 'default']]);
+    n2.style.transform = `scale(${s.toFixed(4)})`;
+    n2.style.color = t >= e.t ? C.mint : '';
+    drawSeq([arrow, ah], P('map', 'arrow', t));
+  };
+});
+
+/* ---------- 3 · route 1: limping, matched to products ---------- */
+board('match', (g, pg) => {
+  const chip = rectOf(pg, T(pg, 'chip'));
+  const cb = ink(g, box(chip.x - 36, chip.y - 14, chip.w + 72, chip.h + 26, 50, [2, -3, 2, -2, 3, -2, 2, -3], 26), 7, C.mint);
+  const rows = [], dg = [];
+  [0, 1, 2].forEach(i => {
+    const y = 850 + i * 202, gg = S('g', g); dg.push(gg);
+    let it;
+    if (i === 0) { it = DOOD.tub(gg, 92, y + 14, 140, 160); it.fill = scribble(pg, gg, it.lid, ...it.lidBox, C.rust, 16, 18, 0.2, 0.9); }
+    if (i === 1) { it = DOOD.pouch(gg, 92, y + 8, 140, 166); }
+    if (i === 2) { it = DOOD.harness(gg, 80, y + 26, 165, 140); it.fill = scribble(pg, gg, it.body, 80, y + 79, 165, 51, C.rust, 16, 12, 0.4, 0.4); }
+    rows.push(it);
+  });
+  return t => {
+    setDraw(cb, P('match', 'chipbox', t));
+    rows.forEach((it, i) => {
+      const q = P('match', `d${i}`, t);
+      drawSeq(it.lines, q * 1.15);
+      if (it.fill) setDraw(it.fill, (q - 0.7) * 3.3);
+      const e = E('match', `pr${i}`), s = track(t, 1, [[e.t + e.d, 1.12, 'snappy'], [e.t + e.d + 0.1, 1, 'default']]);
+      T(pg, `pr${i}`).style.transform = `scale(${s.toFixed(4)})`; T(pg, `pr${i}`).style.transformOrigin = '0 60%';
+    });
+  };
+});
+
+/* ---------- 4 · route 2: the condition list and its count ---------- */
+board('route2', (g, pg) => {
+  const dots = [];
+  for (let i = 0; i < 8; i++) {
+    const r = rectOf(pg, T(pg, `c${i}`)), x = r.x - 34, y = r.y + r.h * 0.55;
+    dots.push(ink(g, `M ${x - 4} ${y} a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0`, 10, i % 2 ? C.mint : C.rust));
+  }
+  const n = inkRect(pg, T(pg, 'n25'));
+  const ring = ink(g, loop(n.x + n.w / 2, n.y + n.h / 2 + 6, n.w / 2 + 52, n.h / 2 + 18, 1.12, -2.2), 9, C.chalk);
+  return t => {
+    dots.forEach((d, i) => setDraw(d, P('route2', `dot${i}`, t)));
+    setDraw(ring, P('route2', 'ring', t));
+  };
+});
+
+/* ---------- 5 · bundles: two real bundles, was-price struck, SAVE 10% stamped ---------- */
+board('bundles', (g, pg) => {
+  const cards = [0, 1].map(i => {
+    const Y = 510 + i * 390;
+    const frame = ink(g, box(66, Y, 874, 352, 34, i ? [2, -3, 3, -2, 2, -3, 3, -2] : [3, -2, 2, -3, 3, -2, 2, -4], 40), 7, C.chalk);
+    const ag = S('g', g), items = [];
+    if (i === 0) {
+      const pad = DOOD.pad(ag, 92, Y + 140, 150, 110), tub = DOOD.tub(ag, 108, Y + 34, 110, 128), pump = DOOD.pump(ag, 232, Y + 64, 72, 170);
+      items.push(...pad.lines, ...tub.lines, ...pump.lines);
+      items.fills = [scribble(pg, ag, tub.lid, ...tub.lidBox, C.rust, 14, 16, 0.2, 0.9), scribble(pg, ag, pad.body, 92, Y + 189, 150, 61, C.mint, 18, 12, 0.4, 0.35)];
+    } else {
+      const tub = DOOD.tub(ag, 92, Y + 50, 110, 130), drop = DOOD.dropper(ag, 214, Y + 40, 64, 150), tin = DOOD.tin(ag, 160, Y + 170, 120, 62);
+      items.push(...tub.lines, ...drop.lines, ...tin.lines);
+      items.fills = [scribble(pg, ag, tub.lid, ...tub.lidBox, C.mint, 14, 16, 0.2, 0.9), scribble(pg, ag, tin.top, 160, Y + 160, 120, 34, C.rust, 14, 16, 0.2, 0.85)];
+    }
+    const w = inkRect(pg, T(pg, `was${i}`)), yy = w.y + w.h * 0.55;
+    const strike = ink(g, line(w.x - 10, yy + 6, w.x + w.w + 10, yy - 8, 2, i), 8, C.rust);
+    return { frame, items, strike };
+  });
+  // the was-price sits right after the price
+  [0, 1].forEach(i => { const p = rectOf(pg, T(pg, `pr${i}`)); T(pg, `was${i}`).style.left = (p.x + p.w + 30) + 'px'; });
+  const strikes = [0, 1].map(i => { const w = inkRect(pg, T(pg, `was${i}`)), yy = w.y + w.h * 0.56; return ink(g, line(w.x - 10, yy + 6, w.x + w.w + 10, yy - 8, 2, i), 8, C.rust); });
+  cards.forEach(c => c.strike.remove());
+  return t => {
+    cards.forEach((c, i) => {
+      setDraw(c.frame, P('bundles', `box${i}`, t));
+      const q = P('bundles', `art${i}`, t);
+      drawSeq(c.items, q * 1.1);
+      c.items.fills.forEach(f => setDraw(f, (q - 0.65) * 3));
+      setDraw(strikes[i], P('bundles', `st${i}`, t));
+      const e = E('bundles', `save${i}`), el = T(pg, `save${i}`);
+      const on = crit(t - e.t, 0.08), s = track(t, 1.7, [[e.t, 1, 'snappy']]);
+      el.style.opacity = on.toFixed(3); el.style.transform = `rotate(-7deg) scale(${s.toFixed(4)})`;
+      const pe = E('bundles', `pr${i}`), ps = track(t, 1, [[pe.t + pe.d, 1.1, 'snappy'], [pe.t + pe.d + 0.1, 1, 'default']]);
+      T(pg, `pr${i}`).style.transform = `scale(${ps.toFixed(4)})`; T(pg, `pr${i}`).style.transformOrigin = '0 60%';
+    });
+  };
+});
+
+/* ---------- 6 · why A: the specialist and the brands ---------- */
+board('whyA', (g, pg) => {
+  const sp = inkRect(pg, document.getElementById('spec')), y = sp.y + sp.h + 2;
+  const ul = [ink(g, line(sp.x, y, sp.x + sp.w, y - 6, 3, 0.3), 9, C.mint), ink(g, line(sp.x + 24, y + 20, sp.x + sp.w - 30, y + 15, 3, 2), 7, C.mint)];
+  const ticks = [0, 1, 2, 3, 4].map(i => { const r = rectOf(pg, T(pg, `b${i}`)); return ink(g, tick(84, r.y + r.h * 0.3, 46), 10, C.rust); });
+  return t => { drawSeq(ul, P('whyA', 'ul', t)); ticks.forEach((k, i) => setDraw(k, P('whyA', `tk${i}`, t))); };
+});
+
+/* ---------- 7 · why B: subscribe & save, fast delivery ---------- */
+board('whyB', (g, pg) => {
+  const pc = inkRect(pg, T(pg, 'pct'));
+  const cx = Math.min(870, pc.x + pc.w + 90), cy = pc.y + pc.h * 0.5, R = 62;
+  const arc = (a0, a1) => { let d = ''; for (let i = 0; i <= 24; i++) { const a = a0 + (a1 - a0) * i / 24; d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * R) + ' ' + f1(cy + Math.sin(a) * R); } return d; };
+  const a1 = -0.3, a2 = 2.6, b1 = 2.85, b2 = 5.75;
+  const cyc = [ink(g, arc(a1, a2), 9, C.mint), ink(g, head(cx + Math.cos(a2) * R, cy + Math.sin(a2) * R, a2 + Math.PI / 2, 26), 9, C.mint),
+    ink(g, arc(b1, b2), 9, C.mint), ink(g, head(cx + Math.cos(b2) * R, cy + Math.sin(b2) * R, b2 + Math.PI / 2, 26), 9, C.mint)];
+  const dv = ink(g, line(80, 790, 940, 784, 3, 2), 5, C.dim);
+  const par = DOOD.parcel(S('g', g), 64, 900, 270, 240);
+  const fill = scribble(pg, g, par.front, 131, 972, 168, 158, C.rust, 18, 12, 0.35, 0.35);
+  return t => {
+    drawSeq(cyc, P('whyB', 'cyc', t));
+    setDraw(dv, P('whyB', 'div', t));
+    const q = P('whyB', 'box', t);
+    drawSeq(par.lines, q * 1.1); setDraw(fill, (q - 0.6) * 2.5);
+  };
+});
+
+/* ---------- 8 · proof: the rating, stars drawn in, two real reviews ---------- */
+board('proof', (g, pg) => {
+  // reviews flow under each other, names right-aligned under their quote
+  const q1 = T(pg, 'q1'), john = T(pg, 'john'), q2 = T(pg, 'q2'), gee = T(pg, 'gee');
+  const r1 = rectOf(pg, q1);
+  john.style.top = (r1.y + r1.h + 4) + 'px'; john.style.left = (940 - john.offsetWidth) + 'px';
+  const rj = rectOf(pg, john);
+  q2.style.top = (rj.y + rj.h + 40) + 'px';
+  const r2 = rectOf(pg, q2);
+  gee.style.top = (r2.y + r2.h + 4) + 'px'; gee.style.left = (940 - gee.offsetWidth) + 'px';
+  const dash = (el, c) => { const r = rectOf(pg, el), y = r.y + r.h * 0.56; return ink(g, line(r.x - 70, y, r.x - 20, y - 2, 1, 0), 6, c); };
+  const dj = dash(john, C.mint), dge = dash(gee, C.mint);
+  const stars = [], fills = [];
+  for (let i = 0; i < 5; i++) {
+    const cx = 540 + (i - 2) * 150, cy = 482, d = star(cx, cy, 64);
+    stars.push(ink(g, d, 7, C.rust));
+    fills.push(scribble(pg, g, d, cx - 70, cy - 66, 140, 128, C.rust, 15, 17, 0.25, 0.95, i < 4 ? null : cx - 64 + 128 * 0.6));
+  }
+  return t => {
+    stars.forEach((s, i) => setDraw(s, P('proof', `s${i}`, t)));
+    const q = P('proof', 'fill', t);
+    fills.forEach((f, i) => setDraw(f, q * 5 - i));
+    setDraw(dj, P('proof', 'john', t) * 2); setDraw(dge, P('proof', 'gee', t) * 2);
+  };
+});
+
+/* ---------- 9 · offer: 10% off, the code as a coupon, delivery, guarantee ---------- */
+board('offer', (g, pg) => {
+  const X = 90, Y = 580, W = 900, H = 250, R = 30;
+  const tk = `M ${X + 20} ${Y + 2} C ${X + 300} ${Y - 3}, ${X + 600} ${Y + 4}, ${X + W - 20} ${Y} Q ${X + W} ${Y}, ${X + W + 2} ${Y + 20} L ${X + W} ${Y + H / 2 - R}` +
+    ` A ${R} ${R} 0 0 0 ${X + W} ${Y + H / 2 + R} L ${X + W - 2} ${Y + H - 20} Q ${X + W} ${Y + H}, ${X + W - 20} ${Y + H + 2} C ${X + 600} ${Y + H - 2}, ${X + 300} ${Y + H + 3}, ${X + 20} ${Y + H}` +
+    ` Q ${X} ${Y + H}, ${X - 2} ${Y + H - 20} L ${X} ${Y + H / 2 + R} A ${R} ${R} 0 0 0 ${X} ${Y + H / 2 - R} L ${X + 2} ${Y + 20} Q ${X} ${Y}, ${X + 20} ${Y + 2} L ${X + 60} ${Y}`;
+  const tg = S('g', g);
+  const ticket = ink(tg, tk, 8, C.rust);
+  const perf = [];
+  for (let y = Y + 22; y < Y + H - 20; y += 34) { perf.push(ink(tg, `M ${X + 105} ${y} L ${X + 105} ${y + 16}`, 6, C.dim)); perf.push(ink(tg, `M ${X + W - 105} ${y} L ${X + W - 105} ${y + 16}`, 6, C.dim)); }
+  const scis = [ink(tg, `M ${X + 34} ${Y + 108} l 36 36 M ${X + 34} ${Y + 144} l 36 -36`, 6, C.dim)];
+  const ticks = ['free', 'guar'].map(k => { const r = rectOf(pg, T(pg, k)); return ink(g, tick(92, r.y + r.h * 0.28, 50), 10, C.mint); });
+  const code = T(pg, 'code'), use = T(pg, 'use');
+  return t => {
+    drawSeq([ticket, ...perf, ...scis], P('offer', 'ticket', t));
+    const e = E('offer', 'stamp'), s = track(t, 1, [[e.t, 1.08, 'snappy'], [e.t + 0.1, 1, 'default']]);
+    const tr = `translate(540 705) scale(${s.toFixed(4)}) translate(-540 -705)`;
+    tg.setAttribute('transform', tr);
+    code.style.transformOrigin = use.style.transformOrigin = `540px ${705 - 656}px`;
+    code.style.transform = `scale(${s.toFixed(4)})`;
+    ticks.forEach((k, i) => setDraw(k, P('offer', `tk${i}`, t)));
+  };
+});
+
+/* ---------- 10 · end: the mark drawn in chalk and filled in, the lockup, the button ---------- */
+board('end', (g, pg) => {
+  const CX = 540, CY = 455, SZ = 290, R = 0.24 * SZ;
+  const sq = box(CX - SZ / 2, CY - SZ / 2, SZ, SZ, R, [2, -3, 2, -2, 3, -2, 2, -3], 0);
+  const fills = [scribble(pg, g, closed(sq), CX - SZ / 2, CY - SZ / 2, SZ, SZ, C.mark, 17, 24, 0.32, 1),
+    scribble(pg, g, closed(sq), CX - SZ / 2 + 60, CY - SZ / 2, SZ, SZ, '#C25E2E', 19, 22, -0.3, 1)];
+  const edge = ink(g, box(CX - SZ / 2, CY - SZ / 2, SZ, SZ, R, [2, -3, 2, -2, 3, -2, 2, -3], 34), 8, C.rust);
+  const pv = ink(g, `M ${CX + 3} ${CY - 72} L ${CX} ${CY + 72}`, 50, C.chalk), ph = ink(g, `M ${CX - 72} ${CY + 3} L ${CX + 72} ${CY}`, 50, C.chalk);
+  // the button: "Shop now" and a chalk arrow on one line, the URL under it
+  const cta = T(pg, 'cta'), cw = cta.offsetWidth, AW = 96, GAP = 28;
+  const lx = 540 - (cw + GAP + AW) / 2;
+  cta.style.left = lx + 'px';
+  const cr = rectOf(pg, cta), ay = cr.y + cr.h * 0.55, ax = lx + cw + GAP;
+  const bg = S('g', g);
+  const BX = 150, BY = 1030, BW = 780, BH = 236;
+  const bfill = scribble(pg, bg, closed(box(BX, BY, BW, BH, 70, [3, -4, 3, -3, 4, -3, 3, -4], 0)), BX, BY, BW, BH, C.rust, 22, 14, 0.4, 0.22);
+  const bk = ink(bg, box(BX, BY, BW, BH, 70, [3, -4, 3, -3, 4, -3, 3, -4], 40), 9, C.rust);
+  const ar = ink(bg, `M ${ax} ${f1(ay)} L ${ax + AW} ${f1(ay - 3)}`, 10), arh = ink(bg, head(ax + AW, ay - 3, 0, 32), 10);
+  const url = T(pg, 'url');
+  return t => {
+    setDraw(edge, P('end', 'edge', t));
+    drawSeq(fills, P('end', 'fill', t));
+    drawSeq([pv, ph], P('end', 'plus', t));
+    const q = P('end', 'btn', t);
+    setDraw(bk, q * 1.1); setDraw(bfill, (q - 0.4) * 1.8);
+    drawSeq([ar, arh], P('end', 'arrowR', t));
+    const e = E('end', 'press'), s = track(t, 1, [[e.t, 0.94, 'snappy'], [e.t + 0.12, 1, 'default']]);
+    bg.setAttribute('transform', `translate(540 1148) scale(${s.toFixed(4)}) translate(-540 -1148)`);
+    cta.style.transformOrigin = `${540 - lx}px ${1148 - cr.y}px`; cta.style.transform = `scale(${s.toFixed(4)})`;
+    url.style.transformOrigin = `540px ${1148 - 1150}px`; url.style.transform = `scale(${s.toFixed(4)})`;
+  };
+});
+
+/* ---------- the long board: chalk-dust texture and ghosts of old writing (fixed seeds) ---------- */
+const SLOTS = 6, boards = [];
+const GHOSTS = [ // [slot, text, x, y, size, font, rotation (deg), alpha]
+  [0, 'Monday 3rd', 640, 150, 66, 'P', -3, .07], [0, '7 x 8 = 56', 90, 1680, 74, 'P', 2, .07], [0, 'spelling test', 610, 1760, 60, 'P', -2, .06], [0, 'ABC', 120, 980, 120, 'H', -4, .035],
+  [1, 'homework p. 42', 560, 140, 62, 'P', 2, .07], [1, 'a² + b² = c²', 100, 1720, 70, 'P', -2, .065], [1, 'x = 7', 760, 1600, 86, 'P', 3, .06], [1, 'remember!', 640, 560, 90, 'H', -6, .03],
+  [2, 'Q2.', 80, 150, 80, 'P', 0, .07], [2, '12 ÷ 4 = 3', 600, 1730, 70, 'P', -3, .065], [2, 'times tables', 90, 1790, 58, 'P', 2, .06], [2, 'Tuesday', 620, 170, 62, 'P', 2, .06],
+  [3, 'quiz on Friday', 520, 140, 62, 'P', -2, .07], [3, '1/2 + 1/4 = 3/4', 90, 1720, 66, 'P', 2, .065], [3, 'p. 17', 820, 1640, 70, 'P', -4, .06],
+  [4, 'Wednesday', 600, 150, 64, 'P', 3, .07], [4, '9 x 9 = 81', 100, 1700, 72, 'P', -2, .065], [4, 'neat writing!', 560, 1780, 60, 'P', 2, .06], [4, 'xyz', 700, 1280, 120, 'H', 5, .03],
+  [5, 'Friday', 110, 150, 66, 'P', -2, .07], [5, '100%', 700, 1740, 90, 'H', -3, .05], [5, 'well done', 120, 1760, 64, 'P', 2, .065],
+];
+const SWIPES = [ // old eraser swipes: [slot, cx, cy, rx, ry, alpha]
+  [0, 260, 1500, 420, 90, .03], [0, 800, 420, 360, 70, .025], [1, 300, 300, 380, 80, .03], [1, 780, 1500, 420, 100, .025], [2, 500, 1600, 460, 90, .03],
+  [3, 300, 500, 400, 80, .025], [3, 760, 1450, 380, 90, .03], [4, 400, 1550, 460, 100, .03], [4, 700, 380, 360, 70, .025], [5, 540, 1600, 480, 90, .03],
+];
+async function makeBoards() {
+  for (let wx = 0; wx < SLOTS; wx++) {
+    const X = wx * 1080;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="${X} 0 1080 1920"><defs>
+      <filter id="a" filterUnits="userSpaceOnUse" x="${X}" y="0" width="1080" height="1920" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0012 0.0021" numOctaves="4" seed="11"/>
+        <feColorMatrix type="matrix" values="0.07 0 0 0 0.022  0.13 0 0 0 0.126  0.11 0 0 0 0.104  0 0 0 0 1"/></filter>
+      <filter id="s" filterUnits="userSpaceOnUse" x="${X}" y="0" width="1080" height="1920" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0011 0.008" numOctaves="3" seed="21"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.8 0 0 0 -0.8"/></filter>
+      <filter id="w" filterUnits="userSpaceOnUse" x="${X}" y="0" width="1080" height="1920" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="33"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.6 0 0 0 -0.78"/></filter>
+      <filter id="d" filterUnits="userSpaceOnUse" x="${X}" y="0" width="1080" height="1920" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="4"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  7 0 0 0 -4.6"/></filter>
+      </defs>
+      <rect x="${X}" y="0" width="1080" height="1920" filter="url(#a)"/>
+      <rect x="${X}" y="0" width="1080" height="1920" filter="url(#s)" opacity="0.11"/>
+      <rect x="${X}" y="0" width="1080" height="1920" filter="url(#w)" opacity="0.06"/>
+      <rect x="${X}" y="0" width="1080" height="1920" filter="url(#d)" opacity="0.2"/></svg>`;
+    const img = new Image();
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    await img.decode();
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1920; c.className = 'board';
+    const ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    // light falls off towards the top and bottom of the board (continuous along its length)
+    const gr = ctx.createLinearGradient(0, 0, 0, 1920);
+    gr.addColorStop(0, 'rgba(4,18,14,.45)'); gr.addColorStop(0.2, 'rgba(4,18,14,0)'); gr.addColorStop(0.8, 'rgba(4,18,14,0)'); gr.addColorStop(1, 'rgba(4,18,14,.5)');
+    ctx.fillStyle = gr; ctx.fillRect(0, 0, 1080, 1920);
+    // ghosts of erased writing and old eraser swipes
+    ctx.filter = 'blur(2.5px)';
+    for (const [s, cx, cy, rx, ry, a] of SWIPES) if (s === wx) {
+      ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#F3F0E8'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, -0.05, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    for (const [s, txt, x, y, size, f, rot, a] of GHOSTS) if (s === wx) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(rot * Math.PI / 180); ctx.globalAlpha = a; ctx.fillStyle = '#F3F0E8';
+      ctx.font = f === 'H' ? `700 ${size}px "Cabin Sketch"` : `400 ${size}px "Patrick Hand"`;
+      ctx.fillText(txt, 0, 0); ctx.fillText(txt, 7, 3); ctx.restore();
+    }
+    ctx.filter = 'none';
+    c.style.left = X + 'px';
+    world.insertBefore(c, world.firstChild);
+    boards.push(c);
+  }
+}
+
+/* ---------- the board eraser: five sweeps smear the old board, then the chalk haze clears ---------- */
+const ER = TL.ERASE, erasers = [];
+const PASS_Y = i => 300 + i * 288, PASS_H = 172;
+function band(i, p) { // the area one sweep has covered, with soft wavy edges
+  const dir = i % 2 ? -1 : 1, x0 = dir > 0 ? -260 : 1340, xl = x0 + dir * 1600 * p, yc = PASS_Y(i);
+  const a = Math.min(x0, xl), b = Math.max(x0, xl);
+  if (b - a < 2) return '';
+  const n = 10; let top = '', bot = '';
+  for (let k = 0; k <= n; k++) { const x = a + (b - a) * k / n; top += ` L ${f1(x)} ${f1(yc - PASS_H + 9 * Math.sin(x * 0.011 + i * 1.7))}`; }
+  for (let k = n; k >= 0; k--) { const x = a + (b - a) * k / n; bot += ` L ${f1(x)} ${f1(yc + PASS_H + 9 * Math.sin(x * 0.013 + i * 2.3))}`; }
+  return 'M' + top.slice(2) + bot + ' Z';
+}
+function makeEraser(pg) {
+  const wrap = document.createElement('div'); wrap.className = 'eraser';
+  wrap.style.left = (pg.wx * 1080) + 'px';
+  const cp = S('clipPath', document.querySelector('#stage > svg defs'), { id: `ec_${pg.id}`, clipPathUnits: 'userSpaceOnUse' });
+  const cpath = S('path', cp, { d: '' });
+  const copy = document.createElement('canvas'); copy.width = 1080; copy.height = 1920;
+  copy.getContext('2d').drawImage(boards[pg.wx], 0, 0);
+  copy.style.clipPath = `url(#ec_${pg.id})`;
+  const svg = S('svg', null, { viewBox: '0 0 1080 1920' });
+  const haze = S('path', svg, { d: '', fill: '#fff', filter: 'url(#smudge)' });
+  const eg = S('g', svg);
+  // a felt board eraser: wooden back, felt edge, chalk dust on the felt
+  S('rect', eg, { x: -62, y: -186, width: 124, height: 372, rx: 22, fill: '#8C6544' });
+  S('rect', eg, { x: -48, y: -170, width: 96, height: 340, rx: 14, fill: '#A07A55' });
+  S('path', eg, { d: 'M -30 -150 L -30 150 M 0 -156 L 0 156 M 30 -150 L 30 150', stroke: '#8C6544', 'stroke-width': 5, opacity: .6 });
+  const felt = S('rect', eg, { x: 44, y: -186, width: 30, height: 372, rx: 10, fill: '#3A403C' });
+  const dust = S('rect', eg, { x: 46, y: -180, width: 26, height: 360, rx: 8, fill: '#E9E6DE', opacity: .55, filter: 'url(#smudge)' });
+  wrap.append(copy, svg);
+  world.appendChild(wrap);
+  const er = { pg, wrap, cpath, copy, haze, eg, felt, dust };
+  erasers.push(er);
+  return er;
+}
+function updateEraser(er, t) {
+  const e0 = er.pg.e0, cover = e0 + (ER.PASS - 1) * ER.PASS_GAP + ER.PASS_D, endT = e0 + ER.CLEAR_AT + ER.CLEAR_D * 1.4;
+  if (t < e0 || t > endT) { er.wrap.style.display = 'none'; return; }
+  er.wrap.style.display = 'block';
+  let d = '', cur = -1, cp = 0;
+  for (let i = 0; i < ER.PASS; i++) {
+    const p = crit(t - (e0 + i * ER.PASS_GAP), ER.PASS_D);
+    if (p > 0.001) d += band(i, p) + ' ';
+    if (t >= e0 + i * ER.PASS_GAP && p < 0.995) { cur = i; cp = p; }
+  }
+  er.cpath.setAttribute('d', d);
+  er.copy.style.display = t < cover ? 'block' : 'none';
+  er.haze.setAttribute('d', d);
+  er.haze.setAttribute('opacity', (0.3 * (1 - crit(t - (e0 + ER.CLEAR_AT), ER.CLEAR_D))).toFixed(3));
+  if (cur >= 0) {
+    const dir = cur % 2 ? -1 : 1, x = (dir > 0 ? -260 : 1340) + dir * 1600 * cp;
+    er.eg.style.display = 'block';
+    er.eg.setAttribute('transform', `translate(${f1(x - dir * 70)} ${PASS_Y(cur)}) rotate(${dir * 4}) scale(${dir} 1)`);
+  } else er.eg.style.display = 'none';
+}
+
+/* ---------- the frame ---------- */
+const PANS = TL.ORDER.map(id => TL.BOARDS[id]).filter(b => b.arrive === 'pan').map(b => [b.t0, b.wx * 1080, PAN]);
+const COVER = (ER.PASS - 1) * ER.PASS_GAP + ER.PASS_D;
+function lifetime(i) { // when a board is shown, and when it is only a faint ghost of erased chalk
+  const id = TL.ORDER[i], b = TL.BOARDS[id], nx = TL.BOARDS[TL.ORDER[i + 1]];
+  const on = b.arrive === 'erase' ? b.e0 : Math.max(0, b.t0 - 0.2);
+  if (!nx) return { on, off: Infinity, ghostEnd: Infinity };
+  if (nx.arrive === 'pan') return { on, off: nx.t0 + 1.6, ghostEnd: nx.t0 + 1.6 };
+  const leave = TL.ORDER.slice(i + 2).map(k => TL.BOARDS[k]).find(k => k.arrive === 'pan');
+  return { on, off: nx.e0 + COVER, ghostEnd: leave ? leave.t0 + 1.6 : Infinity };
+}
+let LIFE = [];
+function renderFrame(t) {
+  const camX = track(t, 0, PANS);
+  world.style.transform = `translate(${f1(-camX)}px,0)`;
+  boards.forEach((c, wx) => { c.style.display = Math.abs(camX - wx * 1080) < 1079 ? 'block' : 'none'; });
+  TL.ORDER.forEach((id, i) => {
+    const pg = pages[id], L = LIFE[i];
+    pg.el.style.zIndex = 10 + 2 * i;
+    if (t < L.on || t >= L.ghostEnd) { pg.el.style.display = 'none'; return; }
+    pg.el.style.display = 'block';
+    if (t >= L.off) { pg.el.style.opacity = '0.04'; pg.el.style.filter = 'blur(4px)'; }
+    else { pg.el.style.opacity = ''; pg.el.style.filter = ''; }
+    updatePage(pg, t);
+  });
+  erasers.forEach(er => { er.wrap.style.zIndex = 10 + 2 * TL.ORDER.indexOf(er.pg.id) - 1; updateEraser(er, t); });
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all(['700 100px "Cabin Sketch"', '400 40px "Patrick Hand"', '800 40px Inter'].map(f => document.fonts.load(f)))
+  .then(() => document.fonts.ready)
+  .then(makeBoards)
+  .then(() => {
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'block'; });
+    prepare();
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'none'; });
+    TL.ORDER.forEach(id => { if (TL.BOARDS[id].arrive === 'erase') makeEraser(pages[id]); });
+    LIFE = TL.ORDER.map((_, i) => lifetime(i));
+    return true;
+  });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const stage = document.getElementById('stage');
+  const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `translate(${(innerWidth - 1080 * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loopF = now => { window.renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loopF); }; requestAnimationFrame(loopF); });
+}
+</script>
+</body>
+</html>
