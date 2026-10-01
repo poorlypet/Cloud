@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IVDD Signs Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+.seg{position:absolute;top:236px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.seg i{display:block;height:100%;width:100%;background:var(--teal);transform:scaleX(0);transform-origin:0 50%}
+#numwin{position:absolute;left:104px;top:380px;width:500px;height:560px;overflow:hidden}
+#numcol{position:absolute;left:0;top:0}
+#numcol div{height:560px;font:500 560px/560px var(--serif);letter-spacing:-.04em;color:var(--teal)}
+.sign{position:absolute;left:120px;top:1010px;width:840px;font-size:104px}
+.chip{position:absolute;display:flex;align-items:center;gap:14px;height:84px;padding:0 30px;border-radius:999px;border:2px solid rgba(255,255,255,.28);font:600 36px/1 var(--sans);color:#fff;white-space:nowrap;box-sizing:border-box}
+.chip i{width:14px;height:14px;border-radius:50%;background:var(--lime)}
+.pinfo{position:absolute;left:120px;width:840px}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- S1 hook -->
+<section class="scene white" id="s1" style="visibility:visible">
+  <div id="segs1"></div>
+  <h1 class="hd" id="s1h" style="left:120px;top:640px;font-size:210px;line-height:1">5 signs<br>of <em>IVDD.</em></h1>
+  <p class="sub" id="s1p" style="left:120px;top:1150px;width:840px">Knowing the signs, and acting quickly,<br><b>makes a real difference.</b></p>
+  <div class="a" id="s1band" style="left:0;top:1340px;width:1080px;height:96px;background:var(--teal);color:#fff;font:700 34px/96px var(--sans);letter-spacing:.06em"></div>
+</section>
+
+<!-- S2 what it is -->
+<section class="scene teal" id="s2">
+  <h2 class="hd" id="s2h" style="left:120px;top:300px;font-size:92px">A disc in the spine<br>bulges or bursts and<br>presses on the <em>cord.</em></h2>
+  <svg class="a" id="spine" style="left:0;top:0" width="1080" height="1920" fill="none">
+    <path id="cord" d="M100 1176 C300 1176 400 1176 540 1176 C680 1176 780 1176 980 1176" stroke="rgba(255,255,255,.55)" stroke-width="6" stroke-linecap="round"/>
+    <g id="verts"></g>
+  </svg>
+  <p class="sub" id="s2p" style="left:120px;top:1300px;width:840px">Dachshunds, Bassets, Corgis and Beagles<br>are most at risk, <b>but any dog can get it.</b></p>
+</section>
+
+<!-- S3 the five signs -->
+<section class="scene white" id="s3">
+  <div id="segs3"></div>
+  <div class="a cap" id="s3cap" style="left:120px;top:290px;color:var(--mute)">The signs</div>
+  <div id="numwin"><div id="numcol"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div></div></div>
+  <div class="a" id="clist" style="left:120px;top:1300px;width:840px;display:flex;flex-wrap:wrap;gap:14px"></div>
+  <h2 class="hd sign" id="g1">A hunched<br><em>back.</em></h2>
+  <h2 class="hd sign" id="g2">A yelp when<br><em>picked up.</em></h2>
+  <h2 class="hd sign" id="g3">Reluctant to jump<br>or do the <em>stairs.</em></h2>
+  <h2 class="hd sign" id="g4">Back legs that<br><em>wobble</em> or <em>cross.</em></h2>
+  <h2 class="hd sign" id="g5">Back legs that<br>suddenly<br><em>stop working.</em></h2>
+</section>
+
+<!-- S4 what helps -->
+<section class="scene teal" id="s4">
+  <h2 class="hd" id="s4h" style="left:120px;top:300px;font-size:120px">What can<br><em>help.</em></h2>
+  <h3 class="hd" id="s4q" style="left:120px;top:640px;font-size:76px">Strict rest first,<br>weeks of it.</h3>
+  <div id="chips"></div>
+</section>
+
+<!-- S5 products -->
+<section class="scene pale" id="s5">
+  <div class="a cap" id="s5cap" style="left:120px;top:250px;color:var(--mute)"></div>
+  <div id="prods"></div>
+</section>
+
+<!-- S6 end -->
+<section class="scene white" id="s6">
+  <h2 class="hd" id="s6h" style="left:120px;top:250px;width:840px;font-size:96px;text-align:center">Find the right support<br>for your dog’s <em>IVDD.</em></h2>
+  <div class="panel" id="tray" style="left:60px;top:520px;width:960px;height:500px;background:var(--pale2)"></div>
+  <div id="row"></div>
+  <div class="panel" id="offer" style="left:120px;top:1070px;width:840px;height:300px;background:var(--teal);color:#fff">
+    <div class="a" style="left:48px;top:42px;font:800 34px/1.15 var(--sans)">10% off your<br>first order</div>
+    <div class="a" style="right:48px;top:44px;font:800 76px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--lime)">POORLY10</div>
+    <div class="btn" id="cta" style="left:48px;top:168px;width:744px;height:96px">Shop IVDD support <span id="arr">→</span></div>
+  </div>
+  <div class="a" id="trust" style="left:120px;width:840px;top:1398px;text-align:center;font:600 28px/1.4 var(--sans);color:var(--mute)">Free UK delivery over £39<br>Ordered before 2pm, packed the same working day</div>
+  <div class="a" id="url" style="left:120px;width:840px;top:1540px;text-align:center;font:700 38px/1 var(--sans);color:var(--teal)">poorly-pet.com</div>
+</section>
+
+</div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script>
+const { $, $$, tl, cue, fit, lines, out, blurIn, show, hide, product, shadow, stars } = K;
+const DUR = 54, PRESS = 51.6; window.END = PRESS;
+
+const PRODUCTS = [
+  { img: 'brace', h: 500, chips: ['Spinal support', 'Thermal therapy'], tag: 'Brace the back', name: 'Thermal Back Brace', line: 'Targeted thermal support to the lumbar<br>and thoracic spine.', price: '£54.99', extra: 'Ortocanis' },
+  { img: 'ramp', h: 450, chips: ['Folds flat', '75kg capacity'], tag: 'No more jumping', name: 'Lightweight Folding Dog Ramp', line: 'Folds flat · 75kg capacity · under 5kg', price: '£79.99', extra: 'Poorly Pet' },
+  { img: 'drops', h: 690, chips: ['For rest periods', 'Natural'], tag: 'Rest, calmly', name: 'Natural Calming Drops', line: 'Helps keep your dog relaxed and settled<br>during essential rest periods.', price: '£13.99', extra: 'Pets Purest' },
+  { img: 'harness', h: 560, chips: ['Toilet trips', 'Lightweight'], tag: 'A handle to help', name: 'Flagline Harness with Handle', line: 'Lightweight, with a handle and<br>three clip points.', price: '£69.99', extra: 'Ruffwear' },
+];
+const SHORT = ['Hunched back', 'Yelps when picked up', 'Won’t jump', 'Wobbly back legs', 'Legs stop working'];
+const CHIPS = ['A back brace', 'Ramps, no jumping', 'Grip on hard floors', 'A harness with a handle', 'Keep them lean'];
+
+function build() {
+  // progress segments (hook teases them, the signs fill them)
+  const segs = id => { $(id).outerHTML = [0, 1, 2, 3, 4].map(i => `<div class="seg" style="left:${120 + i * 172}px;width:152px"><i></i></div>`).join(''); };
+  segs('#segs1'); segs('#segs3');
+  // spine: five vertebrae, four discs; the middle disc bulges onto the cord
+  $('#verts').innerHTML = [0, 1, 2, 3, 4].map(i => `<rect class="vb" x="${130 + i * 172}" y="960" width="132" height="168" rx="30" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.7)" stroke-width="4"/>`).join('') +
+    [0, 1, 2, 3].map(i => `<ellipse class="dk" cx="${130 + i * 172 + 152}" cy="1044" rx="20" ry="74" fill="${i === 1 ? 'var(--lime)' : 'rgba(255,255,255,.35)'}"/>`).join('');
+  $('#chips').outerHTML = CHIPS.map((c, i) => `<div class="chip" style="left:120px;top:${880 + i * 108}px"><i></i>${c}</div>`).join('');
+  $('#prods').outerHTML = PRODUCTS.map((p, i) => `
+    <div class="pslide" id="ps${i}" style="position:absolute;left:0;top:0;width:1080px;height:1920px">
+      <h2 class="hd ptag" style="left:120px;top:350px;font-size:112px">${p.tag.split(' ').slice(0, -1).join(' ')} <em>${p.tag.split(' ').slice(-1)}.</em></h2>
+      <div class="shadow" id="psh${i}"></div>
+      <div class="prod" id="pp${i}" data-img="${p.img}" data-h="${p.h}" data-cx="540" data-floor="1150"></div>
+      <div class="pinfo" style="top:1196px">
+        <div style="font:700 26px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">${p.extra}</div>
+        <div style="margin-top:16px;font:700 46px/1.1 var(--sans);color:var(--ink)">${p.name}</div>
+        <div style="margin-top:12px;font:500 30px/1.35 var(--sans);color:var(--mute)">${p.line}</div>
+      </div>
+      <div class="a pprice" style="right:120px;top:1196px;font:800 30px/1 var(--sans);color:var(--teal);text-align:right">${String(i + 1).padStart(2, '0')} / 04</div>
+      <div class="a" style="left:120px;top:1408px;font:800 64px/1 var(--sans);letter-spacing:-.02em;color:var(--ink)">${p.price}</div>
+      <div class="btn add" style="left:560px;top:1392px;width:400px;height:88px;font-size:34px">Add to basket</div>
+      ${p.chips.map((c, j) => `<div class="a pchip" style="${j ? 'right:120px;top:780px' : 'left:120px;top:620px'};display:flex;align-items:center;gap:12px;height:72px;padding:0 26px;border-radius:999px;background:#fff;box-shadow:0 18px 36px -22px rgba(14,42,40,.4);font:700 30px/1 var(--sans);color:var(--ink)"><i style="width:14px;height:14px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(223,228,58,.3)"></i>${c}</div>`).join('')}
+    </div>`).join('') + `<div class="a" id="bag" style="right:120px;top:236px;display:flex;align-items:center;gap:14px;height:72px;padding:0 24px;border-radius:999px;background:var(--teal);color:#fff;font:800 30px/1 var(--sans)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#DFE43A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span id="bagn">0</span></div>`;
+  $('#row').outerHTML = ['brace', 'ramp', 'drops', 'harness'].map((n, i) => `<div class="shadow rsh"></div><div class="prod rp" data-img="${n}" data-h="${[150, 150, 236, 200][i]}" data-floor="960"></div>`).join('');
+
+  $('#clist').innerHTML = SHORT.map(n => `<div class="cl" style="display:flex;align-items:center;gap:12px;height:62px;padding:0 22px 0 14px;border-radius:999px;background:var(--pale2);font:700 28px/1 var(--sans);color:var(--ink)"><span style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M5 10.5 L8.5 14 L15 6.5" fill="none" stroke="#DFE43A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${n}</div>`).join('');
+  K.marquee('#s1band', 'DACHSHUNDS &nbsp;·&nbsp; BASSETS &nbsp;·&nbsp; CORGIS &nbsp;·&nbsp; BEAGLES &nbsp;·&nbsp; ANY DOG CAN GET IT &nbsp;·&nbsp; ', 70);
+  K.ambient('#s1', ['#F3F6F1', '#E4EED6', '#F3F6F1'], 0); K.ambient('#s2', ['#11524D', '#0D4541', '#11524D'], 1); K.ambient('#s3', ['#F3F6F1', '#F6F8F4', '#EEF3EA'], 2);
+  K.ambient('#s4', ['#11524D', '#0D4541', '#11524D'], 3); K.ambient('#s5', ['#EAF0E6', '#FFFFFF', '#E4EED6'], 4); K.ambient('#s6', ['#F3F6F1', '#FFFFFF', '#F3F6F1'], 5);
+  $$('.prod').forEach(product);
+  PRODUCTS.forEach((p, i) => shadow($('#psh' + i), $('#pp' + i), 1.05, 46));
+  { const ps = $$('.rp'), gap = 34, tot = ps.reduce((a, p) => a + p.offsetWidth, 0) + gap * (ps.length - 1); let x = 540 - tot / 2;
+    ps.forEach((p, i) => { p.style.left = x + 'px'; x += p.offsetWidth + gap; shadow($$('.rsh')[i], p, 1.05, 30); }); }
+  $$('.hd').forEach(h => fit(h, 840));
+
+  // ===== S1 hook (composed at frame 0) =====
+  tl.fromTo('#s1h em', { backgroundSize: '0% 62%' }, { backgroundSize: '100% 62%', duration: 0.7, ease: 'expo.inOut' }, 0.15); cue(0.15, 'swish');
+  lines('#s1p', 0.9, { stagger: 0.03 });
+  $$('#s1 .seg i').forEach((s, i) => tl.to(s, { scaleX: 1, duration: 0.35, ease: 'power2.inOut' }, 1.8 + i * 0.12).to(s, { scaleX: 0, transformOrigin: '100% 50%', duration: 0.35, ease: 'power2.inOut' }, 2.6 + i * 0.12));
+  tl.to('#s1h', { scale: 1.03, transformOrigin: '0% 50%', duration: 5, ease: 'none' }, 0);
+  // exit: teal sheet rises
+  show('s2', 4.4);
+  tl.fromTo('#s2', { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, 4.4); cue(4.45, 'whoosh');
+  tl.to('#s1', { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, 4.4); hide('s1', 5.35);
+
+  // ===== S2 what it is =====
+  lines('#s2h', 5.0);
+  tl.from('.vb', { y: 60, opacity: 0, duration: 0.9, stagger: 0.07, ease: 'expo.out' }, 5.6); cue(5.6, 'card');
+  tl.from('.dk', { scaleY: 0, transformOrigin: '50% 50%', duration: 0.7, stagger: 0.07, ease: 'back.out(2)' }, 5.9);
+  tl.from('#cord', { drawSVG: '50% 50%', duration: 1.0, ease: 'power3.inOut' }, 6.0);
+  // the disc bulges down and pushes the cord
+  const dk = $$('.dk')[1];
+  tl.to(dk, { attr: { rx: 34, ry: 78, cy: 1080 }, duration: 0.8, ease: 'power3.inOut' }, 7.2); cue(7.2, 'thud');
+  tl.to('#cord', { attr: { d: 'M100 1176 C300 1176 400 1176 474 1200 C540 1222 560 1222 606 1200 C680 1176 780 1176 980 1176' }, duration: 0.8, ease: 'power3.inOut' }, 7.3);
+  tl.to(dk, { opacity: 0.55, duration: 0.45, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 8.1);
+  lines('#s2p', 8.2, { stagger: 0.03 });
+  // exit: white sheet rises
+  show('s3', 10.4);
+  tl.fromTo('#s3', { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, 10.4); cue(10.45, 'whoosh');
+  tl.to('#s2', { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, 10.4); hide('s2', 11.35);
+
+  // ===== S3 the five signs =====
+  const T0 = 11.0, STEP = 3.6;
+  blurIn('#s3cap', T0 + 0.4);
+  tl.from('#numwin', { yPercent: 40, opacity: 0, duration: 1.0, ease: 'expo.out' }, T0 + 0.3);
+  tl.from('#s1band', { yPercent: 100, duration: 0.9, ease: 'expo.out' }, 1.2);
+  for (let i = 0; i < 5; i++) {
+    const at = T0 + 0.5 + i * STEP;
+    tl.to($$('#s3 .seg i')[i], { scaleX: 1, duration: STEP - 0.3, ease: 'none' }, at);
+    if (i > 0) { tl.to('#numcol', { y: -560 * i, duration: 0.8, ease: 'expo.inOut' }, at - 0.35); cue(at - 0.3, 'tick'); }
+    lines('#g' + (i + 1), at, { stagger: 0.06 });
+    tl.from($$('.cl')[i], { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(2)' }, at + 1.0); cue(at + 1.0, 'check' + i);
+    cue(at + 0.6, 'pop' + i);
+    if (i < 4) out('#g' + (i + 1), at + STEP - 0.45, { y: -30, dur: 0.4 });
+  }
+  // exit: teal sheet
+  const S4 = T0 + 0.5 + 5 * STEP + 0.2; // ~29.7
+  show('s4', S4 - 0.6);
+  tl.fromTo('#s4', { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, S4 - 0.6); cue(S4 - 0.55, 'whoosh');
+  tl.to('#s3', { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, S4 - 0.6); hide('s3', S4 + 0.35);
+
+  // ===== S4 what helps =====
+  lines('#s4h', S4);
+  lines('#s4q', S4 + 0.8, { stagger: 0.04 });
+  $$('.chip').forEach((c, i) => { tl.from(c, { x: -60, opacity: 0, duration: 0.8, ease: 'expo.out' }, S4 + 1.6 + i * 0.22); cue(S4 + 1.6 + i * 0.22, 'pop' + i); });
+  const P0 = S4 + 4.6; // products begin
+  show('s5', P0 - 0.6);
+  tl.fromTo('#s5', { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, P0 - 0.6); cue(P0 - 0.55, 'whoosh');
+  tl.to('#s4', { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, P0 - 0.6); hide('s4', P0 + 0.35);
+
+  // ===== S5 products: a carousel on one pale stage =====
+  const PS = 3.5;
+  tl.from('#bag', { scale: 0, duration: 0.6, ease: 'back.out(2)' }, P0);
+  $$('.pslide').forEach((s, i) => {
+    const at = P0 + i * PS, p = $('#pp' + i), sh = $('#psh' + i);
+    if (i === 0) tl.set(s, { opacity: 1 }, 0); else tl.set(s, { visibility: 'hidden' }, 0).set(s, { visibility: 'visible' }, at - 0.5);
+    lines(s.querySelector('.ptag'), at, { stagger: 0.05 });
+    tl.from(p, { x: 520, rotate: 4, opacity: 0, duration: 1.1, ease: 'expo.out' }, at - 0.35);
+    tl.from(sh, { x: 520, opacity: 0, scaleX: 0.6, duration: 1.1, ease: 'expo.out' }, at - 0.35);
+    tl.from(s.querySelector('.pinfo'), { y: 50, opacity: 0, duration: 0.9, ease: 'expo.out' }, at + 0.25);
+    tl.from(s.querySelectorAll('.a:not(.pchip)'), { y: 40, opacity: 0, duration: 0.9, stagger: 0.08, ease: 'expo.out' }, at + 0.35);
+    tl.to(p, { scale: 1.025, duration: PS, ease: 'none' }, at + 0.6);
+    s.querySelectorAll('.pchip').forEach((c, j) => { tl.from(c, { scale: 0.6, opacity: 0, y: 20, duration: 0.7, ease: 'back.out(2)' }, at + 0.7 + j * 0.25); cue(at + 0.7 + j * 0.25, 'pop' + (j + 2)); });
+    const add = s.querySelector('.add');
+    tl.from(add, { y: 40, opacity: 0, duration: 0.8, ease: 'expo.out' }, at + 0.5);
+    tl.to(add, { scale: 0.94, duration: 0.09, ease: 'power2.in' }, at + 2.2).to(add, { scale: 1, duration: 0.45, ease: 'elastic.out(1,0.5)' }, at + 2.29);
+    tl.to('#bag', { scale: 1.18, duration: 0.12, ease: 'power2.out' }, at + 2.35).to('#bag', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.4)' }, at + 2.47);
+    tl.set('#bagn', { textContent: String(i + 1) }, at + 2.35);
+    cue(at - 0.3, 'whoosh'); cue(at + 0.45, 'ding'); cue(at + 2.2, 'click');
+    if (i < 3) {
+      tl.to([p, sh], { x: -560, opacity: 0, duration: 0.8, ease: 'power3.in' }, at + PS - 0.6);
+      tl.to([s.querySelector('.ptag'), s.querySelector('.pinfo'), add, ...s.querySelectorAll('.a')], { opacity: 0, y: -20, duration: 0.4, ease: 'power2.in' }, at + PS - 0.55);
+    }
+  });
+  // ===== S6 end =====
+  const E0 = P0 + 4 * PS + 0.2;
+  show('s6', E0 - 0.6);
+  tl.fromTo('#s6', { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, E0 - 0.6); cue(E0 - 0.55, 'whoosh');
+  tl.to('#s5', { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, E0 - 0.6); hide('s5', E0 + 0.35);
+  lines('#s6h', E0, { stagger: 0.04 });
+  tl.from('#tray', { y: 80, opacity: 0, duration: 1.0, ease: 'expo.out' }, E0 + 0.3);
+  $$('.rp').forEach((p, i) => { tl.from(p, { y: 70, opacity: 0, duration: 0.9, ease: 'expo.out' }, E0 + 0.55 + i * 0.1); tl.from($$('.rsh')[i], { opacity: 0, duration: 0.9 }, E0 + 0.6 + i * 0.1); });
+  tl.from('#offer', { y: 90, opacity: 0, duration: 1.0, ease: 'expo.out' }, E0 + 1.0); cue(E0 + 1.0, 'card');
+  blurIn('#trust', E0 + 1.5); blurIn('#url', E0 + 1.7);
+  tl.to('#cta', { scale: 0.95, duration: 0.1, ease: 'power2.in' }, PRESS).to('#cta', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.5)' }, PRESS + 0.1);
+  tl.to('#arr', { x: 12, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.inOut' }, PRESS + 0.05);
+  cue(PRESS, 'click'); cue(PRESS + 0.02, 'confirm');
+}
+K.start(1080, 1920, DUR, ['500 100px Domine', '700 100px Domine', '500 40px Figtree', '600 40px Figtree', '700 40px Figtree', '800 40px Figtree', '800 40px Inter'], ['brace', 'ramp', 'drops', 'harness'], build);
+</script>
+</body>
+</html>

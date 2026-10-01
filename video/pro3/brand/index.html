@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brand Intro Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+#words{position:absolute;left:0;top:0;width:1080px;height:1350px}
+.wd{position:absolute;left:96px;width:888px;top:480px;font-size:180px;text-align:center}
+#orbit{position:absolute;left:0;top:0;width:1080px;height:1350px}
+.op{position:absolute;transform-origin:50% 100%}
+.op img{display:block;width:100%;height:100%}
+.tile{position:absolute;border-radius:28px;padding:40px;box-sizing:border-box;overflow:hidden}
+.tile .big{font:500 64px/1.05 var(--serif);letter-spacing:-.02em}
+.tile .sm{font:600 28px/1.3 var(--sans);margin-top:14px}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- S1 condition words -->
+<section class="scene teal" id="s1" style="visibility:visible">
+  <canvas class="a" id="ring" width="1080" height="1350" style="left:0;top:0"></canvas>
+  <div id="words"></div>
+  <h2 class="hd" id="s1h" style="left:96px;width:888px;top:500px;font-size:96px;text-align:center">Whatever they’re<br><em>going through,</em></h2>
+</section>
+
+<!-- S2 products orbit the promise -->
+<section class="scene white" id="s2">
+  <div id="orbit"></div>
+  <h1 class="hd" id="s2h" style="left:96px;width:888px;top:170px;font-size:108px;text-align:center">find the<br><em>right support.</em></h1>
+</section>
+
+<!-- S3 what we are -->
+<section class="scene teal" id="s3">
+  <h2 class="hd" id="s3h" style="left:96px;top:150px;font-size:84px">Shop by condition.<br>By symptom.<br>By <em>product.</em></h2>
+  <div class="tile" id="t1" style="left:96px;top:560px;width:432px;height:300px;background:var(--lime);color:var(--teal)"><div class="big">4.6<span style="font-size:36px"> / 5</span></div><div id="t1s" style="margin-top:12px"></div><div class="sm">from 99 reviews<br>on Judge.me</div></div>
+  <div class="tile" id="t2" style="left:552px;top:560px;width:432px;height:300px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.14)"><div class="big">Free</div><div class="sm" style="color:rgba(255,255,255,.8)">UK delivery<br>over £39</div></div>
+  <div class="tile" id="t3" style="left:96px;top:884px;width:432px;height:300px;background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.14)"><div class="big">Before 2pm</div><div class="sm" style="color:rgba(255,255,255,.8)">ordered, packed the<br>same working day</div></div>
+  <div class="tile" id="t4" style="left:552px;top:884px;width:432px;height:300px;background:#fff;color:var(--teal)"><div class="big">5 points</div><div class="sm" style="color:var(--mute)">for every £1 in the<br>Poorly Pet Club</div></div>
+</section>
+
+<!-- S4 end -->
+<section class="scene white" id="s4">
+  <h2 class="hd" id="s4h" style="left:96px;width:888px;top:150px;font-size:100px;text-align:center">Find the <em>right support</em><br>for your dog.</h2>
+  <div class="panel" id="tray" style="left:48px;top:420px;width:984px;height:400px;background:var(--pale2)"></div>
+  <div id="row"></div>
+  <div class="panel" id="offer" style="left:96px;top:860px;width:888px;height:296px;background:var(--teal);color:#fff">
+    <div class="a" style="left:48px;top:42px;font:800 34px/1.15 var(--sans)">10% off your<br>first order</div>
+    <div class="a" style="right:48px;top:44px;font:800 76px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--lime)">POORLY10</div>
+    <div class="btn" id="cta" style="left:48px;top:166px;width:792px;height:92px">Shop poorly-pet.com <span id="arr">→</span></div>
+  </div>
+  <div class="a" id="trust" style="left:96px;width:888px;top:1196px;text-align:center;font:600 28px/1.4 var(--sans);color:var(--mute)">The UK’s pet health &amp; recovery specialist</div>
+</section>
+
+</div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script>
+const { $, $$, tl, cue, fit, lines, out, blurIn, show, hide, product, shadow, stars, IM } = K;
+const DUR = 21, PRESS = 18.9; window.END = PRESS;
+const WORDS = ['Itchy <em>skin.</em>', 'A bad <em>back.</em>', 'Stiff <em>joints.</em>', '<em>Anxiety.</em>', 'Bad <em>breath.</em>', 'Hot <em>spots.</em>'];
+const ORB = [['salmon', 360], ['brace', 250], ['spray', 360], ['harness', 300], ['chews', 290], ['ramp', 220], ['drops', 360], ['knee', 300]];
+
+function sheet(from, to, at) {
+  show(to, at);
+  tl.fromTo('#' + to, { yPercent: 100, borderRadius: 60 }, { yPercent: 0, borderRadius: 0, duration: 0.85, ease: 'power4.inOut' }, at);
+  tl.to('#' + from, { yPercent: -16, duration: 0.85, ease: 'power4.inOut' }, at); hide(from, at + 0.86);
+  cue(at + 0.05, 'whoosh');
+}
+function build() {
+  $('#words').innerHTML = WORDS.map((w, i) => `<h2 class="hd wd" id="w${i}">${w}</h2>`).join('');
+  $('#orbit').innerHTML = ORB.map(([n, h], i) => `<div class="shadow osh"></div><div class="op" data-i="${i}"><img src="../shared/assets/${n}.png"></div>`).join('');
+  $$('.op').forEach((o, i) => { const im = IM[ORB[i][0]], h = ORB[i][1], w = im.naturalWidth * h / im.naturalHeight; o.style.width = w + 'px'; o.style.height = h + 'px'; o._w = w; o._h = h; });
+  $('#t1s').innerHTML = stars(4.6, 34);
+  $('#row').outerHTML = ['salmon', 'brace', 'spray', 'harness', 'drops'].map((n, i) => `<div class="shadow rsh"></div><div class="prod rp" data-img="${n}" data-h="${[230, 160, 226, 214, 226][i]}" data-floor="760"></div>`).join('');
+  $$('.prod').forEach(product);
+  { const ps = $$('.rp'), gap = 34, tot = ps.reduce((a, p) => a + p.offsetWidth, 0) + gap * (ps.length - 1); let x = 540 - tot / 2;
+    ps.forEach((p, i) => { p.style.left = x + 'px'; x += p.offsetWidth + gap; shadow($$('.rsh')[i], p, 1.05, 26); }); }
+  $$('.hd').forEach(h => fit(h, 888));
+
+  // ===== S1: the words change on the beat (composed at frame 0) =====
+  const BEAT = 60 / 112 * 1; // one word per beat at 112 BPM
+  WORDS.forEach((w, i) => {
+    const el = $('#w' + i), at = i * BEAT;
+    if (i > 0) { tl.fromTo(el, { yPercent: 70, opacity: 0, filter: 'blur(14px)' }, { yPercent: 0, opacity: 1, filter: 'blur(0px)', duration: 0.42, ease: 'expo.out' }, at); cue(at, 'pop' + i); }
+    tl.fromTo(el.querySelector('em') || el, { scale: 1 }, { scale: 1, duration: 0.01 }, at);
+    tl.to(el, { yPercent: -70, opacity: 0, filter: 'blur(14px)', duration: 0.3, ease: 'power3.in' }, at + BEAT - 0.24);
+  });
+  const W1 = WORDS.length * BEAT; // ~3.2
+  lines('#s1h', W1 + 0.05, { stagger: 0.06 });
+  window.RING = W1;
+  // ===== S2: products orbit the promise =====
+  sheet('s1', 's2', W1 + 1.4);
+  const S2 = W1 + 1.4;
+  lines('#s2h', S2 + 0.5, { stagger: 0.06 });
+  const orb = { r: 0, open: 0 }; window._orb = orb;
+  tl.fromTo(orb, { open: 0 }, { open: 1, duration: 1.6, ease: 'expo.out' }, S2 + 0.2);
+  tl.fromTo(orb, { r: -0.9 }, { r: 1.5, duration: 6.2, ease: 'none' }, S2);
+  cue(S2 + 0.3, 'reveal');
+  // ===== S3: what we are =====
+  const S3 = S2 + 5.6;
+  sheet('s2', 's3', S3);
+  lines('#s3h', S3 + 0.45, { stagger: 0.05 });
+  ['#t1', '#t2', '#t3', '#t4'].forEach((t, i) => { tl.from(t, { y: 90, scale: 0.92, opacity: 0, duration: 0.9, ease: 'expo.out' }, S3 + 1.4 + i * 0.16); cue(S3 + 1.4 + i * 0.16, 'card'); });
+  // ===== S4: end =====
+  const S4 = S3 + 5.0;
+  sheet('s3', 's4', S4);
+  lines('#s4h', S4 + 0.4, { stagger: 0.05 });
+  tl.from('#tray', { y: 60, opacity: 0, duration: 1.0, ease: 'expo.out' }, S4 + 0.6);
+  $$('.rp').forEach((p, i) => { tl.from(p, { y: 60, opacity: 0, duration: 0.9, ease: 'expo.out' }, S4 + 0.8 + i * 0.08); tl.from($$('.rsh')[i], { opacity: 0, duration: 0.9 }, S4 + 0.85 + i * 0.08); });
+  tl.from('#offer', { y: 80, opacity: 0, duration: 1.0, ease: 'expo.out' }, S4 + 1.2); cue(S4 + 1.2, 'card');
+  blurIn('#trust', S4 + 1.6);
+  tl.to('#cta', { scale: 0.95, duration: 0.1, ease: 'power2.in' }, PRESS).to('#cta', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.5)' }, PRESS + 0.1);
+  tl.to('#arr', { x: 12, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.inOut' }, PRESS + 0.05);
+  cue(PRESS, 'click'); cue(PRESS + 0.02, 'confirm');
+}
+
+// S1 backdrop: a lime ring that pulses on each beat and opens out
+K.frame(t => {
+  const c = $('#ring'); if ($('#s1').style.visibility === 'hidden') return;
+  const g = c.getContext('2d'); g.clearRect(0, 0, 1080, 1350);
+  const beat = 60 / 112, ph = (t % beat) / beat, k = Math.min(1, t / 3.5);
+  const R = 360 + 30 * Math.exp(-ph * 5) + k * 120;
+  g.lineWidth = 3; g.strokeStyle = `rgba(223,228,58,${0.5 - 0.2 * ph})`;
+  g.beginPath(); g.arc(540, 640, R, 0, Math.PI * 2); g.stroke();
+  g.lineWidth = 1.5; g.strokeStyle = 'rgba(255,255,255,.14)';
+  g.beginPath(); g.arc(540, 640, R + 70 + ph * 40, 0, Math.PI * 2); g.stroke();
+});
+// S2 orbit: products on a tilted ring, depth sorted, back items smaller and softer
+K.frame(t => {
+  if ($('#s2').style.visibility === 'hidden') return;
+  const o = window._orb, n = ORB.length, cx = 540, cy = 990, RX = 450 * o.open, RY = 150 * o.open;
+  $$('.op').forEach((el, i) => {
+    const a = (i / n) * Math.PI * 2 + o.r * Math.PI * 2 / n * 2.2;
+    const z = Math.cos(a), x = cx + Math.sin(a) * RX, y = cy + z * RY;
+    const s = 0.62 + 0.38 * (z + 1) / 2;
+    el.style.left = (x - el._w / 2) + 'px'; el.style.top = (y - el._h) + 'px';
+    el.style.transform = `scale(${s * (0.6 + 0.4 * o.open)})`;
+    el.style.zIndex = Math.round(100 + z * 50);
+    el.style.filter = `blur(${Math.max(0, -z) * 2.2}px)`; el.style.opacity = Math.min(1, 0.45 + 0.55 * (z + 1) / 2 + 0.2) * Math.min(1, o.open * 2);
+    const sh = $$('.osh')[i], sw = el._w * s * 1.0;
+    Object.assign(sh.style, { width: sw + 'px', height: 26 * s + 'px', left: (x - sw / 2) + 'px', top: (y - 13 * s) + 'px', opacity: (0.3 + 0.7 * (z + 1) / 2) * o.open, zIndex: Math.round(99 + z * 50) });
+  });
+});
+K.start(1080, 1350, DUR, ['500 100px Domine', '700 100px Domine', '500 40px Figtree', '600 40px Figtree', '700 40px Figtree', '800 40px Figtree', '800 40px Inter'], ['salmon', 'brace', 'spray', 'harness', 'chews', 'ramp', 'drops', 'knee'], build);
+</script>
+</body>
+</html>

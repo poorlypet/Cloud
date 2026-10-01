@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Richmond's Story Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+.q{position:absolute;left:120px;width:840px}
+.qm{position:absolute;font:700 300px/1 var(--serif);color:var(--pale)}
+.teal .qm,.deep .qm{color:rgba(223,228,58,.9)}
+.band{position:absolute;left:0;width:1080px;height:96px;font:700 34px/96px var(--sans);letter-spacing:.06em}
+.bcard{position:absolute;left:120px;width:840px;border-radius:32px;padding:48px 52px;box-sizing:border-box}
+.bcard .cap{margin-bottom:22px}
+.mo{position:absolute;top:0;font:700 26px/1 var(--sans);color:var(--mute)}
+.chipx{position:absolute;display:flex;align-items:center;gap:12px;height:72px;padding:0 26px;border-radius:999px;background:#fff;box-shadow:0 18px 36px -22px rgba(14,42,40,.4);font:700 30px/1 var(--sans);color:var(--ink);white-space:nowrap}
+.chipx i{width:14px;height:14px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(223,228,58,.3)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- S1 meet Richmond -->
+<section class="scene deep" id="s1" style="visibility:visible">
+  <div class="a cap" id="s1c" style="left:120px;top:540px;color:var(--lime)">A real story, from a real review</div>
+  <h1 class="hd" id="s1h" style="left:120px;top:620px;font-size:190px;line-height:1">Meet<br><em>Richmond.</em></h1>
+  <div class="a" id="s1s" style="left:120px;top:1090px;display:flex;align-items:center;gap:18px"></div>
+  <div class="band" id="s1b" style="top:1340px;background:var(--lime);color:var(--teal)"></div>
+</section>
+
+<!-- S2 the review opens -->
+<section class="scene white" id="s2">
+  <div class="qm" id="s2m" style="left:96px;top:300px">“</div>
+  <h2 class="hd q" id="s2h" style="top:600px;font-size:108px">My old boy<br>Richmond needed<br>some <em>extra support.</em></h2>
+  <div class="a" id="s2a" style="left:120px;top:1060px;font:600 34px/1 var(--sans);color:var(--mute)">kay D, Richmond’s owner</div>
+  <div class="chipx" id="s2chip" style="left:120px;top:1170px"><i></i>Knee Brace for Dogs · 5★ review</div>
+</section>
+
+<!-- S3 before and after -->
+<section class="scene pale" id="s3">
+  <h2 class="hd" id="s3h" style="left:120px;top:260px;font-size:96px">In the space of<br><em>3 months.</em></h2>
+  <div class="bcard" id="before" style="top:560px;height:300px;background:#fff;box-shadow:0 30px 60px -36px rgba(14,42,40,.35)">
+    <div class="cap" style="color:var(--mute)">Before</div>
+    <div class="hd" style="position:static;font-size:72px;line-height:1.08">getting off the sofa<br>in pain</div>
+  </div>
+  <div class="a" id="tline" style="left:120px;top:910px;width:840px;height:80px">
+    <div class="a" style="left:0;top:44px;width:840px;height:10px;border-radius:5px;background:rgba(14,42,40,.1)"></div>
+    <div class="a" id="tfill" style="left:0;top:44px;width:840px;height:10px;border-radius:5px;background:var(--teal);transform-origin:0 50%"></div>
+    <div class="mo" style="left:0">Month 1</div><div class="mo" style="left:0;width:840px;text-align:center">Month 2</div><div class="mo" style="right:0;text-align:right">Month 3</div>
+    <div class="a tdot" style="left:-8px;top:38px"></div><div class="a tdot" style="left:412px;top:38px"></div><div class="a tdot" style="left:832px;top:38px"></div>
+  </div>
+  <div class="bcard" id="after" style="top:1040px;height:340px;background:var(--teal);color:#fff;transform-origin:50% 0%">
+    <div class="cap" style="color:var(--lime)">After</div>
+    <div class="hd" style="position:static;font-size:88px;line-height:1.06;color:#fff">running up<br><em style="color:var(--lime);background:none">the garden.</em></div>
+  </div>
+</section>
+
+<!-- S4 the product -->
+<section class="scene white" id="s4">
+  <h2 class="hd" id="s4h" style="left:120px;top:260px;font-size:100px">Just what my<br>Richmond <em>needed.</em></h2>
+  <div class="panel" id="s4card" style="left:120px;top:540px;width:840px;height:600px;background:var(--pale2)"></div>
+  <div class="prod" id="knee" data-img="knee" data-h="500" data-cx="540" data-floor="1110"></div>
+  <div class="chipx" id="c1" style="left:150px;top:580px"><i></i>Joint support</div>
+  <div class="chipx" id="c2" style="right:150px;top:580px"><i></i>Injury recovery</div>
+  <div class="a" id="s4n" style="left:120px;top:1180px;width:840px">
+    <div style="font:700 26px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">Ortocanis</div>
+    <div style="margin-top:14px;font:700 46px/1.1 var(--sans);color:var(--ink)">Knee Brace for Dogs</div>
+    <div style="margin-top:10px;font:500 30px/1.3 var(--sans);color:var(--mute)">Used along with joint supplements</div>
+  </div>
+  <div class="a" id="s4p" style="left:120px;top:1392px;font:800 64px/1 var(--sans);letter-spacing:-.02em;color:var(--ink)">£34.99</div>
+  <div class="btn" id="add" style="left:560px;top:1380px;width:400px;height:88px;font-size:34px">Add to basket</div>
+</section>
+
+<!-- S5 how he is now -->
+<section class="scene teal" id="s5">
+  <div class="qm" id="s5m" style="left:96px;top:300px">“</div>
+  <h2 class="hd q" id="s5h" style="top:600px;font-size:120px">He seems <em>happier</em><br>and more<br><em>comfortable.</em></h2>
+  <div class="a" id="s5a" style="left:120px;top:1080px;display:flex;align-items:center;gap:18px"></div>
+  <div class="band" id="s5b" style="top:1340px;background:var(--deep);color:#fff"></div>
+</section>
+
+<!-- S6 end -->
+<section class="scene white" id="s6">
+  <div class="panel" id="tray" style="left:60px;top:220px;width:960px;height:640px;background:var(--pale2)"></div>
+  <div class="prod" id="eknee" data-img="knee" data-h="440" data-cx="540" data-floor="800"></div>
+  <div class="a" id="einfo" style="left:120px;top:900px;width:840px">
+    <div style="font:700 44px/1.1 var(--sans);color:var(--ink)">Knee Brace for Dogs</div>
+    <div style="margin-top:10px;font:500 30px/1.3 var(--sans);color:var(--mute)">Joint Support &amp; Injury Recovery · Ortocanis</div>
+    <div style="margin-top:22px;display:flex;align-items:center;gap:22px"><span style="font:800 64px/1 var(--sans);letter-spacing:-.02em;color:var(--ink)">£34.99</span><span id="estars"></span></div>
+  </div>
+  <div class="panel" id="offer" style="left:120px;top:1150px;width:840px;height:300px;background:var(--teal);color:#fff">
+    <div class="a" style="left:48px;top:42px;font:800 34px/1.15 var(--sans)">10% off your<br>first order</div>
+    <div class="a" style="right:48px;top:44px;font:800 76px/1 Inter,sans-serif;letter-spacing:.04em;color:var(--lime)">POORLY10</div>
+    <div class="btn" id="cta" style="left:48px;top:168px;width:744px;height:96px">Shop joint support <span id="arr">→</span></div>
+  </div>
+  <div class="a" id="trust" style="left:120px;width:840px;top:1478px;text-align:center;font:600 28px/1.4 var(--sans);color:var(--mute)">Free UK delivery over £39 · poorly-pet.com</div>
+</section>
+
+</div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script>
+const { $, $$, tl, cue, fit, lines, out, blurIn, show, hide, product, shadow, stars } = K;
+const DUR = 38, PRESS = 35.6; window.END = PRESS;
+
+function sheet(from, to, at) {
+  show(to, at);
+  tl.fromTo('#' + to, { yPercent: 100, borderRadius: 64 }, { yPercent: 0, borderRadius: 0, duration: 0.9, ease: 'power4.inOut' }, at);
+  tl.to('#' + from, { yPercent: -18, duration: 0.9, ease: 'power4.inOut' }, at); hide(from, at + 0.91);
+  cue(at + 0.05, 'whoosh');
+}
+function starsIn(sel, at) {
+  tl.from(sel + ' .stars > span', { scale: 0, duration: 0.45, stagger: 0.08, ease: 'back.out(3)' }, at);
+  [0, 1, 2, 3, 4].forEach(i => cue(at + i * 0.08, 'star' + i));
+}
+function build() {
+  $('#s1s').innerHTML = stars(5, 52) + `<span style="font:600 32px/1 var(--sans);color:rgba(255,255,255,.82)">kay D · verified review</span>`;
+  $('#s5a').innerHTML = stars(5, 46) + `<span style="font:600 32px/1 var(--sans);color:rgba(255,255,255,.85)">kay D · verified review</span>`;
+  $('#estars').innerHTML = stars(5, 34) + `<span style="font:600 26px/1 var(--sans);color:var(--mute);margin-left:10px">5.0</span>`;
+  $$('.tdot').forEach(d => Object.assign(d.style, { width: '22px', height: '22px', borderRadius: '50%', background: '#fff', boxShadow: 'inset 0 0 0 5px var(--teal)' }));
+  K.marquee('#s1b', 'JUST WHAT MY RICHMOND NEEDED &nbsp;·&nbsp; ★★★★★ &nbsp;·&nbsp; ', 70);
+  K.marquee('#s5b', 'FROM THE SOFA IN PAIN &nbsp;→&nbsp; RUNNING UP THE GARDEN &nbsp;·&nbsp; ', 70);
+  K.ambient('#s1', ['#0D4743', '#08332F', '#0D4743'], 0); K.ambient('#s2', ['#F3F6F1', '#E4EED6', '#F3F6F1'], 1); K.ambient('#s3', ['#EAF0E6', '#FFFFFF', '#E4EED6'], 2);
+  K.ambient('#s4', ['#F3F6F1', '#FFFFFF', '#F3F6F1'], 3); K.ambient('#s5', ['#11524D', '#0D4541', '#11524D'], 4); K.ambient('#s6', ['#F3F6F1', '#FFFFFF', '#F3F6F1'], 5);
+  $$('.prod').forEach(product);
+  $$('.hd').forEach(h => fit(h, 840));
+
+  // S1 (composed at frame 0)
+  tl.to('#s1h', { scale: 1.04, transformOrigin: '0% 50%', duration: 4.8, ease: 'none' }, 0);
+  tl.from('#s1c', { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, 0.2);
+  starsIn('#s1s', 1.0);
+  tl.from('#s1s > span:last-child', { opacity: 0, x: -20, duration: 0.6 }, 1.5);
+  tl.from('#s1b', { yPercent: 100, duration: 0.9, ease: 'expo.out' }, 1.8);
+
+  // S2 the review opens
+  sheet('s1', 's2', 4.4);
+  tl.from('#s2m', { scale: 0.5, rotate: -10, opacity: 0, duration: 1.0, ease: 'back.out(1.6)' }, 4.9);
+  lines('#s2h', 5.1, { stagger: 0.09 });
+  blurIn('#s2a', 6.6);
+  tl.from('#s2chip', { scale: 0.6, opacity: 0, y: 30, duration: 0.8, ease: 'back.out(2)' }, 7.0); cue(7.0, 'pop2');
+  tl.to('#s2h', { scale: 1.03, transformOrigin: '0% 50%', duration: 4, ease: 'none' }, 5.5);
+
+  // S3 before and after over three months
+  sheet('s2', 's3', 9.6);
+  lines('#s3h', 10.2);
+  tl.from('#before', { y: 120, rotateX: -30, opacity: 0, duration: 1.0, ease: 'expo.out' }, 10.8); cue(10.8, 'card');
+  tl.from('#before .hd', { opacity: 0, y: 20, duration: 0.8, ease: 'expo.out' }, 11.1);
+  tl.from('#tline', { opacity: 0, duration: 0.6 }, 12.0);
+  tl.fromTo('#tfill', { scaleX: 0 }, { scaleX: 1, duration: 2.4, ease: 'power1.inOut' }, 12.3);
+  $$('.tdot').forEach((d, i) => { tl.to(d, { background: '#DFE43A', scale: 1.3, duration: 0.25, ease: 'back.out(3)' }, 12.3 + i * 1.18); cue(12.3 + i * 1.18, 'check' + i); });
+  tl.from('#after', { y: 160, rotateX: 50, opacity: 0, duration: 1.1, ease: 'expo.out' }, 14.6); cue(14.6, 'stamp');
+  tl.from('#after .hd', { opacity: 0, y: 30, duration: 0.8, ease: 'expo.out' }, 14.9);
+  tl.to('#before', { opacity: 0.55, scale: 0.97, duration: 0.8 }, 14.8);
+  window.TURN = 14.6;
+
+  // S4 the product
+  sheet('s3', 's4', 18.4);
+  lines('#s4h', 19.0);
+  tl.from('#s4card', { y: 80, opacity: 0, duration: 1.0, ease: 'expo.out' }, 19.3);
+  tl.from('#knee', { x: 700, rotate: 6, duration: 1.3, ease: 'expo.out' }, 19.5); cue(19.5, 'whoosh');
+  tl.to('#knee', { scale: 1.04, duration: 5, ease: 'none' }, 20.8);
+  tl.from('#c1', { scale: 0.6, opacity: 0, y: 20, duration: 0.7, ease: 'back.out(2)' }, 20.4); cue(20.4, 'pop3');
+  tl.from('#c2', { scale: 0.6, opacity: 0, y: 20, duration: 0.7, ease: 'back.out(2)' }, 20.65); cue(20.65, 'pop4');
+  tl.from('#s4n', { y: 50, opacity: 0, duration: 0.9, ease: 'expo.out' }, 20.8);
+  tl.from('#s4p', { y: 40, opacity: 0, duration: 0.9, ease: 'expo.out' }, 21.0); cue(21.0, 'ding');
+  tl.from('#add', { y: 40, opacity: 0, duration: 0.8, ease: 'expo.out' }, 21.2);
+  tl.to('#add', { scale: 0.94, duration: 0.09, ease: 'power2.in' }, 23.0).to('#add', { scale: 1, duration: 0.45, ease: 'elastic.out(1,0.5)' }, 23.09); cue(23.0, 'click');
+
+  // S5 how he is now
+  sheet('s4', 's5', 24.6);
+  tl.from('#s5m', { scale: 0.5, rotate: -10, opacity: 0, duration: 1.0, ease: 'back.out(1.6)' }, 25.1);
+  lines('#s5h', 25.3, { stagger: 0.09 });
+  starsIn('#s5a', 26.6);
+  tl.from('#s5a > span:last-child', { opacity: 0, x: -20, duration: 0.6 }, 27.1);
+  tl.from('#s5b', { yPercent: 100, duration: 0.9, ease: 'expo.out' }, 26.0);
+  tl.to('#s5h', { scale: 1.03, transformOrigin: '0% 50%', duration: 4, ease: 'none' }, 25.5);
+
+  // S6 end
+  sheet('s5', 's6', 29.6);
+  tl.from('#tray', { y: 80, opacity: 0, duration: 1.0, ease: 'expo.out' }, 30.0);
+  tl.from('#eknee', { scale: 0.85, opacity: 0, duration: 1.1, ease: 'expo.out' }, 30.2);
+  tl.from('#einfo', { y: 50, opacity: 0, duration: 0.9, ease: 'expo.out' }, 30.7); cue(30.8, 'ding');
+  starsIn('#estars', 31.2);
+  tl.from('#offer', { y: 90, opacity: 0, duration: 1.0, ease: 'expo.out' }, 31.4); cue(31.4, 'card');
+  blurIn('#trust', 32.0);
+  tl.to('#cta', { scale: 0.95, duration: 0.1, ease: 'power2.in' }, PRESS).to('#cta', { scale: 1, duration: 0.5, ease: 'elastic.out(1,0.5)' }, PRESS + 0.1);
+  tl.to('#arr', { x: 12, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.inOut' }, PRESS + 0.05);
+  cue(PRESS, 'click'); cue(PRESS + 0.02, 'confirm');
+}
+K.start(1080, 1920, DUR, ['500 100px Domine', '700 100px Domine', '500 40px Figtree', '600 40px Figtree', '700 40px Figtree', '800 40px Figtree', '800 40px Inter'], ['knee'], build);
+</script>
+</body>
+</html>
