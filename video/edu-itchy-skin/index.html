@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Itchy Skin Guide</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--rust:#A8542F;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#DCE3DF;--gold:#C9982E;--mark:#C25E2E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+.screen{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+.screen.paper{background:var(--paper)} .screen.deep{background:var(--deep)}
+.a{position:absolute}
+/* type scale: display / heading / body / label */
+.eyebrow{font:700 30px/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--rust)}
+.deep .eyebrow{color:var(--mint)}
+.h{font-family:Fraunces,serif;font-weight:560;font-optical-sizing:auto;letter-spacing:-.018em;line-height:1.04;color:var(--ink);font-size:104px}
+.h.xl{font-size:128px}
+.deep .h{color:#fff}
+.h em{font-style:italic;font-weight:500;color:var(--rust)}
+.deep .h em{color:var(--mint)}
+.p{font:500 46px/1.34 Inter,sans-serif;color:var(--mute)}
+.deep .p{color:rgba(255,255,255,.82)}
+.p b{color:var(--ink);font-weight:700}
+.deep .p b{color:#fff}
+/* line reveal: each line sits in a mask and slides up into it */
+.mask{display:block;overflow:hidden;padding:.14em 0 .14em;margin:-.14em 0 -.14em;white-space:nowrap}
+.mask>span{display:inline-block}
+.card{background:#fff;border-radius:32px;box-shadow:0 2px 0 rgba(16,27,23,.04),0 18px 40px -24px rgba(16,27,23,.25)}
+.pale{background:var(--pale);border-radius:32px}
+.pill{display:inline-block;font:700 26px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:14px 20px;border-radius:999px}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 0 · HOOK -->
+<section class="screen deep" data-start="0" data-end="5">
+  <div class="a" style="left:88px;top:236px;display:flex;align-items:center;gap:18px" data-in="-1" data-kind="rise">
+    <svg width="58" height="58" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#C25E2E"/><rect x="42" y="22" width="16" height="56" rx="6" fill="#fff"/><rect x="22" y="42" width="56" height="16" rx="6" fill="#fff"/></svg>
+    <span style="font:800 44px/1 Inter;color:#fff;letter-spacing:-.02em">Poorly Pet</span>
+  </div>
+  <div class="a eyebrow" style="left:88px;top:400px" data-in="-1" data-kind="rise">Itchy skin · a quick guide</div>
+  <div class="a h xl fit" style="left:88px;top:460px">
+    <span class="mask" data-in="-1.2"><span>Why won't</span></span>
+    <span class="mask" data-in="-1.1"><span>my dog stop</span></span>
+    <span class="mask" data-in="-1"><span><em>scratching?</em></span></span>
+  </div>
+  <div class="a p" style="left:88px;top:910px">
+    <span class="mask" data-in="0.7"><span>Here's what's going on,</span></span>
+    <span class="mask" data-in="0.82"><span>and what actually helps.</span></span>
+  </div>
+  <svg class="a" style="left:560px;top:1120px" width="380" height="330" viewBox="0 0 380 330" fill="none" stroke="#A8542F" stroke-width="22" stroke-linecap="round">
+    <path data-in="0" data-kind="draw" d="M60 300 L180 40"/>
+    <path data-in="0.25" data-kind="draw" d="M150 310 L270 50"/>
+    <path data-in="0.5" data-kind="draw" d="M240 320 L350 80"/>
+  </svg>
+</section>
+
+<!-- 1 · CAUSE -->
+<section class="screen paper" data-start="5" data-end="11">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">What's going on</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>It's usually an</span></span>
+    <span class="mask" data-in="0.42"><span><em>over-reaction</em> to</span></span>
+    <span class="mask" data-in="0.54"><span>something ordinary.</span></span>
+  </div>
+  <div class="a pale" style="left:88px;top:760px;width:413px;height:300px" data-in="1.1" data-kind="pop">
+    <svg class="a" style="left:40px;top:40px" width="110" height="110" viewBox="0 0 64 64" fill="none" stroke="#0B2A23" stroke-width="4" stroke-linecap="round"><circle cx="32" cy="32" r="7"/><circle cx="32" cy="15" r="8"/><circle cx="32" cy="49" r="8"/><circle cx="15" cy="32" r="8"/><circle cx="49" cy="32" r="8"/></svg>
+    <div class="a" style="left:40px;bottom:36px;font:700 46px/1 Inter;color:var(--ink)">Pollen</div>
+  </div>
+  <div class="a pale" style="left:527px;top:760px;width:413px;height:300px" data-in="1.25" data-kind="pop">
+    <svg class="a" style="left:40px;top:40px" width="110" height="110" viewBox="0 0 64 64" fill="none" stroke="#0B2A23" stroke-width="4" stroke-linecap="round"><path d="M10 58 C14 40 16 26 12 8"/><path d="M24 58 C26 40 30 28 28 14"/><path d="M38 58 C38 44 42 30 48 18"/><path d="M52 58 C50 46 52 36 58 28"/><path d="M4 58 H60"/></svg>
+    <div class="a" style="left:40px;bottom:36px;font:700 46px/1 Inter;color:var(--ink)">Grass</div>
+  </div>
+  <div class="a pale" style="left:88px;top:1086px;width:413px;height:300px" data-in="1.4" data-kind="pop">
+    <svg class="a" style="left:40px;top:40px" width="110" height="110" viewBox="0 0 64 64" fill="#0B2A23"><circle cx="14" cy="16" r="4"/><circle cx="34" cy="10" r="3"/><circle cx="50" cy="20" r="4.5"/><circle cx="22" cy="34" r="3"/><circle cx="42" cy="36" r="4"/><circle cx="12" cy="52" r="3.5"/><circle cx="30" cy="54" r="4"/><circle cx="52" cy="50" r="3"/></svg>
+    <div class="a" style="left:40px;bottom:36px;font:700 46px/1 Inter;color:var(--ink)">Dust mites</div>
+  </div>
+  <div class="a pale" style="left:527px;top:1086px;width:413px;height:300px" data-in="1.55" data-kind="pop">
+    <svg class="a" style="left:40px;top:40px" width="110" height="110" viewBox="0 0 64 64" fill="none" stroke="#0B2A23" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 30 H58 C58 44 48 54 32 54 C16 54 6 44 6 30 Z"/><path d="M20 24 C22 18 26 16 32 16 C38 16 42 18 44 24"/></svg>
+    <div class="a" style="left:40px;bottom:36px;font:700 46px/1 Inter;color:var(--ink)">A food</div>
+  </div>
+</section>
+
+<!-- 2 · CYCLE -->
+<section class="screen paper" data-start="11" data-end="17">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">Why it gets worse</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>Then it turns</span></span>
+    <span class="mask" data-in="0.42"><span>into a <em>cycle.</em></span></span>
+  </div>
+  <svg class="a" style="left:0;top:0" width="1080" height="1920" viewBox="0 0 1080 1920" fill="none" stroke="#A8542F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path data-in="1.5" data-kind="draw" d="M690 760 C820 820 860 920 820 1030"/>
+    <path data-in="1.62" data-kind="draw" d="M796 1006 L820 1036 L842 1004"/>
+    <path data-in="2.3" data-kind="draw" d="M640 1270 C560 1310 470 1310 390 1270"/>
+    <path data-in="2.42" data-kind="draw" d="M418 1248 L386 1270 L414 1294"/>
+    <path data-in="3.1" data-kind="draw" d="M210 1030 C170 920 220 820 340 760"/>
+    <path data-in="3.22" data-kind="draw" d="M310 748 L344 758 L330 790"/>
+  </svg>
+  <div class="a card" style="left:334px;top:620px;width:360px;height:150px" data-in="1.0" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:34px;text-align:center;font:700 38px/1.15 Inter;color:var(--ink)">Skin gets<br>inflamed</div></div>
+  <div class="a card" style="left:600px;top:1060px;width:340px;height:150px" data-in="1.8" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:34px;text-align:center;font:700 38px/1.15 Inter;color:var(--ink)">Your dog<br>scratches</div></div>
+  <div class="a card" style="left:88px;top:1060px;width:360px;height:150px" data-in="2.6" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:34px;text-align:center;font:700 38px/1.15 Inter;color:var(--ink)">Scratching<br>makes it worse</div></div>
+  <div class="a p" style="left:88px;top:1350px">
+    <span class="mask" data-in="3.6"><span>Break it from the <b>inside</b></span></span>
+    <span class="mask" data-in="3.72"><span>and the <b>outside.</b></span></span>
+  </div>
+</section>
+
+<!-- 3 · SIGNS -->
+<section class="screen paper" data-start="17" data-end="23">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">Signs to look for</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>Sound <em>familiar?</em></span></span>
+  </div>
+  <div class="signs"></div>
+  <div class="a p" style="left:88px;top:1360px">
+    <span class="mask" data-in="3.6"><span>Here's what helps <b>→</b></span></span>
+  </div>
+</section>
+
+<!-- 4 · INSIDE -->
+<section class="screen paper tip" data-start="23" data-end="29.5"
+  data-eyebrow="What helps · 1 of 3" data-h1="Calm the skin" data-h2="from the <em>inside.</em>"
+  data-p1="Rich in Omega-3. Reduces" data-p2="dryness and boosts shine."
+  data-img="salmon" data-name="Scottish Salmon Oil" data-sub="100% natural · rich in Omega-3" data-price="£9.99" data-badge="Best seller"></section>
+
+<!-- 5 · OUTSIDE -->
+<section class="screen paper tip" data-start="29.5" data-end="36"
+  data-eyebrow="What helps · 2 of 3" data-h1="Soothe the" data-h2="<em>sore spots.</em>"
+  data-p1="Chamomile balm soothes sore," data-p2="red patches on contact."
+  data-img="balm" data-name="Itch Relief Skin Balm" data-sub="60ml · natural &amp; organic" data-price="£9.99" data-badge="From £8.49 on subscribe"></section>
+
+<!-- 6 · HOT SPOTS -->
+<section class="screen paper tip" data-start="36" data-end="42"
+  data-eyebrow="What helps · 3 of 3" data-h1="Hot spots?" data-h2="<em>Spray and leave.</em>"
+  data-p1="Fast relief from hot spots," data-p2="itching and skin irritation."
+  data-img="spray" data-name="Hot Spot &amp; Itch Spray" data-sub="250ml · no steroids · no rinse" data-price="£12.99" data-badge=""></section>
+
+<!-- 7 · BUNDLE -->
+<section class="screen deep" data-start="42" data-end="48">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">The full routine</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>Inside <em>and</em> out,</span></span>
+    <span class="mask" data-in="0.42"><span>in one bundle.</span></span>
+  </div>
+  <div class="a p" style="left:88px;top:548px">
+    <span class="mask" data-in="0.8"><span>Most dogs settle in two</span></span>
+    <span class="mask" data-in="0.92"><span>to three weeks.</span></span>
+  </div>
+  <div class="a" style="left:184px;top:720px;width:660px;height:660px;border-radius:50%;background:rgba(159,232,201,.14)" data-in="1.1" data-kind="pop"></div>
+  <img class="a" src="assets/bundle.png" style="left:194px;top:820px;width:640px" data-in="1.3" data-kind="pop">
+  <div class="a card" style="left:88px;top:1296px;width:852px;height:176px" data-in="1.8" data-kind="rise">
+    <div class="a" style="left:40px;top:36px;font:700 42px/1 Inter;color:var(--ink)">Itchy Skin Bundle</div>
+    <div class="a" style="left:40px;top:96px;font:500 32px/1 Inter;color:var(--mute)">Chews · drops · balm</div>
+    <div class="a" style="right:40px;top:26px;font:800 72px/1 Inter;color:var(--ink);letter-spacing:-.02em">£48.57</div>
+    <div class="a" style="right:40px;top:110px;font:500 32px/1 Inter;color:var(--mute)"><s>£53.97</s>&nbsp; <span style="color:var(--rust);font-weight:800">SAVE 10%</span></div>
+  </div>
+</section>
+
+<!-- 8 · PROOF + OFFER -->
+<section class="screen paper" data-start="48" data-end="56">
+  <div class="a" style="left:88px;top:236px;display:flex;gap:10px;align-items:center" data-in="0.25" data-kind="rise">
+    <span class="stars"></span><span style="font:700 40px/1 Inter;color:var(--ink);margin-left:14px">4.6/5</span>
+  </div>
+  <div class="a" style="left:88px;top:306px;font:500 34px/1 Inter;color:var(--mute)" data-in="0.35" data-kind="rise">from 101 verified reviews</div>
+  <div class="a pale" style="left:88px;top:390px;width:852px;height:330px" data-in="0.6" data-kind="rise">
+    <div class="a" style="left:48px;top:44px;width:760px;font:italic 500 50px/1.2 Fraunces,serif;color:var(--ink)">“…my dogs skin is so much better, less flaky which means less itching”</div>
+    <div class="a" style="left:48px;top:258px;font:600 30px/1 Inter;color:var(--mute)">Amie F. · Oatmeal Shampoo · ★★★★</div>
+  </div>
+  <div class="a" style="left:88px;top:770px;width:852px;height:430px;border-radius:40px;background:var(--deep)" data-in="1.2" data-kind="rise">
+    <div class="a" style="left:48px;top:50px;font:560 72px/1.04 Fraunces,serif;color:#fff">10% off your<br><em style="font-style:italic;color:var(--mint)">first order</em></div>
+    <div class="a" style="left:48px;top:236px;width:756px;height:112px;border:3px dashed rgba(159,232,201,.7);border-radius:24px;box-sizing:border-box">
+      <div class="a" style="left:32px;top:42px;font:700 26px/1 Inter;letter-spacing:.16em;color:rgba(255,255,255,.7)">USE CODE</div>
+      <div class="a" style="right:32px;top:18px;font:800 72px/1 Inter;letter-spacing:.04em;color:var(--mint)">POORLY10</div>
+    </div>
+  </div>
+  <div class="a" style="left:88px;top:1232px;font:600 34px/1.3 Inter;color:var(--ink)" data-in="1.7" data-kind="rise">Free UK delivery over £39 · 30-day guarantee</div>
+  <div class="a btn" style="left:88px;top:1310px;width:852px;height:140px;border-radius:999px;background:var(--rust)" data-in="2.0" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:44px;text-align:center;font:800 52px/1 Inter;color:#fff">Shop itchy skin →</div>
+  </div>
+  <div class="a" style="left:88px;width:852px;top:1490px;text-align:center;font:600 36px/1 Inter;color:var(--mute)" data-in="2.2" data-kind="rise">poorly-pet.com</div>
+</section>
+
+<div id="bar" class="a" style="left:88px;top:196px;width:852px;height:6px;border-radius:3px;background:rgba(94,110,102,.22);z-index:50"><div style="height:6px;border-radius:3px;background:var(--rust);width:0"></div></div>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T } = Motion;
+const W = 1080, H = 1920, DUR = 56, FPS = 30;
+const CW = 852;
+const stage = document.getElementById('stage');
+
+/* ---- signs list ---- */
+const SIGNS = [["Scratching that wakes", "them at night"], ["One paw licked", "rusty brown"], ["Pink skin on the belly", "and armpits"], ["Flakes on the bed", ""]];
+document.querySelector('.signs').outerHTML = SIGNS.map(([a, b], i) => `
+  <div class="a pale" style="left:88px;top:${520 + i * 196}px;width:852px;height:172px" data-in="${0.9 + i * 0.55}" data-kind="rise">
+    <svg class="a" style="left:40px;top:50px" width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="36" fill="#9FE8C9"/><path data-in="${1.15 + i * 0.55}" data-kind="draw" d="M22 37 L32 47 L51 26" fill="none" stroke="#0B2A23" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="a" style="left:144px;top:${b ? 36 : 60}px;font:600 44px/1.18 Inter;color:var(--ink)">${a}${b ? '<br>' + b : ''}</div>
+  </div>`).join('');
+
+/* ---- tip screens from one template ---- */
+document.querySelectorAll('section.tip').forEach(s => {
+  const d = s.dataset;
+  s.innerHTML = `
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">${d.eyebrow}</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>${d.h1}</span></span>
+    <span class="mask" data-in="0.42"><span>${d.h2}</span></span>
+  </div>
+  <div class="a p fit" style="left:88px;top:548px">
+    <span class="mask" data-in="0.8"><span>${d.p1}</span></span>
+    <span class="mask" data-in="0.92"><span>${d.p2}</span></span>
+  </div>
+  <div class="a" style="left:209px;top:712px;width:610px;height:610px;border-radius:50%;background:var(--pale)" data-in="1.0" data-kind="pop"></div>
+  <img class="a prod" src="assets/${d.img}.png" data-in="1.2" data-kind="pop">
+  ${d.badge ? `<div class="a pill" style="right:140px;top:740px;background:var(--rust);color:#fff" data-in="1.7" data-kind="pop">${d.badge}</div>` : ''}
+  <div class="a card" style="left:88px;top:1296px;width:852px;height:176px" data-in="1.5" data-kind="rise">
+    <div class="a" style="left:40px;top:40px;font:700 42px/1 Inter;color:var(--ink)">${d.name}</div>
+    <div class="a" style="left:40px;top:100px;font:500 32px/1 Inter;color:var(--mute)">${d.sub}</div>
+    <div class="a" style="right:40px;top:52px;font:800 76px/1 Inter;color:var(--ink);letter-spacing:-.02em">${d.price}</div>
+  </div>`;
+});
+document.querySelector('.stars').innerHTML = [0, 1, 2, 3, 4].map(i => `<svg width="46" height="46" viewBox="0 0 64 64" style="display:inline-block;margin-right:6px"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="${i < 4 ? '#C9982E' : 'url(#half)'}"/>${i === 4 ? '<defs><linearGradient id="half"><stop offset="60%" stop-color="#C9982E"/><stop offset="60%" stop-color="#D9DED9"/></linearGradient></defs>' : ''}</svg>`).join('');
+
+const screens = [...document.querySelectorAll('section.screen')].map(el => ({ el, start: +el.dataset.start, end: +el.dataset.end, items: [...el.querySelectorAll('[data-in]')] }));
+
+function layout() {
+  // product images: fit inside the pale stage, centred
+  document.querySelectorAll('img.prod').forEach(img => {
+    const k = Math.min(500 / img.naturalWidth, 520 / img.naturalHeight);
+    const w = img.naturalWidth * k, h = img.naturalHeight * k;
+    img.style.width = w + 'px'; img.style.left = (514 - w / 2) + 'px'; img.style.top = (1017 - h / 2) + 'px';
+  });
+  // shrink any text block whose widest line would pass the content width
+  screens.forEach(s => s.el.style.display = 'block');
+  document.querySelectorAll('.fit').forEach(el => {
+    let fs = parseFloat(getComputedStyle(el).fontSize);
+    const widest = () => Math.max(...[...el.querySelectorAll('.mask>span')].map(x => x.getBoundingClientRect().width));
+    while (widest() > CW && fs > 30) { fs -= 2; el.style.fontSize = fs + 'px'; }
+  });
+  document.querySelectorAll('[data-kind="draw"]').forEach(p => { p._len = p.getTotalLength() + 2; });
+  screens.forEach(s => s.el.style.display = 'none');
+}
+
+function apply(el, k) {
+  const kind = el.dataset.kind || (el.classList.contains('mask') ? 'line' : 'rise');
+  if (kind === 'line') { el.firstElementChild.style.transform = `translateY(${(1 - k) * 112}%)`; return; }
+  if (kind === 'rise') { el.style.transform = `translateY(${(1 - k) * 56}px)`; el.style.opacity = Math.min(1, k * 1.6); return; }
+  if (kind === 'pop') { el.style.transform = `scale(${0.9 + 0.1 * k})`; el.style.opacity = Math.min(1, k * 1.6); return; }
+  if (kind === 'draw') { const L = el._len; el.style.strokeDasharray = `${L} ${L}`; el.style.strokeDashoffset = L * (1 - Math.min(1, Math.max(0, k))); el.style.visibility = k < 0.01 ? 'hidden' : 'visible'; }
+}
+
+function renderFrame(t) {
+  screens.forEach((s, i) => {
+    // the first screen is already in place at frame 0; the last one holds as the end card
+    const last = i === screens.length - 1;
+    const y = i === 0 ? T(t, 0, [[s.end - 0.3, -H, 'heavy']]) : T(t, H, last ? [[s.start - 0.3, 0, 'heavy']] : [[s.start - 0.3, 0, 'heavy'], [s.end - 0.3, -H, 'heavy']]);
+    if (y >= H - 1 || y <= -H + 1) { s.el.style.display = 'none'; return; }
+    s.el.style.display = 'block';
+    s.el.style.transform = `translateY(${y}px)`;
+    const lt = t - s.start;
+    s.items.forEach(el => {
+      const preset = el.dataset.kind === 'pop' ? 'default' : el.dataset.kind === 'draw' ? 'heavy' : 'default';
+      apply(el, sp(lt - (+el.dataset.in), preset));
+    });
+  });
+  // the offer button is pressed near the end
+  const btn = document.querySelector('.btn');
+  const press = T(t, 1, [[53.6, 0.95, 'snappy'], [53.75, 1, 'snappy']]);
+  btn.style.transform = `scale(${press * (0.9 + 0.1 * sp(t - 50, 'default'))})`;
+  document.querySelector('#bar>div').style.width = (852 * Math.min(1, t / 53.6)) + 'px';
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('560 100px Fraunces'), document.fonts.load('italic 500 100px Fraunces'), document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('500 40px Inter'),
+  ...[...document.images].map(i => i.decode())]).then(() => { layout(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
