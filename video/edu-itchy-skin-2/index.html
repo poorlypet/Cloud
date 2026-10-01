@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Itchy Skin Guide II</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 900;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 900;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--deep2:#12382F;--rust:#A8542F;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#DCE3DF;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--paper);transform-origin:0 0}
+.screen{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none;overflow:hidden}
+.screen.paper{background:var(--paper)}
+.screen.deep{background:var(--deep)}
+.screen.studio{background:radial-gradient(900px 900px at 540px 940px,#fff 0%,#F6F5F1 45%,#ECEFEA 100%)}
+.a{position:absolute}
+.eyebrow{font:700 30px/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--rust)}
+.deep .eyebrow{color:var(--mint)}
+.h{font-family:Fraunces,serif;font-weight:560;letter-spacing:-.018em;line-height:1.04;color:var(--ink);font-size:104px}
+.h.xl{font-size:128px}
+.h.xxl{font-size:168px;line-height:.98}
+.deep .h{color:#fff}
+.h em{font-style:italic;font-weight:500;color:var(--rust)}
+.deep .h em{color:var(--mint)}
+.p{font:500 46px/1.34 Inter,sans-serif;color:var(--mute)}
+.deep .p{color:rgba(255,255,255,.82)}
+.p b{color:var(--ink);font-weight:700}
+.deep .p b{color:var(--mint);font-weight:700}
+.mask{display:block;overflow:hidden;padding:.14em 0 .14em;margin:-.14em 0 -.14em;white-space:nowrap}
+.mask>span{display:inline-block}
+.card{background:#fff;border-radius:32px;box-shadow:0 2px 0 rgba(16,27,23,.04),0 24px 48px -26px rgba(16,27,23,.32)}
+.pill{display:inline-block;font:700 26px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:14px 20px;border-radius:999px;white-space:nowrap}
+.chip{background:#fff;border-radius:24px;padding:18px 26px;font:700 36px/1.16 Inter,sans-serif;color:var(--ink);white-space:nowrap;box-shadow:0 18px 36px -20px rgba(16,27,23,.35)}
+.chip i{display:block;width:12px;height:12px;border-radius:50%;background:var(--rust);margin-bottom:12px}
+.num{font:400 1000px/1 Fraunces,serif;color:transparent;-webkit-text-stroke:3px #D2DAD3;letter-spacing:-.04em}
+.glow{border-radius:50%;pointer-events:none}
+svg{display:block;overflow:visible}
+#grain{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;opacity:.06;mix-blend-mode:multiply;z-index:60}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 0 · HOOK -->
+<section class="screen deep" data-start="0" data-end="5.5" data-mode="first">
+  <div class="a glow" data-glow="0" style="left:-260px;top:900px;width:1100px;height:1100px;background:radial-gradient(closest-side,rgba(168,84,47,.42),rgba(168,84,47,0))"></div>
+  <div class="a glow" data-glow="1" style="left:420px;top:-200px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(159,232,201,.20),rgba(159,232,201,0))"></div>
+  <div class="a" style="left:88px;top:236px;display:flex;align-items:center;gap:18px" data-in="-1" data-kind="rise">
+    <svg width="58" height="58" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#C25E2E"/><rect x="42" y="22" width="16" height="56" rx="6" fill="#fff"/><rect x="22" y="42" width="56" height="16" rx="6" fill="#fff"/></svg>
+    <span style="font:800 44px/1 Inter;color:#fff;letter-spacing:-.02em">Poorly Pet</span>
+  </div>
+  <div class="a eyebrow" style="left:88px;top:390px" data-in="-1" data-kind="rise">Itchy skin · a 1-minute guide</div>
+  <div class="a h xxl fit" style="left:88px;top:452px">
+    <span class="mask" data-in="-1.2"><span>Scratching</span></span>
+    <span class="mask" data-in="-1.1"><span><em>all night?</em></span></span>
+  </div>
+  <div class="a p" style="left:88px;top:830px">
+    <span class="mask" data-in="0.5"><span>Here's what's going on,</span></span>
+    <span class="mask" data-in="0.62"><span>and <b>3 things that help.</b></span></span>
+  </div>
+  <svg class="a" id="scratch" style="left:520px;top:1060px" width="420" height="380" viewBox="0 0 420 380" fill="none" stroke="#C25E2E" stroke-width="24" stroke-linecap="round">
+    <path d="M70 350 L200 40"/><path d="M170 360 L300 50"/><path d="M270 370 L395 80"/>
+  </svg>
+</section>
+
+<!-- 1 · CAUSE -->
+<section class="screen paper" data-start="5.5" data-end="12" data-mode="y">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">What's going on</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>It's an over-reaction</span></span>
+    <span class="mask" data-in="0.42"><span>to something</span></span>
+    <span class="mask" data-in="0.54"><span><em>ordinary.</em></span></span>
+  </div>
+  <svg class="a" style="left:0;top:0" width="1080" height="1920"><circle cx="540" cy="1070" r="290" fill="none" stroke="#C9D3CC" stroke-width="3" stroke-dasharray="4 14" stroke-linecap="round" id="orbitring"/></svg>
+  <div class="a" style="left:390px;top:920px;width:300px;height:300px;border-radius:50%;background:var(--deep)" data-in="0.9" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:86px;text-align:center;font:italic 500 62px/1.05 Fraunces,serif;color:var(--mint)">Itchy<br><span style="color:#fff;font-style:normal">skin</span></div>
+  </div>
+  <div class="a" id="pulse" style="left:390px;top:920px;width:300px;height:300px;border-radius:50%;border:3px solid var(--deep);box-sizing:border-box"></div>
+  <div class="orbit"></div>
+</section>
+
+<!-- 2 · CYCLE -->
+<section class="screen deep" data-start="12" data-end="18" data-mode="circle" data-cx="540" data-cy="1070">
+  <div class="a glow" data-glow="2" style="left:100px;top:560px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(159,232,201,.13),rgba(159,232,201,0))"></div>
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.35" data-kind="rise">Why it gets worse</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.4"><span>Then it goes</span></span>
+    <span class="mask" data-in="0.52"><span><em>round and round.</em></span></span>
+  </div>
+  <svg class="a" style="left:0;top:0" width="1080" height="1920" fill="none">
+    <circle cx="540" cy="1010" r="270" stroke="rgba(255,255,255,.12)" stroke-width="10"/>
+    <circle cx="540" cy="1010" r="270" stroke="#9FE8C9" stroke-width="10" stroke-linecap="round" transform="rotate(-90 540 1010)" data-in="1.0" data-kind="draw" id="cyclearc"/>
+    <g id="cycledot"><circle r="34" fill="rgba(159,232,201,.22)"/><circle r="16" fill="#9FE8C9"/></g>
+  </svg>
+  <div class="a" style="left:340px;top:960px;width:400px;text-align:center;font:italic 500 66px/1 Fraunces,serif;color:#fff" data-in="2.6" data-kind="pop">on repeat</div>
+  <div class="node" data-x="540" data-y="740" data-in="1.3">Skin gets<br>inflamed</div>
+  <div class="node" data-x="774" data-y="1145" data-in="1.8">Your dog<br>scratches</div>
+  <div class="node" data-x="306" data-y="1145" data-in="2.3">It gets<br>worse</div>
+  <div class="a p" style="left:88px;top:1350px">
+    <span class="mask" data-in="3.4"><span>Break it from the <b>inside</b></span></span>
+    <span class="mask" data-in="3.52"><span>and the <b>outside.</b></span></span>
+  </div>
+</section>
+
+<!-- 3 · SIGNS -->
+<section class="screen paper" data-start="18" data-end="24.5" data-mode="y">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">Signs to look for</div>
+  <div class="a h xl fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.3"><span>Sound <em>familiar?</em></span></span>
+  </div>
+  <div class="signs"></div>
+  <div class="a p" style="left:88px;top:1340px">
+    <span class="mask" data-in="3.4"><span>Here are <b>3 things that help.</b></span></span>
+  </div>
+</section>
+
+<!-- 4–6 · PRODUCTS (built from PRODUCTS below) -->
+<section class="screen studio prod" data-start="24.5" data-end="30.75" data-mode="x" data-p="0"></section>
+<section class="screen studio prod" data-start="30.75" data-end="37" data-mode="x" data-p="1"></section>
+<section class="screen studio prod" data-start="37" data-end="43.25" data-mode="x" data-p="2"></section>
+
+<!-- 7 · ROUTINE -->
+<section class="screen deep" data-start="43.25" data-end="49.5" data-mode="circle" data-cx="540" data-cy="1384">
+  <div class="a glow" data-glow="3" style="left:-200px;top:1000px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(168,84,47,.30),rgba(168,84,47,0))"></div>
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.35" data-kind="rise">Putting it together</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.4"><span>Most dogs settle in</span></span>
+    <span class="mask" data-in="0.52"><span><em>two to three weeks.</em></span></span>
+  </div>
+  <div class="routine"></div>
+  <div class="a" style="left:88px;top:1206px;width:852px;height:10px;border-radius:5px;background:rgba(255,255,255,.14)" data-in="2.2" data-kind="rise">
+    <div id="weekfill" style="height:10px;border-radius:5px;background:var(--mint);width:0"></div>
+  </div>
+  <div class="weeks"></div>
+</section>
+
+<!-- 8 · PROOF -->
+<section class="screen paper" data-start="49.5" data-end="53.75" data-mode="y">
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.25" data-kind="rise">What owners say</div>
+  <div class="a" style="left:80px;top:270px;display:flex;align-items:baseline" data-in="0.3" data-kind="rise">
+    <span id="score" style="font:500 300px/1 Fraunces,serif;color:var(--ink);letter-spacing:-.04em">4.6</span>
+    <span style="font:500 110px/1 Fraunces,serif;color:var(--mute);margin-left:10px">/5</span>
+  </div>
+  <div class="a stars" style="left:88px;top:610px"></div>
+  <div class="a" style="left:88px;top:720px;font:600 40px/1 Inter;color:var(--mute)" data-in="1.2" data-kind="rise">from 101 verified reviews</div>
+  <div class="a" style="left:88px;top:820px;width:852px;height:420px;border-radius:36px;background:var(--pale)" data-in="1.4" data-kind="rise">
+    <svg class="a" style="left:48px;top:44px" width="70" height="56" viewBox="0 0 70 56"><path d="M0 56 V30 C0 12 10 2 28 0 V12 C18 14 14 20 14 28 H28 V56 Z M40 56 V30 C40 12 50 2 68 0 V12 C58 14 54 20 54 28 H68 V56 Z" fill="#A8542F"/></svg>
+    <div class="a" style="left:48px;top:130px;width:756px;font:italic 500 54px/1.2 Fraunces,serif;color:var(--ink);white-space:normal">…my dogs skin is so much better, less flaky which means less itching</div>
+    <div class="a" style="left:48px;top:344px;font:600 32px/1 Inter;color:var(--mute)">Amie F. · ★★★★ · verified review</div>
+  </div>
+</section>
+
+<!-- 9 · OFFER -->
+<section class="screen deep" data-start="53.75" data-end="59" data-mode="circle" data-cx="540" data-cy="1030">
+  <div class="a glow" data-glow="4" style="left:40px;top:120px;width:1000px;height:900px;background:radial-gradient(closest-side,rgba(159,232,201,.20),rgba(159,232,201,0))"></div>
+  <div class="a" style="left:190px;top:676px;width:700px;height:60px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.45),rgba(0,0,0,0))" data-in="0.5" data-kind="pop"></div>
+  <div class="lineup"></div>
+  <div class="a h fit" style="left:88px;top:770px;font-size:96px">
+    <span class="mask" data-in="0.7"><span>10% off your</span></span>
+    <span class="mask" data-in="0.82"><span><em>first order.</em></span></span>
+  </div>
+  <div class="a" style="left:88px;top:1004px;width:852px;height:124px;border:3px dashed rgba(159,232,201,.75);border-radius:26px;box-sizing:border-box" data-in="1.2" data-kind="pop">
+    <div class="a" style="left:36px;top:48px;font:700 28px/1 Inter;letter-spacing:.16em;color:rgba(255,255,255,.7)">USE CODE</div>
+    <div class="a" style="right:36px;top:24px;font:800 76px/1 Inter;letter-spacing:.04em;color:var(--mint)">POORLY10</div>
+  </div>
+  <div class="a" style="left:88px;width:852px;top:1162px;text-align:center;font:600 34px/1.3 Inter;color:rgba(255,255,255,.85)" data-in="1.6" data-kind="rise">Free UK delivery over £39 · 30-day guarantee</div>
+  <div class="a btn" style="left:88px;top:1236px;width:852px;height:140px;border-radius:999px;background:var(--mint)" data-in="1.9" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:44px;text-align:center;font:800 54px/1 Inter;color:var(--deep)">Shop itchy skin →</div>
+  </div>
+  <div class="a" style="left:88px;width:852px;top:1410px;text-align:center;font:600 36px/1 Inter;color:rgba(255,255,255,.7)" data-in="2.1" data-kind="rise">poorly-pet.com</div>
+</section>
+
+<div id="bar" class="a" style="left:88px;top:196px;width:852px;height:6px;border-radius:3px;background:rgba(94,110,102,.25);z-index:50"><div style="height:6px;border-radius:3px;background:var(--rust);width:0"></div></div>
+<svg id="grain" viewBox="0 0 1080 1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T } = Motion;
+const W = 1080, H = 1920, DUR = 59, FPS = 30, CW = 852, PRESS = 57.0;
+const stage = document.getElementById('stage');
+
+/* ---------- content ---------- */
+const TRIGGERS = [
+  ['Pollen', '<circle cx="32" cy="32" r="7"/><circle cx="32" cy="15" r="8"/><circle cx="32" cy="49" r="8"/><circle cx="15" cy="32" r="8"/><circle cx="49" cy="32" r="8"/>'],
+  ['Grass', '<path d="M10 58 C14 40 16 26 12 8"/><path d="M24 58 C26 40 30 28 28 14"/><path d="M38 58 C38 44 42 30 48 18"/><path d="M52 58 C50 46 52 36 58 28"/><path d="M4 58 H60"/>'],
+  ['Dust mites', '<g fill="#0B2A23" stroke="none"><circle cx="14" cy="16" r="4"/><circle cx="34" cy="10" r="3"/><circle cx="50" cy="20" r="4.5"/><circle cx="22" cy="34" r="3"/><circle cx="42" cy="36" r="4"/><circle cx="12" cy="52" r="3.5"/><circle cx="30" cy="54" r="4"/><circle cx="52" cy="50" r="3"/></g>'],
+  ['A food', '<path d="M6 30 H58 C58 44 48 54 32 54 C16 54 6 44 6 30 Z"/><path d="M20 24 C22 18 26 16 32 16 C38 16 42 18 44 24"/>'],
+];
+const SIGNS = [['Scratching that wakes', 'them at night'], ['One paw licked', 'rusty brown'], ['Pink skin on the belly', 'and armpits'], ['Flakes on the bed', '']];
+const PRODUCTS = [
+  { img: 'salmon', n: '1', eyebrow: '1 of 3 · From the inside', h1: 'Calm the skin', h2: 'from the <em>inside.</em>',
+    name: 'Scottish Salmon Oil', sub: '100% natural · no additives', price: '£9.99', badge: 'Best seller', maxW: 560, maxH: 640,
+    chips: [{ x: 88, y: 700, t: 'Rich in<br>Omega-3', to: [430, 830] }, { r: 140, y: 900, t: 'Reduces<br>dryness', to: [650, 990] }, { x: 88, y: 1070, t: 'Boosts<br>shine', to: [430, 1130] }] },
+  { img: 'balm', n: '2', eyebrow: '2 of 3 · On the outside', h1: 'Soothe the', h2: '<em>sore patches.</em>',
+    name: 'Itch Relief Skin Balm', sub: '60ml · natural & organic', price: '£9.99', badge: '£8.49 on subscribe', maxW: 500, maxH: 480,
+    chips: [{ x: 88, y: 640, t: 'Soothes<br>redness', to: [380, 800] }, { r: 140, y: 620, t: 'Chamomile', to: [650, 840] }, { r: 140, y: 830, t: 'Hydrates<br>dry skin', to: [730, 1070] }] },
+  { img: 'spray', n: '3', eyebrow: '3 of 3 · Hot spots', h1: 'Spray it,', h2: '<em>leave it.</em>',
+    name: 'Hot Spot & Itch Spray', sub: '250ml · gentle on sensitive skin', price: '£12.99', badge: '', maxW: 560, maxH: 640,
+    chips: [{ x: 88, y: 720, t: 'No<br>steroids', to: [450, 800] }, { r: 140, y: 880, t: 'No<br>rinse', to: [640, 960] }, { x: 88, y: 1060, t: 'Fast relief<br>from itching', to: [440, 1120] }] },
+];
+const ROUTINE = [['salmon', 'Salmon oil', 'Every day'], ['balm', 'Skin balm', 'On sore, red patches'], ['spray', 'Hot spot spray', 'Spray on and leave']];
+
+/* ---------- build ---------- */
+document.querySelector('.orbit').outerHTML = TRIGGERS.map(([label, icon], i) => `
+  <div class="a card orb" data-i="${i}" style="width:220px;height:156px;border-radius:28px" data-in="${1.3 + i * 0.2}" data-kind="pop">
+    <svg class="a" style="left:78px;top:22px" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#0B2A23" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+    <div class="a" style="left:0;right:0;top:102px;text-align:center;font:700 34px/1 Inter;color:var(--ink)">${label}</div>
+  </div>`).join('');
+
+document.querySelectorAll('.node').forEach(n => {
+  n.outerHTML = `<div class="a" style="left:${n.dataset.x - 150}px;top:${n.dataset.y - 66}px;width:300px;height:132px;border-radius:28px;background:#163F35;border:2px solid rgba(159,232,201,.35);box-sizing:border-box" data-in="${n.dataset.in}" data-kind="pop">
+    <div class="a" style="left:0;right:0;top:24px;text-align:center;font:700 36px/1.16 Inter;color:#fff">${n.innerHTML}</div></div>`;
+});
+
+document.querySelector('.signs').outerHTML = SIGNS.map(([a, b], i) => `
+  <div class="a card" style="left:88px;top:${486 + i * 198}px;width:852px;height:172px" data-in="${0.8 + i * 0.5}" data-kind="slide">
+    <div class="a" style="left:40px;top:44px;font:italic 500 80px/1 Fraunces,serif;color:var(--rust)">0${i + 1}</div>
+    <div class="a" style="left:170px;top:${b ? 37 : 63}px;font:600 42px/1.18 Inter;color:var(--ink)">${a}${b ? '<br>' + b : ''}</div>
+    <svg class="a" style="right:40px;top:50px" width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="36" fill="#9FE8C9"/><path data-in="${1.15 + i * 0.5}" data-kind="draw" d="M22 37 L32 47 L51 26" fill="none" stroke="#0B2A23" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>`).join('');
+
+document.querySelectorAll('section.prod').forEach(s => {
+  const d = PRODUCTS[+s.dataset.p];
+  s.innerHTML = `
+  <div class="a num" style="left:470px;top:330px">${d.n}</div>
+  <div class="a eyebrow" style="left:88px;top:236px" data-in="0.35" data-kind="rise">${d.eyebrow}</div>
+  <div class="a h fit" style="left:88px;top:290px">
+    <span class="mask" data-in="0.4"><span>${d.h1}</span></span>
+    <span class="mask" data-in="0.52"><span>${d.h2}</span></span>
+  </div>
+  <div class="a shadow" style="width:520px;height:56px;border-radius:50%;background:radial-gradient(closest-side,rgba(16,27,23,.30),rgba(16,27,23,0))" data-in="0.9" data-kind="pop"></div>
+  <div class="a float" data-in="0.9" data-kind="lift"><canvas class="hero" data-img="${d.img}"></canvas></div>
+  <svg class="a leaders" style="left:0;top:0" width="1080" height="1920" fill="none">${d.chips.map((c, i) => `<path data-in="${1.9 + i * 0.35}" data-kind="draw" stroke="rgba(16,27,23,.45)" stroke-width="3" stroke-linecap="round"/><circle data-in="${2.1 + i * 0.35}" data-kind="pop" r="9" cx="${c.to[0]}" cy="${c.to[1]}" fill="#A8542F" stroke="#fff" stroke-width="4"/>`).join('')}</svg>
+  ${d.chips.map((c, i) => `<div class="a chip" style="${c.r ? 'right:' + c.r + 'px' : 'left:' + c.x + 'px'};top:${c.y}px" data-in="${1.8 + i * 0.35}" data-kind="pop" data-to="${c.to}">${c.t}</div>`).join('')}
+  <div class="a card" style="left:88px;top:1296px;width:852px;height:176px" data-in="1.4" data-kind="rise">
+    <div class="a" style="left:40px;top:44px;font:700 42px/1 Inter;color:var(--ink)">${d.name}</div>
+    <div class="a" style="left:40px;top:104px;font:500 32px/1 Inter;color:var(--mute)">${d.sub}</div>
+    <div class="a" style="right:40px;top:52px;font:800 76px/1 Inter;color:var(--ink);letter-spacing:-.02em">${d.price}</div>
+  </div>
+  ${d.badge ? `<div class="a pill" style="left:128px;top:1272px;background:var(--rust);color:#fff" data-in="1.75" data-kind="pop">${d.badge}</div>` : ''}`;
+});
+
+document.querySelector('.routine').outerHTML = ROUTINE.map(([img, name, when], i) => `
+  <div class="a" style="left:88px;top:${580 + i * 190}px;width:852px;height:160px" data-in="${1.0 + i * 0.35}" data-kind="slide">
+    <div class="a" style="left:0;top:0;width:160px;height:160px;border-radius:50%;background:rgba(159,232,201,.14)"></div>
+    <img class="a thumb" src="assets/${img}.png" data-box="122">
+    <div class="a" style="left:200px;top:36px;font:700 46px/1 Inter;color:#fff">${name}</div>
+    <div class="a" style="left:200px;top:96px;font:500 36px/1 Inter;color:var(--mint)">${when}</div>
+  </div>`).join('');
+document.querySelector('.weeks').outerHTML = ['Week 1', 'Week 2', 'Week 3'].map((w, i) => `
+  <div class="a wk" data-i="${i}" style="left:${88 + i * 426 - (i ? (i === 2 ? 24 : 12) : 0)}px;top:1194px;width:34px;height:34px;border-radius:50%;background:#0B2A23;border:5px solid rgba(255,255,255,.3);box-sizing:border-box" data-in="${2.3 + i * 0.1}" data-kind="pop"></div>
+  <div class="a" style="${i === 2 ? 'right:140px;text-align:right' : i === 1 ? 'left:390px;width:300px;text-align:center' : 'left:88px'};top:1262px;font:700 38px/1 Inter;color:#fff" data-in="${2.4 + i * 0.1}" data-kind="rise">${w}</div>`).join('');
+
+document.querySelector('.lineup').outerHTML = `
+  <div class="a float" data-in="0.3" data-kind="lift" data-amp="6"><canvas class="hero" data-img="balm" data-box="430,400" data-at="540,520"></canvas></div>
+  <div class="a float" data-in="0.45" data-kind="lift" data-amp="7"><canvas class="hero" data-img="salmon" data-box="300,450" data-at="290,470"></canvas></div>
+  <div class="a float" data-in="0.6" data-kind="lift" data-amp="8"><canvas class="hero" data-img="spray" data-box="300,450" data-at="800,470"></canvas></div>`;
+
+document.querySelector('.stars').innerHTML = [0, 1, 2, 3, 4].map(i => `<span class="star" style="position:relative;display:inline-block;width:86px;height:86px;margin-right:14px">
+  <svg class="a" width="86" height="86" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="#DDE2DD"/></svg>
+  <span class="a fill" style="left:0;top:0;height:86px;width:0;overflow:hidden"><svg width="86" height="86" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="#C9982E"/></svg></span></span>`).join('');
+
+const IMGS = {};
+const screens = [...document.querySelectorAll('section.screen')].map((el, i) => ({
+  el, i, start: +el.dataset.start, end: +el.dataset.end, mode: el.dataset.mode,
+  cx: +el.dataset.cx || 540, cy: +el.dataset.cy || 960, items: [...el.querySelectorAll('[data-in]')],
+  heroes: [...el.querySelectorAll('canvas.hero')],
+}));
+
+/* ---------- layout (after fonts and images) ---------- */
+function layout() {
+  screens.forEach(s => s.el.style.display = 'block');
+  // hero canvases: fit the packshot in its box and centre it on its anchor
+  document.querySelectorAll('canvas.hero').forEach(c => {
+    const im = IMGS[c.dataset.img];
+    const prod = c.closest('section.prod');
+    const d = prod ? PRODUCTS[+prod.dataset.p] : null;
+    const [bw, bh] = d ? [d.maxW, d.maxH] : c.dataset.box.split(',').map(Number);
+    const [ax, ay] = d ? [540, 960] : c.dataset.at.split(',').map(Number);
+    const k = Math.min(bw / im.naturalWidth, bh / im.naturalHeight);
+    const w = Math.round(im.naturalWidth * k), h = Math.round(im.naturalHeight * k);
+    c.width = w; c.height = h;
+    const wrap = c.parentElement; wrap.style.left = (ax - w / 2) + 'px'; wrap.style.top = (ay - h / 2) + 'px'; wrap.style.width = w + 'px'; wrap.style.height = h + 'px';
+    wrap._amp = +(wrap.dataset.amp || 9);
+    c._im = im;
+    if (prod) { const sh = prod.querySelector('.shadow'); sh.style.left = (540 - 260) + 'px'; sh.style.top = (ay + h / 2 - 30) + 'px'; }
+  });
+  document.querySelectorAll('img.thumb').forEach(img => {
+    const b = +img.dataset.box, k = Math.min(b / img.naturalWidth, b / img.naturalHeight);
+    const w = img.naturalWidth * k, h = img.naturalHeight * k;
+    img.style.width = w + 'px'; img.style.left = (80 - w / 2) + 'px'; img.style.top = (80 - h / 2) + 'px';
+  });
+  // leader lines run from the chip edge nearest the product to its target dot
+  document.querySelectorAll('section.prod').forEach(s => {
+    const paths = s.querySelectorAll('.leaders path');
+    s.querySelectorAll('.chip').forEach((chip, i) => {
+      const r = chip.getBoundingClientRect(), sr = s.getBoundingClientRect();
+      const [tx, ty] = chip.dataset.to.split(',').map(Number);
+      const left = r.left - sr.left, right = r.right - sr.left, cy = r.top - sr.top + r.height / 2;
+      const sx = tx > right ? right : left;
+      paths[i].setAttribute('d', `M${sx} ${cy} L${(sx + tx) / 2} ${cy} L${tx} ${ty}`);
+    });
+  });
+  // shrink any text block whose widest line would pass the content width
+  document.querySelectorAll('.fit').forEach(el => {
+    let fs = parseFloat(getComputedStyle(el).fontSize);
+    const widest = () => Math.max(...[...el.querySelectorAll('.mask>span')].map(x => x.getBoundingClientRect().width));
+    while (widest() > CW && fs > 30) { fs -= 2; el.style.fontSize = fs + 'px'; }
+  });
+  document.querySelectorAll('[data-kind="draw"], #scratch path').forEach(p => { p._len = p.getTotalLength() + 2; });
+  screens.forEach(s => s.el.style.display = 'none');
+}
+
+/* ---------- motion ---------- */
+function apply(el, k) {
+  const kind = el.dataset.kind || (el.classList.contains('mask') ? 'line' : 'rise');
+  if (kind === 'line') { el.firstElementChild.style.transform = `translateY(${(1 - k) * 112}%)`; return; }
+  if (kind === 'rise') { el.style.transform = `translateY(${(1 - k) * 56}px)`; el.style.opacity = Math.min(1, k * 1.6); return; }
+  if (kind === 'pop') { el.style.transform = `scale(${0.86 + 0.14 * k})`; el.style.opacity = Math.min(1, k * 1.6); return; }
+  if (kind === 'slide') { el.style.transform = `translateX(${(1 - k) * 260}px) rotate(${(1 - k) * 3}deg)`; el.style.opacity = Math.min(1, k * 1.8); return; }
+  if (kind === 'lift') { el._k = k; el.style.opacity = Math.min(1, k * 1.5); return; }
+  if (kind === 'draw') { const L = el._len; el.style.strokeDasharray = `${L} ${L}`; el.style.strokeDashoffset = L * (1 - Math.min(1, Math.max(0, k))); el.style.visibility = k < 0.01 ? 'hidden' : 'visible'; }
+}
+
+// draw a packshot with a soft light band sweeping across it (only where the product is)
+function paintHero(c, sweep) {
+  const g = c.getContext('2d'), w = c.width, h = c.height;
+  g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, w, h); g.drawImage(c._im, 0, 0, w, h);
+  if (sweep <= 0 || sweep >= 1) return;
+  const x = -w * 0.6 + sweep * w * 2.2;
+  const gr = g.createLinearGradient(x - w * 0.35, 0, x + w * 0.35, h * 0.35);
+  gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.5, 'rgba(255,255,255,.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.globalCompositeOperation = 'source-atop'; g.fillStyle = gr; g.fillRect(0, 0, w, h);
+}
+
+function screenPose(s, t) {
+  // entry
+  // circle reveals open over about 0.8 s; pushes use the heavy spring
+  const REVEAL = { w: 4.5, z: 1 };
+  const ke = s.mode === 'first' ? 1 : s.mode === 'circle' ? sp(t - (s.start - 0.6), REVEAL) : sp(t - (s.start - 0.35), 'heavy');
+  let x = 0, y = 0, scale = 1, clip = null;
+  if (s.mode === 'y') y = H * (1 - ke);
+  if (s.mode === 'x') x = W * (1 - ke);
+  if (s.mode === 'circle') clip = 1600 * ke;
+  // exit, decided by how the next screen arrives
+  const n = screens[s.i + 1];
+  let gone = false;
+  if (n) {
+    const kn = n.mode === 'circle' ? sp(t - (n.start - 0.6), REVEAL) : sp(t - (n.start - 0.35), 'heavy');
+    if (n.mode === 'y') y -= H * kn;
+    if (n.mode === 'x') x -= W * kn;
+    if (n.mode === 'circle') { scale = 1 - 0.06 * kn; gone = kn > 0.995; }
+    if (Math.abs(x) >= W - 1 || y <= -H + 1) gone = true;
+  }
+  if (ke <= 0.0005 || y >= H - 1 || x >= W - 1) gone = true;
+  return { x, y, scale, clip, gone };
+}
+
+function renderFrame(t) {
+  screens.forEach(s => {
+    const p = screenPose(s, t);
+    if (p.gone) { s.el.style.display = 'none'; return; }
+    s.el.style.display = 'block';
+    s.el.style.zIndex = s.i;
+    s.el.style.transform = `translate(${p.x}px,${p.y}px) scale(${p.scale})`;
+    s.el.style.clipPath = p.clip == null ? 'none' : `circle(${p.clip}px at ${s.cx}px ${s.cy}px)`;
+    const lt = t - s.start;
+    s.items.forEach(el => apply(el, sp(lt - (+el.dataset.in), el.dataset.kind === 'draw' ? 'heavy' : 'default')));
+    // floating packshots with a light sweep
+    s.el.querySelectorAll('.float').forEach((wrap, j) => {
+      const k = wrap._k || 0;
+      const bob = Math.sin((t + j * 0.7) * 2 * Math.PI / 3.6) * wrap._amp;
+      wrap.style.transform = `translateY(${(1 - k) * 90 + bob}px) scale(${0.94 + 0.06 * k})`;
+      paintHero(wrap.querySelector('canvas'), (lt - 1.6 - j * 0.15) / 1.1);
+      const sh = s.el.querySelector('.shadow');
+      if (sh && j === 0) sh.style.transform = `scaleX(${(0.86 + 0.14 * k) * (1 - bob / 120)})`;
+    });
+    // the giant step numeral drifts a little faster than the screen (parallax)
+    const num = s.el.querySelector('.num');
+    if (num) num.style.transform = `translateX(${p.x * 0.45 + (1 - sp(lt, 'heavy')) * 80}px)`;
+    // slow ambient glows
+    s.el.querySelectorAll('.glow').forEach(g => {
+      const q = +g.dataset.glow;
+      g.style.transform = `translate(${Math.sin(t * 0.35 + q) * 60}px,${Math.cos(t * 0.28 + q * 2) * 50}px)`;
+    });
+  });
+
+  // hook: three scratch marks that keep scratching
+  const sc = document.querySelectorAll('#scratch path');
+  sc.forEach((p, i) => {
+    const cyc = ((t + 0.35 - i * 0.16) % 2.2 + 2.2) % 2.2;
+    const draw = Math.min(1, Math.max(0, cyc / 0.32));
+    const fade = cyc > 1.7 ? Math.max(0, 1 - (cyc - 1.7) / 0.35) : 1;
+    p.style.strokeDasharray = `${p._len} ${p._len}`; p.style.strokeDashoffset = p._len * (1 - draw); p.style.opacity = fade;
+  });
+
+  // cause: triggers orbit the itch
+  const s1 = screens[1], l1 = t - s1.start;
+  document.querySelectorAll('.orb').forEach(o => {
+    const a = (45 + 90 * +o.dataset.i - l1 * 5) * Math.PI / 180;
+    o.style.left = (540 + Math.cos(a) * 290 - 110) + 'px'; o.style.top = (1070 + Math.sin(a) * 290 - 78) + 'px';
+  });
+  document.getElementById('orbitring').style.transform = `rotate(${-l1 * 5}deg)`;
+  document.getElementById('orbitring').style.transformOrigin = '540px 1070px';
+  const pu = ((l1 % 1.6) + 1.6) % 1.6 / 1.6;
+  const pulse = document.getElementById('pulse');
+  pulse.style.transform = `scale(${1 + pu * 0.35})`; pulse.style.opacity = l1 > 1.1 ? (1 - pu) * 0.5 : 0;
+
+  // cycle: a dot that keeps going round
+  const l2 = t - screens[2].start, ang = (-90 + Math.max(0, l2 - 1.2) * 110) * Math.PI / 180;
+  const dot = document.getElementById('cycledot');
+  dot.setAttribute('transform', `translate(${540 + Math.cos(ang) * 270} ${1010 + Math.sin(ang) * 270})`);
+  dot.style.opacity = Math.min(1, Math.max(0, (l2 - 1.2) * 3));
+
+  // routine: the week track fills
+  const l7 = t - screens[7].start, wf = sp(l7 - 2.4, { w: 3.4, z: 1 });
+  document.getElementById('weekfill').style.width = (852 * wf) + 'px';
+  document.querySelectorAll('.wk').forEach(w => { const on = wf * 852 >= +w.dataset.i * 414; w.style.background = on ? '#9FE8C9' : '#0B2A23'; w.style.borderColor = on ? '#9FE8C9' : 'rgba(255,255,255,.3)'; });
+
+  // proof: count up to 4.6 and fill the stars
+  const l8 = t - screens[8].start, cnt = 4.6 * sp(l8 - 0.3, { w: 7, z: 1 });
+  document.getElementById('score').textContent = (Math.round(cnt * 10) / 10).toFixed(1);
+  document.querySelectorAll('.star .fill').forEach((f, i) => { const v = Math.min(1, Math.max(0, cnt - i)); f.style.width = (86 * v) + 'px'; });
+
+  // the offer button is pressed
+  const btn = document.querySelector('.btn');
+  const press = T(t, 1, [[PRESS, 0.94, 'snappy'], [PRESS + 0.16, 1, 'snappy']]);
+  btn.style.transform = `scale(${press * (0.86 + 0.14 * sp(t - screens[9].start - 1.9, 'default'))})`;
+  btn.style.opacity = Math.min(1, 1.6 * sp(t - screens[9].start - 1.9, 'default'));
+
+  document.querySelector('#bar>div').style.width = (852 * Math.min(1, t / PRESS)) + 'px';
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+
+const load = src => new Promise(r => { const im = new Image(); im.onload = () => r(im); im.src = src; });
+window.ready = Promise.all([
+  document.fonts.load('560 100px Fraunces'), document.fonts.load('italic 500 100px Fraunces'), document.fonts.load('400 100px Fraunces'),
+  document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('500 40px Inter'), document.fonts.load('600 40px Inter'),
+  ...['salmon', 'balm', 'spray'].map(n => load(`assets/${n}.png`).then(im => IMGS[n] = im)),
+  ...[...document.images].map(i => i.decode()),
+]).then(() => { layout(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
