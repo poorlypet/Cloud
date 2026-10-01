@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Itchy Skin Whiteboard</title>
+<style>
+@font-face{font-family:'Permanent Marker';src:url(fonts/permanent-marker.woff2) format('woff2')}
+@font-face{font-family:Kalam;font-weight:400;src:url(fonts/kalam-400.woff2) format('woff2')}
+@font-face{font-family:Kalam;font-weight:700;src:url(fonts/kalam-700.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 900;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--tile:#134A3D;--teal:#17695A;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--yellow:#FFF0A8;--coral:#F8BFA8;--gold:#C9982E;--mute:#5E6E66;--board:#F7F9F9}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:#C3CBC9;transform-origin:0 0}
+.page{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+.board{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;
+  background:
+    linear-gradient(112deg,rgba(255,255,255,0) 18%,rgba(255,255,255,.95) 33%,rgba(255,255,255,0) 47%),
+    linear-gradient(112deg,rgba(255,255,255,0) 50%,rgba(255,255,255,.6) 56%,rgba(255,255,255,0) 62%),
+    radial-gradient(ellipse 130% 85% at 45% 38%,#FDFEFE 0%,#F3F6F6 62%,#E6EBEA 100%)}
+.board svg{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.ink{position:absolute;left:0;top:0;width:1080px;height:1920px}
+svg.art{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.rail{position:absolute}
+.rail.top{left:-36px;width:1152px;top:0;height:30px;background:linear-gradient(#8E979A,#E9EDEE 30%,#C9CFD1 62%,#9AA3A6 92%,#6F787B)}
+.rail.bot{left:-36px;width:1152px;top:1876px;height:44px;background:linear-gradient(#6F787B,#A9B1B4 10%,#EEF1F2 34%,#C4CACC 64%,#8E979A)}
+.rail.side{top:0;width:36px;height:1920px;background:linear-gradient(90deg,#7F888B,#D8DDDF 30%,#F1F3F4 50%,#B9C0C2 76%,#7F888B)}
+.t{position:absolute}
+.pm{font-family:'Permanent Marker',cursive;color:var(--deep);line-height:1.12;white-space:nowrap}
+.kl{font-family:Kalam,cursive;font-weight:700;color:var(--deep);line-height:1.15}
+.wd{display:inline-block}
+.ic{display:inline-block;vertical-align:-.08em}
+.hl{position:relative;display:inline-block;z-index:0}
+.hl>i{position:absolute;left:-.1em;right:-.12em;top:.22em;bottom:.02em;z-index:-1;transform-origin:0 50%;transform:scaleX(0)}
+.hl>i>svg{display:block;width:100%;height:100%;overflow:visible}
+.note{position:absolute;box-sizing:border-box;background-color:var(--c);visibility:hidden;
+  background-image:linear-gradient(180deg,rgba(11,42,35,.05) 0,rgba(11,42,35,0) 13%),linear-gradient(315deg,rgba(11,42,35,.10) 0,rgba(11,42,35,0) 11%)}
+.note .tx{position:absolute}
+.note svg.nart{position:absolute;left:0;top:0;overflow:visible}
+.center{text-align:center}
+.pill{display:inline-block;border:4px solid var(--rust);border-radius:16px;padding:2px 14px 0;font-family:'Permanent Marker',cursive;color:var(--rust);font-size:30px;line-height:1.25;letter-spacing:.04em}
+#fx{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:900;pointer-events:none;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute" id="defs">
+    <filter id="rough" filterUnits="userSpaceOnUse" x="-300" y="-300" width="1680" height="2520">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/>
+      <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+    </filter>
+    <filter id="ghostblur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+  </svg>
+
+  <!-- HOOK -->
+  <div class="page" id="hook"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="l1" style="left:72px;top:232px;font-size:160px">Does your</div>
+    <div class="t pm" data-k="l2" style="left:72px;top:420px;font-size:148px" data-fit="866">dog scratch</div>
+    <div class="t pm" data-k="l3" style="left:72px;top:604px;font-size:156px" data-fit="866"><span class="all" style="color:var(--rust)">ALL</span> night?</div>
+    <div class="t kl" data-k="scr" style="left:84px;top:1290px;font-size:66px;color:var(--rust);transform:rotate(-5deg);transform-origin:0 50%;white-space:nowrap">scratch, scratch, scratch…</div>
+  </div></div>
+
+  <!-- RELATE: sound familiar? -->
+  <div class="page" id="relate"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="title" style="left:72px;top:226px;font-size:106px" data-fit="866">Sound <span class="hl" data-k="hl" data-hc="#9FE8C9"><i></i>familiar?</span></div>
+    <div class="note" data-k="n0" data-rot="-3" data-from="-420,-260" style="--c:var(--yellow);left:64px;top:452px;width:414px;height:414px">
+      <svg class="nart" width="400" height="400" data-cb="0"></svg>
+      <div class="tx kl" data-k="x0" style="left:30px;top:120px;width:364px;font-size:55px">Scratching that wakes them at night</div></div>
+    <div class="note" data-k="n1" data-rot="2.5" data-from="420,-300" style="--c:var(--mint);left:516px;top:440px;width:414px;height:414px">
+      <svg class="nart" width="400" height="400" data-cb="1"></svg>
+      <div class="tx kl" data-k="x1" style="left:30px;top:120px;width:364px;font-size:55px">One paw licked rusty brown</div></div>
+    <div class="note" data-k="n2" data-rot="2" data-from="-420,320" style="--c:var(--coral);left:76px;top:928px;width:414px;height:414px">
+      <svg class="nart" width="400" height="400" data-cb="2"></svg>
+      <div class="tx kl" data-k="x2" style="left:30px;top:120px;width:364px;font-size:55px">Pink skin on the belly and armpits</div></div>
+    <div class="note" data-k="n3" data-rot="-2.5" data-from="420,340" style="--c:var(--yellow);left:520px;top:918px;width:414px;height:414px">
+      <svg class="nart" width="400" height="400" data-cb="3"></svg>
+      <div class="tx kl" data-k="x3" style="left:30px;top:120px;width:364px;font-size:55px">Flakes on the bed</div></div>
+  </div></div>
+
+  <!-- CAUSE: what's actually going on -->
+  <div class="page" id="cause"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="t1" style="left:72px;top:222px;font-size:106px" data-fit="866">What's actually</div>
+    <div class="t pm" data-k="t2" style="left:72px;top:352px;font-size:106px">going on<span style="color:var(--rust)">?</span></div>
+    <div class="t kl" data-k="line" style="left:76px;top:528px;width:870px;font-size:64px;line-height:1.12">An <span class="hl" data-k="hl" data-hc="#FBE38A"><i></i>over-reaction</span> to<br>something ordinary:</div>
+    <div class="note" data-k="s0" data-rot="-4" data-from="-380,-120" style="--c:var(--mint);left:104px;top:850px;width:290px;height:290px"><svg class="nart" width="290" height="290" data-ico="pollen"></svg><div class="tx kl center" style="left:10px;width:270px;top:178px;font-size:56px">pollen</div></div>
+    <div class="note" data-k="s1" data-rot="3" data-from="380,-120" style="--c:var(--yellow);left:600px;top:842px;width:290px;height:290px"><svg class="nart" width="290" height="290" data-ico="grass"></svg><div class="tx kl center" style="left:10px;width:270px;top:178px;font-size:56px">grass</div></div>
+    <div class="note" data-k="s2" data-rot="2.5" data-from="-380,160" style="--c:var(--coral);left:118px;top:1168px;width:290px;height:290px"><svg class="nart" width="290" height="290" data-ico="dust"></svg><div class="tx kl center" style="left:10px;width:270px;top:178px;font-size:56px">dust mites</div></div>
+    <div class="note" data-k="s3" data-rot="-3" data-from="380,160" style="--c:var(--mint);left:590px;top:1160px;width:290px;height:290px"><svg class="nart" width="290" height="290" data-ico="food"></svg><div class="tx kl center" style="left:10px;width:270px;top:178px;font-size:56px">a food</div></div>
+  </div></div>
+
+  <!-- CYCLE: the itch cycle -->
+  <div class="page" id="cycle"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="title" style="left:72px;top:222px;font-size:118px" data-fit="866">The itch cycle</div>
+    <div class="t pm center" data-k="a" style="left:225px;width:560px;top:524px;font-size:72px;color:var(--rust)">inflamed skin</div>
+    <div class="t pm center" data-k="b" style="left:640px;width:300px;top:992px;font-size:72px">scratch!</div>
+    <div class="t pm center" data-k="c" style="left:66px;width:370px;top:992px;font-size:72px;color:var(--rust)">worse skin</div>
+    <div class="t kl center" data-k="rep" style="left:355px;width:300px;top:812px;font-size:50px;color:var(--teal)">on repeat</div>
+    <div class="note" data-k="note" data-rot="-3" data-from="0,420" style="--c:var(--coral);left:372px;top:1222px;width:264px;height:264px"><div class="tx kl center" style="left:12px;width:240px;top:44px;font-size:54px;line-height:1.08">Let's break the cycle</div></div>
+  </div></div>
+
+  <!-- HELPS: what helps -->
+  <div class="page" id="helps"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="title" style="left:72px;top:216px;font-size:140px">What helps</div>
+    <div class="note" data-k="in" data-rot="-2.5" data-from="-420,-200" style="--c:var(--mint);left:72px;top:446px;width:400px;height:400px">
+      <div class="tx pm" style="left:30px;top:26px;font-size:64px;color:var(--rust)">INSIDE</div>
+      <div class="tx kl" data-k="inx" style="left:30px;top:122px;width:345px;font-size:52px">Omega-3 every day to calm the skin</div></div>
+    <div class="note" data-k="out" data-rot="2" data-from="420,-220" style="--c:var(--yellow);left:520px;top:452px;width:400px;height:400px">
+      <div class="tx pm" style="left:30px;top:26px;font-size:64px;color:var(--rust)">OUTSIDE</div>
+      <div class="tx kl" data-k="outx" style="left:30px;top:122px;width:345px;font-size:52px">A gentle wash and a balm</div></div>
+    <div class="t kl center" data-k="flea" style="left:64px;width:876px;top:938px;font-size:54px;color:var(--teal);white-space:nowrap" data-fit="870">+ a flea routine underneath it all</div>
+    <div class="t pm" data-k="settle" style="left:72px;top:1110px;font-size:80px;line-height:1.25">Most dogs settle in<br><span class="hl" data-k="hl" data-hc="#9FE8C9"><i></i>two to three weeks.</span></div>
+  </div></div>
+
+  <!-- BUNDLE -->
+  <div class="page" id="bundle"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="title" style="left:72px;top:218px;font-size:98px" data-fit="866">Itchy Skin Bundle</div>
+    <div class="t pm" data-k="price" data-bump="ding" style="left:72px;top:352px;font-size:150px;color:var(--rust);transform-origin:20% 60%">£48.57</div>
+    <div class="t kl" data-k="was" style="left:82px;top:536px;font-size:58px;color:var(--mute);white-space:nowrap">was £53.97</div>
+    <div class="note" data-k="save" data-rot="6" data-from="380,-160" style="--c:var(--coral);left:676px;top:372px;width:236px;height:236px">
+      <div class="tx pm center" style="left:0;width:236px;top:30px;font-size:66px">SAVE</div>
+      <div class="tx pm center" style="left:0;width:236px;top:102px;font-size:92px;color:var(--rust)">10%</div></div>
+    <div class="t kl" data-k="n0" style="left:292px;top:672px;font-size:56px;white-space:nowrap">Itch Relief Chews</div>
+    <div class="t kl" data-k="b0" style="left:294px;width:640px;font-size:44px;color:var(--teal);line-height:1.1">Calms itching from the inside with natural ingredients and omegas.</div>
+    <div class="t kl" data-k="n1" style="left:292px;top:942px;font-size:56px;white-space:nowrap">Itch Relief Balm</div>
+    <div class="t kl" data-k="b1" style="left:294px;width:640px;font-size:44px;color:var(--teal);line-height:1.1">Chamomile and lavender balm soothes sore, red patches on contact.</div>
+    <div class="t kl" data-k="n2" style="left:292px;top:1212px;font-size:56px;white-space:nowrap">Itch &amp; Allergy Drops</div>
+    <div class="t kl" data-k="b2" style="left:294px;width:640px;font-size:44px;color:var(--teal);line-height:1.1">Natural drops help settle the underlying allergic response.</div>
+    <div class="t" data-tag="0" style="left:70px;width:200px;top:870px;text-align:center"><span class="pill">INSIDE</span></div>
+    <div class="t" data-tag="1" style="left:70px;width:200px;top:1140px;text-align:center"><span class="pill">OUTSIDE</span></div>
+    <div class="t" data-tag="2" style="left:70px;width:200px;top:1410px;text-align:center"><span class="pill">INSIDE</span></div>
+  </div></div>
+
+  <!-- SINGLES: inside, outside, wash -->
+  <div class="page" id="singles"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="title" style="left:72px;top:222px;font-size:78px" data-fit="866">Inside <span style="color:var(--rust)">·</span> Outside <span style="color:var(--rust)">·</span> Wash</div>
+    <div class="note" data-k="t0" data-rot="-4" data-from="-360,-60" style="--c:var(--mint);left:58px;top:368px;width:214px;height:78px"><div class="tx pm center" style="left:0;width:214px;top:10px;font-size:42px">INSIDE</div></div>
+    <div class="note" data-k="t1" data-rot="3" data-from="-360,-60" style="--c:var(--yellow);left:58px;top:743px;width:214px;height:78px"><div class="tx pm center" style="left:0;width:214px;top:10px;font-size:42px">OUTSIDE</div></div>
+    <div class="note" data-k="t2" data-rot="-3" data-from="-360,-60" style="--c:var(--coral);left:58px;top:1118px;width:214px;height:78px"><div class="tx pm center" style="left:0;width:214px;top:10px;font-size:42px">WASH</div></div>
+    <div class="t" style="left:316px;top:390px;width:624px">
+      <div class="pm" data-k="n0" style="position:relative;font-size:58px;white-space:normal">Scottish Salmon Oil</div>
+      <div class="pm" data-k="p0" data-bump="g0" style="position:relative;font-size:92px;color:var(--rust);display:inline-block;transform-origin:20% 60%">£9.99</div>
+      <div class="kl" data-k="b0" data-fit="620" style="position:relative;font-size:46px;color:var(--teal);white-space:nowrap">Rich in Omega-3 (EPA and DHA)</div></div>
+    <div class="t" style="left:316px;top:752px;width:624px">
+      <div class="pm" data-k="n1" style="position:relative;font-size:58px;white-space:normal">Hot Spot <span style="font-family:Kalam;font-weight:700;font-size:1.08em">&amp;</span> Itch Relief Spray</div>
+      <div class="pm" data-k="p1" data-bump="g1" style="position:relative;font-size:92px;color:var(--rust);display:inline-block;transform-origin:20% 60%">£12.99</div>
+      <div class="kl" data-k="b1" style="position:relative;font-size:46px;color:var(--teal)">No steroids, no rinse</div></div>
+    <div class="t" style="left:316px;top:1140px;width:624px">
+      <div class="pm" data-k="n2" style="position:relative;font-size:58px;white-space:normal">Oatmeal Shampoo</div>
+      <div class="pm" data-k="p2" data-bump="g2" style="position:relative;font-size:92px;color:var(--rust);display:inline-block;transform-origin:20% 60%">£9.99</div>
+      <div class="kl" data-k="b2" data-fit="620" style="position:relative;font-size:46px;color:var(--teal);white-space:nowrap">Colloidal oatmeal and aloe vera</div></div>
+  </div></div>
+
+  <!-- PROOF -->
+  <div class="page" id="proof"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t pm" data-k="score" style="left:72px;top:196px;font-size:240px;line-height:1.1"><span style="color:var(--rust)">4.6</span>/5</div>
+    <div class="t" style="left:72px;top:502px;width:860px;height:150px">
+      <span class="t" data-k="s0" style="left:0;top:0" data-star="1"></span><span class="t" data-k="s1" style="left:168px;top:0" data-star="1"></span>
+      <span class="t" data-k="s2" style="left:336px;top:0" data-star="1"></span><span class="t" data-k="s3" style="left:504px;top:0" data-star="1"></span>
+      <span class="t" data-k="s4" style="left:672px;top:0" data-star="0.6"></span></div>
+    <div class="t kl" data-k="from" style="left:76px;top:662px;font-size:64px;white-space:nowrap">from 101 verified reviews</div>
+    <div class="note" data-k="note" data-rot="-2" data-from="0,520" style="--c:var(--yellow);left:150px;top:796px;width:660px;height:660px">
+      <div class="tx pm" style="left:40px;top:6px;font-size:150px;line-height:1;color:var(--rust)">“</div>
+      <div class="tx kl" data-k="q" style="left:52px;top:128px;width:566px;font-size:54px;line-height:1.16">this has done what it says my dogs skin is so much better, less flaky which means less itching</div>
+      <div class="tx kl" data-k="who" style="left:52px;top:488px;width:566px;font-size:44px;color:var(--teal);white-space:nowrap">Amie F. · Oatmeal Shampoo<br><span class="ic" data-mini="4" style="margin-top:8px"></span></div></div>
+  </div></div>
+
+  <!-- OFFER + CTA -->
+  <div class="page" id="offer"><div class="ink">
+    <svg class="art"></svg>
+    <div class="t" data-k="coupon" data-rot="-2.5" data-from="0,-520" data-slap="1" style="left:72px;top:236px;width:846px;height:330px;visibility:hidden">
+      <div id="cMain" style="position:absolute;left:0;top:0;width:700px;height:330px;background:var(--yellow)">
+        <div style="position:absolute;left:18px;top:18px;width:652px;height:288px;box-sizing:border-box;border:4px dashed rgba(11,42,35,.38);border-radius:10px"></div>
+        <div class="kl center" data-k="off" style="position:absolute;left:30px;width:630px;top:40px;font-size:54px;white-space:nowrap">10% off your first order</div>
+        <div class="center" data-k="code" style="position:absolute;left:30px;width:630px;top:138px;font-family:Inter,sans-serif;font-weight:900;font-size:116px;color:var(--rust);line-height:1.15;letter-spacing:.01em;font-feature-settings:'zero' 1,'ss01' 1;white-space:nowrap" data-fit="610">POORLY10</div>
+      </div>
+      <div id="cStub" style="position:absolute;left:692px;top:0;width:154px;height:330px;background:var(--yellow)">
+        <div class="kl center" style="position:absolute;left:0;width:154px;top:116px;font-size:34px;line-height:1.05;color:var(--mute)">tear<br>here</div>
+      </div>
+    </div>
+    <div class="note" data-k="p0" data-rot="-3" data-from="-380,200" style="--c:var(--mint);left:66px;top:650px;width:262px;height:262px">
+      <div class="tx kl center" style="left:16px;width:230px;top:38px;font-size:46px;line-height:1.08">Free UK delivery</div>
+      <div class="tx pm center" style="left:8px;width:246px;top:150px;font-size:50px;color:var(--rust)">over £39</div></div>
+    <div class="note" data-k="p1" data-rot="2" data-from="0,420" style="--c:var(--yellow);left:347px;top:640px;width:262px;height:262px">
+      <div class="tx pm center" style="left:8px;width:246px;top:42px;font-size:66px;color:var(--rust)">30-day</div>
+      <div class="tx kl center" style="left:16px;width:230px;top:138px;font-size:46px">guarantee</div></div>
+    <div class="note" data-k="p2" data-rot="-2" data-from="380,200" style="--c:var(--coral);left:628px;top:650px;width:262px;height:262px">
+      <div class="tx kl center" style="left:16px;width:230px;top:30px;font-size:44px;line-height:1.08">Subscribe &amp; save</div>
+      <div class="tx pm center" style="left:8px;width:246px;top:144px;font-size:44px;color:var(--rust);line-height:1.1">up to 15%</div></div>
+    <div class="t" id="btn" style="left:120px;top:1010px;width:780px;height:166px;background:var(--deep);border-radius:46px 58px 50px 62px / 60px 48px 64px 52px;transform-origin:50% 50%">
+      <div class="pm center" data-k="cta" style="position:absolute;left:0;width:780px;top:28px;font-size:82px;color:#fff">Shop itchy skin <svg class="ic" data-arrow="1" width="100" height="70" viewBox="0 0 100 70"></svg></div>
+    </div>
+    <div class="t" data-k="mark" style="left:132px;top:1232px;width:100px;height:100px" data-markpop="1"></div>
+    <div class="t pm" data-k="url" style="left:258px;top:1228px;font-size:86px">poorly-pet.com</div>
+  </div></div>
+
+  <svg id="fx" viewBox="0 0 1080 1920"></svg>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring, track } = Motion;
+const TL = window.TL, FPS = 30, DUR = TL.DUR, B = TL.B;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { deep: '#0B2A23', tile: '#134A3D', teal: '#17695A', rust: '#A8542F', mark: '#C25E2E', mint: '#9FE8C9', yellow: '#FFF0A8', coral: '#F8BFA8',
+  gold: '#C9982E', mute: '#5E6E66', white: '#FFFFFF', peach: '#F6C3A8', hiY: '#FBE38A' };
+
+/* ---------- time helpers: every value is a spring of time ---------- */
+const crit = (dt, d) => dt <= 0 ? 0 : spring(dt, { w: 7 / Math.max(d, 0.04), z: 1 });
+const E = (pg, k) => TL.EV[pg][k];
+const P = (pg, k, t) => { const e = E(pg, k); return crit(t - e.t, e.d); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const f1 = v => v.toFixed(1), f3 = v => v.toFixed(3);
+
+/* ---------- drawing helpers ---------- */
+function S(tag, parent, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function ink(g, d, w = 9, c = C.deep) { return S('path', g, { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }
+function setDraw(p, q) {
+  const L = p._L || (p._L = p.getTotalLength() + 2);
+  q = clamp(q > 0.993 ? 1 : q);
+  p.style.visibility = q <= 0.002 ? 'hidden' : 'visible';
+  p.style.strokeDasharray = `${L} ${L}`;
+  p.style.strokeDashoffset = L * (1 - q);
+}
+function drawSeq(items, q) {
+  const ws = items.map(p => Math.max(50, p._L || (p._L = p.getTotalLength() + 2)));
+  const tot = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  items.forEach((p, i) => { const a = acc / tot, b = (acc + ws[i]) / tot; acc += ws[i]; setDraw(p, (q - a) / (b - a)); });
+}
+// A group revealed left to right by a growing clip rect (marker fills and labels).
+let cid = 0;
+function reveal(defs, parent, attrs = {}) {
+  const id = `c${cid++}`;
+  const r = S('rect', S('clipPath', defs, { id }), { x: 0, y: 0, width: 0, height: 0 });
+  const g = S('g', parent, Object.assign({ 'clip-path': `url(#${id})` }, attrs));
+  return { g, set(q) {
+    const b = this.bb || (this.bb = g.getBBox());
+    r.setAttribute('x', b.x - 12); r.setAttribute('y', b.y - 12); r.setAttribute('height', b.height + 24);
+    r.setAttribute('width', Math.max(0, (b.width + 24) * clamp(q > 0.993 ? 1 : q)));
+  } };
+}
+const head = (x, y, a, s = 34) => `M ${f1(x + s * Math.cos(a + 2.55))} ${f1(y + s * Math.sin(a + 2.55))} L ${f1(x)} ${f1(y)} L ${f1(x + s * Math.cos(a - 2.55))} ${f1(y + s * Math.sin(a - 2.55))}`;
+// A hand-drawn rounded box whose stroke runs a little past its start.
+function box(x, y, w, h, r, j = [3, -4, 2, -3, 4, -2, 3, -3], over = 40) {
+  return `M ${x + r} ${y + j[0]} C ${x + w * .35} ${y + j[1]}, ${x + w * .65} ${y + j[2]}, ${x + w - r} ${y + j[3]} Q ${x + w} ${y}, ${x + w + j[4]} ${y + r}` +
+    ` C ${x + w + j[5]} ${y + h * .35}, ${x + w + j[6]} ${y + h * .65}, ${x + w} ${y + h - r} Q ${x + w} ${y + h}, ${x + w - r} ${y + h + j[7]}` +
+    ` C ${x + w * .65} ${y + h + j[0]}, ${x + w * .35} ${y + h + j[1]}, ${x + r} ${y + h} Q ${x} ${y + h}, ${x + j[2]} ${y + h - r}` +
+    ` C ${x + j[3]} ${y + h * .65}, ${x + j[4]} ${y + h * .35}, ${x} ${y + r} Q ${x} ${y}, ${x + r} ${y + j[0]}` + (over ? ` L ${x + r + over} ${y + j[0] - 3}` : '');
+}
+const STAR = (cx, cy, R) => { let d = ''; for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? R * 0.45 : R; d += (k ? ' L ' : 'M ') + f1(cx + Math.cos(a) * r) + ' ' + f1(cy + Math.sin(a) * r); } return d + ' Z'; };
+const offs = (e, root) => { let x = 0, y = 0; for (let a = e; a && a !== root; a = a.offsetParent) { x += a.offsetLeft; y += a.offsetTop; } return [x, y]; };
+
+/* ---------- handwriting: words revealed left to right at a steady marker pace ---------- */
+function splitWords(root) {
+  const words = [];
+  const walk = n => [...n.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(s => {
+        if (!s) return;
+        if (/^\s+$/.test(s)) { frag.appendChild(document.createTextNode(s)); return; }
+        const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = s; frag.appendChild(sp); words.push(sp);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1 && c.tagName !== 'I' && c.tagName !== 'BR') {
+      if (c.classList.contains('ic')) { words.push(c); c._w = 4; } else walk(c);
+    }
+  });
+  walk(root);
+  const len = w => w._w || w.textContent.length;
+  const total = words.reduce((a, w) => a + len(w), 0);
+  let acc = 0;
+  words.forEach(w => { w._a = acc / total; acc += len(w); w._b = acc / total; });
+  return words;
+}
+function writeWords(words, t, e) {
+  for (const w of words) {
+    const s = e.t + e.d * w._a, d = Math.max(0.05, e.d * (w._b - w._a));
+    const p = crit(t - s, d);
+    if (p <= 0.002) { w.style.visibility = 'hidden'; continue; }
+    w.style.visibility = 'visible';
+    w.style.clipPath = p > 0.99 ? 'none' : `inset(-50% ${f1((1 - p) * 136 - 18)}% -50% -18%)`;
+  }
+}
+
+/* ---------- sticky notes: slapped on, a little rotation and a peel shadow ---------- */
+function slap(el, t, T) {
+  const rot = +(el.dataset.rot || 0), [fx, fy] = (el.dataset.from || '0,-300').split(',').map(Number);
+  const t0 = T - 0.24;
+  if (t < t0) { el.style.visibility = 'hidden'; return; }
+  el.style.visibility = 'visible';
+  const lift = 1 - spring(t - t0, 'snappy');
+  const sq = track(t, 1, [[T, 0.965, 'snappy'], [T + 0.07, 1, 'default']]);
+  el.style.transform = `translate(${f1(fx * lift)}px,${f1(fy * lift)}px) rotate(${f3(rot + 10 * lift)}deg) scale(${f3((1 + 0.22 * lift) * sq)})`;
+  if (!el.dataset.slap) el.style.boxShadow = `0 ${f1(3 + 26 * lift)}px ${f1(5 + 34 * lift)}px rgba(16,27,23,${f3(0.16 + 0.10 * lift)}), 9px 12px 12px -9px rgba(16,27,23,${f3(0.30 * (1 - lift))})`;
+}
+const popScale = (t, T) => t < T ? 0 : track(t, 0, [[T, 1, { w: 20, z: 0.5 }]]);
+
+/* ---------- pages ---------- */
+const pages = {};
+function page(id, build) {
+  const el = document.getElementById(id);
+  const ink_ = el.querySelector('.ink');
+  const svg = el.querySelector('svg.art');
+  svg.setAttribute('viewBox', '0 0 1080 1920');
+  const pg = { id, el, ink: ink_, t0: TL.PAGES[id].t0, turn: TL.PAGES[id].turn, i: TL.PAGES[id].i, defs: S('defs', svg) };
+  pg.g = S('g', svg, { filter: 'url(#rough)' });
+  pg.build = build;
+  pages[id] = pg;
+}
+function prepare() {
+  for (const pg of Object.values(pages)) {
+    const tw = x => { const r = document.createRange(); r.selectNodeContents(x); const q = r.getBoundingClientRect(); return q.width; };
+    pg.el.querySelectorAll('[data-fit]').forEach(x => { let fs = parseFloat(x.style.fontSize); while (tw(x) > +x.dataset.fit && fs > 20) { fs -= 2; x.style.fontSize = fs + 'px'; } });
+    pg.el.querySelectorAll('.hl').forEach(h => { h.firstElementChild.innerHTML = `<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="M 2 8 L 98 3 L 99 35 L 1 38 Z" fill="${h.dataset.hc}" opacity="0.85"/></svg>`; });
+    pg.texts = [...pg.el.querySelectorAll('[data-k]')].filter(x => !(x instanceof SVGElement) && !x.classList.contains('hl'))
+      .map(x => ({ el: x, k: x.dataset.k, e: E(pg.id, x.dataset.k) })).filter(x => x.e);
+    pg.texts.forEach(tx => { if (tx.e.kind === 'write') tx.words = splitWords(tx.el); });
+    pg.hls = [...pg.el.querySelectorAll('.hl')].map(x => ({ i: x.firstElementChild, k: x.dataset.k }));
+    pg.bumps = [...pg.el.querySelectorAll('[data-bump]')].map(x => ({ el: x, k: x.dataset.bump }));
+  }
+  for (const pg of Object.values(pages)) pg.update = pg.build(pg.g, pg);
+}
+function updatePage(pg, t) {
+  for (const tx of pg.texts) {
+    const e = tx.e;
+    if (e.kind === 'write') writeWords(tx.words, t, e);
+    else if (e.kind === 'slap') slap(tx.el, t, e.t);
+    else if (e.kind === 'pop') { const s = popScale(t, e.t); tx.el.style.visibility = s > 0.01 ? 'visible' : 'hidden'; tx.el.style.transform = `scale(${f3(s)})`; }
+  }
+  for (const h of pg.hls) h.i.style.transform = `scaleX(${f3(P(pg.id, h.k, t))}) rotate(-1.2deg)`;
+  for (const b of pg.bumps) { const e = E(pg.id, b.k); b.el.style.transform = `scale(${f3(track(t, 1, [[e.t, 1.13, 'snappy'], [e.t + 0.1, 1, 'default']]))})`; }
+  pg.update && pg.update(t);
+}
+
+/* ---------- product doodles (local box 220 x 260) ---------- */
+function product(pg, parent, kind, x, y, s = 1) {
+  const g = S('g', parent, { transform: `translate(${x} ${y}) scale(${s})` });
+  const W = { chews: C.mint, balm: C.yellow, drops: C.coral, oil: C.peach, spray: C.mint, shampoo: C.yellow }[kind];
+  const SH = {
+    chews: { fill: 'M 34 92 L 46 236 Q 48 252 64 252 L 156 252 Q 172 252 174 236 L 186 92 Z M 24 66 Q 24 54 36 54 L 184 54 Q 196 54 196 66 L 196 84 Q 196 94 186 94 L 34 94 Q 24 94 24 84 Z',
+      lines: ['M 24 66 Q 24 54 36 54 L 184 54 Q 196 54 196 66 L 196 84 Q 196 94 186 94 L 34 94 Q 24 94 24 84 Z', 'M 34 94 L 46 236 Q 48 252 64 252 L 156 252 Q 172 252 174 236 L 186 94', 'M 62 132 L 158 132 L 158 206 L 62 206 Z'],
+      label: ['chews', 110, 180, 26], lab: 'M 62 132 L 158 132 L 158 206 L 62 206 Z' },
+    balm: { fill: 'M 22 150 Q 22 120 110 120 Q 198 120 198 150 L 198 214 Q 198 244 110 244 Q 22 244 22 214 Z',
+      lines: ['M 22 150 Q 22 120 110 120 Q 198 120 198 150 Q 198 180 110 180 Q 22 180 22 150 Z', 'M 22 150 L 22 214 Q 22 244 110 244 Q 198 244 198 214 L 198 150', 'M 22 176 Q 110 208 198 176',
+        'M 84 100 C 74 86, 94 74, 84 58', 'M 112 96 C 102 80, 122 66, 112 48', 'M 140 100 C 130 86, 150 74, 140 58'],
+      label: ['balm', 110, 230, 30] },
+    drops: { fill: 'M 62 128 Q 62 110 80 110 L 140 110 Q 158 110 158 128 L 158 238 Q 158 252 144 252 L 76 252 Q 62 252 62 238 Z M 96 88 L 96 50 Q 96 22 110 22 Q 124 22 124 50 L 124 88 Z',
+      lines: ['M 62 128 Q 62 110 80 110 L 140 110 Q 158 110 158 128 L 158 238 Q 158 252 144 252 L 76 252 Q 62 252 62 238 Z', 'M 86 110 L 86 88 L 134 88 L 134 110', 'M 96 88 L 96 50 Q 96 22 110 22 Q 124 22 124 50 L 124 88',
+        'M 190 146 Q 174 172 190 184 Q 206 172 190 146 Z'],
+      label: ['drops', 110, 194, 25], lab: 'M 74 152 L 146 152 L 146 214 L 74 214 Z' },
+    oil: { fill: 'M 56 112 Q 56 96 72 96 L 148 96 Q 164 96 164 112 L 164 238 Q 164 252 150 252 L 70 252 Q 56 252 56 238 Z',
+      lines: ['M 56 112 Q 56 96 72 96 L 148 96 Q 164 96 164 112 L 164 238 Q 164 252 150 252 L 70 252 Q 56 252 56 238 Z', 'M 84 96 L 84 74 L 136 74 L 136 96', 'M 110 74 L 110 46',
+        'M 78 44 L 150 44 Q 156 44 156 38 L 156 32 Q 156 26 150 26 L 84 26 Q 78 26 78 32 Z', 'M 156 35 L 194 35 L 194 50'],
+      label: ['oil', 110, 192, 32], lab: 'M 70 146 L 150 146 L 150 212 L 70 212 Z' },
+    spray: { fill: 'M 60 126 Q 60 108 78 108 L 142 108 Q 160 108 160 126 L 160 238 Q 160 252 146 252 L 74 252 Q 60 252 60 238 Z',
+      lines: ['M 60 126 Q 60 108 78 108 L 142 108 Q 160 108 160 126 L 160 238 Q 160 252 146 252 L 74 252 Q 60 252 60 238 Z', 'M 90 108 L 90 88 L 130 88 L 130 108',
+        'M 84 88 L 84 52 Q 84 40 96 40 L 154 40 L 170 58 L 124 62 L 124 88', 'M 116 64 Q 100 80 108 96', 'M 182 42 L 206 32', 'M 184 54 L 212 54', 'M 182 66 L 206 76'],
+      label: ['spray', 110, 194, 25], lab: 'M 74 152 L 146 152 L 146 214 L 74 214 Z' },
+    shampoo: { fill: 'M 64 96 Q 50 170 58 238 Q 60 252 76 252 L 144 252 Q 160 252 162 238 Q 170 170 156 96 Z',
+      lines: ['M 64 96 Q 50 170 58 238 Q 60 252 76 252 L 144 252 Q 160 252 162 238 Q 170 170 156 96 Z', 'M 78 96 L 78 62 Q 78 50 90 50 L 130 50 Q 142 50 142 62 L 142 96', 'M 78 74 L 142 74',
+        'M 110 226 L 110 150', 'M 110 168 Q 90 162 88 142 Q 106 148 110 168', 'M 110 168 Q 130 162 132 142 Q 114 148 110 168', 'M 110 196 Q 90 190 88 170 Q 106 176 110 196', 'M 110 196 Q 130 190 132 170 Q 114 176 110 196'],
+      label: ['oat', 110, 246, 0] },
+  }[kind];
+  const wash = reveal(pg.defs, g, { transform: 'translate(7 6)' });
+  S('path', wash.g, { d: SH.fill, fill: W, 'fill-rule': 'nonzero' });
+  if (SH.lab) S('path', wash.g, { d: SH.lab, fill: '#fff', transform: 'translate(-7 -6)' });
+  const lines = SH.lines.map((d, i) => ink(g, d, i === 0 ? 8 : 7));
+  const lab = reveal(pg.defs, g);
+  if (SH.label[3]) { const tx = S('text', lab.g, { x: SH.label[1], y: SH.label[2], 'text-anchor': 'middle', 'font-family': 'Kalam', 'font-weight': 700, 'font-size': SH.label[3], fill: C.deep }); tx.textContent = SH.label[0]; }
+  return { g, set(q) { drawSeq(lines, q * 1.15); wash.set(q * 1.5 - 0.45); lab.set(q * 2 - 1); } };
+}
+
+/* ---------- HOOK ---------- */
+page('hook', (g, pg) => {
+  const all = pg.el.querySelector('.all'), [ax, ay] = offs(all, pg.ink), aw = all.offsetWidth, ah = all.offsetHeight;
+  const base = ay + ah * 0.93;
+  const ul = [0, 1, 2].map(i => ink(g, `M ${f1(ax - 6 + i * 6)} ${f1(base + i * 30 + (i === 1 ? 3 : 0))} C ${f1(ax + aw * .35)} ${f1(base + i * 30 - 9 + i * 2)}, ${f1(ax + aw * .7)} ${f1(base + i * 30 + 6)}, ${f1(ax + aw + 10 - i * 12)} ${f1(base + i * 30 - 4 - i * 3)}`, 12 - i, C.rust));
+  // a crescent moon and three sparkles: night
+  const mg = S('g', g);
+  const moonD = 'M 830 960 C 700 930, 640 1070, 700 1150 C 760 1230, 890 1210, 930 1120 C 860 1160, 780 1120, 772 1050 C 766 1000, 790 972, 830 960 Z';
+  const mw = reveal(pg.defs, mg, { transform: 'translate(8 7)' }); S('path', mw.g, { d: moonD, fill: C.yellow });
+  const moon = ink(mg, moonD, 9, C.teal);
+  const spark = (x, y, r) => ink(mg, `M ${x} ${y - r} L ${x} ${y + r} M ${x - r} ${y} L ${x + r} ${y}`, 7, C.teal);
+  const sp = [spark(600, 990, 26), spark(940, 980, 20), spark(630, 1200, 18)];
+  // scratch marks beside the doodle
+  const marks = ['M 130 1110 L 190 1020', 'M 180 1130 L 240 1040', 'M 230 1150 L 290 1060'].map(d => ink(g, d, 9, C.rust));
+  return t => {
+    ['u1', 'u2', 'u3'].forEach((k, i) => setDraw(ul[i], P('hook', k, t)));
+    const q = P('hook', 'moon', t);
+    drawSeq([moon, ...sp], q); mw.set(q * 1.4 - 0.4);
+    drawSeq(marks, (q - 0.3) * 1.6);
+    const e = E('hook', 'moon'), wob = track(t, 0, [[e.t + e.d, 1, 'snappy'], [e.t + e.d + 0.08, -0.6, 'snappy'], [e.t + e.d + 0.16, 0, 'default']]);
+    mg.setAttribute('transform', `rotate(${f3(wob * 4)} 800 1070)`);
+  };
+});
+
+/* ---------- RELATE: four sticky notes, each box ticked ---------- */
+page('relate', (g, pg) => {
+  const cbs = [...pg.el.querySelectorAll('svg[data-cb]')].map(svg => {
+    const bx = ink(svg, box(28, 30, 66, 66, 10, [2, -3, 2, -2, 3, -2, 2, -3], 16), 6, C.deep);
+    const tk = ink(svg, 'M 40 62 L 60 86 L 112 18', 11, C.rust);
+    return { bx, tk };
+  });
+  return t => cbs.forEach((c, i) => { setDraw(c.bx, P('relate', `b${i}`, t)); setDraw(c.tk, P('relate', `k${i}`, t)); });
+});
+
+/* ---------- CAUSE: an over-reaction to something ordinary ---------- */
+page('cause', (g, pg) => {
+  // little icons on the four notes
+  const ICO = {
+    pollen: s => { [[0, -34], [32, -10], [20, 28], [-20, 28], [-32, -10]].forEach(([dx, dy]) => S('circle', s, { cx: 145 + dx, cy: 92 + dy, r: 22, fill: C.white, stroke: C.deep, 'stroke-width': 6 })); S('circle', s, { cx: 145, cy: 92, r: 16, fill: C.gold, stroke: C.deep, 'stroke-width': 6 }); },
+    grass: s => ['M 95 150 C 95 110, 85 80, 70 52', 'M 125 150 C 125 100, 120 70, 128 34', 'M 155 150 C 158 110, 170 80, 192 56', 'M 185 150 C 186 120, 196 96, 214 84', 'M 70 150 L 225 150'].forEach(d => ink(s, d, 7, C.deep)),
+    dust: s => [[100, 70, 9], [140, 52, 7], [178, 76, 10], [120, 110, 8], [164, 120, 9], [204, 104, 6], [86, 128, 6], [146, 86, 5], [196, 140, 7]].forEach(([x, y, r]) => S('circle', s, { cx: x, cy: y, r, fill: C.deep, opacity: 0.85 })),
+    food: s => { ink(s, 'M 70 92 L 220 92 C 214 140, 186 156, 145 156 C 104 156, 76 140, 70 92 Z', 7, C.deep); ink(s, 'M 96 92 C 100 66, 130 58, 145 70 C 160 58, 190 66, 194 92', 6, C.rust); },
+  };
+  pg.el.querySelectorAll('svg[data-ico]').forEach(s => ICO[s.dataset.ico](s));
+  const ar = ink(g, 'M 640 690 C 700 740, 700 790, 650 832', 9, C.rust), arh = ink(g, head(650, 832, 2.3, 32), 9, C.rust);
+  const ar2 = ink(g, 'M 440 690 C 380 740, 380 790, 420 832', 9, C.rust), arh2 = ink(g, head(420, 832, 0.9, 32), 9, C.rust);
+  return t => drawSeq([ar, arh, ar2, arh2], P('cause', 'arrow', t));
+});
+
+/* ---------- CYCLE: the itch cycle, a loop ---------- */
+page('cycle', (g, pg) => {
+  const CX = 505, CY = 880, R = 312;
+  const pt = a => [CX + R * Math.cos(a * Math.PI / 180), CY + R * Math.sin(a * Math.PI / 180) * 0.98];
+  const arc = (a0, a1) => { let d = ''; for (let a = a0, i = 0; a <= a1 + 0.01; a += (a1 - a0) / 24, i++) { const [x, y] = pt(a); const j = [0, 3, -2, 2, -3, 1][i % 6]; d += (i ? ' L ' : 'M ') + f1(x + j) + ' ' + f1(y - j); } return d; };
+  const segs = [[-40, 4], [58, 118], [183, 222]];
+  const arcs = segs.map(([a0, a1]) => ink(g, arc(a0, a1), 10, C.deep));
+  const heads = segs.map(([, a1]) => { const [x, y] = pt(a1), ta = (a1 + 90) * Math.PI / 180; return ink(g, head(x, y, ta, 38), 10, C.deep); });
+  // a small "repeat" ring inside the loop that keeps turning once the loop is drawn
+  const rg = S('g', g);
+  const rr = 120, ring = ink(rg, `M ${CX + rr} ${CY - 40} A ${rr} ${rr} 0 1 1 ${CX + rr * Math.cos(-0.5)} ${CY - 40 + rr * Math.sin(-0.5)}`, 7, C.teal);
+  const ringH = ink(rg, head(CX + rr * Math.cos(-0.5), CY - 40 + rr * Math.sin(-0.5), -0.5 + Math.PI / 2 + 0.25, 26), 7, C.teal);
+  return t => {
+    drawSeq(arcs, P('cycle', 'loop', t));
+    drawSeq(heads, P('cycle', 'heads', t));
+    const e = E('cycle', 'spin'), q = crit(t - e.t, e.d);
+    drawSeq([ring, ringH], q);
+    // the ring spins up on a heavy spring and keeps turning
+    const dt = Math.max(0, t - e.t), ang = 150 * dt * spring(dt, 'heavy');
+    rg.setAttribute('transform', `rotate(${f1(ang)} ${CX} ${CY - 40})`);
+  };
+});
+
+/* ---------- HELPS: inside, outside, a flea routine underneath ---------- */
+page('helps', (g, pg) => {
+  const ul = ink(g, 'M 76 392 C 300 380, 560 398, 860 384', 12, C.rust);
+  const br = ink(g, 'M 90 892 C 92 920, 120 920, 300 916 C 440 914, 480 920, 500 942 C 520 920, 560 914, 700 916 C 880 920, 906 920, 908 890', 8, C.teal);
+  return t => { setDraw(ul, P('helps', 'ul', t)); setDraw(br, P('helps', 'br', t)); };
+});
+
+/* ---------- BUNDLE: chews, balm and drops ---------- */
+page('bundle', (g, pg) => {
+  [0, 1, 2].forEach(i => { const n = pg.el.querySelector(`[data-k="n${i}"]`), b = pg.el.querySelector(`[data-k="b${i}"]`); b.style.top = (n.offsetTop + n.offsetHeight + 4) + 'px'; });
+  const was = pg.el.querySelector('[data-k="was"]'), [wx, wy] = offs(was, pg.ink);
+  const strike = ink(g, `M ${wx - 8} ${wy + was.offsetHeight * 0.58} L ${wx + was.offsetWidth + 8} ${wy + was.offsetHeight * 0.48}`, 8, C.rust);
+  const items = [['chews', 662], ['balm', 932], ['drops', 1202]].map(([k, y]) => product(pg, g, k, 60, y, 0.84));
+  const divs = [ink(g, 'M 80 650 C 380 656, 660 646, 930 652', 4, '#B9C4C1'), ink(g, 'M 80 920 C 380 926, 660 916, 930 922', 4, '#B9C4C1'), ink(g, 'M 80 1190 C 380 1196, 660 1186, 930 1192', 4, '#B9C4C1')];
+  const tags = [...pg.el.querySelectorAll('[data-tag]')];
+  return t => {
+    setDraw(strike, P('bundle', 'strike', t));
+    items.forEach((it, i) => { const q = P('bundle', `d${i}`, t); it.set(q); setDraw(divs[i], q * 1.6); const s = popScale(t, E('bundle', `n${i}`).t + 0.15); tags[i].style.visibility = s > .01 ? 'visible' : 'hidden'; tags[i].style.transform = `scale(${f3(s)})`; });
+  };
+});
+
+/* ---------- SINGLES: salmon oil, spray, shampoo ---------- */
+page('singles', (g, pg) => {
+  const items = [['oil', 448], ['spray', 823], ['shampoo', 1198]].map(([k, y]) => product(pg, g, k, 66, y, 1.0));
+  return t => items.forEach((it, i) => it.set(P('singles', `d${i}`, t)));
+});
+
+/* ---------- PROOF: 4.6/5, five stars, a review ---------- */
+page('proof', (g, pg) => {
+  const stars = [...pg.el.querySelectorAll('[data-star]')].map((sp, i) => {
+    const fr = +sp.dataset.star;
+    sp.style.width = '150px'; sp.style.height = '150px'; sp.style.transformOrigin = '75px 75px';
+    sp.innerHTML = `<svg width="150" height="150" viewBox="0 0 150 150" style="overflow:visible"><defs><clipPath id="sc${i}"><rect x="0" y="0" width="${f1(14 + 122 * fr)}" height="150"/></clipPath></defs>
+      <path d="${STAR(75, 78, 70)}" fill="${C.gold}" clip-path="url(#sc${i})" transform="translate(5 4)"/><path d="${STAR(75, 78, 70)}" fill="none" stroke="${C.deep}" stroke-width="8" stroke-linejoin="round"/></svg>`;
+    return sp;
+  });
+  const mini = pg.el.querySelector('[data-mini]');
+  mini.innerHTML = `<svg width="150" height="36" viewBox="0 0 150 36">${[0, 1, 2, 3].map(k => `<path d="${STAR(18 + k * 36, 19, 16)}" fill="${C.gold}" stroke="${C.deep}" stroke-width="3" stroke-linejoin="round"/>`).join('')}</svg>`;
+  return null;
+});
+
+/* ---------- OFFER: the coupon tears, three perks, the button gets pressed ---------- */
+page('offer', (g, pg) => {
+  // torn edges: the coupon's right edge and the stub's left edge share one zigzag
+  const zz = [], N = 15;
+  for (let i = 0; i <= N; i++) zz.push([i % 2 ? 8 : 0, i * 330 / N]);
+  const main = document.getElementById('cMain'), stub = document.getElementById('cStub');
+  main.style.clipPath = `polygon(0 0, ${zz.map(([x, y]) => `${692 + x}px ${f1(y)}px`).join(',')}, 0 330px)`;
+  stub.style.clipPath = `polygon(${zz.map(([x, y]) => `${x}px ${f1(y)}px`).join(',')}, 154px 330px, 154px 0)`;
+  const cp = pg.el.querySelector('[data-k="coupon"]');
+  // the button: a marker outline drawn around a filled body that is revealed left to right
+  const btn = document.getElementById('btn');
+  const bx = 120, by = 1010, bw = 780, bh = 166;
+  const outline = ink(g, box(bx - 12, by - 10, bw + 24, bh + 20, 56, [3, -4, 3, -3, 4, -3, 3, -4], 50), 8, C.rust);
+  const arrowSvg = pg.el.querySelector('[data-arrow]');
+  const a1 = ink(arrowSvg, 'M 8 36 C 30 33, 60 37, 86 35', 10, C.white), a2 = ink(arrowSvg, head(88, 35, 0, 30), 10, C.white);
+  const taps = ['M 912 990 L 948 954', 'M 930 1040 L 980 1036', 'M 870 972 L 884 924'].map(d => ink(g, d, 8, C.rust));
+  const mk = pg.el.querySelector('[data-markpop]');
+  mk.innerHTML = `<svg width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${C.mark}"/><rect x="42" y="20" width="16" height="60" rx="6" fill="#fff"/><rect x="20" y="42" width="60" height="16" rx="6" fill="#fff"/></svg>`;
+  const ul = ink(g, 'M 262 1348 C 440 1340, 700 1352, 892 1342', 8, C.teal);
+  return t => {
+    // the stub tears off and drops away
+    const te = E('offer', 'tear'), k = t < te.t ? 0 : spring(t - te.t, { w: 6.5, z: 0.95 });
+    const jig = track(t, 0, [[te.t - 0.12, 1, 'snappy'], [te.t, 0, 'snappy']]);
+    stub.style.transformOrigin = '0 0';
+    stub.style.transform = `translate(${f1(30 * k + 4 * jig)}px,${f1(1400 * k * k)}px) rotate(${f1(-6 * jig + 32 * k)}deg)`;
+    stub.style.visibility = k > 0.98 ? 'hidden' : 'visible';
+    const ce = E('offer', 'coupon'), lift = t < ce.t - 0.24 ? 1 : 1 - spring(t - (ce.t - 0.24), 'snappy');
+    cp.style.filter = `drop-shadow(${f1(6 * (1 - lift) + 2)}px ${f1(5 + 24 * lift)}px ${f1(6 + 22 * lift)}px rgba(16,27,23,${f3(0.20 + 0.08 * lift)}))`;
+    // button
+    const q = P('offer', 'btn', t);
+    setDraw(outline, q * 1.1);
+    btn.style.visibility = q > 0.01 ? 'visible' : 'hidden';
+    btn.style.clipPath = `inset(-10px ${f1(clamp(1 - q * 1.25) * 102 - 1)}% -10px -10px)`;
+    drawSeq([a1, a2], P('offer', 'arrow', t));
+    const pe = E('offer', 'press');
+    const s = track(t, 1, [[pe.t - 0.05, 0.93, 'snappy'], [pe.t + 0.12, 1, 'default']]);
+    btn.style.transform = `scale(${f3(s)})`;
+    btn.style.boxShadow = `0 ${f1(16 * s - 8)}px 0 rgba(11,42,35,.20)`;
+    outline.setAttribute('transform', `translate(510 1093) scale(${f3(s)}) translate(-510 -1093)`);
+    drawSeq(taps, crit(t - pe.t, 0.18));
+    setDraw(ul, P('offer', 'url', t) * 1.2 - 0.2);
+  };
+});
+
+/* ---------- boards, rails and the ghosting of old marker ---------- */
+const GHOST = ['M 140 520 c 30 -40 60 30 90 0 s 60 30 90 0 s 60 30 90 0 s 60 30 90 0 s 60 30 90 0', 'M 520 780 c 40 -30 70 25 110 0 s 70 25 110 0 s 70 25 110 0',
+  'M 640 1180 m -130 0 a 130 92 0 1 0 260 0 a 130 92 0 1 0 -260 0', 'M 170 1330 C 290 1270, 410 1310, 520 1250 L 490 1236 M 520 1250 L 500 1280',
+  'M 200 1560 c 24 -30 48 24 72 0 s 48 24 72 0 s 48 24 72 0', 'M 760 380 L 930 380 L 930 470 L 760 470 Z', 'M 120 920 c 30 -30 60 26 90 0 s 60 26 90 0'];
+let boardNo = -1;
+function decorate(pg) {
+  if (pg.turn !== 'wipe') boardNo++;
+  pg.board = boardNo;
+  const bd = document.createElement('div'); bd.className = 'board';
+  const v = boardNo, tr = [[0, 0, 1], [60, 140, -1], [-40, -80, 1], [30, 220, -1], [-20, 60, 1]][v % 5];
+  bd.innerHTML = `<svg viewBox="0 0 1080 1920"><g filter="url(#ghostblur)" transform="translate(${tr[0] + (tr[2] < 0 ? 1080 : 0)} ${tr[1]}) scale(${tr[2]} 1)" fill="none" stroke="#7A8783" stroke-width="15" stroke-linecap="round" opacity="0.06">
+    ${GHOST.map(d => `<path d="${d}"/>`).join('')}</g>
+    <ellipse cx="${300 + v * 90}" cy="${700 + v * 130}" rx="260" ry="70" fill="#8C9894" opacity="0.035" filter="url(#soft)" transform="rotate(-8 ${300 + v * 90} ${700 + v * 130})"/></svg>`;
+  pg.el.insertBefore(bd, pg.el.firstChild);
+  pg.boardEl = bd;
+  // aluminium edges and the marker tray (decorative, outside the safe area)
+  const rails = document.createElement('div');
+  rails.innerHTML = `<div class="rail top"></div><div class="rail side" style="left:-36px"></div><div class="rail side" style="left:1080px"></div><div class="rail bot"></div>
+    <svg style="position:absolute;left:0;top:1820px;width:1080px;height:100px" viewBox="0 0 1080 100">
+      <g transform="translate(640 34) rotate(-1.5)"><rect x="0" y="0" width="240" height="34" rx="12" fill="#F4F6F6" stroke="#9AA3A6" stroke-width="2"/><rect x="170" y="-2" width="78" height="38" rx="12" fill="${C.deep}"/><rect x="18" y="9" width="110" height="16" rx="5" fill="${C.deep}" opacity=".85"/></g>
+      <g transform="translate(330 38) rotate(1)"><rect x="0" y="0" width="240" height="34" rx="12" fill="#F4F6F6" stroke="#9AA3A6" stroke-width="2"/><rect x="-8" y="-2" width="78" height="38" rx="12" fill="${C.rust}"/><rect x="110" y="9" width="110" height="16" rx="5" fill="${C.rust}" opacity=".85"/></g>
+    </svg>`;
+  [...rails.children].forEach(c => pg.el.appendChild(c));
+}
+
+/* ---------- transitions: the felt eraser wipe and the board slide ---------- */
+const fx = document.getElementById('fx');
+const ROWS = [250, 730, 1210, 1690], XL = 40, XR = 1040;
+let WP = `M -260 ${ROWS[0]}`;
+ROWS.forEach((y, i) => { const [a, b] = i % 2 ? [XR, XL] : [XL, XR]; if (i) WP += ` L ${a} ${y}`; WP += ` L ${b} ${y}`; });
+const WP_EXIT = WP + ' L -420 2240';
+const pathAll = S('path', fx, { d: WP_EXIT, fill: 'none', stroke: 'none' });
+const LMASK = (() => { const p = S('path', fx, { d: WP }); const L = p.getTotalLength(); p.remove(); return L; })();
+const LALL = pathAll.getTotalLength();
+const WIPE_D = 1.12; // seconds for the whole eraser move (critically damped)
+// the moment the eraser has covered the board: solve crit(dt, WIPE_D) = LMASK / LALL
+const COVER = (() => { let dt = 0; while (crit(dt, WIPE_D) < LMASK / LALL) dt += 0.002; return dt; })();
+const eraser = S('g', fx, { visibility: 'hidden' });
+eraser.innerHTML = `<rect x="-92" y="-226" width="196" height="470" rx="26" fill="rgba(16,27,23,.22)" filter="url(#soft)" transform="translate(16 20)"/>
+  <rect x="-100" y="-236" width="200" height="472" rx="24" fill="#5B6361"/><rect x="-100" y="-236" width="200" height="472" rx="24" fill="none" stroke="#3E4644" stroke-width="3"/>
+  <rect x="-84" y="-220" width="168" height="440" rx="30" fill="${C.deep}"/><rect x="-66" y="-200" width="34" height="400" rx="16" fill="#fff" opacity=".10"/>
+  <path d="M 40 -170 L 40 170" stroke="#000" stroke-opacity=".25" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(-6 -36)"><rect x="-34" y="-34" width="68" height="68" rx="16" fill="${C.mark}"/><rect x="-6" y="-22" width="12" height="44" rx="4" fill="#fff"/><rect x="-22" y="-6" width="44" height="12" rx="4" fill="#fff"/></g>`;
+// one mask per board that gets wiped: a white sheet with the eraser's swept band in near-black
+const maskDefs = document.getElementById('defs');
+const masks = {};
+function makeMask(id) {
+  const m = S('mask', maskDefs, { id: `m-${id}`, maskUnits: 'userSpaceOnUse', x: -400, y: -400, width: 1880, height: 2720 });
+  S('rect', m, { x: -400, y: -400, width: 1880, height: 2720, fill: '#fff' });
+  const p = S('path', m, { d: WP, fill: 'none', stroke: '#000', 'stroke-width': 500, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  p.style.strokeDasharray = `${LMASK + 4} ${LMASK + 4}`;
+  masks[id] = p;
+}
+const SLIDE = { w: 10, z: 0.8 }, GAP = 1150;
+
+function windowOf(i) {
+  const id = TL.ORDER[i], pg = pages[id], nid = TL.ORDER[i + 1], nx = nid ? pages[nid] : null;
+  let start = 0;
+  if (pg.turn === 'slide') start = pg.t0 - TL.SLIDE_LEAD * B;
+  if (pg.turn === 'wipe') start = pg.t0 - TL.WIPE_LEAD * B + COVER;
+  let end = Infinity;
+  if (nx && nx.turn === 'slide') end = nx.t0 - TL.SLIDE_LEAD * B + 1.4;
+  if (nx && nx.turn === 'wipe') end = nx.t0 - TL.WIPE_LEAD * B + COVER + 0.7;
+  return [start, end];
+}
+
+function renderFrame(t) {
+  let wipeFor = null;
+  TL.ORDER.forEach((id, i) => {
+    const pg = pages[id], [a, b] = windowOf(i);
+    const nid = TL.ORDER[i + 1], nx = nid ? pages[nid] : null;
+    if (pg.turn === 'wipe' && t >= pg.t0 - TL.WIPE_LEAD * B - 0.05 && t < pg.t0 - TL.WIPE_LEAD * B + WIPE_D * 1.6) wipeFor = pg;
+    if (t < a || t >= b) { pg.el.style.display = 'none'; return; }
+    pg.el.style.display = 'block';
+    pg.el.style.zIndex = 10 + i;
+    // slides: this board arrives from the right; the previous one is pushed off to the left
+    let x = 0;
+    if (pg.turn === 'slide') { const ts = pg.t0 - TL.SLIDE_LEAD * B; x = GAP * (1 - spring(t - ts, SLIDE)); }
+    if (nx && nx.turn === 'slide') { const ts = nx.t0 - TL.SLIDE_LEAD * B; if (t >= ts) x = -GAP * spring(t - ts, SLIDE); }
+    pg.el.style.transform = x ? `translateX(${f1(x)}px)` : 'none';
+    // a board that is being wiped shows through under the next page's writing until its ghost settles
+    if (pg.turn === 'wipe') { const pv = pages[TL.ORDER[i - 1]], [, pe] = windowOf(i - 1); pg.boardEl.style.display = t < pe ? 'none' : 'block'; }
+    if (nx && nx.turn === 'wipe') {
+      const ts = nx.t0 - TL.WIPE_LEAD * B;
+      if (t >= ts) {
+        const s = LALL * crit(t - ts, WIPE_D), mp = masks[id];
+        mp.style.strokeDashoffset = (LMASK + 4) - Math.min(s, LMASK + 4);
+        // erased marker leaves a faint ghost that settles away
+        const gl = Math.round(12 * (1 - crit(t - ts - COVER, 0.45)));
+        mp.setAttribute('stroke', `rgb(${gl},${gl},${gl})`);
+        pg.ink.style.mask = `url(#m-${id})`;
+      } else pg.ink.style.mask = 'none';
+    } else pg.ink.style.mask = 'none';
+    updatePage(pg, t);
+  });
+  if (wipeFor) {
+    const ts = wipeFor.t0 - TL.WIPE_LEAD * B, s = LALL * crit(t - ts, WIPE_D);
+    if (t < ts || s > LALL - 2) eraser.setAttribute('visibility', 'hidden');
+    else {
+      const p = pathAll.getPointAtLength(s), p2 = pathAll.getPointAtLength(Math.min(LALL, s + 30));
+      const dx = p2.x - p.x, tilt = dx > 5 ? 4 : dx < -5 ? -4 : 0;
+      const lift = track(t, 1.06, [[ts, 1, 'snappy']]);
+      eraser.setAttribute('visibility', 'visible');
+      eraser.setAttribute('transform', `translate(${f1(p.x)} ${f1(p.y)}) rotate(${tilt}) scale(${f3(lift)})`);
+    }
+  } else eraser.setAttribute('visibility', 'hidden');
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all(['400 100px "Permanent Marker"', '700 100px Kalam', '400 100px Kalam', '900 100px Inter'].map(f => document.fonts.load(f)))
+  .then(() => document.fonts.ready).then(() => {
+    TL.ORDER.forEach(id => decorate(pages[id]));
+    TL.ORDER.forEach((id, i) => { const nx = TL.ORDER[i + 1]; if (nx && pages[nx].turn === 'wipe') makeMask(id); });
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'block'; });
+    prepare();
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'none'; });
+    return true;
+  });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const stage = document.getElementById('stage');
+  const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `translate(${(innerWidth - 1080 * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { window.renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
