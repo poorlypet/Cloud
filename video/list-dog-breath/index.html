@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fresher Dog Breath</title>
+<style>
+@font-face{font-family:'Cabin Sketch';font-weight:700;src:url(fonts/cabinsketch-700.woff2) format('woff2')}
+@font-face{font-family:'Patrick Hand';font-weight:400;src:url(fonts/patrickhand-400.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--chalk:#F5F2EA;--mint:#9FE8C9;--rust:#E8996B;--deep:#0B2A23}
+html,body{margin:0;height:100%;background:#06180F;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--deep);transform-origin:0 0}
+#world{position:absolute;left:0;top:0;width:1080px;height:1920px}
+canvas.board{position:absolute;left:-30px;top:-30px;width:1140px;height:1980px;z-index:0}
+.panel{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+svg.art{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.t{position:absolute;color:var(--chalk);filter:url(#chalkT);white-space:nowrap}
+.h{font-family:'Cabin Sketch',cursive;font-weight:700;line-height:1}
+.b{font-family:'Patrick Hand',cursive;font-weight:400;line-height:1.12}
+.w{font-family:Inter,sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1}
+.wrap{white-space:normal}
+.mint{color:var(--mint)}.rust{color:var(--rust)}
+.wd{display:inline-block}
+.stamp{border:8px solid #F2A97C;border-radius:18px;padding:8px 22px 4px;color:#F7B98F;background:rgba(232,153,107,.10);font-family:'Cabin Sketch',cursive;font-weight:700;line-height:1}
+.eraser{position:absolute;left:0;top:0;width:1080px;height:1920px;display:none}
+.eraser canvas,.eraser svg{position:absolute;left:-30px;top:-30px;width:1140px;height:1980px}
+.eraser svg{left:0;top:0;width:1080px;height:1920px;overflow:visible}
+#trk{position:absolute;left:0;top:0;width:1080px;height:1920px;z-index:200;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <!-- chalk on text: grainy erosion plus a slightly rough edge (fixed seeds) -->
+      <filter id="chalkT" x="-6%" y="-12%" width="112%" height="124%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="7" result="g"/>
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.0 0 0 0 -0.72" result="ga"/>
+        <feComposite in="SourceGraphic" in2="ga" operator="in" result="e"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="w"/>
+        <feDisplacementMap in="e" in2="w" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- chalk on drawn strokes and hatch fills -->
+      <filter id="chalkS" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1480" height="2320" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" seed="3" result="g"/>
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.0 0 0 0 -0.8" result="ga"/>
+        <feComposite in="SourceGraphic" in2="ga" operator="in" result="e"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="5" result="w"/>
+        <feDisplacementMap in="e" in2="w" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- the eraser's smudge: streaky chalk haze along the sweep -->
+      <filter id="smudge" filterUnits="userSpaceOnUse" x="-400" y="-200" width="1880" height="2320" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0018 0.009" numOctaves="3" seed="8" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.95  0 0 0 0 0.92  1.3 0 0 0 -0.3" result="w"/>
+        <feComposite in="w" in2="SourceAlpha" operator="in" result="s"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="2" result="w2"/>
+        <feDisplacementMap in="s" in2="w2" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+  <div id="world"><div id="trk"><svg class="art"></svg></div></div>
+</div>
+
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring, track } = Motion;
+const TL = window.TL, FPS = 30, DUR = TL.DUR, B = TL.B;
+const NS = 'http://www.w3.org/2000/svg';
+const C = { chalk: '#F5F2EA', mint: '#9FE8C9', rust: '#E8996B', mark: '#C25E2E', dim: 'rgba(245,242,234,.55)' };
+const world = document.getElementById('world');
+
+/* ---------- time helpers: every value is a spring of time ---------- */
+// A critically damped spring used as progress: 0 before dt=0, ~0.99 at dt=d.
+const crit = (dt, d) => dt <= 0 ? 0 : spring(dt, { w: 7 / Math.max(d, 0.04), z: 1 });
+const E = (id, k) => TL.EV[id][k];
+const P = (id, k, t) => { const e = E(id, k); return crit(t - e.t, e.d); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const f1 = v => (+v).toFixed(1);
+// a slam: big and tilted, then springs down onto the board
+const slamS = (t, ts, from = 2.0, p = 'default') => track(t, from, [[ts, 1, p]]);
+
+/* ---------- drawing helpers ---------- */
+function S(tag, parent, attrs = {}) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function ink(g, d, w = 10, c = C.chalk) { return S('path', g, { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }
+function setDraw(p, q) {
+  const L = p._L || (p._L = p.getTotalLength() + 2);
+  q = clamp(q > 0.993 ? 1 : q);
+  p.style.visibility = q <= 0.002 ? 'hidden' : 'visible';
+  p.style.strokeDasharray = `${L} ${L}`;
+  p.style.strokeDashoffset = L * (1 - q);
+}
+// Draw strokes one after another, each weighted by its length.
+function drawSeq(items, q) {
+  const ws = items.map(p => Math.max(40, p._L || (p._L = p.getTotalLength() + 2)));
+  const tot = ws.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  items.forEach((p, i) => { const a = acc / tot, b = (acc + ws[i]) / tot; acc += ws[i]; setDraw(p, (q - a) / (b - a)); });
+}
+// A rough rounded box whose stroke runs a little past its start, like chalk that did not stop.
+function box(x, y, w, h, r, j = [3, -4, 2, -3, 4, -2, 3, -3], over = 0) {
+  return `M ${x + r} ${y + j[0]} C ${x + w * .35} ${y + j[1]}, ${x + w * .65} ${y + j[2]}, ${x + w - r} ${y + j[3]} Q ${x + w} ${y}, ${x + w + j[4]} ${y + r}` +
+    ` C ${x + w + j[5]} ${y + h * .35}, ${x + w + j[6]} ${y + h * .65}, ${x + w} ${y + h - r} Q ${x + w} ${y + h}, ${x + w - r} ${y + h + j[7]}` +
+    ` C ${x + w * .65} ${y + h + j[0]}, ${x + w * .35} ${y + h + j[1]}, ${x + r} ${y + h} Q ${x} ${y + h}, ${x + j[2]} ${y + h - r}` +
+    ` C ${x + j[3]} ${y + h * .65}, ${x + j[4]} ${y + h * .35}, ${x} ${y + r} Q ${x} ${y}, ${x + r} ${y + j[0]}` + (over ? ` L ${x + r + over} ${y + j[0] - 3}` : '');
+}
+const closed = d => d.replace(/ L [^ ]+ [^ ]+$/, '') + ' Z';
+const head = (x, y, a, s = 34) => `M ${f1(x + s * Math.cos(a + 2.55))} ${f1(y + s * Math.sin(a + 2.55))} L ${f1(x)} ${f1(y)} L ${f1(x + s * Math.cos(a - 2.55))} ${f1(y + s * Math.sin(a - 2.55))}`;
+// A rough loop around a point (a little more than one turn, like a teacher circling an answer).
+function loop(cx, cy, rx, ry, turns = 1.12, a0 = -2.4, k = [1, .97, 1.04, .98, 1.03, .96]) {
+  let d = '';
+  const n = Math.round(48 * turns);
+  for (let i = 0; i <= n; i++) {
+    const u = i / n, a = a0 + u * turns * Math.PI * 2, f = k[i % k.length] * (1 + 0.06 * u);
+    d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rx * f) + ' ' + f1(cy + Math.sin(a) * ry * f);
+  }
+  return d;
+}
+// A wobbly line from a to b.
+function line(x0, y0, x1, y1, wob = 4, ph = 0) {
+  const n = 6; let d = `M ${f1(x0)} ${f1(y0)}`;
+  const L = Math.hypot(x1 - x0, y1 - y0) || 1, nx = -(y1 - y0) / L, ny = (x1 - x0) / L;
+  for (let i = 1; i <= n; i++) { const u = i / n, o = i < n ? wob * Math.sin(u * 5.3 + ph) : 0; d += ` L ${f1(x0 + (x1 - x0) * u + nx * o)} ${f1(y0 + (y1 - y0) * u + ny * o)}`; }
+  return d;
+}
+// Chalk colouring-in: a dense zigzag clipped to a shape, drawn on like a hand scribbling.
+let cid = 0;
+function scribble(defs, g, clipD, x, y, w, h, color, step = 20, sw = 18, lean = 0.3, op = 0.9, rule = 'nonzero') {
+  const id = `cl${cid++}`;
+  S('path', S('clipPath', defs, { id }), { d: clipD, 'clip-rule': rule });
+  const gg = S('g', g, { 'clip-path': `url(#${id})`, opacity: op });
+  let d = '';
+  const n = Math.ceil((w + h * lean) / step) + 2;
+  for (let i = 0; i <= n; i++) {
+    const top = i % 2 === 0, xx = x - h * lean - step + i * step;
+    d += (i ? ' L ' : 'M ') + f1(top ? xx + h * lean : xx) + ' ' + f1(top ? y - 12 : y + h + 12);
+  }
+  return ink(gg, d, sw, color);
+}
+const tick = (x, y, s) => `M ${x} ${y + s * 0.5} L ${x + s * 0.38} ${y + s * 0.88} L ${x + s} ${y}`;
+function star(cx, cy, R, r = R * 0.45) {
+  let d = '';
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r : R; d += (i ? ' L ' : 'M ') + f1(cx + Math.cos(a) * rr) + ' ' + f1(cy + Math.sin(a) * rr); }
+  return d + ' Z';
+}
+// a little four-point glint: freshness
+function glint(g, cx, cy, s, c = C.chalk, w = 8) {
+  const q = s * 0.22;
+  return [ink(g, `M ${cx} ${cy - s * 1.3} Q ${cx + q} ${cy - q}, ${cx + s} ${cy} Q ${cx + q} ${cy + q}, ${cx} ${cy + s * 1.3} Q ${cx - q} ${cy + q}, ${cx - s} ${cy} Q ${cx - q} ${cy - q}, ${cx} ${cy - s * 1.3} Z`, w * 0.8, c),
+    ink(g, `M ${cx + s * 1.25} ${cy - s * 1.15} l 3 3`, w * 1.1, c)];
+}
+
+/* ---------- product doodles (objects only; local box 580 x 420; k scales the chalk width) ---------- */
+const DOOD = {
+  brush(g, defs, k = 1) { // triple-head toothbrush (bristles above, below and on the head) and a tube of paste
+    const handle = box(24, 128, 316, 46, 23, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const neck = 'M 336 138 C 352 142, 364 144, 380 146 M 336 164 C 352 160, 364 158, 380 156';
+    const headD = box(378, 128, 156, 46, 12, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const topB = box(390, 70, 132, 58, 8, [1, -2, 1, -1, 2, -1, 1, -2]), botB = box(390, 174, 132, 58, 8, [1, -2, 1, -1, 2, -1, 1, -2]);
+    let br = '';
+    for (let x = 404; x <= 508; x += 20) br += ` M ${x} 80 L ${x} 118 M ${x} 184 L ${x} 222`;
+    const cap = box(40, 300, 66, 62, 12, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const tube = 'M 106 306 C 220 296, 330 292, 452 282 L 466 396 C 340 388, 220 384, 106 360 Z';
+    const crimp = 'M 452 300 L 470 300 M 455 324 L 473 324 M 457 348 L 475 348 M 459 372 L 477 372';
+    const stripe = 'M 170 330 C 250 324, 330 320, 410 316';
+    const lines = [ink(g, handle, 10 * k), ink(g, neck, 8 * k), ink(g, headD, 10 * k), ink(g, topB, 8 * k, C.mint), ink(g, botB, 8 * k, C.mint), ink(g, br, 6 * k, C.mint),
+      ink(g, tube, 10 * k), ink(g, cap, 9 * k), ink(g, crimp, 6 * k), ink(g, stripe, 7 * k, C.rust)];
+    const fills = [scribble(defs, g, closed(handle), 24, 128, 316, 46, C.mint, 16, 14 * k, 0.4, 0.85),
+      scribble(defs, g, tube, 106, 282, 360, 114, C.rust, 20, 16 * k, 0.35, 0.7),
+      scribble(defs, g, closed(cap), 40, 300, 66, 62, C.chalk, 14, 12 * k, 0.3, 0.8)];
+    return { lines, fills };
+  },
+  crackerz(g, defs, k = 1) { // a stand-up treat pouch with a label, crunchy bites and a mint leaf
+    const pouch = 'M 52 40 L 290 40 L 310 384 Q 172 412 34 384 Z';
+    const zip = 'M 58 86 L 286 86', notch = 'M 52 62 L 64 62 M 290 62 L 278 62';
+    const label = box(86, 150, 172, 160, 16, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const lab = 'M 112 202 L 232 202 M 112 240 L 210 240 M 112 276 L 190 276';
+    const bites = [[350, 260, 104, 82], [470, 218, 92, 78], [404, 330, 100, 70]].map(([x, y, w, h]) => [box(x, y, w, h, 24, [2, -2, 1, -2, 2, -1, 2, -2]), x, y, w, h]);
+    const dots = bites.map(([, x, y, w, h]) => `M ${x + w * .3} ${y + h * .4} l 2 2 M ${x + w * .6} ${y + h * .35} l 2 2 M ${x + w * .45} ${y + h * .68} l 2 2 M ${x + w * .74} ${y + h * .66} l 2 2`).join(' ');
+    const leaf = 'M 430 140 C 470 70, 548 78, 560 120 C 520 168, 466 172, 430 140 Z', vein = 'M 438 138 C 480 120, 520 112, 552 118';
+    const lines = [ink(g, pouch, 10 * k), ink(g, zip, 7 * k), ink(g, notch, 6 * k), ink(g, label, 8 * k, C.chalk), ink(g, lab, 7 * k, C.chalk),
+      ...bites.map(b => ink(g, b[0], 9 * k, C.chalk)), ink(g, dots, 9 * k, C.rust), ink(g, leaf, 8 * k, C.mint), ink(g, vein, 5 * k, C.mint)];
+    const fills = [scribble(defs, g, pouch + ' ' + closed(label), 34, 40, 276, 372, C.rust, 20, 16 * k, 0.3, 0.75, 'evenodd'),
+      ...bites.map(([d, x, y, w, h]) => scribble(defs, g, closed(d), x, y, w, h, C.chalk, 16, 12 * k, 0.3, 0.35)),
+      scribble(defs, g, leaf, 430, 80, 130, 92, C.mint, 14, 12 * k, 0.4, 0.8)];
+    return { lines, fills };
+  },
+  seaweed(g, defs, k = 1) { // a powder tub with a seaweed label, and a scoop of powder
+    const lid = box(40, 58, 290, 66, 16, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const body = 'M 54 124 L 76 386 Q 186 410 296 386 L 318 124';
+    const label = box(84, 196, 204, 136, 12, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const frond = 'M 186 320 C 160 290, 210 262, 182 228 M 184 290 C 206 282, 220 270, 226 254 M 180 266 C 160 260, 150 250, 146 236';
+    const scoop = 'M 350 300 C 360 372, 480 372, 494 300 Z', handleD = 'M 494 300 L 566 246';
+    const mound = 'M 356 300 C 380 250, 460 246, 488 300';
+    const sprinkle = 'M 404 214 l 3 3 M 434 196 l 3 3 M 462 222 l 3 3 M 420 170 l 3 3 M 450 150 l 3 3';
+    const lines = [ink(g, lid, 10 * k), ink(g, body, 10 * k), ink(g, label, 8 * k), ink(g, frond, 8 * k, C.mint),
+      ink(g, scoop, 9 * k), ink(g, handleD, 12 * k), ink(g, mound, 8 * k, C.mint), ink(g, sprinkle, 10 * k, C.mint)];
+    const fills = [scribble(defs, g, closed(lid), 40, 58, 290, 66, C.mint, 16, 14 * k, 0.3, 0.85),
+      scribble(defs, g, body + ' Z ' + closed(label), 54, 124, 264, 286, C.chalk, 22, 14 * k, 0.35, 0.3, 'evenodd'),
+      scribble(defs, g, mound + ' Z', 356, 246, 132, 56, C.mint, 14, 12 * k, 0.3, 0.85)];
+    return { lines, fills };
+  },
+  water(g, defs, k = 1) { // a bottle of water additive, one capful, a water bowl
+    const cap = box(98, 40, 104, 56, 10, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const shoulder = 'M 76 136 L 104 96 L 196 96 L 224 136';
+    const body = box(52, 136, 196, 262, 34, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const label = box(80, 212, 140, 112, 10, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const dropL = 'M 150 236 C 130 262, 132 296, 150 298 C 168 296, 170 262, 150 236';
+    const cup = 'M 340 96 L 458 128 M 350 100 L 366 168 L 430 184 L 446 124 M 372 140 L 436 156';
+    const pour = 'M 400 196 C 388 218, 390 236, 402 238 C 414 236, 414 218, 400 196';
+    const bowl = 'M 286 300 L 574 300 L 540 398 L 320 398 Z';
+    const wave = 'M 300 324 C 340 312, 370 336, 410 324 C 450 312, 480 336, 520 324 C 540 318, 552 322, 562 326';
+    const lines = [ink(g, cap, 9 * k), ink(g, shoulder, 9 * k), ink(g, body, 10 * k), ink(g, label, 7 * k), ink(g, dropL, 7 * k, C.mint),
+      ink(g, cup, 9 * k, C.rust), ink(g, pour, 8 * k, C.mint), ink(g, bowl, 10 * k), ink(g, wave, 7 * k, C.mint)];
+    const fills = [scribble(defs, g, closed(body) + ' ' + closed(label), 52, 136, 196, 262, C.mint, 20, 16 * k, 0.3, 0.75, 'evenodd'),
+      scribble(defs, g, closed(cap), 98, 40, 104, 56, C.rust, 14, 12 * k, 0.3, 0.85),
+      scribble(defs, g, bowl, 286, 300, 288, 98, C.rust, 20, 16 * k, 0.4, 0.7)];
+    return { lines, fills };
+  },
+  gel(g, defs, k = 1) { // a squeezy gel tube, its nozzle and a ribbon of gel; the cap lies beside it
+    const gg = S('g', g, { transform: 'translate(-40 4) rotate(-12 290 210) scale(1.2)' });
+    const tube = 'M 70 140 C 200 128, 320 128, 380 140 Q 430 200 380 260 C 320 272, 200 272, 70 260 Z';
+    const crimp = 'M 70 140 L 36 136 L 36 264 L 70 260 M 44 160 L 62 160 M 44 184 L 62 184 M 44 208 L 62 208 M 44 232 L 62 232';
+    const label = box(124, 166, 196, 68, 12, [1, -2, 1, -1, 2, -1, 1, -2]);
+    const lab = 'M 150 200 L 290 200';
+    const nozzle = 'M 410 184 L 448 186 L 448 214 L 410 216';
+    const ribbon = 'M 452 200 C 496 188, 516 222, 490 244 C 462 268, 486 300, 520 290 C 540 284, 548 268, 540 258';
+    const lines = [ink(gg, tube, 10 * k), ink(gg, crimp, 8 * k), ink(gg, label, 7 * k), ink(gg, lab, 7 * k), ink(gg, nozzle, 9 * k), ink(gg, ribbon, 14 * k, C.mint)];
+    const fills = [scribble(defs, gg, tube + ' ' + closed(label), 36, 128, 400, 146, C.mint, 20, 16 * k, 0.3, 0.75, 'evenodd'),
+      scribble(defs, gg, closed(label), 124, 166, 196, 68, C.rust, 16, 9 * k, 0.3, 0.45)];
+    return { lines, fills };
+  },
+};
+
+/* ---------- handwriting: words are revealed left to right at a steady writing pace ---------- */
+function splitWords(root) {
+  const words = [];
+  const walk = n => [...n.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(s => {
+        if (!s) return;
+        if (/^\s+$/.test(s)) { frag.appendChild(document.createTextNode(s)); return; }
+        const sp = document.createElement('span'); sp.className = 'wd'; sp.textContent = s; frag.appendChild(sp); words.push(sp);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1 && c.tagName !== 'BR') walk(c);
+  });
+  walk(root);
+  const total = words.reduce((a, w) => a + w.textContent.length, 0);
+  let acc = 0;
+  words.forEach(w => { w._a = acc / total; acc += w.textContent.length; w._b = acc / total; });
+  return words;
+}
+function writeWords(words, t, e) {
+  for (const w of words) {
+    const s = e.t + e.d * w._a, d = Math.max(0.05, e.d * (w._b - w._a));
+    const p = crit(t - s, d);
+    if (p <= 0.002) { w.style.visibility = 'hidden'; continue; }
+    w.style.visibility = 'visible';
+    w.style.clipPath = p > 0.99 ? 'none' : `inset(-50% ${f1((1 - p) * 136 - 18)}% -50% -20%)`;
+  }
+}
+
+/* ---------- pages ---------- */
+const pages = {};
+function page(id, build) {
+  const el = document.createElement('div'); el.className = 'panel'; el.id = id; world.appendChild(el);
+  const svg = S('svg', el, { class: 'art', viewBox: '0 0 1080 1920' });
+  const pg = { id, el, ...TL.BOARDS[id], defs: S('defs', svg), texts: [] };
+  pg.g = S('g', svg, { filter: 'url(#chalkS)' });
+  pg.build = build;
+  pages[id] = pg;
+  return pg;
+}
+// a chalk text: k is its event key; fx 'write' (revealed word by word), 'slam' or 'static'
+function txt(pg, k, html, cls, style, fit = 0, fx = null) {
+  const e = document.createElement('div'); e.className = 't ' + cls; e.innerHTML = html; e.style.cssText = style;
+  if (fit) e.dataset.fit = fit;
+  pg.el.appendChild(e);
+  pg.texts.push({ el: e, k, fx: fx || (E(pg.id, k) ? E(pg.id, k).kind : 'write') });
+  return e;
+}
+const offs = (e, root) => { let x = 0, y = 0; for (let a = e; a && a !== root; a = a.offsetParent) { x += a.offsetLeft; y += a.offsetTop; } return [x, y]; };
+const rectOf = (pg, e) => { const [x, y] = offs(e, pg.el); return { x, y, w: e.offsetWidth, h: e.offsetHeight }; };
+function inkRect(pg, el) {
+  const ws = el.querySelectorAll('.wd');
+  if (!ws.length) return rectOf(pg, el);
+  let l = 1e9, r = -1e9, tp = 1e9, bt = -1e9;
+  ws.forEach(w => { const q = rectOf(pg, w); l = Math.min(l, q.x); r = Math.max(r, q.x + q.w); tp = Math.min(tp, q.y); bt = Math.max(bt, q.y + q.h); });
+  return { x: l, y: tp, w: r - l, h: bt - tp };
+}
+function fitText(el) {
+  const W = +el.dataset.fit; if (!W) return;
+  const keep = el.style.width; el.style.width = 'auto';
+  let fs = parseFloat(el.style.fontSize);
+  while (el.offsetWidth > W && fs > 20) { fs -= 1; el.style.fontSize = fs + 'px'; }
+  el.style.width = keep;
+}
+// slam: a text pops from big to its place on the beat (with a little tilt)
+function slamEl(el, t, e, from = 2.0, tilt = -7, base = '') {
+  if (t < e.t) { el.style.visibility = 'hidden'; return; }
+  el.style.visibility = 'visible';
+  const s = slamS(t, e.t, from), r = track(t, tilt, [[e.t, 0, 'default']]);
+  el.style.transform = `${base} scale(${s.toFixed(4)}) rotate(${r.toFixed(2)}deg)`;
+}
+function updatePage(pg, t) {
+  for (const tx of pg.texts) {
+    const e = E(pg.id, tx.k);
+    if (tx.fx === 'write' && tx.words) writeWords(tx.words, t, e);
+    else if (tx.fx === 'slam') slamEl(tx.el, t, e, tx.from || 2.0, tx.tilt ?? -7, tx.base || '');
+    else if (tx.fx === 'static') tx.el.style.visibility = 'visible';
+  }
+  pg.update && pg.update(t);
+}
+
+/* ================= TRACKER: five chalk circles that get ticked ================= */
+const TR = { svg: document.querySelector('#trk svg'), y: 288, r: 46, xs: [220, 380, 540, 700, 860] };
+TR.svg.setAttribute('viewBox', '0 0 1080 1920');
+TR.defs = S('defs', TR.svg);
+TR.g = S('g', TR.svg, { filter: 'url(#chalkS)' });
+TR.items = TR.xs.map((x, i) => {
+  const gi = S('g', TR.g);
+  const fill = scribble(TR.defs, gi, `M ${x - TR.r} ${TR.y} a ${TR.r} ${TR.r} 0 1 0 ${2 * TR.r} 0 a ${TR.r} ${TR.r} 0 1 0 ${-2 * TR.r} 0`, x - TR.r, TR.y - TR.r, 2 * TR.r, 2 * TR.r, C.rust, 13, 11, 0.3, 0.9);
+  const circ = ink(gi, loop(x, TR.y, TR.r, TR.r, 1.08, -2.0 + i * 0.4), 7, C.chalk);
+  const tk = ink(gi, tick(x - 18, TR.y - 52, 74), 12, C.mint);
+  const num = document.createElement('div'); num.className = 't h'; num.textContent = String(i + 1);
+  num.style.cssText = `left:${x - 40}px;width:80px;text-align:center;top:${TR.y - 30}px;font-size:60px;z-index:2`;
+  document.getElementById('trk').appendChild(num);
+  return { gi, fill, circ, tk, num, x };
+});
+function updateTracker(t) {
+  const draw = E('hook', 'trk');
+  TR.items.forEach((it, i) => {
+    const q = crit(t - (draw.t + i * draw.d * 0.16), draw.d * 0.36);
+    setDraw(it.circ, q);
+    it.num.style.visibility = q > 0.3 ? 'visible' : 'hidden';
+    it.num.style.opacity = clamp((q - 0.3) * 2);
+    const id = 'i' + (i + 1), e = E(id, 'tk');
+    const k = crit(t - e.t, e.d);
+    setDraw(it.fill, k);
+    setDraw(it.tk, crit(t - e.t - e.d * 0.5, e.d * 0.6));
+    // the circle for the item on screen pops as it gets ticked
+    const s = track(t, 1, [[e.t, 1.35, 'snappy'], [e.t + 0.12, 1, 'default']]) * track(t, 1, [[E('pay', 'bump').t + i * 0.05, 1.2, 'snappy'], [E('pay', 'bump').t + i * 0.05 + 0.1, 1, 'default']]);
+    it.gi.setAttribute('transform', `translate(${it.x} ${TR.y}) scale(${s.toFixed(4)}) translate(${-it.x} ${-TR.y})`);
+    it.num.style.transform = `scale(${s.toFixed(4)})`;
+  });
+}
+
+/* ================= HOOK: the title is on the board at frame 0 ================= */
+{
+  const pg = page('hook', (g, pg) => {
+    // FRESHER: an orange double underline that is being drawn at frame 0
+    const fr = inkRect(pg, pg.fresh), y = fr.y + fr.h * 0.93;
+    const ul = [ink(g, line(fr.x + 6, y, fr.x + fr.w - 6, y - 8, 4, 0.4), 14, C.rust), ink(g, line(fr.x + 50, y + 26, fr.x + fr.w - 70, y + 20, 3, 1.7), 10, C.rust)];
+    // the 5, circled on the drop
+    // a chalk tooth with a glint
+    const tg = S('g', g, { transform: 'translate(760 520) scale(2.7)' });
+    const tooth = ink(tg, 'M18 12 C24 8 28 12 32 12 C36 12 40 8 46 12 C54 18 49 30 47 38 C45 48 43 56 39 56 C35 56 35 42 32 42 C29 42 29 56 25 56 C21 56 19 48 17 38 C15 30 10 18 18 12Z', 4.2, C.chalk);
+    const shine = ink(tg, 'M22 20 C24 17 27 16 29 17', 3.4, C.mint);
+    const gl = [...glint(g, 950, 540, 30, C.mint, 9), ...glint(g, 742, 690, 18, C.chalk, 7)];
+    // "save this for later": a chalk tag with a bookmark
+    const sv = inkRect(pg, pg.save);
+    const tag = ink(null, box(sv.x - 104, sv.y - 18, sv.w + 140, sv.h + 30, 26, [2, -3, 2, -2, 3, -2, 2, -3], 30), 8, C.rust);
+    const bm = ink(null, `M ${sv.x - 74} ${sv.y + 2} L ${sv.x - 74} ${sv.y + sv.h - 4} L ${sv.x - 56} ${sv.y + sv.h - 20} L ${sv.x - 38} ${sv.y + sv.h - 4} L ${sv.x - 38} ${sv.y + 2} Z`, 7, C.rust);
+    const tagG = S('g', g); tagG.append(tag, bm);
+    const tcx = sv.x + sv.w / 2 - 30, tcy = sv.y + sv.h / 2;
+    return t => {
+      drawSeq(ul, P('hook', 'ulF', t));
+      drawSeq([tooth, shine], P('hook', 'tooth', t));
+      drawSeq(gl, P('hook', 'spark', t));
+      setDraw(tag, P('hook', 'tag', t)); setDraw(bm, P('hook', 'tag', t));
+      const tb = track(t, 1, [[E('hook', 'arrow').t, 1.12, 'snappy'], [E('hook', 'arrow').t + 0.1, 1, 'default']]);
+      tagG.setAttribute('transform', `translate(${tcx} ${tcy}) scale(${tb.toFixed(4)}) translate(${-tcx} ${-tcy})`);
+      pg.save.style.transformOrigin = `${tcx - pg.save._x}px ${tcy - pg.save._y}px`; pg.save.style.transform = `scale(${tb.toFixed(4)})`;
+      // the title settles in from just before frame 0, so it is already moving on the first frame
+      const s = track(t, 1.06, [[E('hook', 'title').t, 1, 'heavy']]);
+      pg.title.forEach(e => { e.style.transform = `scale(${s.toFixed(4)})`; });
+      const k = track(t, 1, [[E('hook', 'five').t, 1.14, 'snappy'], [E('hook', 'five').t + 0.1, 1, 'default']]);
+      pg.five.style.transform = `scale(${k.toFixed(4)}) rotate(${(-4 * (k - 1) / 0.14).toFixed(2)}deg)`;
+    };
+  });
+  pg.five = txt(pg, 'title', '5', 'h rust', 'left:56px;top:296px;font-size:560px;transform-origin:50% 60%', 0, 'static');
+  const a = txt(pg, 'title', 'THINGS', 'h', 'left:380px;top:400px;font-size:150px;transform-origin:0 50%', 560, 'static');
+  const b = txt(pg, 'title', 'FOR', 'h', 'left:384px;top:556px;font-size:150px;transform-origin:0 50%', 0, 'static');
+  pg.fresh = txt(pg, 'title', 'FRESHER', 'h mint', 'left:56px;top:724px;font-size:240px;transform-origin:50% 50%', 900, 'static');
+  const d = txt(pg, 'title', 'DOG BREATH', 'h', 'left:58px;top:964px;font-size:200px;transform-origin:50% 50%', 900, 'static');
+  pg.title = [a, b, pg.fresh, d];
+  txt(pg, 'hl', 'Bad breath is usually the first sign of dental disease', 'b wrap', 'left:66px;top:1186px;width:880px;font-size:66px');
+  pg.save = txt(pg, 'save', 'Save this for later', 'b rust', 'left:178px;top:1382px;font-size:58px');
+}
+
+/* ================= THE FIVE ITEMS ================= */
+const ITEMS = [
+  { id: 'i1', name: 'BRUSH<br><span class="mint" style="font-size:.7em">the right way</span>', line: 'Cleans 3 sides in one stroke', prod: 'Triple-Head Toothbrush Kit', price: '£14.99', badge: 'BEST SELLER', dood: 'brush', glint: [[566, 410], [930, 700]] },
+  { id: 'i2', name: 'DENTAL<br><span class="mint">BITES</span>', line: 'Seaweed, charcoal &amp; spearmint', prod: 'Plaque Crackerz Dental Bites', price: '£5.99', badge: '100% NATURAL', dood: 'crackerz', glint: [[880, 400], [720, 760], [820, 960, 44]] },
+  { id: 'i3', name: 'SEAWEED<br><span class="mint">POWDER</span>', line: 'No brushing needed', prod: 'Organic Seaweed Powder', price: '£10.99', badge: 'ORGANIC', dood: 'seaweed', glint: [[930, 420], [760, 520]] },
+  { id: 'i4', name: 'WATER<br><span class="mint">ADDITIVE</span>', line: 'One capful a day', prod: 'Dental Water Additive', price: '£9.99', badge: 'TOP RATED', dood: 'water', glint: [[640, 420], [930, 560]] },
+  { id: 'i5', name: 'DENTAL<br><span class="mint">GEL</span>', line: 'No toothbrush required', prod: 'Dental Gel for Dogs 100ml', price: '£9.99', badge: 'JUST APPLY', dood: 'gel', glint: [[930, 410], [820, 740], [830, 960, 44]] },
+];
+ITEMS.forEach((it, n) => {
+  const pg = page(it.id, (g, pg) => {
+    const nr = rectOf(pg, pg.num);
+    // chalky double underline under the numeral
+    const ux0 = nr.x + nr.w * 0.12, ux1 = nr.x + nr.w * 0.9, uy = nr.y + nr.h * 0.88;
+    const ul = [ink(g, line(ux0, uy, ux1, uy - 6, 3, n), 14, C.mint), ink(g, line(ux0 + 24, uy + 26, ux1 - 30, uy + 22, 3, n + 2), 10, C.mint)];
+    // the product doodle, drawn then hatched
+    const dg = S('g', g, { transform: 'translate(384 346)' });
+    const dd = DOOD[it.dood](dg, pg.defs, 1);
+    const gl = it.glint.flatMap(([x, y, sz], i) => glint(g, x, y, sz || (i ? 20 : 30), i === 1 ? C.chalk : C.mint, sz ? 11 : i ? 7 : 9));
+    // the product card
+    const card = ink(g, box(62, 1214, 884, 262, 30, [3, -4, 2, -3, 4, -2, 3, -3], 40), 8, C.chalk);
+    pg.badge.style.left = (918 - pg.badge.offsetWidth) + 'px';
+    return t => {
+      drawSeq(ul, P(it.id, 'ul', t));
+      drawSeq(dd.lines, P(it.id, 'dd', t));
+      drawSeq(dd.fills, P(it.id, 'fl', t));
+      drawSeq(gl, P(it.id, 'spark', t));
+      setDraw(card, P(it.id, 'card', t));
+    };
+  });
+  pg.num = txt(pg, 'num', String(n + 1), 'h rust', 'left:44px;top:316px;font-size:468px;transform-origin:50% 60%');
+  txt(pg, 'name', it.name, 'h', 'left:60px;top:772px;font-size:176px;line-height:.98', 900);
+  txt(pg, 'line', it.line, 'b', 'left:66px;top:1124px;font-size:72px', 880);
+  txt(pg, 'pn', it.prod, 'b mint', 'left:96px;top:1236px;font-size:56px', 820);
+  pg.price = txt(pg, 'price', it.price, 'h rust', 'left:92px;top:1306px;font-size:150px;transform-origin:30% 60%');
+  { pg.badge = txt(pg, 'badge', it.badge, 'stamp', 'left:556px;top:1340px;font-size:56px'); pg.texts[pg.texts.length - 1].base = 'rotate(-7deg)'; pg.texts[pg.texts.length - 1].tilt = -10; }
+  pg.texts.find(x => x.k === 'num').from = 1.9;
+  pg.texts.find(x => x.k === 'price').from = 1.9;
+});
+
+/* ================= PAYOFF: the bundle and the offer ================= */
+{
+  const BX = 84, BY = 1270, BW = 840, BH = 204, BCX = BX + BW / 2, BCY = BY + BH / 2;
+  const pg = page('pay', (g, pg) => {
+    const SC = 0.36, CW = 580 * SC, X0 = 64, GAP = (880 - 3 * CW) / 2;
+    const ds = ['brush', 'crackerz', 'seaweed'].map((name, i) => {
+      const dg = S('g', g, { transform: `translate(${X0 + i * (CW + GAP)} 366) scale(${SC})` });
+      return DOOD[name](dg, pg.defs, 2.0);
+    });
+    const plus = [0, 1].map(i => { const cx = X0 + CW + GAP / 2 + i * (CW + GAP), cy = 442; return [ink(g, `M ${cx - 24} ${cy} L ${cx + 24} ${cy}`, 12, C.rust), ink(g, `M ${cx} ${cy - 24} L ${cx} ${cy + 24}`, 12, C.rust)]; });
+    // the was-price, struck through
+    const wr = inkRect(pg, pg.was);
+    const strike = ink(g, line(wr.x - 10, wr.y + wr.h * 0.6, wr.x + wr.w + 10, wr.y + wr.h * 0.48, 3, 1), 10, C.rust);
+    // Joe's name sits at the end of the review, then five stars
+    const ws = pg.rev.querySelectorAll('.wd'), lw = rectOf(pg, ws[ws.length - 1]);
+    pg.joe.style.left = (lw.x + lw.w + 26) + 'px'; pg.joe.style.top = (lw.y + 8) + 'px';
+    const jr = rectOf(pg, pg.joe);
+    const stars = [0, 1, 2, 3, 4].map(i => { const cx = jr.x + jr.w + 38 + i * 50, cy = jr.y + jr.h * 0.5; const s = S('path', g, { d: star(cx, cy, 21), fill: C.rust }); s._c = [cx, cy]; return s; });
+    // the coupon: a dashed chalk ticket, the code right-aligned in it
+    const CX = 64, CY = 1014, CWd = 880, CH = 148;
+    const probe = S('path', null, { d: box(CX, CY, CWd, CH, 24, [2, -3, 2, -2, 3, -2, 2, -3]) });
+    const svgTmp = S('svg', document.body, { width: 0, height: 0 }); svgTmp.appendChild(probe);
+    const PL = probe.getTotalLength(), dashes = [];
+    for (let s = 0; s < PL - 20; s += 34) { const a = probe.getPointAtLength(s), b = probe.getPointAtLength(s + 18); dashes.push(ink(g, `M ${f1(a.x)} ${f1(a.y)} L ${f1(b.x)} ${f1(b.y)}`, 8, C.rust)); }
+    svgTmp.remove();
+    pg.code.style.left = (CX + CWd - 34 - pg.code.offsetWidth) + 'px';
+    pg.code.style.top = (CY + (CH - pg.code.offsetHeight) / 2 + 2) + 'px';
+    const ftick = ink(g, tick(70, rectOf(pg, pg.free).y + 10, 48), 11, C.mint);
+    // the button: chalk box, orange scribble fill, "Shop now" and an arrow, the URL under it
+    const bfill = scribble(pg.defs, g, closed(box(BX, BY, BW, BH, 48, [3, -4, 3, -3, 4, -3, 3, -4])), BX, BY, BW, BH, C.mark, 18, 14, 0.4, 0.42);
+    const bk = ink(g, box(BX, BY, BW, BH, 48, [3, -4, 3, -3, 4, -3, 3, -4], 40), 10, C.rust);
+    const shop = pg.shop, url = pg.url, sw = shop.offsetWidth, AW = 96, GP = 30;
+    const lx = BCX - (sw + GP + AW) / 2;
+    shop.style.left = lx + 'px';
+    url.style.left = (BCX - url.offsetWidth / 2) + 'px';
+    const sr = rectOf(pg, shop), ay = sr.y + sr.h * 0.55, ax = lx + sw + GP;
+    const arr = [ink(g, `M ${ax} ${f1(ay)} L ${ax + AW} ${f1(ay - 2)}`, 11), ink(g, head(ax + AW, ay - 2, 0, 30), 11)];
+    const bg = S('g', g); bg.append(bfill.parentNode, bk, ...arr);
+    return t => {
+      ds.forEach((d, i) => drawSeq(d.lines, P('pay', `d${i}`, t)));
+      drawSeq(ds.flatMap(d => d.fills), P('pay', 'fl', t));
+      plus.forEach((p, i) => drawSeq(p, P('pay', `p${i}`, t)));
+      setDraw(strike, P('pay', 'strike', t));
+      stars.forEach((s, i) => {
+        const e = E('pay', `s${i}`), k = spring(t - e.t, 'default');
+        s.style.visibility = t < e.t ? 'hidden' : 'visible';
+        s.setAttribute('transform', `translate(${s._c[0]} ${s._c[1]}) scale(${k.toFixed(4)}) translate(${-s._c[0]} ${-s._c[1]})`);
+      });
+      drawSeq(dashes, P('pay', 'coupon', t));
+      setDraw(ftick, P('pay', 'ftick', t));
+      const q = P('pay', 'btn', t);
+      setDraw(bk, q * 1.1); setDraw(bfill, (q - 0.3) * 1.6);
+      drawSeq(arr, P('pay', 'arr', t));
+      const e = E('pay', 'press'), s = track(t, 1, [[e.t, 0.92, 'snappy'], [e.t + 0.13, 1, 'default']]);
+      bg.setAttribute('transform', `translate(${BCX} ${BCY}) scale(${s.toFixed(4)}) translate(${-BCX} ${-BCY})`);
+      [shop, url].forEach(x => { x.style.transformOrigin = `${BCX - x._x}px ${BCY - x._y}px`; x.style.transform = `scale(${s.toFixed(4)})`; });
+    };
+  });
+  txt(pg, 'head', 'The Dental Bundle', 'h', 'left:60px;top:540px;font-size:126px', 900);
+  pg.price = txt(pg, 'price', '£28.77', 'h rust', 'left:54px;top:664px;font-size:180px;transform-origin:30% 60%');
+  pg.was = txt(pg, 'was', 'was £31.97', 'b', 'left:600px;top:676px;font-size:68px;color:rgba(245,242,234,.85)');
+  txt(pg, 'save', 'SAVE 10%', 'stamp', 'left:604px;top:764px;font-size:62px');
+  pg.texts[pg.texts.length - 1].base = 'rotate(-6deg)'; pg.texts[pg.texts.length - 1].tilt = -10;
+  pg.rev = txt(pg, 'rev', '“Good stuff and my dogs breath is deffo improving”', 'b wrap', 'left:64px;top:872px;width:880px;font-size:58px;line-height:1.08');
+  pg.joe = txt(pg, 'joe', '— Joe', 'b mint', 'left:66px;top:940px;font-size:48px');
+  txt(pg, 'off', '10% off your<br>first order', 'b', 'left:100px;top:1032px;font-size:54px;line-height:1.02');
+  pg.code = txt(pg, 'code', 'POORLY10', 'w', 'left:400px;top:1040px;font-size:104px;transform-origin:50% 50%');
+  pg.free = txt(pg, 'free', 'Free UK delivery over £39', 'b', 'left:136px;top:1180px;font-size:62px');
+  pg.shop = txt(pg, 'shop', 'Shop now', 'h', `left:200px;top:${BY + 20}px;font-size:92px`);
+  pg.url = txt(pg, 'url', 'poorly-pet.com', 'h mint', `left:300px;top:${BY + 114}px;font-size:74px`);
+  pg.texts.find(x => x.k === 'price').from = 1.9;
+  pg.texts.find(x => x.k === 'code').from = 1.8; pg.texts.find(x => x.k === 'code').tilt = 4;
+}
+
+/* ---------- the board: deep green with chalk dust and old eraser haze (feTurbulence, fixed seeds) ---------- */
+let BOARD;
+async function makeBoard() {
+  const W = 1140, H = 1980;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><defs>
+    <filter id="a" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0013 0.0022" numOctaves="4" seed="11"/>
+      <feColorMatrix type="matrix" values="0.07 0 0 0 0.024  0.13 0 0 0 0.13  0.11 0 0 0 0.107  0 0 0 0 1"/></filter>
+    <filter id="s" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0011 0.008" numOctaves="3" seed="21"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.8 0 0 0 -0.8"/></filter>
+    <filter id="w" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" seed="33"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.6 0 0 0 -0.78"/></filter>
+    <filter id="d" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="4"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  7 0 0 0 -4.6"/></filter>
+    </defs>
+    <rect width="${W}" height="${H}" filter="url(#a)"/>
+    <rect width="${W}" height="${H}" filter="url(#s)" opacity="0.13"/>
+    <rect width="${W}" height="${H}" filter="url(#w)" opacity="0.07"/>
+    <rect width="${W}" height="${H}" filter="url(#d)" opacity="0.22"/></svg>`;
+  const img = new Image();
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  await img.decode();
+  const c = document.createElement('canvas'); c.width = W; c.height = H; c.className = 'board';
+  const ctx = c.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  const gr = ctx.createLinearGradient(0, 0, 0, H);
+  gr.addColorStop(0, 'rgba(4,18,14,.4)'); gr.addColorStop(0.16, 'rgba(4,18,14,0)'); gr.addColorStop(0.8, 'rgba(4,18,14,0)'); gr.addColorStop(1, 'rgba(4,18,14,.5)');
+  ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+  // old eraser swipes, faint
+  ctx.filter = 'blur(3px)';
+  for (const [cx, cy, rx, ry, a] of [[300, 1620, 460, 90, .035], [820, 470, 380, 70, .03], [540, 1150, 520, 80, .02], [260, 840, 300, 60, .02]]) {
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#F5F2EA'; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, -0.04, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+  ctx.filter = 'none';
+  world.insertBefore(c, world.firstChild);
+  BOARD = c;
+}
+
+/* ---------- the board eraser: four fast sweeps smear the old chalk, then the haze clears ---------- */
+const ER = TL.ERASE, erasers = [];
+const PASS_Y = i => 512 + i * 300, PASS_H = 168;
+function band(i, p) {
+  const dir = i % 2 ? -1 : 1, x0 = dir > 0 ? -260 : 1340, xl = x0 + dir * 1600 * p, yc = PASS_Y(i);
+  const a = Math.min(x0, xl), b = Math.max(x0, xl);
+  if (b - a < 2) return '';
+  const n = 10; let top = '', bot = '';
+  for (let k = 0; k <= n; k++) { const x = a + (b - a) * k / n; top += ` L ${f1(x)} ${f1(yc - PASS_H + 9 * Math.sin(x * 0.011 + i * 1.7))}`; }
+  for (let k = n; k >= 0; k--) { const x = a + (b - a) * k / n; bot += ` L ${f1(x)} ${f1(yc + PASS_H + 9 * Math.sin(x * 0.013 + i * 2.3))}`; }
+  return 'M' + top.slice(2) + bot + ' Z';
+}
+function makeEraser(pg) {
+  const wrap = document.createElement('div'); wrap.className = 'eraser';
+  const cp = S('clipPath', document.querySelector('#stage > svg defs'), { id: `ec_${pg.id}`, clipPathUnits: 'userSpaceOnUse' });
+  const cpath = S('path', cp, { d: '', transform: 'translate(30 30)' });
+  const copy = document.createElement('canvas'); copy.width = 1140; copy.height = 1980;
+  copy.getContext('2d').drawImage(BOARD, 0, 0);
+  copy.style.clipPath = `url(#ec_${pg.id})`;
+  const svg = S('svg', null, { viewBox: '0 0 1080 1920' });
+  const haze = S('path', svg, { d: '', fill: '#fff', filter: 'url(#smudge)' });
+  const eg = S('g', svg);
+  S('rect', eg, { x: -60, y: -168, width: 120, height: 336, rx: 22, fill: '#8C6544' });
+  S('rect', eg, { x: -46, y: -152, width: 92, height: 304, rx: 14, fill: '#A07A55' });
+  S('path', eg, { d: 'M -28 -134 L -28 134 M 0 -140 L 0 140 M 28 -134 L 28 134', stroke: '#8C6544', 'stroke-width': 5, opacity: .6 });
+  S('rect', eg, { x: 42, y: -168, width: 30, height: 336, rx: 10, fill: '#3A403C' });
+  S('rect', eg, { x: 44, y: -162, width: 26, height: 324, rx: 8, fill: '#E9E6DE', opacity: .55, filter: 'url(#smudge)' });
+  wrap.append(copy, svg);
+  world.appendChild(wrap);
+  erasers.push({ pg, wrap, cpath, copy, haze, eg });
+}
+function updateEraser(er, t) {
+  const e0 = er.pg.e0, cover = e0 + (ER.PASS - 1) * ER.PASS_GAP + ER.PASS_D, endT = e0 + ER.CLEAR_AT + ER.CLEAR_D * 1.4;
+  if (t < e0 || t > endT) { er.wrap.style.display = 'none'; return; }
+  er.wrap.style.display = 'block';
+  let d = '', cur = -1, cp = 0;
+  for (let i = 0; i < ER.PASS; i++) {
+    const p = crit(t - (e0 + i * ER.PASS_GAP), ER.PASS_D);
+    if (p > 0.001) d += band(i, p) + ' ';
+    if (t >= e0 + i * ER.PASS_GAP && p < 0.995) { cur = i; cp = p; }
+  }
+  er.cpath.setAttribute('d', d);
+  er.copy.style.display = t < cover ? 'block' : 'none';
+  er.haze.setAttribute('d', d);
+  er.haze.setAttribute('opacity', (0.28 * (1 - crit(t - (e0 + ER.CLEAR_AT), ER.CLEAR_D))).toFixed(3));
+  if (cur >= 0) {
+    const dir = cur % 2 ? -1 : 1, x = (dir > 0 ? -260 : 1340) + dir * 1600 * cp;
+    er.eg.style.display = 'block';
+    er.eg.setAttribute('transform', `translate(${f1(x - dir * 70)} ${PASS_Y(cur)}) rotate(${dir * 4}) scale(${dir} 1)`);
+  } else er.eg.style.display = 'none';
+}
+
+/* ---------- the frame ---------- */
+const COVER = (ER.PASS - 1) * ER.PASS_GAP + ER.PASS_D;
+// the board takes a knock on every slam
+const KNOCKS = [];
+TL.ORDER.forEach(id => { for (const k of ['num', 'five', 'bump']) if (TL.EV[id][k]) KNOCKS.push([TL.EV[id][k].t, 12]); for (const k of ['price', 'code']) if (TL.EV[id][k]) KNOCKS.push([TL.EV[id][k].t, 6]); });
+let LIFE = [];
+function renderFrame(t) {
+  let jy = 0;
+  for (const [kt, a] of KNOCKS) if (t >= kt && t < kt + 0.6) jy += a * track(t, 0, [[kt, 1, 'snappy'], [kt + 0.05, 0, 'default']]);
+  world.style.transform = `translate(0px,${f1(jy)}px)`;
+  TL.ORDER.forEach((id, i) => {
+    const pg = pages[id], L = LIFE[i];
+    pg.el.style.zIndex = 10 + 2 * i;
+    if (t < L.on || t >= L.off) { pg.el.style.display = 'none'; return; }
+    pg.el.style.display = 'block';
+    updatePage(pg, t);
+  });
+  erasers.forEach(er => { er.wrap.style.zIndex = 10 + 2 * TL.ORDER.indexOf(er.pg.id) - 1; updateEraser(er, t); });
+  updateTracker(t);
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all(['700 100px "Cabin Sketch"', '400 40px "Patrick Hand"', '800 40px Inter'].map(f => document.fonts.load(f)))
+  .then(() => document.fonts.ready)
+  .then(makeBoard)
+  .then(() => {
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'block'; });
+    for (const pg of Object.values(pages)) {
+      pg.texts.forEach(tx => fitText(tx.el));
+      pg.texts.forEach(tx => { if (tx.fx === 'write') tx.words = splitWords(tx.el); });
+    }
+    for (const pg of Object.values(pages)) pg.update = pg.build(pg.g, pg);
+    for (const pg of Object.values(pages)) pg.texts.forEach(tx => { [tx.el._x, tx.el._y] = offs(tx.el, pg.el); });
+    Object.values(pages).forEach(pg => { pg.el.style.display = 'none'; });
+    TL.ORDER.forEach(id => { if (TL.BOARDS[id].e0 !== undefined) makeEraser(pages[id]); });
+    LIFE = TL.ORDER.map((id, i) => {
+      const b = TL.BOARDS[id], nx = TL.BOARDS[TL.ORDER[i + 1]];
+      return { on: b.e0 !== undefined ? b.e0 : -1, off: nx ? nx.e0 + COVER : Infinity };
+    });
+    return true;
+  });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const stage = document.getElementById('stage');
+  const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `translate(${(innerWidth - 1080 * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fit); fit();
+  window.ready.then(() => { const t0 = performance.now(); const loopF = now => { window.renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loopF); }; requestAnimationFrame(loopF); });
+}
+</script>
+</body>
+</html>
