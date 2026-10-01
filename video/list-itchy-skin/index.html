@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5 Things Itchy Skin</title>
+<style>
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:400 800;src:url(fonts/inter-normal.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--deep);transform-origin:0 0}
+.g{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.L{position:absolute;left:0;top:0;display:none}
+.full{width:1080px;height:1920px}
+.disp{font-family:Fraunces,serif;font-weight:560;font-optical-sizing:auto;letter-spacing:-.02em;line-height:.98;white-space:nowrap}
+.disp em{font-style:italic;font-weight:480}
+.ln{display:block;width:max-content}
+.w{display:inline-block}
+.ui{font-family:Inter,sans-serif}
+.caret{display:inline-block;width:4px;height:.9em;margin-left:3px;background:var(--deep);vertical-align:-.1em}
+.card{background:#fff;box-sizing:border-box;box-shadow:0 26px 60px rgba(11,42,35,.16),0 4px 12px rgba(11,42,35,.06)}
+.pill{font-family:Inter,sans-serif;border-radius:999px;white-space:nowrap;box-sizing:border-box}
+.five{display:inline-block;background:var(--mark);color:#fff;border-radius:.2em;padding:0 .14em;margin-right:.08em;line-height:1.02}
+.tnum{font-variant-numeric:tabular-nums}
+svg{display:block;overflow:visible}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const { B, S0, ITEM, P1, P2, END, TYPE_BEATS } = window.TL;
+const W = 1080, H = 1920, FPS = 30, DUR = Math.round(TL.DUR * FPS) / FPS;
+const b = n => n * B;                       // beats to seconds
+const C = { deep: [11, 42, 35], tile: [19, 74, 61], mint: [159, 232, 201], paper: [250, 249, 246], rust: [168, 84, 47], mark: [194, 94, 46], ink: [16, 27, 23], mute: [94, 110, 102], white: [255, 255, 255], pale: [237, 241, 236], track: [228, 233, 230] };
+const stage = document.getElementById('stage');
+const lerp = (a, c, k) => a + (c - a) * k;
+
+/* ---------------- building blocks ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function group(z) { const g = document.createElement('div'); g.className = 'g'; g.style.zIndex = z; g.style.display = 'none'; stage.appendChild(g); ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+}
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => sp(t - t0, p);
+const press = (t, t0, depth = 0.93) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.1, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+function typed(e, text, t, t0, cps, caretFor = 0.6) {
+  const n = Math.max(0, Math.min(text.length, Math.floor((t - t0) * cps)));
+  const done = t0 + text.length / cps;
+  const caret = t >= t0 && (t < done || (t < done + caretFor && Math.floor((t - done) * 4) % 2 === 0));
+  e.innerHTML = esc(text.slice(0, n)) + (caret ? '<span class="caret"></span>' : '');
+}
+function wrapWords(e) { e.innerHTML = e.innerHTML.replace(/(<em>)?([^\s<]+)(<\/em>)?/g, m => `<span class="w">${m}</span>`); }
+function words(e, t, t0, step = 0.06, d = 110, p = 'default') {
+  [...e.querySelectorAll('.w')].forEach((w, i) => { const k = sp(t - t0 - i * step, p); w.style.opacity = Math.min(1, k * 1.6); w.style.transform = `translateY(${d * (1 - k)}px)`; });
+}
+
+/* ---------------- icons and product illustrations (original drawings, no animals) ---------------- */
+const CHECK = (s, c, sw = 7) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"><path class="ckp" d="M16 33 L27 44 L48 21"/></svg>`;
+const ARROW = (s, c, sw = 7) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"><path d="M10 32 H52 M36 16 L52 32 L36 48"/></svg>`;
+const CARTICON = (s, c) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10 H14 L20 40 H50 L56 18 H17"/><circle cx="24" cy="52" r="4.5"/><circle cx="46" cy="52" r="4.5"/></svg>`;
+const BOOKMARK = s => `<svg width="${s}" height="${s}" viewBox="0 0 64 64"><path class="bmk" d="M16 8 H48 V58 L32 46 L16 58 Z" fill="none" stroke="#9FE8C9" stroke-width="5.5" stroke-linejoin="round"/></svg>`;
+const TRUCK = s => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" fill="none" stroke="#9FE8C9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 H38 V44 H4 Z M38 26 H50 L58 36 V44 H38"/><circle cx="16" cy="48" r="5" fill="#0B2A23"/><circle cx="48" cy="48" r="5" fill="#0B2A23"/></svg>`;
+const STAR = (s, fill) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="${fill}"/></svg>`;
+function mark(size, bg, fg) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${bg}"/><g class="plus"><rect x="42" y="22" width="16" height="56" rx="6" fill="${fg}"/><rect x="22" y="42" width="56" height="16" rx="6" fill="${fg}"/></g>
+    <path class="ck" d="M27 52 L43 67 L74 34" fill="none" stroke="${fg}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" style="visibility:hidden"/></svg>`;
+}
+const SHADOW = '<ellipse cx="100" cy="250" rx="66" ry="7" fill="rgba(11,42,35,.13)"/>';
+const ILL = {
+  // 1. salmon oil: pump bottle
+  oil: `<defs><linearGradient id="gOil" x1="0" x2="1"><stop offset="0" stop-color="#D7783F"/><stop offset="1" stop-color="#A8542F"/></linearGradient></defs>${SHADOW}
+    <path d="M78 20 H146 a8 8 0 0 1 0 16 H113 V54 H87 V36 H78 a8 8 0 0 1 0 -16Z" fill="#101B17"/>
+    <rect x="72" y="52" width="56" height="20" rx="6" fill="#0B2A23"/>
+    <path d="M84 72 H116 V88 C140 94 152 106 152 126 V226 a20 20 0 0 1 -20 20 H68 a20 20 0 0 1 -20 -20 V126 C48 106 60 94 84 88Z" fill="url(#gOil)"/>
+    <rect x="62" y="134" width="76" height="88" rx="10" fill="#FAF9F6"/>
+    <path d="M100 146 C91 159 87 165 87 173 a13 13 0 0 0 26 0 C113 165 109 159 100 146Z" fill="#C25E2E"/>
+    <rect x="74" y="196" width="52" height="7" rx="3.5" fill="#0B2A23"/><rect x="82" y="208" width="36" height="6" rx="3" fill="#9AA8A1"/>
+    <rect x="56" y="114" width="9" height="104" rx="4.5" fill="#fff" opacity=".3"/>`,
+  // 2. itch relief balm: tin with a chamomile flower
+  tin: `${SHADOW}
+    <path d="M22 150 V214 a78 22 0 0 0 156 0 V150Z" fill="#9FE8C9"/>
+    <path d="M22 150 V160 a78 22 0 0 0 156 0 V150Z" fill="#7FD3B0"/>
+    <path d="M18 120 V150 a82 22 0 0 0 164 0 V120Z" fill="#0C342A"/>
+    <ellipse cx="100" cy="120" rx="82" ry="22" fill="#134A3D"/>
+    <ellipse cx="100" cy="117" rx="62" ry="13" fill="none" stroke="#9FE8C9" stroke-width="3" opacity=".55"/>
+    <g transform="translate(100 196)">${[0, 1, 2, 3, 4, 5, 6, 7].map(k => `<ellipse cx="0" cy="-15" rx="6.5" ry="12" fill="#fff" transform="rotate(${k * 45})"/>`).join('')}<circle r="8.5" fill="#C9982E"/></g>
+    <rect x="36" y="160" width="8" height="52" rx="4" fill="#fff" opacity=".35"/>`,
+  // 3. oatmeal shampoo: flip-cap bottle with an oat sprig
+  shampoo: `${SHADOW}
+    <rect x="70" y="18" width="60" height="48" rx="11" fill="#0B2A23"/><rect x="70" y="34" width="60" height="5" fill="#134A3D"/>
+    <path d="M60 64 H140 C153 64 158 74 158 88 V226 a20 20 0 0 1 -20 20 H62 a20 20 0 0 1 -20 -20 V88 C42 74 47 64 60 64Z" fill="#F2E7CF"/>
+    <rect x="56" y="112" width="88" height="106" rx="12" fill="#9FE8C9"/>
+    <path d="M100 206 C100 180 100 158 102 132" fill="none" stroke="#0B2A23" stroke-width="4" stroke-linecap="round"/>
+    ${[[-1, 140], [1, 150], [-1, 160], [1, 170], [-1, 180]].map(([d, y]) => `<ellipse cx="${101 + d * 11}" cy="${y}" rx="6" ry="11" fill="#C9982E" transform="rotate(${d * 32} ${101 + d * 11} ${y})"/>`).join('')}
+    <rect x="50" y="78" width="9" height="140" rx="4.5" fill="#fff" opacity=".55"/>`,
+  // 4. hot spot & itch relief spray: trigger bottle
+  spray: `${SHADOW}
+    <path d="M66 42 H138 a10 10 0 0 1 10 10 V58 H164 V76 H142 L128 98 H74 a8 8 0 0 1 -8 -8 Z" fill="#9FE8C9"/>
+    <path d="M114 98 C106 112 106 126 114 138 L124 134 C118 122 120 110 128 100Z" fill="#0B2A23"/>
+    <rect x="78" y="96" width="44" height="20" rx="5" fill="#0B2A23"/>
+    <path d="M66 114 H134 C147 114 154 124 154 136 V226 a20 20 0 0 1 -20 20 H66 a20 20 0 0 1 -20 -20 V136 C46 124 53 114 66 114Z" fill="#134A3D"/>
+    <rect x="60" y="152" width="80" height="72" rx="10" fill="#FAF9F6"/>
+    <path d="M100 162 C93 172 90 177 90 183 a10 10 0 0 0 20 0 C110 177 107 172 100 162Z" fill="#9FE8C9" stroke="#134A3D" stroke-width="3"/>
+    <rect x="76" y="202" width="48" height="7" rx="3.5" fill="#0B2A23"/>
+    ${[[176, 60, 5], [188, 70, 4], [180, 80, 3.5], [194, 56, 3]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#9FE8C9"/>`).join('')}
+    <rect x="54" y="132" width="8" height="90" rx="4" fill="#fff" opacity=".22"/>`,
+  // 5. itch relief chews: stand-up pouch with a window
+  pouch: `${SHADOW}
+    <path d="M42 36 H158 L162 212 C162 232 152 246 132 246 H68 C48 246 38 232 38 212Z" fill="#0C342A"/>
+    <rect x="42" y="36" width="116" height="20" fill="#134A3D"/><path d="M42 46 h6 M152 46 h6" stroke="#0B2A23" stroke-width="3"/>
+    <rect x="52" y="66" width="96" height="4" rx="2" fill="#134A3D"/>
+    <rect x="60" y="98" width="80" height="90" rx="40" fill="#FAF9F6"/>
+    <rect x="72" y="118" width="34" height="22" rx="11" fill="#C25E2E" transform="rotate(-14 89 129)"/>
+    <rect x="98" y="136" width="32" height="21" rx="10.5" fill="#C9982E" transform="rotate(12 114 146)"/>
+    <rect x="74" y="152" width="30" height="20" rx="10" fill="#A8542F" transform="rotate(6 89 162)"/>
+    <rect x="70" y="204" width="60" height="9" rx="4.5" fill="#9FE8C9"/><rect x="80" y="220" width="40" height="7" rx="3.5" fill="#134A3D"/>
+    <rect x="48" y="84" width="8" height="120" rx="4" fill="#fff" opacity=".18"/>`,
+  // bundle extra: itch & allergy drops, dropper bottle
+  drops: `<defs><linearGradient id="gDrop" x1="0" x2="1"><stop offset="0" stop-color="#B9652F"/><stop offset="1" stop-color="#8E4424"/></linearGradient></defs>${SHADOW}
+    <path d="M86 62 V36 a14 14 0 0 1 28 0 V62Z" fill="#101B17"/>
+    <rect x="74" y="60" width="52" height="26" rx="6" fill="#0B2A23"/>
+    <path d="M72 86 H128 C146 92 156 104 156 122 V226 a20 20 0 0 1 -20 20 H64 a20 20 0 0 1 -20 -20 V122 C44 104 54 92 72 86Z" fill="url(#gDrop)"/>
+    <rect x="58" y="136" width="84" height="84" rx="10" fill="#FAF9F6"/>
+    <path d="M100 150 C112 156 118 168 112 182 C104 178 96 168 100 150Z M100 150 C88 156 82 168 88 182 C96 178 104 168 100 150Z" fill="#134A3D"/>
+    <rect x="76" y="196" width="48" height="7" rx="3.5" fill="#0B2A23"/>
+    <rect x="52" y="114" width="8" height="104" rx="4" fill="#fff" opacity=".28"/>`,
+};
+let illN = 0;
+const ill = (k, w) => { const n = ++illN; return `<svg width="${w}" height="${w * 1.3}" viewBox="0 0 200 260">${ILL[k].replace(/id="(\w+)"/g, `id="$1_${n}"`).replace(/url\(#(\w+)\)/g, `url(#$1_${n})`)}</svg>`; };
+
+/* ---------------- content (all from DATA-PACK.md, Itchy skin) ---------------- */
+const ITEMS = [
+  { name: [['Salmon oil'], ['every day', 1]], prod: 'Scottish Salmon Oil', eyebrow: 'For dogs &amp; cats', tag: 'BEST SELLER', price: 9.99, chip: 'Rich in Omega-3', ill: 'oil', theme: 'paper', enter: 'left' },
+  { name: [['Itch Relief'], ['Balm', 1]], prod: 'Itch Relief Balm', eyebrow: 'Natural &amp; organic', tag: '60ML', price: 9.99, chip: 'Soothes redness, hydrates dry skin', ill: 'tin', theme: 'mint', enter: 'up' },
+  { name: [['A gentle'], ['oatmeal wash', 1]], prod: 'Oatmeal Dog Shampoo', eyebrow: 'For sensitive skin', tag: '500ML', price: 9.99, chip: 'Colloidal oatmeal &amp; aloe vera', ill: 'shampoo', theme: 'deep', enter: 'wipe' },
+  { name: [['Hot Spot &amp;'], ['Itch Spray', 1]], prod: 'Hot Spot &amp; Itch Relief Spray', eyebrow: 'Spray on and leave', tag: '250ML', price: 12.99, chip: 'No steroids, no rinse', ill: 'spray', theme: 'paper', enter: 'left' },
+  { name: [['Itch Relief'], ['Chews', 1]], prod: 'Itch Relief Chews', eyebrow: 'Skin &amp; allergy support', tag: 'BEST SELLER', price: 29.99, chip: 'Itch relief from the inside out', ill: 'pouch', theme: 'mint', enter: 'wipeR' },
+];
+const THEMES = {
+  paper: { wm: '#F0ECE3', bg: '#FAF9F6', text: '#101B17', acc: '#A8542F', num: [194, 94, 46], badge: [11, 42, 35], badgeNum: [159, 232, 201], well: '#EDF1EC', s1: '#ECE8DF', s2: '#E1DCD0', chip: '#E3F7EE', toastBg: '#101B17', toastFg: '#fff', toastCk: '#9FE8C9' },
+  mint: { wm: '#8EDDBB', bg: '#9FE8C9', text: '#0B2A23', acc: '#0B2A23', num: [11, 42, 35], badge: [11, 42, 35], badgeNum: [159, 232, 201], well: '#E7F8F0', s1: '#8BDDBA', s2: '#76CFA8', chip: '#E3F7EE', toastBg: '#0B2A23', toastFg: '#fff', toastCk: '#9FE8C9' },
+  deep: { wm: '#123B31', bg: '#0B2A23', text: '#FAF9F6', acc: '#9FE8C9', num: [159, 232, 201], badge: [159, 232, 201], badgeNum: [11, 42, 35], well: '#EDF1EC', s1: '#134A3D', s2: '#1A5848', chip: '#E3F7EE', toastBg: '#9FE8C9', toastFg: '#0B2A23', toastCk: '#0B2A23' },
+};
+const lines = ls => ls.map(([s, em]) => `<div class="ln">${s.split(' ').map(w => `<span class="w">${em ? `<em>${w}</em>` : w}</span>`).join(' ')}</div>`).join('');
+const start = i => b(S0 + i * ITEM);                         // item i lands on this downbeat
+const CX = 64, CY = 650, CW = 876, CH = 680;                 // product card
+const BADGE = { cx: 502, cy: 980, d: 470 };                  // number badge before it opens
+const STEP = { x: 64, y: 226, w: 876, h: 84 };               // progress tracker
+const CART = { x: STEP.x + 788, y: STEP.y + 10, d: 64 };     // cart button inside the tracker
+const ADD = { x: CX + 32 + 256, y: CY + 32 + 306, d: 104 };  // quick-add button on the product image
+
+/* ================= HOOK ================= */
+const HK = group(10);
+const hkBg = el(HK, '', 'full', 'background:var(--deep)');
+const hkL = [el(HK, '<span class="w"><span class="five">5</span></span> <span class="w">things</span>', 'disp', 'color:#fff'),
+  el(HK, '<span class="w">that</span> <span class="w">help</span>', 'disp', 'color:#fff'),
+  el(HK, '<span class="w"><em>itchy</em></span> <span class="w"><em>skin</em></span>', 'disp', 'color:var(--mint)')];
+const hkUnder = el(HK, '<svg width="700" height="50" viewBox="0 0 700 50" preserveAspectRatio="none"><path d="M6 34 C160 14 420 10 694 24" fill="none" stroke="#C25E2E" stroke-width="14" stroke-linecap="round"/></svg>');
+const hkSave = el(HK, `<span style="display:inline-block;vertical-align:-12px;margin-right:16px">${BOOKMARK(50)}</span>Save this for later`, 'pill', 'font:700 46px/1 Inter;color:#fff;padding:22px 38px 22px 30px;border:3px solid rgba(159,232,201,.55)');
+const hkTiles = ITEMS.map((it, i) => el(HK, `<div style="position:absolute;left:5px;top:22px">${ill(it.ill, 150)}</div>
+  <div class="ui" style="position:absolute;left:14px;top:14px;width:46px;height:46px;border-radius:23px;background:var(--deep);color:var(--mint);font:800 27px/46px Inter;text-align:center">${i + 1}</div>`, 'card', 'width:160px;height:236px;border-radius:28px'));
+const hkWm = el(HK, '5', 'disp', 'font-size:1150px;line-height:1;color:#123B31;letter-spacing:0');
+const hkRing = el(HK, '', '', 'width:176px;height:252px;border-radius:34px;border:5px solid var(--mint);box-sizing:border-box');
+function sceneHook(t) {
+  if (t > b(S0) + 0.8) return;
+  const ex = sp(t - b(S0 - 0.4), 'default');
+  put(HK, { x: -1080 * ex, ox: 0, oy: 0 });
+  put(hkBg);
+  put(hkWm, { x: 1080 - hkWm._w + 60, y: 1240 + rise(t, -0.4, 200, 'heavy') });
+  hkL.forEach((l, i) => { put(l, { x: 58, y: hkL._y[i] }); words(l, t, -0.36 + i * 0.07, 0.05, 120, 'heavy'); });
+  const ux = 58 + hkL[2]._w * 0, uw = hkL[2]._w;
+  hkUnder.querySelector('svg').setAttribute('width', uw);
+  put(hkUnder, { x: ux, y: hkL._y[2] + hkL[2]._h - 30, ox: 0 });
+  setDraw(hkUnder.querySelector('path'), sp(t - b(2), 'heavy'));
+  put(hkSave, { x: 64, y: hkL._y[2] + hkL[2]._h + 50 + rise(t, -0.25, 40), s: pop(t, -0.2, 0.6) * press(t, b(1.5), 0.9), o: op(t, -0.25), ox: 0 });
+  const bmk = hkSave.querySelector('.bmk'); const fk = sp(t - b(1.5) - 0.05, 'snappy');
+  bmk.setAttribute('fill', fk > 0.5 ? '#9FE8C9' : 'none');
+  hkTiles.forEach((c, i) => {
+    const t0 = -0.38 + i * b(0.125);
+    const sel = i === 0 ? press(t, b(5), 0.9) : 1;
+    const wave = 1 + 0.06 * (sp(t - b(3) - i * b(0.125), 'snappy') - sp(t - b(3) - i * b(0.125) - 0.12, 'snappy'));
+    put(c, { x: 64 + i * 179 + rise(t, t0, 700, 'default'), y: hkL._tiles, s: sel * wave, r: -8 * (1 - sp(t - t0, 'default')), o: op(t, t0 - 0.05) });
+  });
+  const rk = sp(t - b(5), 'snappy');
+  put(hkRing, { x: 64 - 8, y: hkL._tiles - 8, s: lerp(1.15, 1, rk), o: rk });
+}
+
+/* ================= ITEMS ================= */
+const IT = ITEMS.map((it, i) => {
+  const th = THEMES[it.theme], g = group(20 + i);
+  const o = { g, th, it };
+  o.bg = el(g, '', 'full', `background:${th.bg}`);
+  o.wm = el(g, String(i + 1), 'disp', `font-size:1150px;line-height:1;color:${th.wm};letter-spacing:0`);
+  o.s2 = el(g, '', '', `width:${CW}px;height:${CH}px;border-radius:40px;background:${th.s2}`);
+  o.s1 = el(g, '', '', `width:${CW}px;height:${CH}px;border-radius:40px;background:${th.s1}`);
+  o.badge = el(g, '', 'card', '');
+  o.well = el(g, `<div class="ui" style="position:absolute;left:20px;top:20px;padding:11px 18px;border-radius:999px;background:${it.tag === 'BEST SELLER' ? 'var(--mark)' : '#fff'};color:${it.tag === 'BEST SELLER' ? '#fff' : 'var(--deep)'};font:800 28px/1 Inter;letter-spacing:.06em;white-space:nowrap">${it.tag}</div>`, '', `width:380px;height:430px;border-radius:30px;background:${th.well}`);
+  o.prod = el(g, ill(it.ill, 290), '', 'width:290px;height:377px');
+  o.add = el(g, mark(ADD.d, '#C25E2E', '#fff'), '', `width:${ADD.d}px;height:${ADD.d}px`);
+  o.eyebrow = el(g, it.eyebrow, 'ui', 'font:600 31px/1.1 Inter;color:var(--mute);white-space:nowrap');
+  o.pname = el(g, it.prod, 'ui', 'width:410px;font:800 50px/1.07 Inter;color:var(--ink);letter-spacing:-.015em');
+  o.price = el(g, '', 'pill ui tnum', 'background:var(--deep);color:var(--mint);font:800 66px/1 Inter;padding:20px 0;text-align:center;letter-spacing:-.01em');
+  o.chip = el(g, `<div style="position:absolute;left:30px;width:64px;height:64px;border-radius:32px;background:var(--deep)" class="ckc"><div style="position:absolute;left:6px;top:6px">${CHECK(52, '#9FE8C9', 8)}</div></div><div class="ct ui" style="position:absolute;left:118px;width:660px;font:700 47px/1.14 Inter;color:var(--deep);letter-spacing:-.01em"></div>`, '', `width:812px;height:162px;border-radius:34px;background:${th.chip}`);
+  o.toast = el(g, `<span style="display:inline-block;vertical-align:-11px;margin-right:14px">${CHECK(46, th.toastCk, 8)}</span>Added to cart`, 'pill', `background:${th.toastBg};color:${th.toastFg};font:700 44px/1 Inter;padding:22px 40px 22px 30px`);
+  o.name = el(g, lines(it.name), 'disp', `color:${th.text}`);
+  o.name.querySelectorAll('em').forEach(e => e.style.color = th.acc);
+  o.num = el(g, String(i + 1), 'disp', 'font-size:330px;line-height:1;letter-spacing:0');
+  return o;
+});
+
+function groupMove(type, k, entering) {
+  // k: 0..1 progress of the transition. Returns transform + clip for the entering or leaving group.
+  const a = entering ? 1 - k : -k;
+  if (type === 'left') return { x: 1080 * a, y: 0, clip: 'none' };
+  if (type === 'up') return { x: 0, y: 1920 * a, clip: 'none' };
+  if (type === 'wipe') return entering ? { x: 0, y: 0, clip: `inset(${(1 - k) * 100}% 0 0 0)` } : { x: 0, y: -160 * k, clip: 'none' };
+  if (type === 'wipeR') return entering ? { x: 0, y: 0, clip: `inset(0 0 0 ${(1 - k) * 100}%)` } : { x: -180 * k, y: 0, clip: 'none' };
+}
+
+function sceneItem(i, t) {
+  const o = IT[i], it = o.it, th = o.th, S = start(i);
+  const next = i < 4 ? start(i + 1) : b(P1);
+  if (t < S - b(0.5) || t > next + (i < 4 && ITEMS[i + 1].enter.startsWith("wipe") ? 0.12 : 0.45)) { o.g.style.clipPath = 'none'; return; }
+  // enter, then leave with the next item's transition
+  const ke = sp(t - (S - b(0.4)), it.enter.startsWith('wipe') ? 'snappy' : 'default');
+  let m = groupMove(it.enter, ke, true);
+  if (i < 4 && t > next - b(0.5)) { const kx = sp(t - (next - b(0.4)), 'default'); const mm = groupMove(ITEMS[i + 1].enter, kx, false); m = { x: m.x + mm.x, y: m.y + mm.y, clip: m.clip }; }
+  o.g.style.clipPath = m.clip === 'none' || ke > 0.999 ? 'none' : m.clip;
+  put(o.g, { x: m.x, y: m.y, ox: 0, oy: 0 });
+  put(o.bg);
+  put(o.wm, { x: 1080 - o.wm._w + 70, y: 1180 + rise(t, S + b(0.5), 300, 'heavy'), o: op(t, S + b(0.5)) });
+
+  // 1. the number badge slams in, then opens into the product card
+  const kb = pop(t, S, 0.15, 'default');
+  const Sm = S + b(0.5), k = sp(t - Sm, 'default');
+  const bw = lerp(BADGE.d, CW, k), bh = lerp(BADGE.d, CH, k);
+  const bx = lerp(BADGE.cx - BADGE.d / 2, CX, k), by = lerp(BADGE.cy - BADGE.d / 2, CY, k);
+  o.badge.style.width = bw + 'px'; o.badge.style.height = bh + 'px'; o.badge._w = bw; o.badge._h = bh;
+  o.badge.style.borderRadius = lerp(BADGE.d / 2, 40, Math.min(1, k)) + 'px';
+  o.badge.style.background = k < 0.2 ? mix(th.badge, th.badge, 0) : '#fff';   // the badge turns into a white card as it opens
+  put(o.badge, { x: bx, y: by, s: kb, r: -10 * (1 - sp(t - S, 'default')) * (1 - k), o: op(t, S - 0.02) });
+  // the numeral rides from the badge to the header
+  const nw = o.num._w, nh = o.num._h;
+  o.num.style.color = mix(th.badgeNum, th.num, sp(t - Sm, 'snappy'));
+  put(o.num, { x: lerp(BADGE.cx - nw / 2, 56, k), y: lerp(BADGE.cy - nh / 2 - 6, 300, k), s: kb, o: op(t, S - 0.02) });
+  // card stack behind
+  const ks = sp(t - (S + b(1)), 'default');
+  put(o.s2, { x: CX + 44 * ks, y: CY + 44 * ks, o: ks > 0.01 ? 1 : 0 });
+  put(o.s1, { x: CX + 22 * ks, y: CY + 22 * ks, o: ks > 0.01 ? 1 : 0 });
+  // 2. the item name
+  put(o.name, { x: o.name._x, y: o.name._y }); words(o.name, t, S + b(0.6), 0.07, 130, 'default');
+  // 3. card contents
+  const t1 = S + b(1.25);
+  put(o.well, { x: CX + 32, y: CY + 32, s: pop(t, t1, 0.85, 'snappy'), o: op(t, t1) });
+  const tp = S + b(1.5);
+  put(o.prod, { x: CX + 32 + 45, y: CY + 32 + 30 + rise(t, tp, 70), s: pop(t, tp, 0.3), r: -7 * (1 - sp(t - tp, 'default')), o: op(t, tp), oy: 330 });
+  const ta = S + b(1.75), tap = S + b(5);
+  put(o.add, { x: ADD.x, y: ADD.y, s: pop(t, ta, 0.2) * press(t, tap, 0.84), o: op(t, ta) });
+  const kk = sp(t - tap - 0.05, 'snappy');
+  o.add.querySelector('.plus').setAttribute('transform', `translate(50 50) scale(${1 - kk}) translate(-50 -50)`);
+  o.add.querySelector('rect').setAttribute('fill', mix(C.mark, C.deep, kk));
+  setDraw(o.add.querySelector('.ck'), sp(t - tap - 0.08, 'default'));
+  put(o.eyebrow, { x: CX + 440, y: CY + 52 + rise(t, S + b(1.5), 30), o: op(t, S + b(1.5)) });
+  put(o.pname, { x: CX + 440, y: CY + 98 + rise(t, S + b(1.625), 40), o: op(t, S + b(1.625)) });
+  // 4. the price pill counts up
+  const tq = S + b(2);
+  const v = it.price * Math.min(1, sp(t - tq, 'heavy'));
+  o.price.innerHTML = '£' + (t < tq ? 0 : v).toFixed(2);
+  o.price.style.width = o.price._fw + 'px';
+  put(o.price, { x: CX + 440, y: CY + 300, s: pop(t, tq, 0.5, 'default'), o: op(t, tq), ox: 0 });
+  // 5. the benefit chip types in
+  const tc = S + b(2.625), tt = S + b(2.75);
+  put(o.chip, { x: CX + 32, y: CY + 486, s: pop(t, tc, 0.9, 'snappy'), o: op(t, tc) });
+  const plain = it.chip.replace(/&amp;/g, '&');
+  typed(o.chip.querySelector('.ct'), plain, t, tt, plain.length / b(TYPE_BEATS));
+  o.chip.querySelector('.ckc').style.transform = `scale(${pop(t, tt + b(TYPE_BEATS), 0.6, 'default')})`;
+  // 6. tap: added to cart
+  put(o.toast, { x: CX, y: 1370 + rise(t, tap + b(0.125), 60, 'snappy'), s: pop(t, tap + b(0.125), 0.7), o: op(t, tap + b(0.125)), ox: 0 });
+}
+
+/* ================= PAYOFF 1: the bundle ================= */
+const PB = group(40);
+const pbBg = el(PB, '', '', 'background:var(--mark)');
+const pbT = el(PB, lines([['Get the'], ['Itchy Skin'], ['Bundle', 1]]), 'disp', 'color:#fff');
+pbT.querySelector('em').style.color = 'var(--deep)';
+const pbWm = el(PB, '%', 'disp', 'font-size:900px;line-height:1;color:#B65429;letter-spacing:0');
+const pbCard = el(PB, '', 'card', `width:${CW}px;height:690px;border-radius:40px`);
+const pbWell = el(PB, '', '', 'width:812px;height:300px;border-radius:30px;background:var(--pale)');
+const pbProds = ['pouch', 'tin', 'drops'].map(k => el(PB, ill(k, 190), '', 'width:190px;height:247px'));
+const pbWhat = el(PB, '<span class="w">Chews</span> <span class="w" style="color:var(--mark)">+</span> <span class="w">Balm</span> <span class="w" style="color:var(--mark)">+</span> <span class="w">Drops</span>', 'ui', 'font:800 48px/1 Inter;color:var(--deep);white-space:nowrap;letter-spacing:-.01em');
+const pbPrice = el(PB, '', 'ui tnum', 'font:800 124px/1 Inter;color:var(--deep);white-space:nowrap;letter-spacing:-.03em');
+const pbWas = el(PB, '£53.97<svg width="190" height="20" viewBox="0 0 190 20" style="position:absolute;left:-6px;top:28px"><path d="M4 14 L186 6" stroke="#A8542F" stroke-width="7" stroke-linecap="round" fill="none"/></svg>', 'ui', 'font:600 58px/1 Inter;color:var(--mute);white-space:nowrap');
+const pbSave = el(PB, 'SAVE 10%', 'pill', 'background:var(--deep);color:var(--mint);font:800 58px/1 Inter;padding:24px 34px;letter-spacing:.02em;border-radius:26px;box-shadow:0 14px 30px rgba(11,42,35,.25)');
+const pbLine = el(PB, 'Less guesswork, one clear price.', 'ui', 'font:600 40px/1 Inter;color:var(--mute);white-space:nowrap');
+const PBY = 748;
+function scenePayoff(t) {
+  const t0 = b(P1);
+  if (t < t0 - b(0.5) || t > b(P2) + 0.8) return;
+  const ky = sp(t - (b(P2) - b(0.4)), 'default');
+  put(PB, { y: -1920 * ky, ox: 0, oy: 0 });
+  // the cart button opens into the bundle page
+  const k = sp(t - (t0 - b(0.5)), 'default');
+  const w = lerp(CART.d, 1080, k), h = lerp(CART.d, 1920, k);
+  pbBg.style.width = w + 'px'; pbBg.style.height = h + 'px'; pbBg.style.borderRadius = lerp(CART.d / 2, 0, k) + 'px';
+  put(pbBg, { x: lerp(CART.x, 0, k), y: lerp(CART.y, 0, k), ox: 0, oy: 0 });
+  put(pbWm, { x: 1080 - pbWm._w + 120, y: 1260 + rise(t, t0, 300, 'heavy'), o: op(t, t0) });
+  put(pbT, { x: 58, y: 318 }); words(pbT, t, t0 + b(0.25), 0.07, 130, 'default');
+  const tc = t0 + b(0.5);
+  put(pbCard, { x: CX, y: PBY + rise(t, tc, 1100, 'default') });
+  const cy = PBY + rise(t, tc, 1100, 'default');
+  put(pbWell, { x: CX + 32, y: cy + 32 });
+  pbProds.forEach((p, i) => { const tp = t0 + b(1 + i * 0.125); put(p, { x: CX + 32 + 70 + i * 240, y: cy + 32 + 34 + rise(t, tp, 60), s: pop(t, tp, 0.3), r: (i - 1) * 6 * (1 - sp(t - tp, 'default')), o: op(t, tp), oy: 220 }); });
+  const tq = t0 + b(1.5);
+  pbPrice.innerHTML = '£' + (48.57 * Math.min(1, sp(t - tq, 'heavy'))).toFixed(2);
+  put(pbPrice, { x: CX + 36, y: cy + 430, s: pop(t, tq, 0.6), o: op(t, tq), ox: 0 });
+  put(pbWas, { x: CX + 36 + pbPrice._w + 34, y: cy + 430 + 52, o: op(t, tq + 0.1) });
+  setDraw(pbWas.querySelector('path'), sp(t - (t0 + b(2.25)), 'default'));
+  const ts = t0 + b(2.75);
+  put(pbSave, { x: Math.min(58 + pbT._l1 + 50, 936 - pbSave._w), y: 318 + pbT._s * 0.5 - pbSave._h / 2 + 4, s: T(t, 2.4, [[ts, 1, 'default']]), r: -7, o: op(t, ts - 0.02) });
+  put(pbWhat, { x: CX + 36, y: cy + 360 }); words(pbWhat, t, t0 + b(3.5), b(0.125), 40, 'snappy');
+  put(pbLine, { x: CX + 36, y: cy + 610 + rise(t, t0 + b(4.75), 30), o: op(t, t0 + b(4.75)) });
+}
+
+/* ================= PAYOFF 2: review, offer, shop now ================= */
+const EN = group(50);
+const enBg = el(EN, '', 'full', 'background:var(--deep)');
+const enT = el(EN, '<div class="ln"><span class="w">Shop</span></div><div class="ln"><span class="w"><em>itchy</em></span> <span class="w"><em>skin</em></span></div>', 'disp', 'color:#fff');
+enT.querySelectorAll('em').forEach(e => e.style.color = 'var(--mint)');
+const enRev = el(EN, `<div style="position:absolute;left:36px;top:32px;display:flex;gap:6px">${[0, 1, 2, 3, 4].map(i => `<div class="st">${STAR(46, i < 4 ? '#C9982E' : '#DCE2DF')}</div>`).join('')}</div>
+  <div class="ui" style="position:absolute;left:310px;top:40px;font:700 33px/1 Inter;color:var(--mute);white-space:nowrap">Amie F. · Oatmeal Shampoo</div>
+  <div class="q disp" style="position:absolute;left:36px;top:104px;width:800px;font-size:52px;line-height:1.12;white-space:normal;color:var(--ink)"><em><span class="w">“…my</span> <span class="w">dogs</span> <span class="w">skin</span> <span class="w">is</span> <span class="w">so</span> <span class="w">much</span> <span class="w">better,</span> <span class="w">less</span> <span class="w">flaky…”</span></em></div>`,
+  'card', `width:${CW}px;height:244px;border-radius:36px`);
+const enCode = el(EN, `<div class="ui" style="position:absolute;left:36px;top:34px;font:700 38px/1.15 Inter;color:var(--deep);white-space:nowrap">10% off your<br>first order</div>
+  <div style="position:absolute;left:316px;top:20px;bottom:20px;border-left:4px dashed rgba(11,42,35,.35)"></div>
+  <div class="ui" style="position:absolute;left:350px;top:36px;font:800 82px/1 Inter;color:var(--deep);letter-spacing:.01em;white-space:nowrap">POORLY10</div>`,
+  '', `width:${CW}px;height:158px;border-radius:32px;background:var(--mint)`);
+const enShip = el(EN, `<span style="display:inline-block;vertical-align:-14px;margin-right:18px">${TRUCK(60)}</span>Free UK delivery over £39`, 'ui', 'font:700 46px/1 Inter;color:#fff;white-space:nowrap');
+const enBtn = el(EN, `<div class="bt" style="position:absolute;inset:0;border-radius:999px;background:var(--mint)"></div>
+  <div class="ui" style="position:absolute;left:0;right:0;top:46px;text-align:center;font:800 50px/1 Inter;color:var(--deep);white-space:nowrap;letter-spacing:-.01em">Shop now <span style="display:inline-block;vertical-align:-10px">${ARROW(54, '#0B2A23', 7)}</span> poorly-pet.com</div>`, '', `width:${CW}px;height:144px`);
+const enTiles = ITEMS.map((it, i) => el(EN, `<div style="position:absolute;left:5px;top:22px">${ill(it.ill, 150)}</div>`, 'card', 'width:160px;height:236px;border-radius:28px'));
+const enRipple = el(EN, '', '', 'width:200px;height:200px;border-radius:100px;border:6px solid #fff;box-sizing:border-box');
+const ENY = { rev: 720, code: 996, ship: 1188, btn: 1288 };
+function sceneEnd(t) {
+  const t0 = b(P2);
+  if (t < t0 - b(0.5)) return;
+  put(EN, { y: 1920 * (1 - sp(t - (t0 - b(0.4)), 'default')), ox: 0, oy: 0 });
+  put(enBg);
+  put(enT, { x: 58, y: 318 }); words(enT, t, t0, 0.08, 140, 'default');
+  put(enRev, { x: CX, y: ENY.rev + rise(t, t0 + b(0.75), 500), o: op(t, t0 + b(0.75)) });
+  enRev.querySelectorAll('.st').forEach((s, i) => s.style.transform = `scale(${pop(t, t0 + b(1 + i * 0.125), 0, 'default')})`);
+  words(enRev.querySelector('.q'), t, t0 + b(1.25), 0.035, 24, 'snappy');
+  const tc = t0 + b(2);
+  put(enCode, { x: CX, y: ENY.code, s: T(t, 1.35, [[tc, 1, 'default']]), r: -3 * (1 - sp(t - tc, 'default')), o: op(t, tc - 0.02) });
+  put(enShip, { x: CX + 4, y: ENY.ship + rise(t, t0 + b(2.5), 40), o: op(t, t0 + b(2.5)) });
+  enTiles.forEach((c, i) => { const ti = t0 + b(0.5) + i * b(0.125); put(c, { x: 64 + i * 179, y: 1572 + rise(t, ti, 400, 'default'), o: op(t, ti) }); });
+  const tb = t0 + b(3), tap = t0 + b(4);
+  put(enBtn, { x: CX, y: ENY.btn, s: pop(t, tb, 0.5) * press(t, tap, 0.93), o: op(t, tb) });
+  enBtn.querySelector('.bt').style.background = mix(C.mint, C.white, sp(t - tap, 'snappy') - sp(t - tap - 0.18, 'default'));
+  const rk = sp(t - tap, 'default');
+  put(enRipple, { x: 502 - 100, y: ENY.btn + 72 - 100, s: lerp(0.3, 1.9, rk), o: t > tap ? (1 - rk) * 0.9 : 0 });
+}
+
+/* ================= OVERLAY: progress tracker, cart, flying items, cursor ================= */
+const OV = group(100);
+const step = el(OV, `<div style="position:absolute;left:24px;top:16px">${mark(52, '#C25E2E', '#fff')}</div>` +
+  [0, 1, 2, 3, 4].map(i => `<div class="sg" style="position:absolute;left:${94 + i * 134}px;top:20px;width:124px;height:44px;border-radius:22px;background:#E4E9E6;overflow:hidden">
+    <div class="fl" style="position:absolute;left:0;top:0;bottom:0;width:0;background:var(--deep)"></div>
+    <div class="nm ui" style="position:absolute;left:0;right:0;top:0;text-align:center;font:800 27px/44px Inter;color:var(--mute)">${i + 1}</div></div>`).join('') +
+  `<div class="cart" style="position:absolute;left:788px;top:10px;width:64px;height:64px;border-radius:32px;background:var(--deep)"><div style="position:absolute;left:12px;top:12px">${CARTICON(40, '#fff')}</div></div>
+   <div class="cb ui" style="position:absolute;left:822px;top:-10px;width:46px;height:46px;border-radius:23px;background:var(--mark);color:#fff;font:800 28px/46px Inter;text-align:center;box-shadow:0 0 0 4px #fff"></div>`,
+  'card', `width:${STEP.w}px;height:${STEP.h}px;border-radius:42px`);
+const ghosts = ITEMS.map(it => el(OV, `<div style="position:absolute;left:14px;top:4px">${ill(it.ill, 92)}</div>`, 'card', 'width:120px;height:128px;border-radius:26px'));
+const cursor = el(OV, '<svg width="84" height="84" viewBox="0 0 64 64"><path d="M14 6 L14 50 L25 40 L33 58 L41 54 L33 37 L48 37 Z" fill="#101B17" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>');
+cursor.style.zIndex = 5;
+const tapRing = el(OV, '', '', 'width:120px;height:120px;border-radius:60px;border:6px solid #C25E2E;box-sizing:border-box');
+
+function sceneOverlay(t) {
+  put(OV);
+  put(step, { x: STEP.x, y: STEP.y + rise(t, -0.3, 30) });
+  const segs = step.querySelectorAll('.sg');
+  segs.forEach((sg, i) => {
+    const S = start(i), next = i < 4 ? start(i + 1) : b(P1);
+    const k = sp(t - S, 'default');
+    sg.querySelector('.fl').style.width = (124 * Math.min(1, k)) + 'px';
+    sg.querySelector('.fl').style.background = mix(C.mark, C.deep, sp(t - next, 'snappy'));
+    sg.querySelector('.nm').style.color = mix(C.mute, C.white, Math.min(1, k * 1.4));
+    const shimmer = 1 + 0.12 * (sp(t - b(3) - i * b(0.125), 'snappy') - sp(t - b(3) - i * b(0.125) - 0.1, 'snappy'));
+    const bump = 1 + 0.16 * (sp(t - S, 'snappy') - sp(t - S - 0.12, 'snappy'));
+    sg.style.transform = `scale(${shimmer * bump})`;
+  });
+  // cart count: one more each time an item is added
+  let n = 0, last = -1;
+  for (let i = 0; i < 5; i++) if (t >= start(i) + b(5.5)) { n = i + 1; last = start(i) + b(5.5); }
+  const cb = step.querySelector('.cb');
+  cb.textContent = n;
+  cb.style.display = n ? 'block' : 'none';
+  cb.style.transform = `scale(${n ? pop(t, last, 0.2, 'default') : 0})`;
+  step.querySelector('.cart').style.transform = `scale(${n ? press(t, last - 0.04, 0.82) : 1})`;
+  // flying item: from the quick-add button into the cart
+  ghosts.forEach((g, i) => {
+    const t0 = start(i) + b(5), t1 = start(i) + b(5.5);
+    if (t < t0 || t > t1 + 0.02) { g.style.display = 'none'; return; }
+    const kx = sp(t - t0, 'default'), ky = sp(t - t0, { w: 13, z: 1 });
+    const x = lerp(ADD.x - 8, CART.x - 28, kx), y = lerp(ADD.y - 12, CART.y - 32, ky * ky * 0.3 + ky * 0.7);
+    put(g, { x, y, s: lerp(1, 0.4, kx), r: 12 * kx, o: 1 });
+  });
+  // cursor: taps tile 1, each quick-add button, and Shop now
+  const taps = [[b(5), 64 + 80, 1258], ...ITEMS.map((_, i) => [start(i) + b(5), ADD.x + 52, ADD.y + 52]), [b(P2 + 4), 640, ENY.btn + 74]];
+  let shown = false;
+  for (const [tp, px, py] of taps) {
+    const tIn = tp - b(0.8), tOut = tp + b(1.0), last = tp > b(P2);
+    if (t < tIn || (!last && t > tOut + 0.5)) continue;
+    const x = T(t, 1180, [[tIn, px, 'default'], last ? [tp + b(0.6), 780, 'snappy'] : [tOut, 1200, 'default']]);
+    const y = T(t, py + 420, [[tIn, py, 'default'], last ? [tp + b(0.6), 1462, 'snappy'] : [tOut, py + 520, 'default']]);
+    put(cursor, { x: x - 17, y: y - 7, s: press(t, tp - 0.02, 0.8), ox: 17, oy: 7 });
+    const rk = sp(t - tp, 'default');
+    put(tapRing, { x: px - 60, y: py - 60, s: lerp(0.3, 1.5, rk), o: t > tp && !last ? (1 - rk) : 0 });
+    shown = true;
+  }
+  if (!shown) { cursor.style.display = 'none'; tapRing.style.display = 'none'; }
+}
+
+/* ---------------- layout from real text widths ---------------- */
+function fit(e, maxW, maxS, minS) {
+  e.style.fontSize = maxS + 'px'; e.style.display = 'block';
+  const w = Math.max(...[...e.querySelectorAll('.ln')].map(l => l.scrollWidth), e.scrollWidth);
+  const s = Math.max(minS, Math.min(maxS, Math.floor(maxS * maxW / w)));
+  e.style.fontSize = s + 'px'; return s;
+}
+function measure() {
+  for (const e of ALL) e.style.display = 'block';
+  // hook title: three lines, same size, as big as the safe area allows
+  let hs = 230;
+  hkL.forEach(l => { l.style.fontSize = '230px'; hs = Math.min(hs, Math.floor(230 * 872 / l.scrollWidth)); });
+  hkL.forEach(l => l.style.fontSize = hs + 'px');
+  hkL._y = hkL.map((_, i) => 322 + i * hs * 1.0);
+  for (const e of ALL) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  hkL._tiles = hkL._y[2] + hkL[2]._h + 50 + hkSave._h + 44;
+  IT.forEach(o => {
+    o.num.style.display = 'block'; o.name._x = Math.max(250, 56 + o.num.offsetWidth + 30);
+    fit(o.name, 940 - o.name._x, 150, 100);
+    o.name._h = o.name.offsetHeight; o.name._w = o.name.offsetWidth;
+    o.name._y = 322 + (300 - o.name._h) / 2;
+    // price pill: fixed width at the final price, so it does not jitter while counting
+    o.price.innerHTML = '£' + o.it.price.toFixed(2); o.price.style.width = 'auto'; o.price.style.padding = '20px 40px';
+    o.price._fw = o.price.offsetWidth; o.price.style.padding = '20px 0';
+    o.price._w = o.price._fw; o.price._h = o.price.offsetHeight;
+    // chip text: centred vertically at its final size, then typed top-down
+    const ct = o.chip.querySelector('.ct'); ct.innerHTML = o.it.chip; const th = ct.offsetHeight;
+    ct.style.top = (162 - th) / 2 - 2 + 'px'; o.chip.querySelector('.ckc').style.top = (162 - 64) / 2 + 'px';
+    o.num._w = o.num.offsetWidth; o.num._h = o.num.offsetHeight;
+  });
+  pbT._s = fit(pbT, 872, 140, 100); pbT._l1 = pbT.querySelector('.ln').scrollWidth;
+  fit(enT, 872, 200, 120);
+  pbPrice.innerHTML = '£48.57'; pbPrice._w = pbPrice.offsetWidth; pbPrice._h = pbPrice.offsetHeight;
+  for (const e of [pbSave, pbWas, enBtn, enShip]) { e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  for (const e of ALL) e.style.display = 'none';
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  sceneHook(t); for (let i = 0; i < 5; i++) sceneItem(i, t); scenePayoff(t); sceneEnd(t); sceneOverlay(t);
+}
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS; window.BEAT = B;
+window.ready = Promise.all([document.fonts.load('560 100px Fraunces'), document.fonts.load('italic 480 100px Fraunces'), document.fonts.load('700 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('600 40px Inter')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fitStage = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fitStage); fitStage();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
