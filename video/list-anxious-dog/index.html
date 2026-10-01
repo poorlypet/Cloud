@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anxious Dog List</title>
+<style>
+@font-face{font-family:Anton;font-weight:400;src:url(fonts/anton.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:normal;font-weight:300 700;src:url(fonts/fraunces-normal.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-style:italic;font-weight:300 700;src:url(fonts/fraunces-italic.woff2) format('woff2')}
+@font-face{font-family:Inter;font-weight:100 900;src:url(fonts/inter-var.woff2) format('woff2')}
+:root{--deep:#0B2A23;--green:#0C342A;--tile:#134A3D;--rust:#A8542F;--mark:#C25E2E;--mint:#9FE8C9;--paper:#FAF9F6;--pale:#EDF1EC;--ink:#101B17;--mute:#5E6E66;--line:#E3E8E6;--gold:#C9982E}
+html,body{margin:0;height:100%;background:#111;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--deep);transform-origin:0 0}
+#world{position:absolute;inset:0}
+.g{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.L{position:absolute;left:0;top:0;display:none}
+.full{width:1080px;height:1920px}
+.big{font-family:Anton,Impact,sans-serif;font-weight:400;line-height:.92;white-space:nowrap;text-transform:uppercase;letter-spacing:.005em}
+.big em{font-family:Fraunces,serif;font-style:italic;font-weight:600;text-transform:none;letter-spacing:-.02em;font-size:1.04em}
+.w{display:inline-block}
+.ui{font-family:Inter,sans-serif}
+.pill5{width:160px;height:58px;border-radius:29px;overflow:hidden}
+.pill5 .tf{position:absolute;left:0;top:0;height:58px;border-radius:29px}
+.pill5 span{position:absolute;left:0;right:0;top:0;text-align:center;font:900 34px/58px Inter,sans-serif}
+.card{background:#fff;border-radius:40px;box-sizing:border-box}
+.cap{font:900 64px/1.2 Inter,sans-serif;width:876px;letter-spacing:-.01em;text-wrap:balance}
+.cap .cw{display:inline-block;position:relative;z-index:2;padding:0 9px;margin:0 -4px}
+.cap .hl{position:absolute;left:0;top:0;border-radius:16px;z-index:1}
+svg{display:block;overflow:visible}
+.ol *{fill:#fff!important;stroke:#fff!important;stroke-width:26px!important;stroke-linejoin:round!important;stroke-dasharray:none!important}
+.sh *{fill:rgba(16,27,23,.28)!important;stroke:rgba(16,27,23,.28)!important;stroke-width:26px!important;stroke-linejoin:round!important;stroke-dasharray:none!important}
+</style>
+</head>
+<body>
+<div id="stage"><div id="world"></div></div>
+<script src="lib/motion.js"></script>
+<script src="cues.js"></script>
+<script>
+const { spring: sp, track: T, mix } = Motion;
+const { B, ITEMS, IT, SC, HK, P1, P2, capWords, headWords } = TL;
+const W = 1080, H = 1920, DUR = TL.DUR, FPS = 30;
+const bt = b => b * B;
+const stage = document.getElementById('stage'), world = document.getElementById('world');
+// extra spring shapes (still closed-form springs from lib/motion.js)
+const SLAM = { w: 19, z: 0.55 }, SLAP = { w: 22, z: 0.6 }, WIPE = { w: 17, z: 0.9 };
+
+const TH = {
+  deep: { bg: '#0B2A23', shade: '#134A3D', tx: '#FAF9F6', ac: '#9FE8C9', hiBg: '#9FE8C9', hiTx: '#0B2A23', num: '#9FE8C9', numSh: '#04140F', band: '#C25E2E', off: [250, 249, 246] },
+  mint: { bg: '#9FE8C9', shade: '#88DAB8', tx: '#0B2A23', ac: '#A8542F', hiBg: '#0B2A23', hiTx: '#9FE8C9', num: '#0B2A23', numSh: '#6CC6A0', band: '#FAF9F6', off: [11, 42, 35] },
+  rust: { bg: '#A8542F', shade: '#974A27', tx: '#FAF9F6', ac: '#9FE8C9', hiBg: '#FAF9F6', hiTx: '#A8542F', num: '#FAF9F6', numSh: '#6E3219', band: '#0B2A23', off: [250, 249, 246] },
+  paper: { bg: '#FAF9F6', shade: '#EDF1EC', tx: '#101B17', ac: '#A8542F', hiBg: '#A8542F', hiTx: '#FAF9F6', num: '#0B2A23', numSh: '#D8E0DB', band: '#9FE8C9', off: [16, 27, 23] },
+};
+const rgba = (c, a) => `rgba(${c.join(',')},${a})`;
+
+/* ---------------- building blocks ---------------- */
+const ALL = [];
+function el(parent, html = '', cls = '', style = '') {
+  const e = document.createElement('div');
+  e.className = 'L ' + cls; e.innerHTML = html; e.style.cssText += style;
+  parent.appendChild(e); ALL.push(e); return e;
+}
+function group(z) { const g = document.createElement('div'); g.className = 'g'; g.style.zIndex = z; world.appendChild(g); ALL.push(g); return g; }
+function put(e, o = {}) {
+  const { x = 0, y = 0, s = 1, sx = s, sy = s, r = 0, o: op = 1, ox = null, oy = null } = o;
+  if (op <= 0.003) { e.style.display = 'none'; return; }
+  e.style.display = 'block';
+  e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${sx},${sy})`;
+  e.style.transformOrigin = `${ox ?? (e._w || 0) / 2}px ${oy ?? (e._h || 0) / 2}px`;
+  e.style.opacity = Math.min(1, op);
+}
+// a point (lx,ly) on an element placed at (x,y) with origin (ox,oy), scale s and rotation r (deg)
+const onEl = (x, y, ox, oy, s, r, lx, ly) => { const a = r * Math.PI / 180, dx = (lx - ox) * s, dy = (ly - oy) * s; return [x + ox + dx * Math.cos(a) - dy * Math.sin(a), y + oy + dx * Math.sin(a) + dy * Math.cos(a)]; };
+const rise = (t, t0, d, p = 'default') => d * (1 - sp(t - t0, p));
+const op = (t, t0, p = 'snappy') => sp(t - t0, p);
+const press = (t, t0, depth = 0.92) => T(t, 1, [[t0, depth, 'snappy'], [t0 + 0.1, 1, 'snappy']]);
+const pop = (t, t0, from = 0.4, p = 'default') => T(t, from, [[t0, 1, p]]);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+// "*word*" marks the italic Fraunces accent
+const md = s => s.split(' ').map(w => /^\*.*\*$/.test(w) ? `<span class="w"><em>${esc(w.slice(1, -1))}</em></span>` : `<span class="w">${esc(w)}</span>`).join(' ');
+function popWords(e, t, times, d = 50, from = 0.3) {
+  e.querySelectorAll('.w').forEach((w, i) => {
+    const t0 = times[i], k = sp(t - t0, SLAP), s = from + (1 - from) * k;
+    w.style.opacity = t >= t0 ? 1 : 0;
+    w.style.transform = `translateY(${d * (1 - sp(t - t0, 'snappy'))}px) scale(${s})`;
+  });
+}
+function setDraw(p, k) { const L = p._len || (p._len = p.getTotalLength() + 2); p.style.strokeDasharray = `${L} ${L}`; p.style.strokeDashoffset = L * (1 - Math.max(0, Math.min(1, k))); p.style.visibility = k <= 0.001 ? 'hidden' : 'visible'; }
+
+/* ---------------- original product illustrations (300x300, no animals) ---------------- */
+const LEAF = (x, y, s = 1, c = '#3BB273') => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 34 C-20 18 -18 -12 0 -34 C18 -12 20 18 0 34Z" fill="${c}"/><path d="M0 30 V-24" stroke="#FAF9F6" stroke-width="4" stroke-linecap="round"/></g>`;
+const SPRIG = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 40 V-30" stroke="#3B7A4E" stroke-width="5" stroke-linecap="round"/>${[-30, -18, -6, 6, 18].map((yy, i) => `<ellipse cx="${i % 2 ? 7 : -7}" cy="${yy}" rx="8" ry="11" fill="#7D5CC0"/>`).join('')}<ellipse cx="0" cy="-38" rx="7" ry="10" fill="#7D5CC0"/></g>`;
+const FLOWER = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})">${[0, 60, 120, 180, 240, 300].map(a => `<ellipse cx="0" cy="-17" rx="9" ry="15" fill="#FAF9F6" transform="rotate(${a})"/>`).join('')}<circle r="11" fill="#E9B23A"/></g>`;
+const ILL = {
+  pouch: {
+    main: `<path d="M80 56 H220 L232 250 Q234 274 210 274 H90 Q66 274 68 250 Z" fill="#C25E2E"/>
+      <rect x="74" y="40" width="152" height="32" rx="8" fill="#A8542F"/>
+      <path d="M86 92 H214" stroke="#8C4424" stroke-width="6" stroke-linecap="round"/>
+      <rect x="98" y="112" width="104" height="120" rx="18" fill="#FAF9F6"/>
+      ${LEAF(150, 160, 1.05)}
+      <rect x="116" y="208" width="68" height="10" rx="5" fill="#C25E2E"/>
+      <rect x="30" y="222" width="80" height="62" rx="24" fill="#D9A066"/>
+      <rect x="196" y="228" width="80" height="58" rx="24" fill="#C98E52"/>`,
+    extra: `<circle cx="56" cy="246" r="5" fill="#B57A42"/><circle cx="80" cy="258" r="5" fill="#B57A42"/><circle cx="224" cy="250" r="5" fill="#A86F38"/><circle cx="248" cy="262" r="5" fill="#A86F38"/>
+      <path d="M200 40 l8 -10 l8 10" fill="none" stroke="#FAF9F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  spray: {
+    main: `<path d="M112 56 H196 Q210 56 210 70 V100 H112 Z" fill="#FAF9F6"/>
+      <rect x="70" y="62" width="48" height="22" rx="8" fill="#FAF9F6"/>
+      <path d="M150 98 L134 146 Q130 158 142 158 L166 104 Z" fill="#E3E8E6"/>
+      <rect x="132" y="96" width="58" height="34" rx="8" fill="#6E52AE"/>
+      <rect x="104" y="124" width="114" height="156" rx="30" fill="#9B7FD4"/>
+      <rect x="118" y="160" width="86" height="96" rx="14" fill="#FAF9F6"/>
+      ${SPRIG(161, 206, 0.95)}`,
+    extra: `<rect x="112" y="136" width="10" height="120" rx="5" fill="#C2B0EA" opacity=".8"/>
+      <circle cx="46" cy="60" r="7" fill="#FAF9F6" opacity=".9"/><circle cx="30" cy="80" r="5" fill="#FAF9F6" opacity=".8"/><circle cx="44" cy="96" r="6" fill="#FAF9F6" opacity=".85"/><circle cx="22" cy="54" r="4" fill="#FAF9F6" opacity=".7"/>`,
+  },
+  mat: {
+    main: `<rect x="36" y="46" width="228" height="216" rx="48" fill="#38B2A3"/>
+      <rect x="64" y="72" width="172" height="164" rx="34" fill="none" stroke="#228576" stroke-width="12" stroke-dasharray="120 24"/>
+      <rect x="96" y="102" width="108" height="104" rx="22" fill="none" stroke="#228576" stroke-width="12" stroke-dasharray="70 22"/>
+      <circle cx="150" cy="154" r="20" fill="#228576"/>`,
+    extra: `${[[52, 62], [248, 62], [52, 246], [248, 246]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" fill="#7FD6CB"/>`).join('')}
+      <path d="M176 120 C196 110 214 124 206 140 C200 152 182 150 176 140 C168 132 166 124 176 120Z" fill="#E7C08A"/>
+      <path d="M80 220 C92 212 108 216 110 226 C112 236 96 240 86 236 C76 232 72 226 80 220Z" fill="#E7C08A"/>`,
+  },
+  plug: {
+    main: `<rect x="138" y="20" width="24" height="44" rx="5" fill="#B9C3BE"/>
+      <rect x="62" y="74" width="40" height="22" rx="5" fill="#B9C3BE"/>
+      <rect x="198" y="74" width="40" height="22" rx="5" fill="#B9C3BE"/>
+      <rect x="82" y="54" width="136" height="124" rx="30" fill="#FAF9F6"/>
+      <rect x="122" y="172" width="56" height="26" rx="6" fill="#DCE3DF"/>
+      <path d="M110 194 H190 V258 Q190 280 168 280 H132 Q110 280 110 258 Z" fill="#5C9A6A"/>
+      <rect x="124" y="214" width="52" height="46" rx="8" fill="#FAF9F6"/>
+      ${LEAF(150, 237, 0.48, '#3B7A4E')}`,
+    extra: `<circle cx="150" cy="112" r="15" fill="#3BB273"/><circle cx="150" cy="112" r="6" fill="#B7F0C9"/>
+      <path d="M244 150 q16 -16 0 -32 q-16 -16 0 -32" fill="none" stroke="#FAF9F6" stroke-width="7" stroke-linecap="round"/>
+      <path d="M268 166 q14 -14 0 -28 q-14 -14 0 -28" fill="none" stroke="#FAF9F6" stroke-width="6" stroke-linecap="round" opacity=".7"/>`,
+  },
+  jar: {
+    main: `<rect x="80" y="40" width="140" height="50" rx="12" fill="#2F7FA6"/>
+      <path d="M86 86 H214 Q232 86 232 106 V254 Q232 278 208 278 H92 Q68 278 68 254 V106 Q68 86 86 86Z" fill="#FAF9F6"/>
+      <rect x="68" y="132" width="164" height="104" fill="#9B7FD4"/>
+      ${FLOWER(150, 184, 1.25)}
+      <rect x="24" y="236" width="74" height="54" rx="22" fill="#9A5B33"/>
+      <rect x="208" y="240" width="72" height="50" rx="22" fill="#B06A3B"/>`,
+    extra: `<path d="M98 50 V80 M122 50 V80 M146 50 V80 M170 50 V80 M194 50 V80" stroke="#246A8C" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="50" cy="256" r="5" fill="#7C4524"/><circle cx="72" cy="268" r="5" fill="#7C4524"/><circle cx="234" cy="258" r="5" fill="#8E5530"/>`,
+  },
+  drops: {
+    main: `<rect x="128" y="22" width="44" height="64" rx="20" fill="#101B17"/>
+      <rect x="118" y="80" width="64" height="34" rx="8" fill="#2A2F2C"/>
+      <path d="M112 112 H188 Q216 124 216 156 V256 Q216 280 192 280 H108 Q84 280 84 256 V156 Q84 124 112 112Z" fill="#B8742F"/>
+      <rect x="100" y="160" width="100" height="90" rx="14" fill="#FAF9F6"/>
+      ${LEAF(150, 205, 0.7)}`,
+    extra: `<rect x="96" y="150" width="9" height="104" rx="4" fill="#D79A5A" opacity=".8"/>`,
+  },
+  pad: {
+    main: `<rect x="24" y="86" width="252" height="160" rx="54" fill="#6E8F88"/>
+      <rect x="46" y="106" width="208" height="120" rx="40" fill="none" stroke="#FAF9F6" stroke-width="5" stroke-dasharray="10 10"/>`,
+    extra: `<path d="M86 132 L150 196 L214 132 M86 196 L150 132 L214 196" stroke="#587A73" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M110 66 q12 -12 0 -24 q-12 -12 0 -24 M150 66 q12 -12 0 -24 q-12 -12 0 -24 M190 66 q12 -12 0 -24 q-12 -12 0 -24" fill="none" stroke="#F2A06B" stroke-width="7" stroke-linecap="round"/>`,
+  },
+};
+function ill(name, size) {
+  const { main, extra } = ILL[name];
+  return `<svg width="${size}" height="${size}" viewBox="0 0 300 300"><g class="sh" transform="translate(8 12)">${main}</g><g class="ol">${main}</g>${main}${extra}</svg>`;
+}
+const STAR = c => `<svg width="64" height="64" viewBox="0 0 64 64"><path d="M32 4 L40 23 L60 24 L44 37 L50 58 L32 46 L14 58 L20 37 L4 24 L24 23 Z" fill="${c}"/></svg>`;
+const ARROW = (c, s = 56) => `<svg width="${s}" height="${s}" viewBox="0 0 64 64" style="display:inline-block;vertical-align:middle"><path d="M10 32 H50 M34 16 L50 32 L34 48" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function mark(size, bg, fg) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${bg}"/><rect x="42" y="22" width="16" height="56" rx="6" fill="${fg}"/><rect x="22" y="42" width="56" height="16" rx="6" fill="${fg}"/></svg>`;
+}
+
+/* ---------------- shared pieces ---------------- */
+// the 5-pill progress tracker, one copy per page so it wipes with its page
+function makeTracker(g, th) {
+  return [0, 1, 2, 3, 4].map(i => {
+    const p = el(g, `<div class="tf" style="background:${th.hiBg}"></div><span>${i + 1}</span>`, 'pill5', `background:${rgba(th.off, 0.16)}`);
+    p._sp = p.querySelector('span'); p._tf = p.querySelector('.tf'); return p;
+  });
+}
+function drawTracker(pills, th, t, filled, fillAt) { // pills < filled are full; pill `filled` fills at fillAt
+  pills.forEach((p, i) => {
+    let k = i < filled ? 1 : i === filled && fillAt != null ? sp(t - fillAt, 'default') : 0;
+    k = Math.max(0, Math.min(1.02, k));
+    p._tf.style.width = 160 * k + 'px'; p._tf.style.display = k > 0.01 ? 'block' : 'none';
+    p._sp.style.color = k > 0.5 ? th.hiTx : rgba(th.off, 0.6);
+    const bump = i === filled && fillAt != null ? T(t, 1, [[fillAt, 1.18, 'snappy'], [fillAt + 0.12, 1, 'default']]) : 1;
+    put(p, { x: 64 + i * 179, y: 236, s: bump });
+  });
+}
+function makeSlab(g, th, poly) { return el(g, '', 'full', `background:${th.shade};clip-path:polygon(${poly})`); }
+
+/* ================= HOOK (deep green) ================= */
+const scenes = [];
+const hook = { s: 0, th: TH.deep };
+{
+  const g = hook.g = group(10), th = hook.th;
+  hook.bg = el(g, '', 'full', `background:${th.bg}`);
+  hook.slab = makeSlab(g, th, '-400px 1260px, 1480px 780px, 1480px 2300px, -400px 2300px');
+  hook.stripe = el(g, '', 'full', 'background:#A8542F;clip-path:polygon(0 1560px, 1080px 1300px, 1080px 1350px, 0 1610px)');
+  hook.pills = makeTracker(g, th);
+  hook.lines = [md('5 THINGS'), md('THAT CALM'), md('AN *anxious*'), md('DOG')].map(h => el(g, h, 'big', `color:${th.tx}`));
+  hook.lines[0].querySelector('.w').style.color = th.ac;
+  hook.lines[2].querySelector('em').style.color = th.ac;
+  hook.chips = ['Fireworks.', 'Travel.', 'Being left alone.'].map(s => el(g, `<div class="cbg" style="position:absolute;inset:0;border-radius:52px;background:${th.ac}"></div><span class="ui" style="position:relative;display:block;padding:0 34px;font:900 66px/104px Inter;white-space:nowrap;color:${th.hiTx}">${s}</span>`, '', 'height:104px'));
+  hook.save = el(g, `<div style="position:absolute;left:30px;top:34px"><svg width="44" height="58" viewBox="0 0 34 44"><path d="M3 3 H31 V41 L17 31 L3 41 Z" fill="#C25E2E"/></svg></div><div class="ui" style="position:absolute;left:96px;top:24px;font:900 44px/1.08 Inter;color:#0B2A23;white-space:nowrap">Save this<br>for later</div>`, '',
+    'width:330px;height:144px;border-radius:30px;background:#FAF9F6;box-shadow:8px 10px 0 rgba(0,0,0,.3)');
+}
+hook.render = (t) => {
+  const th = hook.th;
+  put(hook.bg);
+  put(hook.slab, { x: T(t, 160, [[-0.25, 0, 'heavy']]), y: T(t, 90, [[-0.25, 0, 'heavy']]) });
+  put(hook.stripe, { x: T(t, -1080, [[0.0, 0, 'default']]) });
+  drawTracker(hook.pills, th, t, 0, null);
+  // title is on screen at frame 0, each line still settling in from alternate sides
+  let y = hook._top;
+  hook.lines.forEach((l, i) => {
+    const t0 = -0.42 + i * 0.06, dx = (i % 2 ? 1 : -1) * 160;
+    const k5 = i === 0 ? T(t, 1.25, [[-0.1, 1, SLAM]]) : 1;
+    put(l, { x: 64 + rise(t, t0, dx, 'default'), y });
+    if (i === 0) { const f = l.querySelector('.w'); f.style.transform = `scale(${k5})`; f.style.transformOrigin = '50% 70%'; }
+    y += l._h + hook._gap;
+  });
+  // the three triggers are on screen from frame 0 (still landing), then light up karaoke style on the beat
+  hook.chips.forEach((c, i) => {
+    const tin = -0.24 + i * 0.04, ti = bt(HK.chips[i]), lit = t >= ti && (i === 2 || t < bt(HK.chips[i + 1])), sung = t >= ti && !lit;
+    const [x, cy] = hook._chipPos[i];
+    const bump = T(t, 1, [[ti, 1.14, 'snappy'], [ti + 0.1, 1, 'default']]);
+    put(c, { x, y: cy + rise(t, tin, 60, 'snappy'), s: pop(t, tin, 0.4, SLAP) * bump, o: t >= tin ? 1 : 0, r: [-2, 1.5, -1][i] });
+    c.querySelector('.cbg').style.background = lit ? th.ac : sung ? 'rgba(250,249,246,.2)' : 'rgba(250,249,246,.1)';
+    c.querySelector('span').style.color = lit ? th.hiTx : sung ? th.tx : 'rgba(250,249,246,.62)';
+  });
+  const tsv = bt(HK.save);
+  put(hook.save, { x: hook._saveX, y: hook._saveY, s: pop(t, tsv, 1.7, SLAP), r: T(t, 18, [[tsv, -5, SLAP]]), o: t >= tsv ? 1 : 0 });
+};
+scenes.push(hook);
+
+/* ================= the five items ================= */
+ITEMS.forEach((it, idx) => {
+  const th = TH[it.bg], sc = { s: SC.items[idx], th, it, idx, tr: it.tr };
+  const g = sc.g = group(20 + idx * 10);
+  sc.bg = el(g, '', 'full', `background:${th.bg}`);
+  sc.slab = makeSlab(g, th, idx % 2 ? '0 820px, 1080px 1060px, 1080px 1920px, 0 1920px' : '0 1060px, 1080px 820px, 1080px 1920px, 0 1920px');
+  sc.ghost = el(g, String(idx + 1), 'big', `font-size:640px;line-height:.8;color:transparent;-webkit-text-stroke:5px ${th.numSh}`);
+  sc.pills = makeTracker(g, th);
+  sc.num = el(g, String(idx + 1), 'big', `font-size:600px;line-height:.8;color:${th.num};text-shadow:14px 16px 0 ${th.numSh}`);
+  sc.card = el(g, `<div class="tile" style="position:absolute;left:20px;top:20px;width:480px;height:312px;border-radius:28px;background:${it.tile}"><div style="position:absolute;left:90px;top:6px">${ill(it.ill, 300)}</div></div>
+    <div class="ui pn" style="position:absolute;left:28px;top:348px;width:464px;font:800 42px/1.12 Inter;color:var(--ink);letter-spacing:-.01em">${esc(it.name)}</div>`,
+    'card', 'width:520px;height:600px;box-shadow:12px 16px 0 rgba(16,27,23,.26)');
+  sc.price = el(g, esc(it.price), 'big', 'font-size:88px;line-height:1.51;color:#fff;background:#C25E2E;border-radius:28px;padding:0 30px');
+  sc.badge = el(g, `<span class="ui" style="display:block;font:900 34px/1.05 Inter;letter-spacing:.02em;color:${it.bg === 'paper' ? '#FAF9F6' : '#0B2A23'};text-align:center;white-space:nowrap">${esc(it.badge).toUpperCase().replace('M²', 'm²').replace(' ', '<br>')}</span>`, '',
+    `padding:18px 26px;border-radius:24px;background:${it.bg === 'mint' ? '#FAF9F6' : it.bg === 'paper' ? '#0B2A23' : '#9FE8C9'};box-shadow:6px 8px 0 rgba(16,27,23,.25)`);
+  sc.head = it.head.map(h => el(g, md(h), 'big', `color:${th.tx}`));
+  sc.head.forEach(h => h.querySelectorAll('em').forEach(e => e.style.color = th.ac));
+  const words = capWords(it.line);
+  sc.cap = el(g, `<div class="hl" style="background:${th.hiBg}"></div>` + words.map(w => `<span class="cw">${esc(w)}</span>`).join(' '), 'cap', `color:${th.tx}`);
+  sc.render = (t) => {
+    const S = bt(sc.s), at = b => S + bt(b);
+    put(sc.bg);
+    put(sc.slab, { x: T(t, idx % 2 ? -700 : 700, [[S - 0.05, 0, 'default']]) });
+    put(sc.ghost, { x: 1080 - sc.ghost._w - 10, y: 1400 + rise(t, S + 0.05, 300, 'heavy') });
+    drawTracker(sc.pills, th, t, idx, S);
+    // the giant number slams down on the downbeat, then flinches when the card hits
+    const ns = T(t, 2.6, [[S, 1, SLAM]]) * press(t, at(IT.card), 0.95);
+    put(sc.num, { x: sc._numX, y: 338, s: ns, o: t >= S - 0.02 ? 1 : 0 });
+    // headline words pop one by one
+    let j = 0;
+    const times = headWords(it).map((_, k) => at(IT.head0 + k * IT.headStep));
+    sc.head.forEach((h, li) => {
+      const n = h.querySelectorAll('.w').length;
+      put(h, { x: 64, y: sc._headY[li] });
+      popWords(h, t, times.slice(j, j + n), 60, 0.2); j += n;
+    });
+    // the sticker card slaps on with a little rotation
+    const tc = at(IT.card);
+    const cY = 334 + rise(t, tc, -60, SLAP), cS = pop(t, tc, 1.45, SLAP), cR = T(t, -18, [[tc, -4, SLAP]]);
+    put(sc.card, { x: 412, y: cY, s: cS, r: cR, o: t >= tc ? 1 : 0, ox: 260, oy: 300 });
+    // the price drops onto the card (and rides its rotation)
+    const tp = at(IT.price);
+    const [px, py] = onEl(412, cY, 260, 300, cS, cR, 28, 452);
+    put(sc.price, { x: px, y: py + rise(t, tp, -140, SLAP), s: pop(t, tp, 1.6, SLAP) * cS, r: cR + T(t, 10, [[tp, 0, SLAP]]), o: t >= tp ? 1 : 0, ox: 0, oy: 0 });
+    // karaoke caption: words pop in, the highlight jumps word to word
+    const ws = sc._cw, ct = ws.map((_, k) => at(IT.cap0 + k * IT.capStep));
+    put(sc.cap, { x: 64 - 10, y: sc._capY, o: t >= ct[0] - 0.01 ? 1 : 0 });
+    let cur = -1; ct.forEach((tt, k) => { if (t >= tt) cur = k; });
+    ws.forEach((w, k) => {
+      w.e.style.opacity = t >= ct[k] ? 1 : 0;
+      w.e.style.transform = `translateY(${30 * (1 - sp(t - ct[k], 'snappy'))}px) scale(${pop(t, ct[k], 0.5, SLAP)})`;
+      w.e.style.color = k === cur ? th.hiTx : th.tx;
+    });
+    const hl = sc.cap.querySelector('.hl');
+    if (cur >= 0) {
+      const keys = f => ct.map((tt, k) => [tt, f(ws[k]), 'snappy']);
+      const hx = T(t, ws[0].x, keys(w => w.x)), hy = T(t, ws[0].y, keys(w => w.y)), hw = T(t, ws[0].w, keys(w => w.w));
+      hl.style.display = 'block'; hl.style.left = hx + 'px'; hl.style.top = hy - 2 + 'px'; hl.style.width = hw + 'px'; hl.style.height = ws[0].h + 4 + 'px';
+      hl.style.transform = `scale(${pop(t, ct[0], 0.3, SLAP)})`;
+    } else hl.style.display = 'none';
+    // badge stamps on the card corner
+    const tb = at(IT.badge);
+    put(sc.badge, { x: 940 - sc.badge._w - 6, y: 352, s: pop(t, tb, 1.8, SLAP), r: T(t, 22, [[tb, 7, SLAP]]), o: t >= tb ? 1 : 0 });
+  };
+  scenes.push(sc);
+});
+
+/* ================= P1: the bundle (rust) ================= */
+const p1 = { s: SC.p1, th: TH.rust, tr: 'bars2' };
+{
+  const g = p1.g = group(80), th = p1.th;
+  p1.bg = el(g, '', 'full', `background:${th.bg}`);
+  p1.slab = makeSlab(g, th, '0 1120px, 1080px 900px, 1080px 1920px, 0 1920px');
+  p1.pills = makeTracker(g, th);
+  p1.h1 = el(g, md('GET THE'), 'big', `color:${th.tx}`);
+  p1.h2 = el(g, md('ANXIETY *bundle*'), 'big', `color:${th.tx}`);
+  p1.h2.querySelector('em').style.color = th.ac;
+  const MINI = [['drops', 'Calming<br>Drops'], ['pad', 'Self-Heating<br>Pad'], ['spray', 'Lavender<br>Spray']];
+  p1.card = el(g, `<div class="ui wasrow" style="position:absolute;left:40px;top:494px;font:800 46px/1 Inter;color:var(--mute);white-space:nowrap">was <span class="was" style="position:relative;display:inline-block">£46.97<i class="strike" style="position:absolute;left:-6px;top:22px;height:7px;border-radius:4px;background:#C25E2E;width:0"></i></span></div>`,
+    'card', 'width:876px;height:568px;box-shadow:12px 16px 0 rgba(16,27,23,.3)');
+  p1.minis = MINI.map(([k, l]) => el(g, `<div style="position:absolute;left:0;top:0;width:252px;height:206px;border-radius:26px;background:#0B2A23"><div style="position:absolute;left:46px;top:8px">${ill(k, 160)}</div></div>
+    <div class="ui" style="position:absolute;left:0;top:220px;width:252px;text-align:center;font:800 34px/1.08 Inter;color:var(--ink)">${l}</div>`, '', 'width:252px;height:296px'));
+  p1.price = el(g, '£42.27', 'big', 'font-size:150px;line-height:1;color:#A8542F');
+  p1.save = el(g, `<div class="ui" style="font:900 40px/1 Inter;letter-spacing:.04em">SAVE</div><div class="big" style="font-size:90px;line-height:1">10%</div>`, '',
+    'width:220px;height:220px;border-radius:110px;background:#9FE8C9;color:#0B2A23;text-align:center;box-sizing:border-box;padding-top:40px;box-shadow:6px 8px 0 rgba(16,27,23,.3)');
+  p1.stars = [0, 1, 2, 3, 4].map(() => el(g, STAR('#E9B949'), '', 'width:64px;height:64px'));
+  p1.quote = el(g, '“…noticeably more settled…”', '', `font:italic 600 72px/1.05 Fraunces,serif;color:${th.tx};white-space:nowrap;letter-spacing:-.01em`);
+  p1.who = el(g, 'Kay · Anxiety Bundle review', 'ui', 'font:700 36px/1 Inter;color:rgba(250,249,246,.85);white-space:nowrap');
+}
+p1.render = (t) => {
+  const th = p1.th, S = bt(p1.s);
+  put(p1.bg); put(p1.slab, { x: T(t, -700, [[S - 0.05, 0, 'default']]) });
+  drawTracker(p1.pills, th, t, 5, null);
+  [[p1.h1, 0], [p1.h2, 1]].forEach(([h, i]) => { put(h, { x: 64, y: p1._hy[i] }); const n = h.querySelectorAll('.w').length; popWords(h, t, Array.from({ length: n }, (_, k) => bt(P1.head[i]) + k * 0.12), 60, 0.2); });
+  const tc = bt(P1.card), cy = p1._cardY;
+  put(p1.card, { x: 64, y: cy + rise(t, tc, -50, SLAP), s: pop(t, tc, 1.3, SLAP), r: T(t, -9, [[tc, -1.5, SLAP]]), o: t >= tc ? 1 : 0, ox: 438, oy: 284 });
+  const cr = T(t, -9, [[tc, -1.5, SLAP]]) * Math.PI / 180, cs = pop(t, tc, 1.3, SLAP), cyy = cy + rise(t, tc, -50, SLAP);
+  // children ride with the card: map card-local points through its transform
+  const onCard = (lx, ly) => onEl(64, cyy, 438, 284, cs, cr * 180 / Math.PI, lx, ly);
+  p1.minis.forEach((m, i) => { const t0 = bt(P1.minis[i]); const [x, y] = onCard(30 + i * 276, 28); put(m, { x, y, s: pop(t, t0, 0.2, SLAP) * cs, r: cr * 180 / Math.PI, o: t >= t0 ? 1 : 0, ox: 0, oy: 0 }); });
+  const tp = bt(P1.price); { const [x, y] = onCard(32, 336); put(p1.price, { x, y: y + rise(t, tp, -120, SLAP), s: pop(t, tp, 1.6, SLAP) * cs, r: cr * 180 / Math.PI, o: t >= tp ? 1 : 0, ox: 0, oy: 0 }); }
+  const sk = sp(t - bt(P1.strike), 'snappy'); const st = p1.card.querySelector('.strike'); st.style.width = (p1._wasW + 12) * Math.max(0, Math.min(1, sk)) + 'px';
+  const ts = bt(P1.save);
+  put(p1.save, { x: 940 - 220 - 8, y: cy + 330, s: pop(t, ts, 2, SLAP), r: T(t, 30, [[ts, 10, SLAP]]), o: t >= ts ? 1 : 0 });
+  const tr = bt(P1.review);
+  p1.stars.forEach((s, i) => { const t0 = bt(P1.stars[i]); put(s, { x: 64 + i * 72, y: p1._revY, s: pop(t, t0, 0, SLAP), o: t >= t0 ? 1 : 0 }); });
+  put(p1.quote, { x: 64 + rise(t, tr, -80, 'default'), y: p1._revY + 84, o: op(t, tr) });
+  put(p1.who, { x: 64, y: p1._revY + 84 + p1.quote._h + 16 + rise(t, tr + 0.1, 20), o: op(t, tr + 0.1) });
+};
+scenes.push(p1);
+
+/* ================= P2: the offer and the button (deep green, rhymes with frame 0) ================= */
+const p2 = { s: SC.p2, th: TH.deep, tr: 'split' };
+{
+  const g = p2.g = group(90), th = p2.th;
+  p2.bg = el(g, '', 'full', `background:${th.bg}`);
+  p2.slab = makeSlab(g, th, '0 1180px, 1080px 860px, 1080px 1920px, 0 1920px');
+  p2.stripe = el(g, '', 'full', 'background:#A8542F;clip-path:polygon(0 1560px, 1080px 1300px, 1080px 1350px, 0 1610px)');
+  p2.pills = makeTracker(g, th);
+  p2.big = el(g, md('10% OFF'), 'big', `color:${th.tx}`);
+  p2.big.querySelector('.w').style.color = th.ac;
+  p2.sub = el(g, 'your first order', '', `font:italic 600 92px/1 Fraunces,serif;color:${th.ac};white-space:nowrap;letter-spacing:-.01em`);
+  p2.code = el(g, `<div class="ui" style="position:absolute;left:0;right:0;top:30px;text-align:center;font:800 34px/1 Inter;letter-spacing:.2em;color:#5E6E66">USE CODE</div>
+    <div class="ui" style="position:absolute;left:0;right:0;top:78px;text-align:center;font:800 120px/1 Inter;letter-spacing:.02em;color:#0B2A23">POORLY10</div>
+`,
+    '', 'width:876px;height:236px;border-radius:30px;background:#FAF9F6;box-sizing:border-box;border:5px dashed #C25E2E');
+  p2.deliv = el(g, `<span style="display:inline-block;vertical-align:-8px;margin-right:18px"><svg width="70" height="48" viewBox="0 0 70 48"><rect x="2" y="6" width="40" height="28" rx="5" fill="#9FE8C9"/><path d="M42 14 H56 L66 26 V34 H42 Z" fill="#9FE8C9"/><circle cx="16" cy="38" r="7" fill="#0B2A23" stroke="#9FE8C9" stroke-width="4"/><circle cx="54" cy="38" r="7" fill="#0B2A23" stroke="#9FE8C9" stroke-width="4"/></svg></span>Free UK delivery over £39`, 'ui',
+    `font:800 50px/1 Inter;color:${th.tx};white-space:nowrap`);
+  p2.btn = el(g, `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span class="ui" style="font:900 58px/1 Inter;color:#0B2A23;white-space:nowrap">Shop now</span><span style="margin:0 16px;display:block">${ARROW('#0B2A23', 56)}</span><span class="ui" style="font:800 52px/1 Inter;color:#0B2A23;white-space:nowrap">poorly-pet.com</span></div>`, '',
+    'width:876px;height:150px;border-radius:75px;background:#9FE8C9;display:none;box-sizing:border-box;box-shadow:0 12px 0 #06231C');
+  p2.btn.style.cssText += ';display:none';
+  p2.logo = el(g, `<div style="position:absolute;left:0;top:0">${mark(88, '#C25E2E', '#fff')}</div><div class="ui" style="position:absolute;left:110px;top:0;font:800 74px/88px Inter;letter-spacing:-.02em;color:#FAF9F6;white-space:nowrap">Poorly Pet</div>`, '', 'width:480px;height:88px');
+  p2.ring = el(g, '', '', 'width:120px;height:120px;border-radius:60px;border:8px solid #FAF9F6;box-sizing:border-box');
+  p2.cursor = el(g, '<svg width="84" height="84" viewBox="0 0 64 64"><path d="M14 6 L14 50 L25 40 L33 58 L41 54 L33 37 L48 37 Z" fill="#101B17" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>', '', 'width:84px;height:84px');
+}
+p2.render = (t) => {
+  const th = p2.th, S = bt(p2.s);
+  put(p2.bg);
+  put(p2.slab, { x: T(t, 700, [[S - 0.05, 0, 'heavy']]) });
+  put(p2.stripe, { x: T(t, -1080, [[S + 0.1, 0, 'default']]) });
+  drawTracker(p2.pills, th, t, 5, null);
+  put(p2.big, { x: 64, y: p2._bigY }); popWords(p2.big, t, [S, S + 0.1], 0, 0.1);
+  p2.big.querySelectorAll('.w').forEach((w, i) => w.style.transform = `scale(${T(t, 2.4, [[S + i * 0.1, 1, SLAM]])})`);
+  const tsub = bt(P2.sub);
+  put(p2.sub, { x: 64 + rise(t, tsub, 120, 'default'), y: p2._subY, o: op(t, tsub) });
+  const tcd = bt(P2.code);
+  put(p2.code, { x: 102, y: p2._codeY, s: pop(t, tcd, 1.7, SLAP), r: T(t, 10, [[tcd, -2.5, SLAP]]), o: t >= tcd ? 1 : 0 });
+  const td = bt(P2.deliv);
+  put(p2.deliv, { x: 64, y: p2._delY + rise(t, td, 40, 'snappy'), o: op(t, td) });
+  const tb = bt(P2.btn), tpz = bt(P2.press);
+  const bs = pop(t, tb, 0.3, SLAP) * press(t, tpz, 0.9);
+  put(p2.btn, { x: 102, y: p2._btnY + (t > tpz ? 10 * T(t, 0, [[tpz, 1, 'snappy'], [tpz + 0.1, 0, 'snappy']]) : 0), s: bs, o: t >= tb ? 1 : 0 });
+  p2.btn.style.boxShadow = `0 ${12 - 10 * T(t, 0, [[tpz, 1, 'snappy'], [tpz + 0.1, 0, 'snappy']])}px 0 #06231C`;
+  if (t < tb) p2.btn.style.display = 'none';
+  // the tap: a cursor glides in, presses, a ring spreads from the press
+  const cx = T(t, 1180, [[tpz - 0.4, 640, 'default']]), cyy = T(t, 1700, [[tpz - 0.4, p2._btnY + 80, 'default']]);
+  put(p2.cursor, { x: cx, y: cyy, s: press(t, tpz, 0.8), o: t > tpz - 0.4 && t < tpz + 0.9 ? 1 - sp(t - tpz - 0.5, 'snappy') : 0, ox: 14, oy: 6 });
+  const rk = sp(t - tpz, 'heavy');
+  put(p2.ring, { x: cx - 60 + 10, y: cyy - 60 + 6, s: 0.3 + 1.6 * rk, o: t > tpz && t < tpz + 0.7 ? (1 - rk) : 0 });
+  const tl = bt(P2.logo);
+  put(p2.logo, { x: 540 - p2._logoW / 2, y: p2._logoY + rise(t, tl, 40, 'default'), o: op(t, tl) });
+};
+scenes.push(p2);
+
+/* ---------------- transitions between pages ---------------- */
+const TRANS = {}; // per incoming page: band element for the leading colour stripe
+scenes.forEach((sc, k) => { if (k) { sc.band = el(world, '', 'full', `background:${sc.th.band}`); sc.band.style.zIndex = sc.g.style.zIndex - 5; } });
+const LEAD = 0.32;
+function wipe(sc, t, prev) {
+  // returns false when the page is not yet on screen
+  const S = bt(sc.s), t0 = S - LEAD, g = sc.g, band = sc.band;
+  band.style.display = 'none'; g.style.clipPath = 'none';
+  if (t < t0) return false;
+  const p = sp(t - t0, WIPE), pb = sp(t - t0 + 0.07, WIPE);
+  const done = t - t0 > 0.6;
+  if (done) return true;
+  const s = 520;
+  if (sc.tr === 'diag' || sc.tr === 'diagR') {
+    const poly = (a) => sc.tr === 'diag' ? `polygon(0px 0px, ${a}px 0px, ${a - s}px ${H}px, 0px ${H}px)` : `polygon(${W - a}px 0px, ${W}px 0px, ${W}px ${H}px, ${W - a + s}px ${H}px)`;
+    g.style.clipPath = poly(p * (W + s + 30));
+    band.style.display = 'block'; band.style.clipPath = poly(pb * (W + s + 30)); band.style.transform = 'none'; band.style.opacity = 1;
+  } else if (sc.tr === 'bars' || sc.tr === 'bars2') {
+    const right = sc.tr === 'bars';
+    const ord = right ? [0, 1, 2] : [2, 1, 0];
+    const stair = (off) => { const a = [0, 1, 2].map(i => sp(t - t0 + off - ord[i] * 0.05, WIPE) * (W + 30)); const X = v => right ? W - v : v, E = right ? W : 0;
+      return `polygon(${E}px 0px, ${X(a[0])}px 0px, ${X(a[0])}px 640px, ${X(a[1])}px 640px, ${X(a[1])}px 1280px, ${X(a[2])}px 1280px, ${X(a[2])}px ${H}px, ${E}px ${H}px)`; };
+    g.style.clipPath = stair(0);
+    band.style.display = 'block'; band.style.clipPath = stair(0.07); band.style.transform = 'none'; band.style.opacity = 1;
+  } else if (sc.tr === 'split') {
+    // two diagonal halves of the new page close in from opposite corners
+    const n = [0.4604, 0.8877], d = (1 - p) * 1250;
+    const A = [[-300, -300], [1380, -300], [1380, 431 + 8], [-300, 1302 + 8]], Bp = [[-300, 1302 - 8], [1380, 431 - 8], [1380, 2300], [-300, 2300]];
+    const pth = (pts, sgn) => 'M' + pts.map(([x, y]) => `${(x + sgn * n[0] * d).toFixed(1)} ${(y + sgn * n[1] * d).toFixed(1)}`).join(' L') + ' Z';
+    g.style.clipPath = `path('${pth(A, -1)} ${pth(Bp, 1)}')`;
+  } else if (sc.tr === 'push') {
+    const k = sp(t - t0, WIPE);
+    g.style.transform = `translateY(${H * (1 - k)}px)`;
+    prev.g.style.transform = `translateY(${-H * k}px)`;
+  }
+  return true;
+}
+
+function renderFrame(t) {
+  for (const e of ALL) e.style.display = 'none';
+  scenes.forEach(sc => { sc.g.style.transform = 'none'; sc.g.style.clipPath = 'none'; });
+  // which pages are on screen: a page stays until the next one has fully covered it
+  scenes.forEach((sc, k) => {
+    const next = scenes[k + 1];
+    const end = next ? bt(next.s) - LEAD + 0.62 : 1e9;
+    if (k && !wipe(sc, t, scenes[k - 1])) return;
+    if (t >= end) return;
+    sc.g.style.display = 'block';
+    sc.render(t);
+  });
+  // a short kick of the whole frame on every number slam (decays in about 0.2 s)
+  let sx = 0, sy = 0;
+  for (const b of [0, ...SC.items, SC.p1, SC.p2]) { const dt = t - bt(b); if (dt > 0 && dt < 0.4) { const a = Math.exp(-dt * 16); sx += 10 * a * Math.sin(dt * 70); sy += 14 * a * Math.sin(dt * 55 + 1); } }
+  world.style.transform = `translate(${sx}px,${sy}px)`;
+}
+
+/* ---------------- layout that depends on real text widths ---------------- */
+function fit(e, maxW, size, maxSize) { e.style.fontSize = size + 'px'; let w = e.offsetWidth; const f = Math.min(maxSize, size * maxW / w); e.style.fontSize = f + 'px'; e._w = e.offsetWidth; e._h = e.offsetHeight; return f; }
+function measure() {
+  scenes.forEach(sc => sc.g.style.display = 'block');
+  for (const e of ALL) { e.style.display = 'block'; e._w = e.offsetWidth; e._h = e.offsetHeight; }
+  // hook: a stacked title, every line as wide as the safe area allows (capped)
+  const hs = hook.lines.map(l => fit(l, 876, 200, 250));
+  hook._gap = 4; hook._top = 316;
+  let y = hook._top; hook.lines.forEach(l => y += l._h + hook._gap);
+  let x = 64, cy = y + 40; hook._chipPos = hook.chips.map(c => { if (x + c._w > 940) { x = 64; cy += 124; } const p = [x, cy]; x += c._w + 20; return p; });
+  const dog = hook.lines[3]; hook._saveX = Math.min(940 - 330, 64 + dog._w + 60); hook._saveY = y - hook._gap - dog._h / 2 - 72;
+  // items
+  scenes.slice(1, 6).forEach(sc => {
+    sc._numX = 64 + Math.max(0, (340 - sc.num._w) / 2);
+    let hy = 972; sc._headY = sc.head.map(h => { fit(h, 876, 150, 160); const p = hy; hy += h._h + 4; return p; });
+    sc._capY = hy + 20;
+    sc._cw = [...sc.cap.querySelectorAll('.cw')].map(e => ({ e, x: e.offsetLeft, y: e.offsetTop, w: e.offsetWidth, h: e.offsetHeight }));
+    sc._priceX = 412 + 28; sc._priceY = 334 + 476;
+    sc.ghost._w = sc.ghost.offsetWidth;
+  });
+  // P1
+  fit(p1.h1, 876, 150, 150); fit(p1.h2, 876, 150, 150);
+  p1._hy = [316, 316 + p1.h1._h + 6]; p1._cardY = p1._hy[1] + p1.h2._h + 30;
+  p1._wasW = p1.card.querySelector('.was').offsetWidth;
+  p1._revY = p1._cardY + 568 + 34;
+  // P2
+  fit(p2.big, 876, 250, 320); p2._bigY = 312; p2._subY = p2._bigY + p2.big._h + 6;
+  p2._codeY = p2._subY + 128; p2._delY = p2._codeY + 236 + 50; p2._btnY = p2._delY + 56 + 52; p2._logoY = p2._btnY + 150 + 56;
+  p2._logoW = 110 + p2.logo.querySelector('.ui').offsetWidth;
+  window.LAYOUT = { hookEnd: hook._saveY + 44, items: scenes.slice(1, 6).map(sc => ({ head: sc._headY, cap: sc._capY, capH: sc.cap._h, num: sc.num._w })), p1: { card: p1._cardY, rev: p1._revY, revEnd: p1._revY + 84 + p1.quote._h + 16 + 36, quoteW: p1.quote._w }, p2: { logo: p2._logoY + 88, big: p2.big._h }, hs };
+  for (const e of ALL) e.style.display = 'none';
+}
+
+window.renderFrame = renderFrame; window.DUR = DUR; window.FPS = FPS;
+window.ready = Promise.all([document.fonts.load('400 100px Anton'), document.fonts.load('italic 600 100px Fraunces'), document.fonts.load('900 40px Inter'), document.fonts.load('800 40px Inter'), document.fonts.load('700 40px Inter')])
+  .then(() => document.fonts.ready).then(() => { measure(); return true; });
+
+if (!new URLSearchParams(location.search).has('render')) {
+  const fitView = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `translate(${(innerWidth - W * k) / 2}px,0) scale(${k})`; };
+  addEventListener('resize', fitView); fitView();
+  window.ready.then(() => { const t0 = performance.now(); const loop = now => { renderFrame(((now - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+}
+</script>
+</body>
+</html>
