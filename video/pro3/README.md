@@ -1,10 +1,17 @@
-# Poorly Pet: three films in the new brand style (no logo)
+# Poorly Pet: films in the new brand style (no logo)
 
 | File | Film | Format |
 |---|---|---|
 | `out/poorly-pet-ivdd.mp4` | 5 signs of IVDD and what can help | 1080x1920 (9:16), 54 s |
 | `out/poorly-pet-richmond.mp4` | Richmond’s story, from kay D’s 5-star review of the Knee Brace for Dogs | 1080x1920 (9:16), 38 s |
-| `out/poorly-pet-brand.mp4` | Brand intro for an Instagram feed post | 1080x1350 (4:5), 21 s |
+| `out/poorly-pet-brand.mp4` | Meet Poorly Pet: brand intro for an Instagram feed post (no products) | 1080x1350 (4:5), 26 s |
+| `out/poorly-pet-itchy.mp4` | 5 signs of itchy skin and what can help | 1080x1920 (9:16), 54 s |
+| `out/poorly-pet-arthritis.mp4` | 5 signs of arthritis and what can help | 1080x1920 (9:16), 54 s |
+| `out/poorly-pet-dental.mp4` | 5 signs of dental disease and what can help | 1080x1920 (9:16), 54 s |
+| `out/poorly-pet-anxiety.mp4` | 5 signs of anxiety and what can help | 1080x1920 (9:16), 54 s |
+| `out/poorly-pet-digestive.mp4` | 5 signs of tummy trouble and what can help | 1080x1920 (9:16), 54 s |
+
+The five condition films use `shared/condition.js`, the approved IVDD structure, driven by the config in each folder's `index.html`. Signs and explanations come from each condition page on the site. For anxiety, the fifth sign ("panting on car journeys") comes from Hallie's review, because the page lists four.
 
 All three are 30 fps with AAC audio at -14 LUFS. The style follows the new website (branch `claude/amazing-wright-9e1jru`):
 - white and pale backgrounds with teal panels;
