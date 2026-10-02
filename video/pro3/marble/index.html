@@ -95,7 +95,7 @@ const { $, $$, tl } = K;
 const FW = 1080, FH = 1920, DUR = 89.6;
 const E = [282, 712];                       // Marble's eye midpoint in the photo window R (and in the aligned gouache twin)
 const kR = 1080 / 1427, kP = 1080 / 1888;   // photo-R px and plate px to frame units
-window.FAST = [[8.4, 10.3], [27.7, 28.9], [31.3, 32.2], [41.0, 41.8], [52.1, 52.95], [61.7, 62.5], [64.7, 65.7], [69.7, 70.5], [72.7, 73.7], [75.9, 77.9], [82.9, 84.4]];   // 4-sample motion blur
+window.FAST = [[8.4, 10.3], [27.7, 28.9], [31.3, 32.2], [41.0, 41.8], [52.1, 52.95], [61.7, 62.5], [64.7, 65.7], [69.7, 70.5], [72.7, 73.7], [75.5, 77.9], [82.9, 84.4]];   // 4-sample motion blur
 
 const EZ = {}, ez = n => EZ[n] || (EZ[n] = gsap.parseEase(n));
 const P = (t, a, b, e = 'none') => t <= a ? 0 : t >= b ? 1 : ez(e)((t - a) / (b - a));
@@ -153,10 +153,10 @@ const NA = {
   N03: { disc: [536, 1190] },
   N04: { seat: [880, 976], eye: [426, 968] },
   N05: { legs: [760, 1290] },
-  N06: { dog: [330, 1400], foot: [860, 1470] },
+  N06: { dog: [330, 1400], foot: [800, 1480] },             // foot: sunlit floor at the ramp's foot (N07's sun patch matches here)
   N07: { patch: [620, 1200], brace: [300, 900], harness: [400, 1000], ramp: [740, 1030], face: [395, 1490] },
-  N08: { sun: [860, 580], sky: [540, 300], dogs: [540, 1300] },
-  N09: { parcel: [356, 1190], nose: [600, 1250], leadTop: [430, 1500], leadBot: [380, 1920] },
+  N08: { sun: [915, 742], sky: [540, 300], dogs: [530, 1300] },
+  N09: { parcel: [265, 1283], nose: [430, 1215], leadTop: [266, 1700], leadBot: [307, 1860] },   // lead: its tangent just above the bottom edge
 };
 const CUTEYE = { N01: NA.N01.head, N02: NA.N02.back, N04: NA.N04.eye, N05: NA.N05.legs, N06: NA.N06.dog, N07: NA.N07.face, N08: NA.N08.dogs, N09: NA.N09.nose };
 
@@ -188,7 +188,7 @@ const S = {};
 function scene(id, plate, o = {}) {
   const sc = el('div', $('#scenes'), 'sc'); sc.id = id;
   const cam = el('div', sc, 'cam');
-  const pl = img(cam, `assets/${plate}.jpg`, 0, 0, FW, FH, 'pl');
+  const pl = img(cam, `assets/${plate}${o.bg ? '-bg' : ''}.jpg`, 0, 0, FW, FH, 'pl');   // -bg: subject painted out (mkbg.py), for cuts that slide
   const r = { sc, cam, pl };
   if (o.cut) r.cut = cutImg(cam, plate, CUTEYE[plate] || [540, 960]);
   paper(cam, o.paper ?? .5);
@@ -207,14 +207,14 @@ scene('desk', 'C04');
 S.desk.scr = el('div', el('div', S.desk.cam, 'lay', { filter: 'blur(1.5px)' }), 'lay', { clipPath: QPOLY }); img(S.desk.scr, 'assets/C04.jpg', 0, 0, FW, FH, 'pl');
 S.desk.bands = el('div', S.desk.cam, 'lay', { clipPath: QPOLY, background: 'repeating-linear-gradient(176deg,rgba(255,255,255,0) 0 26px,rgba(255,255,255,.9) 34px,rgba(255,255,255,0) 42px,rgba(255,255,255,0) 64px)', mixBlendMode: 'screen', opacity: .22, filter: 'blur(5px)' });
 S.desk.glow = glow(S.desk.cam, SCR[0], SCR[1] + 40, 520, 460, 'rgba(207,231,255,.95)', .18);
-scene('n02', 'N02', { cut: 1 });
+scene('n02', 'N02', { cut: 1, bg: 1 });
 S.n02.shaft = el('div', S.n02.cam, 'ov', { left: '-200px', top: '760px', width: '1500px', height: '260px', background: 'linear-gradient(180deg,rgba(255,240,205,0),rgba(255,240,205,.95) 50%,rgba(255,240,205,0))', transform: 'rotate(-14deg)', mixBlendMode: 'screen', opacity: .14, filter: 'blur(24px)' });
 scene('n03', 'N03', { paper: .6 });
 S.n03.sc.classList.add('mk-l');
 S.n03.blur = img(S.n03.cam, 'assets/N03.jpg', 0, 0, FW, FH, 'pl'); S.n03.blur.style.filter = 'saturate(.92) contrast(1.04) blur(6px)';
 { const g = `radial-gradient(circle at ${NA.N03.disc[0]}px ${NA.N03.disc[1]}px,transparent 170px,#000 330px)`; Object.assign(S.n03.blur.style, { WebkitMaskImage: g, maskImage: g, opacity: 0 }); }
 S.n03.disc = glow(S.n03.cam, NA.N03.disc[0], NA.N03.disc[1], 150, 110, 'rgba(255,201,119,.95)', .2);
-scene('n04', 'N04', { cut: 1 });
+scene('n04', 'N04', { cut: 1, bg: 1 });
 scene('n05', 'N05', { cut: 1 });
 scene('n06', 'N06', { cut: 1 });
 S.n06.sun = glow(S.n06.cam, 300, 1450, 360, 160, 'rgba(255,226,170,.95)', 0);
@@ -227,19 +227,19 @@ S.garden.shafts = [[28, .16, 70], [42, .12, 46], [56, .10, 60]].map(([a, o, w]) 
 S.garden.bloom = glow(S.garden.cam, SUN[0] - 13, SUN[1] + 27, 330, 330, 'rgba(255,240,205,.95)', .35);
 S.garden.rim = glow(S.garden.cam, 690, 960, 190, 160, 'rgba(255,214,150,.9)', 0);
 S.garden.motes = Array.from({ length: 10 }, (_, i) => { const s = 3 + (i * 7) % 5; return el('div', S.garden.cam, 'ov', { left: 520 + (i * 197) % 520 + 'px', top: 360 + (i * 263) % 640 + 'px', width: s + 'px', height: s + 'px', borderRadius: '50%', background: '#FFF3D0', filter: 'blur(1px)', opacity: .25 + (i % 3) * .1 }); });
-scene('n08', 'N08', { cut: 1 });
+scene('n08', 'N08', { cut: 1, bg: 1 });
 S.n08.flare = glow(S.n08.cam, NA.N08.sun[0], NA.N08.sun[1], 300, 300, 'rgba(255,236,190,.95)', .3);
 scene('house', 'C06');
 S.house.win = glow(S.house.cam, WIN[0], WIN[1], 210, 250, 'rgba(255,184,98,.95)', .25);
 glow(S.house.cam, 990, 700, 150, 150, 'rgba(255,214,140,.9)', .2);
-scene('room', 'C07');
+scene('room', 'C07', { bg: 1 });
 const print = el('div', S.room.cam, 'ov', { left: '150px', top: '1160px', width: '96px', height: '170px', padding: '9px 9px 26px', background: '#F4F1E8', transform: 'rotate(-6deg)', boxShadow: '0 6px 14px rgba(14,42,40,.30)', filter: 'sepia(.12) brightness(.9) blur(.5px)' });
 img(print, 'assets/photoR.jpg', 9, 9, 96, 170);
 S.room.cut = cutImg(S.room.cam, 'C07', MEYE7);
 S.room.bok = el('div', S.room.sc, 'fs');
 [[820, 110, 70, .42], [930, 190, 46, .36], [1010, 90, 84, .3], [880, 300, 38, .45], [1040, 260, 58, .34], [760, 220, 30, .4], [990, 410, 44, .3], [850, 470, 62, .25], [1060, 520, 36, .38]]
   .forEach(([x, y, r, o], i) => el('div', S.room.bok, 'ov', { left: x - r + 'px', top: y - r + 'px', width: 2 * r + 'px', height: 2 * r + 'px', borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(255,213,138,.95) 55%,rgba(255,213,138,.35) 80%,rgba(255,213,138,0))', mixBlendMode: 'screen', opacity: o, filter: `blur(${6 + (i % 4) * 2.5}px)` }));
-scene('n09', 'N09', { cut: 1 });
+scene('n09', 'N09');
 S.n09.patch = glow(S.n09.cam, 700, 1500, 260, 120, 'rgba(255,226,170,.95)', .16);
 const grains = [0, 1, 2, 3, 4, 5].map(i => img($('#grain'), `assets/grain${i}.jpg`, 0, 0, FW, FH));
 
@@ -291,21 +291,23 @@ T.n04 = new Track({ z: 1.18, ax: NA.N04.seat[0], ay: NA.N04.seat[1], sx: 640, sy
   T.n04.to(36.8, 41.1, { z, sx, sy }, 'sine.inOut').to(41.1, 41.75, { sx: sx - 320 }, 'power2.in'); }
 T.n05 = new Track({ z: 1.20, ax: NA.N05.legs[0], ay: NA.N05.legs[1], sx: 900, sy: 1290 }).to(41.6, 42.4, { sx: 740 }, 'power3.out').to(42.4, 44.2, { z: 1.30 }, 'sine.inOut').to(44.2, 45.0, { z: 1.32 }, 'sine.out');
 T.n06 = new Track({ z: 1.04, ax: NA.N06.dog[0], ay: NA.N06.dog[1], sx: 540 + (NA.N06.dog[0] - 540) * 1.04, sy: 960 + (NA.N06.dog[1] - 960) * 1.04 })
-  .to(44.8, 47.6, { z: 1.07 }, 'sine.inOut').frame(47.6, 52.2, NA.N06.foot, [700, 1300], 1.18).to(52.2, 52.8, { z: 1.45 }, 'power2.in').to(52.8, 53.0, { z: 1.5 }, 'none');
+  .to(44.8, 47.6, { z: 1.07 }, 'sine.inOut').frame(47.6, 52.2, NA.N06.foot, [790, 1400], 1.18)   // brace and ramp, her face clear of the edge
+  .to(52.2, 52.8, { z: 1.45, sx: 700, sy: 1300 }, 'power2.in').to(52.8, 53.0, { z: 1.5 }, 'none');
 T.n07 = new Track({ z: 1.45, ax: NA.N07.patch[0], ay: NA.N07.patch[1], sx: 700, sy: 1300 }).centre(52.8, 53.6, 1.10, 'power2.out')
   .frame(53.6, 54.6, NA.N07.brace, [400, 1020], 1.18).frame(54.6, 55.4, NA.N07.harness, [470, 1030], 1.24).frame(55.4, 56.2, NA.N07.ramp, [600, 1150], 1.22)
   .frame(56.2, 59.2, NA.N07.face, [560, 1250], 1.60);
 T.garden = new Track({ z: 1.60, ax: MEYE5[0], ay: MEYE5[1], sx: 560, sy: 1250 }).centre(59.2, 60.4, 1.08, 'power3.out').to(60.4, 61.8, { z: 1.14 }, 'sine.inOut')
   .frame(61.8, 62.4, SUN, [760, 560], 1.40, 'power2.inOut').to(62.4, 62.7, { z: 1.45 }, 'none');
 T.n08 = new Track({ z: 1.50, ax: NA.N08.sun[0], ay: NA.N08.sun[1], sx: 760, sy: 560 }).centre(62.4, 63.6, 1.06, 'power3.out');
-T.n08.to(63.6, 64.8, { sx: T.n08.st.sx - 60 }, 'sine.inOut').frame(64.8, 65.6, NA.N08.sky, [540, 420], 1.25, 'power2.in').to(65.6, 65.9, { z: 1.3 }, 'none');
+T.n08.to(63.6, 64.8, { sx: T.n08.st.sx + 30 }, 'sine.inOut').frame(64.8, 65.6, NA.N08.sky, [540, 420], 1.25, 'power2.in').to(65.6, 65.9, { z: 1.3 }, 'none');
 T.house = new Track({ z: 1.30, ax: 540, ay: 420, sx: 540, sy: 546 }).to(65.6, 67.4, { z: 1.0, sx: 540, sy: 420 }, 'power3.out')
   .about(WIN).to(67.4, 69.8, { z: 1.04 }, 'sine.in').to(69.8, 70.4, { z: 3.6 }, 'power3.in');
 T.room = new Track({ z: 1.06, ax: 540, ay: 960, sx: 540, sy: 960 }).to(70.4, 72.8, { z: 1.09, sx: 513 }, 'sine.inOut').frame(72.8, 73.6, PARCEL7, [360, 1230], 1.90, 'power2.inOut');
 // N09 opens on its parcel where C07's parcel was, then tilts down its lead to land where C01's lead lies at the end of the dive
-const N9END = { z: DIVE.z, sx: toScreen(DIVE, C01LEAD[1])[0], sy: toScreen(DIVE, C01LEAD[1])[1], r: lean(...C01LEAD) + DIVE.r - lean(NA.N09.leadTop, NA.N09.leadBot) };
-T.n09 = new Track({ z: 1.90, ax: NA.N09.parcel[0], ay: NA.N09.parcel[1], sx: 360, sy: 1230 }).centre(73.6, 74.8, 1.06, 'power3.out')
-  .about(NA.N09.nose).to(74.8, 76.0, { z: 1.12 }, 'sine.inOut').about(NA.N09.leadBot).to(76.0, 76.8, N9END, 'power2.in');
+// (a third of the turn: its lead curls the other way, and turning further swings the plate's top-left corner into view)
+const N9END = { z: DIVE.z, sx: toScreen(DIVE, C01LEAD[1])[0], sy: toScreen(DIVE, C01LEAD[1])[1], r: .35 * (lean(...C01LEAD) + DIVE.r - lean(NA.N09.leadTop, NA.N09.leadBot)) };
+T.n09 = new Track({ z: 1.48, ax: NA.N09.parcel[0], ay: NA.N09.parcel[1], sx: 352, sy: 1372 }).centre(73.6, 74.8, 1.06, 'power3.out')   // C07's front parcel, size for size
+  .about(NA.N09.nose).to(74.8, 75.6, { z: 1.12 }, 'sine.inOut').about(NA.N09.leadBot).to(75.6, 76.45, N9END, 'power2.inOut');   // settled before the strokes paint C01 over it
 
 // ---------- type ----------
 const SWIPES = [];
@@ -581,8 +583,7 @@ K.frame(t => {
   }
   // ---- S18 dogs like Marble (N09): parcel match, then down its lead into Marble's
   if (on('n09', 73.6, 77.15, t)) {
-    const st = cover(T.n09.at(t)); place(S.n09.cam, st);
-    parallax(S.n09.cut, st, .2, P(t, 73.6, 76.0));
+    place(S.n09.cam, cover(T.n09.at(t)));
     S.n09.patch.style.transform = `translateX(${20 * P(t, 73.6, 76.8)}px)`;
   }
   // ---- global light, scrims and grade

@@ -1,6 +1,6 @@
 # Prepare new v2 plates: raw/<ID>.png (Canva export, 944x1680) -> assets/<ID>.jpg (1888x3360) and,
 # when asked, a subject cut-out assets/<ID>-cut.png lifted from its own plate. Updates assets/meta.json.
-#   python3 prep2.py N01 N02:cut N03 ...
+#   python3 prep2.py N01 N02:cut N03 ...     (:cut2 keeps every matte component over 20% of the largest, e.g. two dogs)
 import cv2, numpy as np, json, os, sys
 from PIL import Image
 A, R = 'assets', 'raw'
@@ -10,7 +10,7 @@ def up2(im):
     bl = cv2.GaussianBlur(l, (0, 0), 1.2); return cv2.addWeighted(l, 1.45, bl, -0.45, 0)
 ses = None
 for arg in sys.argv[1:]:
-    c, want_cut = arg.split(':')[0], arg.endswith(':cut')
+    c, want_cut, multi = arg.split(':')[0], ':cut' in arg, arg.endswith(':cut2')
     src = cv2.imread(f'{R}/{c}.png')
     if src.shape[1] != 944: src = cv2.resize(src, (944, 1680), interpolation=cv2.INTER_AREA)   # normalise to 9:16
     u = up2(src); cv2.imwrite(f'{A}/{c}.jpg', u, [cv2.IMWRITE_JPEG_QUALITY, 92]); meta[c] = {'w': u.shape[1], 'h': u.shape[0]}
@@ -22,7 +22,8 @@ for arg in sys.argv[1:]:
         m = np.array(remove(im, session=ses, only_mask=True)).astype(np.float32) / 255
         n, lab, st, _ = cv2.connectedComponentsWithStats((m > 0.5).astype(np.uint8), 8)
         if n >= 2:
-            k = 1 + np.argmax(st[1:, cv2.CC_STAT_AREA]); keep = cv2.morphologyEx((lab == k).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
+            ar = st[1:, cv2.CC_STAT_AREA]; ks = [1 + i for i in range(len(ar)) if ar[i] >= .2 * ar.max()] if multi else [1 + np.argmax(ar)]
+            keep = cv2.morphologyEx(np.isin(lab, ks).astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
             al = np.clip((cv2.GaussianBlur(keep.astype(np.float32), (0, 0), 2.2) - 0.15) / 0.7, 0, 1)
             x, y, w, h = cv2.boundingRect(keep); x, y = max(0, x - 8), max(0, y - 8); w, h = min(im.width - x, w + 16), min(im.height - y, h + 16)
             Image.fromarray(np.dstack([np.array(im), (al * 255).astype(np.uint8)])[y:y + h, x:x + w]).save(f'{A}/{c}-cut.png', optimize=True)
