@@ -22,8 +22,8 @@ SF2 = '/usr/share/sounds/sf2/FluidR3_GM.sf2'
 SR, DUR = 48000, 89.6
 N = int(round(SR * DUR))                     # 4,300,800 samples
 TPB, BEAT = 480, 0.8                         # 75 BPM: one beat = 0.8 s, one bar = 3.2 s
-SYNC = (0.0, 0.8, 4.8, 6.4, 7.75, 18.4, 19.2, 22.0, 28.8, 32.0, 36.8, 41.6, 44.8, 45.6, 46.4, 52.8, 56.4, 57.2,
-        58.0, 58.8, 59.2, 60.0, 73.6, 77.6, 78.4, 79.2, 80.0, 80.8, 84.8)        # picture hits: never humanised
+SYNC = (0.0, 0.8, 4.8, 6.4, 7.75, 18.4, 19.2, 22.0, 28.8, 32.0, 36.8, 41.6, 44.8, 45.6, 46.4, 52.8, 54.4, 55.2, 56.0, 56.8,
+        59.2, 60.0, 73.6, 77.6, 78.4, 79.2, 80.0, 80.8, 84.8)        # picture hits: never humanised
 DMAJ = {2, 4, 6, 7, 9, 11, 1}
 TMP = os.path.join(tempfile.gettempdir(), 'marble-score')
 rng = np.random.default_rng(75)
@@ -149,8 +149,8 @@ def compose():
     for t, v in ((4.4, 0), (4.8, 127), (21.9, 0), (22.0, 127), (22.08, 0), (22.4, 127), (90.0, 0)): pn.cc(0, t, 64, v)
     P(0.0, [38, 45, 54], 50, 3.2, roll=0.06)                                     # S01 rolled D2-A2-F#3
     P(0.0, [69], 60, 1.3); P(1.2, [78], 62, 0.4); P(1.6, [76], 58, 1.6)          # motif A4-F#5-E5, held, unresolved
-    P(3.2, [47, 54], 30, 1.2, roll=0.04); P(3.2, [59, 66], 36, 1.2)              # S02 Bm(add9), minor answer
-    P(3.6, [74], 42, 0.8); P(4.0, [73], 38, 0.4)                                 # ... all released at 4.4
+    P(3.2, [47, 54], 27, 1.2, roll=0.04); P(3.2, [59, 66], 32, 1.2)              # S02 Bm(add9), minor answer
+    P(3.6, [74], 38, 0.8); P(4.0, [73], 34, 0.4)                                 # ... all released at 4.4
     P(4.8, [35, 42, 47], 56, 1.6)                                                # 'IVDD': low B octave + F#2
     P(6.4, [43, 50], 40); P(7.2, [59, 66], 34, 0.8)                              # S03 Gmaj7
     P(8.0, [45, 52], 42); P(8.0, [57, 62, 64], 38, 0.8); P(8.8, [57, 61, 64], 40, 0.8)
@@ -262,7 +262,7 @@ def compose():
     for t, n in ((44.8, 81), (45.6, 86), (46.4, 90)): hp.note(0, t, n, 2.4, 42)  # 'harmonic' on each sun pass
     gliss(hp, 52.2, 52.8, 50, 81, 34, 52)                                        # into the sun-patch match
     arps(hp, 52.8, 56.0, 0.4, 42, 48)                                            # 2025: rolling eighths
-    for t, n in ((56.4, 71), (57.2, 74), (58.0, 78), (58.8, 81)): hp.note(1, t, n, 2.0, 48)   # one note per category
+    for t, n in ((54.4, 71), (55.2, 74), (56.0, 78), (56.8, 81)): hp.note(1, t, n, 2.0, 48)   # one note per category, as each lights on screen
     gliss(hp, 61.8, 62.4, 55, 79, 34, 50)                                        # into the sun bloom
     gliss(hp, 64.8, 65.6, 52, 88, 32, 48)                                        # crane into the sky
     gliss(hp, 73.0, 73.6, 50, 81, 36, 54)                                        # push onto the parcel
