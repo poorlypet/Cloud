@@ -148,8 +148,8 @@ const MEYE2 = [468, 1404], SCR = [460, 810], SUN = [873, 453], MEYE5 = [675, 968
 const C01LEAD = [[508, 857], [366, 1920]];            // harness ring to bottom-edge exit, in the photo / C01
 // new v2 plates: measured on the approved takes
 const NA = {
-  N01: { leadTop: [240, 1000], leadBot: [250, 1360], head: [630, 1230] },
-  N02: { hind: [300, 1180], back: [540, 1150], wall: [540, 640] },
+  N01: { leadTop: [200, 540], leadBot: [235, 1290], head: [420, 1335] },
+  N02: { hind: [260, 1290], back: [500, 1210], wall: [540, 640] },
   N03: { disc: [540, 1150] },
   N04: { seat: [880, 976], eye: [426, 968] },
   N05: { legs: [760, 1290] },
@@ -282,7 +282,7 @@ T.hall = new Track({ z: 1.30, ax: MEYE2[0], ay: MEYE2[1], sx: 520, sy: 1300 })
   .to(12.8, 14.6, { z: 1.33, sx: 540, sy: 1250 }, 'sine.out').to(14.6, 17.2, { z: 1.08, sx: 470, sy: 1400 }, 'sine.inOut').to(17.2, 17.9, { z: 1.10 }, 'sine.out');
 T.crate = new Track({ z: 1.06, ax: 540, ay: 960, sx: 570, sy: 960 }).to(17.6, 22.4, { z: 1.10, sx: 510 }, 'sine.inOut');
 T.desk = new Track({ z: 1.0, ax: SCR[0], ay: SCR[1], sx: SCR[0], sy: SCR[1] }).to(22.4, 27.8, { z: 1.14 }, 'sine.in').to(27.8, 28.8, { z: 4.6 }, 'power3.in');
-T.n02 = new Track({ z: 1.55, ax: NA.N02.hind[0], ay: NA.N02.hind[1], sx: 420, sy: 1250 }).centre(28.8, 30.4, 1.04, 'power2.inOut').to(30.4, 31.4, { z: 1.06 }, 'none')
+T.n02 = new Track({ z: 1.55, ax: NA.N02.hind[0], ay: NA.N02.hind[1], sx: 400, sy: 1250 }).centre(28.8, 30.4, 1.04, 'power2.inOut').to(30.4, 31.4, { z: 1.06 }, 'none')
   .frame(31.4, 32.0, NA.N02.wall, [540, 640], 1.40, 'power2.in').to(32.0, 32.95, { z: 1.6 }, 'none');
 T.n03 = new Track({ z: 1.9, ax: NA.N03.disc[0], ay: NA.N03.disc[1], sx: 540, sy: 1150 }).to(32.0, 32.8, { z: 1.5 }, 'power2.out').centre(32.8, 34.0, 1.08)
   .to(34.0, 35.2, { sx: 540 + (NA.N03.disc[0] - 540) * 1.08 + 40 }, 'sine.inOut').to(35.2, 36.4, { z: 1.5, sx: 540, sy: 1150 }, 'sine.inOut').to(36.4, 37.0, { z: 1.62 }, 'sine.in');
