@@ -1,0 +1,293 @@
+{
+ "story_timeline": [
+  {
+   "when": "Opening (present day)",
+   "beat": "Meet Marble. She is the founders' own Dachshund and the reason Poorly Pet exists. Open on the one real photo of her.",
+   "best_quote": "This is Marble. She's the reason Poorly Pet exists.",
+   "sources": "Approved film /home/user/Cloud/video/pro3/marble/index.html:298-299. Live /pages/our-story photo caption 'Marble \u2014 The reason it all started' and hero 'our own Dachshund, Marble'.",
+   "confidence": "stated"
+  },
+  {
+   "when": "Before 2024",
+   "beat": "Marble before her diagnosis. No source describes her early life, personality or routines. The only wording is 'our much-loved Dachshund'. She was three in 2024, so she was born around 2020-21, but that is worked out, not stated, so keep it off screen.",
+   "best_quote": "our much-loved Dachshund Marble",
+   "sources": "Live /pages/our-story 2024 chapter; same in /home/user/Cloud/new-pages/our-story-a.html:90",
+   "confidence": "gap (only the 'much-loved' wording is stated)"
+  },
+  {
+   "when": "2024",
+   "beat": "The first signs: she began dragging her back legs and losing her balance.",
+   "best_quote": "We'd first noticed her dragging her back legs and losing her balance",
+   "sources": "Live /pages/our-story ('Our origin \u00b7 2024'). The repo drafts say 'We had first noticed\u2026' (our-story-a.html:90). The final cut shortened it to 'First, she began dragging her back legs.' (marble/index.html:332). The treatment S04 kept the full line.",
+   "confidence": "stated"
+  },
+  {
+   "when": "2024",
+   "beat": "Diagnosis: IVDD at just three years old. The approved film glosses it as a spinal disc disease. IVDD stands for Intervertebral Disc Disease.",
+   "best_quote": "In 2024, at just three years old, our much-loved Dachshund Marble was diagnosed with IVDD.",
+   "sources": "Live /pages/our-story. Identical in new-pages/our-story-a/b/c.html and final/our-story.html. Gloss 'a spinal disc disease' is at marble/index.html:304 (commit 83bd170). 'Intervertebral Disc Disease' is on the live homepage IVDD block.",
+   "confidence": "stated"
+  },
+  {
+   "when": "2024 (explainer: what IVDD is)",
+   "beat": "What IVDD is and why Dachshunds get it. This is general site copy, not Marble's own medical record. It gives the extra explanation the client asked for.",
+   "best_quote": "A disc in the spine bulging or bursting and pressing on the cord. Dachshunds, Bassets, Corgis and Beagles are most at risk, but any dog can get it.",
+   "sources": "/home/user/Cloud/signed-off/home.html:194. Live homepage: 'IVDD can affect comfort, movement and confidence \u2014 especially in long-backed breeds like Dachshunds.' Drawn film pro3/drawn/index.html:82-83: 'Dachshunds are built long and low. That long back puts pressure on the spine.'",
+   "confidence": "stated (general, not Marble-specific)"
+  },
+  {
+   "when": "2024",
+   "beat": "A new vocabulary almost overnight. The source says they learned the words 'disc extrusion' and 'crate rest'. It never says outright that Marble had an extrusion or was on crate rest. The painted crate scene in the current film is illustration.",
+   "best_quote": "almost overnight we were learning words like \"disc extrusion\" and \"crate rest\".",
+   "sources": "Live /pages/our-story 2024. new-pages/our-story-a.html:90. Film marble/index.html:334-335. The Why Poorly Pet drafts use 'a whole new vocabulary' instead (why-poorly-pet-a.html:108).",
+   "confidence": "stated (the words); implied (that Marble had crate rest)"
+  },
+  {
+   "when": "2024 (explainer: signs to look for)",
+   "beat": "The IVDD signs, as general site guidance. Use it to widen the film from Marble to every owner.",
+   "best_quote": "A hunched back. A yelp when picked up. Reluctant to jump or do the stairs. Back legs that wobble, cross, or suddenly stop working.",
+   "sources": "/home/user/Cloud/signed-off/home.html:194. Already used verbatim in the approved pro3/ivdd and pro3/drawn films.",
+   "confidence": "stated (general)"
+  },
+  {
+   "when": "2024 (explainer: care at home)",
+   "beat": "What IVDD care at home involves: general site advice. Do not present it as Marble's exact regime.",
+   "best_quote": "Strict rest first, weeks of it. A back brace to stop twisting, ramps so there is no jumping, grip on hard floors, and a harness with a handle for the toilet trips. Keep them lean.",
+   "sources": "/home/user/Cloud/signed-off/home.html:194. Item roles at the same line: 'Holds the spine still and warm. Stops the twist. / No more jumping on and off the sofa or into the car. / A handle for toilet trips and stairs while they heal.'",
+   "confidence": "stated (general)"
+  },
+  {
+   "when": "2024",
+   "beat": "The search: they couldn't find the right help, so they kept looking. Late nights of reading.",
+   "best_quote": "We couldn't find the right help, so we kept looking.",
+   "sources": "Live /pages/our-story ('The search for better support.'). On screen, cut the phrase 'and vet guidance': 'Late nights reading studies and forums taught us one thing\u2026'. Final cut: 'We kept searching for the right help.'",
+   "confidence": "stated"
+  },
+  {
+   "when": "2024",
+   "beat": "The problem they found: good products existed, but the right ones were too hard to find, and it was hard to know where to begin.",
+   "best_quote": "good products existed, but finding the right ones was far too hard.",
+   "sources": "Live /pages/our-story 2024. Live /pages/our-mission 2024 'The idea': 'we saw first-hand how hard it is to know where to begin when your dog needs help.' Treatment S07: 'Good products existed. Finding the right ones was far too hard.'",
+   "confidence": "stated"
+  },
+  {
+   "when": "2025",
+   "beat": "Learning and testing: they tried products, read everything and kept what genuinely helped.",
+   "best_quote": "We tested products, read everything we could and found what genuinely helped.",
+   "sources": "Live /pages/our-story ('Learning, testing and helping.'). The signed-off final/our-story.html:97, all six drafts and the approved film say 'kept what genuinely helped' instead. Either is safe.",
+   "confidence": "stated"
+  },
+  {
+   "when": "2025",
+   "beat": "What helped, by category only: back braces, lift harnesses, ramps and rest. This is a section heading on the signed-off Our Story page, not a chapter of the story. No product, brand, therapy, surgery or medication is ever named.",
+   "best_quote": "What helped Marble \u2014 Back braces, lift harnesses, ramps and rest",
+   "sources": "/home/user/Cloud/final/our-story.html:113 and new-pages/our-story-a.html:114. Our Story B and C call the same rail 'Our IVDD range' instead. It is not on the live page.",
+   "confidence": "stated as a heading; implied as story fact. Have the client confirm before a scene shows Marble using a specific item"
+  },
+  {
+   "when": "2025",
+   "beat": "Better days: with patience and careful monitoring, her good days began to outnumber her bad ones. This is improvement, not a cure.",
+   "best_quote": "With patience and a lot of careful monitoring, Marble's better days started to outnumber her bad ones",
+   "sources": "Live /pages/our-story 2025. Repo drafts say 'With patience and careful monitoring\u2026'. Film: 'Her better days started to outnumber the bad ones.'",
+   "confidence": "stated"
+  },
+  {
+   "when": "2025",
+   "beat": "Sharing what they learned with other dog owners: the step from their own dog to everyone else's.",
+   "best_quote": "and we began sharing what we'd learned with other dog owners.",
+   "sources": "Live /pages/our-story 2025. Repo drafts say 'what we had learned' (our-story-a.html:98).",
+   "confidence": "stated"
+  },
+  {
+   "when": "End of 2025",
+   "beat": "Poorly Pet is born. Joe and Lily start it from home in Sandbach, Cheshire.",
+   "best_quote": "At the end of 2025, Joe and Lily founded Poorly Pet from home in Sandbach, Cheshire",
+   "sources": "Live /pages/our-story ('Poorly Pet was born.'), plus JSON-LD foundingDate 2025. new-pages/our-story-a.html:102 and why-poorly-pet-a.html:128. The final cut header reads 'Late 2025 \u00b7 SANDBACH, CHESHIRE'.",
+   "confidence": "stated"
+  },
+  {
+   "when": "End of 2025",
+   "beat": "What they built: one place for guidance and carefully chosen products, so other owners don't have to search the way they did.",
+   "best_quote": "one place for guidance and carefully chosen products for recovery, comfort and everyday wellbeing.",
+   "sources": "Repo/signed-off final/our-story.html and new-pages/our-story-a.html:102. The live sentence adds 'vet-informed guidance, an AI Symptom Scanner'; cut that. Also why-poorly-pet-a.html:129: 'One place to find the right support, without the late-night searching.' And why-poorly-pet-b.html:81: 'That search became Poorly Pet.'",
+   "confidence": "stated"
+  },
+  {
+   "when": "End of 2025 onward (principle)",
+   "beat": "The rule Marble set for every product.",
+   "best_quote": "If we would not give it to Marble, we will not sell it.",
+   "sources": "Live /pages/why-poorly-pet ('Trusted quality' tab). why-poorly-pet-a.html:144-145, captioned 'Our rule for every product'. Supporting lines: 'We say no to far more brands than we say yes to.' (why-poorly-pet-a.html:163) and 'We only stock products we would be genuinely happy to use with our own dog.' (live Why).",
+   "confidence": "stated"
+  },
+  {
+   "when": "Today (how it works)",
+   "beat": "Two ways in: shop by the condition you know, or start from what you can see. Both lead to the same shelves.",
+   "best_quote": "Know the condition? Go straight to it. Not sure? Start with what you can see.",
+   "sources": "why-poorly-pet-a.html:174. 'Two ways in. Both end at the right shelf.' appears at signed-off/home.html:128 and our-story-a.html:143.",
+   "confidence": "stated"
+  },
+  {
+   "when": "Today (what's on the shelves)",
+   "beat": "Affordable everyday support across conditions. Show categories, not specific pricey items: harnesses, back braces, ramps, recovery shirts, soft collars, cooling mats, joint supplements, calming aids, dental care.",
+   "best_quote": "Everything a poorly dog needs, in one place.",
+   "sources": "/home/user/Cloud/signed-off/home.html:94; shop-by-product.html:81",
+   "confidence": "stated"
+  },
+  {
+   "when": "Today (people)",
+   "beat": "Real people answer every email.",
+   "best_quote": "Real people. Every email answered within one working day.",
+   "sources": "Approved film end card marble/index.html:86, trimmed from the site line 'Real people, not a chatbot. We answer every email within one working day, Monday to Friday.' (final/our-story.html, final/contact-us.html). The live /pages/contact says 1\u20132 working days; see conflicts.",
+   "confidence": "stated (reply time disputed)"
+  },
+  {
+   "when": "Today (for the long run)",
+   "beat": "Dog health isn't a quick fix, and they're there for every stage.",
+   "best_quote": "Dog health isn't a quick fix \u2014 we're with you for every stage of your dog's life.",
+   "sources": "Live /pages/our-story value 'Here for the long run'. The repo drafts use a full stop instead of the dash.",
+   "confidence": "stated"
+  },
+  {
+   "when": "Today",
+   "beat": "Every product exists because it would have helped Marble.",
+   "best_quote": "Every product we stock exists because it would have helped Marble.",
+   "sources": "Live /pages/our-story closing CTA, new-pages/our-story-a.html:106 and film marble/index.html:375. Do not carry the '73 brands' sentence before it.",
+   "confidence": "stated"
+  },
+  {
+   "when": "Today (Marble now)",
+   "beat": "How Marble is today. No source says. The last health update is from 2025 (better days outnumbering bad). The pages only have a 'Photo: Marble today' placeholder.",
+   "best_quote": "Photo: Marble today",
+   "sources": "new-pages/our-story-a.html:105; why-poorly-pet-a.html:137",
+   "confidence": "gap: ask the client"
+  },
+  {
+   "when": "Sign-off",
+   "beat": "Brand line.",
+   "best_quote": "Built for Marble. Here for every dog.",
+   "sources": "Repo drafts, final pages and approved film S13. The live site writes it as 'Built for Marble, here for every dog.' (comma).",
+   "confidence": "stated"
+  },
+  {
+   "when": "End card",
+   "beat": "Category line, offer and proof.",
+   "best_quote": "For recovery, comfort and everyday wellbeing. / Use code POORLY10 \u00b7 10% off your first order / Rated 4.6/5 from 99 reviews \u00b7 Free UK delivery over \u00a339",
+   "sources": "marble/index.html:82-86 (approved). The live and final pages now show 101 reviews; see conflicts.",
+   "confidence": "stated (review count needs client confirmation)"
+  }
+ ],
+ "marble": "CONFIRMED (stated in text): Marble is the founders' own Dachshund and is female (she/her throughout). She was diagnosed with IVDD in 2024 'at just three years old'. The first signs were dragging her back legs and losing her balance. Almost overnight her owners were learning words like 'disc extrusion' and 'crate rest' (the text says they learned the words; it does not say she had either). In 2025, through testing products, reading everything and 'patience and a lot of careful monitoring', her better days started to outnumber her bad ones. The live Our Story photo caption is 'Marble \u2014 The reason it all started'. The signed-off final/our-story.html:113 heads its IVDD product rail 'What helped Marble \u2014 Back braces, lift harnesses, ramps and rest'. That is categories only: no item, brand, surgery, medication, physio, hydrotherapy or IVDD grade is ever named for her. The live Why page says 'Our founder's Dachshund, Marble, inspired our entire recovery range.' and 'If we would not give it to Marble, we will not sell it.'\n\nAPPEARANCE (from the photo only, never stated in text; three separate reads agree and I checked the image myself): one small, smooth-coated Dachshund, likely a miniature but not stated. Chocolate/brown base with silver-grey dapple mottling, heaviest on the head and ears. Tan points on the muzzle, eyebrows, legs and under the tail. Liver-brown nose, amber-brown eyes. She wears a pinkish harness on a red lead. In the only photo she is alone on a sunlit woodland path among bluebells, body angled away, head turned back over her shoulder to the camera. Real file: /home/user/Cloud/video/pro3/marble/src/marble.jpg (3574x2537); the site copy is saved at scratchpad/site/marble.jpg. Do not treat the name 'Marble' as evidence of her coat.\n\nTHE 'THREE DOGS LOOKING BACK' NOTE: I checked raw/C08-C10. The S12 Labrador, terrier cross and greyhound are each painted body-away with the head twisted back to copy Marble's pose. The Labrador and greyhound neck turns look strained and unnatural. The look-back is Marble's real, one-off pose from her single photo. Nothing in the sources requires other dogs to repeat it, and those three dogs are invented 'every dog' stand-ins, not customers.\n\nPLANNED PHOTO SLOTS (all placeholders): 'Marble', 'Marble resting', 'Marble on a good day', 'Joe and Lily with Marble', 'Marble today'. The client may have these photos.\n\nNOT KNOWN: her current age, health today, weight, and life before 2024.",
+ "founders_and_founding": "Founders: Joe and Lily (live /pages/our-story; all repo drafts; approved film S10). No source gives surnames, roles, relationship, previous jobs or a photo. The 'we' and 'our own Dachshund' wording implies they share Marble and a home, but that is not stated. One conflict: the live Why page says 'Our founder's Dachshund' (singular). Our Story names two founders, so use 'Joe and Lily'.\n\nWhen: 'At the end of 2025' (live Our Story; JSON-LD foundingDate '2025'). The final cut's header says 'Late 2025'. No exact date.\n\nWhere: 'from home in Sandbach, Cheshire' (live and repo). Our Story C fact strip: 'Sandbach, Cheshire \u2014 Where it began, at home'.\n\nWhy: 'We started Poorly Pet after our own Dachshund, Marble, was diagnosed with IVDD.' The search for help 'became Poorly Pet' (why-poorly-pet-b.html:81). Mission: 'make the right support easy to find for every poorly pet.' The live hero says 'What we learned helping her recover\u2026'; the signed-off repo version drops 'recover' ('What we learned helping her became a simple mission\u2026'). Use the repo version on screen.\n\nWhat they founded: 'one place for guidance and carefully chosen products for recovery, comfort and everyday wellbeing'. The live version inserts 'vet-informed guidance, an AI Symptom Scanner'; cut that.\n\nCompany: Poorly Pet Ltd, registered in England & Wales, company number 17086223. It is a UK online retailer, online-only with no local collection. The registered office is in Sandbach. Never show the street address (BRIEF.md says so, and it may be the founders' home).\n\nThe painted settings in the current film are invented, including the red-brick terrace with the teal door, the hallway, the kitchen table and the packing room. No source describes the founders' real home.",
+ "what_poorly_pet_offers": "POSITIONING: 'UK pet health, recovery and mobility specialist' (signed-off/home.html title). 'Everything a poorly dog needs, in one place.' 'Better days start with the right support.' (live Our Story h1). 'More than a pet store. A partner in better days.' (live Why). 'Calmer, clearer care for every dog owner.' (live Our Mission).\n\nTWO WAYS TO SHOP: by condition ('Know the condition? Go straight to it.') or by symptom ('Not sure? Start with what you can see.'). 'Two ways in. Both end at the right shelf.'\n\nCONDITION AREAS (8):\n- Mobility & Joint: arthritis, hip dysplasia, IVDD, cruciate ligament, luxating patella, elbow dysplasia, rear-leg weakness, back pain, spondylosis\n- Paws & Limbs: knuckling, carpal hyperextension, hock & Achilles, paw care\n- Internal Health: digestive issues, kidney support, weight management\n- Skin & Allergies: itchy skin, hot spots, seasonal allergies, ear & eye care\n- Behaviour & Mood: anxiety, separation anxiety, noise and firework fear, restlessness\n- Essential Care: dental disease, wound and post-surgery\n- Neurological: degenerative myelopathy, paralysis, nerve weakness\n- Rehab: hydrotherapy, physiotherapy, post-surgery recovery\n\nSYMPTOM AREAS (8): Legs & paws, Skin & coat, Tummy & gut, Eyes & ears, Mouth & teeth, Back & spine, Behaviour & mood, Whole body. Back & spine signs: yelping when touched, hunched or arched posture, reluctant to jump or climb, wobbly back legs, sudden rear weakness.\n\nAFFORDABLE PRODUCT TYPES SAFE TO SHOW: support and lift harnesses, back braces, ramps, carpal support wraps, recovery shirts and soft collars, cooling mats and quilted or crate mattresses, salmon oil and joint supplements, calming diffusers, sprays and lick mats, dental bites and gels, grooming and paw balm.\n\nExample IVDD prices, verbatim from the repo rail (check before use): Danish Design Crate Mattress \u00a316.99; Drag Bag \u00a342.99; Thermal Back Brace \u00a354.99; Rear Lift Harness \u00a354.99; No-Knuckling Sling \u00a359.99; Balto Neck brace \u00a370.00; Adjustable Wooden Ramp \u00a379.99. Balto Body Lift at \u00a3120.00 is borderline. Wheelchairs (\u00a3179.99\u2013\u00a3429.99) and every bundle or care kit are out.\n\nGUIDES (free advice hub): IVDD ('Disc disease, and the long-backed dogs who get it.'), itchy skin, 'Arthritis in older dogs', 'Why is my dog limping?', 'Recovery suits versus the cone, honestly', hot spots, firework season. Advice tone: 'Rehabilitation is about helping your dog rebuild comfort, confidence and mobility at the right pace.'\n\nSERVICE (confirmed by policy or the signed-off final pages):\n- 'Free UK delivery over \u00a339'\n- UK delivery only\n- Dispatch typically 1\u20132 working days; standard delivery usually 2\u20134 working days after dispatch; tracking emailed (shipping policy, last updated 22 June 2026; BRIEF.md 'confirmed')\n- Returns: 14 days to cancel plus 14 days to return; refund within 14 days; faulty items covered; opened consumables not returnable unless faulty\n- Email replies 'within one working day', Monday to Friday, 9am\u20135pm (signed-off pages; the live contact page says 1\u20132 working days)\n- '10% off your first order' with code POORLY10\n- Poorly Pet Club, free to join: 5 points per \u00a31, 500 points = \u00a35 off, no minimum spend\n- Subscribe & save 5% / 10% / 15% for 8-, 4- or 2-weekly deliveries, cancel any time (live FAQ)\n- Reviews collected by Judge.me from verified orders ('Every review is from a verified order, collected by Judge.me.')\n- Payments: Visa, Mastercard, Amex, PayPal, Apple Pay, Google Pay, Klarna\n- Contact: hello@poorly-pet.com\n\nVALUES SAFE ON SCREEN:\n- Quality you can trust\n- Putting dogs first\n- Honest and transparent ('Clear information, real guidance and no unnecessary noise.')\n- Always improving\n- Here for the long run\n- 'No shortcuts. No gimmicks.'\n- 'Choose better. Waste less. Care more.'\n- 'If it does not help dogs, it does not belong here.'",
+ "usable_lines": [
+  "This is Marble. She's the reason Poorly Pet exists. [approved film marble/index.html:298-299]",
+  "Marble \u2014 The reason it all started [live /pages/our-story photo caption]",
+  "We started Poorly Pet after our own Dachshund, Marble, was diagnosed with IVDD. [live /pages/our-story hero; repo our-story-a.html:80]",
+  "What we learned helping her became a simple mission: make the right support easy to find for every poorly pet. [final/our-story.html:79; new-pages/our-story-a.html:80]",
+  "Better days start with the right support. [live /pages/our-story h1]",
+  "In 2024, at just three years old, our much-loved Dachshund Marble was diagnosed with IVDD. [live /pages/our-story; new-pages/our-story-a.html:90]",
+  "We'd first noticed her dragging her back legs and losing her balance [live /pages/our-story; repo: 'We had first noticed\u2026']",
+  "a spinal disc disease [approved film marble/index.html:304, gloss after 'IVDD']",
+  "Intervertebral Disc Disease [live homepage IVDD block]",
+  "IVDD can affect comfort, movement and confidence \u2014 especially in long-backed breeds like Dachshunds. [live homepage]",
+  "A disc in the spine bulging or bursting and pressing on the cord. Dachshunds, Bassets, Corgis and Beagles are most at risk, but any dog can get it. [signed-off/home.html:194]",
+  "Dachshunds are built long and low. That long back puts pressure on the spine. [approved film pro3/drawn/index.html:82-83]",
+  "A hunched back. A yelp when picked up. Reluctant to jump or do the stairs. Back legs that wobble, cross, or suddenly stop working. [signed-off/home.html:194]",
+  "Almost overnight we were learning words like \u201cdisc extrusion\u201d and \u201ccrate rest\u201d. [new-pages/our-story-a.html:90; live has the same words after a dash]",
+  "Almost overnight we were learning a whole new vocabulary. [new-pages/why-poorly-pet-a.html:108]",
+  "Strict rest first, weeks of it. [signed-off/home.html:194]",
+  "A back brace to stop twisting, ramps so there is no jumping, grip on hard floors, and a harness with a handle for the toilet trips. Keep them lean. [signed-off/home.html:194]",
+  "Holds the spine still and warm. Stops the twist. / No more jumping on and off the sofa or into the car. / A handle for toilet trips and stairs while they heal. [signed-off/home.html:194]",
+  "We couldn't find the right help, so we kept looking. [live /pages/our-story; repo drafts]",
+  "Good products existed. Finding the right ones was far too hard. [new-pages/why-poorly-pet-a.html:114-115; treatment S07]",
+  "good products existed, but finding the right ones was far too hard. [live /pages/our-story, after removing 'and vet guidance' from the preceding clause]",
+  "we saw first-hand how hard it is to know where to begin when your dog needs help. [live /pages/our-mission 2024 'The idea']",
+  "When something changes with your dog, it can be hard to know where to begin. [live /pages/our-mission 'Why we exist']",
+  "We tested products, read everything we could and found what genuinely helped. [live /pages/our-story]",
+  "We tested products, read everything we could and kept what genuinely helped. [final/our-story.html:97; new-pages/our-story-a.html:98]",
+  "What helped Marble \u2014 Back braces, lift harnesses, ramps and rest [final/our-story.html:113 section heading]",
+  "With patience and a lot of careful monitoring, Marble's better days started to outnumber her bad ones [live /pages/our-story]",
+  "Her better days started to outnumber the bad ones. [new-pages/why-poorly-pet-a.html:122; approved film]",
+  "and we began sharing what we'd learned with other dog owners. [live /pages/our-story]",
+  "At the end of 2025, Joe and Lily founded Poorly Pet from home in Sandbach, Cheshire [live /pages/our-story; new-pages/our-story-a.html:102]",
+  "one place for guidance and carefully chosen products for recovery, comfort and everyday wellbeing. [final/our-story.html; new-pages/our-story-a.html:102]",
+  "One place to find the right support, without the late-night searching. [new-pages/why-poorly-pet-a.html:129]",
+  "That search became Poorly Pet. [new-pages/why-poorly-pet-b.html:81]",
+  "Poorly Pet was born from an IVDD recovery journey. [live /pages/why-poorly-pet 'Recovery focused' tab]",
+  "If we would not give it to Marble, we will not sell it. [live /pages/why-poorly-pet; new-pages/why-poorly-pet-a.html:144-145]",
+  "We only stock products we would be genuinely happy to use with our own dog. [live /pages/why-poorly-pet]",
+  "We say no to far more brands than we say yes to. [new-pages/why-poorly-pet-a.html:163]",
+  "If it does not help dogs, it does not belong here. [live /pages/sustainability]",
+  "Know the condition? Go straight to it. Not sure? Start with what you can see. [new-pages/why-poorly-pet-a.html:174]",
+  "Two ways in. Both end at the right shelf. [signed-off/home.html:128]",
+  "Everything a poorly dog needs, in one place. [signed-off/home.html:94]",
+  "Find the right support for your dog. [approved film pro3/brand/index.html:77]",
+  "Poorly Pet helps you find trusted products, useful guidance and the right next step when your dog needs support. [live /pages/our-mission]",
+  "Curated products for real dog health needs. [live /pages/our-mission pillars]",
+  "Rehabilitation is about helping your dog rebuild comfort, confidence and mobility at the right pace. [signed-off/advice-a.html:81]",
+  "Clear information, real guidance and no unnecessary noise. [live /pages/our-story values]",
+  "No shortcuts. No gimmicks. [live /pages/why-poorly-pet]",
+  "Dog health isn't a quick fix \u2014 we're with you for every stage of your dog's life. [live /pages/our-story]",
+  "Every product we stock exists because it would have helped Marble. [live /pages/our-story; approved film]",
+  "More than a pet store. A partner in better days. [live /pages/why-poorly-pet]",
+  "Built for Marble. Here for every dog. [repo drafts, final pages, approved film S13]",
+  "For recovery, comfort and everyday wellbeing. [approved film end card marble/index.html:82]",
+  "Real people. Every email answered within one working day. [approved film end card marble/index.html:86]",
+  "Use code POORLY10 \u00b7 10% off your first order [approved film marble/index.html:83]",
+  "Rated 4.6/5 from 99 reviews [approved, marble/index.html:85; see conflicts]",
+  "Free UK delivery over \u00a339 [live announcement bar; approved film]"
+ ],
+ "conflicts": [
+  "REVIEW COUNT: the brief approves 'Rated 4.6/5 from 99 reviews', which matches the approved film and the older signed-off/ shop pages ('99 verified reviews on Judge.me'). But the live site (footer '101+', reviews page 'Based on 101 verified reviews'), the newer signed-off final/our-story.html and final/customer-reviews.html, and all new-pages drafts now say 101. Pick: keep the approved 99 line verbatim and ask the client whether to update it to 101. Never use 4.9/5 (live Our Mission and a homepage counter), which contradicts Judge.me.",
+  "WORDING 'found' vs 'kept': live Our Story says 'found what genuinely helped'. The signed-off final/our-story.html:97, all six drafts and the approved film say 'kept what genuinely helped'. Both are approved; the live wording is preferred for sourcing.",
+  "'helping her recover' (live hero) vs 'helping her' (signed-off final/our-story.html:79 and drafts). The repo removed 'recover'. Pick the repo version for screen, because it keeps clear of any recovery or cure reading.",
+  "PUNCTUATION: live uses em dashes and 'We'd' / 'we'd learned'. The repo uses full stops or colons and 'We had' / 'we had learned'. Live writes 'Built for Marble, here for every dog.'; the repo and film write 'Built for Marble. Here for every dog.' Either is fine; keep the film's two-sentence tagline for consistency.",
+  "STORY STRUCTURE: the live Our Story has 4 dated steps (2024, 2024, 2025, 2025 'Poorly Pet was born'). The repo drafts have 5 chapters, adding 'End of 2025' as a label and 'Today \u00b7 Here for every dog'. The final cut relabels them 'Late 2025 \u00b7 Sandbach, Cheshire' and 'Today \u00b7 Dogs like Marble'. No dates contradict.",
+  "FOUNDER COUNT: live Why page says 'Our founder's Dachshund' (singular). Our Story names Joe and Lily. Pick Joe and Lily.",
+  "CRATE REST: the prior-scripts sweep lists 'crate rest at night was part of Marble's recovery' as stated. The text only says they were learning the words 'disc extrusion' and 'crate rest', and the crate scene is painted illustration. Downgraded to implied.",
+  "WHAT HELPED MARBLE: only Our Story A, which is the version signed off as final/our-story.html, heads the IVDD rail 'What helped Marble' (back braces, lift harnesses, ramps and rest). Our Story B/C call it 'Our IVDD range', and the live page has no such heading. Usable as categories only.",
+  "FREE DELIVERY THRESHOLD: \u00a339 (banner, shipping policy, signed-off pages, approved film) vs \u00a340 (live /pages/delivery and FAQ). BRIEF.md says to follow the policy. Pick \u00a339 as approved.",
+  "DISPATCH: 'Order before 2pm, packed the same working day' (signed-off/ shop pages and earlier pro3 films) vs 'within 1 working day' (live Delivery page) vs 'typically dispatched within 1\u20132 working days' (shipping policy, BRIEF.md 'confirmed', final/delivery-information.html). Pick the policy: 1\u20132 working days. Drop the 2pm line.",
+  "DELIVERY TIME: 2\u20134 working days after dispatch (policy) vs 'Many items arrive in 1\u20133 business days' (old ad-brand-intro-60). Pick 2\u20134.",
+  "EMAIL REPLY TIME: 'within one working day' (signed-off final pages, drafts, approved film) vs 'Within 1\u20132 working days' (live /pages/contact and /pages/delivery). The film's line matches the signed-off pages; client to confirm.",
+  "SHIPPING AREA: UK only (policy, Delivery page) vs Europe and worldwide (live FAQ). Pick UK only.",
+  "30-DAY MONEY-BACK GUARANTEE: still on the live site (returns policy s.6, Our Story CTA, promise strips). The repo deliberately removed it 'from every page' (commit 8551e31, 29 Sep 2026; also 918b339). Do not use.",
+  "CONDITIONS COUNT: '30+ ailments' (live homepage) vs 40+ (live Our Mission counter). Avoid both.",
+  "BRAND COUNT: 73 (repo meta and Our Story 'Today') vs 25+ (live) vs 'over 100' (signed-off hero). All banned anyway.",
+  "POSITIONING: 'UK pet health, recovery and mobility specialist' (signed-off title) vs 'The UK's pet health & recovery specialist' (earlier films) vs 'UK's Best Pet Health & Recovery Specialist' (live title tag, inflated). Use the signed-off wording, never 'Best'.",
+  "MARBLE'S COAT: Our-story-pages sweep says no text describes it. The live-site read and the treatment describe it from the photo slightly differently ('chocolate dapple with tan points' vs 'chocolate dapple with heavy silver mottling, tan eyebrow spots'). My own check of the photo agrees with both: chocolate base, silver-grey dapple, tan points. It is a visual read only.",
+  "FINAL CUT vs TREATMENT: the final cut shortened approved lines ('First, she began dragging her back legs.', 'Finding them was hard.', 'We kept searching for the right help.', 'One online shop\u2026'). For a longer film, the fuller live and treatment wording is already approved and gives more story."
+ ],
+ "do_not_use": [
+  "Anything with vets: 'Vet-informed everything', 'vet-informed guidance', 'vet guidance' (in the 2024 search chapter and the Our Mission research step), 'vet-reviewed products', 'Vet informed range every product reviewed', 'from the first vet visit to today', 'Pick the diagnosis your vet gave you', 'Our guides don't replace your vet', 'Vet first, always', 'Vet today, not tomorrow', 'Is it urgent? \u2026 a vet visit, not a basket', footer legal line 'Nothing on this site replaces veterinary advice'. Also the brand and product names Vetwrap, Vetsaver, Natural VetCare and Vets Best, and the 'Veterinary diet food' category.",
+  "AI, chatbot, scanner and quiz: AI Symptom Scanner, Symptom Scanner, 'Scan a photo', AI Support Assistant, 'Ask Poorly Pet AI', Dog Health Quiz, '60 sec Health quiz', 'Take the quiz', the live Our Mission 'Today: Support tools' step, 'Real people, not a chatbot.' (use 'Real people.'), and the whole brand-explainer film. 'Tell us what you can see. We match it to the right products.' is too close to a symptom tool; the two-question size finder reads as a quiz.",
+  "Bundles: IVDD Bundle (\u00a362.08), 'Condition bundles', 'Shop Condition Bundles', 'Care kits', 'Build a care kit. Up to 15% off', 'The IVDD kit, all three, 5% off together \u00a3242.23', 'Two supplements, 10% off / Three supplements, 15% off', '29 bundles', Dental Bundle review.",
+  "Unaffordable: Ortocanis wheelchair \u00a3349.99 (was \u00a3399.99), FreedomRoll wheelchair from \u00a3179.99, any wheelchair, 'Free wheelchair fitting', 'Measuring your dog for a wheelchair', pet stairs \u00a3129.99. Balto Body Lift \u00a3120.00 is borderline. Do not suggest Marble used any of these.",
+  "Brand counts: '73 brands', 'Products from 73 brands', '73 brands, chosen with care', '25+ expert brands', 'over 100 of the best brands', '100+ of the best brands'.",
+  "Fake urgency or sale framing: 'Save 13%', 'Save 10%', 'Save \u00a350.00', 'was \u00a3\u2026', 'Members see sale prices a day before everyone else', '\u00a310.99 away from free UK delivery', 'Add a fourth product\u2026', and any countdown built on the 2pm cut-off. 'Knowing the signs, and acting quickly, makes a real difference' is borderline.",
+  "Cure or outcome claims: 'helping her recover' (use 'helping her'); 'recovered', 'healed', 'walking again', 'cured'; 'Managed well at home, most dogs find steadier, more comfortable days'; 'Weight management and low-impact rehab reduce flare-ups'; 'Most dogs settle in two to three weeks'; 'Real dogs, real results' / 'real recoveries'; 'Bramble is back on her feet', 'Otis is climbing the stairs again', 'Milo's wrist is strong again'; 'Bailey got his legs back'; 'give him his life back'; 'back their independence\u2026 be a dog again'; 'a calm plan that works'; 'what actually helps'; 'Everything you need to support healing'.",
+  "Unverified or inflated numbers and claims: 2,400+ pet parents or happy dogs helped, 98% comfort feedback, 4.9/5, 'thousands of better days', 'Thousands of happy dogs', 'From one dog's diagnosis to thousands of better days', 'UK's Best\u2026', 'the UK's trusted home', 'The number one reason owners come to us', 'Trusted by pet parents across the UK', 'a team of dog owners' (it is two founders), 'Independent & unbiased' (unverified).",
+  "Unverified testimonials: Sarah & Bailey, James & Luna, Emily & Cooper, and Bramble, Otis, Cooper and Milo. They are not traceable to Judge.me and may be placeholders. Wheelchair reviews (danny o, Jamie T) tie the film to an unaffordable product. 'Joe' in list-dog-breath is a customer, not the founder.",
+  "Withdrawn or unconfirmed offers and terms: 30-day money-back guarantee (removed in repo commit 8551e31); 'Min. spend \u00a310 \u00b7 Selected items \u00b7 T&Cs apply' (marble/index.html:84, no source anywhere); 'Order before 2pm, packed the same working day' (contradicts policy); 'Many items arrive in 1\u20133 business days'; \u00a340 free-delivery threshold.",
+  "Illustration presented as fact: the 20-good/8-hard-day calendar as data; the painted terrace, hallway, kitchen and packing room as the real home; the crate scene as a documented event; the red lead story beats as real events; a birth year for Marble; any named product as 'what Marble used'.",
+  "The registered office street address (BRIEF.md: never show it; it may be the founders' home).",
+  "Mis-tagged product labels from the shop pages, e.g. calming spray tagged 'For weepy or red eyes' and recovery collars tagged 'For hot spots'."
+ ],
+ "gaps": [
+  "How is Marble today (late 2026)? Is she still having better days, and what does a normal day look like? No source goes past 2025.",
+  "What did Marble's life look like before 2024: personality, favourite walks, habits? Nothing is written; only 'much-loved'.",
+  "Did Marble actually have crate rest and/or a disc extrusion, and for how long? The text only says they learned the words.",
+  "Which products, if any, did Marble actually use? Only the category heading 'back braces, lift harnesses, ramps and rest' exists. Can a scene show her in a back brace, on a ramp or in a lift harness?",
+  "Did Marble have surgery, physio, hydrotherapy or medication? None is mentioned. Do not invent any.",
+  "Is Marble a miniature Dachshund? Her size is a visual read only. Should the paintings keep her pinkish harness and red lead?",
+  "Does the client have the planned photos ('Marble resting', 'Marble on a good day', 'Joe and Lily with Marble', 'Marble today')? Real photos would give the extra scenes real material.",
+  "Joe and Lily: are they happy to be named and shown (painted or photographed)? Surnames, relationship and roles are unknown.",
+  "Exact founding month: 'end of 2025' / 'late 2025' only.",
+  "What did the 'sharing what we'd learned with other dog owners' look like in 2025 (forums, friends, social)? Not described.",
+  "Review line: keep 'Rated 4.6/5 from 99 reviews' or update to the live 101?",
+  "Email reply promise: 'within one working day' (signed-off) or '1\u20132 working days' (live contact page)?",
+  "Are the POORLY10 terms 'Min. spend \u00a310 \u00b7 Selected items' real?",
+  "Are the named homepage and Why page testimonials genuine Judge.me reviews?",
+  "For the 'every dog' scene: can the other dogs face naturally (walking toward camera, or side-on) rather than copying Marble's look-back? The client says the three look-back dogs 'don't look right', and no source requires the pose."
+ ]
+}
