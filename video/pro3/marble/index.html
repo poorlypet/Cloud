@@ -35,27 +35,27 @@
 #hdr .lab{position:relative;display:block;width:700px;overflow:hidden;height:32px;font:700 26px/32px Figtree,sans-serif;letter-spacing:.14em}
 #hdr .lab b{position:absolute;left:0;top:0;font-weight:700}
 /* calendar */
-.ring{position:absolute;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(15,76,72,.6)}
+.ring{position:absolute;width:38px;height:38px;border-radius:50%;box-shadow:inset 0 0 0 2.5px rgba(15,76,72,.8)}
 .ring i{position:absolute;inset:3px;border-radius:50%}
 /* end card */
 .ec{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap}
-#wm{font:700 104px/1.1 Domine,serif;color:#F3F6F1;letter-spacing:-.02em;overflow:hidden;padding:.1em 0 .25em}
-#wm .wi{display:inline-block}
+#wm{position:absolute;left:306px;top:796px;width:468px;height:136px;overflow:hidden}
+#wm .wi{display:block;width:468px;height:128px;margin-top:4px}
 #cat{font:500 30px/1.2 Figtree,sans-serif;color:#E4EED6}
-#pill{position:absolute;left:150px;top:1140px;width:780px;height:92px;border-radius:46px;background:#DFE43A;color:#0E2A28;display:flex;align-items:center;justify-content:center;font:600 36px/1 Figtree,sans-serif;overflow:hidden;white-space:nowrap}
-#pill b{font-weight:800;font-size:38px;letter-spacing:.08em;margin-left:.3em}
-#pill .sheen{position:absolute;top:0;left:0;width:220px;height:92px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));opacity:.6}
+#pill{position:absolute;left:130px;top:996px;width:820px;height:88px;border-radius:44px;background:#DFE43A;color:#0E2A28;display:flex;align-items:center;justify-content:center;font:600 33px/1 Figtree,sans-serif;overflow:hidden;white-space:nowrap}
+#pill b{font-weight:800;font-size:35px;letter-spacing:.08em;margin:0 .3em}
+#pill .sheen{position:absolute;top:0;left:0;width:220px;height:88px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));opacity:.6}
 .pr{font:500 30px/1.2 Figtree,sans-serif;color:#E4EED6}
 #p2{font-size:28px}
 #tc{font:500 20px/1.2 Figtree,sans-serif;color:rgba(228,238,214,.72);letter-spacing:.01em}
 #url{font:700 42px/1.2 Figtree,sans-serif;color:#F3F6F1}
 #url .ul{position:absolute;height:3px;background:#DFE43A;transform-origin:0 50%}
-#key{position:absolute;left:276px;top:286px;width:524px;height:624px;border:2px solid rgba(228,238,214,.3);border-radius:264px 264px 0 0;box-sizing:border-box}
+#key{position:absolute;left:306px;top:222px;width:468px;height:548px;border:2px solid rgba(228,238,214,.3);border-radius:234px 234px 0 0;box-sizing:border-box}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute"><filter id="rag" x="-4%" y="-25%" width="108%" height="150%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.25" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.5" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 <div id="stage">
-  <div id="endBg" class="sc" style="background:radial-gradient(ellipse 620px 640px at 540px 620px,#12584F,#0F4C48 75%)"></div>
+  <div id="endBg" class="sc" style="background:radial-gradient(ellipse 620px 640px at 540px 560px,#12584F,#0F4C48 75%)"></div>
   <div id="woodClip" class="sc"><div id="wood" class="cam"></div></div>
   <div id="hall" class="sc"><div class="cam"></div></div>
   <div id="crate" class="sc"><div class="cam"></div><div id="wires" class="fs"></div></div>
@@ -78,9 +78,9 @@
   </div>
   <div id="endT" class="sc" style="background:none">
     <div id="key"></div>
-    <div id="wm" class="ec"><span class="wi">poorlypet<i class="bl"></i></span></div>
+    <div id="wm"><img class="wi" src="assets/logo-cream.png" alt="Poorly Pet"></div>
     <div id="cat" class="ec">For recovery, comfort and everyday wellbeing.<i class="bl"></i></div>
-    <div id="pill"><span>10% off your first order&nbsp;·<b>POORLY10</b></span><i class="sheen"></i></div>
+    <div id="pill"><span>Use code<b>POORLY10</b>· 10% off your first order</span><i class="sheen"></i></div>
     <div id="tc" class="ec">Min. spend £10 · Selected items · T&amp;Cs apply<i class="bl"></i></div>
     <div id="p1" class="ec pr">Rated 4.6/5 from 99 reviews · Free UK delivery over £39<i class="bl"></i></div>
     <div id="p2" class="ec pr">Real people. Every email answered within one working day.<i class="bl"></i></div>
@@ -103,7 +103,7 @@ const { $, $$, tl } = K;
 const FW = 1080, FH = 1920, DUR = 52.8;
 const E = [282, 712];                       // Marble's eye midpoint in the photo window R (and in the aligned gouache twin)
 const kR = 1080 / 1427, kP = 1080 / 1888;   // photo-R px and plate px to frame units
-window.FAST = [[8.5, 10.3], [22.9, 24.1], [32.9, 33.7], [35.9, 37.0], [47.1, 48.7]];   // 4-sample motion blur here
+window.FAST = [[8.4, 10.3], [22.9, 24.1], [32.9, 33.7], [35.9, 37.0], [46.5, 48.0]];   // 4-sample motion blur here
 
 const EZ = {}, ez = n => EZ[n] || (EZ[n] = gsap.parseEase(n));
 const P = (t, a, b, e = 'none') => t <= a ? 0 : t >= b ? 1 : ez(e)((t - a) / (b - a));
@@ -152,18 +152,18 @@ const LEAD = [190, 770], MEYE2 = [468, 1404], SCR = [460, 810], SUN = [873, 453]
 const TW = new Track({ z: 1.75, ax: E[0], ay: E[1], sx: 540, sy: 900 })
   .to(0, 3.2, { z: 1.30, sx: 420, sy: 820 }, 'none')
   .to(3.2, 6.4, { z: 1.0, sx: E[0], sy: E[1] }, 'power2.out')
-  .to(6.4, 8.2, { z: 1.04 }, 'sine.out')
-  .about([366, 1920]).to(8.2, 9.6, { z: 1.90, r: -5 }, 'power2.in')
+  .to(6.4, 8.5, { z: 1.04 }, 'sine.out')
+  .about([366, 1920]).to(8.5, 9.6, { z: 1.90, r: -5 }, 'power2.in')
   .jump(41.6, { z: 1.12, ax: E[0], ay: E[1], sx: E[0], sy: E[1] })
   .to(41.6, 44.8, { z: 1.16 }, 'sine.inOut')
-  .to(44.8, 47.2, { z: 1.26 }, 'sine.inOut')
-  .to(47.2, 48.6, { z: 0.95, sx: 505, sy: 564 }, 'power3.inOut')
-  .to(48.6, 52.8, { z: 0.99 }, 'sine.out');
+  .to(44.8, 46.6, { z: 1.24 }, 'sine.inOut')
+  .to(46.6, 47.9, { z: 0.88, sx: 512, sy: 470 }, 'power3.inOut')
+  .to(47.9, 52.8, { z: 0.92 }, 'sine.out');
 // the hallway opens registered on the painted lead as the dive passes it (9.4), then pulls back
 const WL = TW.at(9.4), LA = toScreen(WL, [508, 857]), LB = toScreen(WL, [366, 1920]);
 const TH = new Track({ z: 2.6, ax: LEAD[0], ay: LEAD[1], sx: (LA[0] + LB[0]) / 2, sy: (LA[1] + LB[1]) / 2, r: Math.atan2(LA[0] - LB[0], LB[1] - LA[1]) * 180 / Math.PI })
   .to(9.4, 10.9, { z: 1.12, sx: 150, sy: 632, r: 0 }, 'power2.out')
-  .about(MEYE2).to(10.9, 12.8, { z: 1.17 }, 'sine.inOut').to(12.8, 13.3, { z: 1.19 }, 'sine.out');
+  .about(MEYE2).to(10.9, 12.8, { z: 1.30, sy: 1250 }, 'sine.inOut').to(12.8, 13.3, { z: 1.33 }, 'sine.out');
 const TC = new Track({ z: 1.06, ax: 540, ay: 960, sx: 570, sy: 960 })
   .to(12.6, 17.1, { z: 1.10, sx: 510 }, 'sine.inOut').to(17.1, 17.6, { z: 1.105, sx: 506 }, 'sine.out');
 const TD = new Track({ z: 1.0, ax: SCR[0], ay: SCR[1], sx: SCR[0], sy: SCR[1] })
@@ -279,7 +279,7 @@ function block(lines, o) {
   b._fs = fs; return b;
 }
 function rise(b, at, o = {}) {
-  const lis = [...b.querySelectorAll('.li')], lms = [...b.querySelectorAll('.lm')], st = o.stagger ?? .12, d = o.dur ?? .7;
+  const lis = [...b.querySelectorAll('.li')], lms = [...b.querySelectorAll('.lm')], st = o.stagger ?? .09, d = o.dur ?? .65;
   tl.fromTo(lis, { yPercent: 150, filter: `blur(${o.blur ?? 6}px)` }, { yPercent: 0, filter: 'blur(0px)', duration: d, ease: 'expo.out', stagger: st, immediateRender: true }, at);
   tl.set(lms, { overflow: 'visible' }, at + d + st * lis.length);
 }
@@ -301,7 +301,11 @@ function build() {
   // S02 diagnosis, one breath before IVDD
   const s2 = block(['In 2024, aged three,', 'she was diagnosed with'], { y: 300, size: 62 }); rise(s2, 3.45);
   const iv = block(['*IVDD.*'], { y: 465, size: 150, w: 700, lh: 1.0 }); rise(iv, 4.8, { dur: .6, blur: 10 }); swipe(iv, 5.05);
-  [s2, iv].forEach(b => tl.to(b, { filter: 'blur(8px)', opacity: 0, duration: .45, ease: 'power1.in' }, 6.25));
+  const gl = block(['a spinal disc', 'disease'], { y: 0, size: 36, font: 'Figtree,sans-serif', lh: 1.15 });   // gloss, bottom-aligned to the IVDD baseline
+  gl.style.left = iv.querySelector('.li').offsetWidth + 72 + 30 + 'px'; gl.style.fontWeight = 600; gl.querySelectorAll('.lm').forEach(l => { l.style.overflow = 'visible'; });
+  gl.style.top = 465 + iv.querySelector('.bl').offsetTop + iv.querySelector('.mk').offsetTop - gl.offsetHeight + 8 + 'px';
+  tl.fromTo(gl, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 5.35);
+  [s2, iv, gl].forEach(b => tl.to(b, { filter: 'blur(8px)', opacity: 0, duration: .45, ease: 'power1.in' }, 6.9));
   // running header: rule, time slot (odometer), label (masked)
   const H = $('#hdr'), yrs = $('#hdr .yrs'), ytd = $('#hdr .ytd'), yr = $('#hdr .yr'), pre = $('#hdr .pre'), labs = $$('#hdr .lab b');
   const yW = [...yrs.children].map(b => b.offsetWidth), tdW = ytd.children[1].offsetWidth, preW = pre.firstElementChild.offsetWidth;
@@ -342,19 +346,19 @@ function build() {
   const s9 = block(['Her *better days*', 'started to outnumber', 'the bad ones.'], { y: 300, size: 62, ink: 1 }); rise(s9, 27.3); swipe(s9, 27.85);
   tl.to(s9, { opacity: 0, duration: .3 }, 29.95);
   // calendar card: 4 weeks, 20 good days (lime) and 8 hard days (sage), filling faster and faster
-  const card = el('div', $('#cal'), 'ov', { left: '48px', top: '536px', width: '414px', height: '276px', borderRadius: '16px', backgroundColor: 'rgba(243,246,241,.9)', backgroundImage: 'url(assets/paper.jpg)', backgroundSize: '1080px 1920px', backgroundBlendMode: 'multiply', boxShadow: '0 18px 40px -18px rgba(14,42,40,.45)' });
-  'MTWTFSS'.split('').forEach((d, c) => el('div', $('#cal'), 'ov', { left: 72 + c * 56 + 'px', top: '552px', width: '30px', textAlign: 'center', font: '700 15px/1 Figtree,sans-serif', letterSpacing: '.06em', color: 'rgba(15,76,72,.6)' }).textContent = d);
+  const card = el('div', $('#cal'), 'ov', { left: '48px', top: '546px', width: '446px', height: '300px', borderRadius: '16px', backgroundColor: 'rgba(243,246,241,.9)', backgroundImage: 'url(assets/paper.jpg)', backgroundSize: '1080px 1920px', backgroundBlendMode: 'multiply', boxShadow: '0 18px 40px -18px rgba(14,42,40,.45)' });
+  'MTWTFSS'.split('').forEach((d, c) => el('div', $('#cal'), 'ov', { left: 72 + c * 60 + 'px', top: '568px', width: '38px', textAlign: 'center', font: '700 18px/1 Figtree,sans-serif', letterSpacing: '.06em', color: 'rgba(15,76,72,.6)' }).textContent = d);
   const dows = [...$('#cal').children].slice(1);
   const GOOD = [[3, 6], [1, 3, 4, 6, 7], [1, 2, 3, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]];
   const rings = [];
   for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) {
-    const d = el('div', $('#cal'), 'ring', { left: 72 + c * 56 + 'px', top: 586 + r * 56 + 'px' }), f = el('i', d);
+    const d = el('div', $('#cal'), 'ring', { left: 72 + c * 60 + 'px', top: 602 + r * 60 + 'px' }), f = el('i', d);
     const good = GOOD[r].includes(c + 1); f.style.background = good ? '#DFE43A' : '#9DB3AB'; if (good) f.style.boxShadow = '0 0 12px rgba(223,228,58,.5)';
     rings.push({ d, f, good });
   }
   tl.fromTo([card, ...dows], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out', immediateRender: true }, 27.5);
   tl.fromTo(rings.map(r => r.d), { scale: .9, opacity: 0 }, { scale: 1, opacity: 1, duration: .25, ease: 'power2.out', stagger: .012, immediateRender: true }, 27.65);
-  rings.forEach((r, i) => tl.fromTo(r.f, { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .22, ease: 'power2.out', immediateRender: true }, 28.0 + 1.1 * Math.pow(i / 27, .62)));
+  rings.forEach((r, i) => tl.fromTo(r.f, { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .22, ease: 'power2.out', immediateRender: true }, 27.95 + 1.0 * Math.pow(i / 27, .62)));
   const last = rings[27];
   tl.to([card, ...dows, ...rings.slice(0, 27).map(r => r.d)], { opacity: 0, duration: .3 }, 29.95);
   tl.to(last.d, { boxShadow: 'inset 0 0 0 0px rgba(15,76,72,0)', duration: .2 }, 29.95);
@@ -366,28 +370,28 @@ function build() {
   // S10 home
   const s10 = block(['Joe and Lily started', '*Poorly Pet* from home.'], { y: 300, size: 62 }); rise(s10, 30.95); swipe(s10, 31.7); exit(s10, 33.05);
   // S11 the packing room
-  const s11 = block(['One place for guidance and', '*carefully chosen* products.'], { y: 300, size: 62, maxW: 880 }); rise(s11, 33.85); swipe(s11, 34.6); exit(s11, 36.3);
+  const s11 = block(['One online shop for guidance', 'and *carefully chosen* products.'], { y: 300, size: 62, maxW: 880 }); rise(s11, 33.85); swipe(s11, 34.6); exit(s11, 36.3);
   // S12 every dog
   const s12 = block(['Every product we stock', 'exists because it', 'would have *helped Marble.*'], { y: 300, size: 62 }); rise(s12, 37.2); swipe(s12, 41.62, .4); exit(s12, 42.7);
   // S13 the real Marble returns
   const tg1 = block(['Built for Marble.'], { y: 300, size: 76 }); rise(tg1, 44.8);
-  const tg2 = block(['*Here for every dog.*'], { y: 387, size: 76 }); rise(tg2, 45.2); swipe(tg2, 45.5, .5);
-  [tg1, tg2].forEach(b => exit(b, 47.0));
+  const tg2 = block(['*Here for every dog.*'], { y: 387, size: 76 }); rise(tg2, 45.1); swipe(tg2, 45.35, .45);
+  [tg1, tg2].forEach(b => exit(b, 46.45));
 
   // S14 end card
-  $$('#endT .ec').forEach(e => { const base = { wm: 1030, cat: 1104, tc: 1270, p1: 1326, p2: 1366, url: 1440 }[e.id]; e.style.top = base - e.querySelector('.bl').offsetTop + 'px'; });
-  const ut = $('#url .ut'), ul = $('#url .ul'); Object.assign(ul.style, { left: ut.offsetLeft + 'px', width: ut.offsetWidth + 'px', top: 1460 - parseFloat($('#url').style.top) + 'px' });
-  tl.fromTo('#key', { opacity: 0 }, { opacity: 1, duration: .6, immediateRender: true }, 48.2);
-  tl.fromTo('#wm .wi', { yPercent: 150 }, { yPercent: 0, duration: .7, ease: 'expo.out', immediateRender: true }, 48.2);
-  tl.fromTo('#cat', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 48.45);
-  tl.fromTo('#pill', { opacity: 0, scale: .97 }, { opacity: 1, scale: 1, duration: .5, ease: 'power2.out', immediateRender: true }, 48.7);
-  tl.fromTo('#pill b', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .35, ease: 'power1.inOut', immediateRender: true }, 48.85);
-  tl.fromTo('#tc', { opacity: 0 }, { opacity: 1, duration: .5, immediateRender: true }, 48.95);
-  tl.fromTo('#p1', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 49.05);
-  tl.fromTo('#p2', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 49.2);
-  tl.fromTo('#url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out', immediateRender: true }, 49.35);
-  tl.fromTo(ul, { scaleX: 0 }, { scaleX: 1, duration: .4, ease: 'power2.inOut', immediateRender: true }, 49.55);
-  tl.fromTo('#pill .sheen', { x: -260 }, { x: 820, duration: .7, ease: 'sine.inOut', immediateRender: true }, 50.6);
+  $$('#endT .ec').forEach(e => { const base = { cat: 968, tc: 1118, p1: 1172, p2: 1210, url: 1276 }[e.id]; e.style.top = base - e.querySelector('.bl').offsetTop + 'px'; });
+  const ut = $('#url .ut'), ul = $('#url .ul'); Object.assign(ul.style, { left: ut.offsetLeft + 'px', width: ut.offsetWidth + 'px', top: 1296 - parseFloat($('#url').style.top) + 'px' });
+  tl.fromTo('#key', { opacity: 0 }, { opacity: 1, duration: .6, immediateRender: true }, 47.5);
+  tl.fromTo('#wm .wi', { yPercent: 110 }, { yPercent: 0, duration: .7, ease: 'expo.out', immediateRender: true }, 47.5);
+  tl.fromTo('#cat', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 47.75);
+  tl.fromTo('#pill', { opacity: 0, scale: .97 }, { opacity: 1, scale: 1, duration: .5, ease: 'power2.out', immediateRender: true }, 48.0);
+  tl.fromTo('#pill b', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .35, ease: 'power1.inOut', immediateRender: true }, 48.15);
+  tl.fromTo('#tc', { opacity: 0 }, { opacity: 1, duration: .5, immediateRender: true }, 48.25);
+  tl.fromTo('#p1', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 48.35);
+  tl.fromTo('#p2', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 48.5);
+  tl.fromTo('#url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out', immediateRender: true }, 48.65);
+  tl.fromTo(ul, { scaleX: 0 }, { scaleX: 1, duration: .4, ease: 'power2.inOut', immediateRender: true }, 48.85);
+  tl.fromTo('#pill .sheen', { x: -260 }, { x: 860, duration: .7, ease: 'sine.inOut', immediateRender: true }, 50.4);
 }
 
 // ---------- per-frame: cameras, masks, light, grade ----------
@@ -398,14 +402,14 @@ K.frame(t => {
   if (wOn) {
     const paint = (t >= 6.4 && t < 9.62) || (t >= 41.6 && t < 44.8);
     const B = paint ? [0, 0, FW, FH] : [-1236 * kR, 0, (3574 - 1236) * kR, FH];
-    const ka = P(t, 47.2, 48.6, 'power3.inOut'), V = [L(0, 290, ka), L(0, 300, ka), L(FW, 790, ka), L(FH, 900, ka)];
+    const ka = P(t, 46.6, 47.9, 'power3.inOut'), V = [L(0, 320, ka), L(0, 236, ka), L(FW, 760, ka), L(FH, 756, ka)];
     place(wood, cover(TW.at(t), B, V));
-    $('#woodClip').style.clipPath = t < 47.2 ? 'none' : `inset(${V[1]}px ${FW - V[2]}px ${FH - V[3]}px ${V[0]}px round ${250 * ka}px ${250 * ka}px 0px 0px)`;
+    $('#woodClip').style.clipPath = t < 46.6 ? 'none' : `inset(${V[1]}px ${FW - V[2]}px ${FH - V[3]}px ${V[0]}px round ${220 * ka}px ${220 * ka}px 0px 0px)`;
     let sw = 1;
     if (t < 6.4) sw = 1 + .02 * Math.sin(Math.PI * t / 6.4);
-    else if (t >= 44.8) sw = 1 + .023 * P(t, 44.8, 47.2, 'sine.inOut') * (1 - ka);
+    else if (t >= 44.8) sw = 1 + .023 * P(t, 44.8, 46.6, 'sine.inOut') * (1 - ka);
     WP.c.style.transform = WT.c.style.transform = `scale(${sw})`;
-    const phBlur = t < 6.4 ? 1.5 : t < 9.62 ? L(1.5, 2.5, P(t, 6.4, 7.2)) : t < 47.2 ? 1.2 : L(1.2, 0, ka);
+    const phBlur = t < 6.4 ? 1.5 : t < 9.62 ? L(1.5, 2.5, P(t, 6.4, 7.2)) : t < 46.6 ? 1.2 : L(1.2, 0, ka);
     WP.ph.style.filter = WT.ph.style.filter = `blur(${phBlur}px) saturate(${1 - .08 * P(t, 4.8, 5.6) * (1 - P(t, 6.4, 7.4))})`;
     WAc.style.transform = t >= 41.6 ? `scale(${1 + .015 * Math.sin(Math.PI * Math.min(1, (t - 41.6) / 3.2))})` : 'none';
     if (t < 6.4) { vis(WP.g, 1); vis(WA, 0); vis(WT.g, 0); }
@@ -436,9 +440,9 @@ K.frame(t => {
   const cr = $('#crate'), cOn = t >= 12.85 && t < 17.62; vis(cr, cOn);
   if (cOn) {
     place(cam('crate'), cover(TC.at(t)));
-    const out = P(t, 17.05, 17.45, 'power2.in');
+    const out = P(t, 17.05, 17.5, 'power2.in');
     cr.style.opacity = P(t, 12.85, 13.1);
-    cr.style.filter = `blur(${14 * (1 - P(t, 12.9, 13.5, 'power2.out'))}px) brightness(${L(1, .08, out)})`;
+    cr.style.filter = `blur(${14 * (1 - P(t, 12.9, 13.5, 'power2.out'))}px) brightness(${L(1, .25, out)})`;
     lamp.style.opacity = .25 * (1 + .04 * Math.sin(2 * Math.PI * t / 3.2)) * (1 - out);
     wires.style.opacity = .5 * (1 - out); wires.style.transform = `translateX(${L(160, -160, P(t, 12.8, 17.1, 'sine.inOut'))}px)`;
   }
@@ -446,12 +450,12 @@ K.frame(t => {
   const dk = $('#desk'), dOn = t >= 17.6 && t < 24.05; vis(dk, dOn);
   if (dOn) {
     place(cam('desk'), cover(TD.at(t)));
-    const room = L(.1, 1, P(t, 17.6, 18.9, 'sine.inOut'));
+    const room = L(.3, 1.08, P(t, 17.6, 18.4, 'power2.out'));
     deskBase.style.filter = `saturate(.92) contrast(1.04) brightness(${room}) blur(${3 * P(t, 20.8, 23.0)}px)`;
-    vis(deskScr, t < 18.9); deskScr.style.opacity = P(t, 17.6, 17.95, 'sine.inOut');
+    vis(deskScr, t < 18.4); deskScr.style.opacity = P(t, 17.6, 17.8, 'sine.inOut') * (1 - P(t, 18.0, 18.4));
     scrBands.style.backgroundPosition = `0 ${-38 * t}px`; scrBands.style.opacity = .22 * P(t, 17.8, 18.4);
     const fl = .9 + .1 * (.5 + .25 * Math.sin(t * 13.1) + .25 * Math.sin(t * 7.7 + 1.3));
-    lapGlow.style.opacity = (.18 + .17 * (1 - P(t, 18.0, 18.9))) * fl * P(t, 17.6, 17.9);
+    lapGlow.style.opacity = (.26 + .12 * (1 - P(t, 18.0, 18.6))) * fl * P(t, 17.55, 17.8);
   }
   // white-out into the morning
   $('#white').style.opacity = t < 24 ? P(t, 23.55, 24.0, 'power2.in') : 1 - P(t, 24.0, 24.45, 'power1.out');
@@ -495,13 +499,13 @@ K.frame(t => {
   // global light, scrims and grade
   $('#grade').style.opacity = .2 * (t < 41.6 ? P(t, 6.4, 7.9) : 1 - P(t, 43.2, 44.75));
   $('#cool').style.opacity = .22 * P(t, 4.8, 5.6) * (1 - P(t, 6.4, 7.6));
-  $('#leak').style.opacity = t < 9.62 ? L(.25, .1, P(t, 4.8, 5.6)) * (1 - P(t, 6.4, 8.0)) : t >= 41.6 ? (.25 * P(t, 44.4, 44.9) + .12 * Math.sin(Math.PI * P(t, 44.8, 46.0))) * (1 - P(t, 47.2, 48.2)) : t >= 36.5 ? .12 * P(t, 36.5, 37.0) * (1 - P(t, 38.0, 38.35)) : 0;
+  $('#leak').style.opacity = t < 9.62 ? L(.25, .1, P(t, 4.8, 5.6)) * (1 - P(t, 6.4, 8.0)) : t >= 41.6 ? (.25 * P(t, 44.4, 44.9) + .12 * Math.sin(Math.PI * P(t, 44.8, 46.0))) * (1 - P(t, 46.6, 47.6)) : t >= 36.5 ? .12 * P(t, 36.5, 37.0) * (1 - P(t, 38.0, 38.35)) : 0;
   const day = t < 26 ? P(t, 24.0, 24.45) : 1 - P(t, 29.95, 30.35);
-  $('#scrD').style.opacity = day; $('#scrN').style.opacity = (1 - day) * (1 - P(t, 47.2, 48.0));
-  $('#vig').style.opacity = 1 - .6 * P(t, 47.2, 48.2);
-  vis($('#endBg'), t >= 47.1); vis($('#endT'), t >= 48.1);
+  $('#scrD').style.opacity = day; $('#scrN').style.opacity = (1 - day) * (1 - P(t, 46.6, 47.4));
+  $('#vig').style.opacity = 1 - .6 * P(t, 46.6, 47.6);
+  vis($('#endBg'), t >= 46.5); vis($('#endT'), t >= 47.4);
   grains.forEach((gi, i) => { gi.style.visibility = Math.floor(t * 30) % 6 === i ? 'visible' : 'hidden'; });
-  $('#grain').style.opacity = L(.42, .3, P(t, 47.6, 48.6));
+  $('#grain').style.opacity = L(.42, .3, P(t, 47.0, 48.0));
 });
 
 window.ready = Promise.all(IMGS.map(i => i.decode().catch(() => {}))).then(() => {
