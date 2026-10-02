@@ -1,0 +1,499 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Built for Marble</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+#stage{background:#0A3A37}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;visibility:hidden}
+.cam,.lay{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.cam img,.lay img,.fs img,.sc>img{position:absolute;display:block;max-width:none}
+.pl{filter:saturate(.92) contrast(1.04)}
+.mk-l{-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.ov{position:absolute;pointer-events:none}
+.fs{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+.glow{position:absolute;border-radius:50%;mix-blend-mode:screen;pointer-events:none}
+/* story type */
+.blk{position:absolute;left:72px;margin:0;font-family:Domine,serif;font-weight:600;letter-spacing:-.005em;white-space:nowrap;color:#F3F6F1}
+.blk.cr{text-shadow:0 2px 24px rgba(10,58,55,.35)}
+.blk.ink{color:#0E2A28}
+.blk .lm{display:block;overflow:hidden;padding:.14em .2em .26em;margin:-.14em -.2em -.26em}
+.blk .li{display:inline-block;will-change:transform}
+.mk{position:relative;display:inline-block}
+.mk .band{position:absolute;left:-.12em;right:-.12em;background:#DFE43A;border-radius:4px;filter:url(#rag)}
+.mk .t{position:relative;text-shadow:none}
+.mk .tk{position:absolute;left:0;top:0;color:#0E2A28;text-shadow:none;white-space:nowrap}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+/* running header */
+#hdr{position:absolute;left:72px;top:240px;height:32px;display:flex;align-items:center;white-space:nowrap;--hc:#F3F6F1;--rc:#DFE43A;color:var(--hc);opacity:0}
+#hdr.sh{text-shadow:0 2px 18px rgba(10,58,55,.4)}
+#hdr .rule{display:block;width:48px;height:2px;background:var(--rc);margin-right:18px;transform-origin:0 50%}
+#hdr .pre,#hdr .yr{display:block;overflow:hidden;height:32px;font:700 26px/32px Domine,serif}
+#hdr .pre span{display:block;width:max-content;padding-right:10px}
+#hdr .yr{position:relative}
+#hdr .yrs{position:absolute;left:0;top:0}
+#hdr .yrs b{display:block;width:max-content;height:32px;font-weight:700}
+#hdr .dot{display:block;margin:0 14px;font:700 26px/32px Figtree;opacity:.75}
+#hdr .lab{position:relative;display:block;height:32px;font:700 26px/32px Figtree,sans-serif;letter-spacing:.14em}
+#hdr .lab b{position:absolute;left:0;top:0;font-weight:700}
+/* calendar */
+.ring{position:absolute;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(15,76,72,.6)}
+.ring i{position:absolute;inset:0;border-radius:50%}
+/* end card */
+.ec{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap}
+#wm{font:700 104px/1.1 Domine,serif;color:#F3F6F1;letter-spacing:-.02em;overflow:hidden;padding:.1em 0 .25em}
+#wm .wi{display:inline-block}
+#cat{font:500 30px/1.2 Figtree,sans-serif;color:#E4EED6}
+#pill{position:absolute;left:180px;top:1162px;width:720px;height:84px;border-radius:42px;background:#DFE43A;color:#0E2A28;display:flex;align-items:center;justify-content:center;font:600 30px/1 Figtree,sans-serif;overflow:hidden;white-space:nowrap}
+#pill b{font-weight:800;letter-spacing:.08em;margin-left:.3em}
+#pill .sheen{position:absolute;top:0;left:0;width:220px;height:84px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));opacity:.6}
+.pr{font:500 26px/1.2 Figtree,sans-serif;color:rgba(228,238,214,.85)}
+#url{font:700 42px/1.2 Figtree,sans-serif;color:#F3F6F1}
+#url .ul{position:absolute;height:3px;background:#DFE43A;transform-origin:0 50%}
+#key{position:absolute;left:276px;top:322px;width:524px;height:624px;border:2px solid rgba(228,238,214,.3);border-radius:264px 264px 0 0;box-sizing:border-box}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><filter id="rag" x="-4%" y="-25%" width="108%" height="150%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.9" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<div id="stage">
+  <div id="endBg" class="sc" style="background:radial-gradient(ellipse 620px 640px at 540px 660px,#12584F,#0F4C48 75%)"></div>
+  <div id="woodClip" class="sc"><div id="wood" class="cam"></div></div>
+  <div id="hall" class="sc"><div class="cam"></div></div>
+  <div id="crate" class="sc"><div class="cam"></div><div id="wires" class="fs"></div></div>
+  <div id="desk" class="sc"><div class="cam"></div></div>
+  <div id="garden" class="sc"><div class="cam"></div></div>
+  <div id="house" class="sc"><div class="cam"></div></div>
+  <div id="room" class="sc"><div class="cam"></div><div id="bok" class="fs"></div></div>
+  <div id="s08" class="sc"><div class="cam"></div><div class="fs tint" style="background:#FFD9A0;mix-blend-mode:screen;opacity:.12"></div></div>
+  <div id="s09" class="sc"><div class="cam"></div><div class="fs tint" style="background:#F2B66B;mix-blend-mode:soft-light;opacity:.18"></div><div class="fs" style="background:linear-gradient(180deg,rgba(255,236,214,0) 52%,rgba(255,236,214,.16) 70%,rgba(255,236,214,0) 88%)"></div></div>
+  <div id="s10" class="sc"><div class="cam"></div><div class="fs tint" style="background:#CFE6EA;mix-blend-mode:soft-light;opacity:.16"></div></div>
+  <div id="grade" class="fs" style="background:#0F4C48;mix-blend-mode:soft-light;opacity:0"></div>
+  <div id="cool" class="fs" style="background:#0A3A37;mix-blend-mode:soft-light;opacity:0"></div>
+  <img id="leak" class="fs" src="assets/leak.png" style="mix-blend-mode:screen;opacity:0">
+  <div id="scrN" class="fs" style="background:linear-gradient(180deg,rgba(10,58,55,.72) 0%,rgba(10,58,55,.45) 22%,rgba(10,58,55,0) 38%)"></div>
+  <div id="scrD" class="fs" style="background:linear-gradient(180deg,rgba(243,246,241,.82) 0%,rgba(243,246,241,.5) 22%,rgba(243,246,241,0) 40%);opacity:0"></div>
+  <div id="vig" class="fs" style="background:radial-gradient(ellipse 78% 62% at 50% 48%,rgba(10,58,55,0) 58%,rgba(10,58,55,.34) 100%)"></div>
+  <div id="cal" class="fs"></div>
+  <div id="txt" class="fs">
+    <div id="hdr" class="sh"><i class="rule"></i><span class="pre"><span>END OF</span></span><span class="yr"><span class="yrs"><b>2024</b><b>2025</b><b class="y26">2026</b></span><span class="yrs ytd" style="opacity:0"><b>2025</b><b>Today</b></span></span><span class="dot">·</span><span class="lab"><b>IT STARTED WITH MARBLE</b><b>THE SEARCH FOR BETTER SUPPORT</b><b>LEARNING, TESTING AND HELPING</b><b>POORLY PET WAS BORN</b><b>HERE FOR EVERY DOG</b></span></div>
+  </div>
+  <div id="endT" class="sc" style="background:none">
+    <div id="key"></div>
+    <div id="wm" class="ec"><span class="wi">poorlypet<i class="bl"></i></span></div>
+    <div id="cat" class="ec">For recovery, comfort and everyday wellbeing.<i class="bl"></i></div>
+    <div id="pill"><span>10% off your first order&nbsp;·<b>POORLY10</b></span><i class="sheen"></i></div>
+    <div id="p1" class="ec pr">Rated 4.6/5 from 99 reviews · Free UK delivery over £39<i class="bl"></i></div>
+    <div id="p2" class="ec pr">Real people. Every email answered within one working day.<i class="bl"></i></div>
+    <div id="url" class="ec"><span class="ut">poorly-pet.com</span><i class="bl"></i><i class="ul"></i></div>
+  </div>
+  <div id="white" class="fs" style="background:#FAFCF5;opacity:0"></div>
+  <div id="warm" class="fs" style="background:#FFF4E0;opacity:0"></div>
+  <div id="grain" class="fs" style="mix-blend-mode:overlay;opacity:.42"></div>
+</div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script>
+/* "Built for Marble": Poorly Pet brand film, 9:16, 52.8 s. Treatment in treatment.json.
+   Plates live in frame units (1080x1920); each scene's .cam is placed by a camera track:
+   transform = translate(sx,sy) rotate(r) scale(z) translate(-ax,-ay), i.e. plate point (ax,ay) lands on screen (sx,sy). */
+const { $, $$, tl } = K;
+const FW = 1080, FH = 1920, DUR = 52.8;
+const E = [282, 712];                       // Marble's eye midpoint in the photo window R (and in the aligned gouache twin)
+const kR = 1080 / 1427, kP = 1080 / 1888;   // photo-R px and plate px to frame units
+window.FAST = [[8.5, 9.7], [9.55, 10.3], [22.9, 24.1], [32.9, 33.7], [47.5, 49.3]];   // 4-sample motion blur here
+
+const EZ = {}, ez = n => EZ[n] || (EZ[n] = gsap.parseEase(n));
+const P = (t, a, b, e = 'none') => t <= a ? 0 : t >= b ? 1 : ez(e)((t - a) / (b - a));
+const L = (a, b, k) => a + (b - a) * k;
+const IMGS = [];
+function el(tag, parent, cls, css) { const d = document.createElement(tag); if (cls) d.className = cls; if (css) Object.assign(d.style, css); parent.appendChild(d); return d; }
+function img(parent, src, x, y, w, h, cls) { const i = el('img', parent, cls, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' }); i.src = src; IMGS.push(i); return i; }
+function glow(parent, cx, cy, rx, ry, col, op) { return el('div', parent, 'glow', { left: cx - rx + 'px', top: cy - ry + 'px', width: 2 * rx + 'px', height: 2 * ry + 'px', background: `radial-gradient(closest-side,${col},rgba(0,0,0,0))`, opacity: op }); }
+const vis = (e, on) => { e.style.visibility = on ? 'visible' : 'hidden'; };
+
+// ---------- camera tracks ----------
+const rotv = (x, y, d) => { const a = d * Math.PI / 180, c = Math.cos(a), s = Math.sin(a); return [x * c - y * s, x * s + y * c]; };
+const toScreen = (st, p) => { const [dx, dy] = rotv((p[0] - st.ax) * st.z, (p[1] - st.ay) * st.z, st.r); return [st.sx + dx, st.sy + dy]; };
+const toPlate = (st, q) => { const [dx, dy] = rotv(q[0] - st.sx, q[1] - st.sy, -st.r); return [st.ax + dx / st.z, st.ay + dy / st.z]; };
+class Track {
+  constructor(st) { this.st = { r: 0, ...st }; this.segs = []; }
+  to(t0, t1, patch, e = 'sine.inOut') { const a = { ...this.st }, b = { ...a, ...patch }; this.segs.push({ t0, t1, a, b, e: ez(e) }); this.st = b; return this; }
+  about(p) { const [sx, sy] = toScreen(this.st, p); this.st = { ...this.st, ax: p[0], ay: p[1], sx, sy }; return this; }
+  jump(t, st) { this.st = { r: 0, ...st }; this.segs.push({ t0: t, t1: t, a: this.st, b: this.st, e: ez('none') }); return this; }
+  at(t) {
+    let cur = this.segs.length ? this.segs[0].a : this.st;
+    for (const s of this.segs) {
+      if (t < s.t0) return cur;
+      if (t < s.t1) { const k = s.e((t - s.t0) / (s.t1 - s.t0)), o = {}; for (const key in s.a) o[key] = s.a[key] + (s.b[key] - s.a[key]) * k; return o; }
+      cur = s.b;
+    }
+    return cur;
+  }
+}
+// keep the visible window V covered by plate bounds B, nudging the translation only
+function cover(st, B = [0, 0, FW, FH], V = [0, 0, FW, FH]) {
+  st = { ...st };
+  for (let it = 0; it < 5; it++) {
+    let moved = false;
+    for (const c of [[V[0], V[1]], [V[2], V[1]], [V[0], V[3]], [V[2], V[3]]]) {
+      const q = toPlate(st, c), qx = Math.min(B[2], Math.max(B[0], q[0])), qy = Math.min(B[3], Math.max(B[1], q[1]));
+      if (Math.abs(qx - q[0]) > 1e-6 || Math.abs(qy - q[1]) > 1e-6) { const [dx, dy] = rotv((qx - q[0]) * st.z, (qy - q[1]) * st.z, st.r); st.sx -= dx; st.sy -= dy; moved = true; }
+    }
+    if (!moved) break;
+  }
+  return st;
+}
+const place = (e, st) => { e.style.transform = `translate(${st.sx}px,${st.sy}px) rotate(${st.r}deg) scale(${st.z}) translate(${-st.ax}px,${-st.ay}px)`; };
+
+const LEAD = [190, 770], MEYE2 = [468, 1404], SCR = [460, 810], SUN = [873, 453], MEYE5 = [675, 968], WIN = [558, 1146], MEYE7 = [556, 940];
+const TW = new Track({ z: 1.75, ax: E[0], ay: E[1], sx: 540, sy: 900 })
+  .to(0, 3.2, { z: 1.30, sx: 420, sy: 820 }, 'power2.out')
+  .to(3.2, 6.4, { z: 1.0, sx: E[0], sy: E[1] }, 'sine.inOut')
+  .to(6.4, 8.2, { z: 1.04 }, 'sine.out')
+  .about([366, 1920]).to(8.2, 9.6, { z: 1.90, r: -5 }, 'power2.in')
+  .jump(41.6, { z: 1.12, ax: E[0], ay: E[1], sx: E[0], sy: E[1] })
+  .to(41.6, 44.8, { z: 1.16 }, 'sine.inOut')
+  .to(44.8, 47.6, { z: 1.28 }, 'sine.inOut')
+  .to(47.6, 49.2, { z: 0.95, sx: 505, sy: 600 }, 'power3.inOut')
+  .to(49.2, 52.8, { z: 0.99 }, 'sine.out');
+const TH = new Track({ z: 1.75, ax: LEAD[0], ay: LEAD[1], sx: 300, sy: 960 })
+  .to(9.2, 10.9, { z: 1.12, sx: 150, sy: 632 }, 'power2.out')
+  .about(MEYE2).to(10.9, 12.8, { z: 1.17 }, 'sine.inOut').to(12.8, 13.3, { z: 1.19 }, 'sine.out');
+const TC = new Track({ z: 1.06, ax: 540, ay: 960, sx: 570, sy: 960 })
+  .to(12.6, 17.1, { z: 1.10, sx: 510 }, 'sine.inOut').to(17.1, 17.6, { z: 1.105, sx: 506 }, 'sine.out');
+const TD = new Track({ z: 1.0, ax: SCR[0], ay: SCR[1], sx: SCR[0], sy: SCR[1] })
+  .to(17.6, 23.0, { z: 1.14 }, 'sine.in').to(23.0, 24.0, { z: 4.6 }, 'power3.in');
+const TG = new Track({ z: 2.4, ax: SUN[0], ay: SUN[1], sx: SUN[0], sy: SUN[1] })
+  .to(24.0, 25.2, { z: 1.08, sy: SUN[1] - 30 }, 'power3.out')
+  .to(25.2, 27.2, { z: 1.10, sy: SUN[1] }, 'sine.inOut')
+  .about(MEYE5).to(27.2, 30.4, { z: 1.28 }, 'sine.inOut');
+const THo = new Track({ z: 1.30, ax: WIN[0], ay: WIN[1], sx: WIN[0], sy: WIN[1] })
+  .to(30.3, 32.2, { z: 1.0 }, 'power3.out').to(32.2, 33.0, { z: 1.04 }, 'sine.in').to(33.0, 33.6, { z: 3.6 }, 'power3.in');
+const TR = new Track({ z: 1.06, ax: 540, ay: 960, sx: 540, sy: 960 })
+  .to(33.6, 36.8, { z: 1.10, sx: 504 }, 'sine.inOut').to(36.8, 37.2, { z: 1.104, sx: 500 }, 'sine.out');
+const SEAS = [
+  { id: 's08', P: [270, 711], T: [282, 712], s: 1.05, c: 'C08', a: 36.5, b: 38.5 },
+  { id: 's09', P: [272, 748], T: [282, 712], s: 1.05, c: 'C09', a: 38.35, b: 40.1 },
+  { id: 's10', P: [195, 611], T: [250, 700], s: 1.29, c: 'C10', a: 39.95, b: 41.62 },
+];
+const CUT = { C01: [254, 1077, 1379, 2283], C07: [757, 1514, 1017, 934], C08: [288, 1049, 1472, 2311], C09: [253, 901, 1508, 2459], C10: [184, 831, 1384, 2529] };
+const PCUT = [246, 821, 993, 1215];
+
+// ---------- plates ----------
+function cutImg(parent, name, eye) {
+  const [x, y, w, h] = CUT[name].map(v => v * kP), i = img(parent, `assets/${name}-cut.png`, x, y, w, h, 'pl');
+  i.style.transformOrigin = `${eye[0] - x}px ${eye[1] - y}px`; return i;
+}
+function photoGroup(parent) {
+  const g = el('div', parent, 'lay');
+  const ph = img(g, 'src/marble.jpg', -1236 * kR, 0, 3574 * kR, 2537 * kR);
+  const [x, y, w, h] = PCUT.map(v => v * kR), c = img(g, 'assets/photoR-cut.png', x, y, w, h);
+  c.style.transformOrigin = `${E[0] - x}px ${E[1] - y}px`;
+  return { g, ph, c };
+}
+const wood = $('#wood');
+const WP = photoGroup(wood);                                      // the real photo
+const WA = el('div', wood, 'lay mk-l');                            // its gouache twin (C01), revealed by strokes
+img(WA, 'assets/C01.jpg', 0, 0, FW, FH, 'pl'); const WAc = cutImg(WA, 'C01', E);
+const paper = (parent, op) => { const i = img(parent, 'assets/paper.jpg', 0, 0, FW, FH); Object.assign(i.style, { mixBlendMode: 'multiply', opacity: op }); return i; };
+paper(WA, .9);
+const WT = photoGroup(wood); WT.g.classList.add('mk-l');          // photo on top: eyes-last patch (S03) and the wash back to real (S13)
+const gobo = img(wood, 'assets/gobo.jpg', -700, -200, 2400, 2400); Object.assign(gobo.style, { mixBlendMode: 'screen', filter: 'sepia(.7) saturate(1.6) brightness(1.05)', opacity: 0 });
+['stroke1a', 'stroke1m', 'stroke2a', 'stroke2m', 'stroke3a', 'stroke3m'].forEach(n => { const i = new Image(); i.src = `assets/${n}.png`; IMGS.push(i); });
+
+const cam = id => $(`#${id} .cam`);
+img(cam('hall'), 'assets/C02.jpg', 0, 0, FW, FH, 'pl');
+paper(cam('hall'), .5);
+const doorGlow = glow(cam('hall'), 690, 640, 260, 420, 'rgba(159,184,208,.9)', .12);
+const headlight = el('div', cam('hall'), 'ov', { left: '0px', top: '-300px', width: '260px', height: '1700px', background: 'linear-gradient(90deg,rgba(255,250,235,0),rgba(255,250,235,.9) 50%,rgba(255,250,235,0))', mixBlendMode: 'screen', opacity: 0, filter: 'blur(18px)' });
+
+img(cam('crate'), 'assets/C03.jpg', 0, 0, FW, FH, 'pl');
+paper(cam('crate'), .5);
+const lamp = glow(cam('crate'), 935, 690, 360, 360, 'rgba(255,201,119,.95)', .25);
+const wires = $('#wires');
+[[90, 0], [250, 1], [400, 0], [560, 1], [720, 0], [880, 1], [1010, 0]].forEach(([x, k]) => el('div', wires, 'ov', { left: x + 'px', top: '760px', width: '14px', height: '1200px', background: 'linear-gradient(90deg,#13201F 0 85%,rgba(255,196,120,.8) 85% 100%)', filter: 'blur(13px)', opacity: k ? .8 : 1 }));
+el('div', wires, 'ov', { left: '-200px', top: '1760px', width: '1500px', height: '14px', background: '#13201F', filter: 'blur(14px)' });
+Object.assign(wires.style, { mixBlendMode: 'multiply', opacity: 0, WebkitMaskImage: 'linear-gradient(180deg,transparent 40%,#000 62%)', maskImage: 'linear-gradient(180deg,transparent 40%,#000 62%)' });
+
+const QUAD = [[275, 722], [613, 663], [640, 893], [313, 959]], QPOLY = `polygon(${QUAD.map(p => p.join('px ') + 'px').join(',')})`;
+const deskBase = img(cam('desk'), 'assets/C04.jpg', 0, 0, FW, FH, 'pl');
+const deskScr = el('div', cam('desk'), 'lay', { clipPath: QPOLY }); img(deskScr, 'assets/C04.jpg', 0, 0, FW, FH, 'pl');
+const scrBands = el('div', cam('desk'), 'lay', { clipPath: QPOLY, background: 'repeating-linear-gradient(176deg,rgba(255,255,255,0) 0 26px,rgba(255,255,255,.9) 34px,rgba(255,255,255,0) 42px,rgba(255,255,255,0) 64px)', mixBlendMode: 'screen', opacity: .22, filter: 'blur(5px)' });
+paper(cam('desk'), .5);
+const lapGlow = glow(cam('desk'), SCR[0], SCR[1] + 40, 520, 460, 'rgba(207,231,255,.95)', .18);
+
+img(cam('garden'), 'assets/C05.jpg', 0, 0, FW, FH, 'pl');
+paper(cam('garden'), .5);
+const shafts = [[28, .16, 70], [42, .12, 46], [56, .10, 60]].map(([a, o, w]) => el('div', cam('garden'), 'ov', { left: SUN[0] - w / 2 + 'px', top: SUN[1] + 'px', width: w + 'px', height: '1900px', transformOrigin: '50% 0', transform: `rotate(${a}deg)`, background: 'linear-gradient(180deg,rgba(255,236,190,.95),rgba(255,236,190,0))', mixBlendMode: 'screen', opacity: o, filter: 'blur(30px)' }));
+const sunBloom = glow(cam('garden'), SUN[0] - 13, SUN[1] + 27, 330, 330, 'rgba(255,240,205,.95)', .35);
+const rim = glow(cam('garden'), 690, 960, 190, 160, 'rgba(255,214,150,.9)', 0);
+const motes = Array.from({ length: 10 }, (_, i) => { const s = 3 + (i * 7) % 5; return el('div', cam('garden'), 'ov', { left: 520 + (i * 197) % 520 + 'px', top: 360 + (i * 263) % 640 + 'px', width: s + 'px', height: s + 'px', borderRadius: '50%', background: '#FFF3D0', filter: 'blur(1px)', opacity: .25 + (i % 3) * .1 }); });
+
+img(cam('house'), 'assets/C06.jpg', 0, 0, FW, FH, 'pl');
+paper(cam('house'), .5);
+const winGlow = glow(cam('house'), WIN[0], WIN[1], 210, 250, 'rgba(255,184,98,.95)', .25);
+const lampHalo = glow(cam('house'), 990, 700, 150, 150, 'rgba(255,214,140,.9)', .2);
+
+img(cam('room'), 'assets/C07.jpg', 0, 0, FW, FH, 'pl');
+const print = el('div', cam('room'), 'ov', { left: '150px', top: '1160px', width: '96px', height: '170px', padding: '9px 9px 26px', background: '#F4F1E8', transform: 'rotate(-6deg)', boxShadow: '0 6px 14px rgba(14,42,40,.30)', filter: 'sepia(.12) brightness(.9) blur(.5px)' });
+img(print, 'assets/photoR.jpg', 9, 9, 96, 170);
+const roomCut = cutImg(cam('room'), 'C07', MEYE7);
+paper(cam('room'), .5);
+const bok = $('#bok');
+[[820, 110, 70, .42], [930, 190, 46, .36], [1010, 90, 84, .3], [880, 300, 38, .45], [1040, 260, 58, .34], [760, 220, 30, .4], [990, 410, 44, .3], [850, 470, 62, .25], [1060, 520, 36, .38]]
+  .forEach(([x, y, r, o], i) => el('div', bok, 'ov', { left: x - r + 'px', top: y - r + 'px', width: 2 * r + 'px', height: 2 * r + 'px', borderRadius: '50%', background: 'radial-gradient(closest-side,rgba(255,213,138,.95) 55%,rgba(255,213,138,.35) 80%,rgba(255,213,138,0))', mixBlendMode: 'screen', opacity: o, filter: `blur(${6 + (i % 4) * 2.5}px)` }));
+
+SEAS.forEach(s => { img(cam(s.id), `assets/${s.c}.jpg`, 0, 0, FW, FH, 'pl'); s.cut = cutImg(cam(s.id), s.c, s.P); paper(cam(s.id), .5); });
+const gobo2 = img($('#s08'), 'assets/gobo.jpg', -560, -140, 2200, 2200); Object.assign(gobo2.style, { mixBlendMode: 'screen', filter: 'sepia(.7) saturate(1.6)', opacity: .08 });
+const g09 = gobo2.cloneNode(); $('#s09').appendChild(g09); const g10 = gobo2.cloneNode(); $('#s10').appendChild(g10);
+const gobos2 = [gobo2, g09, g10];
+
+const grains = [0, 1, 2, 3, 4, 5].map(i => img($('#grain'), `assets/grain${i}.jpg`, 0, 0, FW, FH));
+
+// ---------- masks ----------
+function setMask(e, layers) {
+  if (!layers) { e.style.webkitMaskImage = e.style.maskImage = 'none'; return; }
+  const im = layers.map(l => l[0]).join(','), pos = layers.map(l => l[1]).join(','), sz = layers.map(l => l[2]).join(',');
+  e.style.webkitMaskImage = e.style.maskImage = im; e.style.webkitMaskPosition = e.style.maskPosition = pos; e.style.webkitMaskSize = e.style.maskSize = sz;
+}
+const STY = { 1: 1240, 2: 600, 3: -60 };                         // bands: bottom, middle, top
+const stroke = (n, dir, k) => [`url(assets/stroke${n}${dir > 0 ? 'a' : 'm'}.png)`, `${dir > 0 ? L(-1300, -110, k) : L(1080, -110, k)}px ${STY[n]}px`, '1300px 720px'];
+const fill = a => [`linear-gradient(rgba(0,0,0,${a}),rgba(0,0,0,${a}))`, '0 0', '100% 100%'];
+const circle = r => [`radial-gradient(circle at ${E[0]}px ${E[1]}px,#000 ${Math.max(0, r - 12)}px,rgba(0,0,0,0) ${Math.max(0.01, r)}px)`, '0 0', '100% 100%'];
+
+// ---------- type ----------
+const SWIPES = [];
+function block(lines, o) {
+  const b = el('div', $('#txt'), 'blk ' + (o.ink ? 'ink' : 'cr'), { top: o.y + 'px', fontSize: o.size + 'px', lineHeight: o.lh || 1.14, fontWeight: o.w || 600 });
+  b.innerHTML = lines.map(l => `<span class="lm"><span class="li">${l.replace(/\*(.+?)\*/g, '<span class="mk"><i class="band"></i><span class="t">$1</span><span class="tk" aria-hidden="true">$1</span><i class="bl"></i></span>')}</span></span>`).join('');
+  let fs = o.size; const lis = [...b.querySelectorAll('.li')];
+  while (fs > (o.min || o.size - 4) && lis.some(li => li.offsetWidth > (o.maxW || 840))) { fs -= 1; b.style.fontSize = fs + 'px'; }
+  b.querySelectorAll('.mk').forEach(mk => { const band = mk.querySelector('.band'), bl = mk.querySelector('.bl').offsetTop; band.style.top = bl - 0.68 * fs + 'px'; band.style.height = 0.78 * fs + 'px'; });
+  b._fs = fs; return b;
+}
+function rise(b, at, o = {}) {
+  const lis = [...b.querySelectorAll('.li')], lms = [...b.querySelectorAll('.lm')], st = o.stagger ?? .12, d = o.dur ?? .7;
+  tl.fromTo(lis, { yPercent: 150, filter: `blur(${o.blur ?? 6}px)` }, { yPercent: 0, filter: 'blur(0px)', duration: d, ease: 'expo.out', stagger: st, immediateRender: true }, at);
+  tl.set(lms, { overflow: 'visible' }, at + d + st * lis.length);
+}
+function swipe(b, at, dur = .45) {
+  const pad = .12 * b._fs;
+  b.querySelectorAll('.mk').forEach((mk, i) => {
+    const band = mk.querySelector('.band'), tk = mk.querySelector('.tk'), w = mk.offsetWidth;
+    SWIPES.push({ a: at + i * .08, d: dur, f: p => { const edge = -pad + p * (w + 2 * pad); band.style.clipPath = `inset(-30% ${w + pad - edge}px -30% 0)`; tk.style.clipPath = `inset(-30% ${Math.max(0, w - edge)}px -30% 0)`; } });
+  });
+}
+const exit = (b, at, d = .3, y = -20) => tl.to(b, { y, opacity: 0, duration: d, ease: 'power2.in' }, at);
+
+// ---------- build ----------
+function build() {
+  // S01 hook: real photo, name set on frame 0
+  const h1 = block(['This is *Marble*.'], { y: 290, size: 92 }); swipe(h1, .35); h1.querySelector('.lm').style.overflow = 'visible';
+  const h1b = block(["She's the reason", 'Poorly Pet exists.'], { y: 430, size: 62 }); rise(h1b, 1.6);
+  [h1, h1b].forEach(b => exit(b, 2.9));
+  // S02 diagnosis, one breath before IVDD
+  const s2 = block(['In 2024, aged three,', 'she was diagnosed with'], { y: 300, size: 62 }); rise(s2, 3.35);
+  const iv = block(['*IVDD*.'], { y: 465, size: 150, w: 700, lh: 1.0 }); rise(iv, 4.8, { dur: .6, blur: 10 }); swipe(iv, 5.05);
+  [s2, iv].forEach(b => tl.to(b, { filter: 'blur(8px)', opacity: 0, duration: .45, ease: 'power1.in' }, 6.25));
+  // running header
+  const H = $('#hdr'), yrs = $('#hdr .yrs'), ytd = $('#hdr .ytd'), yr = $('#hdr .yr'), pre = $('#hdr .pre'), labs = $$('#hdr .lab b');
+  const yW = [...yrs.children].map(b => b.offsetWidth), tdW = ytd.children[1].offsetWidth, preW = pre.firstElementChild.offsetWidth;
+  const yTo = (i, at, w) => { tl.to(yrs, { y: -32 * i, duration: .25, ease: 'power3.inOut' }, at); tl.to(yr, { width: w ?? yW[i], duration: .25, ease: 'power3.inOut' }, at); };
+  const labIn = (i, at) => tl.fromTo(labs[i], { clipPath: 'inset(0 100% 0 0)', opacity: 1 }, { clipPath: 'inset(0 0% 0 0)', duration: .5, ease: 'power2.inOut', immediateRender: true }, at);
+  const labOut = (i, at) => tl.to(labs[i], { yPercent: -100, opacity: 0, duration: .35, ease: 'power2.in' }, at);
+  gsap.set(yrs, { y: -64 }); gsap.set(yr, { width: yW[2] }); gsap.set(pre, { width: 0 }); labs.forEach(b => gsap.set(b, { clipPath: 'inset(0 100% 0 0)' }));
+  tl.to(H, { opacity: 1, duration: .3 }, 7.2); tl.fromTo('#hdr .rule', { scaleX: 0 }, { scaleX: 1, duration: .4, ease: 'power2.out', immediateRender: true }, 7.2);
+  yTo(1, 7.3); yTo(0, 7.6); labIn(0, 7.5);
+  labOut(0, 18.0); labIn(1, 18.1);
+  tl.to(H, { opacity: 0, duration: .3 }, 23.0);
+  tl.set(labs[1], { opacity: 0 }, 24.0);
+  tl.to(H, { '--hc': '#0F4C48', '--rc': '#0F4C48', duration: .01 }, 24.0); tl.set(H, { textShadow: 'none' }, 24.0);
+  tl.to(H, { opacity: 1, duration: .35 }, 24.45); yTo(1, 24.6); labIn(2, 24.7);
+  tl.to(H, { '--hc': '#F3F6F1', '--rc': '#DFE43A', duration: .4 }, 30.0); tl.set(H, { textShadow: '0 2px 18px rgba(10,58,55,.4)' }, 30.0);
+  tl.to(pre, { width: preW, duration: .45, ease: 'power3.inOut' }, 31.0); labOut(2, 31.0); labIn(3, 31.1);
+  // S03 header persists; S12 'Today'
+  tl.to(pre, { width: 0, duration: .4, ease: 'power3.inOut' }, 37.0);
+  tl.set(yrs, { opacity: 0 }, 37.0); tl.set(ytd, { opacity: 1 }, 37.0);
+  tl.to(ytd, { y: -32, duration: .3, ease: 'power3.inOut' }, 37.0); tl.to(yr, { width: tdW, duration: .3, ease: 'power3.inOut' }, 37.0);
+  labOut(3, 37.0); labIn(4, 37.1);
+  tl.to(H, { opacity: 0, duration: .4 }, 42.0);
+
+  // S04 hallway
+  const s4 = block(['We first noticed her', 'dragging her back legs', 'and losing her *balance*.'], { y: 300, size: 62 }); rise(s4, 10.3); swipe(s4, 11.2); exit(s4, 12.4, .35, -16);
+  // S05 crate rest
+  const s5 = block(['Almost overnight we were', 'learning words like'], { y: 300, size: 62 }); rise(s5, 13.2);
+  const t1 = block(['disc extrusion'], { y: 485, size: 84 }), t2 = block(['crate rest.'], { y: 590, size: 84 });
+  [t1, t2].forEach(b => { b.querySelector('.lm').style.overflow = 'visible'; b.style.transformOrigin = '0 50%'; });
+  tl.fromTo(t1, { opacity: 0, filter: 'blur(18px)', scale: 1.06 }, { opacity: 1, filter: 'blur(0px)', scale: 1, duration: .4, ease: 'power2.out', immediateRender: true }, 14.0);
+  tl.fromTo(t2, { opacity: 0, filter: 'blur(18px)', scale: 1.06 }, { opacity: 1, filter: 'blur(0px)', scale: 1, duration: .4, ease: 'power2.out', immediateRender: true }, 14.8);
+  tl.to(t1, { opacity: .55, duration: .4 }, 14.9);
+  [s5, t1, t2].forEach(b => exit(b, 16.8));
+  // S06-S07 the search
+  const s6 = block(["We couldn't find the", 'right help, so we', '*kept looking*.'], { y: 300, size: 62 }); rise(s6, 18.4); swipe(s6, 19.3); exit(s6, 20.4);
+  const s7 = block(['Good products existed.', 'Finding the *right ones*', 'was far too hard.'], { y: 300, size: 62 }); rise(s7, 21.1); swipe(s7, 21.9); exit(s7, 22.9);
+  // S08-S09 better days (day mode, ink)
+  const s8 = block(['We tested, read', 'everything and kept', 'what *genuinely helped*.'], { y: 300, size: 62, ink: 1 }); rise(s8, 25.0); swipe(s8, 25.9); exit(s8, 27.0);
+  const s9 = block(['Her *better days* started', 'to outnumber', 'the bad ones.'], { y: 300, size: 62, ink: 1 }); rise(s9, 27.4); swipe(s9, 27.95);
+  tl.to(s9, { opacity: 0, duration: .3 }, 29.8);
+  // calendar: 4 x 7 days, 20 good and 8 hard, filling faster and faster
+  const GOOD = [[3, 6], [1, 3, 4, 6, 7], [1, 2, 3, 5, 6, 7], [1, 2, 3, 4, 5, 6, 7]];
+  const rings = [];
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) {
+    const d = el('div', $('#cal'), 'ring', { left: 72 + c * 56 + 'px', top: 590 + r * 56 + 'px' }), f = el('i', d);
+    const good = GOOD[r].includes(c + 1); f.style.background = good ? '#DFE43A' : '#9DB3AB'; if (good) f.style.boxShadow = '0 0 14px rgba(223,228,58,.45)';
+    rings.push({ d, f, good });
+  }
+  tl.fromTo(rings.map(r => r.d), { scale: .9, opacity: 0 }, { scale: 1, opacity: 1, duration: .25, ease: 'power2.out', stagger: .012, immediateRender: true }, 27.6);
+  rings.forEach((r, i) => tl.fromTo(r.f, { scale: .85, opacity: 0 }, { scale: 1, opacity: 1, duration: .22, ease: 'power2.out', immediateRender: true }, 28.1 + 1.6 * Math.pow(i / 27, .62)));
+  const last = rings[27];
+  tl.to(rings.slice(0, 27).map(r => r.d), { opacity: 0, duration: .3 }, 29.8);
+  tl.to(last.d, { boxShadow: 'inset 0 0 0 0px rgba(15,76,72,0)', duration: .2 }, 29.8);
+  // last good day becomes the lit window of the house (sized to the window as the house camera has it at 30.7)
+  const hs = THo.at(30.7), [wx0, wy0] = toScreen(hs, [492, 1033]), [wx1, wy1] = toScreen(hs, [625, 1259]);
+  tl.to(last.d, { left: wx0, top: wy0, width: wx1 - wx0, height: wy1 - wy0, borderRadius: 6, duration: .8, ease: 'power3.inOut' }, 29.9);
+  tl.to(last.f, { background: '#F4C978', boxShadow: 'inset 0 0 40px rgba(255,184,98,.9),0 0 50px rgba(244,201,120,.55)', borderRadius: 6, duration: .8, ease: 'power3.inOut' }, 29.9);
+  tl.to(last.d, { opacity: 0, duration: .25 }, 30.7);
+  // S10 home
+  const s10 = block(['Joe and Lily founded', '*Poorly Pet* from home', 'in Sandbach, Cheshire.'], { y: 300, size: 62 }); rise(s10, 31.2); swipe(s10, 31.9); exit(s10, 33.0);
+  // S11 the packing room
+  const s11 = block(['One place for guidance', 'and *carefully chosen*', 'products.'], { y: 300, size: 62 }); rise(s11, 34.0); swipe(s11, 34.8); exit(s11, 36.2);
+  // S12 every dog
+  const s12 = block(['Every product we stock', 'exists because it would', 'have *helped Marble*.'], { y: 300, size: 62 }); rise(s12, 37.2); swipe(s12, 41.75); exit(s12, 42.2);
+  // S13 the real Marble returns
+  const tg1 = block(['Built for Marble.'], { y: 300, size: 76 }); rise(tg1, 44.8);
+  const tg2 = block(['*Here for every dog.*'], { y: 387, size: 76 }); rise(tg2, 45.6); swipe(tg2, 46.0, .6);
+  [tg1, tg2].forEach(b => exit(b, 47.6));
+
+  // S14 end card: baselines from the treatment
+  $$('#endT .ec').forEach(e => { const base = { wm: 1068, cat: 1122, p1: 1306, p2: 1346, url: 1430 }[e.id]; e.style.top = base - e.querySelector('.bl').offsetTop + 'px'; });
+  const ut = $('#url .ut'), ul = $('#url .ul'); Object.assign(ul.style, { left: ut.offsetLeft + 'px', width: ut.offsetWidth + 'px', top: 1442 - parseFloat($('#url').style.top) + 'px' });
+  tl.fromTo('#wm .wi', { yPercent: 150 }, { yPercent: 0, duration: .7, ease: 'expo.out', immediateRender: true }, 48.8);
+  tl.fromTo('#cat', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 49.1);
+  tl.fromTo('#pill', { opacity: 0, scale: .97 }, { opacity: 1, scale: 1, duration: .5, ease: 'power2.out', immediateRender: true }, 49.4);
+  tl.fromTo('#pill b', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .35, ease: 'power1.inOut', immediateRender: true }, 49.55);
+  tl.fromTo('#p1', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 49.7);
+  tl.fromTo('#p2', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', immediateRender: true }, 49.85);
+  tl.fromTo('#url', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6, ease: 'expo.out', immediateRender: true }, 50.0);
+  tl.fromTo(ul, { scaleX: 0 }, { scaleX: 1, duration: .4, ease: 'power2.inOut', immediateRender: true }, 50.2);
+  tl.fromTo('#pill .sheen', { x: -260 }, { x: 760, duration: .7, ease: 'sine.inOut', immediateRender: true }, 51.0);
+  tl.fromTo('#key', { opacity: 0 }, { opacity: 1, duration: .6, immediateRender: true }, 48.8);
+}
+
+// ---------- per-frame: cameras, masks, light, grade ----------
+K.frame(t => {
+  SWIPES.forEach(s => s.f(P(t, s.a, s.a + s.d, 'power2.inOut')));
+  // woodland: photo, gouache twin, photo on top
+  const wOn = t < 9.62 || t >= 41.6; vis($('#woodClip'), wOn);
+  if (wOn) {
+    const paint = (t >= 6.4 && t < 9.62) || (t >= 41.6 && t < 44.8);
+    const B = paint ? [0, 0, FW, FH] : [-1236 * kR, 0, (3574 - 1236) * kR, FH];
+    const ka = P(t, 47.6, 49.2, 'power3.inOut'), V = [L(0, 290, ka), L(0, 336, ka), L(FW, 790, ka), L(FH, 936, ka)];
+    place(wood, cover(TW.at(t), B, V));
+    $('#woodClip').style.clipPath = t < 47.6 ? 'none' : `inset(${V[1]}px ${FW - V[2]}px ${FH - V[3]}px ${V[0]}px round ${250 * ka}px ${250 * ka}px 0px 0px)`;
+    let sw = 1;
+    if (t < 6.4) sw = 1 + .02 * Math.sin(Math.PI * t / 6.4);
+    else if (t >= 44.8) sw = 1 + .023 * P(t, 44.8, 47.6, 'sine.inOut') * (1 - ka);
+    WP.c.style.transform = WT.c.style.transform = `scale(${sw})`;
+    const phBlur = t < 6.4 ? 1.5 : t < 9.62 ? L(1.5, 2.5, P(t, 6.4, 7.2)) : t < 47.6 ? 1.2 : L(1.2, 0, ka);
+    WP.ph.style.filter = WT.ph.style.filter = `blur(${phBlur}px) saturate(${1 - .08 * P(t, 4.8, 5.6) * (1 - P(t, 6.4, 7.4))})`;
+    WAc.style.transform = t >= 41.6 ? `scale(${1 + .015 * Math.sin(Math.PI * Math.min(1, (t - 41.6) / 3.2))})` : 'none';
+    if (t < 6.4) { vis(WP.g, 1); vis(WA, 0); vis(WT.g, 0); }
+    else if (t < 9.62) {
+      const F = P(t, 7.2, 7.75, 'sine.inOut');
+      vis(WP.g, F < 1); vis(WA, 1);
+      setMask(WA, F >= 1 ? null : [stroke(3, 1, P(t, 6.9, 7.45, 'power3.inOut')), stroke(2, -1, P(t, 6.65, 7.2, 'power3.inOut')), stroke(1, 1, P(t, 6.4, 6.95, 'power3.inOut')), fill(F)]);
+      const r = L(120, 0, P(t, 7.25, 7.75, 'power2.inOut')); vis(WT.g, r > 0); if (r > 0) setMask(WT.g, [circle(r)]);
+    } else if (t < 44.8) {
+      vis(WP.g, 0); vis(WA, 1); setMask(WA, null); vis(WT.g, 1);
+      setMask(WT.g, [circle(130 * P(t, 42.4, 42.9, 'power2.out')), stroke(3, -1, P(t, 44.0, 44.7, 'power3.inOut')), stroke(2, 1, P(t, 43.6, 44.3, 'power3.inOut')), stroke(1, -1, P(t, 43.2, 43.9, 'power3.inOut')), fill(P(t, 44.3, 44.75, 'sine.inOut'))]);
+    } else { vis(WP.g, 0); vis(WA, 0); vis(WT.g, 1); setMask(WT.g, null); }
+    gobo.style.opacity = t < 9.62 ? .12 * (1 - P(t, 4.8, 5.6)) : .12 * P(t, 44.8, 45.6) * (1 - ka);
+    gobo.style.transform = `translateX(${12.5 * (t < 41.6 ? t : t - 41.6)}px)`;
+  }
+  // hallway at dusk
+  const hall = $('#hall'), hOn = t >= 9.2 && t < 13.25; vis(hall, hOn);
+  if (hOn) {
+    place(cam('hall'), cover(TH.at(t)));
+    hall.style.opacity = P(t, 9.2, 9.6, 'sine.inOut');
+    hall.style.filter = t > 12.4 ? `blur(${14 * P(t, 12.4, 13.2, 'sine.in')}px) brightness(${1 - .4 * P(t, 12.4, 13.2)})` : 'none';
+    doorGlow.style.opacity = .12 * (1 - .1 * P(t, 10.9, 12.8));
+    headlight.style.opacity = .12 * Math.sin(Math.PI * P(t, 11.4, 12.4));
+    headlight.style.transform = `translateX(${L(1150, -350, P(t, 11.4, 12.4, 'sine.inOut'))}px) rotate(18deg)`;
+  }
+  // crate rest at night
+  const cr = $('#crate'), cOn = t >= 12.6 && t < 17.62; vis(cr, cOn);
+  if (cOn) {
+    place(cam('crate'), cover(TC.at(t)));
+    const out = P(t, 17.1, 17.5, 'power2.in');
+    cr.style.opacity = P(t, 12.6, 13.0);
+    cr.style.filter = `blur(${14 * (1 - P(t, 12.8, 13.4, 'power2.out'))}px) brightness(${L(1, .08, out)})`;
+    lamp.style.opacity = .25 * (1 + .04 * Math.sin(2 * Math.PI * t / 3.2)) * (1 - out);
+    wires.style.opacity = .5 * (1 - out); wires.style.transform = `translateX(${L(160, -160, P(t, 12.8, 17.1, 'sine.inOut'))}px)`;
+  }
+  // late-night search: screen first, then the room
+  const dk = $('#desk'), dOn = t >= 17.6 && t < 24.05; vis(dk, dOn);
+  if (dOn) {
+    place(cam('desk'), cover(TD.at(t)));
+    const room = t < 18.2 ? 0 : L(.08, 1, P(t, 18.2, 18.8, 'power2.out'));
+    deskBase.style.filter = `saturate(.92) contrast(1.04) brightness(${room}) blur(${3 * P(t, 20.8, 23.0)}px)`;
+    vis(deskScr, t < 18.8); deskScr.style.opacity = P(t, 17.6, 18.2, 'sine.inOut');
+    scrBands.style.backgroundPosition = `0 ${-38 * t}px`; scrBands.style.opacity = .22 * P(t, 17.8, 18.4);
+    const fl = .9 + .1 * (.5 + .25 * Math.sin(t * 13.1) + .25 * Math.sin(t * 7.7 + 1.3));
+    lapGlow.style.opacity = .18 * fl * P(t, 17.6, 18.2);
+  }
+  // white-out into the morning
+  $('#white').style.opacity = t < 24 ? P(t, 23.55, 24.0, 'power2.in') : 1 - P(t, 24.0, 24.45, 'power1.out');
+  // spring garden, then the calendar
+  const gd = $('#garden'), gOn = t >= 23.95 && t < 30.95; vis(gd, gOn);
+  if (gOn) {
+    place(cam('garden'), cover(TG.at(t)));
+    gd.style.filter = `brightness(${L(1.25, 1, P(t, 24.0, 24.8)) * L(1, .1, P(t, 29.9, 30.4, 'power2.inOut'))})`;
+    shafts.forEach((s, i) => { s.style.transform = `rotate(${[28, 42, 56][i] + 2 * P(t, 25.2, 30.4)}deg)`; });
+    motes.forEach((m, i) => { m.style.transform = `translateY(${-(t - 24) * (5 + i % 4 * 2)}px)`; });
+    rim.style.opacity = .14 * P(t, 27.2, 29.5, 'sine.inOut');
+  }
+  // house at blue hour
+  const ho = $('#house'), hoOn = t >= 30.3 && t < 33.95; vis(ho, hoOn);
+  if (hoOn) {
+    place(cam('house'), cover(THo.at(t)));
+    ho.style.opacity = P(t, 30.3, 30.9);
+    ho.style.filter = `blur(${20 * (1 - P(t, 30.3, 31.1, 'power2.out'))}px)`;
+    winGlow.style.opacity = .25 * (.9 + .1 * Math.sin(2 * Math.PI * t / 2.4)) * (1 + 1.5 * P(t, 33.0, 33.6, 'power2.in'));
+  }
+  $('#warm').style.opacity = t < 33.6 ? P(t, 33.15, 33.55, 'power2.in') : 1 - P(t, 33.6, 33.95, 'power1.out');
+  // packing room
+  const rm = $('#room'), rOn = t >= 33.55 && t < 37.2; vis(rm, rOn);
+  if (rOn) {
+    const st = cover(TR.at(t)); place(cam('room'), st);
+    roomCut.style.transform = `translateX(${.5 * (st.sx - 540) / st.z}px) scale(${1 + .015 * Math.sin(Math.PI * P(t, 33.6, 36.8))})`;
+    rm.style.filter = `brightness(${L(1.35, 1, P(t, 33.6, 34.1, 'power2.out'))}) blur(${12 * P(t, 36.0, 36.8, 'sine.inOut')}px)`;
+    bok.style.transform = `translateX(${3 * (st.sx - 540)}px) scale(${1 + .4 * P(t, 36.0, 36.8)})`; bok.style.transformOrigin = '900px 300px';
+  }
+  // every dog: three seasons, eye-locked, one continuous camera
+  const g = 1 + .12 * P(t, 36.8, 41.6, 'sine.inOut');
+  SEAS.forEach((s, i) => {
+    const sc = $('#' + s.id), on = t >= s.a && t < s.b; vis(sc, on); if (!on) return;
+    place(cam(s.id), cover({ z: g * s.s, ax: s.P[0], ay: s.P[1], sx: E[0] + g * (s.T[0] - E[0]), sy: E[1] + g * (s.T[1] - E[1]), r: 0 }));
+    s.cut.style.transform = `scale(${1 + .015 * Math.sin(Math.PI * P(t, s.a, s.b))})`;
+    if (i === 0) { sc.style.opacity = P(t, 36.5, 37.1); sc.style.filter = `blur(${12 * (1 - P(t, 36.6, 37.2, 'power2.out'))}px)`; }
+    else { const c = i === 1 ? 38.4 : 40.0; sc.style.opacity = P(t, c - .05, c + .05); sc.style.filter = `brightness(${L(1.15, 1, P(t, c, c + .07))})`; }
+    gobos2[i].style.transform = `translateX(${12 * (t - 36.5)}px)`;
+  });
+  // global light, scrims and grade
+  $('#grade').style.opacity = .2 * (t < 41.6 ? P(t, 6.4, 7.6) : 1 - P(t, 43.2, 44.7));
+  $('#cool').style.opacity = .22 * P(t, 4.8, 5.6) * (1 - P(t, 6.4, 7.6));
+  $('#leak').style.opacity = t < 9.62 ? L(.25, .1, P(t, 4.8, 5.6)) * (1 - P(t, 6.4, 8.0)) : t >= 41.6 ? (.25 * P(t, 44.4, 44.9) + .12 * Math.sin(Math.PI * P(t, 44.8, 46.0))) * (1 - P(t, 47.6, 48.6)) : t >= 36.5 && t < 38.45 ? .12 : 0;
+  const day = t < 26 ? P(t, 24.0, 24.45) : 1 - P(t, 29.9, 30.4);
+  $('#scrD').style.opacity = day; $('#scrN').style.opacity = (1 - day) * (1 - P(t, 47.6, 48.4));
+  $('#vig').style.opacity = 1 - .6 * P(t, 47.6, 48.6);
+  vis($('#endBg'), t >= 47.5); vis($('#endT'), t >= 48.5);
+  grains.forEach((gi, i) => { gi.style.visibility = Math.floor(t * 30) % 6 === i ? 'visible' : 'hidden'; });
+  $('#grain').style.opacity = t < 48 ? .42 : L(.42, .3, P(t, 48, 49));
+});
+
+window.ready = Promise.all(IMGS.map(i => i.decode().catch(() => {}))).then(() => {
+  K.start(FW, FH, DUR, ['600 62px Domine', '700 62px Domine', '500 30px Figtree', '600 30px Figtree', '700 30px Figtree', '800 30px Figtree'], [], build);
+  return window.ready;
+});
+</script>
+</body></html>

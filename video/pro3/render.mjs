@@ -10,7 +10,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2), film = args[0];
 const flag = f => args.includes(f), opt = f => args[args.indexOf(f) + 1];
 const dir = path.join(here, film);
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium' });
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium', args: ['--allow-file-access-from-files'] });
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
 page.on('pageerror', e => console.error('page error:', e.message));
 page.on('console', m => { if (m.type() === 'error') console.error('console:', m.text()); });
@@ -31,15 +31,27 @@ if (flag('--stills')) {
   for (const t of opt('--stills').split(',').map(Number)) await frameAt(t, { path: path.join(sd, `f-${t.toFixed(2).padStart(5, '0')}.png`) });
   await browser.close(); process.exit(0);
 }
-const CAP = flag('--fast') ? 30 : 60;
+// window.FAST = [[t0, t1], ...] opts a film into 4 samples per output frame inside those ranges (2 elsewhere)
+const FAST = flag('--fast') ? null : await page.evaluate(() => window.FAST || null);
+const CAP = flag('--fast') ? 30 : FAST ? 120 : 60;
 const silent = path.join(here, 'out', `${film}-video.mp4`); fs.mkdirSync(path.dirname(silent), { recursive: true });
-const vf = CAP === 60 ? ['-vf', 'tmix=frames=2,fps=30'] : [];
+const vf = CAP === 120 ? ['-vf', "tmix=frames=4,select='eq(mod(n\\,4)\\,3)',setpts=N/(30*TB)", '-r', '30'] : CAP === 60 ? ['-vf', 'tmix=frames=2,fps=30'] : [];
 const enc = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(CAP), '-i', '-', ...vf, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '17', '-preset', 'slow', '-movflags', '+faststart', silent], { stdio: ['pipe', 'inherit', 'inherit'] });
-const total = Math.round(DUR * CAP);
-for (let f = 0; f < total; f++) {
-  const buf = await frameAt(f / CAP, { type: 'jpeg', quality: 93 });
-  if (!enc.stdin.write(buf)) await new Promise(r => enc.stdin.once('drain', r));
-  if (f % 300 === 0) console.log(`${film} frame ${f}/${total}`);
+const put = async buf => { if (!enc.stdin.write(buf)) await new Promise(r => enc.stdin.once('drain', r)); };
+if (CAP === 120) {
+  const total = Math.round(DUR * 30);
+  for (let f = 0; f < total; f++) {
+    const t = f / 30, fast = FAST.some(([a, b]) => t >= a && t < b);
+    if (fast) for (let k = 0; k < 4; k++) await put(await frameAt(t + k / 120, { type: 'jpeg', quality: 93 }));
+    else { const a = await frameAt(t, { type: 'jpeg', quality: 93 }), b = await frameAt(t + 2 / 120, { type: 'jpeg', quality: 93 }); await put(a); await put(a); await put(b); await put(b); }
+    if (f % 150 === 0) console.log(`${film} frame ${f}/${total}`);
+  }
+} else {
+  const total = Math.round(DUR * CAP);
+  for (let f = 0; f < total; f++) {
+    await put(await frameAt(f / CAP, { type: 'jpeg', quality: 93 }));
+    if (f % 300 === 0) console.log(`${film} frame ${f}/${total}`);
+  }
 }
 enc.stdin.end(); await new Promise(r => enc.on('close', r)); await browser.close();
 const wav = path.join(dir, 'audio', 'score.wav'), outp = path.join(here, 'out', `poorly-pet-${film}.mp4`);
