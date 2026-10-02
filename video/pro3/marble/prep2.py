@@ -29,3 +29,4 @@ for arg in sys.argv[1:]:
             meta[c]['cut'] = [int(x), int(y), int(w), int(h)]
     print(c, meta[c])
 json.dump(meta, open(f'{A}/meta.json', 'w'), indent=1)
+open(f'{A}/cuts.js', 'w').write('window.CUTS = ' + json.dumps({k: v['cut'] for k, v in meta.items() if isinstance(v, dict) and 'cut' in v}) + ';\n')
