@@ -287,7 +287,7 @@ T.n02 = new Track({ z: 1.55, ax: NA.N02.hind[0], ay: NA.N02.hind[1], sx: 400, sy
 T.n03 = new Track({ z: 1.9, ax: NA.N03.disc[0], ay: NA.N03.disc[1], sx: 540, sy: 1190 }).to(32.0, 32.8, { z: 1.5 }, 'power2.out').centre(32.8, 34.0, 1.08)
   .to(34.0, 35.2, { sx: 540 + (NA.N03.disc[0] - 540) * 1.08 + 40 }, 'sine.inOut').to(35.2, 36.4, { z: 1.5, sx: 540, sy: 1190 }, 'sine.inOut').to(36.4, 37.0, { z: 1.62 }, 'sine.in');
 T.n04 = new Track({ z: 1.18, ax: NA.N04.seat[0], ay: NA.N04.seat[1], sx: 640, sy: 1000 });
-{ const e = NA.N04.eye, q = [440, 1100], z = 1.26, sx = q[0] + z * (NA.N04.seat[0] - e[0]), sy = q[1] + z * (NA.N04.seat[1] - e[1]);
+{ const e = NA.N04.eye, q = [510, 1120], z = 1.26, sx = q[0] + z * (NA.N04.seat[0] - e[0]), sy = q[1] + z * (NA.N04.seat[1] - e[1]);
   T.n04.to(36.8, 41.1, { z, sx, sy }, 'sine.inOut').to(41.1, 41.75, { sx: sx - 320 }, 'power2.in'); }
 T.n05 = new Track({ z: 1.20, ax: NA.N05.legs[0], ay: NA.N05.legs[1], sx: 900, sy: 1290 }).to(41.6, 42.4, { sx: 740 }, 'power3.out').to(42.4, 44.2, { z: 1.30 }, 'sine.inOut').to(44.2, 45.0, { z: 1.32 }, 'sine.out');
 T.n06 = new Track({ z: 1.04, ax: NA.N06.dog[0], ay: NA.N06.dog[1], sx: 540 + (NA.N06.dog[0] - 540) * 1.04, sy: 960 + (NA.N06.dog[1] - 960) * 1.04 })
