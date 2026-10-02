@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drawn IVDD Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<style>
+@font-face{font-family:Caveat;font-weight:700;src:url(../shared/fonts/caveat-bold.woff2) format('woff2')}
+:root{--paper:#FBF7EF;--ink2:#2B1A14;--red:#E4574A;--hand:Caveat,cursive}
+#stage{background:var(--paper)}
+#grain{position:absolute;inset:0;opacity:.32;mix-blend-mode:multiply;pointer-events:none;z-index:50}
+.hd{color:var(--teal)}
+.hand{position:absolute;margin:0;font:700 64px/1.05 var(--hand);color:var(--ink2);white-space:nowrap}
+.ctr{text-align:center}
+#pol{position:absolute;left:160px;top:590px;width:760px;height:910px;background:#fff;border-radius:10px;box-shadow:0 2px 0 rgba(43,26,20,.06),0 40px 70px -30px rgba(43,26,20,.4);transform-origin:50% 60%}
+#ph{position:absolute;left:40px;top:40px;width:680px;height:774px;overflow:hidden;border-radius:3px;background:#fff}
+#ph img,#ph svg{position:absolute;left:0;top:0;width:680px;height:774px}
+#toon{-webkit-mask-image:radial-gradient(circle at 50% 60%,#000 calc(var(--r,-15) * 1%),transparent calc(var(--r,-15) * 1% + 14%));mask-image:radial-gradient(circle at 50% 60%,#000 calc(var(--r,-15) * 1%),transparent calc(var(--r,-15) * 1% + 14%))}
+#tape{position:absolute;left:290px;top:-26px;width:180px;height:56px;background:rgba(223,228,58,.72);transform:rotate(-3deg)}
+.dog{position:absolute;transform-origin:50% 100%}
+.dog .in{position:absolute;inset:0;transform-origin:50% 100%}
+.dog img,.dog svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.lid{transform-box:fill-box;transform-origin:50% 0%}
+.doo{fill:none;stroke:var(--ink2);stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.num{position:absolute;width:132px;height:132px}
+.num span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 96px/1 var(--hand);color:var(--teal)}
+.prodimg{position:absolute}
+.prodimg img{display:block;width:100%;height:100%}
+.pname{position:absolute;left:60px;width:960px;text-align:center;font:700 54px/1.15 var(--sans);color:var(--ink2)}
+.pprice{position:absolute;left:60px;width:960px;text-align:center;font:700 104px/1 var(--serif);color:var(--teal);letter-spacing:-.02em}
+#coupon{position:absolute;left:120px;top:1160px;width:840px;height:150px;border-radius:22px;background:#fff;border:4px dashed var(--teal);box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+#coupon .l{font:600 40px/1.2 var(--sans);color:var(--ink2)}
+#coupon .c{font:800 72px/1 Inter,sans-serif;color:var(--teal);letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="gn"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .47  0 0 0 0 .38  0 0 0 .5 0"/></filter><rect width="1080" height="1920" filter="url(#gn)"/></svg>
+
+  <!-- S1/S2 the photo, then the drawing -->
+  <h1 class="hd" id="h1" style="left:120px;top:226px;font-size:100px">Every sausage<br>dog owner should<br>know <em>this.</em></h1>
+  <h1 class="hd" id="h2" style="left:120px;top:250px;font-size:124px">Let’s <em>draw</em><br>it out.</h1>
+  <div id="pol">
+    <div id="tape"></div>
+    <div id="ph">
+      <img id="photo" src="assets/photo-hd.jpg">
+      <img id="toon" src="assets/cartoon-wide.jpg">
+      <svg id="lines" viewBox="0 0 2025 2304" fill="none"></svg>
+    </div>
+    <p class="hand" id="polcap" style="left:0;width:760px;top:826px;font-size:64px;text-align:center">Real dog. Real beach.</p>
+  </div>
+
+  <!-- the drawn dog, front -->
+  <div class="dog" id="dog"><div class="in" id="dogIn">
+    <img src="assets/dog-front.png">
+    <svg viewBox="0 0 935 1287">
+      <g class="lid lidF"><ellipse cx="313" cy="161" rx="45" ry="52" fill="#433A38"/><path d="M270 170 Q313 196 356 170" stroke="#2B1309" stroke-width="8" fill="none" stroke-linecap="round"/></g>
+      <g class="lid lidF"><ellipse cx="568" cy="173" rx="70" ry="60" fill="#433A38"/><path d="M502 180 Q568 214 634 180" stroke="#2B1309" stroke-width="9" fill="none" stroke-linecap="round"/></g>
+    </svg>
+  </div></div>
+
+  <!-- the drawn dog, side -->
+  <div class="dog" id="side"><div class="in" id="sideIn">
+    <img src="assets/dog-side.png">
+    <svg viewBox="0 0 1621 1005" id="sideSvg">
+      <g class="lid lidS"><ellipse cx="1310" cy="123" rx="36" ry="38" fill="#433A38"/><path d="M1276 128 Q1310 146 1344 128" stroke="#2B1309" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+      <path id="backArrow" class="doo" d="M330 372 C 470 330, 620 330, 760 345 S 900 352, 960 330"/>
+      <path id="backHeadL" class="doo" d="M356 342 L330 372 L366 392"/>
+      <path id="backHeadR" class="doo" d="M928 316 L960 330 L934 360"/>
+      <g id="spine"></g>
+    </svg>
+  </div></div>
+  <p class="hand" id="longlbl" style="font-size:84px">a long, long back</p>
+  <svg class="a" id="conn" width="1080" height="1920" style="left:0;top:0;overflow:visible"><path id="connP" class="doo" style="stroke:var(--teal);stroke-width:8;stroke-dasharray:4 18"/></svg>
+  <div class="a" id="lens" style="width:480px;height:480px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 12px #fff,0 0 0 20px var(--teal),0 40px 60px -20px rgba(43,26,20,.5)">
+    <svg id="lensSvg" width="480" height="480" viewBox="0 0 480 480"><defs><radialGradient id="xr" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#4a413e"/><stop offset="1" stop-color="#241e1c"/></radialGradient></defs><rect width="480" height="480" fill="url(#xr)"/></svg>
+  </div>
+  <div class="a" id="ivddTag" style="padding:14px 26px;border-radius:999px;background:var(--lime);font:800 40px/1 var(--sans);color:var(--teal);letter-spacing:.04em">IVDD</div>
+
+  <!-- S3 long and low -->
+  <h2 class="hd" id="h3" style="left:120px;top:236px;font-size:104px">Dachshunds are<br>built <em>long</em><br><em>and low.</em></h2>
+  <h2 class="hd" id="h4" style="left:120px;top:236px;font-size:96px">That long back<br>puts pressure<br>on the <em>spine.</em></h2>
+  <h2 class="hd" id="h5" style="left:120px;top:226px;font-size:84px">A disc in the spine<br>bulges or bursts and<br>presses on the <em>cord.</em></h2>
+  <h2 class="hd" id="h6" style="left:120px;top:226px;font-size:76px">Dachshunds, Bassets,<br>Corgis and Beagles are<br>most at risk, <em>but any</em><br><em>dog can get it.</em></h2>
+
+  <!-- S5 signs -->
+  <p class="hand" id="signsT" style="left:120px;top:214px;font-size:84px;color:var(--teal)">5 signs to watch for</p>
+  <div id="signs"></div>
+  <svg class="a" id="doodles" width="1080" height="1920" style="left:0;top:0;overflow:visible"></svg>
+
+  <!-- S6 what can help -->
+  <h2 class="hd" id="h7" style="left:120px;top:226px;font-size:124px">What can <em>help.</em></h2>
+  <p class="hand ctr" id="rest" style="left:60px;width:960px;top:760px;font-size:104px;line-height:1.1">Strict rest first,<br>weeks of it.</p>
+  <svg class="a" width="1080" height="1920" style="left:0;top:0;overflow:visible"><path id="restU" class="doo" style="stroke:var(--lime);stroke-width:16" d="M300 1036 C 450 1012, 640 1010, 790 1030"/></svg>
+  <div id="prods"></div>
+
+  <!-- S7 end -->
+  <h2 class="hd ctr" id="h8" style="left:60px;width:960px;top:226px;font-size:88px">Find the right support<br>for your dog’s <em>IVDD.</em></h2>
+  <div id="coupon"><div class="l">10% off your<br>first order</div><div class="c">POORLY10</div></div>
+  <div class="btn" id="cta" style="left:120px;top:1330px;width:840px;height:112px;font-size:44px">Shop poorly-pet.com <span id="arr">→</span></div>
+  <div class="a ctr" id="trust" style="left:120px;width:840px;top:1462px;font:600 30px/1.3 var(--sans);color:var(--mute)">Free UK delivery over £39</div>
+</div>
+
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script src="assets/lines.js"></script>
+<script>
+const { $, $$, tl, cue, lines, out } = K;
+const NS = 'http://www.w3.org/2000/svg';
+const PROD = [
+  { img: 'brace', h: 470, tag: 'brace the back', name: 'Thermal Back Brace', price: '£54.99' },
+  { img: 'ramp', h: 400, tag: 'no more jumping', name: 'Lightweight Folding Dog Ramp', price: '£79.99' },
+  { img: 'drops', h: 560, tag: 'rest, calmly', name: 'Natural Calming Drops', price: '£13.99' },
+  { img: 'harness', h: 480, tag: 'a handle to help', name: 'Flagline Harness with Handle', price: '£69.99' },
+];
+const SIGNS = [
+  'A hunched<br><em>back.</em>',
+  'A yelp when<br><em>picked up.</em>',
+  'Reluctant to jump<br>or do the <em>stairs.</em>',
+  'Back legs that<br><em>wobble</em> or <em>cross.</em>',
+  'Back legs that<br>suddenly <em>stop</em><br><em>working.</em>',
+];
+// smooth path through points (Catmull-Rom to Bezier)
+function smooth(p) {
+  if (p.length < 3) return 'M' + p.map(q => q.join(' ')).join(' L');
+  let d = `M${p[0][0]} ${p[0][1]}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
+    d += ` C${b[0] + (c[0] - a[0]) / 6} ${b[1] + (c[1] - a[1]) / 6} ${c[0] - (e[0] - b[0]) / 6} ${c[1] - (e[1] - b[1]) / 6} ${c[0]} ${c[1]}`;
+  }
+  return d;
+}
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+function draw(e, at, dur = 0.6, ease = 'power2.inOut') { tl.fromTo(e, { drawSVG: '0%' }, { drawSVG: '100%', duration: dur, ease, immediateRender: true }, at); }
+function write(e, at, dur = 0.8) { tl.fromTo(e, { clipPath: 'inset(-30% 100% -30% -2%)', opacity: 1 }, { clipPath: 'inset(-30% -2% -30% -2%)', duration: dur, ease: 'none', immediateRender: true }, at); cue(at, 'draw'); }
+function fadeOut(e, at, d = 0.4) { tl.to(e, { opacity: 0, y: -24, duration: d, ease: 'power2.in' }, at); }
+function place(e, x, y, w, natW, natH) { gsap.set(e, { left: x, top: y, width: w, height: w * natH / natW }); }
+function hop(e, at, h = 70) {
+  tl.to(e, { y: -h, scaleY: 1.05, scaleX: 0.97, duration: 0.22, ease: 'power2.out' }, at)
+    .to(e, { y: 0, scaleY: 1, scaleX: 1, duration: 0.2, ease: 'power2.in' }, at + 0.22)
+    .to(e, { scaleY: 0.92, scaleX: 1.05, duration: 0.07, ease: 'power1.out' }, at + 0.42)
+    .to(e, { scaleY: 1, scaleX: 1, duration: 0.35, ease: 'elastic.out(1,.4)' }, at + 0.49);
+  cue(at + 0.42, 'pop');
+}
+function blink(sel, at) { tl.to(sel, { scaleY: 1, duration: 0.06, ease: 'power1.in' }, at).to(sel, { scaleY: 0, duration: 0.09, ease: 'power1.out' }, at + 0.1); }
+
+window.ready = Promise.all($$('img').map(i => i.decode().catch(() => {}))).then(() => { K.start(1080, 1920, 53, ['500 80px Domine', '700 80px Domine', '700 40px Figtree', '600 40px Figtree', '800 40px Figtree', '700 60px Caveat', '800 60px Inter'], PROD.map(p => p.img), () => {
+  window.END = 50.4;
+  $$('.hd').forEach(h => K.fit(h, h.id === 'h8' ? 960 : 840));
+  gsap.set(['#h1', '#h2', '#h3', '#h4', '#h5', '#h6', '#h7', '#h8', '#signsT', '#rest', '#longlbl', '#ivddTag', '#coupon', '#cta', '#trust', '#polcap'], { opacity: 0 });
+  gsap.set(['#dog', '#side'], { opacity: 0 });
+  gsap.set('.lid', { scaleY: 0 });
+  gsap.set(['#backArrow', '#backHeadL', '#backHeadR'], { drawSVG: '0%' });
+
+  // ---------- the traced pen lines over the photo ----------
+  const L = window.LINES;
+  const lineEls = L.paths.map(p => el('path', { d: smooth(p.d), stroke: '#2B1A14', 'stroke-width': Math.max(7, p.w * 0.9), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, $('#lines')));
+  const lens = lineEls.map(e => e.getTotalLength());
+
+  // dog-front sits at crop (469+77, 716) inside cartoon-wide; photo area scale 760/2025
+  const S = 680 / 2025, FX = 160 + 40 + (469 + 77) * S, FY = 590 + 40 + 716 * S, FW = 935 * S;
+  place('#dog', FX, FY, FW, 935, 1287);
+
+  // ===== S1: the real photo =====
+  tl.fromTo('#pol', { y: -160, rotation: -10, opacity: 0 }, { y: 0, rotation: -2.5, opacity: 1, duration: 1.1, ease: 'back.out(1.3)' }, 0.15); cue(0.45, 'card');
+  tl.set('#h1', { opacity: 1 }, 0.5); lines('#h1', 0.5, { mk: 0.7 });
+  write('#polcap', 1.5, 0.9);
+  tl.fromTo('#photo', { scale: 1.08 }, { scale: 1, duration: 3.4, ease: 'power1.out' }, 0.2);
+
+  // ===== S2: draw it =====
+  fadeOut('#h1', 3.0);
+  tl.to('#pol', { rotation: 0, duration: 0.7, ease: 'power3.inOut' }, 3.0);
+  tl.set('#h2', { opacity: 1 }, 3.25); lines('#h2', 3.25, { mk: 0.5 });
+  // strokes in drawing order; each one's speed follows its length, overlapping like a quick sketch
+  let t = 3.45; lineEls.forEach((e, i) => { const d = Math.min(0.75, Math.max(0.18, lens[i] / 1400)); draw(e, t, d, 'power1.inOut'); t += Math.min(0.045, 2.0 / lineEls.length); });
+  [3.5, 4.0, 4.5, 5.0].forEach(x => cue(x, 'draw'));
+  tl.fromTo('#photo', { filter: 'grayscale(0) brightness(1) contrast(1)', opacity: 1 }, { filter: 'grayscale(1) brightness(1.5) contrast(.55)', opacity: 0.4, duration: 1.0, ease: 'power1.inOut', immediateRender: false }, 4.5);
+  tl.fromTo('#toon', { '--r': -15 }, { '--r': 100, duration: 1.1, ease: 'power2.inOut', immediateRender: true }, 5.75); cue(5.75, 'reveal');
+  tl.to('#lines', { opacity: 0, duration: 0.5 }, 6.45);
+  // hand-off: the cut-out dog takes over from the drawing, the polaroid falls away
+  tl.set('#dog', { opacity: 1 }, 6.95);
+  tl.to(['#pol'], { opacity: 0, scale: 0.97, duration: 0.5, ease: 'power2.in' }, 7.0);
+  fadeOut('#h2', 7.0);
+  tl.to('#dog', { left: 220, top: 640, width: 640, height: 640 * 1287 / 935, duration: 0.9, ease: 'power3.inOut' }, 7.15);
+  hop('#dogIn', 8.05, 60);
+  cue(7.15, 'whoosh');
+
+  // ===== S3: long and low =====
+  tl.set('#h3', { opacity: 1 }, 8.2); lines('#h3', 8.2, { mk: 0.6 });
+  blink('.lidF', 9.3); blink('.lidF', 9.62);
+  // turn to the side
+  place('#side', 20, 800, 1040, 1621, 1005);
+  tl.to('#dog', { scaleX: 0, duration: 0.16, ease: 'power2.in' }, 10.5);
+  tl.set('#dog', { opacity: 0 }, 10.66);
+  tl.fromTo('#side', { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'back.out(1.6)', immediateRender: false }, 10.66); cue(10.5, 'swish');
+  draw('#backArrow', 11.2, 0.75); draw(['#backHeadL', '#backHeadR'], 11.85, 0.25); cue(11.2, 'draw');
+  // label above the arrow: side scale 960/1621
+  const SS = 1040 / 1621; gsap.set('#longlbl', { left: 20 + 645 * SS - 270, top: 800 + 240 * SS - 50 });
+  write('#longlbl', 11.9, 0.8);
+  fadeOut('#h3', 12.3); tl.set('#h4', { opacity: 1 }, 12.55); lines('#h4', 12.55, { mk: 0.7 });
+  blink('.lidS', 13.3);
+
+  // ===== S4: what IVDD is (spine on the drawing, then a magnifier) =====
+  tl.to(['#backArrow', '#backHeadL', '#backHeadR', '#longlbl'], { opacity: 0, duration: 0.3 }, 14.4);
+  fadeOut('#h4', 14.4);
+  tl.set('#h5', { opacity: 1 }, 14.75); lines('#h5', 14.75, { mk: 0.9 });
+  tl.to('#sideIn img', { filter: 'brightness(.7) saturate(.75)', duration: 0.6 }, 14.6);
+  // spine geometry from the back line of the drawing
+  const TOP = [[340, 451], [400, 430], [460, 419], [520, 416], [580, 418], [640, 425], [700, 430], [760, 436], [820, 439], [880, 437], [940, 425]];
+  const topAt = x => { for (let i = 0; i < TOP.length - 1; i++) { const [a, b] = [TOP[i], TOP[i + 1]]; if (x <= b[0]) return a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); } return TOP[TOP.length - 1][1]; };
+  const sp = $('#spine'), VX = []; for (let i = 0; i < 9; i++) VX.push(388 + i * 64);
+  const smallCord = el('path', { fill: 'none', stroke: '#F6D77B', 'stroke-width': 12, 'stroke-linecap': 'round', d: smooth(Array.from({ length: 23 }, (_, i) => { const x = 370 + i * 25; return [x, +(topAt(x) + 46).toFixed(1)]; })) }, sp);
+  const verts = VX.map(x => el('rect', { x, y: topAt(x + 25) + 64, width: 52, height: 46, rx: 14, fill: '#FBF7EF', stroke: '#2B1A14', 'stroke-width': 5 }, sp));
+  const discs = VX.slice(0, -1).map(x => el('rect', { x: x + 53, y: topAt(x + 58) + 68, width: 11, height: 38, rx: 5, fill: '#DFE43A', stroke: '#2B1A14', 'stroke-width': 3 }, sp));
+  gsap.set([...verts, ...discs], { opacity: 0, transformBox: 'fill-box', transformOrigin: '50% 50%' });
+  draw(smallCord, 15.2, 0.7);
+  verts.forEach((v, i) => { tl.fromTo(v, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)', immediateRender: false }, 15.3 + i * 0.06); cue(15.3 + i * 0.06, 'pop' + i); });
+  discs.forEach((d, i) => tl.fromTo(d, { opacity: 0, scaleY: 0.2 }, { opacity: 1, scaleY: 1, duration: 0.3, ease: 'back.out(2)', immediateRender: false }, 15.55 + i * 0.06));
+  tl.to(discs[4], { attr: { fill: '#E4574A' }, duration: 0.3 }, 16.9);
+  // the magnifier: zoomed spine around the bad disc
+  const SZ = 1040 / 1621, spotX = 20 + (VX[4] + 58) * SZ, spotY = 800 + (topAt(VX[4] + 58) + 87) * SZ;
+  const LX = 470, LY = 845;
+  gsap.set('#lens', { left: LX - 240, top: LY - 240, opacity: 0 });
+  $('#connP').setAttribute('d', `M${spotX} ${spotY} L${LX + (spotX - LX) * 0.62} ${LY + 240 + 8}`);
+  gsap.set('#connP', { drawSVG: '0%' });
+  const ls = $('#lensSvg'), bulge2 = { v: 0 };
+  const lcord = el('path', { fill: 'none', stroke: '#F6D77B', 'stroke-width': 38, 'stroke-linecap': 'butt' }, ls);
+  const lcordE = el('path', { fill: 'none', stroke: '#2B1A14', 'stroke-width': 4, 'stroke-dasharray': '0' }, ls);
+  const cordPts = sgn => Array.from({ length: 25 }, (_, i) => { const x = -20 + i * 22; return [x, +(196 + sgn * 19 - bulge2.v * 46 * Math.exp(-(((x - 240) / 78) ** 2))).toFixed(1)]; });
+  const setCord = () => { lcord.setAttribute('d', smooth(cordPts(0))); lcordE.setAttribute('d', smooth(cordPts(1)) + ' ' + smooth(cordPts(-1))); };
+  setCord(); K.frame(setCord);
+  [[-51, 120], [103, 120], [257, 120], [411, 120]].forEach(([x, w]) => el('rect', { x, y: 236, width: w, height: 112, rx: 30, fill: '#FBF7EF', stroke: '#2B1A14', 'stroke-width': 6 }, ls));
+  [[69], [377]].forEach(([x]) => el('rect', { x: x + 2, y: 246, width: 30, height: 92, rx: 13, fill: '#DFE43A', stroke: '#2B1A14', 'stroke-width': 5 }, ls));
+  const lbad = el('rect', { x: 225, y: 246, width: 30, height: 92, rx: 13, fill: '#DFE43A', stroke: '#2B1A14', 'stroke-width': 5 }, ls);
+  const lab = (txt, x, y) => { const t = el('text', { x, y, 'text-anchor': 'middle', fill: '#FBF7EF', style: 'font:700 46px Caveat' }, ls); t.textContent = txt; return t; };
+  const tCord = lab('spinal cord', 240, 132), tDisc = lab('disc', 150, 432);
+  const aDisc = el('path', { d: 'M126 396 C 112 380, 100 366, 90 346', fill: 'none', stroke: '#FBF7EF', 'stroke-width': 5, 'stroke-linecap': 'round' }, ls);
+  gsap.set([tCord, tDisc, aDisc], { opacity: 0 });
+  draw('#connP', 15.9, 0.4);
+  tl.fromTo('#lens', { opacity: 0, scale: 0.1, x: spotX - LX, y: spotY - LY }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.75, ease: 'back.out(1.4)', immediateRender: false }, 16.0); cue(16.0, 'lift');
+  tl.to([tCord], { opacity: 1, duration: 0.4 }, 16.5); tl.to([tDisc, aDisc], { opacity: 1, duration: 0.4 }, 16.7); cue(16.5, 'tick');
+  // the bad disc bulges up into the cord
+  tl.to(lbad, { attr: { fill: '#E4574A', x: 213, width: 54, y: 214, height: 124, rx: 22 }, duration: 0.7, ease: 'back.out(2)' }, 17.0);
+  tl.to(bulge2, { v: 1, duration: 0.7, ease: 'back.out(2)' }, 17.0); cue(17.0, 'thud');
+  for (let k = 0; k < 3; k++) { const r = el('circle', { cx: 240, cy: 250, r: 30, fill: 'none', stroke: '#E4574A', 'stroke-width': 7, opacity: 0 }, ls);
+    tl.fromTo(r, { attr: { r: 30 }, opacity: 0.9 }, { attr: { r: 170 }, opacity: 0, duration: 1.1, ease: 'power2.out', immediateRender: false }, 17.25 + k * 0.5); }
+  gsap.set('#ivddTag', { left: LX - 66, top: LY + 210 });
+  tl.fromTo('#ivddTag', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2.2)' }, 17.5); cue(17.5, 'stamp');
+  fadeOut('#h5', 18.7); tl.set('#h6', { opacity: 1 }, 18.95); lines('#h6', 18.95, { mk: 1.0 });
+
+  // ===== S5: five signs =====
+  fadeOut('#h6', 21.0);
+  tl.to(['#lens', '#ivddTag'], { opacity: 0, scale: 0.2, x: spotX - LX, y: spotY - LY, duration: 0.45, ease: 'power3.in' }, 21.0);
+  tl.to(['#spine', '#conn'], { opacity: 0, duration: 0.35 }, 21.1);
+  tl.to('#sideIn img', { filter: 'brightness(1) saturate(1)', duration: 0.5 }, 21.1);
+  const SX = 40, SY = 830, SW = 1000, K5 = SW / 1621;
+  tl.to('#side', { left: SX, top: SY, width: SW, height: 1005 * K5, duration: 0.8, ease: 'power3.inOut' }, 21.1); cue(21.1, 'whoosh');
+  write('#signsT', 21.5, 0.9);
+  const dsv = $('#doodles'), P = (x, y) => [SX + x * K5, SY + y * K5];
+  const signT = [22.4, 24.7, 27.0, 29.3, 31.6];
+  SIGNS.forEach((s, i) => {
+    const at = signT[i];
+    const n = document.createElement('div'); n.className = 'num'; n.style.left = '108px'; n.style.top = '338px';
+    n.innerHTML = `<svg width="132" height="132" viewBox="0 0 118 118" style="position:absolute;overflow:visible"><path class="doo" style="stroke:var(--teal);stroke-width:6" d="M60 8 C 92 6, 112 30, 110 60 C 108 92, 84 112, 56 110 C 26 108, 8 86, 9 57 C 10 30, 30 12, 66 10"/></svg><span>${i + 1}</span>`;
+    const h = document.createElement('h2'); h.className = 'hd'; h.innerHTML = s; Object.assign(h.style, { left: '272px', top: '336px', fontSize: '88px' });
+    $('#signs').append(n, h); K.fit(h, 690);
+    gsap.set([n, h], { opacity: 0 });
+    tl.set([n, h], { opacity: 1 }, at);
+    draw(n.querySelector('path'), at, 0.45); tl.from(n.querySelector('span'), { scale: 0, duration: 0.4, ease: 'back.out(2.5)' }, at + 0.2);
+    lines(h, at + 0.05, { mk: 0.6 }); cue(at, 'check' + i);
+    if (i < 4) { tl.to([n, h], { opacity: 0, duration: 0.3, ease: 'power2.in' }, signT[i + 1] - 0.35); }
+  });
+  const D = (d, at, dur, out, extra = {}) => { const e = el('path', Object.assign({ d, class: 'doo' }, extra), dsv); draw(e, at, dur); tl.to(e, { opacity: 0, duration: 0.3 }, out); return e; };
+  const hand = (txt, x, y, size, col, at, out) => { const q = document.createElement('p'); q.className = 'hand'; q.textContent = txt; Object.assign(q.style, { left: x + 'px', top: y + 'px', fontSize: size + 'px', color: col }); $('#signs').append(q); gsap.set(q, { opacity: 0 });
+    tl.fromTo(q, { opacity: 0, scale: 0.3, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(2.5)', immediateRender: false }, at); tl.to(q, { opacity: 0, duration: 0.3 }, out); return q; };
+  // 1 hunched back: pain marks over the back
+  { const [x, y] = P(620, 400); [[-110, -40, -150, -130], [0, -55, 0, -160], [110, -40, 150, -130]].forEach(([a, b, c, d2], k) => D(`M${x + a} ${y + b} L${x + c} ${y + d2}`, signT[0] + 0.5 + k * 0.08, 0.25, signT[1] - 0.35, { style: 'stroke:#E4574A;stroke-width:13' }));
+    tl.to('#sideIn', { scaleY: 0.965, duration: 0.3, yoyo: true, repeat: 3, ease: 'sine.inOut' }, signT[0] + 0.5); cue(signT[0] + 0.5, 'scratch'); }
+  // 2 yelp: speech bubble above the head
+  { const x = 800, y = 720;
+    D(`M${x + 60} ${y + 70} L${x + 110} ${y + 130} L${x + 100} ${y + 64} C ${x + 190} ${y + 40}, ${x + 200} ${y - 60}, ${x + 120} ${y - 90} C ${x + 40} ${y - 120}, ${x - 120} ${y - 110}, ${x - 150} ${y - 40} C ${x - 175} ${y + 20}, ${x - 80} ${y + 80}, ${x + 60} ${y + 70}`, signT[1] + 0.4, 0.5, signT[2] - 0.35, { style: 'stroke:#E4574A;stroke-width:9' });
+    hand('yelp!', x - 112, y - 82, 104, '#E4574A', signT[1] + 0.75, signT[2] - 0.35); cue(signT[1] + 0.75, 'pop3');
+    tl.to('#sideIn', { y: -30, duration: 0.08, yoyo: true, repeat: 3, ease: 'power1.inOut' }, signT[1] + 0.4); }
+  // 3 stairs: a flight of steps behind, and a question mark
+  { const x0 = 150, y0 = 800; let d = `M${x0 - 40} ${y0} L${x0} ${y0}`; for (let k = 0; k < 4; k++) d += ` L${x0 + k * 74} ${y0 - (k + 1) * 64} L${x0 + (k + 1) * 74} ${y0 - (k + 1) * 64}`; d += ` L${x0 + 296} ${y0}`;
+    D(d, signT[2] + 0.4, 0.9, signT[3] - 0.35, { style: 'stroke-width:11' }); cue(signT[2] + 0.4, 'draw');
+    hand('?', 930, 630, 150, 'var(--teal)', signT[2] + 1.2, signT[3] - 0.35);
+    tl.to('#sideIn', { x: 26, duration: 0.5, ease: 'power2.out' }, signT[2] + 0.9).to('#sideIn', { x: 0, duration: 0.5, ease: 'power2.inOut' }, signT[3] - 0.5); }
+  // 4 wobble marks round the back legs
+  { const [x, y] = P(410, 880); [[-150, -1], [150, 1]].forEach(([dx, s], k) => [0, 1].forEach(j => D(`M${x + dx + s * j * 34} ${y - 80} C ${x + dx + s * (44 + j * 34)} ${y - 30}, ${x + dx + s * (44 + j * 34)} ${y + 30}, ${x + dx + s * j * 34} ${y + 80}`, signT[3] + 0.45 + (k * 2 + j) * 0.07, 0.3, signT[4] - 0.35, { style: 'stroke-width:11' })));
+    tl.to('#sideIn', { rotation: 1.8, duration: 0.18, yoyo: true, repeat: 5, ease: 'sine.inOut', transformOrigin: '70% 100%' }, signT[3] + 0.5).to('#sideIn', { rotation: 0, duration: 0.2 }, signT[3] + 1.6); }
+  // 5 legs stop: red alert and the back end sinks
+  { hand('!', 120, 900, 220, '#E4574A', signT[4] + 0.5, 34.0); cue(signT[4] + 0.5, 'thud');
+    tl.to('#sideIn', { rotation: -2.4, y: 16, duration: 0.6, ease: 'power2.out', transformOrigin: '85% 100%' }, signT[4] + 0.55); }
+  blink('.lidS', 23.9); blink('.lidS', 28.6);
+
+  // ===== S6: what can help =====
+  tl.to(['#signs', '#signsT'], { opacity: 0, duration: 0.35 }, 34.0);
+  tl.to('#side', { left: -1100, duration: 0.7, ease: 'power3.in' }, 34.0); cue(34.0, 'whoosh');
+  tl.set('#h7', { opacity: 1 }, 34.5); lines('#h7', 34.5, { mk: 0.5 });
+  write('#rest', 35.2, 1.1); gsap.set('#restU', { drawSVG: '0%' }); draw('#restU', 36.2, 0.4); tl.to('#restU', { opacity: 0, duration: 0.3 }, 37.0);
+  tl.to('#rest', { opacity: 0, duration: 0.3 }, 37.0);
+  const pT = [37.2, 39.4, 41.6, 43.8];
+  PROD.forEach((p, i) => {
+    const at = pT[i], im = K.IM[p.img], w = Math.round(im.naturalWidth * p.h / im.naturalHeight), cy = 900;
+    const box = document.createElement('div'); box.className = 'prodimg'; Object.assign(box.style, { left: 540 - w / 2 + 'px', top: cy - p.h / 2 + 'px', width: w + 'px', height: p.h + 'px' });
+    box.innerHTML = `<img src="${im.src}">`;
+    const tag = document.createElement('p'); tag.className = 'hand'; tag.textContent = p.tag; Object.assign(tag.style, { left: '60px', width: '960px', textAlign: 'center', top: '418px', fontSize: '84px', color: 'var(--ink2)' });
+    const nm = document.createElement('div'); nm.className = 'pname'; nm.textContent = p.name; nm.style.top = '1262px';
+    const pr = document.createElement('div'); pr.className = 'pprice'; pr.textContent = p.price; pr.style.top = '1336px';
+    $('#prods').append(box, tag, nm, pr);
+    const ring = el('path', { class: 'doo', d: `M${540 + 20} ${cy - 330} C ${540 + 230} ${cy - 330}, ${540 + 345} ${cy - 160}, ${540 + 340} ${cy + 10} C ${540 + 330} ${cy + 220}, ${540 + 170} ${cy + 335}, ${540 - 10} ${cy + 330} C ${540 - 210} ${cy + 325}, ${540 - 345} ${cy + 180}, ${540 - 338} ${cy - 10} C ${540 - 330} ${cy - 210}, ${540 - 180} ${cy - 335}, ${540 + 60} ${cy - 322}`, style: 'stroke:var(--teal);stroke-width:9' }, dsv);
+    gsap.set([box, tag, nm, pr], { opacity: 0 });
+    draw(ring, at, 0.6); cue(at, 'draw');
+    tl.fromTo(box, { opacity: 0, scale: 0.6, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'back.out(1.6)', immediateRender: false }, at + 0.1); cue(at + 0.2, 'pop' + i);
+    write(tag, at + 0.25, 0.6);
+    tl.fromTo(nm, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', immediateRender: false }, at + 0.4);
+    tl.fromTo(pr, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'back.out(2)', immediateRender: false }, at + 0.55); cue(at + 0.55, 'tick');
+    tl.to(box, { y: -10, duration: 1.2, ease: 'sine.inOut' }, at + 0.7);
+    const end = at + 2.0;
+    tl.to([box, tag, nm, pr, ring], { opacity: 0, duration: 0.25, ease: 'power2.in' }, end);
+  });
+
+  // ===== S7: end =====
+  fadeOut('#h7', 45.8);
+  tl.set('#h8', { opacity: 1 }, 46.1); lines('#h8', 46.1, { mk: 0.7 });
+  gsap.set('#dog', { scaleX: 1 });
+  tl.set('#dog', { left: 310, top: 470, width: 460, height: 460 * 1287 / 935, scaleX: 1 }, 45.9);
+  tl.fromTo('#dog', { opacity: 0, y: 500 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', immediateRender: false }, 46.0); cue(46.0, 'lift');
+  hop('#dogIn', 46.9, 50);
+  // hearts doodled either side
+  [[210, 660, -1], [870, 620, 1]].forEach(([x, y, s], k) => { const e = el('path', { class: 'doo', d: `M${x} ${y + 45} C ${x - 75} ${y - 15}, ${x - 45} ${y - 90}, ${x} ${y - 45} C ${x + 45} ${y - 90}, ${x + 75} ${y - 15}, ${x} ${y + 45}`, style: 'stroke:#E4574A;fill:none;stroke-width:10' }, dsv); draw(e, 47.4 + k * 0.15, 0.5); });
+  tl.fromTo('#coupon', { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: 'back.out(1.8)' }, 47.6); cue(47.65, 'stamp');
+  tl.fromTo('#cta', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 48.1); cue(48.1, 'card');
+  tl.fromTo('#trust', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 48.5);
+  tl.to('#arr', { x: 14, duration: 0.4, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 48.6);
+  blink('.lidF', 48.9); blink('.lidF', 51.4);
+  tl.to('#cta', { scale: 0.96, duration: 0.09, ease: 'power2.in' }, 50.4).to('#cta', { scale: 1, duration: 0.35, ease: 'back.out(3)' }, 50.49); cue(50.4, 'click'); cue(50.5, 'confirm');
+
+  // alive: gentle breathing on both drawings
+  K.frame(tt => {
+    const b = Math.sin(tt * 2.6);
+    for (const e of $$('#dogIn > img, #dogIn > svg')) { e.style.transform = `scaleY(${1 + 0.008 * b})`; e.style.transformOrigin = '50% 100%'; }
+    for (const e of $$('#sideIn > img, #sideIn > svg')) { e.style.transform = `scaleY(${1 + 0.007 * b})`; e.style.transformOrigin = '50% 100%'; }
+  });
+}); return window.ready; });
+</script>
+</body>
+</html>
