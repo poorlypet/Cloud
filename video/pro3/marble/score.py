@@ -2,7 +2,7 @@
 
 Composed in MIDI, one file per instrument group, each rendered as its own stem with real samples
 (FluidR3_GM via FluidSynth, its reverb and chorus off). Then per-stem EQ and a synthetic convolution
-hall, 2:1 bus glue, -14 LUFS and a look-ahead true-peak limiter at -1 dBTP. There are no synthesised
+hall, 2:1 bus glue, -14 LUFS and a look-ahead true-peak limiter at -1.6 dBTP (headroom for AAC, so the MP4 stays under -1 dBTP). There are no synthesised
 sound effects or ambience: every sound is a sampled instrument (the reversed piano is a reversed stem).
 
     python3 score.py            writes audio/score.wav (48 kHz, 16-bit PCM, stereo, 2,534,400 samples)
@@ -327,7 +327,7 @@ def glue(x, thr=-18.0, ratio=2.0, knee=6.0, att=0.03, rel=0.4, blk=240):
 
 def true_peak(x): return 20 * np.log10(np.abs(resample_poly(x, 4, 1, axis=0)).max())
 
-def limit(x, ceil=-1.1, la=0.002, rel=0.06, blk=48):
+def limit(x, ceil=-1.6, la=0.002, rel=0.06, blk=48):
     """Look-ahead limiter on 4x-oversampled peaks: min-filter + boxcar of the gain (never above the needed gain), smooth release."""
     tp = np.abs(resample_poly(x, 4, 1, axis=0)).max(1)[:4 * len(x)].reshape(len(x), 4).max(1)
     w = 2 * int(la * SR) + 1
@@ -352,7 +352,7 @@ def main():
     for _ in range(8):                                           # -14 LUFS, then true-peak limit; repeat until both hold
         mix *= 10 ** ((-14.0 - meter.integrated_loudness(mix)) / 20)
         mix = limit(mix)
-        if abs(meter.integrated_loudness(mix) + 14) < 0.05 and true_peak(mix) <= -1.05: break
+        if abs(meter.integrated_loudness(mix) + 14) < 0.05 and true_peak(mix) <= -1.55: break
     pcm = np.clip(np.round(mix * 32767 + rng.random(mix.shape) - rng.random(mix.shape)), -32768, 32767).astype(np.int16)
     out = os.path.join(HERE, 'audio', 'score.wav'); sf.write(out, pcm, SR, subtype='PCM_16')
 
