@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drawn Anxiety Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<link rel="stylesheet" href="../shared/drawn.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script src="assets/assets.js"></script>
+<script>
+window.F = {
+ "hook": "What happens<br>when you <em>leave?</em>",
+ "caption": "Real dog. Real window.",
+ "poseB": "worried",
+ "poseC": "sleep",
+ "dogB": {
+  "x": 326,
+  "y": 690,
+  "w": 428
+ },
+ "dogC": {
+  "x": 190,
+  "y": 600,
+  "w": 700
+ },
+ "endHop": false,
+ "s3": {
+  "h3": "One of the most<br>common, and most<br><em>misunderstood.</em>",
+  "h4": "A stressed dog isn’t<br>being naughty.<br>They’re struggling<br>to <em>cope.</em>"
+ },
+ "s4": {
+  "kind": "pulse",
+  "dog": {
+   "x": 376,
+   "y": 1000,
+   "w": 328
+  },
+  "y": 830,
+  "triggers": [
+   "fireworks",
+   "travel",
+   "separation",
+   "routine changes"
+  ],
+  "h5": "Fireworks, travel,<br>separation, routine<br><em>changes.</em>",
+  "h6": "Building a sense of<br>safety can <em>transform</em><br>their quality of life."
+ },
+ "signs": [
+  {
+   "t": "Restless<br><em>pacing.</em>",
+   "r": "pace",
+   "d": [
+    {
+     "k": "steps",
+     "xy": [
+      240,
+      1590
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Whining when<br><em>left alone.</em>",
+   "r": "hunch",
+   "d": [
+    {
+     "k": "bubble",
+     "p": [
+      0.86,
+      0.2
+     ],
+     "t": "whine…",
+     "w": 300,
+     "size": 86
+    }
+   ]
+  },
+  {
+   "t": "Shaking and<br><em>trembling.</em>",
+   "r": "shake",
+   "d": [
+    {
+     "k": "tremble",
+     "p": [
+      0.5,
+      0.6
+     ],
+     "r": 250
+    }
+   ]
+  },
+  {
+   "t": "Destructive<br><em>behaviour.</em>",
+   "r": "jolt",
+   "d": [
+    {
+     "k": "tear",
+     "xy": [
+      870,
+      1380
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Panting on<br><em>car journeys.</em>",
+   "d": [
+    {
+     "k": "car",
+     "xy": [
+      180,
+      1390
+     ]
+    },
+    {
+     "k": "txt",
+     "xy": [
+      740,
+      880
+     ],
+     "t": "pant pant…",
+     "c": "#0F4C48",
+     "size": 72
+    }
+   ]
+  }
+ ],
+ "rest": "Build a sense<br>of safety.",
+ "endWord": "anxiety",
+ "products": [
+  {
+   "img": "cspray",
+   "tag": "calm in the moment",
+   "name": "Lavender Calming Spray",
+   "price": "£10.99"
+  },
+  {
+   "img": "superchews",
+   "tag": "a calming soft chew",
+   "name": "Calming SuperChews",
+   "price": "£19.95"
+  },
+  {
+   "img": "lickimat",
+   "tag": "lick to unwind",
+   "name": "Lickimat Slomo",
+   "price": "£12.99"
+  },
+  {
+   "img": "cdrops",
+   "tag": "a settled mind",
+   "name": "Calming Drops",
+   "price": "£17.99"
+  }
+ ]
+};
+F.s3.fx = (B, at, out) => { DD.DOODLE.bubble(B, { p: [0.72, 0.24], t: 'come back…', w: 380, size: 78, c: '#0F4C48' }, at, out); DD.DOODLE.tremble(B, { p: [0.5, 0.62], r: 240 }, at + 1.2, out); DD.REACT.shake(at + 1.2); };
+F.endFx = [[720, 560, 'zzz'], [200, 700, 'heart']];
+</script>
+<script src="../shared/drawn.js"></script>
+</body>
+</html>

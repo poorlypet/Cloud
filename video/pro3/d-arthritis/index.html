@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drawn Arthritis Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<link rel="stylesheet" href="../shared/drawn.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script src="assets/assets.js"></script>
+<script>
+window.F = {
+ "hook": "Slowing down isn’t<br>just <em>old age.</em>",
+ "caption": "Real dog. Real garden.",
+ "poseB": "side",
+ "poseC": "sit",
+ "dogB": {
+  "x": 60,
+  "y": 690,
+  "w": 960
+ },
+ "dogC": {
+  "x": 354,
+  "y": 450,
+  "w": 372
+ },
+ "s3": {
+  "h3": "Arthritis affects a<br>huge number of dogs<br><em>as they age.</em>",
+  "h4": "And many more<br>after an <em>injury.</em>"
+ },
+ "s4": {
+  "kind": "joint",
+  "dog": {
+   "x": 290,
+   "y": 1050,
+   "w": 720
+  },
+  "spot": [
+   0.22,
+   0.45
+  ],
+  "lens": [
+   540,
+   790
+  ],
+  "h5": "The cushioning in the<br>joint <em>wears thin.</em>",
+  "h6": "It can’t be cured,<br>but it can be managed<br><em>really well at home.</em>"
+ },
+ "signs": [
+  {
+   "t": "Stiff<br><em>after rest.</em>",
+   "r": "hunch",
+   "d": [
+    {
+     "k": "txt",
+     "p": [
+      0.1,
+      0.2
+     ],
+     "t": "creak…",
+     "c": "#E4574A",
+     "size": 92,
+     "rot": -8
+    },
+    {
+     "k": "marks",
+     "p": [
+      0.22,
+      0.42
+     ],
+     "s": 0.8
+    }
+   ]
+  },
+  {
+   "t": "Slow to<br><em>get up.</em>",
+   "r": "slow",
+   "d": [
+    {
+     "k": "up",
+     "xy": [
+      520,
+      890
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Slowing<br><em>on walks.</em>",
+   "r": "lean",
+   "d": [
+    {
+     "k": "txt",
+     "xy": [
+      300,
+      740
+     ],
+     "t": "sloooow…",
+     "c": "#0F4C48",
+     "size": 96,
+     "dur": 1.0
+    }
+   ]
+  },
+  {
+   "t": "Reluctant<br><em>to jump.</em>",
+   "r": "lean",
+   "d": [
+    {
+     "k": "stairs",
+     "xy": [
+      260,
+      900
+     ],
+     "u": 62
+    },
+    {
+     "k": "q",
+     "xy": [
+      860,
+      600
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Licking<br><em>a joint.</em>",
+   "d": [
+    {
+     "k": "lick",
+     "p": [
+      0.66,
+      0.8
+     ]
+    },
+    {
+     "k": "arrow",
+     "p": [
+      0.64,
+      0.74
+     ],
+     "from": [
+      -260,
+      -170
+     ],
+     "t": "lick lick",
+     "c": "#E4574A",
+     "tx": -60,
+     "ty": -96
+    }
+   ]
+  }
+ ],
+ "rest": "The right routine<br>and support.",
+ "endWord": "joints",
+ "products": [
+  {
+   "img": "msm",
+   "tag": "supple joints",
+   "name": "MSM Powder · Joint & Coat",
+   "price": "£14.99"
+  },
+  {
+   "img": "jchews",
+   "tag": "a daily joint chew",
+   "name": "Joint Care Chews",
+   "price": "£18.99"
+  },
+  {
+   "img": "pad",
+   "tag": "warmth on stiff joints",
+   "name": "Self-Heating Pet Pad",
+   "price": "£17.99"
+  },
+  {
+   "img": "knee",
+   "tag": "support for the knee",
+   "name": "Knee Brace for Dogs",
+   "price": "£34.99"
+  }
+ ]
+};
+F.s3.fx = (B, at, out) => DD.DOODLE.glow(B, { pts: [[0.22, 0.45, 'hips', -70, -140], [0.15, 0.72, 'knees', 40, 20], [0.64, 0.62, 'elbows', 50, -40]] }, at, out);
+</script>
+<script src="../shared/drawn.js"></script>
+</body>
+</html>

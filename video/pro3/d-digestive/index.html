@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drawn Digestive Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<link rel="stylesheet" href="../shared/drawn.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script src="assets/assets.js"></script>
+<script>
+window.F = {
+ "hook": "Tummy trouble,<br><em>again?</em>",
+ "caption": "Real dog. Real dinner.",
+ "poseB": "side",
+ "poseC": "sit",
+ "dogB": {
+  "x": 50,
+  "y": 860,
+  "w": 980
+ },
+ "dogC": {
+  "x": 372,
+  "y": 450,
+  "w": 336
+ },
+ "s3": {
+  "h3": "An occasional<br>upset tummy is<br>part of <em>life.</em>",
+  "h4": "Frequent ones need<br>some <em>support.</em>"
+ },
+ "s4": {
+  "kind": "gut",
+  "spot": [
+   0.44,
+   0.47
+  ],
+  "lens": [
+   540,
+   705
+  ],
+  "gut": [
+   [
+    0.3,
+    0.36
+   ],
+   [
+    0.56,
+    0.34
+   ],
+   [
+    0.58,
+    0.43
+   ],
+   [
+    0.33,
+    0.45
+   ],
+   [
+    0.31,
+    0.53
+   ],
+   [
+    0.57,
+    0.53
+   ],
+   [
+    0.53,
+    0.6
+   ],
+   [
+    0.36,
+    0.6
+   ]
+  ],
+  "h5": "Frequent upsets mean<br>digestion needs <em>support.</em>",
+  "h6": "Help a sensitive stomach<br>and keep their gut <em>healthy.</em>"
+ },
+ "signs": [
+  {
+   "t": "Loose<br><em>stools.</em>",
+   "d": [
+    {
+     "k": "bang",
+     "xy": [
+      70,
+      760
+     ],
+     "size": 200
+    },
+    {
+     "k": "txt",
+     "xy": [
+      150,
+      840
+     ],
+     "t": "uh oh…",
+     "c": "#E4574A",
+     "size": 88
+    }
+   ]
+  },
+  {
+   "t": "Frequent<br><em>vomiting.</em>",
+   "r": "hunch",
+   "d": [
+    {
+     "k": "swirl",
+     "xy": [
+      880,
+      790
+     ]
+    },
+    {
+     "k": "txt",
+     "xy": [
+      560,
+      720
+     ],
+     "t": "urgh…",
+     "c": "#7FA83A",
+     "size": 88
+    }
+   ]
+  },
+  {
+   "t": "Lots of<br><em>wind.</em>",
+   "r": "jolt",
+   "d": [
+    {
+     "k": "wind",
+     "p": [
+      0.12,
+      0.33
+     ],
+     "step": [
+      -8,
+      -95
+     ]
+    },
+    {
+     "k": "txt",
+     "xy": [
+      250,
+      760
+     ],
+     "t": "pfft!",
+     "c": "#7FA83A",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "t": "Appetite<br><em>changes.</em>",
+   "d": [
+    {
+     "k": "bowl",
+     "xy": [
+      880,
+      1500
+     ]
+    }
+   ]
+  },
+  {
+   "t": "A noisy<br><em>tummy.</em>",
+   "r": "shake",
+   "d": [
+    {
+     "k": "rumble",
+     "p": [
+      0.45,
+      0.5
+     ],
+     "t": "grumble…"
+    }
+   ]
+  }
+ ],
+ "rest": "Help a sensitive<br>stomach.",
+ "endWord": "tummy",
+ "products": [
+  {
+   "img": "pumpkin",
+   "tag": "simple pumpkin",
+   "name": "100% Natural Pumpkin Powder",
+   "price": "£12.99"
+  },
+  {
+   "img": "prepro",
+   "tag": "good gut bacteria",
+   "name": "Pre & Probiotic Powder",
+   "price": "£15.99"
+  },
+  {
+   "img": "dchews",
+   "tag": "a daily gut chew",
+   "name": "Digestive Chews",
+   "price": "£19.99"
+  },
+  {
+   "img": "broth",
+   "tag": "tempt a fussy eater",
+   "name": "Chicken Bone Broth Powder",
+   "price": "£17.95"
+  }
+ ]
+};
+F.s3.fx = (B, at, out) => DD.DOODLE.rumble(B, { p: [0.45, 0.47], t: 'grumble…' }, at, out);
+</script>
+<script src="../shared/drawn.js"></script>
+</body>
+</html>

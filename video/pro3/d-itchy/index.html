@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drawn Itchy Skin Film</title>
+<link rel="stylesheet" href="../shared/kit.css">
+<link rel="stylesheet" href="../shared/drawn.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="../shared/lib/gsap.min.js"></script>
+<script src="../shared/lib/SplitText.min.js"></script>
+<script src="../shared/lib/CustomEase.min.js"></script>
+<script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script>
+<script src="assets/assets.js"></script>
+<script>
+window.F = {
+ "hook": "Scratching<br><em>all night?</em>",
+ "caption": "Real pup. Real itch.",
+ "poseB": "white",
+ "poseC": "sit",
+ "dogB": {
+  "x": 256,
+  "y": 690,
+  "w": 568
+ },
+ "dogC": {
+  "x": 339,
+  "y": 450,
+  "w": 403
+ },
+ "s3": {
+  "h3": "An over-reaction to<br>something <em>ordinary.</em>",
+  "h4": "The scratching<br>makes it <em>worse.</em>"
+ },
+ "s4": {
+  "kind": "loop",
+  "dog": {
+   "x": 330,
+   "y": 930,
+   "w": 420
+  },
+  "r": 360,
+  "h5": "Then it turns<br>into a <em>loop.</em>",
+  "h6": "Break it with<br>Omega 3 every day<br>and a <em>gentle wash.</em>"
+ },
+ "signs": [
+  {
+   "t": "Scratching that<br>wakes them<br><em>at night.</em>",
+   "r": "shake",
+   "d": [
+    {
+     "k": "moon",
+     "xy": [
+      900,
+      760
+     ]
+    },
+    {
+     "k": "zzz",
+     "xy": [
+      920,
+      900
+     ]
+    },
+    {
+     "k": "marks",
+     "p": [
+      0.5,
+      0.3
+     ],
+     "s": 0.7
+    }
+   ]
+  },
+  {
+   "t": "One paw licked<br><em>rusty brown.</em>",
+   "d": [
+    {
+     "k": "arrow",
+     "p": [
+      0.1,
+      0.4
+     ],
+     "from": [
+      -120,
+      -230
+     ],
+     "t": "rusty paw",
+     "c": "#A0522D",
+     "tx": -20,
+     "ty": -96
+    },
+    {
+     "k": "lick",
+     "p": [
+      0.12,
+      0.52
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Pink skin on<br>the belly and<br><em>armpits.</em>",
+   "d": [
+    {
+     "k": "blush",
+     "pts": [
+      [
+       0.34,
+       0.5
+      ],
+      [
+       0.62,
+       0.62
+      ]
+     ],
+     "rx": 64
+    },
+    {
+     "k": "arrow",
+     "p": [
+      0.64,
+      0.6
+     ],
+     "from": [
+      230,
+      -140
+     ],
+     "t": "pink",
+     "c": "#E0607A",
+     "tx": -10
+    }
+   ]
+  },
+  {
+   "t": "Flakes<br><em>on the bed.</em>",
+   "d": [
+    {
+     "k": "flakes",
+     "p": [
+      0.5,
+      0.45
+     ]
+    }
+   ]
+  },
+  {
+   "t": "Constant<br><em>licking.</em>",
+   "r": "jolt",
+   "d": [
+    {
+     "k": "lick",
+     "p": [
+      0.78,
+      0.86
+     ]
+    },
+    {
+     "k": "txt",
+     "xy": [
+      560,
+      700
+     ],
+     "t": "lick lick lick",
+     "c": "#E0607A",
+     "size": 84
+    }
+   ]
+  }
+ ],
+ "rest": "Most settle in<br>2–3 weeks.",
+ "endWord": "itchy skin",
+ "products": [
+  {
+   "img": "salmon",
+   "tag": "calm it from inside",
+   "name": "Scottish Salmon Oil",
+   "price": "£9.99"
+  },
+  {
+   "img": "chews",
+   "tag": "a simple daily chew",
+   "name": "Itch Relief Chews",
+   "price": "£29.99"
+  },
+  {
+   "img": "spray",
+   "tag": "hot spots? spray it",
+   "name": "Hot Spot & Itch Relief Spray",
+   "price": "£12.99"
+  },
+  {
+   "img": "oatwash",
+   "tag": "a gentle wash",
+   "name": "No Rinse Oatmeal Shampoo",
+   "price": "£8.99"
+  }
+ ]
+};
+F.s3.fx = (B, at, out) => { [[[0.12, 0.25], [-150, -150], 'pollen', -40], [[0.88, 0.25], [140, -150], 'dust mites', -230], [[0.08, 0.86], [-140, 110], 'grass', -40], [[0.92, 0.86], [130, 110], 'a food', -120]].forEach(([p, f, t, tx], k) => DD.DOODLE.arrow(B, { p, from: f, t, c: '#E4574A', tx, ty: f[1] < 0 ? -96 : 20, size: 72 }, at + k * 0.35, out)); DD.REACT.shake(at + 1.6); };
+</script>
+<script src="../shared/drawn.js"></script>
+</body>
+</html>
