@@ -36,7 +36,9 @@ const FAST = flag('--fast') ? null : await page.evaluate(() => window.FAST || nu
 const CAP = flag('--fast') ? 30 : FAST ? 120 : 60;
 const silent = path.join(here, 'out', `${film}-video.mp4`); fs.mkdirSync(path.dirname(silent), { recursive: true });
 const vf = CAP === 120 ? ['-vf', "tmix=frames=4,select='eq(mod(n\\,4)\\,3)',setpts=N/(30*TB)", '-r', '30'] : CAP === 60 ? ['-vf', 'tmix=frames=2,fps=30'] : [];
-const enc = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(CAP), '-i', '-', ...vf, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '17', '-preset', 'slow', '-movflags', '+faststart', silent], { stdio: ['pipe', 'inherit', 'inherit'] });
+// --bitrate 12M caps the file size (grain is costly at crf 17); default stays crf 17
+const rate = flag('--bitrate') ? ['-b:v', opt('--bitrate'), '-maxrate', String(parseFloat(opt('--bitrate')) * 1.4) + 'M', '-bufsize', String(parseFloat(opt('--bitrate')) * 2) + 'M'] : ['-crf', '17'];
+const enc = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(CAP), '-i', '-', ...vf, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', ...rate, '-preset', 'slow', '-movflags', '+faststart', silent], { stdio: ['pipe', 'inherit', 'inherit'] });
 const put = async buf => { if (!enc.stdin.write(buf)) await new Promise(r => enc.stdin.once('drain', r)); };
 if (CAP === 120) {
   const total = Math.round(DUR * 30);
