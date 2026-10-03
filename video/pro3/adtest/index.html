@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>adkit test</title>
+<link rel="stylesheet" href="../shared/kit.css"><link rel="stylesheet" href="../adkit/ad.css"></head>
+<body><div id="stage"></div>
+<script src="../shared/lib/gsap.min.js"></script><script src="../shared/lib/SplitText.min.js"></script><script src="../shared/lib/CustomEase.min.js"></script><script src="../shared/lib/DrawSVGPlugin.min.js"></script>
+<script src="../shared/kit.js"></script><script src="../adkit/ad.js"></script>
+<script>
+const M = '../marble/assets/';
+AD.film({
+  dur: 16, fast: [],
+  modes: [[0, 'day'], [6, 'night']],
+  flashes: [[5.6, 6.0, 6.4, 'warm', .6]],
+  scenes: [
+    { id: 'a', plate: M + 'N06.jpg', a: 0, b: 6.1, move: T => T({ z: 1.12, at: [330, 1400] }).centre(0, 6, 1.05) },
+    { id: 'b', plate: M + 'C07.jpg', bg: M + 'C07-bg.jpg', cut: { src: M + 'C07-cut.png', box: [757, 1514, 1017, 934], eye: [556, 940], parallax: .3 }, a: 5.9, b: 11.2, wipe: { at: 5.9, fill: [6.3, 6.5] }, move: T => T({ z: 1.3, at: [540, 960] }).to(6, 11, { z: 1.05, sx: 540, sy: 960 }) },
+    { id: 'c', plate: M + 'N08.jpg', bg: M + 'N08-bg.jpg', a: 11, b: 16, fade: [11, 11.4], arch: [12, 13.2], move: T => T({ z: 1.1, at: [530, 1300] }).to(11, 16, { z: 1.0 }) },
+  ],
+  endCard: { T0: 12.6, arch: [12, 13.2], sheen: 14.5 },
+  build: A => {
+    A.header([[0.2, 'CARE AT HOME'], [6.2, 'WHAT CUSTOMERS SAY']], 11.6);
+    A.card(['A back brace', 'to stop twisting.', 'Ramps, so *no jumping.*'], {}, .4, 1.2, 3.0);
+    A.list([['Back braces', 'Lift harnesses'], ['Ramps', 'Rest']], { y: 300, at: 3.3, times: [3.6, 3.9, 4.2, 4.5], out: 5.6 });
+    A.review({ q: ['Arrived next day and', 'fits our boy *perfectly.*'], name: 'Sample N.', at: 6.4, sw: 7.4, out: 8.8, y: 300 });
+    A.rating({ at: 9.0, sw: 9.6, out: 11.0, y: 320 });
+  },
+});
+</script></body></html>

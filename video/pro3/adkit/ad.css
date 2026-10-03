@@ -1,0 +1,68 @@
+/* Poorly Pet painted ad films: shared look (from "Built for Marble"). Used with ../shared/kit.css and ad.js. */
+#stage{background:#0A3A37}
+.sc{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;visibility:hidden}
+.cam,.lay{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.cam img,.lay img,.fs img,.sc>img{position:absolute;display:block;max-width:none}
+.pl{filter:saturate(.92) contrast(1.04)}
+.mk-l{-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.ov{position:absolute;pointer-events:none}
+.fs{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+.top{z-index:10}
+.glow{position:absolute;border-radius:50%;mix-blend-mode:screen;pointer-events:none}
+/* story type */
+.blk{position:absolute;left:72px;margin:0;font-family:Domine,serif;font-weight:600;letter-spacing:-.005em;white-space:nowrap;color:#F3F6F1}
+.blk.cr{text-shadow:0 2px 24px rgba(10,58,55,.35)}
+.blk.ink{color:#0E2A28}
+.blk .lm{display:block;overflow:hidden;padding:.14em .2em .26em;margin:-.14em -.2em -.26em}
+.blk .li{display:inline-block;will-change:transform}
+.mk{position:relative;display:inline-block}
+.mk .band{position:absolute;left:-.07em;right:-.07em;background:#DFE43A;border-radius:4px;filter:url(#rag)}
+.mk .t{position:relative;text-shadow:none}
+.mk .tk{position:absolute;left:0;top:0;color:#0E2A28;text-shadow:none;white-space:nowrap}
+.bl{display:inline-block;width:0;height:0;vertical-align:baseline}
+/* lists (categories, product types): Figtree, each item lights in turn */
+.lst{position:absolute;left:72px;font:600 44px/1.36 Figtree,sans-serif;white-space:nowrap;color:#0E2A28}
+.lst.cr{color:#F3F6F1;text-shadow:0 2px 18px rgba(10,58,55,.45)}
+.lst span{display:inline-block}
+.lst .sep{opacity:.55;padding:0 .32em}
+/* running header */
+#hdr{position:absolute;left:72px;top:240px;height:32px;display:flex;align-items:center;white-space:nowrap;--hc:#F3F6F1;--rc:#DFE43A;color:var(--hc);opacity:0}
+#hdr .rule{display:block;width:48px;height:2px;background:var(--rc);margin-right:18px;transform-origin:0 50%}
+#hdr .lab{position:relative;display:block;width:860px;overflow:hidden;height:32px;font:700 26px/32px Figtree,sans-serif;letter-spacing:.14em}
+#hdr .lab b{position:absolute;left:0;top:0;font-weight:700}
+/* reviews */
+.rv{position:absolute;left:72px;width:880px;white-space:nowrap}
+.rv .st{display:flex;gap:10px;margin-bottom:26px}
+.rv .st i{display:block;width:46px;height:46px;transform-origin:50% 60%}
+.rv .q{font:600 54px/1.24 Domine,serif;color:#F3F6F1;text-shadow:0 2px 24px rgba(10,58,55,.4)}
+.rv.ink .q{color:#0E2A28;text-shadow:none}
+.rv .q .lm{display:block;overflow:hidden;padding:.12em .2em .24em;margin:-.12em -.2em -.24em}
+.rv .q .li{display:inline-block}
+.rv .q .oq{position:absolute;left:-.48em}
+.rv .n{margin-top:22px;font:700 25px/1 Figtree,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E4EED6}
+.rv.ink .n{color:#0F4C48}
+.rv .n i{display:inline-block;width:36px;height:2px;background:#DFE43A;vertical-align:middle;margin-right:16px}
+/* rating badge */
+.rate{position:absolute;left:72px;white-space:nowrap}
+.rate .big{font:800 132px/1 Figtree,sans-serif;letter-spacing:-.02em;color:#F3F6F1}
+.rate.ink .big{color:#0E2A28}
+.rate .big small{font-size:.42em;font-weight:700;opacity:.8;margin-left:.08em}
+.rate .st{display:flex;gap:10px;margin:18px 0 22px}
+.rate .st i{display:block;position:relative;width:54px;height:54px}
+.rate .line{font:600 40px/1.2 Figtree,sans-serif;color:#E4EED6}
+.rate.ink .line{color:#0F4C48}
+.star{position:absolute;left:0;top:0;width:100%;height:100%}
+/* end card */
+.ec{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap}
+#wm{position:absolute;left:306px;top:796px;width:468px;height:136px;overflow:hidden}
+#wm .wi{display:block;width:468px;height:128px;margin-top:4px}
+#cat{font:500 30px/1.2 Figtree,sans-serif;color:#E4EED6}
+#pill{position:absolute;left:130px;top:996px;width:820px;height:88px;border-radius:44px;background:#DFE43A;color:#0E2A28;display:flex;align-items:center;justify-content:center;font:600 33px/1 Figtree,sans-serif;overflow:hidden;white-space:nowrap}
+#pill b{font-weight:800;font-size:35px;letter-spacing:.08em;margin:0 .3em}
+#pill .sheen{position:absolute;top:0;left:0;width:220px;height:88px;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));opacity:.6}
+.pr{font:500 30px/1.2 Figtree,sans-serif;color:#E4EED6}
+#p2{font-size:28px}
+#tc{font:500 20px/1.2 Figtree,sans-serif;color:rgba(228,238,214,.72);letter-spacing:.01em}
+#url{font:700 42px/1.2 Figtree,sans-serif;color:#F3F6F1}
+#url .ul{position:absolute;height:3px;background:#DFE43A;transform-origin:0 50%}
+#key{position:absolute;left:306px;top:222px;width:468px;height:548px;border:2px solid rgba(228,238,214,.3);border-radius:234px 234px 0 0;box-sizing:border-box}
