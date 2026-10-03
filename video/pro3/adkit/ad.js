@@ -191,6 +191,15 @@ const AD = (() => {
     if (o.out != null) [s.r, b].forEach(e => exit(e, o.out));
     return { s, b };
   }
+  // a product: name (serif), its approved one-line claim, price highlighted
+  function product(o) {
+    const y = o.y ?? 300, ink = o.ink ?? isDay(o.at);
+    const a = block([o.name], { y, size: o.size ?? 56, ink, at: o.at });
+    const b = block([o.claim], { y: y + 88, size: 40, ink, font: 'Figtree,sans-serif', w: 600, at: o.at });
+    const c = block([`*${o.price}*`], { y: y + 154, size: 76, ink, font: 'Figtree,sans-serif', w: 800, at: o.at });
+    rise(a, o.at); rise(b, o.at + .15); rise(c, o.at + .3); swipe(c, o.at + .6, .35);
+    if (o.out != null) [a, b, c].forEach(e => exit(e, o.out));
+  }
   // rows of items in Figtree; each lights from dim to full in turn (times) or all rise together
   function list(rows, o) {
     const ink = o.ink ?? isDay(o.at);
@@ -262,6 +271,6 @@ const AD = (() => {
       return window.ready;
     });
   }
-  const A = { tl, P, L, T, Track, el, img, glow, block, rise, swipe, exit, card, review, rating, list, header, toScreen, cover, $, $$, cue: K.cue, FW, FH, kP, isDay };
+  const A = { tl, P, L, T, Track, el, img, glow, block, rise, swipe, exit, card, review, rating, list, product, header, toScreen, cover, $, $$, cue: K.cue, FW, FH, kP, isDay };
   return { film, ...A };
 })();
