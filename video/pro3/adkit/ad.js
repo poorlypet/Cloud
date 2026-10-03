@@ -80,7 +80,7 @@ const AD = (() => {
     <div id="cat" class="ec"><span class="ct"></span><i class="bl"></i></div>
     <div id="pill"><span>Use code<b>POORLY10</b>· 10% off your first order</span><i class="sheen"></i></div>
     <div id="tc" class="ec">Min. spend £10 · Selected items · T&amp;Cs apply<i class="bl"></i></div>
-    <div id="p1" class="ec pr">Rated 4.6/5 from 99 reviews · Free UK delivery over £39<i class="bl"></i></div>
+    <div id="p1" class="ec pr">Rated 4.6/5 from 101 reviews · Free UK delivery over £39<i class="bl"></i></div>
     <div id="p2" class="ec pr">Real people. Every email answered within one working day.<i class="bl"></i></div>
     <div id="url" class="ec"><span class="ut">poorly-pet.com</span><i class="bl"></i><i class="ul"></i></div>
   </div>
@@ -185,7 +185,7 @@ const AD = (() => {
   function rating(o) {
     const y = o.y ?? 300, ink = o.ink ?? isDay(o.at);
     const s = starRow($('#txt'), 4.6, o.star ?? 58, y);
-    const b = block([o.line || 'Rated *4.6/5* from 99 reviews'], { y: y + (o.star ?? 58) + 34, size: o.size ?? 52, ink, font: 'Figtree,sans-serif', w: 700, at: o.at });
+    const b = block([o.line || 'Rated *4.6/5* from 101 reviews'], { y: y + (o.star ?? 58) + 34, size: o.size ?? 52, ink, font: 'Figtree,sans-serif', w: 700, at: o.at });
     tl.fromTo(s.items, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: 'back.out(2.2)', stagger: .07, immediateRender: true }, o.at);
     rise(b, o.at + .25); if (o.sw != null) swipe(b, o.sw);
     if (o.out != null) [s.r, b].forEach(e => exit(e, o.out));
