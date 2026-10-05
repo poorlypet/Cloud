@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Poorly Pet – video ad style options</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;1,9..144,460&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* Two directions taken from poorly-pet.com: A = ivory hero (ink Fraunces, clay italic),
+     B = pine story card (ivory Fraunces, mint italic). */
+  body { margin: 0; }
+  .page { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  .full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  .logo-sm { position: absolute; left: 400px; top: 190px; width: 280px; height: auto; }
+  .eyebrow {
+    position: absolute; left: 90px; top: 340px; width: 900px; margin: 0;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 30px;
+    letter-spacing: 0.22em; text-transform: uppercase; text-align: center;
+  }
+  h1 {
+    position: absolute; left: 70px; top: 398px; width: 940px; margin: 0;
+    font-family: 'Fraunces', Georgia, serif; font-weight: 560; font-size: 140px;
+    line-height: 1.02; letter-spacing: -0.015em; text-align: center;
+  }
+  h1 i { font-style: italic; font-weight: 460; }
+  .logo-lg { position: absolute; left: 230px; top: 690px; width: 620px; height: auto; }
+  .cta {
+    position: absolute; left: 250px; top: 930px; width: 580px; height: 120px; margin: 0;
+    border-radius: 60px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 42px;
+    line-height: 120px; text-align: center;
+  }
+  .trust {
+    position: absolute; left: 90px; top: 1110px; width: 900px; margin: 0;
+    font-family: 'Inter', sans-serif; font-weight: 500; font-size: 34px; line-height: 1.5; text-align: center;
+  }
+
+  .a { background: #F5EFE6; }
+  .a .eyebrow { color: #A8542F; }
+  .a h1 { color: #101B17; }
+  .a h1 i { color: #A8542F; }
+  .a .cta { background: #0E3E33; color: #FAF9F6; }
+  .a .trust { color: #0E3E33; }
+
+  .b { background: #092B23; }
+  .b .eyebrow { color: #9FE8C9; }
+  .b h1 { color: #FAF9F6; }
+  .b h1 i { color: #9FE8C9; }
+  .b .cta { background: #9FE8C9; color: #092B23; }
+  .b .trust { color: #EDF1EC; }
+</style>
+</head>
+<body>
+
+<section class="page a" data-document-role="page" data-label="A · Ivory hero · Scene">
+  <img class="full" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/fade-cream.png" alt="">
+  <img class="logo-sm" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
+  <p class="eyebrow">Skin &amp; coat</p>
+  <h1>Scratching<br><i>again?</i></h1>
+</section>
+
+<section class="page a" data-document-role="page" data-label="A · Ivory hero · End card">
+  <img class="logo-lg" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
+  <p class="cta">Shop by symptom →</p>
+  <p class="trust">Vet-informed · Free UK delivery over £39</p>
+</section>
+
+<section class="page b" data-document-role="page" data-label="B · Pine story · Scene">
+  <img class="full" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/fade-pine.png" alt="">
+  <img class="logo-sm" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-light.png" alt="Poorly Pet">
+  <p class="eyebrow">Skin &amp; coat</p>
+  <h1>Scratching<br><i>again?</i></h1>
+</section>
+
+<section class="page b" data-document-role="page" data-label="B · Pine story · End card">
+  <img class="logo-lg" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-light.png" alt="Poorly Pet">
+  <p class="cta">Shop by symptom →</p>
+  <p class="trust">Vet-informed · Free UK delivery over £39</p>
+</section>
+
+</body>
+</html>
