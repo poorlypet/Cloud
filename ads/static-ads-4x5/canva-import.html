@@ -2,30 +2,36 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<title>Poorly Pet – 4:5 static ads (Canva import)</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<title>Poorly Pet – 4:5 static ads (Canva import, video style)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;1,9..144,460&family=Inter:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  /* 12 Facebook/Instagram feed ads, 1080x1350. Flat illustrations are filled into the page rect
-     (or the rounded grid boxes on page 1) after import. Fredoka echoes the rounded Poorly Pet
-     wordmark; Nunito for small text. Every page ends with the sage banner and logo. */
+  /* 12 Facebook/Instagram feed ads, 1080x1350, in the same "Ivory hero" system as the video ads:
+     clay uppercase Inter eyebrow, ink Fraunces 560 headline with a clay italic 460 clause, pine
+     Inter subtext, painted scene under a warm cream fade. Scenes are filled into the page rect (or
+     the rounded grid boxes on page 1) after import. Every page ends with the sage banner and logo. */
   body { margin: 0; }
   .page { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: #F5EFE6; }
   .fade { position: absolute; left: 0; top: 0; width: 1080px; height: 600px; }
+  .eyebrow {
+    position: absolute; left: 90px; top: 70px; width: 900px; margin: 0;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 30px;
+    letter-spacing: 0.22em; text-transform: uppercase; text-align: center; color: #A8542F;
+  }
   h1 {
-    position: absolute; left: 60px; top: 80px; width: 960px; margin: 0;
-    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 88px; line-height: 1.05;
-    letter-spacing: -0.01em; text-align: center; color: #6B4A3A;
+    position: absolute; left: 60px; top: 120px; width: 960px; margin: 0;
+    font-family: 'Fraunces', Georgia, serif; font-weight: 560; font-size: 92px;
+    line-height: 1.02; letter-spacing: -0.015em; text-align: center; color: #101B17;
   }
-  h1 .acc { color: #B5623F; }
-  h1.three { top: 64px; font-size: 84px; }
-  h1.big { font-size: 104px; }
+  h1 i { font-style: italic; font-weight: 460; color: #A8542F; }
+  h1.three { top: 110px; font-size: 82px; }
+  h1.big { font-size: 108px; }
   .sub {
-    position: absolute; left: 60px; top: 290px; width: 960px; margin: 0;
-    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 34px; line-height: 1.35;
-    text-align: center; color: #6B4A3A;
+    position: absolute; left: 60px; top: 330px; width: 960px; margin: 0;
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.4;
+    text-align: center; color: #0E3E33;
   }
-  .sub.low { top: 352px; }
-  .sub b { font-weight: 800; color: #B5623F; }
+  .sub.low { top: 378px; }
+  .sub span { color: #A8542F; }
   .box { position: absolute; width: 465px; height: 355px; border-radius: 36px; }
   .box.sage { background: #E3E8DC; }
   .box.clay { background: #F1DED3; }
@@ -33,26 +39,27 @@
   .slot { position: absolute; border-radius: 32px; background: #FCFAF6; border: 3px solid #E5D9C6; box-sizing: border-box; }
   .card { position: absolute; border-radius: 32px; background: #FCFAF6; border: 3px solid #E5D9C6; box-sizing: border-box; }
   .ticks {
-    position: absolute; margin: 0; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 28px;
-    line-height: 1.75; color: #6B4A3A;
+    position: absolute; margin: 0; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 28px;
+    line-height: 1.75; color: #0E3E33;
   }
-  .ticks span { color: #5E7D5A; font-weight: 800; }
+  .ticks span { color: #A8542F; }
   .banner { position: absolute; left: 0; top: 1240px; width: 1080px; height: 110px; background: #8FA98B; }
   .blogo { position: absolute; left: 44px; top: 1265px; width: 220px; height: auto; }
   .btext {
     position: absolute; left: 300px; top: 1263px; width: 736px; margin: 0;
-    font-family: 'Nunito', sans-serif; font-weight: 600; font-size: 24px; line-height: 1.32;
-    text-align: right; color: #2F2219;
+    font-family: 'Inter', sans-serif; font-weight: 500; font-size: 24px; line-height: 1.32;
+    text-align: right; color: #0E3E33;
   }
   .btext.one { top: 1279px; }
-  .btext b { font-weight: 800; }
+  .btext b { font-weight: 600; }
 </style>
 </head>
 <body>
 
 <section class="page" data-document-role="page" data-label="1 Brand"
-  data-speaker-notes="Brand ad. Four flat illustrations in the rounded boxes: golden dog scratching, older Labrador getting up, terrier by the door, black Labrador in a support harness.">
-  <h1 class="three">Whatever they’re<br>going through,<br><span class="acc">we’ve got what helps.</span></h1>
+  data-speaker-notes="Brand ad. Four scenes in the rounded boxes: golden retriever scratching, older Labrador getting up, terrier by the door, black Labrador in a support harness.">
+  <p class="eyebrow">Vet-informed pet health</p>
+  <h1 class="three">Whatever they’re<br>going through,<br><i>we’ve got what helps.</i></h1>
   <p class="sub low">Itching · Anxiety · Bad breath · Mobility · Senior care</p>
   <div class="box sage" style="left:60px; top:450px;"></div>
   <div class="box clay" style="left:555px; top:450px;"></div>
@@ -66,7 +73,8 @@
 <section class="page" data-document-role="page" data-label="2 Anxiety"
   data-speaker-notes="Two product spaces: Calming Drops and Calming Aid Probiotic.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>Can’t settle?<br><span class="acc">Help them feel calmer.</span></h1>
+  <p class="eyebrow">Behaviour &amp; mood</p>
+  <h1>Can’t settle?<br><i>Help them feel calmer.</i></h1>
   <p class="sub">Calming Drops &amp; Calming Aid Probiotic</p>
   <div class="slot-sh" style="left:534px; top:920px; width:240px; height:300px;"></div>
   <div class="slot" style="left:534px; top:910px; width:240px; height:300px;"></div>
@@ -80,7 +88,8 @@
 <section class="page" data-document-role="page" data-label="3 Itching &amp; hot spots"
   data-speaker-notes="Three product spaces: Wound &amp; Skin Repair Powder, Hot Spot Spray, Yeast Support.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>Licking the same spot…<br><span class="acc">again?</span></h1>
+  <p class="eyebrow">Skin &amp; coat</p>
+  <h1>Licking the<br>same spot… <i>again?</i></h1>
   <p class="sub">Soothe it. Protect it. Let it heal.</p>
   <div class="slot-sh" style="left:396px; top:970px; width:200px; height:250px;"></div>
   <div class="slot" style="left:396px; top:960px; width:200px; height:250px;"></div>
@@ -96,7 +105,8 @@
 <section class="page" data-document-role="page" data-label="4 Bad breath"
   data-speaker-notes="Two product spaces: Plaque &amp; Tartar Powder and Dental Wipes.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>Love them.<br><span class="acc">Not the breath.</span></h1>
+  <p class="eyebrow">Mouth &amp; teeth</p>
+  <h1>Love them.<br><i>Not the breath.</i></h1>
   <p class="sub">Just sprinkle it on their food. No brushing battles.</p>
   <div class="slot-sh" style="left:534px; top:920px; width:240px; height:300px;"></div>
   <div class="slot" style="left:534px; top:910px; width:240px; height:300px;"></div>
@@ -110,7 +120,8 @@
 <section class="page" data-document-role="page" data-label="5 Mobility"
   data-speaker-notes="One product space: support harness.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>Help them up.<br><span class="acc">Without the strain.</span></h1>
+  <p class="eyebrow">Mobility &amp; joints</p>
+  <h1>Help them up.<br><i>Without the strain.</i></h1>
   <p class="sub">Up the stairs. Into the car. Back on their walks.</p>
   <div class="slot-sh" style="left:716px; top:830px; width:320px; height:390px;"></div>
   <div class="slot" style="left:716px; top:820px; width:320px; height:390px;"></div>
@@ -122,7 +133,8 @@
 <section class="page" data-document-role="page" data-label="6 Senior dogs"
   data-speaker-notes="Three product spaces: senior dog care products.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>More good days<br><span class="acc">together.</span></h1>
+  <p class="eyebrow">Senior care</p>
+  <h1>More good days<br><i>together.</i></h1>
   <p class="sub">Daily support for older dogs</p>
   <div class="slot-sh" style="left:396px; top:970px; width:200px; height:250px;"></div>
   <div class="slot" style="left:396px; top:960px; width:200px; height:250px;"></div>
@@ -137,10 +149,11 @@
 
 <section class="page" data-document-role="page" data-label="7 Braces · Wrist"
   data-speaker-notes="Carousel card 1. One large product space: Carpal Wrap.">
-  <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1 class="big">Weak or<br><span class="acc">sore wrist?</span></h1>
-  <div class="slot-sh" style="left:566px; top:650px; width:470px; height:560px;"></div>
-  <div class="slot" style="left:566px; top:640px; width:470px; height:560px;"></div>
+  <img class="fade" style="top:-30px;" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
+  <p class="eyebrow">Wrist support</p>
+  <h1 class="big">Weak or<br><i>sore wrist?</i></h1>
+  <div class="slot-sh" style="left:606px; top:690px; width:430px; height:520px;"></div>
+  <div class="slot" style="left:606px; top:680px; width:430px; height:520px;"></div>
   <div class="banner"></div>
   <img class="blogo" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
   <p class="btext"><b>Carpal Wrap</b><br>Swipe for more supports →</p>
@@ -148,10 +161,11 @@
 
 <section class="page" data-document-role="page" data-label="8 Braces · Knee"
   data-speaker-notes="Carousel card 2. One large product space: Knee Brace.">
-  <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1 class="big">Knee &amp; cruciate<br><span class="acc">support</span></h1>
-  <div class="slot-sh" style="left:566px; top:650px; width:470px; height:560px;"></div>
-  <div class="slot" style="left:566px; top:640px; width:470px; height:560px;"></div>
+  <img class="fade" style="top:-30px;" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
+  <p class="eyebrow">Knee support</p>
+  <h1 class="big">Knee &amp; cruciate<br><i>support</i></h1>
+  <div class="slot-sh" style="left:606px; top:690px; width:430px; height:520px;"></div>
+  <div class="slot" style="left:606px; top:680px; width:430px; height:520px;"></div>
   <div class="banner"></div>
   <img class="blogo" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
   <p class="btext"><b>Knee Brace</b><br>Swipe for more →</p>
@@ -159,10 +173,11 @@
 
 <section class="page" data-document-role="page" data-label="9 Braces · Elbow"
   data-speaker-notes="Carousel card 3. One large product space: Elbow Pads.">
-  <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1 class="big">Sore, bony<br><span class="acc">elbows?</span></h1>
-  <div class="slot-sh" style="left:566px; top:650px; width:470px; height:560px;"></div>
-  <div class="slot" style="left:566px; top:640px; width:470px; height:560px;"></div>
+  <img class="fade" style="top:-30px;" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
+  <p class="eyebrow">Elbow support</p>
+  <h1 class="big">Sore, bony<br><i>elbows?</i></h1>
+  <div class="slot-sh" style="left:606px; top:690px; width:430px; height:520px;"></div>
+  <div class="slot" style="left:606px; top:680px; width:430px; height:520px;"></div>
   <div class="banner"></div>
   <img class="blogo" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
   <p class="btext"><b>Elbow Pads</b><br>Swipe for more →</p>
@@ -170,10 +185,11 @@
 
 <section class="page" data-document-role="page" data-label="10 Braces · Paw"
   data-speaker-notes="Carousel card 4. One large product space: Leg Bootie Splint.">
-  <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1 class="big">Knuckling or<br><span class="acc">dragging a paw?</span></h1>
-  <div class="slot-sh" style="left:566px; top:650px; width:470px; height:560px;"></div>
-  <div class="slot" style="left:566px; top:640px; width:470px; height:560px;"></div>
+  <img class="fade" style="top:-30px;" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
+  <p class="eyebrow">Paw support</p>
+  <h1 class="big">Knuckling or<br><i>dragging a paw?</i></h1>
+  <div class="slot-sh" style="left:606px; top:690px; width:430px; height:520px;"></div>
+  <div class="slot" style="left:606px; top:680px; width:430px; height:520px;"></div>
   <div class="banner"></div>
   <img class="blogo" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
   <p class="btext"><b>Leg Bootie Splint</b><br>Swipe for more →</p>
@@ -181,10 +197,11 @@
 
 <section class="page" data-document-role="page" data-label="11 Braces · Back"
   data-speaker-notes="Carousel card 5. One large product space: Thermal Back Brace.">
-  <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1 class="big">Back support for<br><span class="acc">IVDD &amp; stiffness</span></h1>
-  <div class="slot-sh" style="left:566px; top:650px; width:470px; height:560px;"></div>
-  <div class="slot" style="left:566px; top:640px; width:470px; height:560px;"></div>
+  <img class="fade" style="top:-30px;" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
+  <p class="eyebrow">Back support</p>
+  <h1 class="big">Back support for<br><i>IVDD &amp; stiffness</i></h1>
+  <div class="slot-sh" style="left:606px; top:690px; width:430px; height:520px;"></div>
+  <div class="slot" style="left:606px; top:680px; width:430px; height:520px;"></div>
   <div class="banner"></div>
   <img class="blogo" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/video-ad-18s/assets/logo-dark.png" alt="Poorly Pet">
   <p class="btext"><b>Thermal Back Brace</b><br>Shop all supports</p>
@@ -193,8 +210,9 @@
 <section class="page" data-document-role="page" data-label="12 Retargeting"
   data-speaker-notes="Retargeting ad for people who visited but did not buy.">
   <img class="fade" src="https://raw.githubusercontent.com/poorlypet/Cloud/claude/determined-ritchie-72r4fh/ads/static-ads-4x5/assets/fade-cream-45.png" alt="">
-  <h1>Still thinking<br><span class="acc">it over?</span></h1>
-  <p class="sub">10% off your first order with code <b>POORLY10</b></p>
+  <p class="eyebrow">Welcome offer</p>
+  <h1>Still thinking<br><i>it over?</i></h1>
+  <p class="sub">10% off your first order with code <span>POORLY10</span></p>
   <div class="slot-sh" style="left:470px; top:950px; width:566px; height:230px;"></div>
   <div class="card" style="left:470px; top:940px; width:566px; height:230px;"></div>
   <p class="ticks" style="left:512px; top:976px; width:500px;"><span>✓</span>  Free UK delivery over £39<br><span>✓</span>  Vet-informed range<br><span>✓</span>  Rated 4.6/5 by UK dog owners</p>
