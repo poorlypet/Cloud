@@ -16,7 +16,6 @@ Layout source: `canva-import.html` in this folder (Fraunces / Inter, same system
 | 7 | Jack Russell with wrist wrap | MAHXL_x2pmg | top 60 |
 | 8 | Border collie with knee brace | MAHXLy3FMlg | resize 1220×1525, top −40, left −140 |
 | 9 | Great Dane with elbow pads | MAHXL8LyHpI | top 80; product card moved up to top 400 (shadow 410) |
-
 | 10 | Springer spaniel with leg bootie splint | MAHXOtjV1qM | top 40 |
 | 11 | Dachshund with thermal back brace | MAHXOgpY_u8 | resize 1296×1620, top −150, left −216 |
 | 12 | Frenchie grinning, owner thumbs up (from the dental video) | MAHXLvGpqzs | resize 1080×1922, top −330 |
