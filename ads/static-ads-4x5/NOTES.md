@@ -17,10 +17,17 @@ Layout source: `canva-import.html` in this folder (Fraunces / Inter, same system
 | 8 | Border collie with knee brace | MAHXLy3FMlg | resize 1220×1525, top −40, left −140 |
 | 9 | Great Dane with elbow pads | MAHXL8LyHpI | top 80; product card moved up to top 400 (shadow 410) |
 
-## Still to do
+| 10 | Springer spaniel with leg bootie splint | MAHXOtjV1qM | top 40 |
+| 11 | Dachshund with thermal back brace | MAHXOgpY_u8 | resize 1296×1620, top −150, left −216 |
+| 12 | Frenchie grinning, owner thumbs up (from the dental video) | MAHXLvGpqzs | resize 1080×1922, top −330 |
 
-- Page 10 (paw): springer spaniel walking on grass with a sage splint bootie on one back paw, dog in the left half.
-- Page 11 (back): dachshund side-on wearing a padded terracotta thermal back brace, dog in the left half.
-- Page 12 (retargeting): happy dog (the terrier, MAHXLSZEonc as reference) sitting by an open delivery box with a sage bow, small hearts and paw prints, dog and box on the left.
-- Generate each in the same painted style (reference MAHXL_x2pmg), PORTRAIT_4_5, top 30% plain cream.
-- Then storyboard, approval, save in Canva, and share the link.
+## Products in the white boxes (real shop photos, cutouts in assets/products/)
+
+- 2 Anxiety: Natural Calming Drops 50ml, Calming Aid Probiotic Powder
+- 3 Itching: Wound & Skin Repair Powder, Hot Spot & Itch Relief Spray, Yeast Support
+- 4 Bad breath: Plaque & Tartar Remover Powder, Dental Cleaning Wipes
+- 5 Mobility: Full Body Support Harness
+- 6 Senior: Super Joints, Joint Care Chews, Canine Prime 40-in-1
+- 7–11 Braces: Carpal Wrap, Knee Brace, Elbow Pads, Leg Bootie Splint, Thermal Back Brace
+
+Status: finished and saved in Canva.
