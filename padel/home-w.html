@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL W Framed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail.css">
+<style>
+:root{}
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;letter-spacing:-.005em;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hrow h1{font-size:clamp(26px,2.6vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:20ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+.hero{padding-block:16px 0}
+.hero .box{position:relative;height:min(64vh,620px);min-height:380px;color:#fff;display:flex;align-items:flex-end}
+.hero .box:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45),rgba(0,0,0,0) 50%);z-index:1}
+.hero .box .in{position:relative;z-index:2;padding:32px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;width:100%;flex-wrap:wrap}
+.hero .box h1{font-size:clamp(26px,2.8vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:18ch}
+.hero .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.hero .three a{background:var(--grey);padding:22px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hero .three a b{font-size:16px}
+.hero .three a:hover{background:var(--fg);color:#fff}
+@media(max-width:1100px){.hero .three{grid-template-columns:1fr}}
+@media(max-width:1100px){.hrow .b{width:100%}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="box"><video class="vid" autoplay muted loop playsinline poster="media/aerial.jpg" src="media/aerial.mp4"></video><div class="in"><h1>Shop over 40 padel and pickleball brands.</h1><a class="btn wh" href="#">Shop new in</a></div></div>
+<div class="three"><a href="#"><b>Padel rackets</b><span>→</span></a><a href="#"><b>Pickleball paddles</b><span>→</span></a><a href="#"><b>Padel shoes</b><span>→</span></a></div></div></section><div style="height:24px"></div>
+<div data-m="trust"></div>
+<div data-m="duo"></div>
+<div data-m="products" data-tabs="new,best" data-n="4" data-cls="t0"></div>
+<div data-m="rail" data-title="Sale" data-f="sale" data-cls="t0"></div>
+<div data-m="reviews"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail.js"></script>
+
+</body></html>

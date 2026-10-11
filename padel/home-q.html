@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL Q Five clips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail.css">
+<style>
+:root{}
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;letter-spacing:-.005em;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hrow h1{font-size:clamp(26px,2.6vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:20ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+.hero{padding-block:24px 48px}
+.five{display:flex;justify-content:center}
+.five .wm{flex:none}
+.five .mask{position:relative;inset:auto}
+.five .mask span{font-size:calc((min(100vw,1600px) - 2*var(--g)) / 2.2);display:block;line-height:.9;padding-top:.04em}
+.hero .hrow{margin-top:32px}
+@media(max-width:1100px){.hrow .b{width:100%}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="five"><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><div class="mask"><span>P</span></div></div><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/court.jpg" src="media/court.mp4"></video><div class="mask"><span>A</span></div></div><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video><div class="mask"><span>D</span></div></div><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/aerial.jpg" src="media/aerial.mp4"></video><div class="mask"><span>E</span></div></div><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/city.jpg" src="media/city.mp4"></video><div class="mask"><span>L</span></div></div></div>
+<div class="hrow"><h1>Rackets, shoes and kit from over 40 brands.</h1><div class="b"><a class="btn" href="#">Shop padel rackets</a><a class="btn ol" href="#">Shop pickleball</a></div></div></div></section>
+<div data-m="trust"></div>
+<div data-m="cats" data-cols="3" data-title="Shop by category"></div>
+<div data-m="rail" data-title="Best sellers" data-f="rackets" data-cls="t0"></div>
+<div data-m="shapes" data-cls="grey"></div>
+<div data-m="reviews"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail.js"></script>
+
+</body></html>

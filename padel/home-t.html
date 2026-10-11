@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL T Bento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail.css">
+<style>
+:root{--accent:#B0141E;}
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;letter-spacing:-.005em;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hrow h1{font-size:clamp(26px,2.6vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:20ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+.hero{padding-block:16px 0}
+.bento{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:16px;height:min(78vh,760px);min-height:520px}
+.bento .wm{grid-row:1/3}
+.bento .wm .mask span{font-size:calc(((min(100vw,1600px) - 2*var(--g) - 16px) * 2 / 3) / 2.25)}
+.bento .wm .lab{position:absolute;left:24px;right:24px;bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;z-index:2}
+.bento .wm .lab b{font-size:18px}
+.bento>a:not(.wm){position:relative;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;overflow:hidden}
+.bento .p1{background:var(--pbg)}
+.bento .p1 img{position:absolute;right:6%;top:8%;height:70%;width:auto;transform:rotate(-14deg)}
+.bento>a>*{position:relative}
+.bento h3{font-size:22px;font-weight:700;letter-spacing:-.01em}
+@media(max-width:1100px){.bento{grid-template-columns:1fr;grid-template-rows:auto;height:auto}.bento .wm{grid-row:auto;height:calc((100vw - 32px) * .42 + 76px)}.bento .wm .mask{align-items:flex-start;padding-top:8px}.bento .wm .mask span{font-size:calc((100vw - 32px)/2.25)}.bento .wm .lab{left:0;right:0;bottom:12px}.bento .wm .lab b{font-size:14px}.bento>a:not(.wm){min-height:300px}}
+@media(max-width:1100px){.hrow .b{width:100%}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap bento"><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/city.jpg" src="media/city.mp4"></video><div class="mask"><span>PADEL</span></div><div class="lab"><b>Europe's padel brands in one store</b><a class="btn" href="#">Shop rackets</a></div></div>
+<a class="p1" href="#"><img src="media/racket.jpg" alt=""><span class="mute" style="font-weight:700">Racket of the week</span><h3>Head Speed Motion 2026</h3><span>£189</span></a>
+<a class="ph" href="#"><span class="note" style="top:12px;bottom:auto">Photo: pickleball paddle and ball on court</span><h3>Pickleball</h3><span class="ul">Shop paddles</span></a></div></section>
+<div data-m="trust"></div>
+<div data-m="clist" data-title="Shop"></div>
+<div data-m="products" data-tabs="best,new" data-n="8" data-cls="t0"></div>
+<div data-m="insta" data-cls="t0"></div>
+<div data-m="reviews"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail.js"></script>
+
+</body></html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL Y Plain video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail.css">
+<style>
+:root{}
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;letter-spacing:-.005em;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hrow h1{font-size:clamp(26px,2.6vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:20ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+.hero{position:relative;height:min(80vh,780px);min-height:480px;color:#fff;background:#000}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45),rgba(0,0,0,0) 45%)}
+.hero .in{position:absolute;left:0;right:0;bottom:48px;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;padding-inline:16px}
+.hero h1{font-size:clamp(26px,2.6vw,40px);font-weight:700;letter-spacing:-.02em}
+@media(max-width:1100px){.hrow .b{width:100%}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><video class="vid" autoplay muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video><div class="in"><h1>Find a racket at the right price.</h1><a class="btn wh" href="#">Shop padel rackets</a></div></section>
+<div data-m="trust"></div>
+<div data-m="prices"></div>
+<div data-m="products" data-tabs="best,shoes,pickle" data-n="8" data-cls="t0"></div>
+<div data-m="reviews"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail.js"></script>
+
+</body></html>
