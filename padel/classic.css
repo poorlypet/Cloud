@@ -332,3 +332,53 @@
 }
 .tpr{padding-bottom:0}
 @media(max-width:760px){.tpr{padding-bottom:0}}
+
+/* round: mobile refinements */
+.card .new{display:none}
+/* smarter mobile menu */
+.drawer .body.mn{position:relative;overflow:hidden;padding:0}
+.mp{position:absolute;inset:0;overflow-y:auto;padding:4px 24px 28px;background:var(--bg);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.mp.main.off{transform:translateX(-25%)}
+.mp.sub{transform:translateX(100%);box-shadow:-12px 0 24px rgba(0,0,0,.06)}
+.mp.sub.on{transform:none}
+.mi{display:flex;justify-content:space-between;align-items:center;width:100%;padding:17px 0;border-bottom:1px solid var(--line);font-family:var(--head);font-weight:600;font-size:19px;letter-spacing:-.015em;text-align:left}
+.mi.sale{color:var(--accent)}
+.mx{display:flex;flex-direction:column;gap:2px;margin-top:20px}
+.mx a{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:15px;color:#3A3A3A}
+.mx svg{width:20px;height:20px}
+.mtp{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px;padding:14px;background:var(--grey);font-size:13px}
+.mback{display:flex;align-items:center;gap:6px;padding:14px 0;font-weight:700;font-size:14px;color:#3A3A3A}
+.mp.sub h3{font-family:var(--head);font-weight:700;letter-spacing:-.03em;font-size:28px;margin:4px 0 8px}
+.mp.sub h6{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:22px 0 4px}
+.mgrp{display:flex;flex-direction:column}
+.mgrp a{padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.mchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.mchips a{padding:8px 12px;background:var(--grey);font-size:13px;font-weight:700}
+.mall{width:100%;margin-top:26px}
+
+@media(max-width:760px){
+ /* hero: review bar only, one line */
+ .hero .box{height:calc(100svh - 64px - 10px - 52px)}
+ .tbar{flex-direction:row;min-height:52px;gap:0;padding:0 12px}
+ .tbar>span:last-child{display:none}
+ .tbar>span:first-child{gap:8px!important;font-size:14px}
+ .tbar .stars i{width:18px;height:18px}.tbar .stars i svg{width:12px;height:12px}
+ /* statement: three lines, last line highlighted */
+ .wst p{font-size:23px;line-height:1.25}
+ .wst mark{display:table;margin:3px auto 0}
+ /* promo tiles all the same text size */
+ .promo3 .pt h3,.promo3 .pt.big h3{font-size:26px}
+ .promo3 .pt,.promo3 .pt.big{padding:24px}
+ /* no product badges */
+ .card .stag{display:none}
+ /* footer stacked, accordion */
+ .fmain{grid-template-columns:1fr;gap:0}
+ .fbrand{margin-bottom:20px}
+ .fmain>div:not(.fbrand){border-top:1px solid #DADADA}
+ .fmain>div:not(.fbrand):last-child{border-bottom:1px solid #DADADA}
+ .fmain>div:not(.fbrand)>h4{display:flex;justify-content:space-between;align-items:center;margin:0;padding:16px 0;cursor:pointer}
+ .fmain>div:not(.fbrand)>h4:after{content:"";width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+ .fmain>div.open>h4:after{transform:rotate(-135deg) translateY(-3px)}
+ .fmain>div:not(.fbrand)>ul{display:none;padding-bottom:12px}
+ .fmain>div.open>ul{display:block}
+}

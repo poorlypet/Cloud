@@ -65,6 +65,7 @@ const IC={s:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
  u:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
  b:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
  m:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h18"/></svg>'};
+const CHR='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg>',CHL='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>';
 const ARW='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
 const MEGA2={
  rackets:{t:'Padel rackets',cols:[['Shop by level',['Beginner rackets','Intermediate rackets','Advanced rackets','Not sure? Racket guide']],['Shop by shape',['Round','Teardrop','Diamond','Hybrid']],['Shop by price',['Under £100','£100 to £200','£200 to £300','Over £300','Sale rackets']]],brands:['Bullpadel','Nox','Head','Babolat','Adidas Padel','StarVie'],feat:['Speed Motion 2026','Vertex 04 Hybrid 2026']},
@@ -96,13 +97,16 @@ function header(){
   document.body.insertAdjacentHTML('beforeend',`<div class="scrim" id="scrim"></div>
   <aside class="search" id="search"><div class="wrap"><div class="row">${IC.s.replace('<svg','<svg width="22" height="22"')}<input id="q" placeholder="Search rackets, brands and more" autocomplete="off"><button class="x" data-close aria-label="Close"></button></div><div class="res" id="sres"></div></div></aside>
   <aside class="drawer" id="bag"><div class="top">Bag<button class="x" data-close aria-label="Close"></button></div><div class="body" id="bagb"></div><div class="foot" id="bagf"></div></aside>
-  <aside class="drawer left" id="menu"><div class="top"><span class="logo">PADEL<i>.</i></span><button class="x" data-close aria-label="Close"></button></div><div class="body mnav">${Object.entries(mm).map(([t,l])=>`<button data-acc>${t}<span>+</span></button><div class="sub">${l.map(x=>`<a href="#">${x}</a>`).join('')}</div>`).join('')}<a href="#">Balls</a><a href="#">Beginners</a><a href="#" style="color:var(--accent)">Sale</a><a href="#">Account</a><a href="#">Help</a></div></aside><div class="toast" id="toast"></div>`);
-  $$('[data-acc]').forEach(b=>b.onclick=()=>{const s=b.nextElementSibling;s.classList.toggle('on');b.lastChild.textContent=s.classList.contains('on')?'−':'+';});
+  <aside class="drawer left" id="menu"><div class="top"><span class="logo">PADEL<i>.</i></span><button class="x" data-close aria-label="Close"></button></div><div class="body mn"><div class="mp main">${Object.entries(MEGA2).map(([k,m])=>`<button class="mi" data-sub="${k}">${m.t}${CHR}</button>`).join('')}<a class="mi" href="#">Balls</a><a class="mi" href="#">Beginners</a><a class="mi sale" href="#">Sale</a>
+  <div class="mx"><a href="#">${IC.u}Account</a><a href="#">Help</a><a href="#">Track my order</a></div><div class="mtp"><b>Excellent</b>${stars('s')}<span>${STORE.tpScore} on Trustpilot</span></div></div>
+  ${Object.entries(MEGA2).map(([k,m])=>`<div class="mp sub" data-p="${k}"><button class="mback">${CHL}Back</button><h3>${m.t}</h3>${m.az?`<div class="mgrp">${BRANDS.map(b=>`<a href="#">${b}</a>`).join('')}</div>`:m.cols.map(([h,l])=>`<h6>${h}</h6><div class="mgrp">${l.map(x=>`<a href="#">${x}</a>`).join('')}</div>`).join('')+(m.brands?`<h6>Top brands</h6><div class="mchips">${m.brands.map(b=>`<a href="#">${b}</a>`).join('')}</div>`:'')}<a class="btn mall" href="#">View all ${m.t.toLowerCase()}</a></div>`).join('')}</div></aside><div class="toast" id="toast"></div>`);
+  $$('[data-sub]').forEach(b=>b.onclick=()=>{$('.mp.main').classList.add('off');$(`.mp.sub[data-p="${b.dataset.sub}"]`).classList.add('on');});
+  $$('.mback').forEach(b=>b.onclick=()=>{b.closest('.mp').classList.remove('on');$('.mp.main').classList.remove('off');});
   const sf=$('#sf');sf.addEventListener('focus',()=>{sf.blur();open('search');});
 }
 let openEl=null;
 function open(id){close();openEl=$('#'+id);openEl.classList.add('on');$('#scrim').classList.add('on');document.body.classList.add('lock');if(id==='search'){search('');setTimeout(()=>$('#q').focus(),150);}if(id==='bag')bagView();}
-function close(){if(openEl)openEl.classList.remove('on');openEl=null;const s=$('#scrim');if(s)s.classList.remove('on');document.body.classList.remove('lock');}
+function close(){if(openEl)openEl.classList.remove('on');$$('.mp.sub.on').forEach(p=>p.classList.remove('on'));const mm=$('.mp.main');if(mm)mm.classList.remove('off');openEl=null;const s=$('#scrim');if(s)s.classList.remove('on');document.body.classList.remove('lock');}
 function search(q){
   q=q.trim().toLowerCase();const r=$('#sres');
   const hit=q?P.filter(x=>`${x.b} ${x.n} ${spec(x)} ${x.c}`.toLowerCase().includes(q)):F.new();
@@ -217,7 +221,7 @@ Object.assign(M,{
 
 function card(x){const r=(4.5+((x.i*7)%5)/10).toFixed(1),c=12+(x.i*37)%180;
   return `<a class="card" href="#"><div class="im">${hasImg(x)?`<img src="${IMG}" alt="${x.b} ${x.n}" loading="lazy">`:'<span class="note">Product image</span>'}${x.w?`<span class="stag">Save £${x.w-x.p}</span>`:''}<button class="add" data-add="${x.i}">Add to bag</button></div>
-  <div class="meta">${x.nw?'<div class="new">New</div>':''}<div class="br">${x.b}</div><div>${x.n}</div><div class="rt">${stars('s')}<span>${r} (${c})</span></div><div class="pr">${x.w?`<span class="now">${gbp(x.p)}</span><s>${gbp(x.w)}</s>`:gbp(x.p)}</div>${spec(x)?`<div class="sp">${spec(x)}</div>`:''}</div></a>`;}
+  <div class="meta"><div class="br">${x.b}</div><div>${x.n}</div><div class="rt">${stars('s')}<span>${r} (${c})</span></div><div class="pr">${x.w?`<span class="now">${gbp(x.p)}</span><s>${gbp(x.w)}</s>`:gbp(x.p)}</div>${spec(x)?`<div class="sp">${spec(x)}</div>`:''}</div></a>`;}
 /* classic modules */
 LVLS[1][1]='New';LVLS[1][2]='Light, forgiving round rackets that are easy to swing.';
 LVLS[2][1]='Improving';LVLS[2][2]='Hybrid shapes that add power without losing control.';
@@ -245,7 +249,7 @@ function augHeads(){$$('.sh').forEach(sh=>{const h=sh.querySelector('h2');if(!h|
  const box=document.createElement('div');box.className='shl';h.replaceWith(box);box.appendChild(h);
  if(d){if(d[0])h.insertAdjacentHTML('beforeend',`<sup>${d[0]}</sup>`);box.insertAdjacentHTML('beforeend',`<p>${d[1]}</p>`);}
  const l=sh.querySelector(':scope > a.ul');if(l){l.className='shbtn';l.insertAdjacentHTML('beforeend',ARW);}});}
-function fx(){augHeads();const b=document.getElementById('bgm');if(b){const s=b.closest('.rated');const t=()=>{const r=s.getBoundingClientRect();b.style.transform=`rotate(-28deg) translate3d(0,${(-(r.top)*0.35).toFixed(1)}px,0)`;};addEventListener('scroll',t,{passive:true});t();}
+function fx(){augHeads();$$('.fmain>div:not(.fbrand)>h4').forEach(h=>{h.setAttribute('role','button');h.tabIndex=0;h.onclick=()=>h.parentElement.classList.toggle('open');});const b=document.getElementById('bgm');if(b){const s=b.closest('.rated');const t=()=>{const r=s.getBoundingClientRect();b.style.transform=`rotate(-28deg) translate3d(0,${(-(r.top)*0.35).toFixed(1)}px,0)`;};addEventListener('scroll',t,{passive:true});t();}
  $$('.chips button').forEach(x=>x.onclick=()=>$$('.chips button').forEach(y=>y.classList.toggle('on',y===x)));}
 document.addEventListener('DOMContentLoaded',()=>setTimeout(fx,0));
 
