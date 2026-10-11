@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL J Court blue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Barlow+Condensed:wght@700;800&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+<style>
+:root{--accent:#1E4FD8;--fog:#F1F3F8;--line:#E3E6EE;--display:'Barlow Condensed','Arial Narrow',sans-serif;--dw:800;--ds:100%;--dl:0;--dlh:.92;}
+.hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;padding:16px var(--g) 0;max-width:calc(var(--max) + 2*var(--g));margin:0 auto}
+.hero .p{background:var(--pbg);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;min-height:min(76vh,720px);padding:56px clamp(24px,4vw,70px);gap:30px}
+.hero .p img{width:100%;max-height:60vh;object-fit:contain;transform:rotate(-8deg)}
+.hero h1{font-size:clamp(44px,5vw,84px)}
+.hero .p p{color:var(--mute);margin:18px 0 8px;max-width:360px}
+.hero .price{font-weight:700;font-size:20px;margin-bottom:24px}
+.hero .v{position:relative;min-height:420px;color:#fff;display:flex;align-items:flex-end;padding:28px}
+.hero .v>div{position:relative}
+.hero .v h2{font-size:40px;margin-bottom:14px}
+@media(max-width:1100px){.hero{grid-template-columns:1fr}.hero .p{grid-template-columns:1fr;padding:40px 20px}}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="p"><div><span class="lbl acc">Racket of the month</span><h1 class="d" style="margin-top:12px">Head Speed Motion 2026</h1><p>A teardrop that rewards good technique. Carbon face, medium core, 360g.</p><div style="margin-bottom:10px" id="jlv"></div><div class="price">£189</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn acc-bg" data-add="0">Add to bag</button><a class="btn ghost" href="#">View details</a></div></div><img src="media/racket.jpg" alt="Head Speed Motion 2026"></div>
+<a class="v" href="#"><video class="vid" autoplay muted loop playsinline poster="media/aerial.jpg" src="media/aerial.mp4"></video><div><h2 class="d">Pickleball</h2><span class="btn lt">Shop paddles</span></div></a></section>
+<div data-sec="usp"></div>
+<div data-sec="products" data-title="Best sellers" data-tabs="1" data-count="4"></div>
+<div data-sec="cats" data-cols="3" data-tight="tight"></div>
+<div data-sec="levels" data-dark="1" data-tight="tight"></div>
+<div data-sec="reviews" data-bg="var(--fog)"></div>
+<div data-sec="brands"></div>
+<div data-sec="news"></div>
+<div data-sec="ftr"></div>
+<script src="shop.js"></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('jlv').innerHTML=PADEL.lvTag(2)});</script>
+</body></html>

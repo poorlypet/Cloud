@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL N Slate slider</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Barlow+Condensed:wght@700;800&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+<style>
+:root{--accent:#FF6A13;--fog:#EDEFF1;--line:#DFE3E7;--dark:#22272E;--mute:#5F6873;--display:'Big Shoulders Display','Arial Narrow',sans-serif;--dw:900;--ds:100%;--dl:0;--dlh:.9;}
+.hero{position:relative;height:min(80vh,780px);min-height:540px;overflow:hidden;background:var(--dark)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+.slide.on{opacity:1;visibility:visible}
+.slide .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:20px}
+.slide h1{font-size:clamp(44px,5.6vw,92px);max-width:11ch}
+.slide p{max-width:380px}
+.s1{color:#fff}.s1 p{color:#D8D8D8}.s1:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,0) 65%);z-index:0}
+.s2{background:var(--pbg)}.s2 img{position:absolute;right:8%;top:8%;height:84%;width:auto;transform:rotate(-10deg)}
+.s3{background:var(--accent);color:#fff}
+.ctrl{position:absolute;right:var(--g);bottom:32px;display:flex;align-items:center;gap:16px;z-index:5}
+.ctrl button.ar{width:48px;height:48px;background:#fff;color:#0B0B0B;display:grid;place-items:center;font-size:18px}
+.ctrl button.ar:hover{background:var(--fg);color:var(--bg)}
+.dots{display:flex;gap:6px}.dots button{width:28px;height:3px;background:rgba(128,128,128,.5)}.dots button.on{background:var(--fg)}
+.s1.on~.ctrl .dots button.on{background:#fff}
+@media(max-width:1100px){.s2 img{opacity:.25}.s1:before{background:rgba(0,0,0,.45)}}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+<section class="hero" id="hs">
+<div class="slide s1 on"><video class="vid" autoplay muted loop playsinline poster="media/court.jpg" src="media/court.mp4"></video><div class="wrap"><span class="lbl">Spring Summer 2026</span><h1 class="d">The new season is on court</h1><p>Fresh rackets from Bullpadel, Nox and Siux.</p><a class="btn lt" href="#">Shop new in</a></div></div>
+<div class="slide s2"><img src="media/racket.jpg" alt=""><div class="wrap"><span class="lbl acc">Beginner bundle</span><h1 class="d">Racket, balls and bag. £99.</h1><p class="mute">Everything you need for your first season, picked by our coaches.</p><a class="btn" href="#">Shop the bundle</a></div></div>
+<div class="slide s3"><div class="wrap"><span class="lbl">Ends Sunday</span><h1 class="d">Up to 30% off last season</h1><p>Rackets, shoes and bags from 12 brands.</p><a class="btn lt" href="#">Shop the sale</a></div></div>
+<div class="ctrl"><div class="dots"><button class="on" aria-label="Slide 1"></button><button aria-label="Slide 2"></button><button aria-label="Slide 3"></button></div><button class="ar" data-d="-1" aria-label="Previous">←</button><button class="ar" data-d="1" aria-label="Next">→</button></div></section>
+<div data-sec="usp"></div>
+<div data-sec="cats" data-cols="6"></div>
+<div data-sec="products" data-title="Shop by level" data-tabs="1" data-count="8" data-tight="tight"></div>
+<div data-sec="reviews" data-bg="var(--fog)"></div>
+<div data-sec="brands"></div>
+<div data-sec="news"></div>
+<div data-sec="ftr"></div>
+<script src="shop.js"></script>
+<script>(()=>{const h=document.getElementById('hs'),s=[...h.querySelectorAll('.slide')],d=[...h.querySelectorAll('.dots button')];let c=0;
+const go=i=>{c=(i+s.length)%s.length;s.forEach((x,j)=>x.classList.toggle('on',j===c));d.forEach((x,j)=>x.classList.toggle('on',j===c));h.querySelector('.ctrl').style.color=c===1?'#0B0B0B':'#fff';};
+d.forEach((b,i)=>b.onclick=()=>go(i));h.querySelectorAll('.ar').forEach(b=>b.onclick=()=>go(c+ +b.dataset.d));})();</script>
+</body></html>

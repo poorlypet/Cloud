@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL H Ball yellow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Barlow+Condensed:wght@700;800&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+<style>
+:root{--accent:#D4F000;--on-accent:#0B0B0B;--dark:#111111;--display:'Big Shoulders Display','Arial Narrow',sans-serif;--dw:900;--ds:100%;--dl:0;--dlh:.9;}
+.acc{color:#6B7C00}.news .acc,.ftr .acc{color:var(--accent)}
+.hero{background:var(--dark);color:#fff;padding-block:64px 0}
+.hero .top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:40px}
+.hero h1{font-size:clamp(48px,6vw,96px)}
+.hero h1 span{color:var(--accent)}
+.hero p{max-width:380px;color:#BDBDBD;margin-bottom:22px}
+.hero .box{position:relative;aspect-ratio:16/7;max-height:70vh;width:100%}
+.hero .bot{background:linear-gradient(var(--dark) 50%,var(--bg) 50%)}
+@media(max-width:1100px){.hero .box{aspect-ratio:4/3}}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="top"><h1 class="d">Your next racket<br>is <span>in here.</span></h1><div><p>320 padel rackets and 64 pickleball paddles from the best brands in Europe.</p><a class="btn acc-bg" href="#">Shop all rackets</a></div></div></div>
+<div class="bot"><div class="wrap"><div class="box"><video class="vid" autoplay muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video></div></div></div></section>
+<div data-sec="cats" data-cols="6"></div>
+<div data-sec="products" data-title="Trending now" data-tabs="1" data-count="8" data-tight="tight"></div>
+<div data-sec="reviews" data-tight="tight"></div>
+<div data-sec="levels" data-dark="3" data-tight="tight"></div>
+<div data-sec="news"></div>
+<div data-sec="ftr"></div>
+<script src="shop.js"></script>
+
+</body></html>

@@ -12,13 +12,17 @@
 .opt>*{position:relative}
 .opt h2{font-size:clamp(44px,5vw,90px)}
 .opt p{color:#DDD;font-size:14px}
-@media (max-width:1000px){.opts{grid-template-columns:1fr 1fr}}
+.opts2{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.opt2{background:var(--fog);padding:24px;min-height:220px;display:flex;flex-direction:column;gap:10px;transition:background .2s,color .2s}
+.opt2:hover{background:var(--ink);color:#fff}.opt2 h3{font-size:36px;margin-top:auto}.opt2 p{font-size:14px;color:var(--steel)}.opt2:hover p{color:#bbb}
+@media (max-width:1000px){.opts,.opts2{grid-template-columns:1fr 1fr}}
 </style></head>
 <body>
 <header class="hdr" data-hdr></header>
 <section class="sec" style="padding-top:60px"><div class="wrap">
   <h1 class="d" style="font-size:clamp(60px,10vw,180px)">Homepage<br>options<span class="acc">.</span></h1>
-  <div class="opts">
+  <h2 class="d" style="font-size:clamp(40px,5vw,80px);margin:90px 0 10px">Round two<span class="acc">.</span></h2><p class="muted" style="margin-bottom:30px">Retail first. Mega menu, working search and bag, Trustpilot reviews and level tags on every product.</p><div class="opts2"><a class="opt2" href="home-f.html"><span class="lbl">Option F</span><h3 class="d">Monochrome</h3><p>Black and white video hero, orange accent</p></a><a class="opt2" href="home-g.html"><span class="lbl">Option G</span><h3 class="d">Concrete red</h3><p>Split hero with standalone video, deep red, wide type</p></a><a class="opt2" href="home-h.html"><span class="lbl">Option H</span><h3 class="d">Ball yellow</h3><p>Framed video, padel ball yellow accent</p></a><a class="opt2" href="home-i.html"><span class="lbl">Option I</span><h3 class="d">Navy wordmark</h3><p>Static PADEL wordmark with video inside, navy and orange</p></a><a class="opt2" href="home-j.html"><span class="lbl">Option J</span><h3 class="d">Court blue</h3><p>Racket of the month hero, court blue accent</p></a><a class="opt2" href="home-k.html"><span class="lbl">Option K</span><h3 class="d">Graphite</h3><p>Dark mode, padel and pickleball side by side</p></a><a class="opt2" href="home-l.html"><span class="lbl">Option L</span><h3 class="d">Court green</h3><p>No video. Photo hero with a search bar</p></a><a class="opt2" href="home-m.html"><span class="lbl">Option M</span><h3 class="d">Black and ball</h3><p>Plain full screen video, small headline</p></a><a class="opt2" href="home-n.html"><span class="lbl">Option N</span><h3 class="d">Slate slider</h3><p>Three slide banner with arrows, slate and orange</p></a><a class="opt2" href="home-o.html"><span class="lbl">Option O</span><h3 class="d">Burgundy bento</h3><p>Video plus two promo tiles, burgundy</p></a></div>
+  <h2 class="d" style="font-size:clamp(40px,5vw,80px);margin:90px 0 10px">Round one<span class="acc">.</span></h2><div class="opts">
     <a class="opt" href="home-a.html"><video class="vid" autoplay muted loop playsinline src="media/rally.mp4"></video><span class="lbl">Option A</span><div><h2 class="d">Wordmark</h2><p>Video plays through the PADEL letters, which open to full screen as you scroll.</p></div></a>
     <a class="opt" href="home-b.html"><video class="vid" autoplay muted loop playsinline src="media/ball.mp4"></video><span class="lbl">Option B</span><div><h2 class="d">Channels</h2><p>Closest to Bullpadel. Full bleed video with level channels that auto advance. Racket finder.</p></div></a>
     <a class="opt" href="home-c.html"><video class="vid" autoplay muted loop playsinline src="media/court.mp4"></video><span class="lbl">Option C</span><div><h2 class="d">Strips</h2><p>Four video strips, one per level. Hover opens a strip in colour.</p></div></a>

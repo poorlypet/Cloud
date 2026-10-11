@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL M Black and ball</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Barlow+Condensed:wght@700;800&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+<style>
+:root{--accent:#C6E000;--on-accent:#0B0B0B;--dark:#000000;}
+.acc{color:#5E6B00}.news .acc,.ftr .acc{color:var(--accent)}
+.hero{position:relative;height:min(84vh,820px);min-height:520px;background:#000;color:#fff}
+.hero .in{position:absolute;inset:auto 0 56px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 16px}
+.hero h1{font-size:clamp(36px,4vw,60px)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,0) 45%);pointer-events:none}
+.hero .in{z-index:1}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+<section class="hero"><video class="vid" autoplay muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video><div class="in"><h1 class="d">New season rackets</h1><a class="btn lt" href="#">Shop now</a></div></section>
+<div data-sec="usp"></div>
+<div data-sec="products" data-title="New in" data-count="8"></div>
+<div data-sec="cats" data-cols="6" data-tight="tight"></div>
+<div data-sec="levels" data-dark="3" data-tight="tight"></div>
+<div data-sec="brands" data-tight="tight"></div>
+<div data-sec="reviews" data-bg="var(--fog)"></div>
+<div data-sec="news"></div>
+<div data-sec="ftr"></div>
+<script src="shop.js"></script>
+
+</body></html>

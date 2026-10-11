@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL F Monochrome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Barlow+Condensed:wght@700;800&family=Big+Shoulders+Display:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shop.css">
+<style>
+:root{}
+.hero{position:relative;height:min(78vh,760px);min-height:520px;background:#000;color:#fff;overflow:hidden}
+.hero video{filter:grayscale(1) brightness(.6) contrast(1.1)}
+.hero .wrap{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-block:56px}
+.hero h1{font-size:clamp(44px,5.6vw,88px);max-width:12ch}
+.hero p{max-width:400px;color:#D6D6D6;margin:18px 0 28px}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+<section class="hero"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video>
+<div class="wrap"><span class="lbl" style="color:#bbb">New season 2026</span><h1 class="d" style="margin-top:14px">Sharper on court.</h1><p>The best of European padel, sorted by level. From your first racket to your tournament weapon.</p><div class="row"><a class="btn lt" href="#">Shop rackets</a><a class="btn ghost" href="#">Find my level</a></div></div></section>
+<div data-sec="usp"></div>
+<div data-sec="cats" data-cols="6"></div>
+<div data-sec="products" data-title="Best sellers" data-tabs="1" data-count="4" data-tight="tight"></div>
+<div data-sec="levels" data-dark="2" data-tight="tight"></div>
+<div data-sec="reviews" data-bg="var(--fog)"></div>
+<div data-sec="news"></div>
+<div data-sec="ftr"></div>
+<script src="shop.js"></script>
+
+</body></html>
