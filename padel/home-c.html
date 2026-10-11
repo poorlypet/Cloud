@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PADEL | Home C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="padel.css">
+<style>
+/* Hero: four video strips, one per level. Hover opens a strip and plays it in colour */
+.hero{padding:0 0 0;background:#fff}
+.hero .head{display:flex;justify-content:space-between;align-items:flex-end;padding:40px var(--g) 24px;gap:30px}
+.hero h1{font-size:clamp(60px,10.5vw,200px)}
+.hero h1 em{font-style:normal;-webkit-text-stroke:2px var(--ink);color:transparent}
+.hero .head p{max-width:330px;color:var(--steel);margin-bottom:12px}
+.strips{display:flex;height:72vh;min-height:520px;gap:2px;padding:0 var(--g)}
+.strip{position:relative;flex:1;overflow:hidden;background:#111;color:#fff;transition:flex .7s cubic-bezier(.2,.7,.2,1);cursor:pointer}
+.strip.on{flex:3.2}
+.strip video{filter:grayscale(1) contrast(1.1) brightness(.6);transition:filter .6s,transform 1.2s}
+.strip.on video{filter:none;transform:scale(1.03)}
+.strip .in{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;z-index:1;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,0) 50%)}
+.strip h2{font-size:clamp(36px,4.4vw,84px);white-space:nowrap}
+.strip .more{max-width:340px;opacity:0;transform:translateY(16px);transition:opacity .4s,transform .4s;margin-top:14px}
+.strip.on .more{opacity:1;transform:none;transition-delay:.25s}
+.strip .more p{color:#DDD;margin-bottom:18px}
+.strip .rng{display:inline-block;background:var(--accent);padding:5px 9px;margin-bottom:12px}
+.strip .vt{position:absolute;top:24px;right:20px;writing-mode:vertical-rl;opacity:.7}
+.strip .vt{display:none}
+.strip h2{transition:opacity .3s}.strip:not(.on) h2{opacity:0}
+
+/* Brands grid */
+.bgrid{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.bgrid a{height:150px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:18px;position:relative;overflow:hidden}
+.bgrid a b{font-family:var(--wide);font-stretch:125%;font-weight:900;font-size:19px;text-transform:uppercase;position:relative;z-index:1}
+.bgrid a span{position:relative;z-index:1;color:var(--mute);font-size:12px}
+.bgrid a:before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.bgrid a:hover:before{transform:none}.bgrid a:hover{color:#fff}.bgrid a:hover span{color:var(--accent)}
+
+/* Big feature product */
+.feat{display:grid;grid-template-columns:1.2fr 1fr;gap:2px;background:var(--line)}
+.feat>div{background:#fff}
+.feat .im{position:relative;background:var(--fog);min-height:760px}
+.feat .tx{padding:70px 60px;display:flex;flex-direction:column;justify-content:space-between}
+.feat h2{font-size:clamp(56px,6.4vw,110px)}
+.spec{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.spec div{padding:16px 0;border-bottom:1px solid var(--line)}
+.spec div:nth-child(odd){padding-right:16px}
+.spec b{display:block;font-weight:700}
+.meter{display:flex;gap:3px;margin-top:6px}.meter i{flex:1;height:5px;background:var(--line)}.meter i.on{background:var(--ink)}
+
+.vband{position:relative;height:85vh;overflow:hidden;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center}
+.vband video{filter:brightness(.55)}
+.vband .in{position:relative;z-index:1}
+.vband h2{font-size:clamp(70px,13vw,240px)}
+@media (max-width:1000px){
+  .hero .head{flex-direction:column;align-items:flex-start;padding-top:24px}
+  .strips{flex-direction:column;height:auto}.strip{flex:none;height:110px;transition:height .6s}.strip.on{height:440px;flex:none}
+  .strip .vt{display:none}
+  .bgrid{grid-template-columns:repeat(2,1fr)}.feat{grid-template-columns:1fr}.feat .im{min-height:420px}.feat .tx{padding:40px 16px}
+}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+
+<section class="hero">
+  <div class="head"><h1 class="d">Play your<br><em>level</em></h1><p>Rackets from over 40 European brands, chosen for where your game is right now. Pick a level to start.</p></div>
+  <div class="strips" id="strips">
+    <div class="strip on"><video class="vid" muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video><span class="vt lbl">Starter</span>
+      <div class="in"><span class="lbl">Starter</span><div><h2 class="d">New to padel</h2><div class="more"><span class="rng lbl">£40 to £120</span><p>Round shapes and soft cores that forgive off centre hits. The easiest way into the game.</p><a class="btn lt" href="#">Shop starter</a></div></div></div></div>
+    <div class="strip"><video class="vid" muted loop playsinline preload="metadata" poster="media/court.jpg" src="media/court.mp4"></video><span class="vt lbl">Club</span>
+      <div class="in"><span class="lbl">Club</span><div><h2 class="d">Weekly player</h2><div class="more"><span class="rng lbl">£120 to £220</span><p>Teardrop and hybrid frames that add power without losing touch.</p><a class="btn lt" href="#">Shop club</a></div></div></div></div>
+    <div class="strip"><video class="vid" muted loop playsinline preload="metadata" poster="media/rally.jpg" src="media/rally.mp4"></video><span class="vt lbl">Competitive</span>
+      <div class="in"><span class="lbl">Competitive</span><div><h2 class="d">Tournament ready</h2><div class="more"><span class="rng lbl">£200 and up</span><p>Diamond shapes, 18K carbon and hard cores. Serious power for serious players.</p><a class="btn lt" href="#">Shop competitive</a></div></div></div></div>
+    <div class="strip"><video class="vid" muted loop playsinline preload="metadata" poster="media/aerial.jpg" src="media/aerial.mp4"></video><span class="vt lbl">Pickleball</span>
+      <div class="in"><span class="lbl">Pickleball</span><div><h2 class="d">Pickleball</h2><div class="more"><span class="rng lbl">From £35</span><p>Paddles, balls and starter sets for the sport everyone is trying this year.</p><a class="btn lt" href="#">Shop pickleball</a></div></div></div></div>
+  </div>
+</section>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">New this week</h2><a class="link" href="#">Shop all new</a></div>
+  <div class="grid" data-products="new" data-count="4"></div>
+</div></section>
+
+<section class="feat">
+  <div class="im"><span class="lbl" style="position:absolute;top:22px;left:22px;background:var(--accent);color:#fff;padding:6px 10px">Racket of the month</span><span class="note" style="position:absolute;left:14px;bottom:12px;font-size:10px;color:#A3A3A3;text-transform:uppercase;letter-spacing:.06em">Product image, large hero crop</span></div>
+  <div class="tx">
+    <div><span class="lbl muted">Bullpadel</span><h2 class="d" style="margin:12px 0 20px">Vertex 04<br>Hybrid</h2><p class="muted" style="max-width:420px">The racket the pros switched to this season. A hybrid diamond that gives you the power of a Vertex with more sweet spot than ever before.</p></div>
+    <div class="spec">
+      <div><span class="lbl muted">Power</span><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+      <div><span class="lbl muted">Control</span><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+      <div><span class="lbl muted">Shape</span><b>Diamond hybrid</b></div><div><span class="lbl muted">Weight</span><b>360 to 375g</b></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap"><b style="font-size:28px">£289</b><a class="btn acc-bg" href="#">Add to bag</a></div>
+  </div>
+</section>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">The brands</h2><p class="rv">Spanish, Italian, French, British. The names players trust, all in one bag.</p></div>
+  <div class="bgrid" id="bgrid"></div>
+</div></section>
+
+<section class="vband"><video class="vid" autoplay muted loop playsinline poster="media/city.jpg" src="media/city.mp4"></video>
+  <div class="in"><h2 class="d">Courts are<br>everywhere</h2><a class="btn lt" href="#" style="margin-top:28px">Find a court near you</a></div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Most wanted</h2><a class="link" href="#">Shop best sellers</a></div>
+  <div class="grid" data-products="3" data-count="4"></div>
+</div></section>
+
+<section class="news" data-news></section>
+<footer class="ftr" data-ftr></footer>
+
+<script src="padel.js"></script>
+<script>
+const strips=[...document.querySelectorAll('.strip')];
+function open_(s){strips.forEach(x=>{const on=x===s;x.classList.toggle('on',on);const v=x.querySelector('video');on?v.play():v.pause();});}
+strips.forEach(s=>{s.addEventListener('mouseenter',()=>matchMedia('(hover:hover)').matches&&open_(s));s.addEventListener('click',()=>open_(s));});
+open_(strips[0]);
+const cc=['Spain','Spain','Germany','Austria','France','Spain','Spain','Spain','Spain','Spain','Spain','USA','Spain','Italy','USA','USA'];
+document.getElementById('bgrid').innerHTML=BRANDS.slice(0,12).map((b,i)=>`<a href="#"><b>${b}</b><span>${cc[i]}  ·  Shop now</span></a>`).join('');
+</script>
+</body></html>

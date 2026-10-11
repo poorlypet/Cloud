@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PADEL | Home A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="padel.css">
+<style>
+/* Hero: video plays through the wordmark, then the letters open up to full bleed on scroll */
+.hero{height:260vh;position:relative;background:#fff}
+.hero .stick{position:sticky;top:0;height:100vh;overflow:hidden}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.mask span{font-family:var(--display);color:#000;font-size:36vw;line-height:.8;letter-spacing:-.01em;transform-origin:46.5% 52%;will-change:transform}
+.hero .top{position:absolute;left:0;right:0;top:96px;display:flex;justify-content:space-between;padding:0 var(--g);z-index:2;transition:opacity .3s}
+.hero .bot{position:absolute;left:0;right:0;bottom:36px;padding:0 var(--g);z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;color:#fff;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .5s}
+.hero .bot.on{opacity:1;transform:none}
+.hero .bot h1{font-size:clamp(56px,9vw,150px)}
+.hero .bot p{max-width:360px;margin:18px 0 26px;color:#E6E6E6}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55));opacity:0;transition:opacity .5s;z-index:1}
+.hero .shade.on{opacity:1}
+.scrollcue{display:flex;align-items:center;gap:10px}
+.scrollcue i{display:block;width:40px;height:2px;background:var(--ink);position:relative;overflow:hidden}
+.scrollcue i:after{content:"";position:absolute;inset:0;background:var(--accent);animation:cue 1.6s infinite}
+@keyframes cue{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+/* Levels */
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.lv{position:relative;aspect-ratio:3/4.4;display:flex;flex-direction:column;justify-content:space-between;padding:22px;overflow:hidden;color:var(--ink)}
+.lv video{opacity:0;transition:opacity .5s}
+.lv:hover video{opacity:1}
+.lv:hover{color:#fff}
+.lv>*{position:relative;z-index:1}
+.lv .ph{position:absolute;inset:0;z-index:0}
+.lv .ph .note{bottom:auto;top:16px;left:auto;right:16px;text-align:right;max-width:55%}
+.lv h3{font-size:clamp(40px,4.4vw,72px)}
+.lv .rng{font-weight:700}
+.lv .go{display:flex;justify-content:space-between;align-items:center;border-top:1px solid currentColor;padding-top:14px}
+.lv.pk .ph{background:var(--ink)}.lv.pk{color:#fff}
+.lv.pk h3 span{color:var(--accent)}
+
+/* Split video band */
+.band{display:grid;grid-template-columns:1fr 1fr;min-height:90vh}
+.band .v{position:relative;overflow:hidden}
+.band .t{background:var(--fog);padding:80px var(--g);display:flex;flex-direction:column;justify-content:space-between}
+.band h2{font-size:clamp(54px,7vw,120px)}
+.band .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #D6D6D6}
+.band .stats div{padding:20px 0}
+.band .stats b{font-family:var(--display);font-size:44px;display:block;line-height:1}
+
+/* Editorial */
+.edit{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2px}
+.edit .ph{aspect-ratio:auto;min-height:520px}
+.edit .tx{padding:20px 0}
+.edit h3{font-family:var(--wide);font-stretch:118%;font-weight:800;font-size:20px;text-transform:uppercase;margin:6px 0}
+@media (max-width:1000px){
+  .levels{grid-template-columns:1fr 1fr}.band{grid-template-columns:1fr}.band .v{min-height:60vh}
+  .edit{grid-template-columns:1fr}.edit .ph{min-height:360px}
+  .hero .bot{flex-direction:column;align-items:flex-start}.hero .top{top:84px}
+}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr" data-hdr></header>
+
+<section class="hero" id="hero">
+  <div class="stick">
+    <video autoplay muted loop playsinline poster="media/rally.jpg"><source src="media/rally.mp4" type="video/mp4"></video>
+    <div class="mask"><span id="word">PADEL</span></div>
+    <div class="shade" id="shade"></div>
+    <div class="top lbl" id="top"><span>Europe's best rackets, one store</span><span class="scrollcue">Scroll <i></i></span></div>
+    <div class="bot" id="bot">
+      <div><h1 class="d">Every brand.<br>Every level.</h1><p>Over 40 brands from Spain, Italy, France and beyond. Sorted by how you actually play.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn acc-bg" href="#">Shop rackets ${ARROW}</a><a class="btn ghost" href="#">Find my level</a></div></div>
+      <span class="lbl">Bullpadel  ·  Nox  ·  Head  ·  Babolat  ·  Siux</span>
+    </div>
+  </div>
+</section>
+
+<div class="brands" data-brands></div>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Shop by level</h2><p class="rv">We sort every racket by who it suits, so you never pay for power you cannot use yet.</p></div>
+  <div class="levels">
+    <a class="lv rv" href="#"><div class="ph"><span class="note">Photo: first timer on court, smiling, soft light</span></div><video class="vid" muted loop playsinline preload="none" src="media/ball.mp4"></video><span class="lbl">Starter</span><div><h3 class="d">New to<br>padel</h3><p class="rng">£40 to £120</p></div><span class="go lbl">Shop starter <svg class="arrow" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <a class="lv rv" href="#"><div class="ph"><span class="note">Photo: doubles game at club, mid rally</span></div><video class="vid" muted loop playsinline preload="none" src="media/court.mp4"></video><span class="lbl">Club</span><div><h3 class="d">Weekly<br>player</h3><p class="rng">£120 to £220</p></div><span class="go lbl">Shop club <svg class="arrow" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <a class="lv rv" href="#"><div class="ph"><span class="note">Photo: smash at the net, motion blur</span></div><video class="vid" muted loop playsinline preload="none" src="media/rally.mp4"></video><span class="lbl">Competitive</span><div><h3 class="d">Tournament<br>ready</h3><p class="rng">£200 and up</p></div><span class="go lbl">Shop competitive <svg class="arrow" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <a class="lv pk rv" href="#"><div class="ph dk"><span class="note">Photo: pickleball paddle and ball, flat lay</span></div><video class="vid" muted loop playsinline preload="none" src="media/aerial.mp4"></video><span class="lbl">Also on court</span><div><h3 class="d">Pickle<span>ball</span></h3><p class="rng">Paddles from £35</p></div><span class="go lbl">Shop pickleball <svg class="arrow" viewBox="0 0 16 10" fill="none"><path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+  </div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Just landed</h2><a class="link" href="#">Shop all new</a></div>
+  <div class="grid" data-products="new" data-count="8"></div>
+</div></section>
+
+<section class="band">
+  <div class="v"><video class="vid" autoplay muted loop playsinline poster="media/court.jpg"><source src="media/court.mp4" type="video/mp4"></video></div>
+  <div class="t">
+    <div><span class="lbl acc">Try before you buy</span><h2 class="d" style="margin-top:18px">Demo it<br>on court.</h2><p class="muted" style="max-width:440px;margin:22px 0 30px">Borrow up to three rackets for a week. Play your normal sessions, keep the one that fits and send the rest back free.</p><a class="btn" href="#">Book a demo</a></div>
+    <div class="stats"><div><b>40+</b><span class="lbl muted">Brands</span></div><div><b>7 days</b><span class="lbl muted">Demo period</span></div><div><b>£0</b><span class="lbl muted">Returns</span></div></div>
+  </div>
+</section>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Pickleball</h2><a class="link" href="#">Shop pickleball</a></div>
+  <div class="grid" data-products="pickle"></div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2 class="d rv">From the court</h2><a class="link" href="#">All stories</a></div>
+  <div class="edit">
+    <a href="#"><div class="ph" style="min-height:620px"><span class="note">Photo: editorial portrait, player with racket, outdoor court Madrid</span></div><div class="tx"><span class="lbl muted">Guide</span><h3>Round, teardrop or diamond</h3><p class="muted">Which racket shape suits your game and why it matters more than the brand.</p></div></a>
+    <a href="#"><div class="ph"><span class="note">Photo: close up of racket surface texture</span></div><div class="tx"><span class="lbl muted">Gear</span><h3>Carbon explained</h3><p class="muted">3K, 12K, 18K. What the numbers really change.</p></div></a>
+    <a href="#"><div class="ph"><span class="note">Photo: pickleball doubles, indoor hall</span></div><div class="tx"><span class="lbl muted">Pickleball</span><h3>Padel player? Try this</h3><p class="muted">The fastest growing sport in Europe in five minutes.</p></div></a>
+  </div>
+</div></section>
+
+<section class="news" data-news></section>
+<footer class="ftr" data-ftr></footer>
+
+<script src="padel.js"></script>
+<script>
+// fill the ${ARROW} placeholder used in the hero buttons
+document.querySelectorAll('.btn').forEach(b=>b.innerHTML=b.innerHTML.replace('${ARROW}',ARROW));
+const hero=document.getElementById('hero'),word=document.getElementById('word'),bot=document.getElementById('bot'),top_=document.getElementById('top'),shade=document.getElementById('shade');
+function tick(){
+  const r=hero.getBoundingClientRect(),max=hero.offsetHeight-innerHeight;
+  const p=Math.min(Math.max(-r.top/max,0),1), e=p*p*p;
+  word.style.transform=`scale(${1+e*40})`;
+  word.parentNode.style.opacity=1-Math.min(Math.max((p-.45)/.25,0),1);
+  const done=p>.72; bot.classList.toggle('on',done); shade.classList.toggle('on',done); top_.style.opacity=1-p*4;
+}
+addEventListener('scroll',tick,{passive:true});tick();
+document.querySelectorAll('.lv').forEach(l=>{const v=l.querySelector('video');l.addEventListener('mouseenter',()=>v.play());l.addEventListener('mouseleave',()=>v.pause());});
+</script>
+</body></html>

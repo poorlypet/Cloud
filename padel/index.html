@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PADEL | Homepage options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="padel.css">
+<style>
+.opts{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:40px}
+.opt{position:relative;aspect-ratio:3/5;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:22px;background:#000}
+.opt video{opacity:.55;filter:grayscale(1);transition:opacity .4s,filter .4s}
+.opt:hover video{opacity:1;filter:none}
+.opt>*{position:relative}
+.opt h2{font-size:clamp(44px,5vw,90px)}
+.opt p{color:#DDD;font-size:14px}
+@media (max-width:1000px){.opts{grid-template-columns:1fr 1fr}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="sec" style="padding-top:60px"><div class="wrap">
+  <h1 class="d" style="font-size:clamp(60px,10vw,180px)">Homepage<br>options<span class="acc">.</span></h1>
+  <div class="opts">
+    <a class="opt" href="home-a.html"><video class="vid" autoplay muted loop playsinline src="media/rally.mp4"></video><span class="lbl">Option A</span><div><h2 class="d">Wordmark</h2><p>Video plays through the PADEL letters, which open to full screen as you scroll.</p></div></a>
+    <a class="opt" href="home-b.html"><video class="vid" autoplay muted loop playsinline src="media/ball.mp4"></video><span class="lbl">Option B</span><div><h2 class="d">Channels</h2><p>Closest to Bullpadel. Full bleed video with level channels that auto advance. Racket finder.</p></div></a>
+    <a class="opt" href="home-c.html"><video class="vid" autoplay muted loop playsinline src="media/court.mp4"></video><span class="lbl">Option C</span><div><h2 class="d">Strips</h2><p>Four video strips, one per level. Hover opens a strip in colour.</p></div></a>
+    <a class="opt" href="home-d.html"><video class="vid" autoplay muted loop playsinline src="media/city.mp4"></video><span class="lbl">Option D</span><div><h2 class="d">Lens</h2><p>Black and white video with a square colour lens on the cursor. Deep red accent.</p></div></a>
+    <a class="opt" href="home-e.html"><video class="vid" autoplay muted loop playsinline src="media/aerial.mp4"></video><span class="lbl">Option E</span><div><h2 class="d">Dark menu</h2><p>Dark mode. Big word menu swaps the framed video. Drag rail for products.</p></div></a>
+  </div>
+</div></section>
+<script src="padel.js"></script>
+</body></html>

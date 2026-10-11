@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PADEL | Home D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="padel.css">
+<style>
+/* This variation uses the deep red accent */
+:root{--accent:var(--red)}
+/* Hero: black and white video, a square lens follows the cursor and shows the colour version */
+.hero{position:relative;height:calc(100vh - 34px);min-height:620px;overflow:hidden;background:#000;color:#fff;cursor:none}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .bw{filter:grayscale(1) brightness(.62) contrast(1.15)}
+.hero .col{clip-path:inset(40% 40% 40% 40%)}
+.lens{position:absolute;width:260px;height:260px;border:2px solid var(--accent);pointer-events:none;z-index:3;transform:translate(-50%,-50%)}
+.lens:before,.lens:after{content:"";position:absolute;background:var(--accent)}
+.lens:before{left:50%;top:-14px;width:2px;height:10px}.lens:after{top:50%;left:-14px;width:10px;height:2px}
+.lens span{position:absolute;left:-2px;top:100%;margin-top:8px;background:var(--accent);color:#fff;padding:4px 8px;white-space:nowrap}
+.hero .copy{position:absolute;inset:auto var(--g) 40px var(--g);z-index:2;display:grid;grid-template-columns:1fr auto;align-items:end;gap:30px;pointer-events:none}
+.hero .copy a{pointer-events:auto}
+.hero h1{font-size:clamp(70px,15vw,280px);line-height:.8}
+.hero h1 span{color:var(--accent)}
+.hero .rt{max-width:300px;padding-bottom:16px}
+.hero .rt p{color:#D0D0D0;margin-bottom:22px}
+.hero .coords{position:absolute;top:120px;right:var(--g);z-index:2;text-align:right;color:#BDBDBD}
+
+/* Level compare table */
+.cmp{border-top:2px solid var(--ink)}
+.cmp .row{display:grid;grid-template-columns:1.1fr repeat(3,1fr);border-bottom:1px solid var(--line)}
+.cmp .row>div{padding:20px 18px 20px 0;transition:background .2s}
+.cmp .row>div:first-child{color:var(--steel)}
+.cmp .hd>div{padding:26px 18px 26px 0}
+.cmp .hd h3{font-size:clamp(34px,3.6vw,60px)}
+.cmp [data-c].hi{background:var(--fog)}
+.cmp .hd [data-c].hi h3{color:var(--accent)}
+.cmp .row>div[data-c]{padding-left:18px}
+.cmp .foot .btn{width:100%;justify-content:center}
+
+/* 50/50 lifestyle */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.duo a{position:relative;min-height:88vh;display:flex;align-items:flex-end;padding:36px;overflow:hidden}
+.duo .ph{position:absolute;inset:0}
+.duo .t{position:relative;z-index:1}
+.duo h3{font-size:clamp(56px,6.5vw,120px)}
+.duo a:hover .btn{background:var(--accent);border-color:var(--accent)}
+
+.quote{padding:140px var(--g);text-align:center}
+.quote p{font-family:var(--wide);font-stretch:125%;font-weight:900;font-size:clamp(28px,3.6vw,58px);line-height:1.05;text-transform:uppercase;max-width:1200px;margin:0 auto}
+.quote p span{color:var(--accent)}
+@media (max-width:1000px){
+  .hero{cursor:auto}.lens{width:170px;height:170px}.hero .copy{grid-template-columns:1fr}.hero .coords{display:none}
+  .cmp{overflow-x:auto}.cmp .row{min-width:720px}
+  .duo{grid-template-columns:1fr}.duo a{min-height:70vh;padding:20px}
+}
+</style></head>
+<body>
+<div class="ann" data-ann></div>
+<header class="hdr over" data-hdr></header>
+
+<section class="hero" id="hero">
+  <video class="bw" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video>
+  <video class="col" id="col" poster="media/rally.jpg" autoplay muted loop playsinline src="media/rally.mp4"></video>
+  <div class="lens" id="lens"><span class="lbl">Shop the look</span></div>
+  <div class="coords lbl">Indoor club session<br>Valencia, Spain</div>
+  <div class="copy">
+    <h1 class="d">Sharper<br>on court<span>.</span></h1>
+    <div class="rt"><p>The best of European padel, curated for every level. From your first racket to your tournament weapon.</p><a class="btn lt" href="#">Shop new season</a></div>
+  </div>
+</section>
+
+<div class="brands" data-brands></div>
+
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Which level are you</h2><p class="rv">Hover a column to compare. Every racket we sell is tagged to one of these three.</p></div>
+  <div class="cmp" id="cmp">
+    <div class="row hd"><div><span class="lbl">Level</span></div><div data-c="1"><h3 class="d">Starter</h3></div><div data-c="2"><h3 class="d">Club</h3></div><div data-c="3"><h3 class="d">Competitive</h3></div></div>
+    <div class="row"><div>You are</div><div data-c="1">Playing your first few months</div><div data-c="2">On court every week</div><div data-c="3">Playing leagues or tournaments</div></div>
+    <div class="row"><div>Shape</div><div data-c="1">Round</div><div data-c="2">Teardrop or hybrid</div><div data-c="3">Diamond</div></div>
+    <div class="row"><div>Core</div><div data-c="1">Soft EVA</div><div data-c="2">Medium EVA</div><div data-c="3">Hard EVA</div></div>
+    <div class="row"><div>Face</div><div data-c="1">Fibreglass</div><div data-c="2">3K to 12K carbon</div><div data-c="3">12K to 18K carbon</div></div>
+    <div class="row"><div>Weight</div><div data-c="1">340 to 355g</div><div data-c="2">350 to 365g</div><div data-c="3">360 to 375g</div></div>
+    <div class="row"><div>Price</div><div data-c="1"><b>£40 to £120</b></div><div data-c="2"><b>£120 to £220</b></div><div data-c="3"><b>£200 and up</b></div></div>
+    <div class="row foot"><div></div><div data-c="1"><a class="btn" href="#">Shop starter</a></div><div data-c="2"><a class="btn" href="#">Shop club</a></div><div data-c="3"><a class="btn" href="#">Shop competitive</a></div></div>
+  </div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Trending now</h2><a class="link" href="#">Shop all</a></div>
+  <div class="grid" data-products="new" data-count="8"></div>
+</div></section>
+
+<section class="duo">
+  <a href="#" style="color:#fff"><div class="ph dk"><span class="note r">Photo: women's padel kit, outdoor court, golden hour</span></div><div class="t"><h3 class="d">Padel</h3><span class="btn lt" style="margin-top:20px">Shop padel</span></div></a>
+  <a href="#"><div class="ph"><span class="note r">Photo: pickleball paddle mid swing, white wall</span></div><div class="t"><h3 class="d">Pickleball</h3><span class="btn" style="margin-top:20px">Shop pickleball</span></div></a>
+</section>
+
+<section class="quote"><span class="lbl muted">Why PADEL</span><p style="margin-top:24px">We do not make rackets. <span>We find the best ones</span> from Madrid to Milan and help you pick the right one.</p></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sh"><h2 class="d rv">Starter picks</h2><a class="link" href="#">Shop starter</a></div>
+  <div class="grid" data-products="1" data-count="4"></div>
+</div></section>
+
+<section class="news" data-news></section>
+<footer class="ftr" data-ftr></footer>
+
+<script src="padel.js"></script>
+<script>
+const hero=document.getElementById('hero'),lens=document.getElementById('lens'),col=document.getElementById('col'),bw=hero.querySelector('.bw');
+let tx=innerWidth*.62,ty=innerHeight*.45,x=tx,y=ty,idle=true,t0=0;
+hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();tx=e.clientX-r.left;ty=e.clientY-r.top;idle=false;});
+hero.addEventListener('pointerleave',()=>idle=true);
+function loop(t){
+  if(idle){t0+=.006;tx=hero.clientWidth*(.55+.2*Math.sin(t0));ty=hero.clientHeight*(.42+.12*Math.sin(t0*1.7));}
+  x+=(tx-x)*.12;y+=(ty-y)*.12;
+  const s=lens.offsetWidth/2,W=hero.clientWidth,H=hero.clientHeight;
+  lens.style.left=x+'px';lens.style.top=y+'px';
+  col.style.clipPath=`inset(${y-s}px ${W-x-s}px ${H-y-s}px ${x-s}px)`;
+  if(Math.abs(col.currentTime-bw.currentTime)>.15)col.currentTime=bw.currentTime;
+  requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+const cells=document.querySelectorAll('#cmp [data-c]');
+function hi(c){cells.forEach(el=>el.classList.toggle('hi',el.dataset.c===c));}
+cells.forEach(el=>el.addEventListener('mouseenter',()=>hi(el.dataset.c)));hi('2');
+</script>
+</body></html>
