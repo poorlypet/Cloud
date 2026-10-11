@@ -34,8 +34,9 @@ body{background:var(--ink);color:#fff}
 .rail-wrap{overflow:hidden;cursor:grab}
 .rail-wrap.drag{cursor:grabbing}
 .prail{display:flex;gap:2px;width:max-content;padding:0 var(--g);user-select:none}
+.prail img{pointer-events:none}
 .prail .card{width:min(420px,78vw);background:transparent}
-.prail .card .im{background:#E9E9E9}
+.prail .card .im{background:var(--fog)}
 .prail .card .meta{color:#fff}.prail .card .br{color:#8C8C8C}
 .bar{height:2px;background:#262626;margin:36px var(--g) 0;position:relative}
 .bar i{position:absolute;left:0;top:0;bottom:0;width:25%;background:var(--accent)}

@@ -27,7 +27,7 @@ const ARROW='<svg class="arrow" viewBox="0 0 16 10" fill="none"><path d="M0 5h14
 
 function card(x){
   const bars=[1,2,3].map(i=>`<b class="${i<=x.l?'on':''}"></b>`).join('');
-  return `<a class="card" href="#"><div class="im"><span class="note">Product image</span>${x.t?`<span class="tag${/New|Low/.test(x.t)?' hot':''}">${x.t}</span>`:''}<span class="lvl" title="${LEVELS[x.l].k}">${bars}</span><span class="quick">Quick add</span></div>
+  return `<a class="card" href="#"><div class="im"><img src="media/racket.jpg" alt="${x.b} ${x.n}" loading="lazy">${x.t?`<span class="tag${/New|Low/.test(x.t)?' hot':''}">${x.t}</span>`:''}<span class="lvl" title="${LEVELS[x.l].k}">${bars}</span><span class="quick">Quick add</span></div>
   <div class="meta"><span class="br">${x.b}</span><span class="pr">£${x.p}${x.w?`<s>£${x.w}</s>`:''}</span><span class="nm">${x.n}</span></div></a>`;
 }
 
@@ -37,7 +37,7 @@ function mount(){
     ann.innerHTML=`<div class="rail">${[...m,...m,...m,...m].map(t=>`<span>${t}</span>`).join('')}</div>`;}
   const hdr=document.querySelector('[data-hdr]');
   if(hdr){hdr.innerHTML=`<div class="wrap in"><nav><a href="#">Padel</a><a href="#">Pickleball</a><a href="#">Shop by level</a><a href="#">Brands</a><a href="#">Sale</a></nav><button class="burger" aria-label="Menu"></button>
-    <a class="logo" href="index.html">PADEL<i>.</i></a><div class="tools"><a href="#">Search</a><a href="#">Account</a><a class="bag" href="#">Bag 0</a></div></div>`;
+    <a class="logo" href="./">PADEL<i>.</i></a><div class="tools"><a href="#">Search</a><a href="#">Account</a><a class="bag" href="#">Bag 0</a></div></div>`;
     if(hdr.classList.contains('over')){const a=document.querySelector('[data-ann]'),f=()=>{hdr.classList.toggle('solid',scrollY>innerHeight*.8);hdr.style.top=Math.max(0,(a?a.offsetHeight:0)-scrollY)+'px';};addEventListener('scroll',f,{passive:true});f();}}
   document.querySelectorAll('[data-brands]').forEach(el=>{el.innerHTML=`<div class="rail">${[...BRANDS,...BRANDS].map(b=>`<span>${b}</span>`).join('')}</div>`;});
   document.querySelectorAll('[data-products]').forEach(el=>{

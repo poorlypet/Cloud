@@ -47,7 +47,7 @@
 .opts button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .opts button:hover:not(.on){border-color:var(--ink)}
 .finder .r{background:#fff;margin:40px;display:grid;grid-template-rows:1fr auto}
-.finder .r .im{position:relative;background:#EAEAEA;min-height:340px}
+.finder .r .im{position:relative;background:var(--fog);min-height:340px}
 .finder .r .info{padding:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
 .finder .r h3{font-family:var(--wide);font-stretch:118%;font-weight:900;text-transform:uppercase;font-size:28px;line-height:1}
 .match{position:absolute;top:18px;left:18px;background:var(--accent);color:#fff;padding:6px 10px}
@@ -112,7 +112,7 @@
     <div class="q"><span class="lbl">Budget</span><div class="opts" data-q="b"><button data-v="1">Up to £100</button><button class="on" data-v="2">£100 to £200</button><button data-v="3">No limit</button></div></div>
   </div>
   <div class="r">
-    <div class="im"><span class="match lbl" id="fm">94% match</span><span class="note" style="position:absolute;left:14px;bottom:12px">Product image</span></div>
+    <div class="im"><span class="match lbl" id="fm">94% match</span><img class="pimg" src="media/racket.jpg" alt=""></div>
     <div class="info"><div><span class="lbl muted" id="fb">StarVie</span><h3 id="fn">Aquila Soft</h3><p class="muted" id="fd">Round shape, soft EVA core</p></div><div style="text-align:right"><b id="fp" style="font-size:22px">£119</b><br><a class="btn" href="#" style="margin-top:12px">Add to bag</a></div></div>
   </div>
 </section>
