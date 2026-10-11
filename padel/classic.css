@@ -330,3 +330,5 @@
  .fmain{gap:28px 16px;padding-block:40px}
  .fbot{flex-direction:column;align-items:flex-start}
 }
+.tpr{padding-bottom:0}
+@media(max-width:760px){.tpr{padding-bottom:0}}
