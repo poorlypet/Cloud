@@ -258,3 +258,75 @@
 .begin .intro .ia{margin-top:0;padding-top:22px}
 @media(max-width:1100px){.begin .intro .bph{flex:none;aspect-ratio:16/10}}
 .begin .intro .ia{padding:22px 28px 28px!important}
+
+/* desktop: less space above reviews */
+.tpr{padding-top:8px}
+
+/* ---------- mobile pass ---------- */
+@media(max-width:760px){
+ :root{--g:16px}
+ .sec{padding-block:48px}
+ .sec.t0{padding-top:0}
+ /* hero fills the first screen: header, boxed video, review bar */
+ .hero{padding-top:10px}
+ .hero .box{height:calc(100svh - 64px - 10px - 66px);min-height:420px}
+ .hero .box .in{padding:20px;gap:14px}
+ .hero h1{font-size:32px}
+ .hero .hb .btn{width:auto;padding:0 22px}
+ .tbar{flex-direction:column;gap:2px;min-height:66px;padding:8px 12px;font-size:13px}
+ .tbar .tpw{display:inline-flex}
+ /* shared horizontal scroll rail */
+ .hero .three,.ctiles.c4,.grid,.promo3,.gtiles,.begin .grid{
+   display:grid!important;grid-auto-flow:column;grid-template-columns:none!important;grid-template-rows:none!important;
+   overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+   margin-inline:calc(-1*var(--g));padding-inline:var(--g);scroll-padding-inline:var(--g);gap:10px}
+ .hero .three::-webkit-scrollbar,.ctiles.c4::-webkit-scrollbar,.grid::-webkit-scrollbar,.promo3::-webkit-scrollbar,.gtiles::-webkit-scrollbar,.lsplit::-webkit-scrollbar{display:none}
+ .hero .three>*,.ctiles.c4>*,.grid>*,.promo3>*,.gtiles>*,.lsplit>*{scroll-snap-align:start}
+ .hero .three{grid-auto-columns:max-content;margin-block:12px 0}
+ .hero .three a{height:50px;padding:0 18px;gap:14px;font-size:15px;white-space:nowrap}
+ .hero .three a svg{width:16px;height:16px}
+ .ctiles.c4{grid-auto-columns:64%}
+ .grid,.begin .grid{grid-auto-columns:46%;row-gap:0}
+ .promo3{grid-auto-columns:82%;height:auto}
+ .promo3 .pt,.promo3 .pt.big{grid-row:auto;min-height:380px}
+ .gtiles{grid-auto-columns:68%}
+ .begin{display:block}
+ .begin .intro{margin-bottom:16px}
+ .begin .intro .bph{flex:none;aspect-ratio:16/9;min-height:0}
+ /* level panels scroll sideways */
+ .lsplit{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:8px;padding-inline:var(--g);scroll-padding-inline:var(--g)}
+ .lfit .lp{height:auto;min-height:440px;padding:22px}
+ .lp h3{font-size:44px}
+ /* product cards */
+ .card .meta{font-size:14px;padding-top:10px}
+ .card .br{font-size:14px}
+ .card .rt{font-size:12px;gap:4px;margin:4px 0 2px}
+ .card .rt .stars i{width:12px;height:12px}.card .rt .stars i svg{width:8px;height:8px}
+ .card .sp{font-size:12px}
+ .card .stag{font-size:11px;padding:3px 6px;top:8px;left:8px}
+ .card .im img{padding:12%}
+ .card .add{opacity:1;left:auto;right:8px;bottom:8px;width:36px;height:36px;padding:0;font-size:0;border:0;background:#fff;display:grid;place-items:center}
+ .card .add:before{content:"+";font-size:22px;line-height:1;font-weight:400;color:#111}
+ /* headings */
+ .sh{gap:12px;margin-bottom:20px}
+ .shl h2{font-size:28px}
+ .shl p{font-size:14px}
+ .shbtn{height:38px;padding:0 12px;font-size:13px}
+ /* statement, Klarna, reviews, guides */
+ .wst{padding-top:32px}
+ .wst p{font-size:26px}
+ .logostrip{padding-block:24px}
+ .vb{min-height:520px}
+ .vb.kl .tx{padding:22px}
+ .vb.kl h2{font-size:34px}
+ .vb.kl .kb{height:36px}
+ .tpr{padding-block:8px 48px}
+ .tph h2{font-size:28px}
+ .tpsum{font-size:13px;gap:8px}
+ .gt2{aspect-ratio:3/4}
+ /* footer */
+ .fnl .wrap{padding-block:28px}
+ .fnl h3{font-size:24px}
+ .fmain{gap:28px 16px;padding-block:40px}
+ .fbot{flex-direction:column;align-items:flex-start}
+}
