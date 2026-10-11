@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL V3 Five clips, scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail4.css">
+<style>
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px}
+.hrow h1{font-size:clamp(26px,2.5vw,38px);font-weight:700;letter-spacing:-.025em;line-height:1.1;max-width:22ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:1100px){.hrow .b{width:100%}}
+.hero{height:calc(100svh + 120vh);position:relative}
+.hero .st{position:sticky;top:68px;height:calc(100svh - 68px);display:flex;flex-direction:column;overflow:hidden}
+.hero .st>.wrap{width:100%}
+.hero .stage{flex:1;display:flex;align-items:center;padding-top:16px}
+.five{display:flex;justify-content:center;width:100%}
+.five .cell{flex:none}
+.five .cell .mask span{font-size:min(calc((min(100vw,1600px) - 2*var(--g)) / 2.2), calc((100svh - 68px - 250px) / .92));display:block;line-height:.9;padding-top:.04em;will-change:transform}
+.five .cell .mask{will-change:opacity}
+.five .sizer{visibility:hidden}
+.five .cell .mask{position:relative;inset:auto}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero" id="hero"><div class="st"><div class="wrap stage"><div class="five" id="five"><div class="wm cell"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><div class="mask"><span>P</span></div></div><div class="wm cell"><video class="vid" autoplay muted loop playsinline poster="media/court.jpg" src="media/court.mp4"></video><div class="mask"><span>A</span></div></div><div class="wm cell"><video class="vid" autoplay muted loop playsinline poster="media/ball.jpg" src="media/ball.mp4"></video><div class="mask"><span>D</span></div></div><div class="wm cell"><video class="vid" autoplay muted loop playsinline poster="media/aerial.jpg" src="media/aerial.mp4"></video><div class="mask"><span>E</span></div></div><div class="wm cell"><video class="vid" autoplay muted loop playsinline poster="media/city.jpg" src="media/city.mp4"></video><div class="mask"><span>L</span></div></div></div></div><div class="wrap hrow"><h1>Europe's best padel brands, in one store.</h1><div class="b"><a class="btn" href="#">Shop padel rackets</a><a class="btn ol" href="#">Shop new in</a></div></div><div data-m="trust"></div></div></section>
+<div data-m="cats"></div>
+<div data-m="rotw"></div>
+<div data-m="products" data-title="New in" data-f="new"></div>
+<div data-m="banner" data-v="ball" data-k="Shop by brand" data-t="Every major padel brand" data-p="Bullpadel, Nox, Head, Babolat, Adidas, StarVie, Siux and more." data-c="Shop all brands"></div>
+<div data-m="reviews"></div>
+<div data-m="levels"></div>
+<div data-m="brands3" data-cls="t0"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail4.js"></script>
+<script>(()=>{const hero=document.getElementById('hero'),five=document.getElementById('five');let cells,masks,spans,nat=[],H0=0;
+function init(){cells=[...five.querySelectorAll('.cell')];masks=cells.map(c=>c.querySelector('.mask'));spans=masks.map(m=>m.querySelector('span'));
+ cells.forEach(c=>{c.style.width='';c.style.height=''});masks.forEach(m=>{m.style.position='relative'});nat=cells.map(c=>c.getBoundingClientRect().width);H0=cells[0].getBoundingClientRect().height;
+ cells.forEach(c=>c.style.height=H0+'px');masks.forEach(m=>{m.style.position='absolute';m.style.inset='0'});tick();}
+function tick(){if(!cells)return;const r=hero.getBoundingClientRect(),p=Math.min(Math.max(-r.top/(hero.offsetHeight-innerHeight),0),1),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+ const gap=8*e,W=five.clientWidth,target=(W-gap*4)/5;five.style.gap=gap+'px';
+ cells.forEach((c,i)=>{c.style.width=(nat[i]+(target-nat[i])*e)+'px'});
+ spans.forEach(s=>s.style.transform=`scale(${1+e*e*6})`);masks.forEach(m=>m.style.opacity=1-Math.min(Math.max((p-.15)/.45,0),1));}
+addEventListener('scroll',tick,{passive:true});addEventListener('resize',init);(document.fonts?document.fonts.ready:Promise.resolve()).then(init);})();</script>
+</body></html>

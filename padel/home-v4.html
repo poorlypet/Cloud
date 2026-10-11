@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL V4 Framed rally</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail4.css">
+<style>
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px}
+.hrow h1{font-size:clamp(26px,2.5vw,38px);font-weight:700;letter-spacing:-.025em;line-height:1.1;max-width:22ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:1100px){.hrow .b{width:100%}}
+.hero{padding-top:16px}
+.hero .box{position:relative;height:clamp(320px,calc(100svh - 68px - 16px - 88px - 54px - 28px),700px);color:#fff;display:flex;align-items:flex-end;overflow:hidden}
+.hero .box:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,0) 55%);z-index:1}
+.hero .box .in{position:relative;z-index:2;padding:36px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;width:100%;flex-wrap:wrap}
+.hero .box h1{font-size:clamp(28px,3vw,46px);font-weight:700;letter-spacing:-.025em;line-height:1.08;max-width:17ch}
+.hero .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-block:16px 28px}
+.hero .three a{background:var(--grey);height:72px;padding:0 26px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:17px}
+.hero .three a:hover{background:var(--fg);color:#fff}
+@media(max-width:1100px){.hero .three{grid-template-columns:1fr;gap:8px}.hero .three a{height:56px}}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="box"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><div class="in"><h1>Europe's best padel brands, in one store.</h1><a class="btn wh" href="#">Shop new in</a></div></div><div class="three"><a href="#"><b>Padel rackets</b><span>→</span></a><a href="#"><b>Padel shoes</b><span>→</span></a><a href="#"><b>Bags and accessories</b><span>→</span></a></div></div></section>
+<div data-m="trust"></div>
+<div data-m="products" data-title="Best sellers" data-f="best"></div>
+<div data-m="cats" data-cls="t0"></div>
+<div data-m="banner" data-ph="Bullpadel 2026 campaign, player portrait on court" data-k="Brand focus" data-t="Bullpadel 2026" data-p="The full Bullpadel range, from the Indiga to the new Vertex 04." data-c="Shop Bullpadel"></div>
+<div data-m="products" data-title="New in" data-f="new"></div>
+<div data-m="levels" data-cls="t0"></div>
+<div data-m="reviews"></div>
+<div data-m="journal"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail4.js"></script>
+
+</body></html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL V1 Wordmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail4.css">
+<style>
+.wm{position:relative;overflow:hidden}
+.wm .mask{position:absolute;inset:0;background:#fff;mix-blend-mode:screen;display:flex;align-items:center;justify-content:center}
+.wm .mask span{font-family:var(--mark);color:#000;line-height:1;white-space:nowrap}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-block:24px}
+.hrow h1{font-size:clamp(26px,2.5vw,38px);font-weight:700;letter-spacing:-.025em;line-height:1.1;max-width:22ch}
+.hrow .b{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:1100px){.hrow .b{width:100%}}
+.hero{padding-top:20px}
+.hero .wm{height:calc(min(calc((min(100vw,1600px) - 2*var(--g)) / 2.2), calc((100svh - 68px - 250px) / .92)) * .9)}
+.hero .wm .mask span{font-size:min(calc((min(100vw,1600px) - 2*var(--g)) / 2.2), calc((100svh - 68px - 250px) / .92))}
+</style></head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="wm"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><div class="mask"><span>PADEL</span></div></div><div class="hrow"><h1>Europe's best padel brands, in one store.</h1><div class="b"><a class="btn" href="#">Shop padel rackets</a><a class="btn ol" href="#">Shop new in</a></div></div></div></section>
+<div data-m="trust"></div>
+<div data-m="cats"></div>
+<div data-m="products" data-title="New in" data-f="new" data-cls="t0"></div>
+<div data-m="banner" data-v="court" data-k="New season" data-t="The 2026 rackets are here" data-p="New rackets from Bullpadel, Nox, Head and Babolat, in stock now." data-c="Shop new season"></div>
+<div data-m="products" data-title="Best sellers" data-f="best"></div>
+<div data-m="levels" data-cls="t0"></div>
+<div data-m="reviews"></div>
+<div data-m="brands3"></div>
+<div data-m="journal" data-cls="t0"></div>
+<div data-m="nl"></div>
+<div data-m="ftr"></div>
+<script src="retail4.js"></script>
+
+</body></html>
