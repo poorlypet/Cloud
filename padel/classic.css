@@ -252,3 +252,5 @@
 .vb.kl .kb{margin-bottom:14px}
 .vb.kl .ia{margin-bottom:10px}
 .begin .intro .ia .btn{width:100%}
+.shbtn{background:var(--accent);border-color:var(--accent);color:#fff}
+.shbtn:hover{background:var(--fg);border-color:var(--fg);color:#fff}
