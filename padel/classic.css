@@ -243,3 +243,12 @@
  .fmain{grid-template-columns:1fr 1fr}.fbrand{grid-column:1/-1}
  .shbtn{height:40px;padding:0 14px}
 }
+/* round 3 */
+.card .rt{display:flex;align-items:center;gap:6px;margin:6px 0 2px;font-size:13px;color:var(--mute)}
+.card .rt .stars i{width:14px;height:14px}.card .rt .stars i svg{width:10px;height:10px}
+.gb h3{font-size:clamp(17px,1.45vw,22px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vb.kl h2{line-height:.98;margin-bottom:8px}
+.vb.kl p{margin-bottom:16px;line-height:1.4}
+.vb.kl .kb{margin-bottom:14px}
+.vb.kl .ia{margin-bottom:10px}
+.begin .intro .ia .btn{width:100%}
