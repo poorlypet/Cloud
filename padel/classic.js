@@ -240,7 +240,7 @@ Object.assign(M,{
   <div class="wrap fbot"><div class="fpay">${['Visa','Mastercard','Amex','PayPal','Apple Pay'].map(p=>`<i>${p}</i>`).join('')}<img src="media/klarna-badge.png" alt="Klarna"></div><div class="flegal"><span>© 2026 PADEL</span><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div></footer>`;}
 });
 
-const HEADS={'Shop by category':['','Rackets, shoes, clothing and everything in between.'],'Best for beginners':['','Forgiving rackets picked for your first year on court.'],'Shop your level':['','Every racket we stock is matched to a level of player.'],'Sale':[F.sale().length,'Last season’s rackets, shoes and bags, reduced.'],'The padel guide':['','Buying advice and tips from players who know the game.']};
+const HEADS={'Shop by category':['','Rackets, shoes, clothing and everything in between.'],'Best for beginners':['','Forgiving rackets picked for your first year on court.'],'Shop your level':['','Every racket we stock is matched to a level of player.'],'Sale':['','Last season’s rackets, shoes and bags, reduced.'],'The padel guide':['','Buying advice and tips from players who know the game.']};
 function augHeads(){$$('.sh').forEach(sh=>{const h=sh.querySelector('h2');if(!h||h.dataset.aug)return;const k=h.textContent.trim(),d=HEADS[k];h.dataset.aug=1;
  const box=document.createElement('div');box.className='shl';h.replaceWith(box);box.appendChild(h);
  if(d){if(d[0])h.insertAdjacentHTML('beforeend',`<sup>${d[0]}</sup>`);box.insertAdjacentHTML('beforeend',`<p>${d[1]}</p>`);}
