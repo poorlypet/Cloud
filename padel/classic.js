@@ -24,14 +24,39 @@ const P=[
  ['Adidas Padel','Metalbone 3.4',279,0,3,'Diamond','racket',1],
  ['StarVie','Aquila Soft',99,129,1,'Round','racket',0],
  ['Siux','Electra ST3 Pro',249,0,3,'Diamond','racket',0],
+ ['Bullpadel','Neuron 02',249,0,3,'Diamond','racket',0],
+ ['Bullpadel','Ionic Power',169,199,2,'Teardrop','racket',0],
+ ['Bullpadel','Elite Woman',139,0,2,'Round','racket',0],
+ ['Nox','EQUATION Lady',129,0,2,'Round','racket',0],
+ ['Nox','TL10 Future',199,0,3,'Teardrop','racket',1],
+ ['Head','Gravity Motion',209,0,3,'Teardrop','racket',0],
+ ['Head','Flash Pro',109,0,1,'Round','racket',0],
+ ['Babolat','Air Vertuo',229,259,3,'Teardrop','racket',0],
+ ['Babolat','Contact',59,0,1,'Round','racket',0],
+ ['Adidas Padel','Adipower Lite 3.3',189,0,2,'Teardrop','racket',1],
+ ['Adidas Padel','RX 100',49,0,1,'Round','racket',0],
+ ['StarVie','Metheora Warrior',239,0,3,'Diamond','racket',0],
+ ['StarVie','Kenta Soft',119,0,1,'Round','racket',0],
+ ['Siux','Fenix Elite 4',199,229,3,'Diamond','racket',0],
+ ['Drop Shot','Explorer Pro 2.0',149,0,2,'Teardrop','racket',0],
+ ['Varlion','Bourne Summum',179,0,2,'Hybrid','racket',1],
+ ['Wilson','Defy Elite',139,0,2,'Round','racket',0],
+ ['Black Crown','Piton 12',219,0,3,'Diamond','racket',0],
  ['Joola','Perseus 16mm',199,0,3,'','pickle',1],
  ['Head','Radical Tour Pickle',89,0,2,'','pickle',0],
  ['Selkirk','SLK Neo Starter Set',59,0,1,'','pickle',0],
  ['Franklin','Signature 14mm',119,139,2,'','pickle',0],
  ['Bullpadel','Vertex 24 Shoe',119,0,0,'Herringbone','shoe',1],
  ['Asics','Gel Padel Pro 5',99,0,0,'Omni','shoe',0],
+ ['Adidas Padel','Crazyquick Boost',129,0,0,'Herringbone','shoe',1],
+ ['Head','Sprint Pro 3.5',99,119,0,'Omni','shoe',0],
+ ['Babolat','Movea',109,0,0,'Herringbone','shoe',0],
+ ['Nox','ML10 Hexa Shoe',89,0,0,'Clay','shoe',0],
  ['Nox','Pro Team Racket Bag',69,0,0,'','bag',1],
- ['Head','Padel Pro Ball 3 Pack',6,0,0,'','ball',0]
+ ['Head','Padel Pro Ball 3 Pack',6,0,0,'','ball',0],
+ ['Bullpadel','GB 1200 Overgrip 3 Pack',8,0,0,'','acc',0],
+ ['Nox','Frame Protector Tape',10,0,0,'','acc',0],
+ ['Head','Padel Racket Cover',15,0,0,'','acc',0]
 ].filter(r=>r[6]!=='pickle').map(([b,n,p,w,l,sh,c,nw],i)=>({i,b,n,p,w,l,sh,c,nw}));
 
 const BRANDS=['Adidas Padel','Asics','Babolat','Black Crown','Bullpadel','Drop Shot','Dunlop','Franklin','Head','Kombat','Nox','Royal Padel','Siux','StarVie','Varlion','Vibor-A','Wilson'];
@@ -176,7 +201,7 @@ const VID=n=>`<video class="vid" autoplay muted loop playsinline poster="media/$
 const REV=[['Great advice on my first racket','Told them I had been playing for six months and asked what to buy. The racket they suggested has made a real difference to my game.','Hannah R.','2 days ago',12],
  ['Arrived quickly and well packed','Ordered on Monday and was playing with it by Wednesday. Came in a proper box with plenty of protection.','Tom W.','4 days ago',8],
  ['Best range I have found','Every brand I was looking at in one place, with the specs laid out clearly so it was easy to compare.','Priya S.','1 week ago',4],
- ['Easy exchange on shoes','First pair were a size small. The exchange was simple and the new pair came a few days later.','Marcus L.','2 weeks ago',17],
+ ['Easy exchange on shoes','First pair were a size small. The exchange was simple and the new pair came a few days later.','Marcus L.','2 weeks ago',35],
  ['Fair prices','Checked around before buying and the price here was as good as anywhere. Will be back for a bag.','Dan P.','3 weeks ago',2]];
 Object.assign(M,{
  products:o=>sec(o,head(o.title||'New in','<a class="ul" href="#">Shop all</a>')+`<div class="grid">${F[o.f||'new']().slice(0,4).map(card).join('')}</div>`),
@@ -267,5 +292,5 @@ function lvsInit(){const s=document.getElementById('lvs');if(!s)return;let cur=0
  addEventListener('scroll',tick,{passive:true});set(1);tick();}
 document.addEventListener('DOMContentLoaded',()=>setTimeout(lvsInit,0));
 document.addEventListener('DOMContentLoaded',()=>{header();$$('[data-m]').forEach(el=>{el.outerHTML=M[el.dataset.m]({...el.dataset});});save();});
-window.PADEL={P,card,add,open,F};
+window.PADEL={P,card,add,open,F,stars,IMG,LVL,spec,gbp,hasImg,tpLogo,STORE,ARW:typeof ARW!=='undefined'?ARW:''};
 })();
