@@ -463,3 +463,6 @@
  .mh1 .h-po .hv,.mh2 .h-po .hv{object-position:0% center}
 }
 @media(max-width:760px){.mh2 .h-po .hv{object-position:25% center}}
+.blogo2{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;border:1px dashed rgba(255,255,255,.5);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;color:inherit}
+.blogo2.dk{border-color:#BDBDBD;color:#777}
+@media(max-width:760px){.blogo2{height:34px;font-size:10.5px;margin-bottom:8px}.mh1 .blogo2,.mh2 .blogo2{display:none}}

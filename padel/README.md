@@ -19,6 +19,11 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `product-r1.html` to `product-r5.html`: earlier product round
 - `product-p1.html` to `product-p5.html`: earlier product round
 
+## Store pages, 3 versions each
+- `delivery`, `returns`, `track`, `reviews`, `klarna`, `faqs`, `about`, `guide`, `brands`, `help`, `search`, `cart` as `<page>-1.html` to `<page>-3.html`, built by `pages.js` and `pages.css`
+- `brand-1.html` to `brand-3.html`: brand collection pages, built by `plp.js`
+- Orange dashed boxes (`.tc`) mark details to confirm: prices, times, contact details and company facts
+
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data
 - `plp.js`, `plp.css`: collection pages

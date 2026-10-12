@@ -292,5 +292,5 @@ function lvsInit(){const s=document.getElementById('lvs');if(!s)return;let cur=0
  addEventListener('scroll',tick,{passive:true});set(1);tick();}
 document.addEventListener('DOMContentLoaded',()=>setTimeout(lvsInit,0));
 document.addEventListener('DOMContentLoaded',()=>{header();$$('[data-m]').forEach(el=>{el.outerHTML=M[el.dataset.m]({...el.dataset});});save();});
-window.PADEL={P,card,add,open,F,stars,IMG,LVL,spec,gbp,hasImg,tpLogo,STORE,ARW:typeof ARW!=='undefined'?ARW:''};
+window.PADEL={M,P,card,add,open,F,stars,IMG,LVL,spec,gbp,hasImg,tpLogo,STORE,PAYM:typeof PAYM!=='undefined'?PAYM:'',ARW:typeof ARW!=='undefined'?ARW:''};
 })();
