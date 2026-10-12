@@ -18,12 +18,11 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 
 ## Final pages
 - `collection.html`, `brand.html`, `search.html`: built by `plp.js`. Change the collection photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
-- `brands.html`, `reviews.html`, `about.html`, `klarna.html`, `delivery.html`, `returns.html`, `track.html`, `faqs.html`, `help.html`: built by `pages.js` and `pages.css`
+- `brands.html`, `reviews.html`, `about.html`, `klarna.html`, `returns.html`, `track.html`, `faqs.html`, `help.html`, `guide.html`, `cart.html`: built by `pages.js` and `pages.css`
 - Delivery prices and times, the 14 day returns window, refund time and opening hours are set once in `POL` at the top of `pages.js`
 
 ## Still choosing
-- `guide-1.html` to `guide-3.html`: padel guide
-- `cart-1.html` to `cart-5.html`: bag, also built by `pages.js`
+- `delivery-1.html` to `delivery-3.html`: delivery, also built by `pages.js`
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data
