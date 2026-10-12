@@ -418,3 +418,48 @@
  .fin .pinfo .related.r1{margin-inline:calc(-1*var(--g));padding-inline:var(--g)}
 }
 @media(max-width:760px){.fin .h-po .hv{object-position:42% center}}
+/* related links: mobile only on the final page */
+.fin .pinfo .related.r1{display:none}
+@media(max-width:760px){
+ .fin .pinfo .related.r1{display:flex}
+ /* mobile hero, shared */
+ .fin[class*="mh"] .h-po{height:auto;min-height:0}
+ .fin[class*="mh"] .h-po p{display:none}
+ .fin[class*="mh"] .h-po h1{font-size:24px}
+ .fin[class*="mh"] .lvm small{display:none}
+ /* MH1: thin photo, black level bar under it */
+ .mh1 .h-po{height:112px!important}
+ .mh1 .h-po .in{padding:0 16px 14px}
+ .mh1 .lvm{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:#111;border:0}
+ .mh1 .lvm button{background:#111;color:#fff;align-items:center;padding:0;height:44px;justify-content:center;border-left:1px solid #2E2E2E}
+ .mh1 .lvm button:first-child{border-left:0}
+ .mh1 .lvm b{font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:0}
+ .mh1 .lvm button.on{background:var(--accent)}
+ /* MH2: levels sit inside the photo along the bottom */
+ .mh2 .lvm{display:none}
+ .mh2 .h-po{height:150px!important}
+ .mh2 .h-po .in{position:absolute;inset:0;padding:16px;display:block}
+ .mh2 .h-po .wtabs{display:grid;position:absolute;left:0;right:0;bottom:0;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0}
+ .mh2 .h-po .wtabs button{height:42px;padding:0;border:0;border-left:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.55);font-size:12.5px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+ .mh2 .h-po .wtabs button:first-child{border-left:0}
+ .mh2 .h-po .wtabs button.on{background:#fff;color:#111}
+ .mh2 .h-po:before{background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,0) 55%)}
+ /* MH3: title on white, photo strip, underline levels with prices */
+ .mh3 .h-po{display:flex;flex-direction:column;background:#fff;color:var(--fg)}
+ .mh3 .h-po:before{display:none}
+ .mh3 .h-po .in{order:-1;padding:0 0 12px}
+ .mh3 .h-po h1{font-size:28px}
+ .mh3 .h-po picture{position:relative;display:block;height:84px;overflow:hidden}
+ .mh3 .lvm{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:none;border:0;border-bottom:1px solid var(--line)}
+ .mh3 .lvm button{padding:10px 0 9px;background:none;align-items:flex-start;position:relative;color:#9A9A9A}
+ .mh3 .lvm b{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:0}
+ .mh3 .lvm small{display:block;font-size:11.5px;color:#9A9A9A}
+ .mh3 .lvm button.on{background:none;color:var(--fg)}
+ .mh3 .lvm button.on small{color:var(--mute)}
+ .mh3 .lvm button.on:after{content:"";position:absolute;left:0;right:8px;bottom:-1px;height:2px;background:var(--fg)}
+}
+@media(max-width:760px){
+ .mh3 .h-po{align-items:stretch}
+ .mh1 .h-po .hv,.mh2 .h-po .hv{object-position:0% center}
+}
+@media(max-width:760px){.mh2 .h-po .hv{object-position:25% center}}

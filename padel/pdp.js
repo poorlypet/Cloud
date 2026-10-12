@@ -107,7 +107,7 @@ const descTxt=shoe?[`The ${x.n} is built for the quick lateral movement padel de
 const bullets=shoe?['Herringbone sole for artificial grass','Reinforced toe for glass drags','Cushioned midsole','Breathable mesh upper']:[`${x.sh} shape, ${weight}`,`${LVL[x.l]} level`,x.l===3?'18K carbon face':x.l===2?'12K carbon face':'Fibreglass face',x.l===3?'Hard EVA core':x.l===2?'Medium EVA core':'Soft EVA core'];
 const specs=shoe?[['Brand',x.b],['Sole',x.sh],['Court','Artificial grass'],['Upper','Mesh and synthetic'],['Drop','8mm'],['Weight','340g (UK 9)']]:[['Brand',x.b],['Shape',x.sh],['Weight',weight],['Balance',x.l===3?'High':x.l===2?'Medium':'Low'],['Core',x.l===3?'Hard EVA':x.l===2?'Medium EVA':'Soft EVA'],['Face',x.l===3?'18K carbon':x.l===2?'12K carbon':'Fibreglass'],['Frame','100% carbon tube'],['Thickness','38mm'],['Level',LVL[x.l]],['Season','2026']];
 const delTxt=`<p>Free UK delivery on orders over £${K.STORE.freeOver}. Delivery options and prices are shown at checkout.</p><p>Returns are covered by our returns policy. <a href="#" style="text-decoration:underline">Read the full policy</a>.</p>`;
-function details(mode){const D=[['Description',`<div class="desc"><div>${descTxt.map(p=>`<p>${p}</p>`).join('')}</div><ul>${bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>`],['Specifications',`<div class="spec2" id="specs">${specs.map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`],['Delivery and returns',delTxt]];
+function details(mode){const D=[['Description',`<div class="desc"><div>${descTxt.map(p=>`<p>${p}</p>`).join('')}</div><ul>${bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>`],...(C.fin?[['How it plays',`<div class="hpx"><p class="hp-s">${SUMM} Best for ${BEST.toLowerCase()}.</p><div class="hp-bars">${PF.map(([t,v])=>`<div><div class="lb"><span>${t}</span><span class="mute">${word(v)}</span></div><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div>`]]:[]),[C.fin?'Key specs':'Specifications',`<div class="spec2" id="specs">${specs.map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`],['Delivery and returns',delTxt]];
  if(mode==='acc')return `<section class="psec"><div class="acc2">${D.map(([t,b],k)=>`<details ${k?'':'open'}><summary>${t}</summary><div class="in2">${b}</div></details>`).join('')}</div></section>`;
  return `<section class="psec"><div class="ptabs">${D.map(([t],k)=>`<button class="${k?'':'on'}" data-tabp="${k}">${t}</button>`).join('')}</div>${D.map(([t,b],k)=>`<div class="pane ${k?'':'on'}" data-pane="${k}"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">${t}</h3>${b}</div>`).join('')}</section>`;}
 
@@ -168,7 +168,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,a[data-sg
  if(t.closest('.rf')){$$('.rf button').forEach(b=>b.classList.toggle('on',b===t));return;}
 });
 document.addEventListener('change',e=>{if(e.target.dataset.bun)btot();});
-document.addEventListener('click',e=>{const a=e.target.closest('a[href="#specs"]');if(!a)return;const b=$('[data-tabp="1"]');if(b)b.click();});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#specs"]');if(!a)return;const sp=$('#specs'),pn=sp&&sp.closest('.pane');const b=pn&&$(`[data-tabp="${pn.dataset.pane}"]`);if(b)b.click();});
 document.addEventListener('click',e=>{if(e.target.id==='sgm')e.target.classList.remove('on');});
 document.addEventListener('DOMContentLoaded',()=>setTimeout(render,0));
 })();
