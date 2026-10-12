@@ -31,16 +31,26 @@ const facetsHTML=()=>(C.facets||['brand','level','shape','price','rating','sale'
 
 /* ads */
 const AD={
- klarna:w=>`<div class="ad kl ${w}"><img src="media/klarna-badge.png" alt="Klarna"><h3>Serve now. Pay later.</h3><p>Pay in 3 interest free instalments with Klarna.</p><a class="btn" href="#">How it works</a></div>`,
+ klarna:w=>w?`<div class="ad kl2 w2"><div class="kv"><video autoplay muted loop playsinline poster="media/klarna.jpg" src="media/klarna.mp4"></video></div><div class="kt"><img src="media/klarna-badge.png" alt="Klarna"><h3>Serve now. Pay later.</h3><p>Split any racket into 3 interest free payments.</p><div class="kx"><span>£189 racket</span><b>3 × £63.00</b></div><ol><li>Choose Klarna at checkout</li><li>Pay the first instalment today</li><li>The rest every 30 days</li></ol><a class="btn" href="#">How Klarna works</a><small>18+. T&amp;Cs apply. Credit subject to status.</small></div></div>`:`<div class="ad kl"><img src="media/klarna-badge.png" alt="Klarna"><h3>Serve now. Pay later.</h3><div class="kx"><span>£189 racket</span><b>3 × £63.00</b></div><p>Split any order into 3 interest free payments.</p><a class="btn" href="#">How it works</a></div>`,
  guide:w=>`<a class="ad ${w}" href="#"><span class="note">Photo: player choosing between rackets</span><small>Racket guide</small><h3>Not sure which racket?</h3><p>Shape, weight and core explained in plain English.</p><span class="btn wh">Read the guide</span></a>`,
  delivery:w=>`<div class="ad or ${w}"><small>On every order over £${K.STORE.freeOver}</small><h3>Free UK delivery</h3><p>Add a grip or a tube of balls to get there.</p><a class="btn" href="#">Shop accessories</a></div>`,
  brand:w=>`<a class="ad ${w}" href="#"><span class="note">Photo: Bullpadel 2026 campaign</span><small>Brand focus</small><h3>Bullpadel 2026</h3><p>The new Vertex, Hack and Neuron ranges.</p><span class="btn wh">Shop Bullpadel</span></a>`,
- video:w=>`<a class="ad ${w}" href="#"><video autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><small>On court</small><h3>Built for the way you play</h3><span class="btn wh">Find my level</span></a>`,
+ video:w=>`<a class="ad ${w}" href="#"><video autoplay muted loop playsinline poster="media/${C.adVid||'rally'}.jpg" src="media/${C.adVid||'rally'}.mp4"></video><small>On court</small><h3>Built for the way you play</h3><span class="btn wh">Find my level</span></a>`,
  news:w=>`<div class="ad nl ${w}"><span class="note">Photo: sale rackets on court bench</span><small>Sale alerts</small><h3>Be first to the next drop</h3><form onsubmit="event.preventDefault();this.querySelector('button').textContent='Done'"><input type="email" placeholder="Email address" required aria-label="Email"><button>Sign up</button></form></div>`};
 
 /* hero */
+const LV=[['','All'],[1,'Beginner'],[2,'Intermediate'],[3,'Advanced']];
+const isOn=v=>v===''?!S.levels.size:S.levels.size===1&&S.levels.has(v);
+const tabsHTML=cls=>`<div class="${cls}">${LV.map(([v,t])=>`<button data-lv="${v}" class="${isOn(v)?'on':''}">${t}</button>`).join('')}</div>`;
+const VID=n=>`<video class="hv" autoplay muted loop playsinline poster="media/${n}.jpg" src="media/${n}.mp4"></video>`;
+const minP=l=>gbp(Math.min(...base.filter(x=>x.l===l).map(x=>x.p)));
 function hero(){const n=base.length,h=C.hero;
- const extra=h==='tabs'?`<div class="tabs2">${[['','All'],[1,'Beginner'],[2,'Intermediate'],[3,'Advanced']].map(([v,t])=>`<button data-tab="${v}" class="${(v===''&&!S.levels.size)||S.levels.has(v)?'on':''}">${t}</button>`).join('')}</div>`:'';
+ if(h==='vbox')return `<section class="h-vbox">${VID(C.heroVid)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><span class="cnt">${n} rackets</span></div></section>${tabsHTML('segs')}`;
+ if(h==='split')return `<section class="h-split"><div class="t"><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('segs dk')}</div><div class="m">${VID(C.heroVid)}</div></section>`;
+ if(h==='cards')return `<section class="h-cards"><div class="t"><h1>${C.title}</h1><p>${C.desc}</p><button class="ul" data-lv="" style="color:#fff">Show all ${n} rackets</button></div>${[1,2,3].map(l=>`<button class="lc2 ${isOn(l)?'on':''}" data-lv="${l}"><img src="${IMG}" alt=""><span><b>${LVL[l]}</b><small>From ${minP(l)}</small></span></button>`).join('')}</section>`;
+ if(h==='klarna')return `<section class="h-vbox h-kl">${VID(C.heroVid)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><div class="klchip"><img src="media/klarna-badge.png" alt="Klarna"><span><b>Pay in 3</b> interest free on every racket</span></div></div></section>${tabsHTML('segs')}`;
+ if(h==='min')return `<section class="h-min"><div class="t"><span class="mute" style="font-weight:700;font-size:13px">${n} rackets from over 40 brands</span><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('utabs')}</div><div class="m">${VID(C.heroVid)}</div></section>`;
+ const extra=h==='tabs'?tabsHTML('tabs2'):'';
  const logo=h==='brand'?`<div class="blogo">Logo: ${C.base}</div>`:'';
  return `<section class="phero ${h==='sale'?'sale':h==='light'?'light':''}">${h==='light'||h==='sale'?'':`<span class="note">Photo: ${C.photo}</span>`}<div class="in"><div>${logo}<h1>${C.title}</h1><p>${C.desc}</p>${extra}</div><span class="cnt">${n} products</span></div></section>`;}
 
@@ -71,12 +81,12 @@ function update(keepFacets){
   html+=`<div class="pc">${C.compare?`<label class="cmpk"><input type="checkbox" data-cmp="${x.i}" ${S.cmp.has(x.i)?'checked':''}>Compare</label>`:''}${card(x)}</div>`;});
  if(!list.length)html=`<div class="empty2"><p>No rackets match those filters.</p><button class="btn" data-clear style="margin-top:16px">Clear all filters</button></div>`;
  $('#pgrid').innerHTML=html;
- $('#more').innerHTML=list.length>S.shown?`<p>Showing ${S.shown} of ${list.length}</p><div class="bar"><i style="width:${S.shown/list.length*100}%"></i></div><button class="btn ol" data-loadmore>Load more</button>`:list.length?`<p>Showing all ${list.length}</p>`:'';
+ $('#more').innerHTML=list.length>S.shown?`<div class="mbox"><p>You have seen <b>${S.shown}</b> of <b>${list.length}</b> rackets</p><div class="bar"><i style="width:${S.shown/list.length*100}%"></i></div><button class="btn" data-loadmore>Show ${Math.min(12,list.length-S.shown)} more rackets</button></div>`:list.length?`<p>You have seen all ${list.length} rackets</p>`:'';
  const chips=[...[...S.brands].map(v=>['brands',v,v]),...[...S.levels].map(v=>['levels',v,LVL[v]]),...[...S.shapes].map(v=>['shapes',v,v])];
  if(S.max<MAXP)chips.push(['max','',`Up to ${gbp(S.max)}`]);if(S.rating)chips.push(['rating','',`${S.rating} stars and up`]);if(S.sale)chips.push(['sale','','On sale']);
  $('#achips').innerHTML=chips.map(([k,v,t])=>`<button data-rm="${k}" data-v="${v}">${t}</button>`).join('')+(chips.length?'<button class="clr" data-clear>Clear all</button>':'');
  $$('.qchips button').forEach(b=>{const k=b.dataset.qk,v=b.dataset.qv;b.classList.toggle('on',k==='levels'?S.levels.has(+v):k==='shapes'?S.shapes.has(v):k==='max'?S.max==+v:false);});
- $$('.phero [data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===''?!S.levels.size:S.levels.size===1&&S.levels.has(+b.dataset.tab)));
+ $$('[data-lv]').forEach(b=>b.classList.toggle('on',isOn(b.dataset.lv===''?'':+b.dataset.lv)));
  if(!keepFacets)facetsAll();
  if(C.compare)tray();
 }
@@ -96,7 +106,7 @@ document.addEventListener('change',e=>{const t=e.target,f=t.dataset.f;if(t.id===
  else{const v=f==='levels'?+t.value:t.value;t.checked?S[f].add(v):S[f].delete(v);}
  S.shown=12;update();});
 document.addEventListener('input',e=>{if(e.target.dataset.f==='max'){S.max=+e.target.value;$$('.rng b').forEach(b=>b.textContent=gbp(S.max));}});
-document.addEventListener('click',e=>{const t=e.target.closest('button,[data-rm]');if(!t)return;
+document.addEventListener('click',e=>{const t=e.target.closest('button,[data-rm],[data-lv]');if(!t)return;
  if(t.closest('.fg')&&t.parentElement.classList.contains('fg')){t.parentElement.classList.toggle('shut');return;}
  if(t.dataset.view){$$('.vt button').forEach(b=>b.classList.toggle('on',b===t));$('#pgrid').classList.toggle('list',t.dataset.view==='list');return;}
  if(t.dataset.loadmore!==undefined){S.shown+=12;update(true);return;}
@@ -105,7 +115,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,[data-rm]
  if(t.dataset.openF!==undefined){$('#fsheet').classList.add('on');$('#scrim').classList.add('on');return;}
  if(t.dataset.closeF!==undefined){$('#fsheet').classList.remove('on');$('#scrim').classList.remove('on');return;}
  if(t.dataset.qk){const k=t.dataset.qk,v=t.dataset.qv;if(k==='levels'){const n=+v;S.levels.has(n)?S.levels.delete(n):S.levels.add(n);}else if(k==='shapes'){S.shapes.has(v)?S.shapes.delete(v):S.shapes.add(v);}else if(k==='max'){S.max=S.max==+v?MAXP:+v;}update();return;}
- if(t.dataset.tab!==undefined){S.levels.clear();if(t.dataset.tab)S.levels.add(+t.dataset.tab);update();return;}
+ if(t.dataset.lv!==undefined){S.levels.clear();if(t.dataset.lv)S.levels.add(+t.dataset.lv);update();return;}
  if(t.dataset.hb!==undefined){S.max=t.dataset.hb?+t.dataset.hb:MAXP;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));update();return;}
  if(t.dataset.hs!==undefined){S.shapes.clear();if(t.dataset.hs)S.shapes.add(t.dataset.hs);t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));update();return;}
  if(t.dataset.more!==undefined){t.closest('.seo').classList.toggle('open');t.textContent=t.closest('.seo').classList.contains('open')?'Read less':'Read more';return;}

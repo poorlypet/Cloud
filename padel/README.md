@@ -6,8 +6,10 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)
 
 ## Current options
-- `collection-c1.html` to `collection-c5.html`: collection pages
-- `product-p1.html` to `product-p5.html`: product pages
+- `collection-k1.html` to `collection-k5.html`: collection pages, five hero options on the C2 layout
+- `collection-c1.html` to `collection-c5.html`: earlier collection round
+- `product-r1.html` to `product-r5.html`: product pages, P1 gallery with P2 buy box and Trustpilot reviews
+- `product-p1.html` to `product-p5.html`: earlier product round
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data

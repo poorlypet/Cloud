@@ -228,3 +228,34 @@
 }
 .pane .mh{display:none}
 @media(max-width:760px){.pane .mh{display:block}}
+
+/* round 2: key specs and Trustpilot reviews */
+.kf{border-top:1px solid var(--line)}
+.kfh{display:flex;justify-content:space-between;align-items:center;padding:14px 0 6px;font-size:14px}
+.kfh a{text-decoration:underline;color:#555;font-size:13px}
+.kf dl{display:grid;grid-template-columns:1fr 1fr;column-gap:24px}
+.kf dl div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kf dt{color:var(--mute)}
+.kf dd{font-weight:700;text-align:right}
+.tph2{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.tplogo2{display:inline-flex;align-items:center;gap:6px;font-size:20px;letter-spacing:-.02em}
+.tps{display:flex;align-items:center;gap:12px;margin:12px 0 8px}
+.tps b{font-family:var(--head);font-size:30px;letter-spacing:-.03em}
+.tps .stars i{width:30px;height:30px}.tps .stars i svg{width:20px;height:20px}
+.tpl p{font-size:15px;color:#3A3A3A;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tpl .sep{width:1px;height:14px;background:#BDBDBD}
+.tpa{display:flex;gap:8px;flex-wrap:wrap}
+.tpb2{background:#00B67A;border-color:#00B67A;color:#fff}
+.tpb2:hover{background:#111;border-color:#111}
+.tpg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tpc2{border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:10px}
+.tpc2 .tt{display:flex;justify-content:space-between;align-items:center}
+.tpc2 .vf{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#6B6B6B}
+.tpc2 h4{font-size:16px}
+.tpc2 p{font-size:15px;color:#3A3A3A;flex:1}
+.tpc2 .nm{display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
+.tpc2 .av{width:34px;height:34px;background:var(--grey);display:grid;place-items:center;font-weight:700}
+.tpc2 .nm small{display:block;color:var(--mute);font-size:12px}
+.tpf{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px;font-size:14px;color:#555}
+@media(max-width:1100px){.tpg{grid-template-columns:1fr}}
+@media(max-width:760px){.tps b{font-size:24px}.tps .stars i{width:24px;height:24px}.kf dl{grid-template-columns:1fr}.tpa{width:100%}.tpa .btn{flex:1}}

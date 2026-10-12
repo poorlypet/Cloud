@@ -220,3 +220,86 @@
  .phero .tabs2{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-20px;padding-right:20px}
  .phero .tabs2 button{flex:none}
 }
+
+/* round 2: new heroes */
+.hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.h-vbox{position:relative;min-height:240px;color:#fff;display:flex;align-items:flex-end;overflow:hidden;background:#111}
+.h-vbox:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.6),rgba(0,0,0,.05) 70%);z-index:1}
+.h-vbox .in{position:relative;z-index:2;width:100%;padding:30px 36px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.h-vbox h1,.h-split h1,.h-cards h1,.h-min h1{font-family:var(--head);font-weight:700;letter-spacing:-.035em;font-size:clamp(32px,3.4vw,52px);line-height:1}
+.h-vbox p,.h-split p,.h-cards p,.h-min p{margin-top:10px;max-width:52ch;font-size:15px;opacity:.88}
+.h-vbox .cnt{font-size:14px;opacity:.85}
+.segs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-top:0}
+.segs button{height:56px;font-family:var(--head);font-weight:600;font-size:16px;border-left:1px solid var(--line);transition:background .15s,color .15s}
+.segs button:first-child{border-left:0}
+.segs button.on{background:var(--fg);color:#fff}
+.segs button:hover:not(.on){background:var(--grey)}
+.segs.dk{border:1px solid #DADADA;margin-top:22px}
+.segs.dk button{height:46px;font-size:15px;border-color:#DADADA}
+.h-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);min-height:280px}
+.h-split .t{background:var(--grey);padding:34px 36px;display:flex;flex-direction:column;justify-content:center}
+.h-split .m{position:relative;min-height:240px;overflow:hidden}
+.h-cards{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:8px;background:#111;color:#fff;padding:8px}
+.h-cards .t{padding:26px 28px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px}
+.h-cards .t p{margin-bottom:8px}
+.lc2{position:relative;background:#1E1E1E;color:#fff;min-height:200px;display:flex;align-items:flex-end;padding:18px;text-align:left;overflow:hidden;border:2px solid transparent;transition:border-color .15s,background .15s}
+.lc2 img{position:absolute;right:-6%;top:6%;height:78%;width:auto;transform:rotate(-14deg);transition:transform .3s}
+.lc2:hover img{transform:rotate(-8deg) scale(1.04)}
+.lc2 span{position:relative;display:flex;flex-direction:column}
+.lc2 b{font-family:var(--head);font-size:20px;letter-spacing:-.02em}
+.lc2 small{font-size:13px;opacity:.75;margin-top:2px}
+.lc2.on{border-color:var(--accent);background:#262626}
+.h-kl .klchip{display:flex;align-items:center;gap:10px;background:#FFA8CD;color:#17120F;padding:10px 14px;font-size:14px}
+.h-kl .klchip img{height:26px;width:auto}
+.h-min{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:end;padding-block:12px 4px}
+.h-min .t h1{margin-top:8px}
+.h-min .t p{opacity:1;color:#444}
+.h-min .m{position:relative;aspect-ratio:1;overflow:hidden;background:#111}
+.utabs{display:flex;gap:28px;margin-top:26px;border-bottom:1px solid var(--line)}
+.utabs button{height:46px;font-family:var(--head);font-weight:700;font-size:16px;color:#9A9A9A;position:relative}
+.utabs button.on{color:var(--fg)}
+.utabs button.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--accent)}
+
+/* richer Klarna ad */
+.ad.kl .kx{display:flex;justify-content:space-between;align-items:baseline;background:rgba(255,255,255,.55);padding:10px 12px;font-size:14px}
+.ad.kl .kx b{font-family:var(--head);font-size:20px}
+.ad.kl2{background:#FFA8CD;color:#17120F;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);padding:0;gap:0}
+.ad.kl2:before{display:none}
+.ad.kl2 .kv{position:relative;overflow:hidden;min-height:100%}
+.ad.kl2 .kt{padding:26px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.ad.kl2 img{height:32px;width:auto;align-self:flex-start}
+.ad.kl2 h3{font-size:28px}
+.ad.kl2 p{opacity:.85}
+.ad.kl2 .kx{display:flex;justify-content:space-between;align-items:baseline;background:rgba(255,255,255,.6);padding:10px 14px;font-size:14px}
+.ad.kl2 .kx b{font-family:var(--head);font-size:22px}
+.ad.kl2 ol{list-style:none;counter-reset:k;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.ad.kl2 ol li{display:flex;align-items:center;gap:8px}
+.ad.kl2 ol li:before{counter-increment:k;content:counter(k);width:20px;height:20px;background:#17120F;color:#FFA8CD;display:grid;place-items:center;font-size:11px;font-weight:700;flex:none}
+.ad.kl2 .btn{align-self:flex-start;background:#17120F;border-color:#17120F;color:#fff;height:42px;padding:0 18px;font-size:13px}
+.ad.kl2 small{font-size:11px;opacity:.7}
+
+/* load more block */
+.more .mbox{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:14px;padding:28px;background:var(--grey)}
+.more .mbox .bar{width:100%}
+.more .mbox .btn{width:100%;height:52px;background:var(--accent);border-color:var(--accent)}
+.more .mbox .btn:hover{background:var(--fg);border-color:var(--fg)}
+
+@media(max-width:1100px){
+ .h-split,.h-min{grid-template-columns:1fr}
+ .h-split .m{min-height:200px;order:-1}
+ .h-min .m{display:none}
+ .h-cards{grid-template-columns:repeat(3,minmax(0,1fr))}.h-cards .t{grid-column:1/-1;padding:18px}
+ .ad.kl2{grid-template-columns:1fr}.ad.kl2 .kv{min-height:200px}
+}
+@media(max-width:760px){
+ .h-vbox{min-height:200px}.h-vbox .in{padding:20px}
+ .h-vbox h1,.h-split h1,.h-cards h1,.h-min h1{font-size:30px}
+ .segs{grid-template-columns:repeat(4,auto);overflow-x:auto}
+ .segs button{height:48px;font-size:14px;padding:0 14px;white-space:nowrap}
+ .h-split .t{padding:20px}
+ .lc2{min-height:130px;padding:12px}.lc2 b{font-size:16px}
+ .h-kl .klchip{font-size:13px;padding:8px 10px}
+ .utabs{gap:18px;overflow-x:auto;scrollbar-width:none}
+ .utabs button{flex:none}
+}
+.h-split .t{min-width:0}.segs{max-width:100%}@media(max-width:760px){.segs{scrollbar-width:none}.segs::-webkit-scrollbar{display:none}}
