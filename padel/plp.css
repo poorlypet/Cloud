@@ -561,3 +561,17 @@
  .fin.mh7 .card .rt,.mh7 .card .sp,.mh7 .card .add,.mh7 .kc{display:none}
 }
 @media(max-width:760px){.fin.mh7 .h-po h1{max-width:4.3em}.fin.mh7 .h-po .hv{object-position:60% center}}
+/* mobile buttons match the site .btn */
+@media(max-width:760px){
+ .fin.mh7 .lvm{gap:8px;margin-top:16px}
+ .fin.mh7 .lvm button{height:48px;border:1px solid var(--fg)}
+ .fin.mh7 .lvm b{font-size:14px;font-weight:700}
+ .fin.mh7 .tool .r,.fin.mh7 .tool .r:has(.vt.v2){gap:8px}
+ .fin.mh7 .tool .fbtn{height:48px;border:1px solid var(--fg);font-size:14px;font-weight:700;gap:8px}
+ .fin.mh7 .tool .fbtn svg{width:18px;height:18px}
+ .fin.mh7 .tool .sel{height:48px;border:1px solid var(--fg)}
+ .fin.mh7 .sl2{font-size:14px;gap:8px}
+ .fin.mh7 .sl2:before{width:18px;height:18px}
+ .fin.mh7 .cnth{font-size:14px;margin-top:18px;padding-top:16px}
+ .fin.mh7 .cnth .ul{font-size:14px}
+}
