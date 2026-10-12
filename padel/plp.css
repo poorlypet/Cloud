@@ -466,3 +466,48 @@
 .blogo2{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;border:1px dashed rgba(255,255,255,.5);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;color:inherit}
 .blogo2.dk{border-color:#BDBDBD;color:#777}
 @media(max-width:760px){.blogo2{height:34px;font-size:10.5px;margin-bottom:8px}.mh1 .blogo2,.mh2 .blogo2{display:none}}
+/* mobile hero round 2 */
+@media(max-width:760px){
+ .mh4 .lvm small,.mh5 .lvm small,.mh6 .lvm small{display:none}
+ .fin.mh4 .ptm,.fin.mh5 .ptm,.fin.mh6 .ptm{font-size:13px;gap:6px;padding:10px 0;border-bottom:0}
+ .fin.mh4 .ptm .stars i,.fin.mh5 .ptm .stars i,.fin.mh6 .ptm .stars i{width:16px;height:16px}
+ /* MH4: compact photo, chips that scroll */
+ .mh4 .h-po{height:128px!important}
+ .mh4 .h-po .hv{object-position:30% center}
+ .mh4 .h-po .in{padding:0 16px 14px}
+ .mh4 .h-po h1{font-size:26px}
+ .mh4 .lvm{display:flex;gap:8px;background:none;border:0;overflow-x:auto;scrollbar-width:none;margin:12px calc(-1*var(--g)) 0;padding:0 var(--g)}
+ .mh4 .lvm::-webkit-scrollbar{display:none}
+ .mh4 .lvm button{flex:none;flex-direction:row;align-items:center;height:38px;padding:0 16px;border:1px solid #D6D6D6;background:#fff;gap:0}
+ .mh4 .lvm b{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:0}
+ .mh4 .lvm button.on{background:var(--fg);border-color:var(--fg);color:#fff}
+ /* MH5: title on white, edge to edge photo, segmented control */
+ .mh5 .h-po{display:flex;flex-direction:column;align-items:stretch;background:#fff;color:var(--fg);margin-inline:calc(-1*var(--g))}
+ .mh5 .h-po:before{display:none}
+ .mh5 .h-po .in{order:-1;padding:0 var(--g) 14px}
+ .mh5 .h-po h1{font-size:30px}
+ .mh5 .h-po picture{position:relative;display:block;height:104px;overflow:hidden}
+ .mh5 .h-po .hv{object-position:30% center}
+ .mh5 .lvm{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;background:var(--grey);border:0;padding:3px;margin-top:12px}
+ .mh5 .lvm button{background:transparent;align-items:center;justify-content:center;padding:0;height:38px;color:#555}
+ .mh5 .lvm b{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0}
+ .mh5 .lvm button.on{background:#fff;color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+ .mh5 .lvm button.on b{font-weight:700}
+ /* MH6: edge to edge photo, level links with level bars */
+ .mh6 .h-po{height:150px!important;margin-inline:calc(-1*var(--g))}
+ .mh6 .h-po .hv{object-position:32% center}
+ .mh6 .h-po:before{background:linear-gradient(0deg,rgba(0,0,0,.7),rgba(0,0,0,0) 70%)}
+ .mh6 .h-po .in{padding:0 var(--g) 16px}
+ .mh6 .h-po h1{font-size:28px}
+ .mh6 .lvm{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:none;border:0;border-bottom:1px solid var(--line);margin-inline:calc(-1*var(--g));padding:0 var(--g)}
+ .mh6 .lvm button{background:none;align-items:flex-start;padding:12px 0 11px;gap:6px;position:relative;color:#8A8A8A}
+ .mh6 .lvm b{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:0;display:flex;flex-direction:column;gap:6px}
+ .mh6 .lvm b:before{content:"";width:20px;height:8px;background:linear-gradient(90deg,#D0D0D0 0 6px,transparent 6px 7px,#D0D0D0 7px 13px,transparent 13px 14px,#D0D0D0 14px 20px)}
+ .mh6 .lvm button[data-lv="1"] b:before{background:linear-gradient(90deg,currentColor 0 6px,transparent 6px 7px,#D0D0D0 7px 13px,transparent 13px 14px,#D0D0D0 14px 20px)}
+ .mh6 .lvm button[data-lv="2"] b:before{background:linear-gradient(90deg,currentColor 0 6px,transparent 6px 7px,currentColor 7px 13px,transparent 13px 14px,#D0D0D0 14px 20px)}
+ .mh6 .lvm button[data-lv="3"] b:before{background:linear-gradient(90deg,currentColor 0 6px,transparent 6px 7px,currentColor 7px 13px,transparent 13px 14px,currentColor 14px 20px)}
+ .mh6 .lvm button[data-lv=""] b:before{background:linear-gradient(90deg,currentColor 0 20px)}
+ .mh6 .lvm button.on{color:var(--fg)}
+ .mh6 .lvm button.on:after{content:"";position:absolute;left:0;right:10px;bottom:-1px;height:2px;background:var(--accent)}
+}
+@media(max-width:760px){.fin.mh6 .lvm button.on{background:none;color:var(--fg)}}
