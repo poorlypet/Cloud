@@ -46,18 +46,59 @@ const P=[
  ['Head','Radical Tour Pickle',89,0,2,'','pickle',0],
  ['Selkirk','SLK Neo Starter Set',59,0,1,'','pickle',0],
  ['Franklin','Signature 14mm',119,139,2,'','pickle',0],
- ['Bullpadel','Vertex 24 Shoe',119,0,0,'Herringbone','shoe',1],
- ['Asics','Gel Padel Pro 5',99,0,0,'Omni','shoe',0],
- ['Adidas Padel','Crazyquick Boost',129,0,0,'Herringbone','shoe',1],
- ['Head','Sprint Pro 3.5',99,119,0,'Omni','shoe',0],
- ['Babolat','Movea',109,0,0,'Herringbone','shoe',0],
- ['Nox','ML10 Hexa Shoe',89,0,0,'Clay','shoe',0],
- ['Nox','Pro Team Racket Bag',69,0,0,'','bag',1],
- ['Head','Padel Pro Ball 3 Pack',6,0,0,'','ball',0],
- ['Bullpadel','GB 1200 Overgrip 3 Pack',8,0,0,'','acc',0],
- ['Nox','Frame Protector Tape',10,0,0,'','acc',0],
- ['Head','Padel Racket Cover',15,0,0,'','acc',0]
-].filter(r=>r[6]!=='pickle').map(([b,n,p,w,l,sh,c,nw],i)=>({i,b,n,p,w,l,sh,c,nw}));
+ ['Bullpadel','Vertex 24 Shoe',119,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
+ ['Asics','Gel Padel Pro 5',99,0,0,'Omni','shoe',0,'Men\'s shoes','Men'],
+ ['Adidas Padel','Crazyquick Boost',129,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
+ ['Head','Sprint Pro 3.5',99,119,0,'Omni','shoe',0,'Men\'s shoes','Men'],
+ ['Babolat','Movea',109,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
+ ['Nox','ML10 Hexa Shoe',89,0,0,'Clay','shoe',0,'Men\'s shoes','Men'],
+ ['Nox','Pro Team Racket Bag',69,0,0,'','bag',1,'Racket bags'],
+ ['Head','Padel Pro Ball 3 Pack',6,0,0,'','ball',0,'Single tubes'],
+ ['Bullpadel','GB 1200 Overgrip 3 Pack',8,0,0,'','acc',0,'Overgrips'],
+ ['Nox','Frame Protector Tape',10,0,0,'','acc',0,'Protector tape'],
+ ['Head','Padel Racket Cover',15,0,0,'','acc',0,'Racket covers'],
+ ['Asics','Gel Padel Exclusive 6',109,0,0,'Omni','shoe',1,'Women\'s shoes','Women'],
+ ['Bullpadel','Hack Vibram 25',99,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
+ ['Adidas Padel','Adipower Ctrl',119,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
+ ['Head','Revolt Pro 4.5',119,139,0,'Omni','shoe',0,'Men\'s shoes','Men'],
+ ['Joma','Slam 25',69,0,0,'Clay','shoe',0,'Men\'s shoes','Men'],
+ ['Nox','AT10 Lux Shoe',99,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
+ ['Asics','Gel Padel Junior',59,0,0,'Omni','shoe',0,'Junior shoes','Junior'],
+ ['Bullpadel','Liria T-Shirt',35,0,0,'','cloth',1,'T-shirts','Men'],
+ ['Adidas Padel','Club Polo',40,0,0,'','cloth',0,'Polos','Men'],
+ ['Head','Performance Shorts',35,0,0,'','cloth',0,'Shorts','Men'],
+ ['Nox','Team Hoodie',55,0,0,'','cloth',1,'Hoodies and jackets','Men'],
+ ['Babolat','Play Crew Tee',25,30,0,'','cloth',0,'T-shirts','Men'],
+ ['Siux','Tour Tank',30,0,0,'','cloth',1,'Tops','Women'],
+ ['Bullpadel','Edra Skirt',39,0,0,'','cloth',0,'Skirts and dresses','Women'],
+ ['Adidas Padel','Club Dress',55,0,0,'','cloth',0,'Skirts and dresses','Women'],
+ ['Head','Club Leggings',40,0,0,'','cloth',0,'Leggings','Women'],
+ ['Nox','Pro Shorts',32,0,0,'','cloth',0,'Shorts','Women'],
+ ['Bullpadel','Performance Socks 3 Pack',15,0,0,'','cloth',0,'Socks','Unisex'],
+ ['Head','Padel Cap',20,0,0,'','cloth',0,'Caps and visors','Unisex'],
+ ['Nox','Team Visor',18,22,0,'','cloth',0,'Caps and visors','Unisex'],
+ ['Bullpadel','Vertex Racket Bag',79,0,0,'','bag',1,'Racket bags'],
+ ['Adidas Padel','Multigame Bag',65,0,0,'','bag',0,'Racket bags'],
+ ['Head','Tour Team Padel Bag',75,89,0,'','bag',0,'Racket bags'],
+ ['Babolat','RH Padel Lite',55,0,0,'','bag',0,'Racket bags'],
+ ['Nox','AT10 Backpack',59,0,0,'','bag',0,'Backpacks'],
+ ['Bullpadel','Tour Backpack',49,0,0,'','bag',0,'Backpacks'],
+ ['Head','Pro Duffle',69,0,0,'','bag',0,'Holdalls'],
+ ['StarVie','Shoe Bag',15,0,0,'','bag',0,'Shoe bags'],
+ ['Bullpadel','Premium Pro Balls 3 Pack',7,0,0,'','ball',0,'Single tubes'],
+ ['Nox','Pro Titanium Balls 3 Pack',6,0,0,'','ball',0,'Single tubes'],
+ ['Adidas Padel','Speed RX Balls 3 Pack',6,0,0,'','ball',0,'Single tubes'],
+ ['Head','Padel Pro Box of 24 Tubes',120,139,0,'','ball',0,'Boxes of 24'],
+ ['Bullpadel','Premium Pro Box of 24 Tubes',135,0,0,'','ball',0,'Boxes of 24'],
+ ['Nox','Pro Overgrip 3 Pack',7,0,0,'','acc',0,'Overgrips'],
+ ['Head','Prime Tour Overgrip 3 Pack',8,0,0,'','acc',0,'Overgrips'],
+ ['Bullpadel','Replacement Grip',12,0,0,'','acc',0,'Grips'],
+ ['StarVie','Protector Tape',9,0,0,'','acc',0,'Protector tape'],
+ ['Adidas Padel','Wristbands 2 Pack',10,0,0,'','acc',0,'Wristbands'],
+ ['Nox','Team Towel',18,0,0,'','acc',0,'Towels'],
+ ['Bullpadel','Water Bottle',15,0,0,'','acc',0,'Water bottles'],
+ ['Head','Racket Cover Pro',22,25,0,'','acc',0,'Racket covers']
+].filter(r=>r[6]!=='pickle').map(([b,n,p,w,l,sh,c,nw,t='',g=''],i)=>({i,b,n,p,w,l,sh,c,nw,t,g}));
 
 const BRANDS=['Adidas Padel','Asics','Babolat','Black Crown','Bullpadel','Drop Shot','Dunlop','Franklin','Head','Kombat','Nox','Royal Padel','Siux','StarVie','Varlion','Vibor-A','Wilson'];
 const STAR='<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2.5l2.8 6.6 7.2.6-5.5 4.7 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6z"/></svg>';
@@ -66,7 +107,9 @@ const tpLogo='<span class="tpw"><svg viewBox="0 0 24 24"><path fill="var(--tp)" 
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const gbp=n=>'£'+n;
 const hasImg=x=>x.c==='racket'||x.c==='pickle';
-const spec=x=>[x.l?LVL[x.l]:'',x.sh,x.c==='pickle'?'Pickleball':''].filter(Boolean).join(', ');
+/* where menu and footer links go */
+const LINK={'Padel rackets':'collection.html','Shoes':'shoes.html','Clothing':'clothing.html','Bags':'bags.html','Balls':'balls.html','Accessories':'accessories.html','Sale':'sale-1.html','Beginner':'rackets-beginner.html','Intermediate':'rackets-intermediate.html','Advanced':'rackets-advanced.html','Bullpadel':'brand.html','Nox':'brand-nox.html','Head':'brand-head.html','All brands':'brands.html','Delivery':'delivery.html','Returns':'returns.html','Track my order':'track.html','Pay with Klarna':'klarna.html','Contact us':'contact-1.html','FAQs':'faqs.html','About PADEL':'about.html','Reviews':'reviews.html','The padel guide':'guide.html','Beginners':'beginners-1.html','Privacy':'privacy-1.html','Terms':'terms-1.html','Cookies':'cookies-1.html'};
+const spec=x=>[x.l?LVL[x.l]:'',x.sh,x.c==='pickle'?'Pickleball':'',x.c!=='racket'&&x.c!=='shoe'?x.t:'',x.c==='shoe'&&x.g?x.g:''].filter(Boolean).join(', ');
 const ph=n=>`<div class="ph"><span class="note">Photo: ${n}</span></div>`;
 
 function card(x){
@@ -117,7 +160,7 @@ function header(){
   h.innerHTML=`<div class="wrap r1"><div class="lg"><button class="burger2" data-open="menu" aria-label="Menu">${IC.m}</button><a class="logo" href="./">PADEL<i>.</i></a></div>
   <label class="sfield">${IC.s}<input id="sf" type="search" placeholder="Search rackets, brands and more" autocomplete="off" aria-label="Search"></label>
   <div class="tools2"><button class="sbtn" data-open="search" aria-label="Search">${IC.s}</button><a href="#" class="tx">Help</a><a href="#" aria-label="Account">${IC.u}<span class="tx">Account</span></a><button data-open="bag" aria-label="Bag">${IC.b}<span class="tx">Bag</span><span class="cnt" id="bagn">0</span></button></div></div>
-  <nav class="r2"><div class="wrap">${nav.map(([k,t])=>k?`<button data-mega="${k}">${t}</button>`:`<a href="#" class="${t==='Sale'?'sale':''}">${t}</a>`).join('')}</div></nav><div class="mega" id="mega"></div>`;
+  <nav class="r2"><div class="wrap">${nav.map(([k,t])=>k?`<button data-mega="${k}">${t}</button>`:`<a href="${LINK[t]||'#'}" class="${t==='Sale'?'sale':''}">${t}</a>`).join('')}</div></nav><div class="mega" id="mega"></div>`;
   const mega=$('#mega');let cur=null,tm;
   const show=k=>{clearTimeout(tm);if(cur===k)return;cur=k;mega.innerHTML=megaHTML(k);mega.className='mega on';$$('[data-mega]').forEach(b=>b.classList.toggle('on',b.dataset.mega===k));};
   const hide=()=>{tm=setTimeout(()=>{cur=null;mega.className='mega';$$('[data-mega]').forEach(b=>b.classList.remove('on'));},140);};
@@ -192,7 +235,7 @@ const M={
  prices:o=>sec(o,head(o.title||'Rackets by price','<span></span>')+`<div class="prices">${[['Under £100','Light, forgiving rackets. Ideal if you are just starting out.'],['£100 to £200','Our most popular range for regular club players.'],['Over £200','Carbon rackets for experienced and competitive players.']].map(([t,d])=>`<a href="#"><b>${t}</b><div><p style="max-width:34ch;margin-bottom:12px">${d}</p><span class="ul">Shop now</span></div></a>`).join('')}</div>`),
  reviews:o=>sec(o,`<div class="tpbox"><div class="head"><b>Excellent</b>${stars()}<span>Rated ${STORE.tpScore} / 5 based on ${STORE.tpCount} reviews on</span>${tpLogo}</div><div class="tprev">${[['Great advice on my first racket','Told them I had been playing for six months. They sent a round racket and it has made a real difference.','Hannah R.','2 days ago'],['Fast and well packed','Ordered on Monday and played with it on Tuesday night. Racket arrived in a proper box with protection.','Tom W.','4 days ago'],['Best range I have found','Every brand I was looking at in one place, with the specs laid out clearly. Easy to compare.','Priya S.','1 week ago'],['Easy exchange','Shoes were a size small. Swapped them quickly and the new pair arrived two days later.','Marcus L.','2 weeks ago']].map(([h,p,n,d])=>`<div>${stars('s')}<h4>${h}</h4><p>${p}</p><small>${n}, ${d}</small></div>`).join('')}</div><p class="ph-n">Sample reviews. Replace with the Trustpilot widget.</p></div>`),
  nl:()=>`<section class="nl"><div class="wrap"><div><h3>New arrivals in your inbox</h3><p>Be the first to hear about new rackets and restocks.</p></div><form onsubmit="event.preventDefault();this.querySelector('button').textContent='Subscribed'"><input id="nl" type="email" placeholder="Email address" required aria-label="Email address"><button>Sign up</button></form></div></section>`,
- ftr:()=>{const c=(h,l)=>`<div><h4>${h}</h4><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`;
+ ftr:()=>{const c=(h,l)=>`<div><h4>${h}</h4><ul>${l.map(x=>`<li><a href="${LINK[x]||'#'}">${x}</a></li>`).join('')}</ul></div>`;
   return `<footer class="ftr"><div class="wrap"><div class="cols">${c('Shop',['Padel rackets','Shoes','Bags','Clothing','Accessories','Sale'])}${c('Brands',['Bullpadel','Nox','Head','Babolat','All brands'])}${c('Help',['Delivery','Returns','Track my order','Contact us','FAQs'])}${c('About',['About PADEL','Guides','Instagram','TikTok'])}<div><h4>Customer reviews</h4><p class="tp" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>Excellent</b>${stars('s')}</p><p style="margin-top:6px">${STORE.tpScore} out of 5 from ${STORE.tpCount} reviews</p></div></div><div class="base"><span>© 2026 PADEL</span><span>Privacy policy  ·  Terms  ·  Cookies</span></div></div></footer>`;}
 };
 
@@ -267,11 +310,11 @@ Object.assign(M,{
   <div class="tpfoot"><span>Showing our latest 5 star reviews</span><span class="phn">Sample reviews. Replace with the Trustpilot widget.</span></div></div></section>`,
  journal:o=>sec(o,head('The padel guide','<a class="ul" href="#">All guides</a>')+`<div class="gtiles">${[['Buying guide','Choosing your first racket','6 min','player choosing between rackets'],['Technique','The bandeja, step by step','4 min','player hitting a bandeja at the net'],['Beginners','Padel rules made simple','3 min','court from behind the glass'],['Kit care','Make your racket last','3 min','racket with protector tape, close up']].map(([t,h,m,n])=>`<a class="gt2" href="#"><span class="note">Photo: ${n}</span><span class="gtag">${t}</span><div class="gb"><h3>${h}</h3><span class="gm">${m} read ${ARW}</span></div></a>`).join('')}</div>`),
  nl:()=>'',
- ftr:()=>{const c=(h,l)=>`<div><h4>${h}</h4><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`;
+ ftr:()=>{const c=(h,l)=>`<div><h4>${h}</h4><ul>${l.map(x=>`<li><a href="${LINK[x]||'#'}">${x}</a></li>`).join('')}</ul></div>`;
   return `<footer class="ftr3"><div class="fnl"><div class="wrap"><div><h3>Get new drops first</h3><p>New rackets, restocks and sale previews.</p></div><form onsubmit="event.preventDefault();this.querySelector('button').textContent='Subscribed'"><input id="fnl" type="email" placeholder="Email address" required aria-label="Email address"><button>Sign up</button></form></div></div>
   <div class="wrap fmain"><div class="fbrand"><a class="logo" href="./">PADEL<i>.</i></a><p>Europe's best padel brands, in one UK store.</p><div class="ftpm"><b>Excellent</b>${stars('s')}<span>${STORE.tpScore} out of 5</span>${tpLogo}</div><div class="fsoc">${['Instagram','TikTok','YouTube','Facebook'].map(x=>`<a href="#">${x}</a>`).join('')}</div></div>
-  ${c('Shop',['Padel rackets','Shoes','Clothing','Bags','Balls','Accessories','Sale'])}${c('Rackets',['Beginner','Intermediate','Advanced','Bullpadel','Nox','Head','All brands'])}${c('Help',['Delivery','Returns','Track my order','Pay with Klarna','Contact us','FAQs'])}${c('About',['About PADEL','The padel guide','Careers','Affiliates'])}</div>
-  <div class="wrap fbot"><div class="fpay">${Object.entries(PAYM).map(([k,v])=>`<i title="${k}" aria-label="${k}">${v}</i>`).join('')}<img src="media/klarna-badge.png" alt="Klarna"></div><div class="flegal"><span>© 2026 PADEL</span><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div></footer>`;}
+  ${c('Shop',['Padel rackets','Shoes','Clothing','Bags','Balls','Accessories','Sale'])}${c('Rackets',['Beginner','Intermediate','Advanced','Bullpadel','Nox','Head','All brands'])}${c('Help',['Delivery','Returns','Track my order','Pay with Klarna','Contact us','FAQs'])}${c('About',['About PADEL','Reviews','The padel guide'])}</div>
+  <div class="wrap fbot"><div class="fpay">${Object.entries(PAYM).map(([k,v])=>`<i title="${k}" aria-label="${k}">${v}</i>`).join('')}<img src="media/klarna-badge.png" alt="Klarna"></div><div class="flegal"><span>© 2026 PADEL</span><a href="${LINK.Privacy}">Privacy</a><a href="${LINK.Terms}">Terms</a><a href="${LINK.Cookies}">Cookies</a></div></div></footer>`;}
 });
 
 const HEADS={'Shop by category':['','Rackets, shoes, clothing and everything in between.'],'Best for beginners':['','Forgiving rackets picked for your first year on court.'],'Shop your level':['','Every racket we stock is matched to a level of player.'],'Sale':['','Last season’s rackets, shoes and bags, reduced.'],'The padel guide':['','Buying advice and tips from players who know the game.']};

@@ -31,7 +31,8 @@ const BENTO=(a,b,c)=>`<div class="promo3">${PT('big',...a)}${PT('',...b)}${PT(''
 const GUIDES=[['Buying guide','Choosing your first racket','6 min','player choosing between rackets'],['Technique','The bandeja, step by step','4 min','player hitting a bandeja at the net'],['Beginners','Padel rules made simple','3 min','court from behind the glass'],['Kit care','Make your racket last','3 min','racket with protector tape'],['Buying guide','Round, teardrop or diamond?','5 min','three racket shapes side by side'],['Footwear','Choosing padel shoes','5 min','shoe sole on court'],['Technique','Getting the most from the glass','4 min','player playing off the back wall'],['Beginners','Your first padel lesson','4 min','coach with beginners']];
 const GUIDES2=[['Buying guides','How to choose a padel racket','8 min','player choosing between rackets'],['Buying guides','Round, teardrop or diamond?','5 min','three racket shapes side by side'],['Buying guides','Racket weight and balance explained','4 min','racket on scales'],['Footwear','Choosing padel shoes','5 min','shoe sole on court'],['Beginners','Padel rules made simple','3 min','court from behind the glass'],['Beginners','Your first padel lesson','4 min','coach with beginners'],['Beginners','How padel scoring works','3 min','scoreboard at a club'],['Technique','The bandeja, step by step','4 min','player hitting a bandeja'],['Technique','Getting the most from the glass','4 min','player playing off the back wall'],['Technique','Serving well in padel','3 min','player serving'],['Kit care','Make your racket last','3 min','racket with protector tape'],['Kit care','When to change your overgrip','2 min','overgrip being wrapped']];
 const GCATS=[['Buying guides','rackets laid out on a bench'],['Beginners','first lesson on court'],['Technique','player at the net'],['Footwear','padel shoes on court'],['Kit care','grips and protector tape']];
-const GC=([t,h,m,n])=>`<a class="gcd" href="#" data-gt="${t}">${PH(n,'gp')}<span class="gtg">${t}</span><h3>${h}</h3><span class="gm">${m} read</span></a>`;
+const SLUG=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const GC=([t,h,m,n])=>`<a class="gcd" href="g-${SLUG(h)}.html" data-gt="${t}">${PH(n,'gp')}<span class="gtg">${t}</span><h3>${h}</h3><span class="gm">${m} read</span></a>`;
 const GT=l=>`<div class="gtiles">${l.map(([t,h,m,n])=>`<a class="gt2" href="#"><span class="note">Photo: ${n}</span><span class="gtag">${t}</span><div class="gb"><h3>${h}</h3><span class="gm">${m} read ${ARW}</span></div></a>`).join('')}</div>`;
 const GRID=l=>`<div class="grid">${l.map(card).join('')}</div>`;
 const FAQP=(l,n)=>`<div class="faqp"><div>${FAQ(l)}</div>${PH(n,'fp')}</div>`;
@@ -212,12 +213,15 @@ function cart(){
  const tile=c=>`<div class="btl" data-ci="${c.x.i}"><a class="im" href="#">${IMGB(c.x)}</a><span class="br">${c.x.b}</span><a href="#" class="nm">${c.x.n}</a><span class="op">${opt(c.x)}</span><div class="bf">${step(c)}<b>${gbp(c.x.p*c.q)}</b></div><button class="ul" data-rm2>Remove</button></div>`;
  return [SEC(`<div class="bhd"><h1>Your <mark>bag</mark></h1><span>${n} item${n===1?'':'s'}</span></div><div class="bl2 v4"><div class="btiles2">${CI.length?CI.map(tile).join(''):empty}</div><aside class="sm2 grey"><h2>Summary</h2>${totals}${fd}${pay}</aside></div>`,'pt8'),recs];}
 const R={reviews,klarna,delivery,returns,track,faqs,help,about,guide,brands,cart};
+/* helpers for page types kept in pages2.js and lab.js */
+const H={G,K,V,POL,$,$$,money,rk,byName,ACC,IC,NOTE,PH,SH,SEC,crumbs,HERO,STAGE,TITLE,BARS,TILES,PT,BENTO,GC,GT,GRID,FAQ,FAQP,KL,SRCH,STILL,HELP,FQ,QA,GUIDES2,GCATS,RST,SLUG,EXP,IMGB,card,stars,IMG,LVL,gbp,hasImg,tpLogo,STORE,PAYM,ARW,M,P};
 function zoom(){const H=$('#zm');if(!H)return;const st=$('#zst'),hd=$('.hdr');let hh=0;const sz=()=>{hh=hd?hd.offsetHeight:0;st.style.top=hh+'px';st.style.height=(innerHeight-hh)+'px';};sz();addEventListener('resize',sz);const W=$('#zw'),MK=$('#zmk');const mob=matchMedia('(max-width:760px)');const f=()=>{if(hd&&hd.offsetHeight!==hh)sz();if(mob.matches){$('#zen').classList.add('on');$('#zsh').classList.add('on');return;}const r=H.getBoundingClientRect(),p=Math.min(Math.max((hh-r.top)/(H.offsetHeight-st.offsetHeight),0),1);W.style.transform=`scale(${1+p*p*p*40})`;MK.style.opacity=1-Math.min(Math.max((p-.45)/.25,0),1);const on=p>.7;$('#zen').classList.toggle('on',on);$('#zsh').classList.toggle('on',on);};addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f();}
-function render(){const root=$('#pg-root');root.className=`pg sx pg-${G.t} v${V}`;root.innerHTML=R[G.t]().join('');
+function render(){const root=$('#pg-root');root.className=`pg sx pg-${G.t} v${V}`;root.innerHTML=(R[G.t]?R[G.t]():window.PGX[G.t](H)).join('');
  $$('[data-m]',root).forEach(el=>{if(M[el.dataset.m])el.outerHTML=M[el.dataset.m]({...el.dataset});});
  if(G.t==='reviews')rvRender();
  $$('.faqp').forEach(f=>{const l=f.querySelector('.sxfaq'),p=f.querySelector('.fp');if(l&&p)p.style.height=l.offsetHeight+'px';});
- if(G.t==='about')zoom();}
+ if(G.t==='about')zoom();
+ (window.PGXI||[]).forEach(f=>f(G.t,H));}
 const wd=(d,n)=>{const x=new Date(d);let k=0;while(k<n){x.setDate(x.getDate()+1);if(x.getDay()%6)k++;}return x;};
 document.addEventListener('submit',e=>{
  if(e.target.id==='tkf'){e.preventDefault();$('#trk').classList.add('on');return;}
