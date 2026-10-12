@@ -369,3 +369,19 @@
  .ad.klv{min-height:260px}
 }
 .h-ph .cnt{text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.ad.phd{background:#EDEDED;color:#111}
+.ad.phd:before{display:none}
+.ad.phd .note{top:auto;bottom:12px;color:#9A9A9A}
+.pgrid.two,.pgrid.c4.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 20px}
+.pgrid.two .card .meta{font-size:16px}
+@media(max-width:760px){
+ .vt.v2{display:flex}
+ .pgrid.two,.pgrid.c4.two{grid-template-columns:1fr}
+}
+.h-po p{max-width:44ch}
+@media(max-width:760px){
+ .tool .r:has(.vt.v2){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;width:100%}
+ .tool .r:has(.vt.v2) .fbtn{justify-content:center}
+ .tool .r:has(.vt.v2) .sel select{width:100%;padding-right:30px}
+ .wtabs{flex-wrap:nowrap;gap:5px}.wtabs button{padding:0 10px;white-space:nowrap}
+}

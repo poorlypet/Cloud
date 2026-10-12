@@ -9,7 +9,7 @@ const base=BASE();
 const S={brands:new Set(),levels:new Set(C.levels||[]),shapes:new Set(),max:Math.max(...base.map(x=>x.p)),rating:0,sale:false,sort:C.sort||'pop',shown:12,cmp:new Set()};
 const MAXP=S.max;
 const ARW=K.ARW||'→';
-const ico={grid:'<svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" fill="currentColor"/><rect x="9" y="1" width="6" height="6" fill="currentColor"/><rect x="1" y="9" width="6" height="6" fill="currentColor"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg>',
+const ico={two:'<svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="14" fill="currentColor"/><rect x="9" y="1" width="6" height="14" fill="currentColor"/></svg>',grid:'<svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" fill="currentColor"/><rect x="9" y="1" width="6" height="6" fill="currentColor"/><rect x="1" y="9" width="6" height="6" fill="currentColor"/><rect x="9" y="9" width="6" height="6" fill="currentColor"/></svg>',
  list:'<svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="2" width="14" height="3" fill="currentColor"/><rect x="1" y="7" width="14" height="3" fill="currentColor"/><rect x="1" y="12" width="14" height="3" fill="currentColor"/></svg>',
  filt:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg>'};
 
@@ -38,6 +38,7 @@ const AD={
  video:w=>`<a class="ad ${w}" href="#"><video autoplay muted loop playsinline poster="media/${C.adVid||'rally'}.jpg" src="media/${C.adVid||'rally'}.mp4"></video><small>On court</small><h3>Built for the way you play</h3><span class="btn wh">Find my level</span></a>`,
  kvt:w=>`<a class="ad klv" href="#"><video autoplay muted loop playsinline poster="media/klarna.jpg" src="media/klarna.mp4"></video><img src="media/klarna-badge.png" alt="Klarna"><h3>Pay in 3 interest free payments.</h3><small>18+. T&amp;Cs apply.</small></a>`,
  kvw:w=>`<a class="ad klv w2" href="#"><video autoplay muted loop playsinline poster="media/klarna.jpg" src="media/klarna.mp4"></video><img src="media/klarna-badge.png" alt="Klarna"><h3>Pay in 3 interest free payments.</h3><small>18+. T&amp;Cs apply.</small></a>`,
+ ph:w=>`<div class="ad phd ${w}"><span class="note">Photo or video placeholder</span></div>`,
  kstrip:w=>`<a class="kst" href="#"><img src="media/klarna-badge.png" alt="Klarna"><span><b>Pay in 3 interest free payments</b> with Klarna at checkout.</span><span class="ul">Learn more</span><small>18+. T&amp;Cs apply.</small></a>`,
  news:w=>`<div class="ad nl ${w}"><span class="note">Photo: sale rackets on court bench</span><small>Sale alerts</small><h3>Be first to the next drop</h3><form onsubmit="event.preventDefault();this.querySelector('button').textContent='Done'"><input type="email" placeholder="Email address" required aria-label="Email"><button>Sign up</button></form></div>`};
 
@@ -51,7 +52,7 @@ const PH=n=>`<img class="hv" src="media/hero${n}.jpg" alt="">`;
 const minP=l=>gbp(Math.min(...base.filter(x=>x.l===l).map(x=>x.p)));
 function hero(){const n=base.length,h=C.hero;
  if(h==='pbox')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><span class="cnt">${n} rackets</span></div></section>${tabsHTML('segs')}`;
- if(h==='pover')return `<section class="h-vbox h-ph h-po">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('wtabs')}</div><span class="cnt">${n} rackets</span></div></section>`;
+ if(h==='pover')return `<section class="h-vbox h-ph h-po">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('wtabs')}</div>${C.noCnt?'':`<span class="cnt">${n} rackets</span>`}</div></section>`;
  if(h==='pstrip')return `<section class="h-strip"><div class="t"><h1>${C.title}</h1><div><p>${C.desc}</p><span class="cnt">${n} rackets from over 40 brands</span></div></div><div class="ps">${PH(C.ph)}</div>${tabsHTML('utabs')}</section>`;
  if(h==='psplit')return `<section class="h-psplit"><div class="t"><span class="cnt">${n} rackets</span><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('btabs')}</div><div class="m">${PH(C.ph)}</div></section>`;
  if(h==='plinks')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div></div></section><div class="lvb">${[1,2,3].map(l=>`<button data-lv="${l}" class="${isOn(l)?'on':''}"><span><b>${LVL[l]}</b><small>From ${minP(l)}</small></span><i>${ARW2}</i></button>`).join('')}<button data-lv="" class="${isOn('')?'on':''}"><span><b>All rackets</b><small>${n} rackets</small></span><i>${ARW2}</i></button></div>`;
@@ -68,12 +69,12 @@ function render(){
  const root=$('#plp-root');
  root.innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span>${(C.crumbs||[]).map(c=>`<a href="#">${c}</a><span>/</span>`).join('')}<span>${C.title}</span></nav>
  ${hero()}
- <div class="ptrust"><span>${stars('s')} <b>Excellent</b> 4.8 on Trustpilot</span><span>Free UK delivery over £${K.STORE.freeOver}</span><span><img class="kb" src="media/klarna-badge.png" alt="Klarna"> Pay in 3</span><span>Over 40 brands</span></div>
+ <div class="ptrust"><span>${stars('s')} <b>Excellent</b> 4.8 on Trustpilot</span><span>Free UK delivery over £${K.STORE.freeOver}</span><span><img class="kb" src="media/klarna-badge.png" alt="Klarna"> Pay in 3</span>${C.noBrands?'':'<span>Over 40 brands</span>'}</div>
  ${C.ranges?`<div class="ranges">${C.ranges.map(r=>`<a href="#"><span class="note">Photo: ${r} range</span>${r}</a>`).join('')}</div>`:''}
  ${C.helper?`<div class="helper"><b>Find your first racket</b><div class="hq">Budget <button data-hb="80">Under £80</button><button data-hb="120">Under £120</button><button data-hb="">Any</button></div><div class="hq">Shape <button data-hs="Round">Round</button><button data-hs="">Any</button></div></div>`:''}
  ${C.chips?`<div class="qchips">${C.chips.map(([t,k,v])=>`<button data-qk="${k}" data-qv="${v}">${t}</button>`).join('')}</div>`:''}
  <div class="plp ${C.layout==='top'?'top':''}">${C.layout==='top'?'':`<aside class="facets" id="facets"></aside>`}
- <div><div class="fbar" id="fbar"></div><div class="tool"><span class="count" id="cnt"></span><div class="r"><button class="fbtn" data-open-f>${ico.filt}Filter</button><label class="sel"><select id="sort" aria-label="Sort">${[['pop','Most popular'],['new','Newest'],['low','Price, low to high'],['high','Price, high to low'],['save','Biggest saving'],['rate','Top rated']].map(([v,t])=>`<option value="${v}" ${S.sort===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="vt"><button class="on" data-view="grid" aria-label="Grid view">${ico.grid}</button><button data-view="list" aria-label="List view">${ico.list}</button></div></div></div>
+ <div><div class="fbar" id="fbar"></div><div class="tool"><span class="count" id="cnt"></span><div class="r"><button class="fbtn" data-open-f>${ico.filt}Filter</button><label class="sel"><select id="sort" aria-label="Sort">${[['pop','Most popular'],['new','Newest'],['low','Price, low to high'],['high','Price, high to low'],['save','Biggest saving'],['rate','Top rated']].map(([v,t])=>`<option value="${v}" ${S.sort===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="vt ${C.view2?'v2':''}"><button class="on" data-view="grid" aria-label="Grid view">${ico.grid}</button>${C.view2?'<button data-view="two" aria-label="Two per row">'+ico.two+'</button>':'<button data-view="list" aria-label="List view">${ico.list}</button>'}</div></div></div>
  <div class="achips" id="achips"></div><div class="pgrid ${C.cols===4?'c4':''}" id="pgrid"></div><div class="more" id="more"></div></div></div>
  <section class="pinfo"><div class="seo"><h2>${C.seoTitle}</h2><div class="clip">${C.seo.map(p=>`<p>${p}</p>`).join('')}</div><button class="ul" data-more style="margin-top:12px">Read more</button><div class="related">${(C.related||[]).map(r=>`<a href="#">${r}</a>`).join('')}</div></div>
  <div class="faq"><h2>Questions</h2>${C.faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></section></div>`;
@@ -84,14 +85,14 @@ function facetsAll(){const shut=new Set($$('.fg.shut').map(g=>g.dataset.g)),open
  const fb=$('#fbar');if(fb&&C.layout==='top'){fb.innerHTML=['brand','level','shape','price'].map(k=>{const has=k==='brand'?S.brands.size:k==='level'?S.levels.size:k==='shape'?S.shapes.size:S.max<MAXP;return `<div class="dd" data-dd="${k}"><button class="${has?'has':''}">${{brand:'Brand',level:'Level',shape:'Shape',price:'Price'}[k]}${has&&k!=='price'?` (${has})`:''}</button><div class="pop">${G[k]().replace(/^<div class="fg[^>]*><button type="button">[^<]*<\/button>/,'').replace(/<\/div>$/,'')}</div></div>`;}).join('')+`<label class="swt" style="gap:10px;height:42px;border:1px solid var(--line);padding:0 14px">On sale<input type="checkbox" data-f="sale" ${S.sale?'checked':''}></label>`;}
  $$('.fg[data-g]').forEach(g=>{if(shut.has(g.dataset.g))g.classList.add('shut');else if(opened.has(g.dataset.g))g.classList.remove('shut');});if(openDD){const d=$(`.dd[data-dd="${openDD}"]`);if(d)d.classList.add('on');}}
 function update(keepFacets){
- const list=sorted(apply(base));const shown=list.slice(0,S.shown);
+ const list=sorted(apply(base));let N=S.shown;if(C.fill){const cl=C.cols||3,cells=m=>m+(C.ads||[]).filter(a=>a.at<m).reduce((t,a)=>t+(a.w2?2:1),0);while(cells(N)%cl&&N<list.length)N++;}const shown=list.slice(0,N);
  $('#cnt').innerHTML=`<b>${list.length}</b> of ${base.length} products`;$('#fshow').textContent=`Show ${list.length} results`;
  let html='';const ads=(C.ads||[]).filter(a=>a.at<=shown.length);
  shown.forEach((x,k)=>{ads.filter(a=>a.at===k).forEach(a=>html+=AD[a.t](a.w2?'w2':''));
   html+=`<div class="pc">${C.compare?`<label class="cmpk"><input type="checkbox" data-cmp="${x.i}" ${S.cmp.has(x.i)?'checked':''}>Compare</label>`:''}${card(x)}${C.klCard?`<div class="kc">or 3 payments of <b>£${(x.p/3).toFixed(2)}</b> with <img src="media/klarna-badge.png" alt="Klarna"></div>`:''}</div>`;});
  if(!list.length)html=`<div class="empty2"><p>No rackets match those filters.</p><button class="btn" data-clear style="margin-top:16px">Clear all filters</button></div>`;
  $('#pgrid').innerHTML=html;
- $('#more').innerHTML=list.length>S.shown?`<div class="mbox"><p>You have seen <b>${S.shown}</b> of <b>${list.length}</b> rackets</p><div class="bar"><i style="width:${S.shown/list.length*100}%"></i></div><button class="btn" data-loadmore>Show ${Math.min(12,list.length-S.shown)} more rackets</button></div>`:list.length?`<p>You have seen all ${list.length} rackets</p>`:'';
+ $('#more').innerHTML=list.length>N?`<div class="mbox"><p>You have seen <b>${N}</b> of <b>${list.length}</b> rackets</p><div class="bar"><i style="width:${N/list.length*100}%"></i></div><button class="btn" data-loadmore>Show ${Math.min(12,list.length-N)} more rackets</button></div>`:list.length?`<p>You have seen all ${list.length} rackets</p>`:'';
  const chips=[...[...S.brands].map(v=>['brands',v,v]),...[...S.levels].map(v=>['levels',v,LVL[v]]),...[...S.shapes].map(v=>['shapes',v,v])];
  if(S.max<MAXP)chips.push(['max','',`Up to ${gbp(S.max)}`]);if(S.rating)chips.push(['rating','',`${S.rating} stars and up`]);if(S.sale)chips.push(['sale','','On sale']);
  $('#achips').innerHTML=chips.map(([k,v,t])=>`<button data-rm="${k}" data-v="${v}">${t}</button>`).join('')+(chips.length?'<button class="clr" data-clear>Clear all</button>':'');
@@ -118,7 +119,7 @@ document.addEventListener('change',e=>{const t=e.target,f=t.dataset.f;if(t.id===
 document.addEventListener('input',e=>{if(e.target.dataset.f==='max'){S.max=+e.target.value;$$('.rng b').forEach(b=>b.textContent=gbp(S.max));}});
 document.addEventListener('click',e=>{const t=e.target.closest('button,[data-rm],[data-lv]');if(!t)return;
  if(t.closest('.fg')&&t.parentElement.classList.contains('fg')){t.parentElement.classList.toggle('shut');return;}
- if(t.dataset.view){$$('.vt button').forEach(b=>b.classList.toggle('on',b===t));$('#pgrid').classList.toggle('list',t.dataset.view==='list');return;}
+ if(t.dataset.view){$$('.vt button').forEach(b=>b.classList.toggle('on',b===t));$('#pgrid').classList.toggle('list',t.dataset.view==='list');$('#pgrid').classList.toggle('two',t.dataset.view==='two');return;}
  if(t.dataset.loadmore!==undefined){S.shown+=12;update(true);return;}
  if(t.dataset.rm){const k=t.dataset.rm,v=t.dataset.v;if(k==='max')S.max=MAXP;else if(k==='rating')S.rating=0;else if(k==='sale')S.sale=false;else S[k].delete(k==='levels'?+v:v);update();return;}
  if(t.dataset.clear!==undefined){S.brands.clear();S.levels.clear();S.shapes.clear();S.max=MAXP;S.rating=0;S.sale=false;update();return;}

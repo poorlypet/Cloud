@@ -6,10 +6,12 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)
 
 ## Current options
-- `collection-m1.html` to `collection-m5.html`: collection pages, photo heroes and simpler Klarna
+- `collection-m2a.html` to `collection-m2c.html`: collection page, M2 with each of the three photos
+- `collection-m1.html` to `collection-m5.html`: earlier photo hero round
 - `collection-k1.html` to `collection-k5.html`: earlier hero round
 - `collection-c1.html` to `collection-c5.html`: earlier collection round
-- `product-n1.html` to `product-n5.html`: product pages, Head Speed Motion with How it plays ratings
+- `product-s1.html` to `product-s5.html`: product pages, mosaic gallery, flowing buy box, five How it plays styles
+- `product-n1.html` to `product-n5.html`: earlier product round
 - `product-r1.html` to `product-r5.html`: earlier product round
 - `product-p1.html` to `product-p5.html`: earlier product round
 

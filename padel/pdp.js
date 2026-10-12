@@ -63,6 +63,34 @@ function buy(){return `<div class="buy" id="buy">
  ${C.inlineBundle?bundle():''}
  <p class="helpl">${shoe?'Not sure of your size? <a href="#" data-sg>Check the size guide</a>':'Not sure it is right for you? <a href="#">Read our racket guide</a>'}</p></div>`;}
 
+/* flowing buy box */
+const LEDE={1:'A forgiving round racket for players in their first year. Big sweet spot, light in the hand and kind on the arm.',2:`A ${x.sh.toLowerCase()} racket for players moving up from their first racket. More pace on overheads without losing the touch you need at the net.`,3:'A head heavy racket for confident players who want to finish points. Plenty of power for those who can control it.'}[x.l];
+const SUMM={1:'Easy to control with a big, central sweet spot.',2:'Balanced, with extra pace on overheads and control at the net.',3:'Built for power, with a firm feel on full swings.'}[x.l];
+const BEST={1:'New players and casual games',2:'Improving players who play every week',3:'Competitive and league players'}[x.l];
+const STR={1:['Control at the net','Comfort on the arm','Easy to swing'],2:['Pace on overheads','Control at the net','Quick to manoeuvre'],3:['Power on smashes','Spin from the carbon face','Firm, direct feel']}[x.l];
+const word=v=>v>=9?'Very high':v>=7?'High':v>=5?'Medium':'Low';
+const lvlScale=`<div class="hp-lv"><div class="ln">${[1,2,3].map(l=>`<span class="${l===x.l?'on':''}"><i></i>${LVL[l]}</span>`).join('')}</div></div>`;
+function howPlays(st){const head=`<div class="hp-h"><b>How it plays</b><p>${SUMM}</p></div>`;
+ if(st==='bars')return `<div class="hp">${head}<div class="hp-bars">${PF.map(([t,v])=>`<div><div class="lb"><span>${t}</span><span class="mute">${word(v)}</span></div><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div>`;
+ if(st==='sliders')return `<div class="hp">${head}<div class="hp-sl">${SC.map(([a,b,v])=>`<div><span>${a}</span><div class="ln"><i style="left:${v}%"></i></div><span>${b}</span></div>`).join('')}</div></div>`;
+ if(st==='row4')return `<div class="hp">${head}<div class="hp-r4">${PF.map(([t,v])=>`<div><b>${v}<small>/10</small></b><span>${t}</span><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div>`;
+ if(st==='words')return `<div class="hp">${head}${lvlScale}<p class="hp-w">Best at ${STR.map(t=>`<b>${t.toLowerCase()}</b>`).join(', ').replace(/, ([^,]*)$/,' and $1')}.</p></div>`;
+ if(st==='tabs')return `<div class="hp hp-t"><div class="tl2"><button class="on" data-bt="0">How it plays</button><button data-bt="1">Key specs</button><button data-bt="2">Who it is for</button></div><div class="btp on" data-btp="0"><p class="hp-s">${SUMM}</p><div class="hp-bars">${PF.map(([t,v])=>`<div><div class="lb"><span>${t}</span><span class="mute">${v}/10</span></div><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div><div class="btp" data-btp="1">${specDL()}<a class="ul allsp" href="#specs">All specifications</a></div><div class="btp" data-btp="2">${lvlScale}<p class="hp-s">${BEST}. ${x.l===2?'If you are new to padel, a round racket will be easier to start with.':''}</p></div></div>`;
+ return '';}
+const specT=()=>`<details class="kft"><summary>Key specs</summary>${specDL()}<a class="ul allsp" href="#specs">All specifications</a></details>`;
+function buyFlow(){return `<div class="buy flow" id="buy">
+ <div class="bl"><a href="#">${x.b}</a><span class="mute">${shoe?'Padel shoes':'Padel rackets'}</span></div>
+ <h1>${x.b} ${x.n}</h1>
+ <div class="rl">${stars('s')}<b>${rating}</b><a href="#reviews">${revs} reviews</a></div>
+ <p class="lede">${LEDE} <a href="#desc">Read more</a></p>
+ <div class="pr2"><b>${gbp(x.p)}</b>${x.w?`<s>${gbp(x.w)}</s><span class="sv">Save £${x.w-x.p}</span>`:''}</div>
+ <div class="kl2"><img src="media/klarna-badge.png" alt="Klarna"><span>3 interest free payments of <b>${money(x.p/3)}</b>. <a href="#" style="text-decoration:underline">Learn more</a></span></div>
+ <p class="best"><span class="mute">Best for</span> ${BEST}</p>
+ ${howPlays(C.hp)}${C.hp==='tabs'?'':specT()}
+ <div class="atc"><div class="qty2"><button data-qd="-1" aria-label="Less">−</button><span id="qty">1</span><button data-qd="1" aria-label="More">+</button></div><button class="btn big" id="atc">Add to bag</button><button class="wish" id="wish" aria-label="Save to wishlist">${heart}</button></div>
+ <ul class="perks"><li><span class="dot"></span><span><b>In stock</b>, ready to send</span></li><li>${truck}<span>${freeDel?'<b>Free UK delivery</b> on this order':`Free UK delivery on orders over £${K.STORE.freeOver}`}</span></li><li>${shield}<span>Rated <b>Excellent</b> on Trustpilot</span></li></ul>
+ <p class="helpl">Not sure it is right for you? <a href="#">Read our racket guide</a></p></div>`;}
+
 /* bundle */
 const ACC=['GB 1200 Overgrip 3 Pack','Frame Protector Tape','Padel Pro Ball 3 Pack','Padel Racket Cover'].map(n=>P.find(p=>p.n===n)).filter(Boolean);
 function bundle(){const items=shoe?ACC.slice(2,3):ACC.slice(0,3);
@@ -104,7 +132,7 @@ const alsoLike=()=>`<section class="psec"><div class="sh"><div class="shl"><h2 s
 function compare(){const xs=[x,...similar.slice(0,2)];const row=(h,f)=>`<tr><th>${h}</th>${xs.map((p,k)=>`<td class="${k?'':'me'}">${f(p)}</td>`).join('')}</tr>`;
  return `<section class="psec"><h2>Compare similar rackets</h2><div class="ctab"><table>${row('',p=>`<div class="cimg"><img src="${IMG}" alt=""></div>`)}${row('Racket',p=>`<b>${p.b} ${p.n}</b>${p===x?'<br><span class="mute" style="font-size:12px">This racket</span>':''}`)}${row('Price',p=>p.w?`<b style="color:var(--accent)">${gbp(p.p)}</b> <s class="mute">${gbp(p.w)}</s>`:gbp(p.p))}${row('Level',p=>LVL[p.l])}${row('Shape',p=>p.sh)}${row('Rating',p=>`${stars('s')} ${(4.5+((p.i*7)%5)/10).toFixed(1)}`)}${row('',p=>p===x?'<span class="mute">Viewing</span>':`<button class="btn ol" data-add="${p.i}">Add to bag</button>`)}</table></div></section>`;}
 const feats=()=>`<section class="feat2"><div class="wrap"><h2>What makes it different</h2><div class="fg3">${(C.features||[]).map(([t,p,n])=>`<div class="fi"><div class="ph"><span class="note">Photo: ${n}</span></div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></div></section>`;
-const fband=()=>`<section class="fband"><div class="wrap"><div class="ph"><img src="media/hero${C.fph||1}.jpg" alt=""><h2>What makes it different</h2></div><div class="f4">${(C.features||[]).map(([t,p])=>`<div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></div></section>`;
+const fband=()=>`<section class="fband"><div class="wrap"><div class="ph">${C.fph===0?'<span class="note">Photo: product feature image, from a metafield</span>':`<img src="media/hero${C.fph||1}.jpg" alt="">`}<h2>What makes it different</h2></div><div class="f4">${(C.features||[]).map(([t,p])=>`<div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></div></section>`;
 const flist=()=>`<section class="psec flist"><div class="ph"><img src="media/hero${C.fph||2}.jpg" alt=""></div><div><h2>Why players choose it</h2>${(C.features||[]).map(([t,p])=>`<div class="fl"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></section>`;
 const story=()=>`<section class="psec">${(C.story||[]).map(([t,p,n],k)=>`<div class="story ${k%2?'flip':''}"><div class="ph"><span class="note">Photo: ${n}</span></div><div><h3>${t}</h3><p>${p}</p></div></div>`).join('')}</section>`;
 const brandBlock=()=>`<section class="psec"><div class="bblock"><div class="blogo">Logo: ${x.b}</div><p><b>About ${x.b}.</b> ${C.brandTxt||'One of the most played brands in European padel, with rackets for every level from first time players to the professional tour.'}</p><a class="shbtn" href="#">Shop ${x.b} ${ARW}</a></div></section>`;
@@ -115,8 +143,8 @@ function render(){
  const B={fband,flist,details:()=>details(C.details||'tabs'),reviews:C.tp?reviewsTP:reviews,also:alsoLike,compare,features:feats,story,brand:brandBlock,faq,bundle:()=>`<section class="psec">${bundle()}</section>`};
  $('#pdp-root').innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span><a href="#">${shoe?'Padel shoes':'Padel rackets'}</a><span>/</span><a href="#">${x.b}</a><span>/</span><span>${x.n}</span></nav>
  ${C.hero?`<div class="thero"><span class="note">Photo: ${C.hero[2]}</span><div><h2>${C.hero[0]}</h2><p>${C.hero[1]}</p></div></div>`:''}
- <div class="pdp ${C.fast?'fast':''}">${gallery()}${buy()}</div></div>
- ${C.blocks.map(b=>b==='features'||b==='fband'?B[b]():`<div class="wrap">${B[b]()}</div>`).join('')}
+ <div class="pdp ${C.fast?'fast':''} ${C.hp?'flow':''}">${gallery()}${C.hp?buyFlow():buy()}</div></div>
+ ${C.blocks.map((b,k)=>{let h=B[b]();if(!k&&C.hp)h=h.replace('class="psec"','class="psec first" id="desc"');return b==='features'||b==='fband'?h:`<div class="wrap">${h}</div>`;}).join('')}
  <div class="sbar" id="sbar"><div class="wrap"><div class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</div><div class="nm"><b>${x.b} ${x.n}</b><span>${stars('s')} ${rating} (${revs})</span></div><span class="pr3">${gbp(x.p)}</span><button class="btn" data-sbadd>${shoe?'Choose size':'Add to bag'}</button></div></div>${shoe?sg():''}`;
  btot();
  const sb=$('#sbar'),at=$('#atc'),chk=()=>sb.classList.toggle('on',at.getBoundingClientRect().bottom<0);addEventListener('scroll',chk,{passive:true});chk();
@@ -132,7 +160,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,a[data-sg
  if(t.dataset.size){S.size=t.dataset.size;$$('.sizes button').forEach(b=>b.classList.toggle('on',b===t));$('#sizen').textContent='UK '+S.size+(t.querySelector('.lo')?', only 2 left':'');const a=$('#atc');a.disabled=false;a.textContent='Add to bag';return;}
  if(t.dataset.col!==undefined){$$('.sw button').forEach(b=>b.classList.toggle('on',b===t));$('#coln').textContent=t.dataset.n;return;}
  if(t.dataset.bunadd!==undefined){add(x.i);$$('[data-bun]').filter(i=>i.checked).forEach(i=>add(+i.dataset.bun));return;}
- if(t.dataset.bt!==undefined){$$('.bth button').forEach(b=>b.classList.toggle('on',b===t));$$('.btp').forEach(p=>p.classList.toggle('on',p.dataset.btp===t.dataset.bt));return;}
+ if(t.dataset.bt!==undefined){$$('.bth button,.tl2 button').forEach(b=>b.classList.toggle('on',b===t));$$('.btp').forEach(p=>p.classList.toggle('on',p.dataset.btp===t.dataset.bt));return;}
  if(t.dataset.tabp!==undefined){$$('.ptabs button').forEach(b=>b.classList.toggle('on',b===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.pane===t.dataset.tabp));return;}
  if(t.dataset.sg!==undefined){e.preventDefault();$('#sgm').classList.add('on');return;}
  if(t.dataset.sgx!==undefined){$('#sgm').classList.remove('on');return;}
