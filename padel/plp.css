@@ -511,3 +511,9 @@
  .mh6 .lvm button.on:after{content:"";position:absolute;left:0;right:10px;bottom:-1px;height:2px;background:var(--accent)}
 }
 @media(max-width:760px){.fin.mh6 .lvm button.on{background:none;color:var(--fg)}}
+.hrv{display:none}
+@media(max-width:760px){
+ .mh6 .hrv{display:flex;position:absolute;right:var(--g);bottom:18px;z-index:3}
+ .mh6 .hrv .stars i{width:18px;height:18px}
+ .fin.mh6 .ptm{display:none}
+}
