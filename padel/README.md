@@ -17,13 +17,12 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `product-p1.html` to `product-p5.html`: earlier product round
 
 ## Final pages
-- `reviews.html`, `returns.html`, `track.html`, `guide.html`: built by `pages.js` and `pages.css`
-- `brand.html`, `search.html`: built by `plp.js`
+- `collection.html`, `brand.html`, `search.html`: built by `plp.js`. Change the collection photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
+- `brands.html`, `reviews.html`, `about.html`, `klarna.html`, `delivery.html`, `returns.html`, `track.html`, `faqs.html`, `help.html`, `guide.html`: built by `pages.js` and `pages.css`
+- Delivery prices and times, the 14 day returns window, refund time and opening hours are set once in `POL` at the top of `pages.js`
 
 ## Still choosing
-- `collection.html` and `collection-b2.html` to `collection-b5.html`: collection page with five mobile level buttons. Change the hero photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
-- `klarna`, `delivery`, `faqs`, `help`, `about`, `brands`, `cart` as `<page>-1.html` to `<page>-3.html`
-- Delivery prices and times, the 14 day returns window, refund time and opening hours are set once in `POL` at the top of `pages.js`
+- `cart-1.html` to `cart-3.html`: bag
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data
