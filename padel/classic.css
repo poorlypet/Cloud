@@ -417,3 +417,12 @@
  .ftr3 .fpay i svg{max-width:100%;height:auto;max-height:16px}
  .ftr3 .fpay img{height:28px;flex:none}
 }
+/* mobile review line: no grey bar, left aligned, breathing room below */
+@media(max-width:760px){
+ .hero .box{height:calc(100svh - 60px - 10px - 44px - 28px)}
+ .tbar{background:none;min-height:44px;padding:12px 0 0;justify-content:flex-start}
+ .tbar>span:first-child{flex-wrap:nowrap;justify-content:flex-start;gap:8px!important;font-size:14px}
+ .tbar>span:first-child .stars{order:0;flex-basis:auto}
+ .tbar>span:first-child>b{display:none}
+}
+@media(max-width:760px){.hero .three{margin-top:32px}}
