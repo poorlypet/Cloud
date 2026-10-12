@@ -382,3 +382,38 @@
  .fmain>div:not(.fbrand)>ul{display:none;padding-bottom:12px}
  .fmain>div.open>ul{display:block}
 }
+
+/* mobile round 3 */
+.mhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 8px}
+.mhead h3{margin:0!important}
+.mva{display:inline-flex;align-items:center;height:36px;padding:0 14px;background:var(--accent);color:#fff;font-weight:700;font-size:13px}
+.ftr3 .fpay i{height:30px;min-width:52px;padding:0 10px;background:#fff;border:1px solid #DADADA}
+.ftr3 .fpay i svg{display:block}
+@media(max-width:760px){
+ /* header: menu and search left, logo centred, account and bag right */
+ .hdr .r1{grid-template-columns:40px 40px 1fr 40px 44px;gap:0;height:60px}
+ .hdr .lg,.hdr .tools2{display:contents}
+ .burger2{grid-column:1;grid-row:1;justify-content:flex-start}
+ .sbtn{grid-column:2;grid-row:1;justify-content:flex-start!important;padding:0!important}
+ .hdr .logo{grid-column:3;grid-row:1;justify-self:center;font-size:28px}
+ .tools2 a[aria-label="Account"]{grid-column:4;grid-row:1;justify-content:flex-end;padding:0}
+ .tools2 button[data-open="bag"]{grid-column:5;grid-row:1;justify-content:flex-end;padding:0;position:relative}
+ .tools2 a.tx{display:none}
+ .tools2 .cnt{position:absolute;top:4px;right:-6px;min-width:17px;height:17px;font-size:10px;padding:0 4px}
+ .hero .box{height:calc(100svh - 60px - 10px - 58px)}
+ /* review bar under hero: stars on top, text below */
+ .tbar{min-height:58px;padding:7px 12px}
+ .tbar>span:first-child{flex-wrap:wrap;justify-content:center;gap:2px 6px!important;font-size:13px}
+ .tbar>span:first-child .stars{order:-1;flex-basis:100%;justify-content:center;display:flex}
+ .tbar .stars i{width:17px;height:17px}.tbar .stars i svg{width:11px;height:11px}
+ .tbar .tpw{font-size:13px}
+ /* statement: 3 lines max */
+ body .wst p{font-size:min(24px,calc((100vw - 32px) / 14.5));line-height:1.25}
+ .wst{overflow:hidden}
+ .wst p span{white-space:nowrap}
+ /* payment logos on one line */
+ .ftr3 .fpay{flex-wrap:nowrap;gap:5px;width:100%}
+ .ftr3 .fpay i{flex:1 1 0;min-width:0;height:28px;padding:0 4px;display:flex;align-items:center;justify-content:center}
+ .ftr3 .fpay i svg{max-width:100%;height:auto;max-height:16px}
+ .ftr3 .fpay img{height:28px;flex:none}
+}
