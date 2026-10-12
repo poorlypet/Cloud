@@ -1203,3 +1203,15 @@
 @media(max-width:760px){.sxh .dhf .btn{width:auto;min-width:0;flex:none;padding:0 22px}.dcard{width:auto}.dcard h1{white-space:normal}}
 .pg-cart .bhd{padding-top:28px}
 @media(max-width:760px){.pg-cart .bhd{padding-top:12px}}
+/* round 11: about mobile is a plain video hero, bag mobile is a list */
+@media(max-width:760px){
+ .zm{height:auto}
+ .zm .st{position:relative;top:0!important}
+ .zm .mask{display:none}
+ .btiles2{grid-template-columns:minmax(0,1fr);gap:0;border-top:1px solid var(--line)}
+ .btl{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:14px;row-gap:2px;padding:16px 0;border-bottom:1px solid var(--line);align-content:start}
+ .btl .im{grid-row:1/span 5;margin:0;align-self:start}
+ .btl>*:not(.im){grid-column:2}
+ .btl .bf{margin-top:8px}
+ .btl .ul{justify-self:start;margin-top:6px}
+}
