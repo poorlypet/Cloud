@@ -1,6 +1,6 @@
 /* PADEL collection page. Reads window.PLPCFG, renders into #plp-root. Needs classic.js first. */
 (()=>{
-const C=window.PLPCFG,K=window.PADEL;const {P,card,stars,IMG,LVL,gbp,hasImg}=K;
+const C=window.PLPCFG,K=window.PADEL;const {tpLogo,P,card,stars,IMG,LVL,gbp,hasImg}=K;
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const rating=x=>+(4.5+((x.i*7)%5)/10).toFixed(1),revs=x=>12+(x.i*37)%180;
 const rackets=P.filter(x=>x.c==='racket');
@@ -52,7 +52,7 @@ const PH=n=>`<img class="hv" src="media/hero${n}.jpg" alt="">`;
 const minP=l=>gbp(Math.min(...base.filter(x=>x.l===l).map(x=>x.p)));
 function hero(){const n=base.length,h=C.hero;
  if(h==='pbox')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><span class="cnt">${n} rackets</span></div></section>${tabsHTML('segs')}`;
- if(h==='pover')return `<section class="h-vbox h-ph h-po">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('wtabs')}</div>${C.noCnt?'':`<span class="cnt">${n} rackets</span>`}</div></section>`;
+ if(h==='pover')return `<section class="h-vbox h-ph h-po">${C.fin?`<picture><source media="(max-width:760px)" srcset="media/${C.phm||'hero'+C.ph}.jpg"><img class="hv" src="media/hero${C.ph}.jpg" alt=""></picture>`:PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('wtabs')}</div>${C.noCnt?'':`<span class="cnt">${n} rackets</span>`}</div></section>${C.fin?`<div class="lvm">${LV.map(([v,t])=>`<button data-lv="${v}" class="${isOn(v)?'on':''}"><b>${v===''?'All rackets':t}</b><small>${v===''?'Every level':'From '+minP(v)}</small></button>`).join('')}</div>`:''}`;
  if(h==='pstrip')return `<section class="h-strip"><div class="t"><h1>${C.title}</h1><div><p>${C.desc}</p><span class="cnt">${n} rackets from over 40 brands</span></div></div><div class="ps">${PH(C.ph)}</div>${tabsHTML('utabs')}</section>`;
  if(h==='psplit')return `<section class="h-psplit"><div class="t"><span class="cnt">${n} rackets</span><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('btabs')}</div><div class="m">${PH(C.ph)}</div></section>`;
  if(h==='plinks')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div></div></section><div class="lvb">${[1,2,3].map(l=>`<button data-lv="${l}" class="${isOn(l)?'on':''}"><span><b>${LVL[l]}</b><small>From ${minP(l)}</small></span><i>${ARW2}</i></button>`).join('')}<button data-lv="" class="${isOn('')?'on':''}"><span><b>All rackets</b><small>${n} rackets</small></span><i>${ARW2}</i></button></div>`;
@@ -67,17 +67,17 @@ function hero(){const n=base.length,h=C.hero;
 
 function render(){
  const root=$('#plp-root');
- root.innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span>${(C.crumbs||[]).map(c=>`<a href="#">${c}</a><span>/</span>`).join('')}<span>${C.title}</span></nav>
+ root.classList.toggle('fin',!!C.fin);root.innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span>${(C.crumbs||[]).map(c=>`<a href="#">${c}</a><span>/</span>`).join('')}<span>${C.title}</span></nav>
  ${hero()}
- <div class="ptrust"><span>${stars('s')} <b>Excellent</b> 4.8 on Trustpilot</span><span>Free UK delivery over £${K.STORE.freeOver}</span><span><img class="kb" src="media/klarna-badge.png" alt="Klarna"> Pay in 3</span>${C.noBrands?'':'<span>Over 40 brands</span>'}</div>
+ ${C.fin?`<div class="ptm"><b>Excellent</b>${stars('s')}<span class="n">${K.STORE.tpScore}</span>${tpLogo}</div>`:''}<div class="ptrust"><span>${stars('s')} <b>Excellent</b> 4.8 on Trustpilot</span><span>Free UK delivery over £${K.STORE.freeOver}</span><span><img class="kb" src="media/klarna-badge.png" alt="Klarna"> Pay in 3</span>${C.noBrands?'':'<span>Over 40 brands</span>'}</div>
  ${C.ranges?`<div class="ranges">${C.ranges.map(r=>`<a href="#"><span class="note">Photo: ${r} range</span>${r}</a>`).join('')}</div>`:''}
  ${C.helper?`<div class="helper"><b>Find your first racket</b><div class="hq">Budget <button data-hb="80">Under £80</button><button data-hb="120">Under £120</button><button data-hb="">Any</button></div><div class="hq">Shape <button data-hs="Round">Round</button><button data-hs="">Any</button></div></div>`:''}
  ${C.chips?`<div class="qchips">${C.chips.map(([t,k,v])=>`<button data-qk="${k}" data-qv="${v}">${t}</button>`).join('')}</div>`:''}
  <div class="plp ${C.layout==='top'?'top':''}">${C.layout==='top'?'':`<aside class="facets" id="facets"></aside>`}
  <div><div class="fbar" id="fbar"></div><div class="tool"><span class="count" id="cnt"></span><div class="r"><button class="fbtn" data-open-f>${ico.filt}Filter</button><label class="sel"><select id="sort" aria-label="Sort">${[['pop','Most popular'],['new','Newest'],['low','Price, low to high'],['high','Price, high to low'],['save','Biggest saving'],['rate','Top rated']].map(([v,t])=>`<option value="${v}" ${S.sort===v?'selected':''}>${t}</option>`).join('')}</select></label><div class="vt ${C.view2?'v2':''}"><button class="on" data-view="grid" aria-label="Grid view">${ico.grid}</button>${C.view2?'<button data-view="two" aria-label="Two per row">'+ico.two+'</button>':'<button data-view="list" aria-label="List view">${ico.list}</button>'}</div></div></div>
  <div class="achips" id="achips"></div><div class="pgrid ${C.cols===4?'c4':''}" id="pgrid"></div><div class="more" id="more"></div></div></div>
- <section class="pinfo"><div class="seo"><h2>${C.seoTitle}</h2><div class="clip">${C.seo.map(p=>`<p>${p}</p>`).join('')}</div><button class="ul" data-more style="margin-top:12px">Read more</button><div class="related">${(C.related||[]).map(r=>`<a href="#">${r}</a>`).join('')}</div></div>
- <div class="faq"><h2>Questions</h2>${C.faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></section></div>`;
+ <section class="pinfo"><div class="seo"><h2>${C.seoTitle}</h2><div class="clip">${C.seo.map(p=>`<p>${p}</p>`).join('')}</div><button class="ul" data-more style="margin-top:12px">Read more</button>${C.fin?'':`<div class="related">${(C.related||[]).map(r=>`<a href="#">${r}</a>`).join('')}</div>`}</div>
+ <div class="faq"><h2>Questions</h2>${C.faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>${C.fin?`<div class="related r1">${(C.related||[]).map(r=>`<a href="#">${r}</a>`).join('')}</div>`:''}</section></div>`;
  document.body.insertAdjacentHTML('beforeend',`<div class="fsheet" id="fsheet"><div class="hd">Filter and sort<button class="x" data-close-f aria-label="Close"></button></div><div class="bd" id="fsb"></div><div class="ft"><button class="btn ol" data-clear>Clear all</button><button class="btn" data-close-f id="fshow">Show results</button></div></div>${C.compare?'<div class="ctray" id="ctray"></div><div class="cmodal" id="cmodal"><div class="box2" id="cbox"></div></div>':''}`);
  update();
 }

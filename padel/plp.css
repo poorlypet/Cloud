@@ -385,3 +385,36 @@
  .tool .r:has(.vt.v2) .sel select{width:100%;padding-right:30px}
  .wtabs{flex-wrap:nowrap;gap:5px}.wtabs button{padding:0 10px;white-space:nowrap}
 }
+/* final collection page */
+.fin .h-po picture{position:absolute;inset:0}
+.lvm,.ptm{display:none}
+.fin .pinfo .related.r1{grid-column:1/-1;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-top:0}
+.fin .related.r1::-webkit-scrollbar{display:none}
+.fin .related.r1 a{flex:none;white-space:nowrap}
+@media(max-width:760px){
+ .fin .h-po{min-height:0;height:190px}
+ .fin .h-po .in{padding:20px}
+ .fin .h-po h1{font-size:28px}
+ .fin .h-po p{font-size:13.5px;margin-top:6px;max-width:30ch}
+ .fin .h-po .wtabs{display:none}
+ .fin .lvm{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-top:0}
+ .fin .lvm button{background:#fff;text-align:left;padding:12px 14px;display:flex;flex-direction:column;gap:2px;transition:background .15s,color .15s}
+ .fin .lvm b{font-family:var(--head);font-size:16px;letter-spacing:-.02em}
+ .fin .lvm small{font-size:12.5px;color:var(--mute)}
+ .fin .lvm button.on{background:var(--fg);color:#fff}
+ .fin .lvm button.on small{color:#BDBDBD}
+ .fin .ptrust{display:none}
+ .fin .ptm{display:flex;align-items:center;gap:8px;padding:12px 0;font-size:14px;border-bottom:1px solid var(--line)}
+ .fin .ptm .tpw{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-weight:700}
+ .fin .ptm .tpw svg{width:18px;height:18px}
+ .fin .tool .r:has(.vt.v2){grid-template-columns:auto minmax(0,1fr) auto}
+ .fin .tool .fbtn{padding:0 16px}
+ .fin .tool .sel select{font-size:14px;padding:0 30px 0 12px}
+ .fin .ad.klv{justify-content:flex-end;gap:4px;padding:14px;min-height:0}
+ .fin .ad.klv img{height:20px}
+ .fin .ad.klv h3{margin-top:6px;font-size:15px;line-height:1.15}
+ .fin .ad.klv small{font-size:10px}
+ .fin .ad.phd .note{left:14px;bottom:14px;font-size:9px}
+ .fin .pinfo .related.r1{margin-inline:calc(-1*var(--g));padding-inline:var(--g)}
+}
+@media(max-width:760px){.fin .h-po .hv{object-position:42% center}}

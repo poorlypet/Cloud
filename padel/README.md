@@ -5,7 +5,11 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 ## Signed off
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)
 
-## Current options
+## Final pages, for sign off
+- `collection.html`: collection page (M2, photo 1). Change the photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
+- `product.html`: product page (option 1 with tabs)
+
+## Earlier options
 - `collection-m2a.html` to `collection-m2c.html`: collection page, M2 with each of the three photos
 - `collection-m1.html` to `collection-m5.html`: earlier photo hero round
 - `collection-k1.html` to `collection-k5.html`: earlier hero round

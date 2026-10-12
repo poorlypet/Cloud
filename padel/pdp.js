@@ -75,6 +75,7 @@ function howPlays(st){const head=`<div class="hp-h"><b>How it plays</b><p>${SUMM
  if(st==='sliders')return `<div class="hp">${head}<div class="hp-sl">${SC.map(([a,b,v])=>`<div><span>${a}</span><div class="ln"><i style="left:${v}%"></i></div><span>${b}</span></div>`).join('')}</div></div>`;
  if(st==='row4')return `<div class="hp">${head}<div class="hp-r4">${PF.map(([t,v])=>`<div><b>${v}<small>/10</small></b><span>${t}</span><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div>`;
  if(st==='words')return `<div class="hp">${head}${lvlScale}<p class="hp-w">Best at ${STR.map(t=>`<b>${t.toLowerCase()}</b>`).join(', ').replace(/, ([^,]*)$/,' and $1')}.</p></div>`;
+ if(st==='tabs2')return `<div class="hp hp-t"><div class="tl2"><button class="on" data-bt="0">How it plays</button><button data-bt="1">Key specs</button></div><div class="btp on" data-btp="0"><p class="hp-s">${SUMM}</p><div class="hp-bars">${PF.map(([t,v])=>`<div><div class="lb"><span>${t}</span><span class="mute">${word(v)}</span></div><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div><div class="btp" data-btp="1">${specDL()}<a class="ul allsp" href="#specs">All specifications</a></div></div>`;
  if(st==='tabs')return `<div class="hp hp-t"><div class="tl2"><button class="on" data-bt="0">How it plays</button><button data-bt="1">Key specs</button><button data-bt="2">Who it is for</button></div><div class="btp on" data-btp="0"><p class="hp-s">${SUMM}</p><div class="hp-bars">${PF.map(([t,v])=>`<div><div class="lb"><span>${t}</span><span class="mute">${v}/10</span></div><div class="ln"><i style="width:${v*10}%"></i></div></div>`).join('')}</div></div><div class="btp" data-btp="1">${specDL()}<a class="ul allsp" href="#specs">All specifications</a></div><div class="btp" data-btp="2">${lvlScale}<p class="hp-s">${BEST}. ${x.l===2?'If you are new to padel, a round racket will be easier to start with.':''}</p></div></div>`;
  return '';}
 const specT=()=>`<details class="kft"><summary>Key specs</summary>${specDL()}<a class="ul allsp" href="#specs">All specifications</a></details>`;
@@ -84,9 +85,9 @@ function buyFlow(){return `<div class="buy flow" id="buy">
  <div class="rl">${stars('s')}<b>${rating}</b><a href="#reviews">${revs} reviews</a></div>
  <p class="lede">${LEDE} <a href="#desc">Read more</a></p>
  <div class="pr2"><b>${gbp(x.p)}</b>${x.w?`<s>${gbp(x.w)}</s><span class="sv">Save £${x.w-x.p}</span>`:''}</div>
- <div class="kl2"><img src="media/klarna-badge.png" alt="Klarna"><span>3 interest free payments of <b>${money(x.p/3)}</b>. <a href="#" style="text-decoration:underline">Learn more</a></span></div>
+ <div class="kl2"><img src="media/klarna-badge.png" alt="Klarna"><span>3 interest free payments of <b>${money(x.p/3)}</b>. <a class="lm" href="#" style="text-decoration:underline">Learn more</a></span></div>
  <p class="best"><span class="mute">Best for</span> ${BEST}</p>
- ${howPlays(C.hp)}${C.hp==='tabs'?'':specT()}
+ ${howPlays(C.hp)}${C.hp.startsWith('tabs')?'':specT()}
  <div class="atc"><div class="qty2"><button data-qd="-1" aria-label="Less">−</button><span id="qty">1</span><button data-qd="1" aria-label="More">+</button></div><button class="btn big" id="atc">Add to bag</button><button class="wish" id="wish" aria-label="Save to wishlist">${heart}</button></div>
  <ul class="perks"><li><span class="dot"></span><span><b>In stock</b>, ready to send</span></li><li>${truck}<span>${freeDel?'<b>Free UK delivery</b> on this order':`Free UK delivery on orders over £${K.STORE.freeOver}`}</span></li><li>${shield}<span>Rated <b>Excellent</b> on Trustpilot</span></li></ul>
  <p class="helpl">Not sure it is right for you? <a href="#">Read our racket guide</a></p></div>`;}
@@ -141,13 +142,13 @@ const sg=()=>`<div class="sgm" id="sgm"><div class="box2"><div style="display:fl
 
 function render(){
  const B={fband,flist,details:()=>details(C.details||'tabs'),reviews:C.tp?reviewsTP:reviews,also:alsoLike,compare,features:feats,story,brand:brandBlock,faq,bundle:()=>`<section class="psec">${bundle()}</section>`};
- $('#pdp-root').innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span><a href="#">${shoe?'Padel shoes':'Padel rackets'}</a><span>/</span><a href="#">${x.b}</a><span>/</span><span>${x.n}</span></nav>
+ $('#pdp-root').classList.toggle('fin',!!C.fin);$('#pdp-root').innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span><a href="#">${shoe?'Padel shoes':'Padel rackets'}</a><span>/</span><a href="#">${x.b}</a><span>/</span><span>${x.n}</span></nav>
  ${C.hero?`<div class="thero"><span class="note">Photo: ${C.hero[2]}</span><div><h2>${C.hero[0]}</h2><p>${C.hero[1]}</p></div></div>`:''}
  <div class="pdp ${C.fast?'fast':''} ${C.hp?'flow':''}">${gallery()}${C.hp?buyFlow():buy()}</div></div>
  ${C.blocks.map((b,k)=>{let h=B[b]();if(!k&&C.hp)h=h.replace('class="psec"','class="psec first" id="desc"');return b==='features'||b==='fband'?h:`<div class="wrap">${h}</div>`;}).join('')}
- <div class="sbar" id="sbar"><div class="wrap"><div class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</div><div class="nm"><b>${x.b} ${x.n}</b><span>${stars('s')} ${rating} (${revs})</span></div><span class="pr3">${gbp(x.p)}</span><button class="btn" data-sbadd>${shoe?'Choose size':'Add to bag'}</button></div></div>${shoe?sg():''}`;
+ ${C.noSticky?'':`<div class="sbar" id="sbar"><div class="wrap"><div class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</div><div class="nm"><b>${x.b} ${x.n}</b><span>${stars('s')} ${rating} (${revs})</span></div><span class="pr3">${gbp(x.p)}</span><button class="btn" data-sbadd>${shoe?'Choose size':'Add to bag'}</button></div></div>`}${shoe?sg():''}`;
  btot();
- const sb=$('#sbar'),at=$('#atc'),chk=()=>sb.classList.toggle('on',at.getBoundingClientRect().bottom<0);addEventListener('scroll',chk,{passive:true});chk();
+ const sb=$('#sbar'),at=$('#atc');if(sb){const chk=()=>sb.classList.toggle('on',at.getBoundingClientRect().bottom<0);addEventListener('scroll',chk,{passive:true});chk();}
  const gal=$('#gal');if(gal)gal.addEventListener('scroll',()=>{const k=Math.round(gal.scrollLeft/gal.clientWidth);$$('#dots i').forEach((d,j)=>d.classList.toggle('on',j===k));},{passive:true});
 }
 function setImg(k){S.img=(k+shots.length)%shots.length;$('#mainimg').innerHTML=sq(shots[S.img],S.img,badge);$$('.tl button').forEach((b,j)=>b.classList.toggle('on',j===S.img));const c=$('#ctr');if(c){c.textContent=`${S.img+1} / ${shots.length}`;$('#pbar').style.width=`${(S.img+1)/shots.length*100}%`;}}

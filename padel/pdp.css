@@ -397,3 +397,64 @@
  .psec.first .pane.on{display:block!important}
  .psec.first .pane .mh{display:none}
 }
+/* final product page */
+.fin .pdp.flow{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px}
+.fin .pdp.flow .gal.g2{gap:10px}
+.fin .pdp.flow .gal .sq img{inset:9%;width:82%;height:82%}
+.fin .buy.flow{max-width:none}
+.fin .kl2 span{white-space:nowrap}
+.fin .hp-t .btp{padding-top:14px}
+@media(max-width:1100px){.fin .pdp.flow{grid-template-columns:1fr}}
+@media(max-width:760px){
+ .fin .pdp.flow{gap:14px;padding-bottom:8px}
+ .fin .gal .sq{aspect-ratio:5/4}
+ .fin .buy.flow{gap:12px}
+ .fin .buy.flow>.bl{order:1}.fin .buy.flow>h1{order:2}.fin .buy.flow>.rl{order:3}.fin .buy.flow>.pr2{order:4}.fin .buy.flow>.kl2{order:5}
+ .fin .buy.flow>.atc{order:6}.fin .buy.flow>.perks{order:7}.fin .buy.flow>.lede{order:8}.fin .buy.flow>.hp{order:9}.fin .buy.flow>.best{order:10}
+ .fin .buy.flow>.helpl{display:none}
+ .fin .buy.flow h1{font-size:26px}
+ .fin .buy.flow .pr2 b{font-size:26px}
+ .fin .kl2{font-size:13px;gap:8px}.fin .kl2 img{height:22px}.fin .kl2 .lm{display:none}
+ .fin .perks{flex-direction:row;flex-wrap:wrap;gap:6px 16px;font-size:13px}
+ .fin .perks li:last-child{display:none}
+ .fin .perks svg{width:16px;height:16px}
+ .fin .buy.flow .lede{font-size:14.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;padding-top:6px;border-top:1px solid var(--line);padding-top:14px}
+ .fin .hp-t .tl2 button{font-size:14px}
+ .fin .hp-bars{grid-template-columns:1fr 1fr;gap:12px 20px}
+ .fin .hp-bars .lb{font-size:12.5px;flex-direction:column;gap:1px}
+ /* what makes it different, swipe */
+ .fin .fband{padding-block:32px 8px}
+ .fin .fband .ph{height:160px}
+ .fin .f4{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:76%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:18px calc(-1*var(--g)) 0;padding:0 var(--g) 6px;scroll-padding-inline:var(--g)}
+ .fin .f4::-webkit-scrollbar{display:none}
+ .fin .f4 div{scroll-snap-align:start;padding-top:12px}
+ .fin .f4 h3{font-size:17px}.fin .f4 p{font-size:14px}
+ /* trustpilot, compact */
+ .fin #reviews{padding-top:36px}
+ .fin .tph2{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px;margin-bottom:18px}
+ .fin .tplogo2{font-size:16px;grid-column:1}
+ .fin .tps{margin:0;gap:8px;grid-column:1}
+ .fin .tps b{font-size:18px;font-family:var(--sans)}
+ .fin .tps .stars i{width:20px;height:20px}.fin .tps .stars i svg{width:14px;height:14px}
+ .fin .tpl p{font-size:13px;margin-top:4px}
+ .fin .tpa{width:auto;grid-column:2;grid-row:1/3}
+ .fin .tpa .btn.ol{display:none}
+ .fin .tpa .btn{height:40px;padding:0 14px;font-size:13px}
+ .fin .tpg{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1*var(--g));padding-inline:var(--g);scroll-padding-inline:var(--g)}
+ .fin .tpg::-webkit-scrollbar{display:none}
+ .fin .tpc2{scroll-snap-align:start;padding:18px;gap:8px}
+ .fin .tpc2 p{font-size:14px}
+ .fin .tpf{margin-top:12px;font-size:13px}
+ /* you may also like */
+ .fin .sh{display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:16px}
+ .fin .shl h2{font-size:24px;margin:0}
+ .fin .shl p{display:none}
+ .fin .sh .shbtn{background:none;border:0;color:var(--fg);height:auto;padding:0;text-decoration:underline;text-underline-offset:4px;font-size:14px}
+ .fin .sh .shbtn svg{display:none}
+}
+@media(max-width:760px){
+ .fin .tph2{display:block}
+ .fin .tpa{display:none}
+ .fin .tps{margin:6px 0 4px}
+ .fin .tpl p{white-space:nowrap;flex-wrap:nowrap;font-size:12.5px;gap:6px}
+}
