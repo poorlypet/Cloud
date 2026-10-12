@@ -475,3 +475,5 @@
  .hpx .hp-bars{grid-template-columns:1fr;gap:14px}
  .fin .lede{-webkit-line-clamp:3}
 }
+#pdp-root{padding-bottom:48px}
+@media(max-width:760px){#pdp-root{padding-bottom:28px}}

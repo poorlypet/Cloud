@@ -6,10 +6,6 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)
 - `product.html`: product page
 
-## Final pages, for sign off
-- `collection.html`: collection page (M2, photo 1). Change the photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
-- `product.html`: product page (option 1 with tabs)
-
 ## Earlier options
 - `collection-m2a.html` to `collection-m2c.html`: collection page, M2 with each of the three photos
 - `collection-m1.html` to `collection-m5.html`: earlier photo hero round
@@ -20,10 +16,14 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `product-r1.html` to `product-r5.html`: earlier product round
 - `product-p1.html` to `product-p5.html`: earlier product round
 
-## Store pages, 3 versions each
-- `delivery`, `returns`, `track`, `reviews`, `klarna`, `faqs`, `about`, `guide`, `brands`, `help`, `cart`, `checkout` as `<page>-1.html` to `<page>-3.html`, built by `pages.js` and `pages.css`
-- `brand-1.html` to `brand-3.html` and `search-1.html` to `search-3.html`: built by `plp.js`
-- Delivery prices and times, returns window, refund time and opening hours are set once in `POL` at the top of `pages.js`
+## Final pages
+- `reviews.html`, `returns.html`, `track.html`, `guide.html`: built by `pages.js` and `pages.css`
+- `brand.html`, `search.html`: built by `plp.js`
+
+## Still choosing
+- `collection.html` and `collection-b2.html` to `collection-b5.html`: collection page with five mobile level buttons. Change the hero photo with `ph` in `PLPCFG`, add a mobile crop with `phm`
+- `klarna`, `delivery`, `faqs`, `help`, `about`, `brands`, `cart` as `<page>-1.html` to `<page>-3.html`
+- Delivery prices and times, the 14 day returns window, refund time and opening hours are set once in `POL` at the top of `pages.js`
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data
