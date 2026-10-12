@@ -36,6 +36,9 @@ const AD={
  delivery:w=>`<div class="ad or ${w}"><small>On every order over £${K.STORE.freeOver}</small><h3>Free UK delivery</h3><p>Add a grip or a tube of balls to get there.</p><a class="btn" href="#">Shop accessories</a></div>`,
  brand:w=>`<a class="ad ${w}" href="#"><span class="note">Photo: Bullpadel 2026 campaign</span><small>Brand focus</small><h3>Bullpadel 2026</h3><p>The new Vertex, Hack and Neuron ranges.</p><span class="btn wh">Shop Bullpadel</span></a>`,
  video:w=>`<a class="ad ${w}" href="#"><video autoplay muted loop playsinline poster="media/${C.adVid||'rally'}.jpg" src="media/${C.adVid||'rally'}.mp4"></video><small>On court</small><h3>Built for the way you play</h3><span class="btn wh">Find my level</span></a>`,
+ kvt:w=>`<a class="ad klv" href="#"><video autoplay muted loop playsinline poster="media/klarna.jpg" src="media/klarna.mp4"></video><img src="media/klarna-badge.png" alt="Klarna"><h3>Pay in 3 interest free payments.</h3><small>18+. T&amp;Cs apply.</small></a>`,
+ kvw:w=>`<a class="ad klv w2" href="#"><video autoplay muted loop playsinline poster="media/klarna.jpg" src="media/klarna.mp4"></video><img src="media/klarna-badge.png" alt="Klarna"><h3>Pay in 3 interest free payments.</h3><small>18+. T&amp;Cs apply.</small></a>`,
+ kstrip:w=>`<a class="kst" href="#"><img src="media/klarna-badge.png" alt="Klarna"><span><b>Pay in 3 interest free payments</b> with Klarna at checkout.</span><span class="ul">Learn more</span><small>18+. T&amp;Cs apply.</small></a>`,
  news:w=>`<div class="ad nl ${w}"><span class="note">Photo: sale rackets on court bench</span><small>Sale alerts</small><h3>Be first to the next drop</h3><form onsubmit="event.preventDefault();this.querySelector('button').textContent='Done'"><input type="email" placeholder="Email address" required aria-label="Email"><button>Sign up</button></form></div>`};
 
 /* hero */
@@ -43,8 +46,15 @@ const LV=[['','All'],[1,'Beginner'],[2,'Intermediate'],[3,'Advanced']];
 const isOn=v=>v===''?!S.levels.size:S.levels.size===1&&S.levels.has(v);
 const tabsHTML=cls=>`<div class="${cls}">${LV.map(([v,t])=>`<button data-lv="${v}" class="${isOn(v)?'on':''}">${t}</button>`).join('')}</div>`;
 const VID=n=>`<video class="hv" autoplay muted loop playsinline poster="media/${n}.jpg" src="media/${n}.mp4"></video>`;
+const ARW2='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const PH=n=>`<img class="hv" src="media/hero${n}.jpg" alt="">`;
 const minP=l=>gbp(Math.min(...base.filter(x=>x.l===l).map(x=>x.p)));
 function hero(){const n=base.length,h=C.hero;
+ if(h==='pbox')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><span class="cnt">${n} rackets</span></div></section>${tabsHTML('segs')}`;
+ if(h==='pover')return `<section class="h-vbox h-ph h-po">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('wtabs')}</div><span class="cnt">${n} rackets</span></div></section>`;
+ if(h==='pstrip')return `<section class="h-strip"><div class="t"><h1>${C.title}</h1><div><p>${C.desc}</p><span class="cnt">${n} rackets from over 40 brands</span></div></div><div class="ps">${PH(C.ph)}</div>${tabsHTML('utabs')}</section>`;
+ if(h==='psplit')return `<section class="h-psplit"><div class="t"><span class="cnt">${n} rackets</span><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('btabs')}</div><div class="m">${PH(C.ph)}</div></section>`;
+ if(h==='plinks')return `<section class="h-vbox h-ph">${PH(C.ph)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div></div></section><div class="lvb">${[1,2,3].map(l=>`<button data-lv="${l}" class="${isOn(l)?'on':''}"><span><b>${LVL[l]}</b><small>From ${minP(l)}</small></span><i>${ARW2}</i></button>`).join('')}<button data-lv="" class="${isOn('')?'on':''}"><span><b>All rackets</b><small>${n} rackets</small></span><i>${ARW2}</i></button></div>`;
  if(h==='vbox')return `<section class="h-vbox">${VID(C.heroVid)}<div class="in"><div><h1>${C.title}</h1><p>${C.desc}</p></div><span class="cnt">${n} rackets</span></div></section>${tabsHTML('segs')}`;
  if(h==='split')return `<section class="h-split"><div class="t"><h1>${C.title}</h1><p>${C.desc}</p>${tabsHTML('segs dk')}</div><div class="m">${VID(C.heroVid)}</div></section>`;
  if(h==='cards')return `<section class="h-cards"><div class="t"><h1>${C.title}</h1><p>${C.desc}</p><button class="ul" data-lv="" style="color:#fff">Show all ${n} rackets</button></div>${[1,2,3].map(l=>`<button class="lc2 ${isOn(l)?'on':''}" data-lv="${l}"><img src="${IMG}" alt=""><span><b>${LVL[l]}</b><small>From ${minP(l)}</small></span></button>`).join('')}</section>`;
@@ -78,7 +88,7 @@ function update(keepFacets){
  $('#cnt').innerHTML=`<b>${list.length}</b> of ${base.length} products`;$('#fshow').textContent=`Show ${list.length} results`;
  let html='';const ads=(C.ads||[]).filter(a=>a.at<=shown.length);
  shown.forEach((x,k)=>{ads.filter(a=>a.at===k).forEach(a=>html+=AD[a.t](a.w2?'w2':''));
-  html+=`<div class="pc">${C.compare?`<label class="cmpk"><input type="checkbox" data-cmp="${x.i}" ${S.cmp.has(x.i)?'checked':''}>Compare</label>`:''}${card(x)}</div>`;});
+  html+=`<div class="pc">${C.compare?`<label class="cmpk"><input type="checkbox" data-cmp="${x.i}" ${S.cmp.has(x.i)?'checked':''}>Compare</label>`:''}${card(x)}${C.klCard?`<div class="kc">or 3 payments of <b>£${(x.p/3).toFixed(2)}</b> with <img src="media/klarna-badge.png" alt="Klarna"></div>`:''}</div>`;});
  if(!list.length)html=`<div class="empty2"><p>No rackets match those filters.</p><button class="btn" data-clear style="margin-top:16px">Clear all filters</button></div>`;
  $('#pgrid').innerHTML=html;
  $('#more').innerHTML=list.length>S.shown?`<div class="mbox"><p>You have seen <b>${S.shown}</b> of <b>${list.length}</b> rackets</p><div class="bar"><i style="width:${S.shown/list.length*100}%"></i></div><button class="btn" data-loadmore>Show ${Math.min(12,list.length-S.shown)} more rackets</button></div>`:list.length?`<p>You have seen all ${list.length} rackets</p>`:'';

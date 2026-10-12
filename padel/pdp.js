@@ -17,6 +17,7 @@ function gallery(){const g=C.gallery;
  if(g==='grid')return `<div style="min-width:0"><div class="gal g2" id="gal">${shots.slice(0,4).map((s,k)=>sq(s,k,badge)).join('')}</div><div class="gal"><div class="dots" id="dots">${shots.slice(0,4).map((s,k)=>`<i class="${k?'':'on'}"></i>`).join('')}</div></div></div>`;
  const thumbs=`<div class="tl">${shots.map((s,k)=>`<button class="${k?'':'on'}" data-img="${k}" aria-label="Image ${k+1}">${s[0].includes('img')?`<img src="${IMG}" alt="">`:''}</button>`).join('')}</div>`;
  const main=`<div class="main"><div id="mainimg">${sq(shots[0],0,badge)}</div><div class="nav2"><button data-step="-1" aria-label="Previous image">←</button><button data-step="1" aria-label="Next image">→</button></div></div>`;
+ if(g==='single')return `<div class="gal single"><div class="main"><div id="mainimg">${sq(shots[0],0,badge)}</div><div class="nav2"><button data-step="-1" aria-label="Previous image">←</button><button data-step="1" aria-label="Next image">→</button></div><span class="ctr" id="ctr">1 / ${shots.length}</span></div><div class="pbar"><i id="pbar" style="width:${100/shots.length}%"></i></div></div>`;
  if(g==='thumbs')return `<div class="gal thumbs">${thumbs}${main}</div>`;
  return `<div class="gal row">${main}${thumbs}</div>`;}
 
@@ -30,6 +31,21 @@ const SIZES=['6','6.5','7','7.5','8','8.5','9','9.5','10','10.5','11','11.5','12
 const shoeOpts=shoe?`<div class="opt"><h4><span>Colour: <b id="coln">White and black</b></span></h4><div class="sw">${[['#F2F2F2','White and black'],['#1E1E1E','Black'],['#2E5BB8','Court blue']].map(([c,n],k)=>`<button class="${k?'':'on'}" data-col="${k}" data-n="${n}" aria-label="${n}"><i style="background:${c}"></i></button>`).join('')}</div></div>
  <div class="opt"><h4><span>Size (UK): <b id="sizen">Select a size</b></span><a href="#" data-sg>Size guide</a></h4><div class="sizes">${SIZES.map(z=>`<button data-size="${z}" ${OOS.includes(z)?'disabled':''}>${z}${LOW.includes(z)?'<span class="lo"></span>':''}</button>`).join('')}</div><p style="font-size:12px;color:var(--mute);margin-top:8px">Orange line means low stock.</p></div>
  <div class="fit"><b>Fit from customer reviews</b><div class="tr"><i style="left:46%"></i></div><div class="lb"><span>Runs small</span><span>True to size</span><span>Runs large</span></div></div>`:'';
+
+/* how it plays, plain styles */
+const PF={1:[['Power',5],['Control',9],['Comfort',9],['Manoeuvrability',8]],2:[['Power',7],['Control',8],['Comfort',7],['Manoeuvrability',8]],3:[['Power',9],['Control',6],['Comfort',5],['Manoeuvrability',6]]}[x.l]||[];
+const SC=[['Control','Power',{1:20,2:55,3:85}[x.l]],['Soft feel','Hard feel',{1:20,2:50,3:80}[x.l]],['Low balance','High balance',{1:25,2:50,3:80}[x.l]]];
+function perfHTML(st){
+ if(st==='slider')return `<div class="pf sl">${SC.map(([a,b,v])=>`<div><div class="tk"><i style="left:${v}%"></i></div><div class="ends"><span>${a}</span><span>${b}</span></div></div>`).join('')}</div>`;
+ if(st==='bar')return `<div class="pf br">${PF.map(([t,v])=>`<div><span>${t}</span><span class="tk"><i style="width:${v*10}%"></i></span><b>${v}/10</b></div>`).join('')}</div>`;
+ if(st==='dots')return `<div class="pf dt">${PF.map(([t,v])=>`<div><span>${t}</span><span class="sq5">${[1,2,3,4,5].map(i=>`<i class="${i<=Math.round(v/2)?'on':''}"></i>`).join('')}</span></div>`).join('')}</div>`;
+ if(st==='ticks')return `<div class="pf tx">${PF.map(([t,v])=>`<div><span>${t}</span><span class="t10">${[...Array(10)].map((_,i)=>`<i class="${i<v?'on':''}"></i>`).join('')}</span></div>`).join('')}</div>`;
+ return '';}
+const pfHead=`<div class="pfh"><b>How it plays</b><span class="mute">${LVL[x.l]} level</span></div>`;
+function specDL(){const f=[['Weight',weight],['Balance',x.l===3?'High':x.l===2?'Medium':'Low'],['Core',x.l===3?'Hard EVA':x.l===2?'Medium EVA':'Soft EVA'],['Face',x.l===3?'18K carbon':x.l===2?'12K carbon':'Fibreglass'],['Shape',x.sh],['Thickness','38mm']];return `<dl class="kdl">${f.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>`;}
+function playBlock(){const p=perfHTML(C.perf);
+ if(C.specs==='tabs')return `<div class="btab"><div class="bth"><button class="on" data-bt="0">How it plays</button><button data-bt="1">Key specs</button></div><div class="btp on" data-btp="0">${p}</div><div class="btp" data-btp="1">${specDL()}<a class="ul allsp" href="#specs">All specifications</a></div></div>`;
+ return `<div class="pfw">${pfHead}${p}</div><details class="kfa"><summary>Key specs</summary>${specDL()}<a class="ul allsp" href="#specs">All specifications</a></details>`;}
 const freeDel=x.p>=K.STORE.freeOver;
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-8.6C1.2 8.3 3 4.8 6.4 4.8c2 0 3.3 1.1 4 2.2.7-1.1 2-2.2 4-2.2 3.4 0 5.2 3.5 3.6 6.6C19 15.6 12 20 12 20z" fill="none" stroke="#111" stroke-width="1.8"/></svg>';
 const truck='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>';
@@ -40,7 +56,7 @@ function buy(){return `<div class="buy" id="buy">
  <div class="rl">${stars('s')}<b>${rating}</b><a href="#reviews">${revs} reviews</a></div>
  <div class="pr2"><b>${gbp(x.p)}</b>${x.w?`<s>${gbp(x.w)}</s><span class="sv">Save £${x.w-x.p}</span>`:''}</div>
  <div class="kl2"><img src="media/klarna-badge.png" alt="Klarna"><span>3 interest free payments of <b>${money(x.p/3)}</b>. <a href="#" style="text-decoration:underline">Learn more</a></span></div>
- ${chips}${C.facts?facts():(C.meters?meters:lvlMeter)}${shoeOpts}
+ ${C.perf?'':chips}${C.perf?playBlock():C.facts?facts():(C.meters?meters:lvlMeter)}${shoeOpts}
  <div class="atc"><div class="qty2"><button data-qd="-1" aria-label="Less">−</button><span id="qty">1</span><button data-qd="1" aria-label="More">+</button></div><button class="btn big" id="atc" ${shoe?'disabled':''}>${shoe?'Select a size':'Add to bag'}</button><button class="wish" id="wish" aria-label="Save to wishlist">${heart}</button></div>
  ${C.apay?`<button class="apay" data-apay><svg viewBox="0 0 17 20"><path fill="#fff" d="M14 10.6c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8C4.9 5.5 3.5 6.4 2.8 7.7c-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.3 1.1 0 1.6-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1.1 2.7-2.2.9-1.3 1.2-2.5 1.2-2.6 0 0-2.4-.9-2.5-3.6zM11.7 3.9c.6-.8 1.1-1.8.9-2.9-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-1 2.8 1.1.1 2.1-.5 2.8-1.3z"/></svg>Pay</button>`:''}
  <div class="stock"><div><span class="dot"></span><b>In stock</b>${C.stockNote?`<span class="mute">${C.stockNote}</span>`:''}</div><div>${truck}${freeDel?'<span><b>Free UK delivery</b> on this order</span>':`<span>Free UK delivery on orders over £${K.STORE.freeOver}</span>`}</div><div>${shield}<span>Rated <b>Excellent</b> on Trustpilot</span></div></div>
@@ -88,23 +104,25 @@ const alsoLike=()=>`<section class="psec"><div class="sh"><div class="shl"><h2 s
 function compare(){const xs=[x,...similar.slice(0,2)];const row=(h,f)=>`<tr><th>${h}</th>${xs.map((p,k)=>`<td class="${k?'':'me'}">${f(p)}</td>`).join('')}</tr>`;
  return `<section class="psec"><h2>Compare similar rackets</h2><div class="ctab"><table>${row('',p=>`<div class="cimg"><img src="${IMG}" alt=""></div>`)}${row('Racket',p=>`<b>${p.b} ${p.n}</b>${p===x?'<br><span class="mute" style="font-size:12px">This racket</span>':''}`)}${row('Price',p=>p.w?`<b style="color:var(--accent)">${gbp(p.p)}</b> <s class="mute">${gbp(p.w)}</s>`:gbp(p.p))}${row('Level',p=>LVL[p.l])}${row('Shape',p=>p.sh)}${row('Rating',p=>`${stars('s')} ${(4.5+((p.i*7)%5)/10).toFixed(1)}`)}${row('',p=>p===x?'<span class="mute">Viewing</span>':`<button class="btn ol" data-add="${p.i}">Add to bag</button>`)}</table></div></section>`;}
 const feats=()=>`<section class="feat2"><div class="wrap"><h2>What makes it different</h2><div class="fg3">${(C.features||[]).map(([t,p,n])=>`<div class="fi"><div class="ph"><span class="note">Photo: ${n}</span></div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></div></section>`;
+const fband=()=>`<section class="fband"><div class="wrap"><div class="ph"><img src="media/hero${C.fph||1}.jpg" alt=""><h2>What makes it different</h2></div><div class="f4">${(C.features||[]).map(([t,p])=>`<div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></div></section>`;
+const flist=()=>`<section class="psec flist"><div class="ph"><img src="media/hero${C.fph||2}.jpg" alt=""></div><div><h2>Why players choose it</h2>${(C.features||[]).map(([t,p])=>`<div class="fl"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></section>`;
 const story=()=>`<section class="psec">${(C.story||[]).map(([t,p,n],k)=>`<div class="story ${k%2?'flip':''}"><div class="ph"><span class="note">Photo: ${n}</span></div><div><h3>${t}</h3><p>${p}</p></div></div>`).join('')}</section>`;
 const brandBlock=()=>`<section class="psec"><div class="bblock"><div class="blogo">Logo: ${x.b}</div><p><b>About ${x.b}.</b> ${C.brandTxt||'One of the most played brands in European padel, with rackets for every level from first time players to the professional tour.'}</p><a class="shbtn" href="#">Shop ${x.b} ${ARW}</a></div></section>`;
 const faq=()=>`<section class="psec"><h2>Questions about this ${shoe?'shoe':'racket'}</h2><div class="faq">${(shoe?[['How do I choose my size?','Padel shoes fit like running shoes. If you are between sizes, our reviewers suggest going half a size up.'],['Which sole do I need?','Herringbone soles suit most artificial grass courts. Choose an omni sole for heavily sanded courts.']]:[['Is this racket right for my level?',`It is designed for ${LVL[x.l].toLowerCase()} players. If you are unsure, our racket guide explains the differences.`],['Does it come with a cover?','Check the specifications for what is included. You can add a racket cover in Complete the set.'],['Can I pay with Klarna?','Yes. Choose Klarna at checkout to split the cost into 3 interest free payments.']]).map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></section>`;
 const sg=()=>`<div class="sgm" id="sgm"><div class="box2"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-family:var(--head);font-size:24px">Size guide</h3><button class="x" data-sgx aria-label="Close"></button></div><table><tr><th>UK</th><th>EU</th><th>US</th><th>Foot length</th></tr>${[['7','41','8','25.5cm'],['8','42','9','26.5cm'],['9','43','10','27.5cm'],['10','44.5','11','28.5cm'],['11','46','12','29.5cm']].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div></div>`;
 
 function render(){
- const B={details:()=>details(C.details||'tabs'),reviews:C.tp?reviewsTP:reviews,also:alsoLike,compare,features:feats,story,brand:brandBlock,faq,bundle:()=>`<section class="psec">${bundle()}</section>`};
+ const B={fband,flist,details:()=>details(C.details||'tabs'),reviews:C.tp?reviewsTP:reviews,also:alsoLike,compare,features:feats,story,brand:brandBlock,faq,bundle:()=>`<section class="psec">${bundle()}</section>`};
  $('#pdp-root').innerHTML=`<div class="wrap"><nav class="crumbs"><a href="./home.html">Home</a><span>/</span><a href="#">${shoe?'Padel shoes':'Padel rackets'}</a><span>/</span><a href="#">${x.b}</a><span>/</span><span>${x.n}</span></nav>
  ${C.hero?`<div class="thero"><span class="note">Photo: ${C.hero[2]}</span><div><h2>${C.hero[0]}</h2><p>${C.hero[1]}</p></div></div>`:''}
  <div class="pdp ${C.fast?'fast':''}">${gallery()}${buy()}</div></div>
- ${C.blocks.map(b=>b==='features'?B[b]():`<div class="wrap">${B[b]()}</div>`).join('')}
+ ${C.blocks.map(b=>b==='features'||b==='fband'?B[b]():`<div class="wrap">${B[b]()}</div>`).join('')}
  <div class="sbar" id="sbar"><div class="wrap"><div class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</div><div class="nm"><b>${x.b} ${x.n}</b><span>${stars('s')} ${rating} (${revs})</span></div><span class="pr3">${gbp(x.p)}</span><button class="btn" data-sbadd>${shoe?'Choose size':'Add to bag'}</button></div></div>${shoe?sg():''}`;
  btot();
  const sb=$('#sbar'),at=$('#atc'),chk=()=>sb.classList.toggle('on',at.getBoundingClientRect().bottom<0);addEventListener('scroll',chk,{passive:true});chk();
  const gal=$('#gal');if(gal)gal.addEventListener('scroll',()=>{const k=Math.round(gal.scrollLeft/gal.clientWidth);$$('#dots i').forEach((d,j)=>d.classList.toggle('on',j===k));},{passive:true});
 }
-function setImg(k){S.img=(k+shots.length)%shots.length;$('#mainimg').innerHTML=sq(shots[S.img],S.img,badge);$$('.tl button').forEach((b,j)=>b.classList.toggle('on',j===S.img));}
+function setImg(k){S.img=(k+shots.length)%shots.length;$('#mainimg').innerHTML=sq(shots[S.img],S.img,badge);$$('.tl button').forEach((b,j)=>b.classList.toggle('on',j===S.img));const c=$('#ctr');if(c){c.textContent=`${S.img+1} / ${shots.length}`;$('#pbar').style.width=`${(S.img+1)/shots.length*100}%`;}}
 document.addEventListener('click',e=>{const t=e.target.closest('button,a[data-sg]');if(!t)return;
  if(t.dataset.img!==undefined){setImg(+t.dataset.img);return;}
  if(t.dataset.step){setImg(S.img+ +t.dataset.step);return;}
@@ -114,12 +132,14 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,a[data-sg
  if(t.dataset.size){S.size=t.dataset.size;$$('.sizes button').forEach(b=>b.classList.toggle('on',b===t));$('#sizen').textContent='UK '+S.size+(t.querySelector('.lo')?', only 2 left':'');const a=$('#atc');a.disabled=false;a.textContent='Add to bag';return;}
  if(t.dataset.col!==undefined){$$('.sw button').forEach(b=>b.classList.toggle('on',b===t));$('#coln').textContent=t.dataset.n;return;}
  if(t.dataset.bunadd!==undefined){add(x.i);$$('[data-bun]').filter(i=>i.checked).forEach(i=>add(+i.dataset.bun));return;}
+ if(t.dataset.bt!==undefined){$$('.bth button').forEach(b=>b.classList.toggle('on',b===t));$$('.btp').forEach(p=>p.classList.toggle('on',p.dataset.btp===t.dataset.bt));return;}
  if(t.dataset.tabp!==undefined){$$('.ptabs button').forEach(b=>b.classList.toggle('on',b===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.pane===t.dataset.tabp));return;}
  if(t.dataset.sg!==undefined){e.preventDefault();$('#sgm').classList.add('on');return;}
  if(t.dataset.sgx!==undefined){$('#sgm').classList.remove('on');return;}
  if(t.closest('.rf')){$$('.rf button').forEach(b=>b.classList.toggle('on',b===t));return;}
 });
 document.addEventListener('change',e=>{if(e.target.dataset.bun)btot();});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#specs"]');if(!a)return;const b=$('[data-tabp="1"]');if(b)b.click();});
 document.addEventListener('click',e=>{if(e.target.id==='sgm')e.target.classList.remove('on');});
 document.addEventListener('DOMContentLoaded',()=>setTimeout(render,0));
 })();
