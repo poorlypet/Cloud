@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PADEL Mobile reviews R4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="retail4.css"><link rel="stylesheet" href="retail5.css"><link rel="stylesheet" href="retail6.css"><link rel="stylesheet" href="classic.css">
+<style>@media(max-width:1100px){.hero .three{grid-template-columns:1fr 1fr!important}}</style>
+<style>.hero .hb{display:flex;gap:10px;flex-wrap:wrap}.btn.hor{background:#FF4F00;border:1.5px solid #FF4F00;color:#fff;width:210px}.btn.hor:hover{background:#fff;border-color:#fff;color:#111}.btn.hol{background:transparent;color:#fff;border:1.5px solid #fff}.btn.hol:hover{background:#fff;color:#111}</style>
+<style>.wst{padding-top:48px;text-align:center}.wst p{font-family:var(--head);font-weight:700;letter-spacing:-.03em;line-height:1.15;font-size:clamp(28px,3.4vw,52px);max-width:none;margin:0 auto}.wst p span{display:block}.wst mark{--p:100%;color:inherit;background:linear-gradient(#FF4F00,#FF4F00) no-repeat left center/var(--p) 100%}
+.wst mark i{font-style:normal;padding:0 .14em;color:transparent;background:linear-gradient(90deg,#fff var(--p),#111 var(--p));-webkit-background-clip:text;background-clip:text}
+.wst.anim p span{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.wst.anim p span+span{transition-delay:.15s}
+.wst.anim.in p span{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.wst.anim p span{opacity:1;transform:none}}.wst em{font-style:normal;color:#FF4F00}.wst+.logostrip{border-bottom:0;padding-top:48px}.logostrip{border-bottom:0}</style>
+<style>@media(max-width:760px){
+body .hero .box{height:calc(100svh - 60px - 10px - 66px - 24px)}
+body .tbar{background:none;min-height:0;padding:14px 0 0;justify-content:flex-start}
+body .tbar>span:first-child{display:grid!important;grid-template-columns:auto auto 1fr;column-gap:10px;row-gap:3px;align-items:center;font-size:13px}
+body .tbar>span:first-child>span:not(.stars):not(.tpw):not(.tbn):not(.tbc){display:none}
+body .tbar>span:first-child .tbn{display:block;grid-column:1;grid-row:1/3;font-family:var(--head);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.04em;padding-right:4px}
+body .tbar>span:first-child .stars{grid-column:2;grid-row:1}
+body .tbar>span:first-child>b{display:block;grid-column:3;grid-row:1;font-size:15px}
+body .tbar>span:first-child .tbc{display:block;grid-column:2;grid-row:2;color:var(--mute);white-space:nowrap}
+body .tbar>span:first-child .tpw{grid-column:3;grid-row:2}
+body .hero .three{margin-top:28px}}</style>
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+<section class="hero"><div class="wrap"><div class="box"><video class="vid" autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video><div class="in"><h1>Europe's best padel brands, in one store</h1><div class="hb"><a class="btn hor" href="#">SHOP THE SALE</a></div></div></div><div data-m="tbar"></div>
+<div class="three" style="grid-template-columns:repeat(4,minmax(0,1fr))"><a href="#">Padel rackets<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a href="#">Padel shoes<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a href="#">Clothing<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a><a href="#">Bags and accessories<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div></div></section>
+<div data-m="cat4" data-cls=""></div>
+<div data-m="begin" data-intro="1" data-cls="t0"></div>
+<section class="wst"><div class="wrap"><p><span>We don't make rackets.</span><span>We stock over 40 of Europe's <mark><i>best padel brands.</i></mark></span></p></div></section>
+<div data-m="logostrip"></div>
+<div data-m="promo3" data-cls=""></div>
+<div data-m="lsplit" data-cls="lfit"></div>
+<div data-m="sale" data-cls=""></div>
+<div data-m="klarna"></div>
+<div data-m="rated"></div>
+<div data-m="journal" data-cls=""></div>
+<div data-m="nl"></div><div data-m="ftr"></div>
+<script src="classic.js"></script>
+<script>(()=>{const w=document.querySelector(".wst");if(!w)return;const m=w.querySelector("mark");
+if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+w.classList.add("anim");
+if("IntersectionObserver" in window)new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){w.classList.add("in");o.disconnect();}}),{threshold:.3}).observe(w);else w.classList.add("in");
+const tick=()=>{const r=w.getBoundingClientRect(),vh=innerHeight,p=Math.min(Math.max((vh*.85-r.top)/(vh*.4),0),1);m.style.setProperty("--p",(p*100).toFixed(1)+"%");};
+addEventListener("scroll",tick,{passive:true});tick();})();</script>
+</body></html>

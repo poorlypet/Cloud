@@ -198,7 +198,7 @@ const LVLS={1:['Beginner','New to padel','Forgiving round rackets with soft core
 const from=l=>gbp(Math.min(...F[LVLS[l][3]]().map(x=>x.p)));
 const arrows='<div class="arrows"><button data-arr="-1" aria-label="Previous">←</button><button data-arr="1" aria-label="Next">→</button></div>';
 Object.assign(M,{
- tbar:()=>`<div class="tbar"><span style="display:inline-flex;gap:10px;align-items:center"><b>Excellent</b>${stars()}<span>${STORE.tpScore} out of 5</span>${tpLogo}</span><span>Free UK delivery over £${STORE.freeOver}</span></div>`,
+ tbar:()=>`<div class="tbar"><span style="display:inline-flex;gap:10px;align-items:center"><b>Excellent</b>${stars()}<span>${STORE.tpScore} out of 5</span>${tpLogo}<span class="tbn">${STORE.tpScore}</span><span class="tbc">${STORE.tpCount} reviews on</span></span><span>Free UK delivery over £${STORE.freeOver}</span></div>`,
  cat4:o=>sec(o,head(o.title||'Shop by category',' ')+`<div class="ctiles c4 ${o.bl?'bl':''}">${CATS.slice(0,4).map(ct).join('')}</div>`),
  cat6:o=>sec(o,head(o.title||'Shop by category',' ')+`<div class="ctiles c3 ${o.bl?'bl':''}">${CATS.map(ct).join('')}</div>`),
  catrail:o=>sec(o,head(o.title||'Shop by category',arrows)+`<div class="rail ctrail">${CATS.map(ct).join('')}</div>`),
