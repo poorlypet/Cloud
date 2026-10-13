@@ -1,6 +1,6 @@
 # PADEL
 
-Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the design board.
+Design work for PADEL, a multi-brand padel retailer. Open `home.html` to browse the whole store: every menu, footer, card and button link goes to its page. Open `index.html` for the design board.
 
 ## Signed off
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)
@@ -27,7 +27,7 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 - `court.html` and `map.html`: the court and the racket map, built by `lab.js` and `lab.css`
 - All 12 guides: `g-*.html`, text in `guides.js`
 - Legal text is in `legal.js`. Company name, number, address, email and VAT number are set once in `LEGAL` at the top of `pages2.js`
-- Menu and footer links are set in `LINK` in `classic.js`
+- Menu and footer links are set in `LINK` in `classic.js`. Other links are matched to their page by their text, in the site wiring block at the end of `classic.js`
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data

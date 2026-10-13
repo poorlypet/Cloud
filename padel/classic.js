@@ -113,7 +113,7 @@ const spec=x=>[x.l?LVL[x.l]:'',x.sh,x.c==='pickle'?'Pickleball':'',x.c!=='racket
 const ph=n=>`<div class="ph"><span class="note">Photo: ${n}</span></div>`;
 
 function card(x){
-  return `<a class="card" href="#"><div class="im">${hasImg(x)?`<img src="${IMG}" alt="${x.b} ${x.n}" loading="lazy">`:'<span class="note">Product image</span>'}${x.w?`<span class="stag">Save £${x.w-x.p}</span>`:''}<button class="add" data-add="${x.i}">Add to bag</button></div>
+  return `<a class="card" href="product.html"><div class="im">${hasImg(x)?`<img src="${IMG}" alt="${x.b} ${x.n}" loading="lazy">`:'<span class="note">Product image</span>'}${x.w?`<span class="stag">Save £${x.w-x.p}</span>`:''}<button class="add" data-add="${x.i}">Add to bag</button></div>
   <div class="meta">${x.nw?'<div class="new">New</div>':''}<div class="br">${x.b}</div><div>${x.n}</div><div class="pr">${x.w?`<span class="now">${gbp(x.p)}</span><s>${gbp(x.w)}</s>`:gbp(x.p)}</div>${spec(x)?`<div class="sp">${spec(x)}</div>`:''}</div></a>`;}
 const F={
  new:()=>P.filter(x=>x.nw),best:()=>P.filter(x=>x.c==='racket').sort((a,b)=>a.p-b.p).filter((x,i)=>i%2===0).concat(P.filter(x=>x.c==='racket'&&x.l===3)),
@@ -195,7 +195,7 @@ function bagView(){
   const b=$('#bagb'),f=$('#bagf'),tot=bag.reduce((a,x)=>a+P[x.i].p*x.q,0),left=Math.max(0,STORE.freeOver-tot);
   if(!bag.length){b.innerHTML=`<div class="empty"><p>Your bag is empty.</p><button class="btn" data-close style="margin-top:18px">Continue shopping</button></div>`;f.innerHTML='';return;}
   b.innerHTML=bag.map(x=>{const p=P[x.i];return `<div class="line"><div class="th">${hasImg(p)?`<img src="${IMG}" alt="">`:''}</div><div><b>${p.b}</b><div>${p.n}</div>${spec(p)?`<div class="s">${spec(p)}</div>`:''}<span class="qty"><button data-q="-1" data-i="${x.i}" aria-label="Fewer">−</button><span>${x.q}</span><button data-q="1" data-i="${x.i}" aria-label="More">+</button></span><button class="rm" data-rm="${x.i}">Remove</button></div><b>${gbp(p.p*x.q)}</b></div>`}).join('');
-  f.innerHTML=`<div class="free">${left?`Spend ${gbp(left)} more for free UK delivery`:'Your order qualifies for free UK delivery'}<i><b style="width:${Math.min(100,tot/STORE.freeOver*100)}%"></b></i></div><div class="tot"><span>Subtotal</span><span>${gbp(tot)}</span></div><button class="btn" style="width:100%">Checkout</button><p class="small">Checkout connects when the store goes live.</p>`;
+  f.innerHTML=`<div class="free">${left?`Spend ${gbp(left)} more for free UK delivery`:'Your order qualifies for free UK delivery'}<i><b style="width:${Math.min(100,tot/STORE.freeOver*100)}%"></b></i></div><div class="tot"><span>Subtotal</span><span>${gbp(tot)}</span></div><a class="btn" style="width:100%" href="cart.html">Checkout</a><p class="small">Checkout connects when the store goes live.</p>`;
 }
 document.addEventListener('click',e=>{
   const t=e.target.closest('[data-add],[data-open],[data-close],#scrim,.qty button,[data-rm],[data-tab],[data-arr]');if(!t)return;
@@ -293,7 +293,7 @@ Object.assign(M,{
 });
 
 function card(x){const r=(4.5+((x.i*7)%5)/10).toFixed(1),c=12+(x.i*37)%180;
-  return `<a class="card" href="#"><div class="im">${hasImg(x)?`<img src="${IMG}" alt="${x.b} ${x.n}" loading="lazy">`:'<span class="note">Product image</span>'}${x.w?`<span class="stag">Save £${x.w-x.p}</span>`:''}<button class="add" data-add="${x.i}">Add to bag</button></div>
+  return `<a class="card" href="product.html"><div class="im">${hasImg(x)?`<img src="${IMG}" alt="${x.b} ${x.n}" loading="lazy">`:'<span class="note">Product image</span>'}${x.w?`<span class="stag">Save £${x.w-x.p}</span>`:''}<button class="add" data-add="${x.i}">Add to bag</button></div>
   <div class="meta"><div class="br">${x.b}</div><div>${x.n}</div><div class="rt">${stars('s')}<span>${r} (${c})</span></div><div class="pr">${x.w?`<span class="now">${gbp(x.p)}</span><s>${gbp(x.w)}</s>`:gbp(x.p)}</div>${spec(x)?`<div class="sp">${spec(x)}</div>`:''}</div></a>`;}
 /* classic modules */
 LVLS[1][1]='New';LVLS[1][2]='Light, forgiving round rackets that are easy to swing.';
@@ -336,4 +336,20 @@ function lvsInit(){const s=document.getElementById('lvs');if(!s)return;let cur=0
 document.addEventListener('DOMContentLoaded',()=>setTimeout(lvsInit,0));
 document.addEventListener('DOMContentLoaded',()=>{header();$$('[data-m]').forEach(el=>{el.outerHTML=M[el.dataset.m]({...el.dataset});});save();});
 window.PADEL={M,P,card,add,open,F,stars,IMG,LVL,spec,gbp,hasImg,tpLogo,STORE,PAYM:typeof PAYM!=='undefined'?PAYM:'',ARW:typeof ARW!=='undefined'?ARW:''};
+})();
+
+/* site wiring: every placeholder link goes to its real page, matched on the link text */
+(()=>{
+const GT=['How to choose a padel racket','Round, teardrop or diamond?','Racket weight and balance explained','Choosing padel shoes','Padel rules made simple','Your first padel lesson','How padel scoring works','The bandeja, step by step','Getting the most from the glass','Serving well in padel','Make your racket last','When to change your overgrip'];
+const sl=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const R=[[/trustpilot|reviews?\b/,'reviews.html'],[/klarna|pay in 3|pay later/,'klarna.html'],[/\btrack/,'track.html'],[/return/,'returns.html'],[/deliver/,'delivery.html'],[/\bfaqs?\b|questions/,'faqs.html'],[/contact|customer team|ask the team/,'contact.html'],[/\bhelp/,'help.html'],[/sign in|sign out|my account|\baccount\b/,'signin.html'],[/about|behind the store/,'about.html'],[/racket map/,'map.html'],[/the court|\bshots?\b/,'court.html'],[/new in|new season|new arrivals|latest/,'new-in.html'],[/\bsale\b|reduced|last season/,'sale.html'],
+ [/beginners|new to padel|first game|start here/,'beginners.html'],[/beginner|first year|first lesson/,'rackets-beginner.html'],[/intermediate|improving|every week/,'rackets-intermediate.html'],[/advanced|competing|competition/,'rackets-advanced.html'],[/\bround\b/,'rackets-round.html'],[/teardrop/,'rackets-teardrop.html'],[/diamond/,'rackets-diamond.html'],[/under £100/,'rackets-under-100.html'],
+ [/guides?\b|technique|kit care|buying/,'guide.html'],[/shoe|footwear|\bsole\b|herringbone|\bomni\b|\bclay\b|all court|wide fit/,'shoes.html'],[/\btops\b|cloth|t-shirt|polo|shorts|skirt|legging|hoodie|\bkit\b|socks|caps|visor|headband/,'clothing.html'],[/\bbags?\b|backpack|holdall|holds \d/,'bags.html'],[/\bballs?\b/,'balls.html'],[/accessor|grip|tape|cover|towel|bottle|wristband|gift/,'accessories.html'],
+ [/bullpadel/,'brand.html'],[/\bnox\b/,'brand-nox.html'],[/\bhead\b/,'brand-head.html'],[/babolat|adidas|starvie|siux|wilson|dunlop|drop shot|black crown|varlion|kombat|royal padel|joma|asics|franklin|vibor-a|brands?\b/,'brands.html'],[/racket|shop now|shop all|view all|see all|best sellers|hybrid|£/,'collection.html'],[/legal/,'privacy.html']];
+const txt=a=>{const c=a.cloneNode(true);c.querySelectorAll('.note,svg,img').forEach(n=>n.remove());return (c.textContent+' '+(a.getAttribute('aria-label')||'')).replace(/\s+/g,' ').trim().toLowerCase();};
+const to=a=>{if(a.matches('.card,.mcard,.pk'))return 'product.html';const t=txt(a);if(!t)return null;const g=GT.find(x=>t.includes(x.toLowerCase()));if(g)return 'g-'+sl(g)+'.html';for(const [r,u] of R)if(r.test(t))return u;return null;};
+const wire=()=>document.querySelectorAll('a[href="#"]').forEach(a=>{if([...a.attributes].some(x=>x.name.startsWith('data-')))return;const u=to(a);if(u&&!location.pathname.endsWith('/'+u))a.setAttribute('href',u);});
+let tm;new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(wire,80);}).observe(document.documentElement,{childList:true,subtree:true});
+document.addEventListener('DOMContentLoaded',()=>setTimeout(wire,60));
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.target.matches('input[type=search],#sf'))location.href='search.html';});
 })();
