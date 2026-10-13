@@ -23,7 +23,7 @@ Or with the Shopify CLI: `shopify theme push --path theme --unpublished`.
 
 ## The under construction page
 
-Turn on Online Store, Preferences, Password protection. Visitors then see the Raqello landing page: the big wordmark, "Opening soon", an email sign up and the brands. Sign ups are saved as customers tagged `prelaunch`. The owner can get in with the store password from the link at the bottom. Edit the text, background video and brands in the theme editor on the Password page.
+Turn on Online Store, Preferences, Password protection. Visitors then see the Raqello landing page: the big wordmark, "Opening soon" and an email sign up, all on one screen with no scrolling. Sign ups are saved as customers tagged `prelaunch`. The owner can get in with the store password from the link at the bottom. Edit the text and background video in the theme editor on the Password page.
 
 ## Set up the store, in this order
 

@@ -66,12 +66,21 @@ a{color:inherit}
 .uc form.nl .ok,.uc form.nl .err{flex-basis:100%}
 .uc .row .fine{font-size:12px;color:#9A9A9A;margin-top:10px;text-align:right;max-width:none}
 @media(max-width:760px){.uc form.nl input{flex:none;height:56px;width:100%}.uc form.nl button{width:100%}.uc .row .fine{text-align:left}}
+
+/* one screen, no scroll */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+.uc{position:fixed;inset:0;height:100svh;min-height:0}
+.uc .mid{justify-content:flex-end;padding-top:clamp(20px,6vh,72px);min-height:0}
+.uc .wm{font-size:min(calc((min(100vw,1600px) - 2*var(--g)) / 3.36),50vh)}
+@media(max-width:760px){.uc .wm{font-size:min(calc((100vw - 2*var(--g)) / 3.36),24vh)}}
+@media(max-height:760px){.uc .wm{margin-bottom:16px}.uc h1{font-size:clamp(24px,3vw,40px)}.uc .row p{font-size:15px;margin-top:8px}}
+@media(max-width:760px) and (max-height:700px){.uc .row p{display:none}.uc .row{gap:14px}.uc form.nl input,.uc form.nl button{height:48px}.uc .bot{padding-top:10px;padding-bottom:14px}}
+.uc .bg .note{top:24px;bottom:auto}
 </style>
 </head>
 <body>
   <div id="shopify-section-main" class="shopify-section"><div class="uc">
   <div class="bg"><video autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video></div>
-  <header class="top"><span class="logo">RAQELLO<i>.</i></span><span class="chip">Under construction</span></header>
   <main class="mid">
     <div class="wm" aria-hidden="true">RAQELLO<i>.</i></div>
     <div class="row">
@@ -81,7 +90,8 @@ a{color:inherit}
             <button type="submit">Tell me first</button></form><p class="fine">One email when we open. No spam.</p>
       </div>
     </div>
-  </main><div class="brands" aria-label="Brands we will stock"><div class="rl"><span>Bullpadel</span><span>Nox</span><span>Head</span><span>Babolat</span><span>Adidas Padel</span><span>StarVie</span><span>Siux</span><span>Wilson</span><span>Dunlop</span><span>Drop Shot</span><span>Black Crown</span><span>Varlion</span><span aria-hidden="true">Bullpadel</span><span aria-hidden="true">Nox</span><span aria-hidden="true">Head</span><span aria-hidden="true">Babolat</span><span aria-hidden="true">Adidas Padel</span><span aria-hidden="true">StarVie</span><span aria-hidden="true">Siux</span><span aria-hidden="true">Wilson</span><span aria-hidden="true">Dunlop</span><span aria-hidden="true">Drop Shot</span><span aria-hidden="true">Black Crown</span><span aria-hidden="true">Varlion</span></div></div><footer class="bot">
+  </main>
+  <footer class="bot">
     <span>&copy; 2026 Raqello. Padel rackets, shoes and kit.</span>
     <nav><button class="own" type="button" onclick="document.getElementById('pwd').showModal()">Store owner?</button>
     </nav>
