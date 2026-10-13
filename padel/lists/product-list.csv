@@ -1,122 +1,427 @@
-Category,Brand,Product,"Type, shape or sole",Level,For,Price shown,Notes
-Rackets,Adidas Padel,Adipower Lite 3.3,Teardrop,Intermediate,,189,New in
-Rackets,Adidas Padel,Match Light 3.3,Round,Beginner,,79,
-Rackets,Adidas Padel,Metalbone 3.4,Diamond,Advanced,,279,New in
-Rackets,Adidas Padel,Metalbone HRD+ 3.4,Diamond,Advanced,,319,New in
-Rackets,Adidas Padel,RX 100,Round,Beginner,,49,
-Rackets,Babolat,Air Vertuo,Teardrop,Advanced,,229,"On sale, was £259"
-Rackets,Babolat,Contact,Round,Beginner,,59,
-Rackets,Babolat,Counter Veron,Round,Intermediate,,149,"On sale, was £169"
-Rackets,Babolat,Technical Viper,Diamond,Advanced,,259,New in
-Rackets,Black Crown,Piton 12,Diamond,Advanced,,219,
-Rackets,Black Crown,Special Soft,Round,Beginner,,119,
-Rackets,Bullpadel,Elite Woman,Round,Intermediate,,139,
-Rackets,Bullpadel,Flow Light,Round,Beginner,,99,
-Rackets,Bullpadel,Hack 03 Comfort,Diamond,Intermediate,,219,"On sale, was £249"
-Rackets,Bullpadel,Hack 04 Pro,Diamond,Advanced,,309,
-Rackets,Bullpadel,Indiga Woman,Round,Beginner,,129,New in
-Rackets,Bullpadel,Ionic Power,Teardrop,Intermediate,,169,"On sale, was £199"
-Rackets,Bullpadel,Neuron 02,Diamond,Advanced,,249,
-Rackets,Bullpadel,Vertex 04 Hybrid 2026,Diamond,Advanced,,289,New in
-Rackets,Drop Shot,Conqueror 12,Diamond,Advanced,,239,
-Rackets,Drop Shot,Explorer Pro 2.0,Teardrop,Intermediate,,149,
-Rackets,Dunlop,Aero-Star Team,Round,Beginner,,89,
-Rackets,Dunlop,Galactica Pro,Diamond,Advanced,,199,
-Rackets,Head,Delta Pro,Diamond,Advanced,,239,"On sale, was £279"
-Rackets,Head,Evo Sanyo,Round,Beginner,,69,
-Rackets,Head,Extreme Pro,Hybrid,Advanced,,229,
-Rackets,Head,Flash Pro,Round,Beginner,,109,
-Rackets,Head,Gravity Motion,Teardrop,Advanced,,209,
-Rackets,Head,Speed Motion 2026,Teardrop,Intermediate,,189,New in
-Rackets,Kombat,Attack Pro,Diamond,Advanced,,209,
-Rackets,Kombat,Control Soft,Round,Beginner,,99,
-Rackets,Nox,AT10 Genius 18K,Teardrop,Advanced,,269,"On sale, was £299"
-Rackets,Nox,EQUATION Lady,Round,Intermediate,,129,
-Rackets,Nox,ML10 Pro Cup,Round,Intermediate,,179,New in
-Rackets,Nox,TL10 Future,Teardrop,Advanced,,199,New in
-Rackets,Nox,VK10 Luxury,Diamond,Advanced,,229,
-Rackets,Nox,X-One Evo,Round,Beginner,,89,
-Rackets,Royal Padel,M27 Polietileno,Round,Beginner,,119,
-Rackets,Royal Padel,Whip Hybrid,Hybrid,Intermediate,,169,
-Rackets,Siux,Diablo Revolution,Diamond,Advanced,,259,
-Rackets,Siux,Electra ST3 Pro,Diamond,Advanced,,249,
-Rackets,Siux,Fenix Elite 4,Diamond,Advanced,,199,"On sale, was £229"
-Rackets,StarVie,Aquila Soft,Round,Beginner,,99,"On sale, was £129"
-Rackets,StarVie,Kenta Soft,Round,Beginner,,119,
-Rackets,StarVie,Metheora Warrior,Diamond,Advanced,,239,
-Rackets,Varlion,Bourne Summum,Hybrid,Intermediate,,179,New in
-Rackets,Varlion,LW Carbon Soft,Round,Intermediate,,159,
-Rackets,Vibor-A,King Cobra,Teardrop,Intermediate,,159,"On sale, was £179"
-Rackets,Vibor-A,Yarara Edition,Diamond,Advanced,,229,New in
-Rackets,Wilson,Bela Pro,Diamond,Advanced,,249,
-Rackets,Wilson,Defy Elite,Round,Intermediate,,139,
-Shoes,Adidas Padel,Adipower Ctrl,Herringbone sole,,Women,119,
-Shoes,Adidas Padel,Barricade W,All court sole,,Women,129,
-Shoes,Adidas Padel,Crazyquick Boost,Herringbone sole,,Men,129,New in
-Shoes,Asics,Gel Padel Exclusive 6,Omni sole,,Women,109,New in
-Shoes,Asics,Gel Padel Junior,Omni sole,,Junior,59,
-Shoes,Asics,Gel Padel Pro 5,Omni sole,,Men,99,Wide fit
-Shoes,Babolat,Movea,Herringbone sole,,Women,109,
-Shoes,Bullpadel,Hack Vibram 25,Herringbone sole,,Women,99,
-Shoes,Bullpadel,Vertex 24 Shoe,Herringbone sole,,Men,119,New in
-Shoes,Head,Revolt Pro 4.5,Omni sole,,Men,119,"On sale, was £139"
-Shoes,Head,Sprint Pro 3.5,Omni sole,,Men,99,"On sale, was £119"
-Shoes,Joma,Slam 25,Clay sole,,Men,69,Wide fit
-Shoes,Nox,AT10 Lux Shoe,Herringbone sole,,Men,99,New in
-Shoes,Nox,ML10 Hexa Shoe,Clay sole,,Men,89,
-Shoes,Wilson,Hurakn Pro,All court sole,,Men,99,
-Clothing,Adidas Padel,Club Dress,Skirts and dresses,,Women,55,
-Clothing,Adidas Padel,Club Jacket,Hoodies and jackets,,Men,60,
-Clothing,Adidas Padel,Club Polo,Polos,,Men,40,
-Clothing,Adidas Padel,Club Tank,Tops,,Women,32,
-Clothing,Babolat,Play Crew Tee,T-shirts,,Men,25,"On sale, was £30"
-Clothing,Bullpadel,Arbol Polo,Polos,,Men,42,
-Clothing,Bullpadel,Edra Skirt,Skirts and dresses,,Women,39,
-Clothing,Bullpadel,Headband,Headbands,,Unisex,8,
-Clothing,Bullpadel,Liria T-Shirt,T-shirts,,Men,35,New in
-Clothing,Bullpadel,Mitin Shorts,Shorts,,Men,32,
-Clothing,Bullpadel,Performance Socks 3 Pack,Socks,,Unisex,15,
-Clothing,Head,Club Leggings,Leggings,,Women,40,
-Clothing,Head,Club Tech Tee,T-shirts,,Men,30,
-Clothing,Head,Padel Cap,Caps and visors,,Unisex,20,
-Clothing,Head,Performance Shorts,Shorts,,Men,35,
-Clothing,Head,Performance Socks 2 Pack,Socks,,Unisex,12,
-Clothing,Nox,Pro Headband,Headbands,,Unisex,8,
-Clothing,Nox,Pro Shorts,Shorts,,Women,32,
-Clothing,Nox,Team Hoodie,Hoodies and jackets,,Men,55,New in
-Clothing,Nox,Team Leggings,Leggings,,Women,38,
-Clothing,Nox,Team Visor,Caps and visors,,Unisex,18,"On sale, was £22"
-Clothing,Siux,Club Shorts,Shorts,,Women,30,
-Clothing,Siux,Tour Tank,Tops,,Women,30,New in
-Bags,Adidas Padel,Multigame Bag,Racket bags,,,65,Holds 3 to 5 rackets
-Bags,Babolat,RH Padel Lite,Racket bags,,,55,Holds 3 to 5 rackets
-Bags,Bullpadel,Tour Backpack,Backpacks,,,49,Holds 1 to 2 rackets
-Bags,Bullpadel,Vertex Racket Bag,Racket bags,,,79,"Holds 6 or more rackets, New in"
-Bags,Head,Pro Duffle,Holdalls,,,69,Holds 1 to 2 rackets
-Bags,Head,Tour Team Padel Bag,Racket bags,,,75,"Holds 6 or more rackets, On sale, was £89"
-Bags,Nox,AT10 Backpack,Backpacks,,,59,Holds 1 to 2 rackets
-Bags,Nox,Pro Team Racket Bag,Racket bags,,,69,"Holds 3 to 5 rackets, New in"
-Bags,StarVie,Shoe Bag,Shoe bags,,,15,
-Balls,Adidas Padel,Speed RX Balls 3 Pack,Single tubes,,,6,
-Balls,Bullpadel,Premium Pro Balls 3 Pack,Single tubes,,,7,
-Balls,Bullpadel,Premium Pro Box of 24 Tubes,Boxes of 24,,,135,
-Balls,Head,Padel Pro Ball 3 Pack,Single tubes,,,6,
-Balls,Head,Padel Pro Box of 24 Tubes,Boxes of 24,,,120,"On sale, was £139"
-Balls,Nox,Pro Titanium Balls 3 Pack,Single tubes,,,6,
-Accessories,Adidas Padel,Wristbands 2 Pack,Wristbands,,,10,
-Accessories,Bullpadel,Ball Holder,Ball holders,,,9,
-Accessories,Bullpadel,Court Towel,Towels,,,16,
-Accessories,Bullpadel,GB 1200 Overgrip 3 Pack,Overgrips,,,8,
-Accessories,Bullpadel,Replacement Grip,Grips,,,12,
-Accessories,Bullpadel,Water Bottle,Water bottles,,,15,
-Accessories,Head,Hydrosorb Grip,Grips,,,11,
-Accessories,Head,Insulated Bottle,Water bottles,,,20,
-Accessories,Head,Padel Racket Cover,Racket covers,,,15,
-Accessories,Head,Prime Tour Overgrip 3 Pack,Overgrips,,,8,
-Accessories,Head,Racket Cover Pro,Racket covers,,,22,"On sale, was £25"
-Accessories,Nox,Ball Clip,Ball holders,,,7,
-Accessories,Nox,Frame Protector Tape,Protector tape,,,10,
-Accessories,Nox,Pro Overgrip 3 Pack,Overgrips,,,7,
-Accessories,Nox,Team Towel,Towels,,,18,
-Accessories,Nox,Wristbands 2 Pack,Wristbands,,,9,
-Accessories,StarVie,Protector Tape,Protector tape,,,9,
+Folder name,Category,Brand,Product,"Type, shape or sole",Level,For,Price shown,Notes
+adidas-padel-adipower-2026,Rackets,Adidas Padel,Adipower 2026,Teardrop,Intermediate,,189,
+adidas-padel-adipower-lite-3-3,Rackets,Adidas Padel,Adipower Lite 3.3,Teardrop,Intermediate,,189,New in
+adidas-padel-adipower-team,Rackets,Adidas Padel,Adipower Team,Teardrop,Intermediate,,179,New in
+adidas-padel-cross-it-pro,Rackets,Adidas Padel,Cross It Pro,Teardrop,Advanced,,249,
+adidas-padel-cross-it-tour,Rackets,Adidas Padel,Cross It Tour,Teardrop,Advanced,,259,
+adidas-padel-drive-junior,Rackets,Adidas Padel,Drive Junior,Round,Beginner,,39,New in
+adidas-padel-drive-lite,Rackets,Adidas Padel,Drive Lite,Round,Beginner,,59,"On sale, was £89"
+adidas-padel-match-junior,Rackets,Adidas Padel,Match Junior,Round,Beginner,,49,
+adidas-padel-match-light-3-3,Rackets,Adidas Padel,Match Light 3.3,Round,Beginner,,79,
+adidas-padel-match-lite,Rackets,Adidas Padel,Match Lite,Round,Beginner,,69,
+adidas-padel-metalbone-3-4,Rackets,Adidas Padel,Metalbone 3.4,Diamond,Advanced,,279,New in
+adidas-padel-metalbone-hrd-3-4,Rackets,Adidas Padel,Metalbone HRD+ 3.4,Diamond,Advanced,,319,New in
+adidas-padel-metalbone-pro,Rackets,Adidas Padel,Metalbone Pro,Diamond,Advanced,,299,
+adidas-padel-metalbone-tour,Rackets,Adidas Padel,Metalbone Tour,Diamond,Advanced,,309,"On sale, was £339"
+adidas-padel-rx-100,Rackets,Adidas Padel,RX 100,Round,Beginner,,49,
+adidas-padel-rx-junior,Rackets,Adidas Padel,RX Junior,Round,Beginner,,19,
+adidas-padel-rx-lite,Rackets,Adidas Padel,RX Lite,Round,Beginner,,39,
+babolat-air-pro,Rackets,Babolat,Air Pro,Teardrop,Advanced,,249,"On sale, was £279"
+babolat-air-tour,Rackets,Babolat,Air Tour,Teardrop,Advanced,,259,
+babolat-air-vertuo,Rackets,Babolat,Air Vertuo,Teardrop,Advanced,,229,"On sale, was £259"
+babolat-contact,Rackets,Babolat,Contact,Round,Beginner,,59,
+babolat-contact-junior,Rackets,Babolat,Contact Junior,Round,Beginner,,29,
+babolat-contact-lite,Rackets,Babolat,Contact Lite,Round,Beginner,,49,
+babolat-counter-2026,Rackets,Babolat,Counter 2026,Round,Intermediate,,149,
+babolat-counter-team,Rackets,Babolat,Counter Team,Round,Intermediate,,139,New in
+babolat-counter-veron,Rackets,Babolat,Counter Veron,Round,Intermediate,,149,"On sale, was £169"
+babolat-revenge-junior,Rackets,Babolat,Revenge Junior,Round,Beginner,,49,
+babolat-revenge-lite,Rackets,Babolat,Revenge Lite,Round,Beginner,,69,
+babolat-technical-pro,Rackets,Babolat,Technical Pro,Diamond,Advanced,,279,
+babolat-technical-tour,Rackets,Babolat,Technical Tour,Diamond,Advanced,,289,
+babolat-technical-viper,Rackets,Babolat,Technical Viper,Diamond,Advanced,,259,New in
+black-crown-hurricane-2026,Rackets,Black Crown,Hurricane 2026,Teardrop,Intermediate,,169,"On sale, was £199"
+black-crown-hurricane-team,Rackets,Black Crown,Hurricane Team,Teardrop,Intermediate,,159,
+black-crown-nita-2026,Rackets,Black Crown,Nita 2026,Round,Intermediate,,149,
+black-crown-nita-team,Rackets,Black Crown,Nita Team,Round,Intermediate,,139,
+black-crown-piton-12,Rackets,Black Crown,Piton 12,Diamond,Advanced,,219,
+black-crown-piton-pro,Rackets,Black Crown,Piton Pro,Diamond,Advanced,,239,
+black-crown-piton-tour,Rackets,Black Crown,Piton Tour,Diamond,Advanced,,249,New in
+black-crown-special-junior,Rackets,Black Crown,Special Junior,Round,Beginner,,89,
+black-crown-special-lite,Rackets,Black Crown,Special Lite,Round,Beginner,,109,
+black-crown-special-soft,Rackets,Black Crown,Special Soft,Round,Beginner,,119,
+bullpadel-elite-2026,Rackets,Bullpadel,Elite 2026,Round,Intermediate,,139,"On sale, was £169"
+bullpadel-elite-team,Rackets,Bullpadel,Elite Team,Round,Intermediate,,129,
+bullpadel-elite-woman,Rackets,Bullpadel,Elite Woman,Round,Intermediate,,139,
+bullpadel-flow-junior,Rackets,Bullpadel,Flow Junior,Round,Beginner,,69,
+bullpadel-flow-light,Rackets,Bullpadel,Flow Light,Round,Beginner,,99,
+bullpadel-flow-lite,Rackets,Bullpadel,Flow Lite,Round,Beginner,,89,
+bullpadel-hack-03-comfort,Rackets,Bullpadel,Hack 03 Comfort,Diamond,Intermediate,,219,"On sale, was £249"
+bullpadel-hack-04-pro,Rackets,Bullpadel,Hack 04 Pro,Diamond,Advanced,,309,
+bullpadel-hack-pro,Rackets,Bullpadel,Hack Pro,Diamond,Advanced,,279,
+bullpadel-hack-tour,Rackets,Bullpadel,Hack Tour,Diamond,Advanced,,289,
+bullpadel-indiga-junior,Rackets,Bullpadel,Indiga Junior,Round,Beginner,,89,
+bullpadel-indiga-lite,Rackets,Bullpadel,Indiga Lite,Round,Beginner,,109,
+bullpadel-indiga-woman,Rackets,Bullpadel,Indiga Woman,Round,Beginner,,129,New in
+bullpadel-ionic-2026,Rackets,Bullpadel,Ionic 2026,Teardrop,Intermediate,,169,
+bullpadel-ionic-power,Rackets,Bullpadel,Ionic Power,Teardrop,Intermediate,,169,"On sale, was £199"
+bullpadel-ionic-team,Rackets,Bullpadel,Ionic Team,Teardrop,Intermediate,,159,New in
+bullpadel-neuron-02,Rackets,Bullpadel,Neuron 02,Diamond,Advanced,,249,
+bullpadel-neuron-pro,Rackets,Bullpadel,Neuron Pro,Diamond,Advanced,,269,
+bullpadel-neuron-tour,Rackets,Bullpadel,Neuron Tour,Diamond,Advanced,,279,
+bullpadel-pearl-junior,Rackets,Bullpadel,Pearl Junior,Round,Beginner,,79,New in
+bullpadel-pearl-lite,Rackets,Bullpadel,Pearl Lite,Round,Beginner,,99,
+bullpadel-vertex-04-hybrid-2026,Rackets,Bullpadel,Vertex 04 Hybrid 2026,Diamond,Advanced,,289,New in
+bullpadel-vertex-pro,Rackets,Bullpadel,Vertex Pro,Diamond,Advanced,,299,
+bullpadel-vertex-tour,Rackets,Bullpadel,Vertex Tour,Diamond,Advanced,,309,
+drop-shot-canyon-junior,Rackets,Drop Shot,Canyon Junior,Round,Beginner,,59,"On sale, was £89"
+drop-shot-canyon-lite,Rackets,Drop Shot,Canyon Lite,Round,Beginner,,79,
+drop-shot-conqueror-12,Rackets,Drop Shot,Conqueror 12,Diamond,Advanced,,239,
+drop-shot-conqueror-pro,Rackets,Drop Shot,Conqueror Pro,Diamond,Advanced,,259,
+drop-shot-conqueror-tour,Rackets,Drop Shot,Conqueror Tour,Diamond,Advanced,,269,New in
+drop-shot-explorer-2026,Rackets,Drop Shot,Explorer 2026,Teardrop,Intermediate,,149,
+drop-shot-explorer-pro-2-0,Rackets,Drop Shot,Explorer Pro 2.0,Teardrop,Intermediate,,149,
+drop-shot-explorer-team,Rackets,Drop Shot,Explorer Team,Teardrop,Intermediate,,139,
+drop-shot-power-pro,Rackets,Drop Shot,Power Pro,Diamond,Advanced,,219,
+drop-shot-power-tour,Rackets,Drop Shot,Power Tour,Diamond,Advanced,,229,
+dunlop-aero-star-junior,Rackets,Dunlop,Aero-Star Junior,Round,Beginner,,59,
+dunlop-aero-star-lite,Rackets,Dunlop,Aero-Star Lite,Round,Beginner,,79,
+dunlop-aero-star-team,Rackets,Dunlop,Aero-Star Team,Round,Beginner,,89,
+dunlop-boost-junior,Rackets,Dunlop,Boost Junior,Round,Beginner,,39,"On sale, was £69"
+dunlop-boost-lite,Rackets,Dunlop,Boost Lite,Round,Beginner,,59,
+dunlop-galactica-pro,Rackets,Dunlop,Galactica Pro,Diamond,Advanced,,199,
+dunlop-galactica-tour,Rackets,Dunlop,Galactica Tour,Diamond,Advanced,,229,New in
+dunlop-inferno-2026,Rackets,Dunlop,Inferno 2026,Teardrop,Intermediate,,129,
+dunlop-inferno-team,Rackets,Dunlop,Inferno Team,Teardrop,Intermediate,,119,
+head-delta-pro,Rackets,Head,Delta Pro,Diamond,Advanced,,239,"On sale, was £279"
+head-delta-tour,Rackets,Head,Delta Tour,Diamond,Advanced,,269,
+head-evo-junior,Rackets,Head,Evo Junior,Round,Beginner,,39,
+head-evo-lite,Rackets,Head,Evo Lite,Round,Beginner,,59,
+head-evo-sanyo,Rackets,Head,Evo Sanyo,Round,Beginner,,69,
+head-extreme-pro,Rackets,Head,Extreme Pro,Hybrid,Advanced,,229,
+head-extreme-tour,Rackets,Head,Extreme Tour,Hybrid,Advanced,,259,
+head-flash-junior,Rackets,Head,Flash Junior,Round,Beginner,,79,New in
+head-flash-lite,Rackets,Head,Flash Lite,Round,Beginner,,99,
+head-flash-pro,Rackets,Head,Flash Pro,Round,Beginner,,109,
+head-gravity-motion,Rackets,Head,Gravity Motion,Teardrop,Advanced,,209,
+head-gravity-pro,Rackets,Head,Gravity Pro,Teardrop,Advanced,,239,
+head-gravity-tour,Rackets,Head,Gravity Tour,Teardrop,Advanced,,249,"On sale, was £279"
+head-speed-2026,Rackets,Head,Speed 2026,Teardrop,Intermediate,,189,
+head-speed-motion-2026,Rackets,Head,Speed Motion 2026,Teardrop,Intermediate,,189,New in
+head-speed-team,Rackets,Head,Speed Team,Teardrop,Intermediate,,179,New in
+kombat-attack-pro,Rackets,Kombat,Attack Pro,Diamond,Advanced,,209,
+kombat-attack-tour,Rackets,Kombat,Attack Tour,Diamond,Advanced,,239,New in
+kombat-balance-2026,Rackets,Kombat,Balance 2026,Teardrop,Intermediate,,149,
+kombat-balance-team,Rackets,Kombat,Balance Team,Teardrop,Intermediate,,139,
+kombat-control-junior,Rackets,Kombat,Control Junior,Round,Beginner,,69,
+kombat-control-lite,Rackets,Kombat,Control Lite,Round,Beginner,,89,
+kombat-control-soft,Rackets,Kombat,Control Soft,Round,Beginner,,99,
+nox-at10-genius-18k,Rackets,Nox,AT10 Genius 18K,Teardrop,Advanced,,269,"On sale, was £299"
+nox-at10-pro,Rackets,Nox,AT10 Pro,Teardrop,Advanced,,279,
+nox-at10-tour,Rackets,Nox,AT10 Tour,Teardrop,Advanced,,289,"On sale, was £319"
+nox-equation-lady,Rackets,Nox,EQUATION Lady,Round,Intermediate,,129,
+nox-equation-2026,Rackets,Nox,Equation 2026,Round,Intermediate,,129,"On sale, was £159"
+nox-equation-team,Rackets,Nox,Equation Team,Round,Intermediate,,119,
+nox-ml10-2026,Rackets,Nox,ML10 2026,Round,Intermediate,,179,
+nox-ml10-pro-cup,Rackets,Nox,ML10 Pro Cup,Round,Intermediate,,179,New in
+nox-ml10-team,Rackets,Nox,ML10 Team,Round,Intermediate,,169,
+nox-nerbo-2026,Rackets,Nox,Nerbo 2026,Teardrop,Intermediate,,159,
+nox-nerbo-team,Rackets,Nox,Nerbo Team,Teardrop,Intermediate,,149,
+nox-tl10-future,Rackets,Nox,TL10 Future,Teardrop,Advanced,,199,New in
+nox-tl10-pro,Rackets,Nox,TL10 Pro,Teardrop,Advanced,,229,
+nox-tl10-tour,Rackets,Nox,TL10 Tour,Teardrop,Advanced,,239,New in
+nox-vk10-luxury,Rackets,Nox,VK10 Luxury,Diamond,Advanced,,229,
+nox-vk10-pro,Rackets,Nox,VK10 Pro,Diamond,Advanced,,259,
+nox-vk10-tour,Rackets,Nox,VK10 Tour,Diamond,Advanced,,269,
+nox-x-one-evo,Rackets,Nox,X-One Evo,Round,Beginner,,89,
+nox-x-one-junior,Rackets,Nox,X-One Junior,Round,Beginner,,59,
+nox-x-one-lite,Rackets,Nox,X-One Lite,Round,Beginner,,79,
+royal-padel-m27-junior,Rackets,Royal Padel,M27 Junior,Round,Beginner,,89,New in
+royal-padel-m27-lite,Rackets,Royal Padel,M27 Lite,Round,Beginner,,109,"On sale, was £139"
+royal-padel-m27-polietileno,Rackets,Royal Padel,M27 Polietileno,Round,Beginner,,119,
+royal-padel-riviera-2026,Rackets,Royal Padel,Riviera 2026,Teardrop,Intermediate,,149,
+royal-padel-riviera-team,Rackets,Royal Padel,Riviera Team,Teardrop,Intermediate,,139,
+royal-padel-whip-2026,Rackets,Royal Padel,Whip 2026,Hybrid,Intermediate,,169,
+royal-padel-whip-hybrid,Rackets,Royal Padel,Whip Hybrid,Hybrid,Intermediate,,169,
+royal-padel-whip-team,Rackets,Royal Padel,Whip Team,Hybrid,Intermediate,,159,
+siux-diablo-pro,Rackets,Siux,Diablo Pro,Diamond,Advanced,,279,
+siux-diablo-revolution,Rackets,Siux,Diablo Revolution,Diamond,Advanced,,259,
+siux-diablo-tour,Rackets,Siux,Diablo Tour,Diamond,Advanced,,289,New in
+siux-electra-pro,Rackets,Siux,Electra Pro,Diamond,Advanced,,269,
+siux-electra-st3-pro,Rackets,Siux,Electra ST3 Pro,Diamond,Advanced,,249,
+siux-electra-tour,Rackets,Siux,Electra Tour,Diamond,Advanced,,279,
+siux-fenix-elite-4,Rackets,Siux,Fenix Elite 4,Diamond,Advanced,,199,"On sale, was £229"
+siux-fenix-pro,Rackets,Siux,Fenix Pro,Diamond,Advanced,,219,
+siux-fenix-tour,Rackets,Siux,Fenix Tour,Diamond,Advanced,,229,
+siux-pegasus-junior,Rackets,Siux,Pegasus Junior,Round,Beginner,,79,
+siux-pegasus-lite,Rackets,Siux,Pegasus Lite,Round,Beginner,,99,"On sale, was £129"
+siux-trilogy-2026,Rackets,Siux,Trilogy 2026,Teardrop,Intermediate,,169,
+siux-trilogy-team,Rackets,Siux,Trilogy Team,Teardrop,Intermediate,,159,
+starvie-aquila-junior,Rackets,StarVie,Aquila Junior,Round,Beginner,,69,
+starvie-aquila-lite,Rackets,StarVie,Aquila Lite,Round,Beginner,,89,
+starvie-aquila-soft,Rackets,StarVie,Aquila Soft,Round,Beginner,,99,"On sale, was £129"
+starvie-kenta-junior,Rackets,StarVie,Kenta Junior,Round,Beginner,,89,
+starvie-kenta-lite,Rackets,StarVie,Kenta Lite,Round,Beginner,,109,
+starvie-kenta-soft,Rackets,StarVie,Kenta Soft,Round,Beginner,,119,
+starvie-metheora-pro,Rackets,StarVie,Metheora Pro,Diamond,Advanced,,259,
+starvie-metheora-tour,Rackets,StarVie,Metheora Tour,Diamond,Advanced,,269,
+starvie-metheora-warrior,Rackets,StarVie,Metheora Warrior,Diamond,Advanced,,239,
+starvie-raptor-pro,Rackets,StarVie,Raptor Pro,Diamond,Advanced,,239,
+starvie-raptor-tour,Rackets,StarVie,Raptor Tour,Diamond,Advanced,,249,
+starvie-triton-2026,Rackets,StarVie,Triton 2026,Teardrop,Intermediate,,179,
+starvie-triton-team,Rackets,StarVie,Triton Team,Teardrop,Intermediate,,169,"On sale, was £199, New in"
+varlion-avant-2026,Rackets,Varlion,Avant 2026,Teardrop,Intermediate,,149,
+varlion-avant-team,Rackets,Varlion,Avant Team,Teardrop,Intermediate,,139,
+varlion-bourne-2026,Rackets,Varlion,Bourne 2026,Hybrid,Intermediate,,179,
+varlion-bourne-summum,Rackets,Varlion,Bourne Summum,Hybrid,Intermediate,,179,New in
+varlion-bourne-team,Rackets,Varlion,Bourne Team,Hybrid,Intermediate,,169,
+varlion-lw-2026,Rackets,Varlion,LW 2026,Round,Intermediate,,159,
+varlion-lw-carbon-soft,Rackets,Varlion,LW Carbon Soft,Round,Intermediate,,159,
+varlion-lw-team,Rackets,Varlion,LW Team,Round,Intermediate,,149,New in
+varlion-maxima-junior,Rackets,Varlion,Maxima Junior,Round,Beginner,,69,
+varlion-maxima-lite,Rackets,Varlion,Maxima Lite,Round,Beginner,,89,"On sale, was £119"
+vibor-a-black-mamba-pro,Rackets,Vibor-A,Black Mamba Pro,Diamond,Advanced,,269,
+vibor-a-black-mamba-tour,Rackets,Vibor-A,Black Mamba Tour,Diamond,Advanced,,279,"On sale, was £309, New in"
+vibor-a-king-cobra,Rackets,Vibor-A,King Cobra,Teardrop,Intermediate,,159,"On sale, was £179"
+vibor-a-king-cobra-2026,Rackets,Vibor-A,King Cobra 2026,Teardrop,Intermediate,,159,
+vibor-a-king-cobra-team,Rackets,Vibor-A,King Cobra Team,Teardrop,Intermediate,,149,
+vibor-a-naja-junior,Rackets,Vibor-A,Naja Junior,Round,Beginner,,89,
+vibor-a-naja-lite,Rackets,Vibor-A,Naja Lite,Round,Beginner,,109,
+vibor-a-yarara-edition,Rackets,Vibor-A,Yarara Edition,Diamond,Advanced,,229,New in
+vibor-a-yarara-pro,Rackets,Vibor-A,Yarara Pro,Diamond,Advanced,,249,
+vibor-a-yarara-tour,Rackets,Vibor-A,Yarara Tour,Diamond,Advanced,,259,
+wilson-bela-pro,Rackets,Wilson,Bela Pro,Diamond,Advanced,,249,
+wilson-bela-tour,Rackets,Wilson,Bela Tour,Diamond,Advanced,,279,
+wilson-blade-pro,Rackets,Wilson,Blade Pro,Teardrop,Advanced,,219,
+wilson-blade-tour,Rackets,Wilson,Blade Tour,Teardrop,Advanced,,229,
+wilson-defy-2026,Rackets,Wilson,Defy 2026,Round,Intermediate,,139,
+wilson-defy-elite,Rackets,Wilson,Defy Elite,Round,Intermediate,,139,
+wilson-defy-team,Rackets,Wilson,Defy Team,Round,Intermediate,,129,New in
+wilson-pro-staff-junior,Rackets,Wilson,Pro Staff Junior,Round,Beginner,,69,
+wilson-pro-staff-lite,Rackets,Wilson,Pro Staff Lite,Round,Beginner,,89,
+wilson-ultra-2026,Rackets,Wilson,Ultra 2026,Teardrop,Intermediate,,159,
+wilson-ultra-team,Rackets,Wilson,Ultra Team,Teardrop,Intermediate,,149,"On sale, was £179"
+adidas-padel-adipower-ctrl,Shoes,Adidas Padel,Adipower Ctrl,Herringbone sole,,Women,119,
+adidas-padel-adipower-ctrl-m,Shoes,Adidas Padel,Adipower Ctrl M,Herringbone sole,,Men,119,"On sale, was £139"
+adidas-padel-barricade-w,Shoes,Adidas Padel,Barricade W,All court sole,,Women,129,
+adidas-padel-courtjam-padel,Shoes,Adidas Padel,Courtjam Padel,Omni sole,,Women,89,
+adidas-padel-crazyquick-boost,Shoes,Adidas Padel,Crazyquick Boost,Herringbone sole,,Men,129,New in
+adidas-padel-crazyquick-ls,Shoes,Adidas Padel,Crazyquick LS,Herringbone sole,,Men,109,
+asics-gel-game-padel,Shoes,Asics,Gel Game Padel,Omni sole,,Men,79,"Wide fit, On sale, was £99"
+asics-gel-padel-exclusive-6,Shoes,Asics,Gel Padel Exclusive 6,Omni sole,,Women,109,New in
+asics-gel-padel-hunter-3,Shoes,Asics,Gel Padel Hunter 3,Omni sole,,Men,109,New in
+asics-gel-padel-hunter-3-w,Shoes,Asics,Gel Padel Hunter 3 W,Omni sole,,Women,109,
+asics-gel-padel-junior,Shoes,Asics,Gel Padel Junior,Omni sole,,Junior,59,
+asics-gel-padel-pro-5,Shoes,Asics,Gel Padel Pro 5,Omni sole,,Men,99,Wide fit
+asics-solution-swift-padel,Shoes,Asics,Solution Swift Padel,Clay sole,,Men,119,
+babolat-jet-premura-padel,Shoes,Babolat,Jet Premura Padel,Clay sole,,Men,129,"On sale, was £149"
+babolat-movea,Shoes,Babolat,Movea,Herringbone sole,,Women,109,
+babolat-movea-w,Shoes,Babolat,Movea W,Herringbone sole,,Women,109,
+babolat-pulsion-junior,Shoes,Babolat,Pulsion Junior,Omni sole,,Junior,49,New in
+babolat-sensa-padel,Shoes,Babolat,Sensa Padel,Omni sole,,Men,89,
+bullpadel-comfort-pro-25,Shoes,Bullpadel,Comfort Pro 25,Herringbone sole,,Men,99,Wide fit
+bullpadel-elite-25-w,Shoes,Bullpadel,Elite 25 W,Herringbone sole,,Women,109,New in
+bullpadel-hack-vibram-25,Shoes,Bullpadel,Hack Vibram 25,Herringbone sole,,Women,99,
+bullpadel-junior-grip,Shoes,Bullpadel,Junior Grip,Herringbone sole,,Junior,49,
+bullpadel-vertex-24-shoe,Shoes,Bullpadel,Vertex 24 Shoe,Herringbone sole,,Men,119,New in
+bullpadel-vertex-grip-25,Shoes,Bullpadel,Vertex Grip 25,Herringbone sole,,Men,129,
+drop-shot-kenzo-shoe,Shoes,Drop Shot,Kenzo Shoe,Clay sole,,Men,89,
+head-motion-pro-padel-w,Shoes,Head,Motion Pro Padel W,Clay sole,,Women,119,
+head-revolt-court,Shoes,Head,Revolt Court,All court sole,,Men,89,New in
+head-revolt-pro-4-5,Shoes,Head,Revolt Pro 4.5,Omni sole,,Men,119,"On sale, was £139"
+head-sprint-junior,Shoes,Head,Sprint Junior,Omni sole,,Junior,45,
+head-sprint-pro-3-5,Shoes,Head,Sprint Pro 3.5,Omni sole,,Men,99,"On sale, was £119"
+head-sprint-pro-4-0,Shoes,Head,Sprint Pro 4.0,Omni sole,,Men,119,
+joma-master-1000-padel,Shoes,Joma,Master 1000 Padel,Clay sole,,Men,79,
+joma-set-padel,Shoes,Joma,Set Padel,Omni sole,,Men,59,Wide fit
+joma-slam-25,Shoes,Joma,Slam 25,Clay sole,,Men,69,Wide fit
+joma-t-slam-w,Shoes,Joma,T.Slam W,Clay sole,,Women,69,
+nox-at10-lux-shoe,Shoes,Nox,AT10 Lux Shoe,Herringbone sole,,Men,99,New in
+nox-ml10-hexa-shoe,Shoes,Nox,ML10 Hexa Shoe,Clay sole,,Men,89,
+nox-ml10-hexa-w,Shoes,Nox,ML10 Hexa W,Clay sole,,Women,89,
+nox-nerbo-shoe,Shoes,Nox,Nerbo Shoe,Herringbone sole,,Men,79,Wide fit
+siux-diablo-shoe,Shoes,Siux,Diablo Shoe,Herringbone sole,,Men,109,
+siux-pegasus-shoe-w,Shoes,Siux,Pegasus Shoe W,Omni sole,,Women,89,
+starvie-metheora-shoe,Shoes,StarVie,Metheora Shoe,Herringbone sole,,Men,99,
+wilson-hurakn-2-0,Shoes,Wilson,Hurakn 2.0,All court sole,,Men,109,"On sale, was £129, New in"
+wilson-hurakn-pro,Shoes,Wilson,Hurakn Pro,All court sole,,Men,99,
+wilson-rush-pro-padel-w,Shoes,Wilson,Rush Pro Padel W,All court sole,,Women,99,
+adidas-padel-cap,Clothing,Adidas Padel,Cap,Caps and visors,,Unisex,20,
+adidas-padel-club-dress,Clothing,Adidas Padel,Club Dress,Skirts and dresses,,Women,55,
+adidas-padel-club-jacket,Clothing,Adidas Padel,Club Jacket,Hoodies and jackets,,Men,60,
+adidas-padel-club-polo,Clothing,Adidas Padel,Club Polo,Polos,,Men,40,
+adidas-padel-club-tank,Clothing,Adidas Padel,Club Tank,Tops,,Women,32,
+adidas-padel-court-shorts,Clothing,Adidas Padel,Court Shorts,Shorts,,Men,32,
+adidas-padel-court-skirt,Clothing,Adidas Padel,Court Skirt,Skirts and dresses,,Women,35,New in
+adidas-padel-graphic-tee,Clothing,Adidas Padel,Graphic Tee,T-shirts,,Men,30,
+adidas-padel-leggings,Clothing,Adidas Padel,Leggings,Leggings,,Women,40,
+adidas-padel-track-top,Clothing,Adidas Padel,Track Top,Hoodies and jackets,,Men,50,
+babolat-cap,Clothing,Babolat,Cap,Caps and visors,,Unisex,20,New in
+babolat-court-shorts,Clothing,Babolat,Court Shorts,Shorts,,Men,32,
+babolat-court-skirt,Clothing,Babolat,Court Skirt,Skirts and dresses,,Women,35,
+babolat-graphic-tee,Clothing,Babolat,Graphic Tee,T-shirts,,Men,30,
+babolat-leggings,Clothing,Babolat,Leggings,Leggings,,Women,40,
+babolat-play-crew-tee,Clothing,Babolat,Play Crew Tee,T-shirts,,Men,25,"On sale, was £30"
+babolat-track-top,Clothing,Babolat,Track Top,Hoodies and jackets,,Men,50,
+black-crown-club-polo,Clothing,Black Crown,Club Polo,Polos,,Men,40,New in
+black-crown-court-dress,Clothing,Black Crown,Court Dress,Skirts and dresses,,Women,55,"On sale, was £63"
+black-crown-crew-socks-3-pack,Clothing,Black Crown,Crew Socks 3 Pack,Socks,,Unisex,14,
+black-crown-crop-top,Clothing,Black Crown,Crop Top,Tops,,Women,30,
+black-crown-headband,Clothing,Black Crown,Headband,Headbands,,Unisex,8,
+black-crown-team-hoodie,Clothing,Black Crown,Team Hoodie,Hoodies and jackets,,Men,55,
+bullpadel-ankle-socks-3-pack,Clothing,Bullpadel,Ankle Socks 3 Pack,Socks,,Unisex,12,
+bullpadel-arbol-polo,Clothing,Bullpadel,Arbol Polo,Polos,,Men,42,
+bullpadel-court-shorts-w,Clothing,Bullpadel,Court Shorts W,Shorts,,Women,30,"On sale, was £38"
+bullpadel-edra-skirt,Clothing,Bullpadel,Edra Skirt,Skirts and dresses,,Women,39,
+bullpadel-headband,Clothing,Bullpadel,Headband,Headbands,,Unisex,8,
+bullpadel-liria-t-shirt,Clothing,Bullpadel,Liria T-Shirt,T-shirts,,Men,35,New in
+bullpadel-long-sleeve-top,Clothing,Bullpadel,Long Sleeve Top,Tops,,Women,35,
+bullpadel-mitin-shorts,Clothing,Bullpadel,Mitin Shorts,Shorts,,Men,32,
+bullpadel-performance-polo,Clothing,Bullpadel,Performance Polo,Polos,,Men,45,
+bullpadel-performance-socks-3-pack,Clothing,Bullpadel,Performance Socks 3 Pack,Socks,,Unisex,15,
+bullpadel-training-tee,Clothing,Bullpadel,Training Tee,T-shirts,,Men,28,
+bullpadel-zip-jacket,Clothing,Bullpadel,Zip Jacket,Hoodies and jackets,,Men,65,
+drop-shot-cap,Clothing,Drop Shot,Cap,Caps and visors,,Unisex,20,
+drop-shot-court-shorts,Clothing,Drop Shot,Court Shorts,Shorts,,Men,32,
+drop-shot-court-skirt,Clothing,Drop Shot,Court Skirt,Skirts and dresses,,Women,35,
+drop-shot-graphic-tee,Clothing,Drop Shot,Graphic Tee,T-shirts,,Men,30,
+drop-shot-leggings,Clothing,Drop Shot,Leggings,Leggings,,Women,40,
+drop-shot-track-top,Clothing,Drop Shot,Track Top,Hoodies and jackets,,Men,50,
+head-club-leggings,Clothing,Head,Club Leggings,Leggings,,Women,40,
+head-club-tech-tee,Clothing,Head,Club Tech Tee,T-shirts,,Men,30,
+head-padel-cap,Clothing,Head,Padel Cap,Caps and visors,,Unisex,20,
+head-performance-shorts,Clothing,Head,Performance Shorts,Shorts,,Men,35,
+head-performance-socks-2-pack,Clothing,Head,Performance Socks 2 Pack,Socks,,Unisex,12,
+head-pleated-skirt,Clothing,Head,Pleated Skirt,Skirts and dresses,,Women,38,
+head-tank,Clothing,Head,Tank,Tops,,Women,28,"On sale, was £36"
+head-tech-shorts,Clothing,Head,Tech Shorts,Shorts,,Men,35,New in
+head-tech-tee,Clothing,Head,Tech Tee,T-shirts,,Men,32,
+head-tights,Clothing,Head,Tights,Leggings,,Women,38,
+head-visor,Clothing,Head,Visor,Caps and visors,,Unisex,18,
+joma-ankle-socks-3-pack,Clothing,Joma,Ankle Socks 3 Pack,Socks,,Unisex,12,
+joma-court-shorts-w,Clothing,Joma,Court Shorts W,Shorts,,Women,30,
+joma-long-sleeve-top,Clothing,Joma,Long Sleeve Top,Tops,,Women,35,New in
+joma-performance-polo,Clothing,Joma,Performance Polo,Polos,,Men,45,
+joma-training-tee,Clothing,Joma,Training Tee,T-shirts,,Men,28,
+joma-zip-jacket,Clothing,Joma,Zip Jacket,Hoodies and jackets,,Men,65,"On sale, was £73"
+nox-club-polo,Clothing,Nox,Club Polo,Polos,,Men,40,
+nox-court-dress,Clothing,Nox,Court Dress,Skirts and dresses,,Women,55,
+nox-crew-socks-3-pack,Clothing,Nox,Crew Socks 3 Pack,Socks,,Unisex,14,
+nox-crop-top,Clothing,Nox,Crop Top,Tops,,Women,30,
+nox-headband,Clothing,Nox,Headband,Headbands,,Unisex,8,"On sale, was £16"
+nox-pro-headband,Clothing,Nox,Pro Headband,Headbands,,Unisex,8,
+nox-pro-shorts,Clothing,Nox,Pro Shorts,Shorts,,Women,32,
+nox-team-hoodie,Clothing,Nox,Team Hoodie,Hoodies and jackets,,Men,55,New in
+nox-team-leggings,Clothing,Nox,Team Leggings,Leggings,,Women,38,
+nox-team-visor,Clothing,Nox,Team Visor,Caps and visors,,Unisex,18,"On sale, was £22"
+siux-ankle-socks-3-pack,Clothing,Siux,Ankle Socks 3 Pack,Socks,,Unisex,12,
+siux-club-shorts,Clothing,Siux,Club Shorts,Shorts,,Women,30,
+siux-court-shorts-w,Clothing,Siux,Court Shorts W,Shorts,,Women,30,
+siux-long-sleeve-top,Clothing,Siux,Long Sleeve Top,Tops,,Women,35,"On sale, was £43"
+siux-performance-polo,Clothing,Siux,Performance Polo,Polos,,Men,45,New in
+siux-tour-tank,Clothing,Siux,Tour Tank,Tops,,Women,30,New in
+siux-training-tee,Clothing,Siux,Training Tee,T-shirts,,Men,28,
+siux-zip-jacket,Clothing,Siux,Zip Jacket,Hoodies and jackets,,Men,65,
+starvie-pleated-skirt,Clothing,StarVie,Pleated Skirt,Skirts and dresses,,Women,38,
+starvie-tank,Clothing,StarVie,Tank,Tops,,Women,28,
+starvie-tech-shorts,Clothing,StarVie,Tech Shorts,Shorts,,Men,35,"On sale, was £43"
+starvie-tech-tee,Clothing,StarVie,Tech Tee,T-shirts,,Men,32,
+starvie-tights,Clothing,StarVie,Tights,Leggings,,Women,38,
+starvie-visor,Clothing,StarVie,Visor,Caps and visors,,Unisex,18,
+varlion-pleated-skirt,Clothing,Varlion,Pleated Skirt,Skirts and dresses,,Women,38,
+varlion-tank,Clothing,Varlion,Tank,Tops,,Women,28,New in
+varlion-tech-shorts,Clothing,Varlion,Tech Shorts,Shorts,,Men,35,
+varlion-tech-tee,Clothing,Varlion,Tech Tee,T-shirts,,Men,32,"On sale, was £40"
+varlion-tights,Clothing,Varlion,Tights,Leggings,,Women,38,
+varlion-visor,Clothing,Varlion,Visor,Caps and visors,,Unisex,18,
+wilson-club-polo,Clothing,Wilson,Club Polo,Polos,,Men,40,
+wilson-court-dress,Clothing,Wilson,Court Dress,Skirts and dresses,,Women,55,
+wilson-crew-socks-3-pack,Clothing,Wilson,Crew Socks 3 Pack,Socks,,Unisex,14,"On sale, was £22, New in"
+wilson-crop-top,Clothing,Wilson,Crop Top,Tops,,Women,30,
+wilson-headband,Clothing,Wilson,Headband,Headbands,,Unisex,8,
+wilson-team-hoodie,Clothing,Wilson,Team Hoodie,Hoodies and jackets,,Men,55,
+adidas-padel-backpack-multigame,Bags,Adidas Padel,Backpack Multigame,Backpacks,,,55,Holds 1 to 2 rackets
+adidas-padel-multigame-bag,Bags,Adidas Padel,Multigame Bag,Racket bags,,,65,Holds 3 to 5 rackets
+adidas-padel-racket-bag-control,Bags,Adidas Padel,Racket Bag Control,Racket bags,,,69,"Holds 3 to 5 rackets, New in"
+adidas-padel-shoe-bag,Bags,Adidas Padel,Shoe Bag,Shoe bags,,,15,
+babolat-evo-court-backpack,Bags,Babolat,Evo Court Backpack,Backpacks,,,49,"Holds 1 to 2 rackets, On sale, was £64"
+babolat-rh-padel-lite,Bags,Babolat,RH Padel Lite,Racket bags,,,55,Holds 3 to 5 rackets
+babolat-rh-pro-padel,Bags,Babolat,RH Pro Padel,Racket bags,,,79,Holds 3 to 5 rackets
+bullpadel-hack-backpack,Bags,Bullpadel,Hack Backpack,Backpacks,,,55,Holds 1 to 2 rackets
+bullpadel-performance-racket-bag,Bags,Bullpadel,Performance Racket Bag,Racket bags,,,89,"Holds 6 or more rackets, New in"
+bullpadel-tour-backpack,Bags,Bullpadel,Tour Backpack,Backpacks,,,49,Holds 1 to 2 rackets
+bullpadel-tour-holdall,Bags,Bullpadel,Tour Holdall,Holdalls,,,65,"Holds 1 to 2 rackets, On sale, was £80"
+bullpadel-vertex-racket-bag,Bags,Bullpadel,Vertex Racket Bag,Racket bags,,,79,"Holds 6 or more rackets, New in"
+drop-shot-essential-bag,Bags,Drop Shot,Essential Bag,Racket bags,,,59,Holds 3 to 5 rackets
+head-delta-monstercombi,Bags,Head,Delta Monstercombi,Racket bags,,,99,Holds 6 or more rackets
+head-pro-duffle,Bags,Head,Pro Duffle,Holdalls,,,69,Holds 1 to 2 rackets
+head-speed-backpack,Bags,Head,Speed Backpack,Backpacks,,,55,"Holds 1 to 2 rackets, On sale, was £70"
+head-tour-duffle,Bags,Head,Tour Duffle,Holdalls,,,70,Holds 1 to 2 rackets
+head-tour-team-padel-bag,Bags,Head,Tour Team Padel Bag,Racket bags,,,75,"Holds 6 or more rackets, On sale, was £89"
+nox-at10-backpack,Bags,Nox,AT10 Backpack,Backpacks,,,59,Holds 1 to 2 rackets
+nox-at10-competition-bag,Bags,Nox,AT10 Competition Bag,Racket bags,,,95,Holds 6 or more rackets
+nox-ml10-racket-bag,Bags,Nox,ML10 Racket Bag,Racket bags,,,75,Holds 3 to 5 rackets
+nox-pro-team-racket-bag,Bags,Nox,Pro Team Racket Bag,Racket bags,,,69,"Holds 3 to 5 rackets, New in"
+nox-shoe-bag,Bags,Nox,Shoe Bag,Shoe bags,,,15,
+nox-street-backpack,Bags,Nox,Street Backpack,Backpacks,,,45,"Holds 1 to 2 rackets, New in"
+siux-fusion-backpack,Bags,Siux,Fusion Backpack,Backpacks,,,49,Holds 1 to 2 rackets
+siux-pro-tour-bag,Bags,Siux,Pro Tour Bag,Racket bags,,,85,Holds 6 or more rackets
+starvie-shoe-bag,Bags,StarVie,Shoe Bag,Shoe bags,,,15,
+starvie-tour-bag,Bags,StarVie,Tour Bag,Racket bags,,,75,"Holds 3 to 5 rackets, New in"
+varlion-ambassador-bag,Bags,Varlion,Ambassador Bag,Racket bags,,,79,"Holds 6 or more rackets, On sale, was £94, New in"
+wilson-team-padel-bag,Bags,Wilson,Team Padel Bag,Racket bags,,,69,Holds 3 to 5 rackets
+adidas-padel-speed-rx-balls-3-pack,Balls,Adidas Padel,Speed RX Balls 3 Pack,Single tubes,,,6,
+adidas-padel-speed-rx-box-of-24-tubes,Balls,Adidas Padel,Speed RX Box of 24 Tubes,Boxes of 24,,,119,
+babolat-court-padel-3-pack,Balls,Babolat,Court Padel 3 Pack,Single tubes,,,6,
+bullpadel-premium-pro-balls-3-pack,Balls,Bullpadel,Premium Pro Balls 3 Pack,Single tubes,,,7,
+bullpadel-premium-pro-box-of-24-tubes,Balls,Bullpadel,Premium Pro Box of 24 Tubes,Boxes of 24,,,135,
+drop-shot-premium-pro-3-pack,Balls,Drop Shot,Premium Pro 3 Pack,Single tubes,,,6,
+dunlop-padel-pro-3-pack,Balls,Dunlop,Padel Pro 3 Pack,Single tubes,,,6,
+head-padel-pro-ball-3-pack,Balls,Head,Padel Pro Ball 3 Pack,Single tubes,,,6,
+head-padel-pro-box-of-24-tubes,Balls,Head,Padel Pro Box of 24 Tubes,Boxes of 24,,,120,"On sale, was £139"
+nox-pro-titanium-balls-3-pack,Balls,Nox,Pro Titanium Balls 3 Pack,Single tubes,,,6,
+nox-pro-titanium-box-of-24-tubes,Balls,Nox,Pro Titanium Box of 24 Tubes,Boxes of 24,,,125,"On sale, was £135"
+siux-pro-balls-3-pack,Balls,Siux,Pro Balls 3 Pack,Single tubes,,,6,
+starvie-titania-pro-3-pack,Balls,StarVie,Titania Pro 3 Pack,Single tubes,,,7,
+varlion-summum-pro-3-pack,Balls,Varlion,Summum Pro 3 Pack,Single tubes,,,7,
+wilson-padel-rush-100-3-pack,Balls,Wilson,Padel Rush 100 3 Pack,Single tubes,,,7,
+adidas-padel-ball-holder,Accessories,Adidas Padel,Ball Holder,Ball holders,,,8,
+adidas-padel-base-grip,Accessories,Adidas Padel,Base Grip,Grips,,,11,New in
+adidas-padel-overgrip-3-pack,Accessories,Adidas Padel,Overgrip 3 Pack,Overgrips,,,8,
+adidas-padel-protector-tape,Accessories,Adidas Padel,Protector Tape,Protector tape,,,10,
+adidas-padel-racket-cover,Accessories,Adidas Padel,Racket Cover,Racket covers,,,15,
+adidas-padel-steel-bottle,Accessories,Adidas Padel,Steel Bottle,Water bottles,,,20,
+adidas-padel-towel,Accessories,Adidas Padel,Towel,Towels,,,16,
+adidas-padel-wristbands-2-pack,Accessories,Adidas Padel,Wristbands 2 Pack,Wristbands,,,10,
+babolat-syntec-pro-grip,Accessories,Babolat,Syntec Pro Grip,Grips,,,12,
+babolat-vs-original-overgrip-3-pack,Accessories,Babolat,VS Original Overgrip 3 Pack,Overgrips,,,10,
+bullpadel-ball-holder,Accessories,Bullpadel,Ball Holder,Ball holders,,,9,
+bullpadel-court-towel,Accessories,Bullpadel,Court Towel,Towels,,,16,
+bullpadel-gb-1200-overgrip-3-pack,Accessories,Bullpadel,GB 1200 Overgrip 3 Pack,Overgrips,,,8,
+bullpadel-gb-1201-overgrip-3-pack,Accessories,Bullpadel,GB 1201 Overgrip 3 Pack,Overgrips,,,8,
+bullpadel-insulated-bottle,Accessories,Bullpadel,Insulated Bottle,Water bottles,,,22,
+bullpadel-protector-tape-clear,Accessories,Bullpadel,Protector Tape Clear,Protector tape,,,9,
+bullpadel-racket-cover,Accessories,Bullpadel,Racket Cover,Racket covers,,,16,
+bullpadel-replacement-grip,Accessories,Bullpadel,Replacement Grip,Grips,,,12,
+bullpadel-water-bottle,Accessories,Bullpadel,Water Bottle,Water bottles,,,15,
+bullpadel-wristbands-2-pack,Accessories,Bullpadel,Wristbands 2 Pack,Wristbands,,,9,
+head-ball-clip,Accessories,Head,Ball Clip,Ball holders,,,7,
+head-club-towel,Accessories,Head,Club Towel,Towels,,,15,
+head-hydrosorb-grip,Accessories,Head,Hydrosorb Grip,Grips,,,11,
+head-insulated-bottle,Accessories,Head,Insulated Bottle,Water bottles,,,20,
+head-padel-racket-cover,Accessories,Head,Padel Racket Cover,Racket covers,,,15,
+head-prime-tour-overgrip-12-pack,Accessories,Head,Prime Tour Overgrip 12 Pack,Overgrips,,,24,New in
+head-prime-tour-overgrip-3-pack,Accessories,Head,Prime Tour Overgrip 3 Pack,Overgrips,,,8,
+head-protector-tape,Accessories,Head,Protector Tape,Protector tape,,,9,
+head-racket-cover-pro,Accessories,Head,Racket Cover Pro,Racket covers,,,22,"On sale, was £25"
+head-wristbands-2-pack,Accessories,Head,Wristbands 2 Pack,Wristbands,,,8,New in
+nox-ball-clip,Accessories,Nox,Ball Clip,Ball holders,,,7,
+nox-court-towel,Accessories,Nox,Court Towel,Towels,,,18,"On sale, was £22"
+nox-frame-protector-tape,Accessories,Nox,Frame Protector Tape,Protector tape,,,10,
+nox-pro-overgrip-12-pack,Accessories,Nox,Pro Overgrip 12 Pack,Overgrips,,,22,
+nox-pro-overgrip-3-pack,Accessories,Nox,Pro Overgrip 3 Pack,Overgrips,,,7,
+nox-replacement-grip,Accessories,Nox,Replacement Grip,Grips,,,11,
+nox-team-towel,Accessories,Nox,Team Towel,Towels,,,18,
+nox-thermal-racket-cover,Accessories,Nox,Thermal Racket Cover,Racket covers,,,18,
+nox-water-bottle,Accessories,Nox,Water Bottle,Water bottles,,,14,
+nox-wristbands-2-pack,Accessories,Nox,Wristbands 2 Pack,Wristbands,,,9,
+siux-ball-holder,Accessories,Siux,Ball Holder,Ball holders,,,7,"On sale, was £11, New in"
+siux-overgrip-3-pack,Accessories,Siux,Overgrip 3 Pack,Overgrips,,,7,"On sale, was £11"
+siux-protector-tape-black,Accessories,Siux,Protector Tape Black,Protector tape,,,9,"On sale, was £13"
+siux-racket-cover,Accessories,Siux,Racket Cover,Racket covers,,,15,
+siux-wristbands-2-pack,Accessories,Siux,Wristbands 2 Pack,Wristbands,,,8,
+starvie-ball-clip,Accessories,StarVie,Ball Clip,Ball holders,,,6,
+starvie-overgrip-3-pack,Accessories,StarVie,Overgrip 3 Pack,Overgrips,,,7,
+starvie-protector-tape,Accessories,StarVie,Protector Tape,Protector tape,,,9,
+wilson-ball-clip,Accessories,Wilson,Ball Clip,Ball holders,,,7,
+wilson-pro-overgrip-3-pack,Accessories,Wilson,Pro Overgrip 3 Pack,Overgrips,,,9,
