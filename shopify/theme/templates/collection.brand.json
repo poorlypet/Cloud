@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "unit": "products",
+        "brand": true,
+        "help_link": "shopify://pages/help"
+      }
+    },
+    "info": {
+      "type": "collection-info",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "q": "Can I return it if it does not fit?",
+            "a": "Yes. You have 14 days to send back anything unused, in its original packaging."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "q": "How much is delivery?",
+            "a": "Standard UK delivery is free on orders over \u00a375. Under that it is \u00a34.95, and it takes 3 to 5 working days."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "q": "Can I pay with Klarna?",
+            "a": "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "info"
+  ]
+}

@@ -1,0 +1,61 @@
+{%- liquid
+  assign free = settings.free_delivery_over | times: 100
+  assign left = free | minus: cart.total_price
+-%}
+<div class="pg sx pg-cart v1">
+<section class="sec sx-sec pt8"><div class="wrap">
+  <div class="bhd"><h1>{{ 'cart.your' | t }} <mark>{{ 'cart.bag_word' | t }}</mark></h1><span>{{ 'cart.items' | t: count: cart.item_count }}</span></div>
+  {%- if cart.item_count == 0 -%}
+    <div class="empty"><p>{{ 'cart.empty' | t }}</p><a class="btn" href="{{ routes.all_products_collection_url }}" style="margin-top:18px">{{ 'cart.continue' | t }}</a></div>
+  {%- else -%}
+  <form action="{{ routes.cart_url }}" method="post" id="cartp" class="bl2 v4">
+    <div class="btiles2">
+      {%- for item in cart.items -%}
+        <div class="btl">
+          <a class="im" href="{{ item.url }}">{%- if item.image -%}{{ item.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: item.product.title }}{%- else -%}<span class="note">{{ item.product.title }}</span>{%- endif -%}</a>
+          <span class="br">{{ item.product.vendor }}</span>
+          <a href="{{ item.url }}" class="nm">{{ item.product.title | remove_first: item.product.vendor | strip }}</a>
+          <span class="op">{%- if item.product.has_only_default_variant -%}{% render 'product-spec', product: item.product %}{%- else -%}{{ item.variant.title }}{%- endif -%}</span>
+          <div class="bf">
+            <div class="qty2"><a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.fewer' | t }}">&minus;</a><span>{{ item.quantity }}</span><a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.more' | t }}">+</a></div>
+            <b>{{ item.final_line_price | money }}</b>
+          </div>
+          <a class="ul" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+        </div>
+      {%- endfor -%}
+    </div>
+    <aside class="sm2 grey">
+      <h2>{{ 'cart.summary' | t }}</h2>
+      <div class="r"><span>{{ 'cart.subtotal' | t }}</span><b>{{ cart.items_subtotal_price | money }}</b></div>
+      {%- for d in cart.cart_level_discount_applications -%}<div class="r"><span>{{ d.title }}</span><b>&minus;{{ d.total_allocated_amount | money }}</b></div>{%- endfor -%}
+      <div class="r"><span>{{ 'cart.delivery' | t }}</span><b>{%- if free > 0 and left <= 0 -%}{{ 'cart.free' | t }}{%- else -%}{{ 'cart.at_checkout' | t }}{%- endif -%}</b></div>
+      <div class="r tot"><span>{{ 'cart.total' | t }}</span><b>{{ cart.total_price | money }}</b></div>
+      {%- if free > 0 -%}
+        <p class="fd2{% if left <= 0 %} ok{% endif %}"><span>{%- if left <= 0 -%}{{ 'cart.free_ok_html' | t }}{%- else -%}{%- assign spend = left | money_without_trailing_zeros -%}{{ 'cart.spend_more' | t: amount: spend }}{%- endif -%}</span></p>
+      {%- endif -%}
+      <textarea name="note" hidden>{{ cart.note }}</textarea>
+      <button class="btn big co" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+      {%- if additional_checkout_buttons -%}<div class="expr dyn">{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+      {%- if settings.klarna -%}{%- assign third = cart.total_price | divided_by: 3 | money -%}<div class="kln">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: class: 'klb', alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'cart.klarna' | t: amount: third }}</span></div>{%- endif -%}
+    </aside>
+  </form>
+  {%- endif -%}
+</div></section>
+{%- assign col = section.settings.collection -%}
+{%- if col.products.size > 0 -%}
+<section class="sec sx-sec"><div class="wrap">
+  {% render 'sec-head', heading: section.settings.heading, link_label: section.settings.link_label, link: col.url %}
+  <div class="grid g4s">{%- for p in col.products limit: 4 -%}{% render 'product-card', product: p %}{%- endfor -%}</div>
+</div></section>
+{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Bag",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Add on heading", "default": "You might also need" },
+    { "type": "collection", "id": "collection", "label": "Add on collection" },
+    { "type": "text", "id": "link_label", "label": "Link text", "default": "Shop accessories" }
+  ]
+}
+{% endschema %}

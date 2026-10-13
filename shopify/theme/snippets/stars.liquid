@@ -1,0 +1,3 @@
+{%- comment -%} Five star row in the Trustpilot style. Pass size: 's' for the small version. {%- endcomment -%}
+{%- capture star -%}<i>{% render 'icon', name: 'star' %}</i>{%- endcapture -%}
+<span class="stars {{ size }}" aria-hidden="true">{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span>

@@ -1,0 +1,138 @@
+{%- liquid
+  assign s = section.settings
+  assign unit = s.unit | default: 'products'
+  assign total = collection.products_count
+  assign lv_filter = nil
+  for f in collection.filters
+    if f.param_name == s.level_param
+      assign lv_filter = f
+    endif
+  endfor
+  assign tiles = collection.metafields.custom.tiles.value
+-%}
+<div class="fin mh8{% if s.level_bar and lv_filter %} mlv11{% endif %}{% if s.brand %} brandp{% endif %}" data-plp="{{ section.id }}">
+<div class="wrap">
+  {%- assign parent = collection.metafields.custom.parent.value -%}
+  {%- if s.brand -%}
+    {%- capture bt -%}{{ 'collection.brands' | t }}{%- endcapture -%}
+    {% render 'crumbs', title: collection.title, parent_title: bt, parent_url: routes.collections_url %}
+  {%- else -%}
+    {% render 'crumbs', title: collection.title, parent_title: parent.title, parent_url: parent.url %}
+  {%- endif -%}
+  <section class="h-vbox h-ph h-po">
+    {%- if collection.image -%}
+      {{ collection.image | image_url: width: 2400 | image_tag: class: 'hv', widths: '750, 1100, 1500, 2000, 2400', sizes: '100vw', alt: '', fetchpriority: 'high' }}
+    {%- else -%}
+      <div class="hv phn3"><span class="note">{{ 'general.photo' | t }}: {{ collection.title }} {{ 'collection.hero_note' | t }}</span></div>
+    {%- endif -%}
+    <div class="in"><div>
+      {%- if s.brand -%}
+        {%- assign logo = collection.metafields.custom.logo.value -%}
+        <span class="blogo2">{%- if logo -%}{{ logo | image_url: height: 120 | image_tag: alt: collection.title }}{%- else -%}Logo: {{ collection.title }}{%- endif -%}</span>
+      {%- endif -%}
+      <h1>{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<p>{{ collection.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
+      {%- if settings.tp_label != blank -%}<div class="htp">{% render 'stars', size: 's' %}<span><b>{{ settings.tp_label }}</b> on Trustpilot</span></div>{%- endif -%}
+      {%- if s.level_bar and lv_filter -%}
+        <div class="wtabs" id="lvt">
+          <a href="{{ lv_filter.url_to_remove }}" data-furl class="{% if lv_filter.active_values.size == 0 %}on{% endif %}">{{ 'collection.all' | t }}</a>
+          {%- for v in lv_filter.values -%}
+            <a href="{{ collection.url }}?{{ v.param_name }}={{ v.value | url_encode }}" data-furl class="{% if v.active and lv_filter.active_values.size == 1 %}on{% endif %}">{{ v.label }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div></div>
+    {%- if settings.tp_label != blank -%}<a class="hrv" href="{{ settings.tp_link }}" aria-label="{{ settings.tp_label }} on Trustpilot">{% render 'stars', size: 's' %}</a>{%- endif -%}
+  </section>
+  {%- if s.level_bar and lv_filter -%}
+    <button class="mlv m11 b4" type="button" data-open-lv><span>{{ lv_filter.label }}</span><b id="lvlab">{%- if lv_filter.active_values.size == 1 -%}{{ lv_filter.active_values.first.label }}{%- else -%}{{ 'collection.all_levels' | t }}{%- endif -%}</b><i class="chev"></i></button>
+  {%- endif -%}
+  <div class="cnth"><span><b id="cntm">{{ total }}</b> {{ unit }}</span>{%- if s.help_link != blank -%}<a class="ul" href="{{ s.help_link }}">{{ 'collection.need_help' | t }}</a>{%- endif -%}</div>
+  {%- if settings.tp_label != blank -%}<div class="ptm"><b>{{ settings.tp_label }}</b>{% render 'stars', size: 's' %}<span class="n">{{ settings.tp_score }}</span>{% render 'icon', name: 'tp' %}</div>{%- endif -%}
+  <div class="ptrust">
+    {%- if settings.tp_label != blank -%}<span>{% render 'stars', size: 's' %} <b>{{ settings.tp_label }}</b> {{ settings.tp_score }} on Trustpilot</span>{%- endif -%}
+    {%- if settings.delivery_line != blank -%}<span>{{ settings.delivery_line }}</span>{%- endif -%}
+    {%- if settings.klarna -%}<span>{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: class: 'kb', alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%} {{ 'general.pay_in_3' | t }}</span>{%- endif -%}
+  </div>
+  {%- if tiles.size > 0 -%}
+    <div class="ranges{% unless s.brand %} tys n{{ tiles.size }}{% endunless %}">
+      {%- for t in tiles -%}<a href="{{ t.url }}">{% render 'ph', image: t.image, note: t.title, cls: 'fill', sizes: '(min-width: 990px) 25vw, 50vw' %}{{ t.metafields.custom.short_title | default: t.title }}</a>{%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- paginate collection.products by s.per_page -%}
+  <div class="plp top"><div>
+    {% render 'facets', results: collection, url: collection.url, form_id: 'ff', sheet: false %}
+    <div class="tool" id="tool"><span class="count" id="cnt"><b>{{ total }}</b> {{ unit }}</span><div class="r">
+      <button class="fbtn" type="button" data-open-f>{% render 'icon', name: 'filter' %}{{ 'collection.filter' | t }}</button>
+      <label class="sel srt"><span class="slx">{{ 'collection.sort' | t }}</span><select id="sort" name="sort_by" aria-label="{{ 'collection.sort' | t }}">
+        {%- assign sb = collection.sort_by | default: collection.default_sort_by -%}
+        {%- for o in collection.sort_options -%}<option value="{{ o.value }}"{% if o.value == sb %} selected{% endif %}>{{ o.name }}</option>{%- endfor -%}
+      </select></label>
+      <div class="vt v2"><button class="on" type="button" data-view="grid" aria-label="{{ 'collection.grid' | t }}"></button><button type="button" data-view="two" aria-label="{{ 'collection.two' | t }}"></button></div>
+    </div></div>
+    {% render 'active-filters', results: collection, url: collection.url %}
+    <div class="pgrid c4" id="pgrid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product, wrap: true %}
+        {%- assign pos = forloop.index -%}
+        {%- if paginate.current_page == 1 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.position == pos -%}
+              {%- if block.type == 'klarna' -%}
+                <a class="ad klv" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{%- if block.settings.video != blank -%}{{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}{%- endif -%}{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 160 | image_tag: alt: 'Klarna' }}{%- endif -%}<h3>{{ block.settings.heading }}</h3><small>{{ block.settings.small }}</small></a>
+              {%- else -%}
+                <a class="ad phd" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{% render 'ph', image: block.settings.image, note: block.settings.note, cls: 'fill', sizes: '50vw' %}</a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- else -%}
+        <p class="mute">{{ 'collection.empty' | t }}</p>
+      {%- endfor -%}
+    </div>
+    {%- assign shown = paginate.current_offset | plus: collection.products.size -%}
+    <div class="more" id="more">{%- if paginate.next -%}
+      {%- assign pct = shown | times: 100 | divided_by: total -%}
+      {%- assign left = total | minus: shown | at_most: s.per_page -%}
+      <div class="mbox"><p>{{ 'collection.seen' | t: shown: shown, total: total, unit: unit }}</p><div class="bar"><i style="width:{{ pct }}%"></i></div><button class="btn" type="button" data-loadmore="{{ paginate.next.url }}">{{ 'collection.show_more' | t: count: left, unit: unit }}</button></div>
+      <noscript><nav class="pgn">{%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="{% if part.title == paginate.current_page %}on{% endif %}">{{ part.title }}</span>{%- endif -%}{%- endfor -%}</nav></noscript>
+    {%- endif -%}</div>
+  </div></div>
+  {%- endpaginate -%}
+</div>
+{% render 'facets', results: collection, url: collection.url, form_id: 'ff2', sheet: true %}
+{%- if s.level_bar and lv_filter -%}
+  <div class="lvsheet" id="lvsheet"><div class="hd">{{ 'collection.choose_level' | t }}<button class="x" type="button" data-close-lv aria-label="{{ 'general.close' | t }}"></button></div>
+    <a class="lvr{% if lv_filter.active_values.size == 0 %} on{% endif %}" href="{{ lv_filter.url_to_remove }}"><span class="ph"></span><span><b>{{ 'collection.all_levels' | t }}</b></span><em></em></a>
+    {%- for v in lv_filter.values -%}<a class="lvr{% if v.active %} on{% endif %}" href="{{ collection.url }}?{{ v.param_name }}={{ v.value | url_encode }}"><span class="ph"></span><span><b>{{ v.label }}</b><small>{{ v.count }} {{ unit }}</small></span><em></em></a>{%- endfor -%}
+  </div>
+{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "text", "id": "unit", "label": "Product word", "default": "products", "info": "For example rackets" },
+    { "type": "range", "id": "per_page", "label": "Products per load", "min": 12, "max": 48, "step": 4, "default": 24 },
+    { "type": "checkbox", "id": "level_bar", "label": "Show the level bar", "default": false, "info": "Racket collections only. Needs a Level filter (product metafield custom.level) turned on in the Search and Discovery app." },
+    { "type": "text", "id": "level_param", "label": "Level filter key", "default": "filter.p.m.custom.level" },
+    { "type": "checkbox", "id": "brand", "label": "Brand page layout", "default": false },
+    { "type": "url", "id": "help_link", "label": "Need help choosing link" }
+  ],
+  "blocks": [
+    { "type": "klarna", "name": "Klarna tile in the grid", "limit": 1, "settings": [
+      { "type": "range", "id": "position", "label": "After product", "min": 1, "max": 24, "step": 1, "default": 10 },
+      { "type": "video", "id": "video", "label": "Video" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Pay in 3 interest free payments." },
+      { "type": "text", "id": "small", "label": "Small print", "default": "18+. T&Cs apply." },
+      { "type": "url", "id": "link", "label": "Link" } ] },
+    { "type": "photo", "name": "Photo tile in the grid", "limit": 2, "settings": [
+      { "type": "range", "id": "position", "label": "After product", "min": 1, "max": 24, "step": 1, "default": 4 },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "note", "label": "Placeholder note", "default": "photo or video" },
+      { "type": "url", "id": "link", "label": "Link" } ] }
+  ]
+}
+{% endschema %}

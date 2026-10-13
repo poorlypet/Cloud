@@ -1,0 +1,25 @@
+{%- assign s = section.settings -%}
+<div class="pg sx pg-help v3">
+<div class="wrap">{% render 'crumbs', title: page.title %}</div>
+<section class="sec sx-sec pt8"><div class="wrap"><div class="h3c">
+  <div class="hl"><small>{{ s.label }}</small><h1>{{ s.heading }}</h1>
+    <form class="sxs" action="{{ routes.search_url }}" method="get"><input name="q" placeholder="{{ 'help.search' | t }}" aria-label="{{ 'help.search' | t }}"><button class="btn hor" type="submit">{{ 'search.button' | t }}</button></form>
+    <div class="hpop"><b>{{ s.popular_heading }}</b>{%- for block in section.blocks -%}{%- if block.type == 'popular' -%}<a href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.title }}</a>{%- endif -%}{%- endfor -%}</div>
+  </div>
+  <div class="hact">{%- assign first = true -%}{%- for block in section.blocks -%}{%- if block.type == 'card' -%}<a class="{% if first %}dk{% endif %}" href="{{ block.settings.link }}" {{ block.shopify_attributes }}><span><b>{{ block.settings.title }}</b><small>{{ block.settings.sub }}</small></span></a>{%- assign first = false -%}{%- endif -%}{%- endfor -%}</div>
+</div></div></section>
+</div>
+{% schema %}
+{
+  "name": "Help centre",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Small label", "default": "Help centre" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How can we help?" },
+    { "type": "text", "id": "popular_heading", "label": "Popular heading", "default": "Popular right now" }
+  ],
+  "blocks": [
+    { "type": "popular", "name": "Popular question", "settings": [ { "type": "text", "id": "title", "label": "Question" }, { "type": "url", "id": "link", "label": "Link" } ] },
+    { "type": "card", "name": "Help card", "settings": [ { "type": "text", "id": "title", "label": "Title" }, { "type": "text", "id": "sub", "label": "Small text" }, { "type": "url", "id": "link", "label": "Link" } ] }
+  ]
+}
+{% endschema %}

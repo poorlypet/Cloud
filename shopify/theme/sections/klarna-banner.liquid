@@ -1,0 +1,30 @@
+<section class="sec"><div class="wrap"><div class="vb kl">
+  {%- if section.settings.video != blank -%}
+    {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'vid', image_size: '1400x' }}
+  {%- elsif section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 1600 | image_tag: class: 'vid', loading: 'lazy', alt: '' }}
+  {%- endif -%}
+  <div class="tx">
+    {%- if settings.klarna_badge != blank -%}{{ settings.klarna_badge | image_url: width: 160 | image_tag: class: 'kb', alt: 'Klarna' }}{%- else -%}<span class="kb kbt">Klarna.</span>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2><p>{{ section.settings.text }}</p>
+    <div class="ia"><a class="btn kbtn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>{%- if section.settings.info_link != blank -%}<a class="ul" href="{{ section.settings.info_link }}" style="color:#fff">{{ section.settings.info_label }}</a>{%- endif -%}</div>
+    <small>{{ section.settings.small }}</small>
+  </div>
+</div></div></section>
+{% schema %}
+{
+  "name": "Klarna banner",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Video" },
+    { "type": "image_picker", "id": "image", "label": "Or image" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Serve now. Pay later." },
+    { "type": "text", "id": "text", "label": "Text", "default": "Split the cost into 3 interest free payments with Klarna." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "info_label", "label": "Second link", "default": "How Klarna works" },
+    { "type": "url", "id": "info_link", "label": "Second link URL" },
+    { "type": "text", "id": "small", "label": "Small print", "default": "18+. T&Cs apply. Credit subject to status." }
+  ],
+  "presets": [ { "name": "Klarna banner" } ]
+}
+{% endschema %}

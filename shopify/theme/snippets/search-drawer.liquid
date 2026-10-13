@@ -1,0 +1,26 @@
+<aside class="search" id="search" aria-label="{{ 'search.label' | t }}">
+  <div class="wrap">
+    <form class="row" action="{{ routes.search_url }}" method="get" role="search">
+      {% render 'icon', name: 'search' %}
+      <input id="q" type="search" name="q" placeholder="{{ 'search.placeholder' | t }}" autocomplete="off" aria-label="{{ 'search.label' | t }}">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}"></button>
+    </form>
+    <div class="res" id="sres">
+      {%- assign pops = settings.popular_searches | split: ',' -%}
+      {%- if pops.size > 0 -%}
+        <h6>{{ 'search.popular' | t }}</h6>
+        <div class="pop">{%- for s in pops -%}{%- assign t = s | strip -%}<a href="{{ routes.search_url }}?q={{ t | url_encode }}">{{ t }}</a>{%- endfor -%}</div>
+      {%- endif -%}
+      {%- assign nc = collections[settings.search_collection] -%}
+      {%- if nc.products.size > 0 -%}
+        <h6>{{ nc.title }}</h6>
+        <div class="sgrid">
+          {%- for p in nc.products limit: 6 -%}
+            <a href="{{ p.url }}"><div class="th">{%- if p.featured_media -%}{{ p.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div><b>{{ p.vendor }}</b><span>{{ p.title | remove_first: p.vendor | strip }}</span><br><span>{{ p.price | money_without_trailing_zeros }}</span></a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</aside>

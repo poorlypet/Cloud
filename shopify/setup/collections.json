@@ -1,0 +1,4240 @@
+[
+ {
+  "handle": "accessories",
+  "title": "Padel accessories",
+  "description": "Grips, tape, covers and everything else in the bag.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "tiles": [
+    "accessories-overgrips",
+    "accessories-grips",
+    "accessories-protector-tape",
+    "accessories-racket-covers",
+    "clothing-wristbands",
+    "accessories-towels",
+    "accessories-water-bottles"
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "grips and protector tape on a bench"
+ },
+ {
+  "handle": "accessories-ball-holders",
+  "title": "Ball holders",
+  "description": "Keep a spare ball on you for the next point.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Ball holders"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "ball holder on a player"
+ },
+ {
+  "handle": "accessories-grips",
+  "title": "Grips",
+  "description": "Replacement grips to build up the handle.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Grips"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket handle"
+ },
+ {
+  "handle": "accessories-on-court",
+  "title": "On court essentials",
+  "description": "Balls, bottles, towels and ball holders for match day.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": true,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel balls"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Water bottles"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Towels"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Ball holders"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "tiles": [
+    "balls",
+    "accessories-water-bottles",
+    "accessories-towels",
+    "accessories-ball-holders"
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "kit laid out courtside"
+ },
+ {
+  "handle": "accessories-overgrips",
+  "title": "Overgrips",
+  "description": "A fresh grip stops the racket slipping.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Overgrips"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "overgrip being wrapped"
+ },
+ {
+  "handle": "accessories-popular",
+  "title": "Popular accessories",
+  "description": "Gift ideas and reduced accessories.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "tiles": [
+    "gift-ideas",
+    "accessories-sale"
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "accessories on a store shelf"
+ },
+ {
+  "handle": "accessories-protector-tape",
+  "title": "Protector tape",
+  "description": "Saves the frame when you scrape the floor or glass.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Protector tape"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket with protector tape"
+ },
+ {
+  "handle": "accessories-racket-care",
+  "title": "Racket care",
+  "description": "Grips, tape and covers to keep your racket playing well.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": true,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Overgrips"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Grips"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Protector tape"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Racket covers"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "tiles": [
+    "accessories-overgrips",
+    "accessories-grips",
+    "accessories-protector-tape",
+    "accessories-racket-covers"
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket being re-gripped"
+ },
+ {
+  "handle": "accessories-racket-covers",
+  "title": "Racket covers",
+  "description": "Keep your racket safe between games.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Racket covers"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket in a cover"
+ },
+ {
+  "handle": "accessories-sale",
+  "title": "Sale accessories",
+  "description": "Grips, tape and covers, reduced.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "variant_compare_at_price",
+    "relation": "greater_than",
+    "condition": "0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "sale accessories on a bench"
+ },
+ {
+  "handle": "accessories-towels",
+  "title": "Towels",
+  "description": "Dry hands, better grip.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Towels"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "towel on a bench"
+ },
+ {
+  "handle": "accessories-water-bottles",
+  "title": "Water bottles",
+  "description": "Stay cool between sets.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Water bottles"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "water bottle courtside"
+ },
+ {
+  "handle": "adidas-padel",
+  "title": "Adidas Padel",
+  "description": "Every Adidas Padel padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Adidas Padel"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Adidas Padel",
+   "seo_text": "Adidas Padel is one of the brands players ask for most. Every Adidas Padel racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Adidas Padel rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Adidas Padel racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Metalbone, Adipower, Match, RX"
+  },
+  "hero_photo_note": "Adidas Padel campaign photo"
+ },
+ {
+  "handle": "asics",
+  "title": "Asics",
+  "description": "Every Asics padel shoe we stock, in one place.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Asics"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Asics",
+   "seo_text": "Asics is one of the brands players ask for most. Every Asics product here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Asics rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Asics racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Gel Padel Pro, Gel Padel Exclusive, Junior"
+  },
+  "hero_photo_note": "Asics campaign photo"
+ },
+ {
+  "handle": "babolat",
+  "title": "Babolat",
+  "description": "Every Babolat padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Babolat"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Babolat",
+   "seo_text": "Babolat is one of the brands players ask for most. Every Babolat racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Babolat rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Babolat racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Technical, Counter, Air, Contact"
+  },
+  "hero_photo_note": "Babolat campaign photo"
+ },
+ {
+  "handle": "bags",
+  "title": "Padel bags",
+  "description": "Racket bags, backpacks and holdalls with room for the whole kit.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "bags-racket-bags",
+    "bags-backpacks",
+    "bags-holdalls",
+    "bags-shoe-bags"
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket bag on a court bench"
+ },
+ {
+  "handle": "bags-1-2-rackets",
+  "title": "Bags for 1 to 2 rackets",
+  "description": "Light and easy to carry.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "holds-1-2"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "backpack on a court bench"
+ },
+ {
+  "handle": "bags-3-5-rackets",
+  "title": "Bags for 3 to 5 rackets",
+  "description": "The everyday racket bag size.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "holds-3-5"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket bag being packed"
+ },
+ {
+  "handle": "bags-6-rackets",
+  "title": "Bags for 6 or more rackets",
+  "description": "For players who carry the whole kit.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "holds-6-plus"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "large racket bag on a bench"
+ },
+ {
+  "handle": "bags-backpacks",
+  "title": "Backpacks",
+  "description": "A racket sleeve and room for the essentials.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Backpacks"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "backpack with racket sleeve"
+ },
+ {
+  "handle": "bags-best-sellers",
+  "title": "Best selling bags",
+  "description": "The bags players buy most.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "best selling bags lined up"
+ },
+ {
+  "handle": "bags-by-size",
+  "title": "Padel bags by size",
+  "description": "Pick a bag by how many rackets you carry.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "bags-1-2-rackets",
+    "bags-3-5-rackets",
+    "bags-6-rackets"
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "small and large racket bags side by side"
+ },
+ {
+  "handle": "bags-by-type",
+  "title": "Padel bags by type",
+  "description": "Racket bags, backpacks, holdalls and shoe bags.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "bags-racket-bags",
+    "bags-backpacks",
+    "bags-holdalls",
+    "bags-shoe-bags"
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "bags lined up on a court bench"
+ },
+ {
+  "handle": "bags-holdalls",
+  "title": "Holdalls",
+  "description": "For kit, towels and a change of clothes.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Holdalls"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "holdall in a changing room"
+ },
+ {
+  "handle": "bags-new",
+  "title": "New in bags",
+  "description": "The latest bags to arrive.",
+  "template_suffix": "",
+  "sort_order": "created-desc",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "new"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "new bags unboxed"
+ },
+ {
+  "handle": "bags-popular",
+  "title": "Popular padel bags",
+  "description": "New arrivals, best sellers and reduced bags.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "bags-new",
+    "bags-best-sellers",
+    "bags-sale"
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "bags in the store"
+ },
+ {
+  "handle": "bags-racket-bags",
+  "title": "Racket bags",
+  "description": "Room for your rackets, shoes and kit.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Racket bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "racket bag on a bench"
+ },
+ {
+  "handle": "bags-sale",
+  "title": "Sale bags",
+  "description": "Last season's bags, reduced.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "variant_compare_at_price",
+    "relation": "greater_than",
+    "condition": "0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "sale bags on a bench"
+ },
+ {
+  "handle": "bags-shoe-bags",
+  "title": "Shoe bags",
+  "description": "Keep the sand away from the rest of your kit.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "bags"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Shoe bags"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a padel bag",
+   "seo_text": "A racket bag protects your racket from heat and knocks. Thermal compartments keep it out of the sun, and separate shoe pockets keep sand away from your kit.\nIf you play with one or two rackets, a backpack with a racket sleeve is often enough. Racket bags suit players who carry more.",
+   "faq": [
+    [
+     "Do I need a thermal bag?",
+     "It helps. Heat can soften a racket's core over time, so a thermal compartment is worth having if you leave your bag in the car."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-racket-covers",
+    "balls"
+   ]
+  },
+  "hero_photo_note": "shoe bag"
+ },
+ {
+  "handle": "balls",
+  "title": "Padel balls",
+  "description": "Tubes and boxes from the brands used at clubs and tournaments.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel balls"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel balls",
+   "seo_text": "Padel balls look like tennis balls but run at a lower pressure, so they bounce less and suit the enclosed court.\nBalls lose pressure once the tube is opened. Most players change them every few sessions.",
+   "faq": [
+    [
+     "Can I use tennis balls?",
+     "They will work, but they bounce too high. Padel balls are made at a lower pressure for the court."
+    ],
+    [
+     "How long do padel balls last?",
+     "Usually a few sessions once opened. You will notice them bouncing lower and feeling heavy."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "accessories-overgrips"
+   ]
+  },
+  "hero_photo_note": "new tube of balls being opened"
+ },
+ {
+  "handle": "black-crown",
+  "title": "Black Crown",
+  "description": "Every Black Crown padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Black Crown"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Black Crown",
+   "seo_text": "Black Crown is one of the brands players ask for most. Every Black Crown racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Black Crown rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Black Crown racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Piton, Special"
+  },
+  "hero_photo_note": "Black Crown campaign photo"
+ },
+ {
+  "handle": "bullpadel",
+  "title": "Bullpadel",
+  "description": "Spain's most played padel brand. The full range, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Bullpadel"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Bullpadel",
+   "seo_text": "Bullpadel is one of the brands players ask for most. Every Bullpadel racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Bullpadel rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Bullpadel racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Vertex, Hack, Neuron, Indiga, Flow"
+  },
+  "hero_photo_note": "Bullpadel campaign photo"
+ },
+ {
+  "handle": "clothing",
+  "title": "Padel clothing",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "clothing-mens-t-shirts",
+    "clothing-mens-polos",
+    "clothing-mens-shorts",
+    "clothing-womens-tops",
+    "clothing-womens-skirts-dresses",
+    "clothing-womens-leggings",
+    "clothing-socks",
+    "clothing-caps-visors"
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ]
+  },
+  "hero_photo_note": "player in kit, walking off court"
+ },
+ {
+  "handle": "clothing-caps-visors",
+  "title": "Caps and visors",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Caps and visors"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "cap on court"
+ },
+ {
+  "handle": "clothing-headbands",
+  "title": "Headbands",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Headbands"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "headband on a player"
+ },
+ {
+  "handle": "clothing-kit",
+  "title": "Padel kit",
+  "description": "Socks, caps, wristbands and headbands to finish the kit.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": true,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Socks"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Caps and visors"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Wristbands"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Headbands"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "clothing-wristbands",
+    "clothing-headbands"
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "socks, cap and wristbands on a bench"
+ },
+ {
+  "handle": "clothing-mens",
+  "title": "Men's padel clothing",
+  "description": "T-shirts, polos, shorts and layers for match day and training.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "men"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "clothing-mens-t-shirts",
+    "clothing-mens-polos",
+    "clothing-mens-shorts",
+    "clothing-mens-hoodies-jackets"
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "player in new season kit"
+ },
+ {
+  "handle": "clothing-mens-hoodies-jackets",
+  "title": "Men's hoodies and jackets",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Hoodies and jackets"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "men"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "player in a hoodie after a match"
+ },
+ {
+  "handle": "clothing-mens-polos",
+  "title": "Men's polos",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Polos"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "men"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "polo on a player"
+ },
+ {
+  "handle": "clothing-mens-shorts",
+  "title": "Men's shorts",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Shorts"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "men"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "shorts on court"
+ },
+ {
+  "handle": "clothing-mens-t-shirts",
+  "title": "Men's t-shirts",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "T-shirts"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "men"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "t-shirt on a player"
+ },
+ {
+  "handle": "clothing-socks",
+  "title": "Socks",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Socks"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "socks and shoes"
+ },
+ {
+  "handle": "clothing-womens",
+  "title": "Women's padel clothing",
+  "description": "Tops, skirts, shorts and leggings built to move.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "women"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "clothing-womens-tops",
+    "clothing-womens-skirts-dresses",
+    "clothing-womens-shorts",
+    "clothing-womens-leggings"
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "player in women's kit on court"
+ },
+ {
+  "handle": "clothing-womens-leggings",
+  "title": "Women's leggings",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Leggings"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "women"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "leggings on court"
+ },
+ {
+  "handle": "clothing-womens-shorts",
+  "title": "Women's shorts",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Shorts"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "women"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "women's shorts on court"
+ },
+ {
+  "handle": "clothing-womens-skirts-dresses",
+  "title": "Women's skirts and dresses",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Skirts and dresses"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "women"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "skirt on court"
+ },
+ {
+  "handle": "clothing-womens-tops",
+  "title": "Women's tops",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "clothing"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Tops"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "women"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "women's top on court"
+ },
+ {
+  "handle": "clothing-wristbands",
+  "title": "Wristbands",
+  "description": "Light, breathable kit from the brands on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "accessories"
+   },
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Wristbands"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel clothing",
+   "seo_text": "Good padel clothing keeps you cool and lets you move. Look for light, quick drying fabrics and shorts or skirts with pockets for a spare ball.\nWe stock clothing from the same brands as our rackets, so you can match your kit.",
+   "faq": [
+    [
+     "How do the sizes come up?",
+     "Sizes follow each brand's own chart, shown on the product page."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "clothing-caps-visors",
+    "shoes"
+   ],
+   "parent": "clothing"
+  },
+  "hero_photo_note": "wristbands on a player"
+ },
+ {
+  "handle": "drop-shot",
+  "title": "Drop Shot",
+  "description": "Every Drop Shot padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Drop Shot"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Drop Shot",
+   "seo_text": "Drop Shot is one of the brands players ask for most. Every Drop Shot racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Drop Shot rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Drop Shot racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Explorer, Conqueror"
+  },
+  "hero_photo_note": "Drop Shot campaign photo"
+ },
+ {
+  "handle": "dunlop",
+  "title": "Dunlop",
+  "description": "Every Dunlop padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Dunlop"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Dunlop",
+   "seo_text": "Dunlop is one of the brands players ask for most. Every Dunlop racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Dunlop rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Dunlop racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Galactica, Aero-Star"
+  },
+  "hero_photo_note": "Dunlop campaign photo"
+ },
+ {
+  "handle": "gift-ideas",
+  "title": "Gift ideas",
+  "description": "Presents for padel players, all under £25.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "variant_price",
+    "relation": "less_than",
+    "condition": "25.01"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Padel accessories",
+   "seo_text": "Small things make a big difference. A fresh overgrip stops the racket slipping, and protector tape saves the frame when you scrape it on the floor or glass.\nMost accessories are under £20, which is handy if you are close to free delivery.",
+   "faq": [
+    [
+     "How often should I change my overgrip?",
+     "When it feels smooth or starts to tear. For players on court every week that is usually every few weeks."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ]
+   ],
+   "related": [
+    "balls"
+   ]
+  },
+  "hero_photo_note": "wrapped padel gifts"
+ },
+ {
+  "handle": "head",
+  "title": "Head",
+  "description": "Speed, Delta and Gravity. Rackets from one of the oldest names in racket sports.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Head"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Head",
+   "seo_text": "Head is one of the brands players ask for most. Every Head racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Head rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Head racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Speed, Delta, Gravity, Flash, Evo"
+  },
+  "hero_photo_note": "Head campaign photo"
+ },
+ {
+  "handle": "joma",
+  "title": "Joma",
+  "description": "Every Joma padel shoe we stock, in one place.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Joma"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Joma",
+   "seo_text": "Joma is one of the brands players ask for most. Every Joma product here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Joma rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Joma racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Slam"
+  },
+  "hero_photo_note": "Joma campaign photo"
+ },
+ {
+  "handle": "kombat",
+  "title": "Kombat",
+  "description": "Every Kombat padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Kombat"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Kombat",
+   "seo_text": "Kombat is one of the brands players ask for most. Every Kombat racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Kombat rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Kombat racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Attack, Control"
+  },
+  "hero_photo_note": "Kombat campaign photo"
+ },
+ {
+  "handle": "new-in",
+  "title": "New in",
+  "description": "The latest rackets, shoes and kit to arrive.",
+  "template_suffix": "",
+  "sort_order": "created-desc",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "new"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "New in at Raqello",
+   "seo_text": "This is where new arrivals land first, from new season rackets to shoes and kit.",
+   "faq": [
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "tiles": [
+    "shoes-new",
+    "bags-new"
+   ],
+   "related": [
+    "padel-rackets",
+    "shoes",
+    "clothing",
+    "sale"
+   ]
+  },
+  "hero_photo_note": "new season rackets unboxed"
+ },
+ {
+  "handle": "nox",
+  "title": "Nox",
+  "description": "Spanish rackets built around feel, from the AT10 to the ML10.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Nox"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Nox",
+   "seo_text": "Nox is one of the brands players ask for most. Every Nox racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Nox rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Nox racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "AT10, ML10, X-One, Equation, TL10"
+  },
+  "hero_photo_note": "Nox campaign photo"
+ },
+ {
+  "handle": "padel-rackets",
+  "title": "Padel rackets",
+  "description": "Find the right racket for your game.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing a racket for your level",
+   "seo_text": "Every padel racket we sell is chosen from the brands players trust most, from Bullpadel and Nox in Spain to Head, Babolat and Adidas. Each one is tagged with a level, a shape and a weight so you can compare like for like.\nIf you are new to the game, start with a round racket and a soft core. Regular players looking for more power should look at teardrop and hybrid shapes, while competitive players tend to choose diamond shapes with firmer cores and carbon faces.\nNot sure where you fit? Our racket guide explains shape, balance, core and face materials in plain English, and our customers rate us Excellent on Trustpilot.",
+   "faq": [
+    [
+     "Which padel racket should I buy as a beginner?",
+     "Start with a round racket with a soft core. It has the biggest sweet spot and is the easiest to control while you learn."
+    ],
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-beginner",
+    "rackets-intermediate",
+    "rackets-advanced",
+    "rackets-round",
+    "rackets-diamond",
+    "rackets-under-100",
+    "rackets-sale"
+   ]
+  },
+  "hero_photo_note": ""
+ },
+ {
+  "handle": "rackets-100-200",
+  "title": "Rackets from £100 to £200",
+  "description": "The sweet spot for most club players, from the brands we stock.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "variant_price",
+    "relation": "greater_than",
+    "condition": "99.99"
+   },
+   {
+    "column": "variant_price",
+    "relation": "less_than",
+    "condition": "200.0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "rackets on a bench at the club"
+ },
+ {
+  "handle": "rackets-200-300",
+  "title": "Rackets from £200 to £300",
+  "description": "Carbon faces and firmer cores for regular and competitive players.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "variant_price",
+    "relation": "greater_than",
+    "condition": "199.99"
+   },
+   {
+    "column": "variant_price",
+    "relation": "less_than",
+    "condition": "300.01"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "carbon racket close up"
+ },
+ {
+  "handle": "rackets-advanced",
+  "title": "Advanced rackets",
+  "description": "Diamond shapes and firm cores for league and competition players.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Advanced",
+    "metafield": "custom.level"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Rackets for competitive players",
+   "seo_text": "Advanced rackets put the weight higher in the head for maximum power. Diamond shapes, hard EVA cores and 12K or 18K carbon faces are common, and they reward a fast, clean swing.\nIf you are moving up from an intermediate racket, look at hybrid shapes first. They give you most of the power with a larger sweet spot.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-intermediate",
+    "rackets-diamond",
+    "accessories-protector-tape",
+    "bags-racket-bags"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "tournament smash at the net"
+ },
+ {
+  "handle": "rackets-beginner",
+  "title": "Beginner rackets",
+  "description": "Light, forgiving rackets for your first year on court.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Beginner",
+    "metafield": "custom.level"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Your first padel racket",
+   "seo_text": "A beginner racket should be easy to swing and forgiving when you miss the middle. That usually means a round shape, a soft foam or soft EVA core and a fibreglass face, at a weight between 345 and 365g.\nEvery racket here is tagged as a beginner racket by its shape, balance and core, so you can compare them like for like before you buy.",
+   "faq": [
+    [
+     "Which padel racket should I buy as a beginner?",
+     "Start with a round racket with a soft core. It has the biggest sweet spot and is the easiest to control while you learn."
+    ],
+    [
+     "Do I need an expensive racket to start?",
+     "No. A good beginner racket does not need carbon or a hard core. Comfort and control matter far more in your first year."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-intermediate",
+    "rackets-round",
+    "shoes",
+    "balls"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "first lesson, coach feeding balls"
+ },
+ {
+  "handle": "rackets-by-level",
+  "title": "Rackets by level",
+  "description": "Beginner, intermediate or advanced. Pick your level and see the rackets that suit it.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "three players of different levels on court"
+ },
+ {
+  "handle": "rackets-by-price",
+  "title": "Rackets by price",
+  "description": "Every racket we stock, from first rackets under £100 to tour models.",
+  "template_suffix": "",
+  "sort_order": "price-ascending",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "tiles": [
+    "rackets-under-100",
+    "rackets-100-200",
+    "rackets-200-300",
+    "rackets-over-300"
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "rackets lined up on a wall"
+ },
+ {
+  "handle": "rackets-by-shape",
+  "title": "Rackets by shape",
+  "description": "Round for control, diamond for power and teardrop or hybrid in between.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "tiles": [
+    "rackets-round",
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-hybrid"
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "round, teardrop and diamond rackets side by side"
+ },
+ {
+  "handle": "rackets-diamond",
+  "title": "Diamond rackets",
+  "description": "Weight in the head for maximum power on the overhead.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Diamond",
+    "metafield": "custom.shape"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a diamond racket",
+   "seo_text": "Diamond rackets put the balance high in the head. The extra weight up top adds power to smashes and bandejas, but the sweet spot is smaller and they need good technique.\nThey suit attacking, advanced players. If you are not sure, try a hybrid or teardrop first.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-advanced",
+    "accessories-protector-tape"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "smash at the net, diamond racket"
+ },
+ {
+  "handle": "rackets-hybrid",
+  "title": "Hybrid rackets",
+  "description": "Close to a teardrop, with a little more power for players who like to attack.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Hybrid",
+    "metafield": "custom.shape"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "hybrid racket at the net"
+ },
+ {
+  "handle": "rackets-intermediate",
+  "title": "Intermediate rackets",
+  "description": "More power without losing control, for players on court every week.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Intermediate",
+    "metafield": "custom.level"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Moving up a level",
+   "seo_text": "Once you are playing every week, a teardrop or hybrid racket gives you more power on the overhead while keeping enough control at the net. Cores get a little firmer and faces often move to carbon.\nEvery racket here is tagged as intermediate, with its shape and weight shown on the card.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-beginner",
+    "rackets-advanced",
+    "rackets-teardrop",
+    "accessories-overgrips"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "club doubles at dusk"
+ },
+ {
+  "handle": "rackets-over-300",
+  "title": "Rackets over £300",
+  "description": "The top of each range, built for competitive players.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "variant_price",
+    "relation": "greater_than",
+    "condition": "300.0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "tour racket in its cover"
+ },
+ {
+  "handle": "rackets-round",
+  "title": "Round rackets",
+  "description": "The biggest sweet spot and the most control. Ideal if you are starting out or play at the net.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Round",
+    "metafield": "custom.shape"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "round racket at the net"
+ },
+ {
+  "handle": "rackets-sale",
+  "title": "Sale rackets",
+  "description": "Last season's rackets, reduced. When they are gone, they are gone.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "variant_compare_at_price",
+    "relation": "greater_than",
+    "condition": "0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a round racket",
+   "seo_text": "Round rackets keep the balance low, close to your hand. That makes them easy to manoeuvre, forgiving on off centre hits and comfortable on the arm.\nThey suit beginners and defensive players, and plenty of experienced players choose them for control.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-teardrop",
+    "rackets-diamond",
+    "rackets-beginner"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "sale rackets on a court bench"
+ },
+ {
+  "handle": "rackets-teardrop",
+  "title": "Teardrop rackets",
+  "description": "A balance of power and control for an all round game.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Teardrop",
+    "metafield": "custom.shape"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Why choose a teardrop racket",
+   "seo_text": "Teardrop rackets sit between round and diamond. The balance is in the middle, the sweet spot is a good size and there is more power on the overhead than a round racket.\nThey are the most popular choice for improving players who play every part of the court.",
+   "faq": [
+    [
+     "What is the difference between round, teardrop and diamond?",
+     "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+    ],
+    [
+     "How heavy should my racket be?",
+     "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-round",
+    "rackets-diamond",
+    "rackets-intermediate"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "player volleying with a teardrop racket"
+ },
+ {
+  "handle": "rackets-under-100",
+  "title": "Rackets under £100",
+  "description": "Proper padel rackets from the brands we stock, all under £100.",
+  "template_suffix": "rackets",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   },
+   {
+    "column": "variant_price",
+    "relation": "less_than",
+    "condition": "100"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Good rackets for less",
+   "seo_text": "You do not need to spend a lot for a good first racket. Under £100 you will find round and teardrop shapes with soft cores and fibreglass faces from the same brands the pros use.\nEvery racket is tagged by level, shape and weight, so you can still compare them properly.",
+   "faq": [
+    [
+     "Which padel racket should I buy as a beginner?",
+     "Start with a round racket with a soft core. It has the biggest sweet spot and is the easiest to control while you learn."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "related": [
+    "rackets-beginner",
+    "rackets-round",
+    "sale"
+   ],
+   "parent": "padel-rackets"
+  },
+  "hero_photo_note": "rackets on a bench at the club"
+ },
+ {
+  "handle": "royal-padel",
+  "title": "Royal Padel",
+  "description": "Every Royal Padel padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Royal Padel"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Royal Padel",
+   "seo_text": "Royal Padel is one of the brands players ask for most. Every Royal Padel racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Royal Padel rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Royal Padel racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Whip, M27"
+  },
+  "hero_photo_note": "Royal Padel campaign photo"
+ },
+ {
+  "handle": "sale",
+  "title": "Sale",
+  "description": "Last season's rackets and kit, reduced. When it is gone, it is gone.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "variant_compare_at_price",
+    "relation": "greater_than",
+    "condition": "0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About our sale",
+   "seo_text": "Our sale is last season's rackets and end of line kit from the brands we stock. Stock is limited, and every price shows the saving against the full price.\nSale items have the same 14 day returns and delivery as everything else.",
+   "faq": [
+    [
+     "Can I return sale items?",
+     "Yes. Sale items have the same 14 day returns as everything else."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "tiles": [
+    "rackets-sale",
+    "shoes-sale",
+    "bags-sale",
+    "accessories-sale"
+   ],
+   "related": [
+    "padel-rackets",
+    "new-in",
+    "shoes"
+   ]
+  },
+  "hero_photo_note": "sale rackets on a court bench"
+ },
+ {
+  "handle": "search",
+  "title": "Search",
+  "description": "",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel racket"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "",
+   "seo_text": ""
+  },
+  "hero_photo_note": ""
+ },
+ {
+  "handle": "shoes",
+  "title": "Padel shoes",
+  "description": "Grip, support and comfort for every court surface.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "shoes-mens",
+    "shoes-womens",
+    "shoes-junior"
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ]
+  },
+  "hero_photo_note": "padel shoes on artificial grass"
+ },
+ {
+  "handle": "shoes-all-court",
+  "title": "All court shoes",
+  "description": "One pair for padel, tennis and the gym.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "All court",
+    "metafield": "custom.sole"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "all court shoes on court"
+ },
+ {
+  "handle": "shoes-best-sellers",
+  "title": "Best selling shoes",
+  "description": "The shoes players buy most.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "best selling shoes lined up"
+ },
+ {
+  "handle": "shoes-by-fit",
+  "title": "Padel shoes by fit",
+  "description": "Men's, women's, junior and wide fit padel shoes.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "shoes-mens",
+    "shoes-womens",
+    "shoes-junior",
+    "shoes-wide-fit"
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "shoes being laced up on court"
+ },
+ {
+  "handle": "shoes-by-sole",
+  "title": "Padel shoes by sole",
+  "description": "Match the sole to the court you play on most.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "shoes-herringbone",
+    "shoes-omni",
+    "shoes-clay",
+    "shoes-all-court"
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "shoe soles side by side"
+ },
+ {
+  "handle": "shoes-clay",
+  "title": "Clay sole shoes",
+  "description": "Made for very sandy courts.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Clay",
+    "metafield": "custom.sole"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "clay sole on a sandy court"
+ },
+ {
+  "handle": "shoes-herringbone",
+  "title": "Herringbone sole shoes",
+  "description": "The most common padel sole. Grips well on most UK courts.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Herringbone",
+    "metafield": "custom.sole"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "herringbone sole close up"
+ },
+ {
+  "handle": "shoes-junior",
+  "title": "Junior padel shoes",
+  "description": "Proper court shoes for young players.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Junior",
+    "metafield": "custom.fit"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "junior player tying laces"
+ },
+ {
+  "handle": "shoes-mens",
+  "title": "Men's padel shoes",
+  "description": "Grip and support for every court surface.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Men",
+    "metafield": "custom.fit"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "men's padel shoes on court"
+ },
+ {
+  "handle": "shoes-new",
+  "title": "New in shoes",
+  "description": "The latest padel shoes to arrive.",
+  "template_suffix": "",
+  "sort_order": "created-desc",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "new"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "new season shoes unboxed"
+ },
+ {
+  "handle": "shoes-omni",
+  "title": "Omni sole shoes",
+  "description": "Small studs that grip sandy artificial grass.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Omni",
+    "metafield": "custom.sole"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "omni sole close up"
+ },
+ {
+  "handle": "shoes-popular",
+  "title": "Popular padel shoes",
+  "description": "New arrivals, best sellers and reduced shoes.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "tiles": [
+    "shoes-new",
+    "shoes-best-sellers",
+    "shoes-sale"
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "shoes lined up in the store"
+ },
+ {
+  "handle": "shoes-sale",
+  "title": "Sale shoes",
+  "description": "Last season's shoes, reduced.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "variant_compare_at_price",
+    "relation": "greater_than",
+    "condition": "0"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "sale shoes on a bench"
+ },
+ {
+  "handle": "shoes-wide-fit",
+  "title": "Wide fit padel shoes",
+  "description": "More room across the foot, the same grip on court.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "tag",
+    "relation": "equals",
+    "condition": "wide-fit"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "wide fit shoe from above"
+ },
+ {
+  "handle": "shoes-womens",
+  "title": "Women's padel shoes",
+  "description": "Grip and support for every court surface.",
+  "template_suffix": "",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "type",
+    "relation": "equals",
+    "condition": "Padel shoes"
+   },
+   {
+    "column": "product_metafield_definition",
+    "relation": "equals",
+    "condition": "Women",
+    "metafield": "custom.fit"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "Choosing padel shoes",
+   "seo_text": "Padel shoes are built for quick lateral movement. Most courts in the UK are artificial grass with sand, which suits a herringbone or omni sole. Clay soles suit very sandy courts.\nLook for a firm heel, good support at the side of the foot and a sole that grips without sticking.",
+   "faq": [
+    [
+     "Can I play padel in running shoes?",
+     "It is not a good idea. Running shoes are built to move forwards, not side to side, and the sole will not grip a sandy court."
+    ],
+    [
+     "Which sole should I choose?",
+     "Herringbone and omni soles suit most UK courts. Choose clay if your club's courts are very sandy."
+    ],
+    [
+     "Can I return it if it does not fit?",
+     "Yes. You have 14 days to send back anything unused, in its original packaging."
+    ],
+    [
+     "How much is delivery?",
+     "Standard UK delivery is free on orders over £75. Under that it is £4.95, and it takes 3 to 5 working days."
+    ]
+   ],
+   "related": [
+    "clothing-socks",
+    "bags-shoe-bags",
+    "shoes-sale"
+   ],
+   "parent": "shoes"
+  },
+  "hero_photo_note": "women's padel shoes on court"
+ },
+ {
+  "handle": "siux",
+  "title": "Siux",
+  "description": "Every Siux padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Siux"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Siux",
+   "seo_text": "Siux is one of the brands players ask for most. Every Siux racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Siux rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Siux racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Electra, Fenix, Diablo"
+  },
+  "hero_photo_note": "Siux campaign photo"
+ },
+ {
+  "handle": "starvie",
+  "title": "StarVie",
+  "description": "Every StarVie padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "StarVie"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About StarVie",
+   "seo_text": "StarVie is one of the brands players ask for most. Every StarVie racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all StarVie rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which StarVie racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Metheora, Aquila, Kenta"
+  },
+  "hero_photo_note": "StarVie campaign photo"
+ },
+ {
+  "handle": "varlion",
+  "title": "Varlion",
+  "description": "Every Varlion padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Varlion"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Varlion",
+   "seo_text": "Varlion is one of the brands players ask for most. Every Varlion racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Varlion rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Varlion racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Bourne, LW"
+  },
+  "hero_photo_note": "Varlion campaign photo"
+ },
+ {
+  "handle": "vibor-a",
+  "title": "Vibor-A",
+  "description": "Every Vibor-A padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Vibor-A"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Vibor-A",
+   "seo_text": "Vibor-A is one of the brands players ask for most. Every Vibor-A racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Vibor-A rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Vibor-A racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Yarara, King Cobra"
+  },
+  "hero_photo_note": "Vibor-A campaign photo"
+ },
+ {
+  "handle": "wilson",
+  "title": "Wilson",
+  "description": "Every Wilson padel racket we stock, from first rackets to tour models.",
+  "template_suffix": "brand",
+  "sort_order": "best-selling",
+  "disjunctive": false,
+  "rules": [
+   {
+    "column": "vendor",
+    "relation": "equals",
+    "condition": "Wilson"
+   }
+  ],
+  "metafields": {
+   "seo_heading": "About Wilson",
+   "seo_text": "Wilson is one of the brands players ask for most. Every Wilson racket here is tagged by level, shape and weight so you can compare it with the rest of the range and with other brands.\nNot sure which one suits you? Use the level buttons above, or read our racket guide.",
+   "faq": [
+    [
+     "Are all Wilson rackets in stock?",
+     "Stock is shown on every product. If a racket is sold out you can sign up to hear when it is back."
+    ],
+    [
+     "Which Wilson racket is best for beginners?",
+     "Look at the round shaped rackets in the range with a soft core. Use the Beginner filter to see them."
+    ],
+    [
+     "Can I pay with Klarna?",
+     "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+    ]
+   ],
+   "ranges_note": "Bela, Defy"
+  },
+  "hero_photo_note": "Wilson campaign photo"
+ }
+]

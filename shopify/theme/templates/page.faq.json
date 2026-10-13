@@ -1,0 +1,240 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "label": "FAQs",
+        "intro": "Answers about orders, delivery, returns, payment and kit.",
+        "parent_label": "Help",
+        "parent_link": "shopify://pages/help"
+      }
+    },
+    "s2": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Orders",
+        "cls": "pt0"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "Can I change or cancel my order?",
+            "a": "<p>Contact us as soon as you can. If your order has not been packed yet we can change or cancel it for you.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "Do I need an account to order?",
+            "a": "<p>No. You can check out as a guest. An account lets you track orders and start returns faster.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "Do your prices include VAT?",
+            "a": "<p>Yes. Every price on the site includes VAT.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "s3": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Delivery"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "How much is delivery?",
+            "a": "<p>Standard UK delivery is free on orders over \u00a375. Below that it is \u00a34.95.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "How long will my order take?",
+            "a": "<p>Most UK addresses get their order in 3 to 5 working days. The Highlands, Islands and Northern Ireland take 4 to 7 working days.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "How do I track my order?",
+            "a": "<p>We email you a tracking link as soon as your parcel leaves us. You can also find it in your account.</p>"
+          }
+        },
+        "b4": {
+          "type": "q",
+          "settings": {
+            "q": "Do you deliver outside the UK?",
+            "a": "<p>Not at the moment. We deliver to UK addresses only.</p>"
+          }
+        },
+        "b5": {
+          "type": "q",
+          "settings": {
+            "q": "What if I am not in?",
+            "a": "<p>The courier will leave a card or message you with options to rearrange delivery or collect your parcel.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "s4": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Returns"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "How long do I have to return something?",
+            "a": "<p>14 days from the day your order arrives. Items need to be unused and in their original packaging.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "Do I pay for returns?",
+            "a": "<p>Send your return with any tracked service. If something is faulty or we sent the wrong item, we cover the cost.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "When will I get my money back?",
+            "a": "<p>Within 5 working days of your return reaching us, back to the card or account you paid with.</p>"
+          }
+        },
+        "b4": {
+          "type": "q",
+          "settings": {
+            "q": "Can I exchange an item?",
+            "a": "<p>The quickest way is to return the item and place a new order for the one you want, so you are not waiting on an exchange.</p>"
+          }
+        },
+        "b5": {
+          "type": "q",
+          "settings": {
+            "q": "Can I return a racket I have played with?",
+            "a": "<p>We can only accept rackets that are unused, with the protective film still on the face. Not sure which racket suits you? Ask us before you order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "s5": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Payment and Klarna"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "Can I pay with Klarna?",
+            "a": "<p>Yes. Choose Klarna at checkout to split the cost into 3 interest free payments.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "Does Klarna cost anything?",
+            "a": "<p>Pay in 3 is interest free. Klarna explains everything, including what happens if a payment is late, before you confirm.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "Who can use Klarna?",
+            "a": "<p>Klarna is for UK residents over 18 and is subject to status. Klarna decides at checkout.</p>"
+          }
+        },
+        "b4": {
+          "type": "q",
+          "settings": {
+            "q": "How do I manage my payments?",
+            "a": "<p>In the Klarna app or on the Klarna website. You can see what is due and pay early if you want to.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "s6": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Rackets"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "Which racket should I start with?",
+            "a": "<p>A round racket with a soft core. The sweet spot is bigger and it is far easier to control while you learn.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "What is the difference between round, teardrop and diamond?",
+            "a": "<p>Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "How heavy should my racket be?",
+            "a": "<p>Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "s7": {
+      "type": "help-banner",
+      "settings": {
+        "button_link": "shopify://pages/contact",
+        "link": "shopify://pages/help"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6",
+    "s7"
+  ]
+}

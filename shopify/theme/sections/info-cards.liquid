@@ -1,0 +1,17 @@
+<section class="sec sx-sec"><div class="wrap">
+  {%- if section.settings.heading != blank -%}{% render 'sec-head', heading: section.settings.heading %}{%- endif -%}
+  <div class="dcards">
+    {%- for block in section.blocks -%}<div class="dcd" {{ block.shopify_attributes }}><div class="pph dcp">{% render 'ph', image: block.settings.image, note: block.settings.note, cls: 'fill', sizes: '50vw' %}</div><div class="dct"><span>{{ block.settings.label }}</span><b>{{ block.settings.value }}</b></div></div>{%- endfor -%}
+  </div>
+  {%- if section.settings.note != blank -%}<p class="dfn">{{ section.settings.note }}</p>{%- endif -%}
+</div></section>
+{% schema %}
+{
+  "name": "Info cards",
+  "settings": [ { "type": "text", "id": "heading", "label": "Heading" }, { "type": "textarea", "id": "note", "label": "Note under the cards" } ],
+  "blocks": [ { "type": "card", "name": "Card", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" }, { "type": "text", "id": "note", "label": "Placeholder note" },
+    { "type": "text", "id": "label", "label": "Label" }, { "type": "text", "id": "value", "label": "Value" } ] } ],
+  "presets": [ { "name": "Info cards" } ]
+}
+{% endschema %}

@@ -1,0 +1,496 @@
+{
+ "main-menu": {
+  "title": "Main menu",
+  "items": [
+   {
+    "title": "Padel rackets",
+    "url": "/collections/padel-rackets",
+    "items": [
+     {
+      "title": "Shop by level",
+      "url": "/collections/rackets-by-level",
+      "items": [
+       {
+        "title": "Beginner rackets",
+        "url": "/collections/rackets-beginner"
+       },
+       {
+        "title": "Intermediate rackets",
+        "url": "/collections/rackets-intermediate"
+       },
+       {
+        "title": "Advanced rackets",
+        "url": "/collections/rackets-advanced"
+       },
+       {
+        "title": "Not sure? Racket guide",
+        "url": "/blogs/guides/how-to-choose-a-padel-racket"
+       }
+      ]
+     },
+     {
+      "title": "Shop by shape",
+      "url": "/collections/rackets-by-shape",
+      "items": [
+       {
+        "title": "Round",
+        "url": "/collections/rackets-round"
+       },
+       {
+        "title": "Teardrop",
+        "url": "/collections/rackets-teardrop"
+       },
+       {
+        "title": "Diamond",
+        "url": "/collections/rackets-diamond"
+       },
+       {
+        "title": "Hybrid",
+        "url": "/collections/rackets-hybrid"
+       }
+      ]
+     },
+     {
+      "title": "Shop by price",
+      "url": "/collections/rackets-by-price",
+      "items": [
+       {
+        "title": "Under £100",
+        "url": "/collections/rackets-under-100"
+       },
+       {
+        "title": "£100 to £200",
+        "url": "/collections/rackets-100-200"
+       },
+       {
+        "title": "£200 to £300",
+        "url": "/collections/rackets-200-300"
+       },
+       {
+        "title": "Over £300",
+        "url": "/collections/rackets-over-300"
+       },
+       {
+        "title": "Sale rackets",
+        "url": "/collections/rackets-sale"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Shoes",
+    "url": "/collections/shoes",
+    "items": [
+     {
+      "title": "Shop by sole",
+      "url": "/collections/shoes-by-sole",
+      "items": [
+       {
+        "title": "Herringbone",
+        "url": "/collections/shoes-herringbone"
+       },
+       {
+        "title": "Omni",
+        "url": "/collections/shoes-omni"
+       },
+       {
+        "title": "Clay",
+        "url": "/collections/shoes-clay"
+       },
+       {
+        "title": "All court",
+        "url": "/collections/shoes-all-court"
+       }
+      ]
+     },
+     {
+      "title": "Shop by fit",
+      "url": "/collections/shoes-by-fit",
+      "items": [
+       {
+        "title": "Men's shoes",
+        "url": "/collections/shoes-mens"
+       },
+       {
+        "title": "Women's shoes",
+        "url": "/collections/shoes-womens"
+       },
+       {
+        "title": "Junior shoes",
+        "url": "/collections/shoes-junior"
+       },
+       {
+        "title": "Wide fit",
+        "url": "/collections/shoes-wide-fit"
+       }
+      ]
+     },
+     {
+      "title": "Popular",
+      "url": "/collections/shoes-popular",
+      "items": [
+       {
+        "title": "New in",
+        "url": "/collections/shoes-new"
+       },
+       {
+        "title": "Best sellers",
+        "url": "/collections/shoes-best-sellers"
+       },
+       {
+        "title": "Sale shoes",
+        "url": "/collections/shoes-sale"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Clothing",
+    "url": "/collections/clothing",
+    "items": [
+     {
+      "title": "Men",
+      "url": "/collections/clothing-mens",
+      "items": [
+       {
+        "title": "T-shirts",
+        "url": "/collections/clothing-mens-t-shirts"
+       },
+       {
+        "title": "Polos",
+        "url": "/collections/clothing-mens-polos"
+       },
+       {
+        "title": "Shorts",
+        "url": "/collections/clothing-mens-shorts"
+       },
+       {
+        "title": "Hoodies and jackets",
+        "url": "/collections/clothing-mens-hoodies-jackets"
+       }
+      ]
+     },
+     {
+      "title": "Women",
+      "url": "/collections/clothing-womens",
+      "items": [
+       {
+        "title": "Tops",
+        "url": "/collections/clothing-womens-tops"
+       },
+       {
+        "title": "Skirts and dresses",
+        "url": "/collections/clothing-womens-skirts-dresses"
+       },
+       {
+        "title": "Shorts",
+        "url": "/collections/clothing-womens-shorts"
+       },
+       {
+        "title": "Leggings",
+        "url": "/collections/clothing-womens-leggings"
+       }
+      ]
+     },
+     {
+      "title": "Kit",
+      "url": "/collections/clothing-kit",
+      "items": [
+       {
+        "title": "Socks",
+        "url": "/collections/clothing-socks"
+       },
+       {
+        "title": "Caps and visors",
+        "url": "/collections/clothing-caps-visors"
+       },
+       {
+        "title": "Wristbands",
+        "url": "/collections/clothing-wristbands"
+       },
+       {
+        "title": "Headbands",
+        "url": "/collections/clothing-headbands"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Bags",
+    "url": "/collections/bags",
+    "items": [
+     {
+      "title": "Bags",
+      "url": "/collections/bags-by-type",
+      "items": [
+       {
+        "title": "Racket bags",
+        "url": "/collections/bags-racket-bags"
+       },
+       {
+        "title": "Backpacks",
+        "url": "/collections/bags-backpacks"
+       },
+       {
+        "title": "Holdalls",
+        "url": "/collections/bags-holdalls"
+       },
+       {
+        "title": "Shoe bags",
+        "url": "/collections/bags-shoe-bags"
+       }
+      ]
+     },
+     {
+      "title": "By size",
+      "url": "/collections/bags-by-size",
+      "items": [
+       {
+        "title": "Holds 1 to 2 rackets",
+        "url": "/collections/bags-1-2-rackets"
+       },
+       {
+        "title": "Holds 3 to 5 rackets",
+        "url": "/collections/bags-3-5-rackets"
+       },
+       {
+        "title": "Holds 6 or more",
+        "url": "/collections/bags-6-rackets"
+       }
+      ]
+     },
+     {
+      "title": "Popular",
+      "url": "/collections/bags-popular",
+      "items": [
+       {
+        "title": "New in",
+        "url": "/collections/bags-new"
+       },
+       {
+        "title": "Best sellers",
+        "url": "/collections/bags-best-sellers"
+       },
+       {
+        "title": "Sale bags",
+        "url": "/collections/bags-sale"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Balls",
+    "url": "/collections/balls",
+    "items": []
+   },
+   {
+    "title": "Accessories",
+    "url": "/collections/accessories",
+    "items": [
+     {
+      "title": "Racket care",
+      "url": "/collections/accessories-racket-care",
+      "items": [
+       {
+        "title": "Overgrips",
+        "url": "/collections/accessories-overgrips"
+       },
+       {
+        "title": "Grips",
+        "url": "/collections/accessories-grips"
+       },
+       {
+        "title": "Protector tape",
+        "url": "/collections/accessories-protector-tape"
+       },
+       {
+        "title": "Racket covers",
+        "url": "/collections/accessories-racket-covers"
+       }
+      ]
+     },
+     {
+      "title": "On court",
+      "url": "/collections/accessories-on-court",
+      "items": [
+       {
+        "title": "Balls",
+        "url": "/collections/balls"
+       },
+       {
+        "title": "Water bottles",
+        "url": "/collections/accessories-water-bottles"
+       },
+       {
+        "title": "Towels",
+        "url": "/collections/accessories-towels"
+       },
+       {
+        "title": "Ball holders",
+        "url": "/collections/accessories-ball-holders"
+       }
+      ]
+     },
+     {
+      "title": "Popular",
+      "url": "/collections/accessories-popular",
+      "items": [
+       {
+        "title": "Gift ideas",
+        "url": "/collections/gift-ideas"
+       },
+       {
+        "title": "Sale accessories",
+        "url": "/collections/accessories-sale"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Brands",
+    "url": "/collections",
+    "items": []
+   },
+   {
+    "title": "Beginners",
+    "url": "/pages/beginners",
+    "items": []
+   },
+   {
+    "title": "Sale",
+    "url": "/collections/sale",
+    "items": []
+   }
+  ]
+ },
+ "footer-shop": {
+  "title": "Shop",
+  "items": [
+   {
+    "title": "Padel rackets",
+    "url": "/collections/padel-rackets"
+   },
+   {
+    "title": "Shoes",
+    "url": "/collections/shoes"
+   },
+   {
+    "title": "Clothing",
+    "url": "/collections/clothing"
+   },
+   {
+    "title": "Bags",
+    "url": "/collections/bags"
+   },
+   {
+    "title": "Balls",
+    "url": "/collections/balls"
+   },
+   {
+    "title": "Accessories",
+    "url": "/collections/accessories"
+   },
+   {
+    "title": "Sale",
+    "url": "/collections/sale"
+   }
+  ]
+ },
+ "footer-rackets": {
+  "title": "Rackets",
+  "items": [
+   {
+    "title": "Beginner",
+    "url": "/collections/rackets-beginner"
+   },
+   {
+    "title": "Intermediate",
+    "url": "/collections/rackets-intermediate"
+   },
+   {
+    "title": "Advanced",
+    "url": "/collections/rackets-advanced"
+   },
+   {
+    "title": "Bullpadel",
+    "url": "/collections/bullpadel"
+   },
+   {
+    "title": "Nox",
+    "url": "/collections/nox"
+   },
+   {
+    "title": "Head",
+    "url": "/collections/head"
+   },
+   {
+    "title": "All brands",
+    "url": "/collections"
+   }
+  ]
+ },
+ "footer-help": {
+  "title": "Help",
+  "items": [
+   {
+    "title": "Delivery",
+    "url": "/pages/delivery"
+   },
+   {
+    "title": "Returns",
+    "url": "/pages/returns"
+   },
+   {
+    "title": "Track my order",
+    "url": "/account"
+   },
+   {
+    "title": "Pay with Klarna",
+    "url": "/pages/klarna"
+   },
+   {
+    "title": "Contact us",
+    "url": "/pages/contact"
+   },
+   {
+    "title": "FAQs",
+    "url": "/pages/faqs"
+   }
+  ]
+ },
+ "footer-about": {
+  "title": "About",
+  "items": [
+   {
+    "title": "About Raqello",
+    "url": "/pages/about"
+   },
+   {
+    "title": "The padel guide",
+    "url": "/blogs/guides"
+   }
+  ]
+ },
+ "footer": {
+  "title": "Legal",
+  "items": [
+   {
+    "title": "Privacy",
+    "url": "/pages/privacy"
+   },
+   {
+    "title": "Terms",
+    "url": "/pages/terms"
+   },
+   {
+    "title": "Cookies",
+    "url": "/pages/cookies"
+   }
+  ]
+ }
+}

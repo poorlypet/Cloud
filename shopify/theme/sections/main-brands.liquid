@@ -1,0 +1,27 @@
+{%- assign vendors = shop.vendors | sort_natural -%}
+<div class="pg sx pg-brands v3">
+<div class="wrap">{% render 'crumbs', title: section.settings.title %}</div>
+<section class="sxtitle"><div class="wrap"><small>{{ section.settings.title }}</small><h1>{{ section.settings.heading }}</h1><p>{{ 'brands.count' | t: count: vendors.size }}</p></div></section>
+<section class="sec sx-sec pt0"><div class="wrap">
+  <div class="bcards" id="bcards">
+    {%- for v in vendors -%}
+      {%- assign bh = v | handleize -%}{%- assign bc = collections[bh] -%}
+      <a class="bcd" href="{% render 'brand-url', brand: v %}">
+        <div class="pph bp">{%- if bc.image -%}{{ bc.image | image_url: width: 900 | image_tag: class: 'fill', loading: 'lazy', widths: '360, 600, 900', sizes: '(min-width: 990px) 33vw, 100vw', alt: '' }}{%- else -%}<span class="note">{{ 'general.photo' | t }}: {{ v }} campaign</span>{%- endif -%}</div>
+        <span class="lg">{%- assign logo = bc.metafields.custom.logo.value -%}{%- if logo -%}{{ logo | image_url: height: 100 | image_tag: alt: v }}{%- else -%}Logo: {{ v }}{%- endif -%}</span>
+        <div class="bt"><b>{{ v }}</b>{%- if bc.id -%}<span>{{ 'brands.products' | t: count: bc.all_products_count }}</span>{%- endif -%}</div>
+        <span class="sh2">{{ 'brands.shop' | t }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>
+</div>
+{% schema %}
+{
+  "name": "Brands",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Label", "default": "Brands" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our brands" }
+  ]
+}
+{% endschema %}

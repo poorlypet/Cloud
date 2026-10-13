@@ -1,0 +1,37 @@
+{%- comment -%}
+  Storefront filters from the Search and Discovery app.
+  sheet: false renders the desktop filter bar, sheet: true the mobile filter and sort drawer.
+{%- endcomment -%}
+{%- if sheet -%}<div class="fsheet" id="fsheet"><div class="hd">{{ 'collection.filter_sort' | t }}<button class="x" type="button" data-close-f aria-label="{{ 'general.close' | t }}"></button></div><div class="bd" id="fsb">{%- endif -%}
+<form id="{{ form_id }}" data-filters action="{{ url }}">
+  {%- if results.terms -%}<input type="hidden" name="q" value="{{ results.terms | escape }}">{%- endif -%}
+  {%- unless sheet -%}<div class="fbar" id="fbar">{%- endunless -%}
+  {%- if sheet -%}
+    {%- assign sb = results.sort_by | default: results.default_sort_by -%}
+    <div class="fg"><button type="button">{{ 'collection.sort' | t }}</button><div class="fo">
+      {%- for o in results.sort_options -%}<label><input type="radio" name="sort_by" value="{{ o.value }}"{% if o.value == sb %} checked{% endif %}>{{ o.name }}</label>{%- endfor -%}
+    </div></div>
+  {%- endif -%}
+  {%- for f in results.filters -%}
+    {%- case f.type -%}
+      {%- when 'list', 'boolean' -%}
+        {%- if sheet -%}<div class="fg{% if forloop.index > 3 and f.active_values.size == 0 %} shut{% endif %}"><button type="button">{{ f.label }}</button>{%- else -%}<div class="dd"><button type="button" class="{% if f.active_values.size > 0 %}has{% endif %}">{{ f.label }}{% if f.active_values.size > 0 %} ({{ f.active_values.size }}){% endif %}</button><div class="pop">{%- endif -%}
+        <div class="fo">
+          {%- for v in f.values -%}
+            <label class="{% if v.count == 0 and v.active == false %}dis{% endif %}"><input type="checkbox" name="{{ v.param_name }}" value="{{ v.value }}"{% if v.active %} checked{% endif %}{% if v.count == 0 and v.active == false %} disabled{% endif %}>{{ v.label }}<span>{{ v.count }}</span></label>
+          {%- endfor -%}
+        </div>
+        {%- if sheet -%}</div>{%- else -%}</div></div>{%- endif -%}
+      {%- when 'price_range' -%}
+        {%- if sheet -%}<div class="fg"><button type="button">{{ f.label }}</button>{%- else -%}<div class="dd"><button type="button" class="{% if f.min_value.value or f.max_value.value %}has{% endif %}">{{ f.label }}</button><div class="pop">{%- endif -%}
+        <div class="fo"><div class="prng">
+          <input type="number" min="0" name="{{ f.min_value.param_name }}" placeholder="0" aria-label="{{ 'collection.min' | t }}"{% if f.min_value.value %} value="{{ f.min_value.value | money_without_currency | remove: ',' }}"{% endif %}>
+          <span>{{ 'collection.to' | t }}</span>
+          <input type="number" min="0" name="{{ f.max_value.param_name }}" placeholder="{{ f.range_max | money_without_currency | remove: ',' }}" aria-label="{{ 'collection.max' | t }}"{% if f.max_value.value %} value="{{ f.max_value.value | money_without_currency | remove: ',' }}"{% endif %}>
+        </div></div>
+        {%- if sheet -%}</div>{%- else -%}</div></div>{%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
+  {%- unless sheet -%}</div>{%- endunless -%}
+</form>
+{%- if sheet -%}</div><div class="ft"><a class="btn ol" href="{{ url }}{% if results.terms %}?q={{ results.terms | url_encode }}{% endif %}" data-furl>{{ 'collection.clear' | t }}</a><button class="btn" type="button" data-close-f>{{ 'collection.show_results' | t }}</button></div></div>{%- endif -%}

@@ -1,0 +1,8 @@
+{%- if section.blocks.size > 0 or request.design_mode -%}
+<div class="wrap"><section class="psec" id="reviews">
+  {%- for block in section.blocks -%}{% render block %}{%- else -%}<p class="mute">Add the Trustpilot product reviews app block here. Hidden on the live store until an app block is added.</p>{%- endfor -%}
+</section></div>
+{%- endif -%}
+{% schema %}
+{ "name": "Product reviews", "blocks": [ { "type": "@app" } ] }
+{% endschema %}

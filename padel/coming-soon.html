@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Raqello Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>/* Raqello: under construction landing page */
+:root{--fg:#111;--accent:#FF4F00;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--head:'Inter Tight','Helvetica Neue',Arial,sans-serif;--mark:'Anton','Arial Narrow',Impact,sans-serif;--g:clamp(16px,3vw,40px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0E0E0E;color:#fff;font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.uc{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+.uc .bg{position:absolute;inset:0;z-index:-2;background:#1B1B1B}
+.uc .bg video,.uc .bg img{width:100%;height:100%;object-fit:cover;opacity:.55}
+.uc .bg .note{position:absolute;right:var(--g);bottom:96px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#6E6E6E}
+.uc:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(14,14,14,.55),rgba(14,14,14,.2) 40%,rgba(14,14,14,.92))}
+.uc .top{display:flex;justify-content:space-between;align-items:center;padding:22px var(--g)}
+.uc .logo{font-family:var(--mark);font-size:28px;letter-spacing:.01em;text-decoration:none}
+.uc .logo i,.uc .wm i{font-style:normal;color:var(--accent)}
+.uc .chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border:1px solid rgba(255,255,255,.35);font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.uc .chip:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);animation:ucp 1.6s ease-in-out infinite}
+@keyframes ucp{50%{opacity:.25}}
+.uc .mid{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--g) 36px}
+.uc .wm{font-family:var(--mark);font-weight:400;line-height:.84;letter-spacing:-.005em;font-size:calc((min(100vw,1600px) - 2*var(--g)) / 3.7);white-space:nowrap;margin-bottom:28px}
+.uc .row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end}
+.uc small.lab{display:block;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.uc h1{font-family:var(--head);font-weight:700;letter-spacing:-.03em;line-height:1.05;font-size:clamp(30px,3.6vw,56px)}
+.uc .row p{color:#CFCFCF;font-size:17px;max-width:46ch;margin-top:14px}
+.uc form.nl{display:flex;gap:0;max-width:520px;margin-left:auto;width:100%}
+.uc form.nl input{flex:1;min-width:0;height:56px;padding:0 18px;border:1px solid rgba(255,255,255,.4);border-right:0;background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:16px}
+.uc form.nl input::placeholder{color:#A9A9A9}
+.uc form.nl button{height:56px;padding:0 26px;border:0;background:var(--accent);color:#fff;font-family:var(--head);font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap}
+.uc form.nl button:hover{background:#fff;color:#111}
+.uc .fine{font-size:12px;color:#9A9A9A;margin-top:10px;text-align:right}
+.uc .ok{max-width:520px;margin-left:auto;padding:18px 20px;border:1px solid var(--accent);font-weight:700}
+.uc .err{color:#FF8A65;font-size:14px;margin-top:8px}
+.uc .brands{display:flex;gap:44px;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.14);padding:18px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.uc .brands .rl{display:inline-flex;gap:44px;animation:ucm 40s linear infinite}
+.uc .brands span{font-family:var(--head);font-weight:700;font-size:15px;letter-spacing:.02em;color:#BDBDBD;text-transform:uppercase}
+@keyframes ucm{to{transform:translateX(-50%)}}
+.uc .bot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px var(--g) 22px;font-size:13px;color:#9A9A9A}
+.uc .bot nav{display:flex;gap:18px}
+.uc .bot a{text-decoration:none}.uc .bot a:hover{color:#fff}
+.uc .own{background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+.pwd{border:0;padding:0;background:transparent;color:#111;margin:auto}
+.pwd::backdrop{background:rgba(0,0,0,.7)}
+.pwd .bx{background:#fff;padding:28px;width:min(420px,92vw)}
+.pwd h2{font-family:var(--head);font-size:22px;letter-spacing:-.02em;margin-bottom:6px}
+.pwd p{color:#555;font-size:14px;margin-bottom:16px}
+.pwd input{width:100%;height:48px;border:1px solid #ccc;padding:0 14px;font:inherit;margin-bottom:12px}
+.pwd .act{display:flex;gap:10px}
+.pwd button{height:48px;padding:0 20px;border:1.5px solid #111;background:#111;color:#fff;font-family:var(--head);font-weight:700;cursor:pointer}
+.pwd button.ol{background:#fff;color:#111}
+@media(prefers-reduced-motion:reduce){.uc .brands .rl,.uc .chip:before{animation:none}}
+@media(max-width:760px){
+ .uc .logo{font-size:24px}
+ .uc .wm{font-size:calc((100vw - 2*var(--g)) / 3.7);margin-bottom:18px}
+ .uc .row{grid-template-columns:1fr;gap:22px}
+ .uc .row p{font-size:15px}
+ .uc form.nl{margin-left:0;flex-direction:column;gap:10px}
+ .uc form.nl input{border-right:1px solid rgba(255,255,255,.4)}
+ .uc .fine{text-align:left}
+ .uc .ok{margin-left:0}
+ .uc .bot{flex-direction:column;align-items:flex-start}
+}
+.uc form.nl{flex-wrap:wrap}
+.uc form.nl .ok,.uc form.nl .err{flex-basis:100%}
+.uc .row .fine{font-size:12px;color:#9A9A9A;margin-top:10px;text-align:right;max-width:none}
+@media(max-width:760px){.uc form.nl input{flex:none;height:56px;width:100%}.uc form.nl button{width:100%}.uc .row .fine{text-align:left}}
+</style>
+</head>
+<body>
+  <div id="shopify-section-main" class="shopify-section"><div class="uc">
+  <div class="bg"><video autoplay muted loop playsinline poster="media/rally.jpg" src="media/rally.mp4"></video></div>
+  <header class="top"><span class="logo">RAQELLO<i>.</i></span><span class="chip">Under construction</span></header>
+  <main class="mid">
+    <div class="wm" aria-hidden="true">RAQELLO<i>.</i></div>
+    <div class="row">
+      <div><small class="lab">Opening soon</small><h1>Europe's best padel brands, in one UK store.</h1><p>We are building the store now. Leave your email and we will tell you the day we open.</p></div>
+      <div><form class="nl" method="post"><input type="hidden" name="contact[tags]" value="prelaunch, newsletter">
+            <input type="email" name="contact[email]" placeholder="Email address" required aria-label="Email address" autocomplete="email">
+            <button type="submit">Tell me first</button></form><p class="fine">One email when we open. No spam.</p>
+      </div>
+    </div>
+  </main><div class="brands" aria-label="Brands we will stock"><div class="rl"><span>Bullpadel</span><span>Nox</span><span>Head</span><span>Babolat</span><span>Adidas Padel</span><span>StarVie</span><span>Siux</span><span>Wilson</span><span>Dunlop</span><span>Drop Shot</span><span>Black Crown</span><span>Varlion</span><span aria-hidden="true">Bullpadel</span><span aria-hidden="true">Nox</span><span aria-hidden="true">Head</span><span aria-hidden="true">Babolat</span><span aria-hidden="true">Adidas Padel</span><span aria-hidden="true">StarVie</span><span aria-hidden="true">Siux</span><span aria-hidden="true">Wilson</span><span aria-hidden="true">Dunlop</span><span aria-hidden="true">Drop Shot</span><span aria-hidden="true">Black Crown</span><span aria-hidden="true">Varlion</span></div></div><footer class="bot">
+    <span>&copy; 2026 Raqello. Padel rackets, shoes and kit.</span>
+    <nav><button class="own" type="button" onclick="document.getElementById('pwd').showModal()">Store owner?</button>
+    </nav>
+  </footer>
+</div>
+<dialog class="pwd" id="pwd"><div class="bx">
+  <h2>Enter the store</h2><p>Enter the password to see the store.</p><form onsubmit="event.preventDefault()"><input type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" required>
+    <div class="act"><button type="submit">Enter</button><button class="ol" type="button" onclick="this.closest('dialog').close()">Close</button></div></form><p style="margin:14px 0 0">Are you the store owner? <a href="#">Log in here</a></p>
+</div></dialog>
+<script>if(document.querySelector('#pwd .err'))document.getElementById('pwd').showModal();</script>
+
+</div>
+
+</body></html>

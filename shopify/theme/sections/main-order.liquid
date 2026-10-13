@@ -1,0 +1,17 @@
+<div class="pg sx pg-account v3"><section class="sec sx-sec pt8"><div class="wrap">
+  {%- capture oh -%}{{ 'account.order' | t }} {{ order.name }}{%- endcapture -%}
+  {% render 'account-head', heading: oh, on: 'orders' %}
+  <p class="mute">{{ order.created_at | date: '%-d %B %Y' }}. {{ order.financial_status_label }}, {{ order.fulfillment_status_label }}.</p>
+  <div class="ordt">
+    {%- for li in order.line_items -%}
+      <div class="line"><div class="th">{%- if li.image -%}{{ li.image | image_url: width: 200 | image_tag: alt: li.title }}{%- endif -%}</div><div><b>{{ li.vendor }}</b><div>{{ li.product.title | default: li.title }}</div>{%- unless li.variant.title == 'Default Title' -%}<div class="s">{{ li.variant.title }}</div>{%- endunless -%}<div class="s">{{ 'account.qty' | t }} {{ li.quantity }}</div>{%- if li.fulfillment.tracking_url -%}<a class="ul" href="{{ li.fulfillment.tracking_url }}">{{ 'account.track' | t }}</a>{%- endif -%}</div><b>{{ li.final_line_price | money }}</b></div>
+    {%- endfor -%}
+    <div class="r"><span>{{ 'cart.subtotal' | t }}</span><b>{{ order.line_items_subtotal_price | money }}</b></div>
+    {%- for s in order.shipping_methods -%}<div class="r"><span>{{ s.title }}</span><b>{{ s.price | money }}</b></div>{%- endfor -%}
+    <div class="r tot"><span>{{ 'cart.total' | t }}</span><b>{{ order.total_price | money }}</b></div>
+  </div>
+  {%- if order.shipping_address -%}<h2 style="margin-top:28px">{{ 'account.delivery_to' | t }}</h2><p>{{ order.shipping_address | format_address }}</p>{%- endif -%}
+</div></section></div>
+{% schema %}
+{ "name": "Order" }
+{% endschema %}

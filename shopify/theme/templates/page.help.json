@@ -1,0 +1,100 @@
+{
+  "sections": {
+    "main": {
+      "type": "help-centre",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "popular",
+          "settings": {
+            "title": "How do I track my order?",
+            "link": "shopify://pages/delivery"
+          }
+        },
+        "b2": {
+          "type": "popular",
+          "settings": {
+            "title": "How much is delivery?",
+            "link": "shopify://pages/delivery"
+          }
+        },
+        "b3": {
+          "type": "popular",
+          "settings": {
+            "title": "How long do I have to return something?",
+            "link": "shopify://pages/returns"
+          }
+        },
+        "b4": {
+          "type": "popular",
+          "settings": {
+            "title": "Which racket should I start with?",
+            "link": "shopify://blogs/guides"
+          }
+        },
+        "b5": {
+          "type": "popular",
+          "settings": {
+            "title": "Does Klarna cost anything?",
+            "link": "shopify://pages/klarna"
+          }
+        },
+        "b6": {
+          "type": "card",
+          "settings": {
+            "title": "Track my order",
+            "sub": "Where is my parcel?",
+            "link": "shopify://pages/delivery"
+          }
+        },
+        "b7": {
+          "type": "card",
+          "settings": {
+            "title": "Returns",
+            "sub": "14 days on anything unused",
+            "link": "shopify://pages/returns"
+          }
+        },
+        "b8": {
+          "type": "card",
+          "settings": {
+            "title": "Delivery",
+            "sub": "Free over \u00a375",
+            "link": "shopify://pages/delivery"
+          }
+        },
+        "b9": {
+          "type": "card",
+          "settings": {
+            "title": "Payment and Klarna",
+            "sub": "Ways to pay",
+            "link": "shopify://pages/klarna"
+          }
+        },
+        "b10": {
+          "type": "card",
+          "settings": {
+            "title": "Contact us",
+            "sub": "Monday to Friday, 9am to 5pm",
+            "link": "shopify://pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

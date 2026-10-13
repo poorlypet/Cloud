@@ -1,0 +1,94 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "parent_link": "shopify://pages/help"
+      },
+      "blocks": {
+        "b1": {
+          "type": "route",
+          "settings": {
+            "title": "Email",
+            "text": "Add your customer email address"
+          }
+        },
+        "b2": {
+          "type": "route",
+          "settings": {
+            "title": "Order help",
+            "text": "Track or change an order"
+          }
+        },
+        "b3": {
+          "type": "route",
+          "settings": {
+            "title": "Kit advice",
+            "text": "Rackets, shoes and sizes"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "s2": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Quick answers",
+        "text": "Most questions are answered here.",
+        "note": "customer team on the phone"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "Can I change or cancel my order?",
+            "a": "<p>Contact us as soon as you can. If your order has not been packed yet we can change or cancel it for you.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "How long will my order take?",
+            "a": "<p>Most UK addresses get their order in 3 to 5 working days. The Highlands, Islands and Northern Ireland take 4 to 7 working days.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "How long do I have to return something?",
+            "a": "<p>14 days from the day your order arrives. Items need to be unused and in their original packaging.</p>"
+          }
+        },
+        "b4": {
+          "type": "q",
+          "settings": {
+            "q": "Can I exchange an item?",
+            "a": "<p>The quickest way is to return the item and place a new order for the one you want, so you are not waiting on an exchange.</p>"
+          }
+        },
+        "b5": {
+          "type": "q",
+          "settings": {
+            "q": "Which racket should I start with?",
+            "a": "<p>A round racket with a soft core. The sweet spot is bigger and it is far easier to control while you learn.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "s2"
+  ]
+}

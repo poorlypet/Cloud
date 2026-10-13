@@ -1,0 +1,23 @@
+{%- if predictive_search.performed -%}
+  {%- assign ps = predictive_search.resources -%}
+  {%- assign n = ps.products.size -%}
+  {%- if ps.queries.size > 0 -%}
+    <h6>{{ 'search.suggestions' | t }}</h6>
+    <div class="pop">{%- for s in ps.queries -%}<a href="{{ s.url }}">{{ s.text }}</a>{%- endfor -%}</div>
+  {%- endif -%}
+  {%- if ps.collections.size > 0 -%}
+    <h6>{{ 'search.collections' | t }}</h6>
+    <div class="pop">{%- for c in ps.collections -%}<a href="{{ c.url }}">{{ c.title }}</a>{%- endfor -%}</div>
+  {%- endif -%}
+  <h6>{{ 'search.results' | t: count: n }}</h6>
+  {%- if n > 0 -%}
+    <div class="sgrid">
+      {%- for p in ps.products limit: 6 -%}
+        <a href="{{ p.url }}"><div class="th">{%- if p.featured_media -%}{{ p.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div><b>{{ p.vendor }}</b><span>{{ p.title | remove_first: p.vendor | strip }}</span><br><span>{{ p.price | money_without_trailing_zeros }}</span></a>
+      {%- endfor -%}
+    </div>
+    <p><a class="ul" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&amp;options%5Bprefix%5D=last">{{ 'search.see_all' | t: terms: predictive_search.terms }}</a></p>
+  {%- else -%}
+    <p class="mute">{{ 'search.none_hint' | t }}</p>
+  {%- endif -%}
+{%- endif -%}

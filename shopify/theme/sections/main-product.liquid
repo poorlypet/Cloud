@@ -1,0 +1,133 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign m = product.metafields.custom
+  assign has_play = false
+  if m.power.value != blank or m.control.value != blank
+    assign has_play = true
+  endif
+  capture specs
+    render 'spec-rows', product: product, tag: 'dt', vtag: 'dd'
+  endcapture
+  assign has_specs = false
+  if specs != blank
+    assign has_specs = true
+  endif
+-%}
+<div id="pdp-root" class="fin">
+<div class="wrap">
+  {%- capture vurl -%}{% render 'brand-url', brand: product.vendor %}{%- endcapture -%}
+  {%- if collection -%}
+    {% render 'crumbs', title: product.title, parent_title: collection.title, parent_url: collection.url %}
+  {%- else -%}
+    {% render 'crumbs', title: product.title, parent_title: product.vendor, parent_url: vurl %}
+  {%- endif -%}
+  <div class="pdp flow">
+    <div style="min-width:0">
+      <div class="gal g2" id="gal">
+        {%- for media in product.media -%}
+          <div class="sq{% if media.media_type == 'image' %} zoom{% endif %}">
+            {%- if forloop.first and m.badge.value != blank -%}<span class="badge">{{ m.badge.value }}</span>{%- endif -%}
+            {%- case media.media_type -%}
+              {%- when 'image' -%}{%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}{{ media | image_url: width: 1400 | image_tag: widths: '450, 700, 1000, 1400', sizes: '(min-width: 990px) 30vw, 100vw', loading: ld, alt: media.alt }}
+              {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1000x', autoplay: false, loop: true, controls: true }}
+              {%- else -%}{{ media | media_tag }}
+            {%- endcase -%}
+          </div>
+        {%- else -%}
+          <div class="sq"><span class="note">{{ 'product.image' | t }}</span></div><div class="sq"><span class="note">{{ 'product.image' | t }}</span></div>
+        {%- endfor -%}
+      </div>
+      {%- if product.media.size > 1 -%}<div class="gal"><div class="dots" id="dots">{%- for media in product.media -%}<i class="{% if forloop.first %}on{% endif %}"></i>{%- endfor -%}</div></div>{%- endif -%}
+    </div>
+    <div class="buy flow" id="buy">
+      <div class="bl"><a href="{{ vurl }}">{{ product.vendor }}</a><span class="mute">{{ product.type }}</span></div>
+      <h1>{{ product.title }}</h1>
+      {%- assign r = product.metafields.reviews.rating.value -%}
+      {%- if r != blank -%}<div class="rl">{% render 'stars', size: 's' %}<b>{{ r.rating | round: 1 }}</b><a href="#reviews">{{ 'product.reviews' | t: count: product.metafields.reviews.rating_count.value }}</a></div>{%- endif -%}
+      {%- if m.lede.value != blank -%}<p class="lede">{{ m.lede.value }} <a href="#desc">{{ 'general.read_more' | t }}</a></p>{%- endif -%}
+      <div class="pr2" id="ppr"><b>{{ v.price | money_without_trailing_zeros }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}</div>
+      {%- if settings.klarna -%}
+        {%- assign third = v.price | divided_by: 3 | money -%}
+        <div class="kl2">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'product.klarna' | t: amount: third }}</span></div>
+      {%- endif -%}
+      {%- if m.best_for.value != blank -%}<p class="best"><span class="mute">{{ 'product.best_for' | t }}</span> {{ m.best_for.value }}</p>{%- endif -%}
+      {%- if has_play or has_specs -%}
+        <div class="hp hp-t"><div class="tl2">
+          {%- if has_play -%}<button type="button" class="on" data-bt="0">{{ 'product.how_it_plays' | t }}</button>{%- endif -%}
+          {%- if has_specs -%}<button type="button" data-bt="1"{% unless has_play %} class="on"{% endunless %}>{{ 'product.key_specs' | t }}</button>{%- endif -%}
+        </div>
+        {%- if has_play -%}<div class="btp on" data-btp="0">{%- if m.plays.value != blank -%}<p class="hp-s">{{ m.plays.value }}</p>{%- endif -%}{% render 'play-bars', product: product %}</div>{%- endif -%}
+        {%- if has_specs -%}<div class="btp{% unless has_play %} on{% endunless %}" data-btp="1"><dl class="kdl">{{ specs }}</dl><a class="ul allsp" href="#specs">{{ 'product.all_specs' | t }}</a></div>{%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- form 'product', product, data-product-form: '', id: 'pform' -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+        {%- unless product.has_only_default_variant -%}
+          <div class="vopts">
+            {%- for option in product.options_with_values -%}
+              <fieldset data-opt><legend>{{ option.name }}<span data-optv>{{ option.selected_value }}</span></legend><div class="sw">
+                {%- for value in option.values -%}
+                  {%- assign oid = section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ oid }}" name="opt{{ forloop.parentloop.index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}{% unless value.available %} class="na"{% endunless %}><label for="{{ oid }}">{{ value }}</label>
+                {%- endfor -%}
+              </div></fieldset>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+        <div class="atc"><div class="qty2"><button type="button" data-qd="-1" aria-label="{{ 'cart.fewer' | t }}">&minus;</button><span id="qty">1</span><button type="button" data-qd="1" aria-label="{{ 'cart.more' | t }}">+</button></div>
+          <button class="btn big" id="atc" type="submit" data-l-add="{{ 'product.add' | t }}" data-l-soldout="{{ 'product.sold_out' | t }}" data-l-na="{{ 'product.unavailable' | t }}"{% unless v.available %} disabled{% endunless %}>{%- if v.available -%}{{ 'product.add' | t }}{%- else -%}{{ 'product.sold_out' | t }}{%- endif -%}</button>
+        </div>
+        {{ form | payment_button }}
+      {%- endform -%}
+      <script type="application/json" data-variants>[{%- for x in product.variants -%}{%- capture phtml -%}<b>{{ x.price | money_without_trailing_zeros }}</b>{%- if x.compare_at_price > x.price -%} <s>{{ x.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}{%- endcapture -%}{"id":{{ x.id }},"available":{{ x.available | json }},"options":{{ x.options | json }},"price_html":{{ phtml | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
+      <ul class="perks">
+        <li>{%- if v.available -%}<span class="dot"></span><span><b>{{ 'product.in_stock' | t }}</b>, {{ 'product.ready' | t }}</span>{%- else -%}<span>{{ 'product.sold_out' | t }}</span>{%- endif -%}</li>
+        {%- assign fo = settings.free_delivery_over | times: 100 -%}
+        {%- if fo > 0 and v.price >= fo -%}<li><span><b>{{ 'product.free_delivery' | t }}</b> {{ 'product.on_this_order' | t }}</span></li>{%- elsif settings.delivery_line != blank -%}<li><span>{{ settings.delivery_line }}</span></li>{%- endif -%}
+        {%- if settings.tp_label != blank -%}<li><span>{{ 'product.rated' | t }} <b>{{ settings.tp_label }}</b> on Trustpilot</span></li>{%- endif -%}
+      </ul>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}{% render block %}
+          {%- when 'help' -%}<p class="helpl" {{ block.shopify_attributes }}>{{ block.settings.text }} <a href="{{ block.settings.link }}">{{ block.settings.link_label }}</a></p>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+<div class="wrap"><section class="psec first" id="desc">
+  <div class="ptabs">
+    <button type="button" class="on" data-tabp="0">{{ 'product.description' | t }}</button>
+    {%- if has_play -%}<button type="button" data-tabp="1">{{ 'product.how_it_plays' | t }}</button>{%- endif -%}
+    {%- if has_specs -%}<button type="button" data-tabp="2">{{ 'product.key_specs' | t }}</button>{%- endif -%}
+    <button type="button" data-tabp="3">{{ 'product.delivery_returns' | t }}</button>
+  </div>
+  <div class="pane on" data-pane="0"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.description' | t }}</h3><div class="desc rte">{{ product.description }}</div></div>
+  {%- if has_play -%}<div class="pane" data-pane="1"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.how_it_plays' | t }}</h3><div class="hpx">{%- if m.plays.value != blank -%}<p class="hp-s">{{ m.plays.value }}</p>{%- endif -%}{% render 'play-bars', product: product %}</div></div>{%- endif -%}
+  {%- if has_specs -%}<div class="pane" data-pane="2"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.key_specs' | t }}</h3><div class="spec2" id="specs"><div><span>{{ 'product.brand' | t }}</span><b>{{ product.vendor }}</b></div>{% render 'spec-rows', product: product %}</div></div>{%- endif -%}
+  <div class="pane" data-pane="3"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.delivery_returns' | t }}</h3><div class="rte">{{ section.settings.delivery }}</div></div>
+</section></div>
+{%- assign feats = m.features.value | newline_to_br | split: '<br />' -%}
+{%- if m.features.value != blank -%}
+<section class="fband"><div class="wrap">
+  <div class="ph">{%- if m.feature_image.value -%}{{ m.feature_image.value | image_url: width: 1600 | image_tag: class: 'fill', loading: 'lazy', alt: '' }}{%- else -%}<span class="note">{{ 'general.photo' | t }}: {{ product.title }}</span>{%- endif -%}<h2>{{ 'product.what_makes' | t }}</h2></div>
+  <div class="f4">{%- for line in feats limit: 4 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div>{%- endif -%}{%- endfor -%}</div>
+</div></section>
+{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "richtext", "id": "delivery", "label": "Delivery and returns text", "default": "<p>Free UK delivery on orders over £75. Delivery options and prices are shown at checkout.</p><p>You have 14 days to return anything unused, in its original packaging.</p>" }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    { "type": "help", "name": "Help line", "limit": 1, "settings": [
+      { "type": "text", "id": "text", "label": "Text", "default": "Not sure it is right for you?" },
+      { "type": "text", "id": "link_label", "label": "Link text", "default": "Read our racket guide" },
+      { "type": "url", "id": "link", "label": "Link" } ] }
+  ]
+}
+{% endschema %}

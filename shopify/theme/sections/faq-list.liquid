@@ -1,0 +1,24 @@
+{%- assign s = section.settings -%}
+<section class="sec sx-sec {{ s.cls }}"><div class="wrap">
+  {%- if s.heading != blank -%}{% render 'sec-head', heading: s.heading, text: s.text %}{%- endif -%}
+  <div class="faqp{% if s.image == blank and s.note == blank %} one{% endif %}"><div><div class="sxfaq">
+    {%- for block in section.blocks -%}<details {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><div class="rte">{{ block.settings.a }}</div></details>{%- endfor -%}
+  </div></div>
+  {%- if s.image != blank or s.note != blank -%}<div class="pph fp">{% render 'ph', image: s.image, note: s.note, cls: 'fill', sizes: '40vw' %}</div>{%- endif -%}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Questions",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions" },
+    { "type": "text", "id": "text", "label": "Text" },
+    { "type": "image_picker", "id": "image", "label": "Side image" },
+    { "type": "text", "id": "note", "label": "Placeholder note" },
+    { "type": "text", "id": "cls", "label": "Spacing class" }
+  ],
+  "blocks": [ { "type": "q", "name": "Question", "settings": [
+    { "type": "text", "id": "q", "label": "Question" }, { "type": "richtext", "id": "a", "label": "Answer" } ] } ],
+  "presets": [ { "name": "Questions" } ]
+}
+{% endschema %}

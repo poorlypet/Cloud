@@ -1,0 +1,14 @@
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  assign p = target.price
+  assign was = target.compare_at_price
+  if variant == blank
+    assign p = product.price
+    assign was = product.compare_at_price
+  endif
+-%}
+{%- if was > p -%}
+  <span class="now">{{ p | money_without_trailing_zeros }}</span><s>{{ was | money_without_trailing_zeros }}</s>
+{%- else -%}
+  {%- if variant == blank and product.price_varies %}From {% endif -%}{{ p | money_without_trailing_zeros }}
+{%- endif -%}

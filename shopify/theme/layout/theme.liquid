@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">
+  {%- endif -%}
+  <title>{{ page_title }}{% if current_page != 1 %} | Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {% render 'meta-tags' %}
+  {% render 'fonts' %}
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {%- case template.name -%}
+    {%- when 'product' -%}{{ 'pdp.css' | asset_url | stylesheet_tag }}
+    {%- when 'collection', 'index' -%}
+    {%- else -%}{{ 'pages.css' | asset_url | stylesheet_tag }}
+  {%- endcase -%}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {% render 'theme-vars' %}
+  <script>
+    window.RQ = {
+      cartUrl: {{ routes.cart_url | json }},
+      cartAdd: {{ routes.cart_add_url | json }},
+      cartChange: {{ routes.cart_change_url | json }},
+      searchUrl: {{ routes.predictive_search_url | json }},
+      recsUrl: {{ routes.product_recommendations_url | json }},
+      freeOver: {{ settings.free_delivery_over | default: 0 | times: 100 | json }},
+      money: {{ shop.money_format | json }},
+      added: {{ 'cart.added' | t | json }}
+    };
+  </script>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  {{ content_for_header }}
+</head>
+<body class="tpl-{{ template.name }}{% if template.suffix %} tpl-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <a class="skip" href="#main">{{ 'general.skip' | t }}</a>
+  {% sections 'header-group' %}
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+  {% sections 'footer-group' %}
+  <div class="scrim" id="scrim"></div>
+  {% render 'search-drawer' %}
+  {% section 'cart-drawer' %}
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

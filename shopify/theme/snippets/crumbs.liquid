@@ -1,0 +1,6 @@
+<nav class="crumbs" aria-label="{{ 'general.breadcrumbs' | t }}">
+  <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+  {%- if parent_title != blank -%}<span>/</span><a href="{{ parent_url }}">{{ parent_title }}</a>{%- endif -%}
+  {%- if parent2_title != blank -%}<span>/</span><a href="{{ parent2_url }}">{{ parent2_title }}</a>{%- endif -%}
+  <span>/</span><span>{{ title }}</span>
+</nav>

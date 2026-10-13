@@ -1,0 +1,1 @@
+{%- assign words = article.content | strip_html | split: ' ' | size -%}{%- assign mins = words | divided_by: 200 | at_least: 1 -%}{{ 'blog.read_time' | t: count: mins }}

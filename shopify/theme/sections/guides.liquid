@@ -1,0 +1,21 @@
+{%- assign b = section.settings.blog -%}
+<section class="sec"><div class="wrap">
+  {% render 'sec-head', heading: section.settings.heading, text: section.settings.text, link_label: section.settings.link_label, link: b.url %}
+  <div class="gtiles">
+    {%- for article in b.articles limit: 4 -%}
+      <a class="gt2" href="{{ article.url }}">{% render 'ph', image: article.image, note: article.title, cls: 'fill', sizes: '(min-width: 990px) 25vw, 50vw' %}<span class="gtag">{{ article.tags.first | default: b.title }}</span><div class="gb"><h3>{{ article.title }}</h3><span class="gm">{% render 'read-time', article: article %} {% render 'icon', name: 'arrow' %}</span></div></a>
+    {%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Guides",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The padel guide" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Buying advice and tips from players who know the game." },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "link_label", "label": "Link text", "default": "All guides" }
+  ],
+  "presets": [ { "name": "Guides" } ]
+}
+{% endschema %}

@@ -1,0 +1,5 @@
+{{ 'inter-tight.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+<style>
+  @font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:swap;src:url({{ 'anton.woff2' | asset_url }}) format('woff2')}
+  @font-face{font-family:'Inter Tight';font-style:normal;font-weight:600 700;font-display:swap;src:url({{ 'inter-tight.woff2' | asset_url }}) format('woff2')}
+</style>

@@ -1,0 +1,37 @@
+{%- liquid
+  assign seo_h = collection.metafields.custom.seo_heading.value | default: section.settings.heading
+  assign seo_t = collection.metafields.custom.seo_text.value
+  assign related = collection.metafields.custom.related.value
+-%}
+<div class="wrap"><section class="pinfo">
+  {%- if seo_t != blank or collection.description != blank -%}
+    <div class="seo"><h2>{{ seo_h | default: collection.title }}</h2><div class="clip rte">{%- if seo_t != blank -%}{{ seo_t | newline_to_br | replace: '<br />', '</p><p>' | prepend: '<p>' | append: '</p>' }}{%- else -%}{{ collection.description }}{%- endif -%}</div><button class="ul" type="button" data-more data-more-label="{{ 'general.read_more' | t }}" data-less="{{ 'general.read_less' | t }}" style="margin-top:12px">{{ 'general.read_more' | t }}</button></div>
+  {%- endif -%}
+  {%- assign faq = collection.metafields.custom.faq.value -%}
+  {%- if faq.size > 0 -%}
+    <div class="faq"><h2>{{ section.settings.faq_heading }}</h2>
+      {%- for qa in faq -%}<details><summary>{{ qa[0] }}</summary><p>{{ qa[1] }}</p></details>{%- endfor -%}
+    </div>
+  {%- elsif section.blocks.size > 0 -%}
+    <div class="faq"><h2>{{ section.settings.faq_heading }}</h2>
+      {%- for block in section.blocks -%}<details {{ block.shopify_attributes }}><summary>{{ block.settings.q }}</summary><p>{{ block.settings.a }}</p></details>{%- endfor -%}
+    </div>
+  {%- endif -%}
+  {%- if related.size > 0 -%}
+    <div class="related r1">{%- for c in related -%}<a href="{{ c.url }}">{{ c.title }}</a>{%- endfor -%}</div>
+  {%- endif -%}
+</section></div>
+{% schema %}
+{
+  "name": "Collection guide and FAQ",
+  "settings": [
+    { "type": "paragraph", "content": "The guide text comes from the collection metafields custom.seo_heading and custom.seo_text, questions from custom.faq and related links from custom.related. The questions below show when a collection has no custom.faq." },
+    { "type": "text", "id": "heading", "label": "Fallback heading" },
+    { "type": "text", "id": "faq_heading", "label": "Questions heading", "default": "Questions" }
+  ],
+  "blocks": [ { "type": "faq", "name": "Question", "settings": [
+    { "type": "text", "id": "q", "label": "Question" },
+    { "type": "textarea", "id": "a", "label": "Answer" } ] } ],
+  "presets": [ { "name": "Collection guide and FAQ" } ]
+}
+{% endschema %}

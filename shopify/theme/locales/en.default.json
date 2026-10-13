@@ -1,0 +1,233 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "breadcrumbs": "Breadcrumbs",
+    "home": "Home",
+    "photo": "Photo",
+    "close": "Close",
+    "back": "Back",
+    "view_all": "View all",
+    "see_all": "See all",
+    "read_more": "Read more",
+    "read_less": "Read less",
+    "previous": "Previous",
+    "next": "Next",
+    "pay_in_3": "Pay in 3",
+    "free_delivery": "Free UK delivery over £{{ amount }}"
+  },
+  "header": {
+    "menu": "Menu",
+    "main": "Main menu",
+    "help": "Help",
+    "account": "Account",
+    "bag": "Bag",
+    "track": "Track my order",
+    "top_brands": "Top brands",
+    "featured": "Featured",
+    "view_all": "View all {{ title }}"
+  },
+  "search": {
+    "label": "Search",
+    "placeholder": "Search rackets, brands and more",
+    "popular": "Popular searches",
+    "suggestions": "Suggestions",
+    "collections": "Collections",
+    "results": {
+      "one": "1 result",
+      "other": "{{ count }} results"
+    },
+    "see_all": "See all results for {{ terms }}",
+    "none_hint": "No results. Try a brand name such as Nox, or a level such as Beginner.",
+    "button": "Search",
+    "results_for_html": {
+      "one": "1 result for <span class=\"q\">{{ terms }}</span>",
+      "other": "{{ count }} results for <span class=\"q\">{{ terms }}</span>"
+    },
+    "products": "results",
+    "more": "Show more results",
+    "none_html": "No results for <span class=\"q\">{{ terms }}</span>",
+    "none_text": "Check the spelling or try fewer words. Or start from one of these."
+  },
+  "cart": {
+    "added": "added to bag",
+    "empty": "Your bag is empty.",
+    "continue": "Continue shopping",
+    "fewer": "Fewer",
+    "more": "More",
+    "remove": "Remove",
+    "spend_more": "Spend {{ amount }} more for free UK delivery",
+    "free_ok": "Your order qualifies for free UK delivery",
+    "free_ok_html": "You have <b>free UK delivery</b>",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "view": "View bag",
+    "your": "Your",
+    "bag_word": "bag",
+    "items": {
+      "one": "1 item",
+      "other": "{{ count }} items"
+    },
+    "summary": "Summary",
+    "delivery": "Delivery",
+    "free": "Free",
+    "at_checkout": "At checkout",
+    "total": "Total",
+    "klarna": "Or 3 interest free payments of <b>{{ amount }}</b>"
+  },
+  "product": {
+    "image": "Product image",
+    "save": "Save {{ amount }}",
+    "add": "Add to bag",
+    "choose": "Choose options",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "new": "New",
+    "reviews": {
+      "one": "1 review",
+      "other": "{{ count }} reviews"
+    },
+    "klarna": "3 interest free payments of <b>{{ amount }}</b>.",
+    "best_for": "Best for",
+    "how_it_plays": "How it plays",
+    "key_specs": "Key specs",
+    "all_specs": "All specifications",
+    "in_stock": "In stock",
+    "ready": "ready to send",
+    "free_delivery": "Free UK delivery",
+    "on_this_order": "on this order",
+    "rated": "Rated",
+    "description": "Description",
+    "delivery_returns": "Delivery and returns",
+    "brand": "Brand",
+    "what_makes": "What makes it different"
+  },
+  "collection": {
+    "brands": "Brands",
+    "hero_note": "hero photo",
+    "all": "All",
+    "all_levels": "All levels",
+    "choose_level": "Choose your level",
+    "need_help": "Need help choosing?",
+    "filter": "Filter",
+    "sort": "Sort",
+    "grid": "Grid view",
+    "two": "Two per row",
+    "empty": "No products match these filters.",
+    "seen": "You have seen <b>{{ shown }}</b> of <b>{{ total }}</b> {{ unit }}",
+    "show_more": "Show {{ count }} more {{ unit }}",
+    "from": "From {{ price }}",
+    "filter_sort": "Filter and sort",
+    "min": "Minimum price",
+    "max": "Maximum price",
+    "to": "to",
+    "clear": "Clear all",
+    "show_results": "Show results"
+  },
+  "brands": {
+    "count": {
+      "one": "1 brand, from first rackets to tour models.",
+      "other": "{{ count }} brands, from first rackets to tour models."
+    },
+    "products": {
+      "one": "1 product",
+      "other": "{{ count }} products"
+    },
+    "shop": "Shop"
+  },
+  "blog": {
+    "read_time": {
+      "one": "1 min read",
+      "other": "{{ count }} min read"
+    },
+    "search": "Search guides",
+    "latest": "Latest guides"
+  },
+  "newsletter": {
+    "email": "Email address",
+    "button": "Sign up",
+    "thanks": "Thanks. You are signed up."
+  },
+  "contact": {
+    "name": "Your name",
+    "email": "Email address",
+    "topic": "What is it about?",
+    "order": "Order number, if you have one",
+    "message": "Your message",
+    "send": "Send message",
+    "thanks": "Thanks, we have got it.",
+    "reply": "We will reply by email within one working day."
+  },
+  "help": {
+    "search": "Search help"
+  },
+  "page": {
+    "updated": "Last updated {{ date }}",
+    "jump": "Jump to a section",
+    "questions": "Questions about this policy?",
+    "contact": "Contact us"
+  },
+  "notfound": {
+    "home": "Back to the homepage",
+    "shop": "Shop rackets"
+  },
+  "account": {
+    "sign_in": "Sign in",
+    "create": "Create account",
+    "welcome": "Welcome back",
+    "password": "Password",
+    "password_confirm": "Confirm password",
+    "forgot": "Forgotten your password?",
+    "create_heading": "Create an account",
+    "why": "Track orders, start returns and check out faster with your details saved.",
+    "first": "First name",
+    "last": "Last name",
+    "marketing": "Email me about new rackets and sale previews",
+    "reset": "Reset your password",
+    "reset_text": "Enter your email and we will send you a link to reset your password.",
+    "reset_sent": "Check your email for a link to reset your password.",
+    "send_link": "Send link",
+    "your_account": "Your account",
+    "orders": "Orders",
+    "addresses": "Addresses",
+    "sign_out": "Sign out",
+    "hello": "Hello {{ name }}",
+    "your_racket": "Your racket",
+    "bought": "Bought",
+    "view_racket": "View racket",
+    "your_orders": "Your orders",
+    "view_order": "View order",
+    "no_orders": "You have not placed any orders yet.",
+    "order": "Order",
+    "qty": "Quantity",
+    "track": "Track parcel",
+    "delivery_to": "Delivery address",
+    "default": "Default address",
+    "add_address": "Add an address",
+    "address1": "Address",
+    "address2": "Address line 2",
+    "city": "Town or city",
+    "postcode": "Postcode",
+    "phone": "Phone",
+    "make_default": "Make this my default address",
+    "save": "Save",
+    "reset_password": "Choose a new password",
+    "activate_account": "Activate your account"
+  },
+  "password": {
+    "owner": "Store owner?",
+    "enter": "Enter the store",
+    "enter_text": "Enter the password to see the store.",
+    "password": "Password",
+    "enter_button": "Enter",
+    "admin_html": "Are you the store owner? <a href=\"{{ url }}\">Log in here</a>"
+  },
+  "gift_card": {
+    "title": "Your gift card from {{ shop }}",
+    "heading": "Your {{ value }} gift card",
+    "expired": "This gift card has expired or is disabled.",
+    "code": "Use this code at checkout",
+    "balance": "Balance left: {{ value }}",
+    "shop": "Start shopping",
+    "print": "Print"
+  }
+}

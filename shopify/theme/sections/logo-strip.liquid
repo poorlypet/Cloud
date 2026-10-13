@@ -1,0 +1,19 @@
+<section class="logostrip"><div class="rail">
+  {%- for i in (1..2) -%}
+    {%- for block in section.blocks -%}
+      <a class="lg" href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}{% render 'brand-url', brand: block.settings.name %}{% endif %}"{% if i == 2 %} aria-hidden="true" tabindex="-1"{% else %} {{ block.shopify_attributes }}{% endif %}>
+        {%- if block.settings.logo != blank -%}{{ block.settings.logo | image_url: height: 120 | image_tag: loading: 'lazy', alt: block.settings.name }}{%- else -%}Logo: {{ block.settings.name }}{%- endif -%}
+      </a>
+    {%- endfor -%}
+  {%- endfor -%}
+</div></section>
+{% schema %}
+{
+  "name": "Brand logos",
+  "blocks": [ { "type": "brand", "name": "Brand", "settings": [
+    { "type": "text", "id": "name", "label": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "url", "id": "link", "label": "Link", "info": "Leave empty to link to the brand's collection." } ] } ],
+  "presets": [ { "name": "Brand logos" } ]
+}
+{% endschema %}

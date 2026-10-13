@@ -1,0 +1,18 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu", "settings": { "heading": "Shop", "menu": "footer-shop" } },
+        "rackets": { "type": "menu", "settings": { "heading": "Rackets", "menu": "footer-rackets" } },
+        "help": { "type": "menu", "settings": { "heading": "Help", "menu": "footer-help" } },
+        "about": { "type": "menu", "settings": { "heading": "About", "menu": "footer-about" } }
+      },
+      "block_order": ["shop", "rackets", "help", "about"],
+      "settings": { "legal_menu": "footer" }
+    }
+  },
+  "order": ["footer"]
+}

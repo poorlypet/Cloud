@@ -1,0 +1,7 @@
+{%- comment -%} Returns key|label pairs for product spec metafields that have a value. {%- endcomment -%}
+{%- assign keys = 'weight:Weight,balance:Balance,core:Core,face:Face,frame:Frame,shape:Shape,thickness:Thickness,level:Level,season:Season,sole:Sole,fit:Fit,material:Material,capacity:Capacity' | split: ',' -%}
+{%- for k in keys -%}
+  {%- assign kk = k | split: ':' -%}
+  {%- assign val = product.metafields.custom[kk[0]].value -%}
+  {%- if val != blank -%}<div><{{ tag | default: 'span' }}>{{ kk[1] }}</{{ tag | default: 'span' }}><{{ vtag | default: 'b' }}>{{ val }}</{{ vtag | default: 'b' }}></div>{%- endif -%}
+{%- endfor -%}

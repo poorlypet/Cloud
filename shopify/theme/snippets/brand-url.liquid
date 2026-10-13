@@ -1,0 +1,3 @@
+{%- comment -%} Brand link: the brand's own collection if it exists (handle = brand name), otherwise the vendor page. {%- endcomment -%}
+{%- assign bh = brand | handleize -%}
+{%- if collections[bh].id != blank -%}{{ collections[bh].url }}{%- else -%}{{ brand | url_for_vendor }}{%- endif -%}

@@ -1,0 +1,18 @@
+{%- assign bars = 'power:Power,control:Control,comfort:Comfort,manoeuvrability:Manoeuvrability' | split: ',' -%}
+<div class="hp-bars">
+  {%- for b in bars -%}
+    {%- assign bb = b | split: ':' -%}
+    {%- assign val = product.metafields.custom[bb[0]].value -%}
+    {%- if val != blank -%}
+      {%- liquid
+        assign word = 'Low'
+        if val >= 7
+          assign word = 'High'
+        elsif val >= 4
+          assign word = 'Medium'
+        endif
+      -%}
+      <div><div class="lb"><span>{{ bb[1] }}</span><span class="mute">{{ word }}</span></div><div class="ln"><i style="width:{{ val | times: 10 }}%"></i></div></div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

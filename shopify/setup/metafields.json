@@ -1,0 +1,318 @@
+[
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "level",
+  "name": "Level",
+  "type": "single_line_text_field",
+  "pin": true,
+  "validations": [
+   {
+    "name": "choices",
+    "value": "[\"Beginner\", \"Intermediate\", \"Advanced\"]"
+   }
+  ],
+  "use_as_filter": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "shape",
+  "name": "Shape",
+  "type": "single_line_text_field",
+  "pin": true,
+  "validations": [
+   {
+    "name": "choices",
+    "value": "[\"Round\", \"Teardrop\", \"Diamond\", \"Hybrid\"]"
+   }
+  ],
+  "use_as_filter": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "sole",
+  "name": "Sole",
+  "type": "single_line_text_field",
+  "pin": true,
+  "validations": [
+   {
+    "name": "choices",
+    "value": "[\"Herringbone\", \"Omni\", \"Clay\", \"All court\"]"
+   }
+  ],
+  "use_as_filter": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "fit",
+  "name": "Fit",
+  "type": "single_line_text_field",
+  "pin": true,
+  "validations": [
+   {
+    "name": "choices",
+    "value": "[\"Men\", \"Women\", \"Junior\"]"
+   }
+  ],
+  "use_as_filter": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "weight",
+  "name": "Weight",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "balance",
+  "name": "Balance",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "core",
+  "name": "Core",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "face",
+  "name": "Face",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "frame",
+  "name": "Frame",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "thickness",
+  "name": "Thickness",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "season",
+  "name": "Season",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "material",
+  "name": "Material",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "capacity",
+  "name": "Capacity",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "best_for",
+  "name": "Best for",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "badge",
+  "name": "Gallery badge",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "lede",
+  "name": "Short intro",
+  "type": "multi_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "plays",
+  "name": "How it plays",
+  "type": "multi_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "features",
+  "name": "Features (one per line, Title: text)",
+  "type": "multi_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "power",
+  "name": "Power 0 to 10",
+  "type": "number_integer",
+  "pin": true,
+  "validations": [
+   {
+    "name": "min",
+    "value": "0"
+   },
+   {
+    "name": "max",
+    "value": "10"
+   }
+  ]
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "control",
+  "name": "Control 0 to 10",
+  "type": "number_integer",
+  "pin": true,
+  "validations": [
+   {
+    "name": "min",
+    "value": "0"
+   },
+   {
+    "name": "max",
+    "value": "10"
+   }
+  ]
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "comfort",
+  "name": "Comfort 0 to 10",
+  "type": "number_integer",
+  "pin": true,
+  "validations": [
+   {
+    "name": "min",
+    "value": "0"
+   },
+   {
+    "name": "max",
+    "value": "10"
+   }
+  ]
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "manoeuvrability",
+  "name": "Manoeuvrability 0 to 10",
+  "type": "number_integer",
+  "pin": true,
+  "validations": [
+   {
+    "name": "min",
+    "value": "0"
+   },
+   {
+    "name": "max",
+    "value": "10"
+   }
+  ]
+ },
+ {
+  "ownerType": "PRODUCT",
+  "namespace": "custom",
+  "key": "feature_image",
+  "name": "Feature image",
+  "type": "file_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "tiles",
+  "name": "Tiles under the hero",
+  "type": "list.collection_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "related",
+  "name": "Related collections",
+  "type": "list.collection_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "parent",
+  "name": "Breadcrumb parent",
+  "type": "collection_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "seo_heading",
+  "name": "Guide heading",
+  "type": "single_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "seo_text",
+  "name": "Guide text",
+  "type": "multi_line_text_field",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "faq",
+  "name": "Questions",
+  "type": "json",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "logo",
+  "name": "Brand logo",
+  "type": "file_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "short_title",
+  "name": "Short title for tiles",
+  "type": "single_line_text_field",
+  "pin": true
+ }
+]

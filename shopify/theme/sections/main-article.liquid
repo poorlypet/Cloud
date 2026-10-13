@@ -1,0 +1,33 @@
+{%- assign s = section.settings -%}
+<div class="pg sx pg-article v3">
+<div class="aprog" id="aprog"><i></i></div>
+<section class="ahd3"><div class="wrap">
+  <div>{% render 'crumbs', title: article.title, parent_title: blog.title, parent_url: blog.url %}</div>
+  <small>{%- if article.tags.size > 0 -%}{{ article.tags.first }}, {% endif -%}{% render 'read-time', article: article %}</small>
+  <h1>{{ article.title }}</h1>
+  {%- if article.excerpt != blank -%}<p>{{ article.excerpt | strip_html }}</p>{%- endif -%}
+</div></section>
+<div class="wrap"><div class="pph awide">{% render 'ph', image: article.image, note: article.title, cls: 'fill' %}</div></div>
+<section class="sec sx-sec"><div class="wrap"><article class="abody a3 rte">
+  {{ article.content }}
+  {%- assign col = s.collection -%}
+  {%- if col.products.size > 0 -%}
+    <div class="ashop v3"><div class="ah"><b>{{ s.shop_heading | default: col.title }}</b><a class="ul" href="{{ col.url }}">{{ 'general.see_all' | t }}</a></div><div class="grid">{%- for p in col.products limit: 3 -%}{% render 'product-card', product: p %}{%- endfor -%}</div></div>
+  {%- endif -%}
+</article></div></section>
+{%- if blog.articles_count > 1 -%}
+<section class="sec sx-sec"><div class="wrap">{% render 'sec-head', heading: s.more_heading, link_label: 'All guides', link: blog.url %}
+  <div class="gcards c4">{%- for a in blog.articles limit: 5 -%}{%- if a.id != article.id -%}<a class="gcd" href="{{ a.url }}"><div class="pph gp">{% render 'ph', image: a.image, note: a.title, cls: 'fill', sizes: '25vw' %}</div><span class="gtg">{{ a.tags.first }}</span><h3>{{ a.title }}</h3><span class="gm">{% render 'read-time', article: a %}</span></a>{%- endif -%}{%- endfor -%}</div>
+</div></section>
+{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Guide",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Shop the guide", "info": "Connect to an article metafield to pick a collection per guide." },
+    { "type": "text", "id": "shop_heading", "label": "Shop heading" },
+    { "type": "text", "id": "more_heading", "label": "More guides heading", "default": "More guides" }
+  ]
+}
+{% endschema %}

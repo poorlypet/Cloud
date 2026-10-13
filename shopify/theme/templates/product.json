@@ -1,0 +1,1 @@
+{"sections":{"main":{"type":"main-product","blocks":{"help":{"type":"help","settings":{"link":"shopify://blogs/guides"}}},"block_order":["help"],"settings":{}},"reviews":{"type":"product-reviews","settings":{}},"recs":{"type":"product-recommendations","settings":{}}},"order":["main","reviews","recs"]}

@@ -1,0 +1,24 @@
+{%- assign col = section.settings.collection -%}
+<section class="sec {{ section.settings.cls }}"><div class="wrap">
+  {% render 'sec-head', heading: section.settings.heading, text: section.settings.text, link_label: section.settings.link_label, link: col.url %}
+  <div class="grid{% if section.settings.cols == '4' %} g4s{% endif %}">
+    {%- for p in col.products limit: section.settings.count -%}{% render 'product-card', product: p %}{%- else -%}
+      {%- for i in (1..4) -%}<div class="card"><div class="im"><span class="note">{{ 'product.image' | t }}</span></div><div class="meta"><div class="br">Brand</div><div>Product name</div><div class="pr">£0</div></div></div>{%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{
+  "name": "Product row",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Sale" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Last season's rackets, shoes and bags, reduced." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "link_label", "label": "Link text", "default": "Shop all sale" },
+    { "type": "range", "id": "count", "label": "Products", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "select", "id": "cols", "label": "Layout", "default": "3", "options": [ { "value": "4", "label": "Four across, small" }, { "value": "3", "label": "Design default" } ] },
+    { "type": "text", "id": "cls", "label": "Spacing class" }
+  ],
+  "presets": [ { "name": "Product row" } ]
+}
+{% endschema %}

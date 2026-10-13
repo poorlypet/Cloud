@@ -1,0 +1,18 @@
+<section class="sec"><div class="wrap"><div class="promo3">
+  {%- for block in section.blocks limit: 3 -%}
+    <a class="pt{% if forloop.first %} big{% endif %}" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{% render 'ph', image: block.settings.image, note: block.settings.note, cls: 'fill', sizes: '(min-width: 990px) 50vw, 100vw' %}<small>{{ block.settings.label }}</small><h3>{{ block.settings.heading }}</h3><span class="ul">{{ block.settings.cta }}</span></a>
+  {%- endfor -%}
+</div></div></section>
+{% schema %}
+{
+  "name": "Promo tiles",
+  "blocks": [ { "type": "tile", "name": "Tile", "limit": 3, "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "note", "label": "Placeholder note" },
+    { "type": "text", "id": "label", "label": "Label" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "cta", "label": "Link text" },
+    { "type": "url", "id": "link", "label": "Link" } ] } ],
+  "presets": [ { "name": "Promo tiles" } ]
+}
+{% endschema %}

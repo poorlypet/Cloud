@@ -1,0 +1,5 @@
+{%- comment -%} Product rating from a reviews app (reviews.rating and reviews.rating_count metafields). Shows nothing until reviews exist. {%- endcomment -%}
+{%- assign r = product.metafields.reviews.rating.value -%}
+{%- if r != blank -%}
+  <div class="rt">{% render 'stars', size: 's' %}<span>{{ r.rating | round: 1 }} ({{ product.metafields.reviews.rating_count.value | default: 0 }})</span></div>
+{%- endif -%}

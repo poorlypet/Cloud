@@ -1,0 +1,29 @@
+{%- assign s = section.settings -%}
+<div class="pg sx pg-{{ s.style }} v3">
+  <div class="wrap">{% render 'crumbs', title: page.title, parent_title: s.parent_label, parent_url: s.parent_link %}</div>
+  {%- if s.style == 'legal' -%}
+    <section class="lg3h"><div class="wrap"><div class="in"><small>{{ s.label }}</small><h1>{{ page.title }}</h1>{%- if s.intro != blank -%}<p>{{ s.intro }}</p>{%- endif -%}{%- assign upd = page.published_at | date: '%B %Y' -%}<span>{{ 'page.updated' | t: date: upd }}</span></div></div></section>
+    <section class="sec sx-sec pt0"><div class="wrap"><div class="lg3">
+      <label class="sel lgj"><select id="lgjump" aria-label="{{ 'page.jump' | t }}"><option value="">{{ 'page.jump' | t }}</option></select></label>
+      <div class="lgtx rte">{{ page.content }}</div>
+      {%- if s.contact_link != blank -%}<div class="lgq"><h2>{{ 'page.questions' | t }}</h2><p>{{ s.contact_text }}</p><a class="btn" href="{{ s.contact_link }}">{{ 'page.contact' | t }}</a></div>{%- endif -%}
+    </div></div></section>
+  {%- else -%}
+    <section class="sxtitle"><div class="wrap">{%- if s.label != blank -%}<small>{{ s.label }}</small>{%- endif -%}<h1>{{ page.title }}</h1>{%- if s.intro != blank -%}<p>{{ s.intro }}</p>{%- endif -%}</div></section>
+    {%- if page.content != blank -%}<section class="sec sx-sec pt0"><div class="wrap"><div class="rte pgtx">{{ page.content }}</div></div></section>{%- endif -%}
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    { "type": "select", "id": "style", "label": "Style", "default": "page", "options": [ { "value": "page", "label": "Standard" }, { "value": "legal", "label": "Legal policy" } ] },
+    { "type": "text", "id": "label", "label": "Small label" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "parent_label", "label": "Breadcrumb parent" },
+    { "type": "url", "id": "parent_link", "label": "Breadcrumb parent link" },
+    { "type": "text", "id": "contact_text", "label": "Legal: questions text", "default": "Email us and our team will get back to you within one working day." },
+    { "type": "url", "id": "contact_link", "label": "Legal: contact link" }
+  ]
+}
+{% endschema %}

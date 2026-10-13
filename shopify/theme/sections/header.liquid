@@ -1,0 +1,190 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="hdr" data-hdr>
+  <div class="wrap r1">
+    <div class="lg">
+      <button class="burger2" type="button" data-open="menu" aria-label="{{ 'header.menu' | t }}">{% render 'icon', name: 'menu' %}</button>
+      <a class="logo" href="{{ routes.root_url }}">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, width: section.settings.logo_width, style: 'height:auto' }}
+        {%- else -%}
+          {{ section.settings.wordmark | default: shop.name | upcase }}<i>.</i>
+        {%- endif -%}
+      </a>
+    </div>
+    <label class="sfield">{% render 'icon', name: 'search' %}<input id="sf" type="search" placeholder="{{ 'search.placeholder' | t }}" autocomplete="off" aria-label="{{ 'search.label' | t }}" readonly data-open="search"></label>
+    <div class="tools2">
+      <button class="sbtn" type="button" data-open="search" aria-label="{{ 'search.label' | t }}">{% render 'icon', name: 'search' %}</button>
+      {%- if section.settings.help_link != blank -%}<a href="{{ section.settings.help_link }}" class="tx">{{ 'header.help' | t }}</a>{%- endif -%}
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" aria-label="{{ 'header.account' | t }}">{% render 'icon', name: 'user' %}<span class="tx">{{ 'header.account' | t }}</span></a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" data-open="bag" aria-label="{{ 'header.bag' | t }}">{% render 'icon', name: 'bag' %}<span class="tx">{{ 'header.bag' | t }}</span><span class="cnt" id="bagn">{{ cart.item_count }}</span></a>
+    </div>
+  </div>
+  <nav class="r2" aria-label="{{ 'header.main' | t }}"><div class="wrap">
+    {%- for link in menu.links -%}
+      {%- liquid
+        assign has_mega = false
+        if link.links.size > 0
+          assign has_mega = true
+        endif
+        for block in section.blocks
+          if block.settings.item == link.title and block.settings.az
+            assign has_mega = true
+          endif
+        endfor
+        assign is_sale = false
+        if link.title == section.settings.sale_title
+          assign is_sale = true
+        endif
+      -%}
+      <a href="{{ link.url }}"{% if has_mega %} data-mega="{{ forloop.index }}"{% endif %}{% if is_sale %} class="sale"{% endif %}{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+    {%- endfor -%}
+  </div></nav>
+  <div class="mega" id="mega">
+    {%- for link in menu.links -%}
+      {%- liquid
+        assign mb = nil
+        for block in section.blocks
+          if block.settings.item == link.title
+            assign mb = block
+          endif
+        endfor
+      -%}
+      {%- if link.links.size > 0 or mb.settings.az -%}
+        <div class="mpn" data-p="{{ forloop.index }}" hidden>
+          {%- if mb.settings.az -%}
+            {%- liquid
+              assign vendors = shop.vendors | sort_natural
+              assign per = vendors.size | divided_by: 4.0 | ceil
+            -%}
+            <div class="wrap in az">
+              {%- for c in (0..3) -%}
+                {%- assign off = c | times: per -%}
+                <ul>{%- for v in vendors limit: per offset: off -%}<li><a href="{% render 'brand-url', brand: v %}">{{ v }}</a></li>{%- endfor -%}</ul>
+              {%- endfor -%}
+              {%- if mb.settings.promo_link != blank -%}
+                <a class="mpromo ph" href="{{ mb.settings.promo_link }}">{% render 'ph', image: mb.settings.promo_image, note: 'brand campaign image', sizes: '400px' %}<span class="mpt"><small>{{ mb.settings.promo_label }}</small><b>{{ mb.settings.promo_heading }}</b><span class="ul">{{ mb.settings.promo_cta }}</span></span></a>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="wrap in">
+              {%- for col in link.links -%}
+                <div><h5><a href="{{ col.url }}">{{ col.title }}</a></h5><ul>{%- for item in col.links -%}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{%- endfor -%}</ul></div>
+              {%- endfor -%}
+              {%- assign brands = mb.settings.brands | split: ',' -%}
+              {%- if brands.size > 0 -%}
+                <div><h5><a href="{{ routes.collections_url }}">{{ 'header.top_brands' | t }}</a></h5><div class="mlogos">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{% render 'brand-url', brand: bn %}">{{ bn }}</a>{%- endfor -%}</div></div>
+              {%- endif -%}
+              {%- if mb.settings.featured != blank -%}
+                <div><h5><a href="{{ link.url }}">{{ 'header.featured' | t }}</a></h5><div class="mfeat">
+                  {%- for p in mb.settings.featured -%}
+                    <a href="{{ p.url }}" class="mcard"><span class="th">{%- if p.featured_media -%}{{ p.featured_media | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</span><span><b>{{ p.vendor }}</b><span>{{ p.title | remove_first: p.vendor | strip }}</span><span class="pr">{{ p.price | money_without_trailing_zeros }}</span></span></a>
+                  {%- endfor -%}
+                </div></div>
+              {%- elsif mb != nil and mb.settings.promo_link != blank -%}
+                <div><a class="mpromo ph" href="{{ mb.settings.promo_link }}">{% render 'ph', image: mb.settings.promo_image, note: mb.settings.promo_note, sizes: '400px' %}<span class="mpt"><small>{{ mb.settings.promo_label }}</small><b>{{ mb.settings.promo_heading }}</b><span class="ul">{{ mb.settings.promo_cta }}</span></span></a></div>
+              {%- endif -%}
+            </div>
+            <div class="mfoot"><div class="wrap">{%- assign lt = link.title | downcase -%}<a class="ul" href="{{ link.url }}">{{ 'header.view_all' | t: title: lt }}</a>{%- if settings.free_delivery_over > 0 -%}<span>{{ 'general.free_delivery' | t: amount: settings.free_delivery_over }}</span>{%- endif -%}</div></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</header>
+
+<aside class="drawer left" id="menu" aria-label="{{ 'header.menu' | t }}">
+  <div class="top"><span class="logo">{{ section.settings.wordmark | default: shop.name | upcase }}<i>.</i></span><button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}"></button></div>
+  <div class="body mn">
+    <div class="mp main">
+      {%- for link in menu.links -%}
+        {%- liquid
+          assign mb = nil
+          for block in section.blocks
+            if block.settings.item == link.title
+              assign mb = block
+            endif
+          endfor
+        -%}
+        {%- if link.links.size > 0 or mb.settings.az -%}
+          <button class="mi" type="button" data-sub="{{ forloop.index }}">{{ link.title }}{% render 'icon', name: 'chev-right' %}</button>
+        {%- else -%}
+          <a class="mi{% if link.title == section.settings.sale_title %} sale{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+      <div class="mx">
+        {%- if shop.customer_accounts_enabled -%}<a href="{{ routes.account_url }}">{% render 'icon', name: 'user' %}{{ 'header.account' | t }}</a>{%- endif -%}
+        {%- if section.settings.help_link != blank -%}<a href="{{ section.settings.help_link }}">{{ 'header.help' | t }}</a>{%- endif -%}
+        {%- if section.settings.track_link != blank -%}<a href="{{ section.settings.track_link }}">{{ 'header.track' | t }}</a>{%- endif -%}
+      </div>
+      {%- if settings.tp_label != blank -%}<div class="mtp"><b>{{ settings.tp_label }}</b>{% render 'stars', size: 's' %}<span>{{ settings.tp_score }} on Trustpilot</span></div>{%- endif -%}
+    </div>
+    {%- for link in menu.links -%}
+      {%- liquid
+        assign mb = nil
+        for block in section.blocks
+          if block.settings.item == link.title
+            assign mb = block
+          endif
+        endfor
+      -%}
+      {%- if link.links.size > 0 or mb.settings.az -%}
+        <div class="mp sub" data-p="{{ forloop.index }}">
+          <button class="mback" type="button">{% render 'icon', name: 'chev-left' %}{{ 'general.back' | t }}</button>
+          <div class="mhead"><h3><a href="{{ link.url }}">{{ link.title }}</a></h3><a class="mva" href="{{ link.url }}">{{ 'general.view_all' | t }}</a></div>
+          {%- if mb.settings.az -%}
+            <div class="mgrp">{%- assign vendors = shop.vendors | sort_natural -%}{%- for v in vendors -%}<a href="{% render 'brand-url', brand: v %}">{{ v }}</a>{%- endfor -%}</div>
+          {%- else -%}
+            {%- for col in link.links -%}
+              <h6><a href="{{ col.url }}">{{ col.title }}</a></h6>
+              {%- if col.links.size > 0 -%}<div class="mgrp">{%- for item in col.links -%}<a href="{{ item.url }}">{{ item.title }}</a>{%- endfor -%}</div>{%- endif -%}
+            {%- endfor -%}
+            {%- assign brands = mb.settings.brands | split: ',' -%}
+            {%- if brands.size > 0 -%}
+              <h6><a href="{{ routes.collections_url }}">{{ 'header.top_brands' | t }}</a></h6>
+              <div class="mchips">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{% render 'brand-url', brand: bn %}">{{ bn }}</a>{%- endfor -%}</div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shdr",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Three levels: top item, column heading, link. Every column heading links to its own collection." },
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "Raqello" },
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the wordmark." },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 260, "step": 10, "unit": "px", "default": 140 },
+    { "type": "text", "id": "sale_title", "label": "Menu item shown in the accent colour", "default": "Sale" },
+    { "type": "url", "id": "help_link", "label": "Help link" },
+    { "type": "url", "id": "track_link", "label": "Track my order link" }
+  ],
+  "blocks": [
+    {
+      "type": "mega",
+      "name": "Mega menu extras",
+      "settings": [
+        { "type": "text", "id": "item", "label": "Menu item title", "info": "Must match the top level menu item, for example Padel rackets." },
+        { "type": "checkbox", "id": "az", "label": "Show every brand A to Z", "default": false },
+        { "type": "text", "id": "brands", "label": "Top brands", "info": "Comma separated, for example Bullpadel, Nox, Head" },
+        { "type": "product_list", "id": "featured", "label": "Featured products", "limit": 2 },
+        { "type": "header", "content": "Promo tile" },
+        { "type": "image_picker", "id": "promo_image", "label": "Image" },
+        { "type": "text", "id": "promo_note", "label": "Placeholder note", "default": "new season campaign image" },
+        { "type": "text", "id": "promo_label", "label": "Label", "default": "New season" },
+        { "type": "text", "id": "promo_heading", "label": "Heading" },
+        { "type": "text", "id": "promo_cta", "label": "Link text", "default": "Shop now" },
+        { "type": "url", "id": "promo_link", "label": "Link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

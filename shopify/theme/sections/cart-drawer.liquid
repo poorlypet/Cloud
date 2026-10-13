@@ -1,0 +1,44 @@
+{%- liquid
+  assign free = settings.free_delivery_over | times: 100
+  assign left = free | minus: cart.total_price
+  assign pct = cart.total_price | times: 100 | divided_by: free
+  if pct > 100
+    assign pct = 100
+  endif
+-%}
+<aside class="drawer" id="bag" aria-label="{{ 'header.bag' | t }}">
+  <div class="top">{{ 'header.bag' | t }}<button class="x" type="button" data-close aria-label="{{ 'general.close' | t }}"></button></div>
+  <div class="body" id="bagb">
+    {%- if cart.item_count == 0 -%}
+      <div class="empty"><p>{{ 'cart.empty' | t }}</p><button class="btn" type="button" data-close style="margin-top:18px">{{ 'cart.continue' | t }}</button></div>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="line">
+          <div class="th">{%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
+          <div>
+            <b>{{ item.product.vendor }}</b>
+            <div><a href="{{ item.url }}">{{ item.product.title | remove_first: item.product.vendor | strip }}</a></div>
+            {%- unless item.product.has_only_default_variant -%}<div class="s">{{ item.variant.title }}</div>{%- endunless -%}
+            <span class="qty"><button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="{{ 'cart.fewer' | t }}">&minus;</button><span>{{ item.quantity }}</span><button type="button" data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.more' | t }}">+</button></span>
+            <button class="rm" type="button" data-line="{{ forloop.index }}" data-qty="0">{{ 'cart.remove' | t }}</button>
+          </div>
+          <b>{{ item.final_line_price | money }}</b>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  <div class="foot" id="bagf">
+    {%- if cart.item_count > 0 -%}
+      {%- if free > 0 -%}
+        <div class="free">{%- if left > 0 -%}{%- assign spend = left | money_without_trailing_zeros -%}{{ 'cart.spend_more' | t: amount: spend }}{%- else -%}{{ 'cart.free_ok' | t }}{%- endif -%}<i><b style="width:{{ pct }}%"></b></i></div>
+      {%- endif -%}
+      <div class="tot"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+      <form action="{{ routes.cart_url }}" method="post"><button class="btn" type="submit" name="checkout" style="width:100%">{{ 'cart.checkout' | t }}</button></form>
+      <p class="small"><a class="ul" href="{{ routes.cart_url }}">{{ 'cart.view' | t }}</a></p>
+    {%- endif -%}
+  </div>
+</aside>
+
+{% schema %}
+{ "name": "Cart drawer", "settings": [] }
+{% endschema %}

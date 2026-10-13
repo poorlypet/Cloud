@@ -1,0 +1,26 @@
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ 'gift_card.title' | t: shop: shop.name }}</title>
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  {{ content_for_header }}
+</head>
+<body>
+  <div class="wrap" style="max-width:560px;padding:48px 16px;text-align:center">
+    <a class="logo" href="{{ shop.url }}" style="font-size:32px">{{ shop.name | upcase }}<i>.</i></a>
+    {%- assign iv = gift_card.initial_value | money -%}{%- assign bv = gift_card.balance | money -%}
+    <h1 style="font-family:var(--head);font-size:28px;margin:28px 0 8px">{{ 'gift_card.heading' | t: value: iv }}</h1>
+    {%- if gift_card.expired or gift_card.enabled == false -%}<p class="mute">{{ 'gift_card.expired' | t }}</p>{%- endif -%}
+    <p style="margin:12px 0">{{ 'gift_card.code' | t }}</p>
+    <p style="font-family:monospace;font-size:24px;letter-spacing:.1em;border:1px dashed #999;padding:14px">{{ gift_card.code | format_code }}</p>
+    {%- if gift_card.balance != gift_card.initial_value -%}<p>{{ 'gift_card.balance' | t: value: bv }}</p>{%- endif -%}
+    <div id="QrCode" data-identifier="{{ gift_card.qr_identifier }}" style="display:flex;justify-content:center;margin:20px 0"></div>
+    {%- if gift_card.pass_url -%}<a href="{{ gift_card.pass_url }}"><img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="Add to Apple Wallet" loading="lazy"></a>{%- endif -%}
+    <p style="margin-top:24px"><a class="btn" href="{{ shop.url }}">{{ 'gift_card.shop' | t }}</a> <button class="btn ol" type="button" onclick="window.print()">{{ 'gift_card.print' | t }}</button></p>
+  </div>
+  <script>window.addEventListener('load',function(){var q=document.getElementById('QrCode');if(window.QRCode&&q)new QRCode(q,{text:q.dataset.identifier,width:120,height:120});});</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{%- comment -%}
+  Product card, as signed off. Pass product. Pass wrap: true to add the wishlist wrapper used on collection grids.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign name = product.title | remove_first: product.vendor | strip
+  if name == blank
+    assign name = product.title
+  endif
+-%}
+{%- if wrap -%}<div class="pc">{%- endif -%}
+<a class="card" href="{{ product.url }}">
+  <div class="im">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 720 | image_tag: loading: 'lazy', widths: '240, 360, 480, 600, 720', sizes: '(min-width: 990px) 25vw, 50vw', alt: product.featured_media.alt | default: product.title }}
+    {%- else -%}
+      <span class="note">{{ 'product.image' | t }}</span>
+    {%- endif -%}
+    {%- if product.compare_at_price > product.price -%}
+      {%- assign saving = product.compare_at_price | minus: product.price | money_without_trailing_zeros -%}
+      <span class="stag">{{ 'product.save' | t: amount: saving }}</span>
+    {%- endif -%}
+    {%- if product.available -%}
+      {%- if product.has_only_default_variant -%}
+        <button class="add" type="button" data-add="{{ v.id }}">{{ 'product.add' | t }}</button>
+      {%- else -%}
+        <span class="add">{{ 'product.choose' | t }}</span>
+      {%- endif -%}
+    {%- else -%}
+      <span class="add">{{ 'product.sold_out' | t }}</span>
+    {%- endif -%}
+  </div>
+  <div class="meta">
+    {%- if product.tags contains 'new' or product.tags contains 'New' -%}<div class="new">{{ 'product.new' | t }}</div>{%- endif -%}
+    <div class="br">{{ product.vendor }}</div>
+    <div>{{ name }}</div>
+    {%- render 'rating', product: product -%}
+    <div class="pr">{% render 'price', product: product %}</div>
+    {%- render 'product-spec', product: product -%}
+  </div>
+</a>
+{%- if wrap -%}</div>{%- endif -%}

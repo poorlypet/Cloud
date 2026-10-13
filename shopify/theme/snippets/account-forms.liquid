@@ -1,0 +1,35 @@
+{%- comment -%} Sign in and create account, in one card with tabs. Pass tab: 0 or 1. {%- endcomment -%}
+<div class="pg sx pg-signin v2"><section class="sec sx-sec pt8 sic"><div class="wrap"><div class="acc2b">
+  <div class="tabs2" role="tablist"><button type="button" class="{% if tab == 0 %}on{% endif %}" data-atab="0">{{ 'account.sign_in' | t }}</button><button type="button" class="{% if tab == 1 %}on{% endif %}" data-atab="1">{{ 'account.create' | t }}</button></div>
+  <div class="pane{% if tab == 0 %} on{% endif %}" data-apane="0">
+    <h1>{{ 'account.welcome' | t }}</h1>
+    {%- form 'customer_login', class: 'tfx' -%}
+      {%- if form.errors -%}<p class="ferr">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <label>{{ 'contact.email' | t }}<input type="email" name="customer[email]" required autocomplete="email"></label>
+      {%- if form.password_needed -%}<label>{{ 'account.password' | t }}<input type="password" name="customer[password]" required autocomplete="current-password"></label>{%- endif -%}
+      <a class="ul fp2" href="#recover" data-atab="2">{{ 'account.forgot' | t }}</a>
+      <button class="btn hor" type="submit">{{ 'account.sign_in' | t }}</button>
+    {%- endform -%}
+  </div>
+  <div class="pane{% if tab == 1 %} on{% endif %}" data-apane="1">
+    <h1>{{ 'account.create_heading' | t }}</h1><p class="why">{{ 'account.why' | t }}</p>
+    {%- form 'create_customer', class: 'tfx' -%}
+      {%- if form.errors -%}<p class="ferr">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="two"><label>{{ 'account.first' | t }}<input name="customer[first_name]" required autocomplete="given-name"></label><label>{{ 'account.last' | t }}<input name="customer[last_name]" required autocomplete="family-name"></label></div>
+      <label>{{ 'contact.email' | t }}<input type="email" name="customer[email]" required autocomplete="email"></label>
+      <label>{{ 'account.password' | t }}<input type="password" name="customer[password]" required autocomplete="new-password"></label>
+      <label class="cb"><input type="checkbox" name="customer[accepts_marketing]" value="true">{{ 'account.marketing' | t }}</label>
+      <button class="btn hor" type="submit">{{ 'account.create' | t }}</button>
+    {%- endform -%}
+  </div>
+  <div class="pane" data-apane="2" id="recover">
+    <h1>{{ 'account.reset' | t }}</h1><p class="why">{{ 'account.reset_text' | t }}</p>
+    {%- form 'recover_customer_password', class: 'tfx' -%}
+      {%- if form.posted_successfully? -%}<p class="nlok">{{ 'account.reset_sent' | t }}</p>{%- endif -%}
+      {%- if form.errors -%}<p class="ferr">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <label>{{ 'contact.email' | t }}<input type="email" name="email" required autocomplete="email"></label>
+      <button class="btn hor" type="submit">{{ 'account.send_link' | t }}</button>
+    {%- endform -%}
+  </div>
+  {%- if settings.tp_label != blank -%}<div class="tps"><span class="rst s5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span><b>{{ settings.tp_label }}</b> on Trustpilot</span></div>{%- endif -%}
+</div></div></section></div>

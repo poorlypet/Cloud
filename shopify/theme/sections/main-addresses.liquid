@@ -1,0 +1,26 @@
+<div class="pg sx pg-account v3"><section class="sec sx-sec pt8"><div class="wrap">
+  {%- capture ah -%}{{ 'account.addresses' | t }}{%- endcapture -%}
+  {% render 'account-head', heading: ah, on: 'addresses' %}
+  {%- paginate customer.addresses by 10 -%}
+  <div class="ocards">
+    {%- for a in customer.addresses -%}
+      <div class="oc2"><div class="hd"><span><b>{{ a.first_name }} {{ a.last_name }}</b>{%- if a == customer.default_address -%}<small>{{ 'account.default' | t }}</small>{%- endif -%}</span></div><p>{{ a | format_address }}</p>
+        {%- form 'customer_address', a -%}<input type="hidden" name="_method" value="delete"><button class="ul" type="submit">{{ 'cart.remove' | t }}</button>{%- endform -%}</div>
+    {%- endfor -%}
+  </div>
+  {%- endpaginate -%}
+  <h2 style="margin-top:32px">{{ 'account.add_address' | t }}</h2>
+  {%- form 'customer_address', customer.new_address, class: 'tfx' -%}
+    <div class="two"><label>{{ 'account.first' | t }}<input name="address[first_name]" autocomplete="given-name"></label><label>{{ 'account.last' | t }}<input name="address[last_name]" autocomplete="family-name"></label></div>
+    <label>{{ 'account.address1' | t }}<input name="address[address1]" autocomplete="address-line1"></label>
+    <label>{{ 'account.address2' | t }}<input name="address[address2]" autocomplete="address-line2"></label>
+    <div class="two"><label>{{ 'account.city' | t }}<input name="address[city]" autocomplete="address-level2"></label><label>{{ 'account.postcode' | t }}<input name="address[zip]" autocomplete="postal-code"></label></div>
+    <input type="hidden" name="address[country]" value="United Kingdom">
+    <label>{{ 'account.phone' | t }}<input name="address[phone]" type="tel" autocomplete="tel"></label>
+    <label class="cb"><input type="checkbox" name="address[default]" value="1">{{ 'account.make_default' | t }}</label>
+    <button class="btn hor" type="submit">{{ 'account.save' | t }}</button>
+  {%- endform -%}
+</div></section></div>
+{% schema %}
+{ "name": "Addresses" }
+{% endschema %}

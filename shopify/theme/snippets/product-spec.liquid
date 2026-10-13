@@ -1,0 +1,19 @@
+{%- comment -%} The short spec line under a product: level and shape for rackets, type or sole for everything else. {%- endcomment -%}
+{%- liquid
+  assign bits = ''
+  assign lv = product.metafields.custom.level.value
+  assign sh = product.metafields.custom.shape.value
+  if lv != blank
+    assign bits = lv
+  endif
+  if sh != blank
+    if bits != blank
+      assign bits = bits | append: ', '
+    endif
+    assign bits = bits | append: sh
+  endif
+  if bits == blank
+    assign bits = product.type
+  endif
+-%}
+{%- if bits != blank -%}<div class="sp">{{ bits }}</div>{%- endif -%}

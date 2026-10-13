@@ -1,0 +1,12 @@
+<section class="wst"><div class="wrap"><p><span>{{ section.settings.line1 }}</span><span>{{ section.settings.line2 }} <mark><i>{{ section.settings.highlight }}</i></mark></span></p></div></section>
+{% schema %}
+{
+  "name": "Statement",
+  "settings": [
+    { "type": "text", "id": "line1", "label": "First line", "default": "We don't make rackets." },
+    { "type": "text", "id": "line2", "label": "Second line", "default": "We stock over 40 of Europe's" },
+    { "type": "text", "id": "highlight", "label": "Highlighted words", "default": "best padel brands." }
+  ],
+  "presets": [ { "name": "Statement" } ]
+}
+{% endschema %}

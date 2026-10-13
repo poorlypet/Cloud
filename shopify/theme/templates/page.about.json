@@ -1,0 +1,156 @@
+{
+  "sections": {
+    "main": {
+      "type": "about-hero",
+      "settings": {}
+    },
+    "s2": {
+      "type": "statement",
+      "settings": {}
+    },
+    "s3": {
+      "type": "logo-strip",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "brand",
+          "settings": {
+            "name": "Bullpadel"
+          }
+        },
+        "b2": {
+          "type": "brand",
+          "settings": {
+            "name": "Nox"
+          }
+        },
+        "b3": {
+          "type": "brand",
+          "settings": {
+            "name": "Head"
+          }
+        },
+        "b4": {
+          "type": "brand",
+          "settings": {
+            "name": "Babolat"
+          }
+        },
+        "b5": {
+          "type": "brand",
+          "settings": {
+            "name": "Adidas Padel"
+          }
+        },
+        "b6": {
+          "type": "brand",
+          "settings": {
+            "name": "StarVie"
+          }
+        },
+        "b7": {
+          "type": "brand",
+          "settings": {
+            "name": "Siux"
+          }
+        },
+        "b8": {
+          "type": "brand",
+          "settings": {
+            "name": "Wilson"
+          }
+        },
+        "b9": {
+          "type": "brand",
+          "settings": {
+            "name": "Dunlop"
+          }
+        },
+        "b10": {
+          "type": "brand",
+          "settings": {
+            "name": "Drop Shot"
+          }
+        },
+        "b11": {
+          "type": "brand",
+          "settings": {
+            "name": "Black Crown"
+          }
+        },
+        "b12": {
+          "type": "brand",
+          "settings": {
+            "name": "Varlion"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10",
+        "b11",
+        "b12"
+      ]
+    },
+    "s4": {
+      "type": "promo-tiles",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "tile",
+          "settings": {
+            "note": "warehouse shelves of racket boxes",
+            "label": "Our warehouse",
+            "heading": "Where every order is checked",
+            "cta": "Delivery and packing",
+            "link": "shopify://pages/delivery"
+          }
+        },
+        "b2": {
+          "type": "tile",
+          "settings": {
+            "note": "team on court after work",
+            "label": "Our team",
+            "heading": "Players, not just staff",
+            "cta": "Contact the team",
+            "link": "shopify://pages/contact"
+          }
+        },
+        "b3": {
+          "type": "tile",
+          "settings": {
+            "note": "team filming a racket review",
+            "label": "Our guides",
+            "heading": "Written by players",
+            "cta": "The padel guide",
+            "link": "shopify://blogs/guides"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "s5": {
+      "type": "reviews",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "s2",
+    "s3",
+    "s4",
+    "s5"
+  ]
+}

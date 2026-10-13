@@ -1,0 +1,54 @@
+{%- liquid
+  assign last_racket = nil
+  for o in customer.orders
+    for li in o.line_items
+      if li.product.metafields.custom.level.value != blank and last_racket == nil
+        assign last_racket = li
+        assign last_order = o
+      endif
+    endfor
+  endfor
+-%}
+<div class="pg sx pg-account v3">
+<section class="sec sx-sec pt8"><div class="wrap">
+  {%- capture hi -%}{{ 'account.hello' | t: name: customer.first_name }}{%- endcapture -%}
+  {% render 'account-head', heading: hi, on: 'orders' %}
+  {%- if last_racket -%}
+    <div class="kit"><div class="kr" id="kr"><div class="im">{%- if last_racket.image -%}{{ last_racket.image | image_url: width: 400 | image_tag: alt: last_racket.title }}{%- endif -%}</div>
+      <div><small>{{ 'account.your_racket' | t }}</small><h2>{{ last_racket.product.title }}</h2><p>{{ last_racket.product.metafields.custom.level.value }}{% if last_racket.product.metafields.custom.shape.value %}, {{ last_racket.product.metafields.custom.shape.value }}{% endif %}. {{ 'account.bought' | t }} {{ last_order.created_at | date: '%-d %B %Y' }}.</p><a class="ul" href="{{ last_racket.product.url }}">{{ 'account.view_racket' | t }}</a></div></div>
+      {%- assign kc = section.settings.kit -%}
+      {%- if kc.products.size > 0 -%}<div class="kf"><b id="kft">{{ section.settings.kit_heading }}</b><div class="grid">{%- for p in kc.products limit: 3 -%}{% render 'product-card', product: p %}{%- endfor -%}</div></div>{%- endif -%}
+    </div>
+  {%- else -%}
+    {%- assign nc = section.settings.no_racket -%}
+    <div class="kit"><div class="kr"><div class="im"></div><div><small>{{ 'account.your_racket' | t }}</small><h2>{{ section.settings.no_racket_heading }}</h2><p>{{ section.settings.no_racket_text }}</p>{%- if nc -%}<a class="ul" href="{{ nc.url }}">{{ section.settings.no_racket_link }}</a>{%- endif -%}</div></div></div>
+  {%- endif -%}
+</div></section>
+<section class="sec sx-sec"><div class="wrap">
+  <div class="sh"><div class="shl"><h2>{{ 'account.your_orders' | t }}</h2></div></div>
+  {%- paginate customer.orders by 10 -%}
+  {%- if customer.orders.size > 0 -%}
+    <div class="ocards">
+      {%- for o in customer.orders -%}
+        <div class="oc2"><div class="hd"><span><b>{{ o.name }}</b><small>{{ o.created_at | date: '%-d %B %Y' }}</small></span><span class="ost{% if o.fulfillment_status == 'fulfilled' %} ok{% endif %}">{{ o.fulfillment_status_label }}</span></div>
+          <div class="ims">{%- for li in o.line_items limit: 4 -%}<span>{%- if li.image -%}{{ li.image | image_url: width: 200 | image_tag: alt: li.title }}{%- else -%}<span class="note">{{ li.title }}</span>{%- endif -%}</span>{%- endfor -%}</div>
+          <div class="ft"><b>{{ o.total_price | money }}</b><span><a class="ul" href="{{ o.customer_url }}">{{ 'account.view_order' | t }}</a></span></div></div>
+      {%- endfor -%}
+    </div>
+  {%- else -%}<p class="mute">{{ 'account.no_orders' | t }}</p>{%- endif -%}
+  {%- endpaginate -%}
+</div></section>
+</div>
+{% schema %}
+{
+  "name": "Account",
+  "settings": [
+    { "type": "collection", "id": "kit", "label": "Kit for your racket" },
+    { "type": "text", "id": "kit_heading", "label": "Kit heading", "default": "Made to fit your racket" },
+    { "type": "text", "id": "no_racket_heading", "label": "No racket yet: heading", "default": "Find your racket" },
+    { "type": "textarea", "id": "no_racket_text", "label": "No racket yet: text", "default": "Once you buy a racket from us it shows here, with the grips, tape and covers that fit it." },
+    { "type": "collection", "id": "no_racket", "label": "No racket yet: link to" },
+    { "type": "text", "id": "no_racket_link", "label": "No racket yet: link text", "default": "Shop rackets by level" }
+  ]
+}
+{% endschema %}

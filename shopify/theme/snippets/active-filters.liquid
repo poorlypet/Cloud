@@ -1,0 +1,14 @@
+<div class="achips" id="achips">
+  {%- assign any = false -%}
+  {%- for f in results.filters -%}
+    {%- if f.type == 'price_range' -%}
+      {%- if f.min_value.value or f.max_value.value -%}
+        {%- assign any = true -%}
+        <a href="{{ f.url_to_remove }}" data-furl>{{ f.label }}: {{ f.min_value.value | default: 0 | money_without_trailing_zeros }} to {{ f.max_value.value | default: f.range_max | money_without_trailing_zeros }} <span aria-hidden="true">&times;</span></a>
+      {%- endif -%}
+    {%- else -%}
+      {%- for v in f.active_values -%}{%- assign any = true -%}<a href="{{ v.url_to_remove }}" data-furl>{{ v.label }} <span aria-hidden="true">&times;</span></a>{%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if any -%}<a class="ul" href="{{ url }}{% if results.terms %}?q={{ results.terms | url_encode }}{% endif %}" data-furl>{{ 'collection.clear' | t }}</a>{%- endif -%}
+</div>

@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "rackets": { "type": "mega", "settings": { "item": "Padel rackets", "brands": "Bullpadel, Nox, Head, Babolat, Adidas Padel, StarVie", "promo_label": "New season", "promo_heading": "Padel rackets" } },
+        "shoes": { "type": "mega", "settings": { "item": "Shoes", "brands": "Asics, Bullpadel, Adidas Padel, Head, Babolat, Joma", "promo_label": "New season", "promo_heading": "Padel shoes" } },
+        "clothing": { "type": "mega", "settings": { "item": "Clothing", "brands": "Bullpadel, Adidas Padel, Head, Nox, Siux, Babolat", "promo_note": "player in new season kit, walking off court", "promo_label": "New season", "promo_heading": "Clothing", "promo_link": "shopify://collections/clothing" } },
+        "bags": { "type": "mega", "settings": { "item": "Bags", "brands": "Nox, Bullpadel, Head, Adidas Padel, Babolat, StarVie", "promo_heading": "Padel bags" } },
+        "accessories": { "type": "mega", "settings": { "item": "Accessories", "brands": "Head, Bullpadel, Nox, Adidas Padel, Dunlop, Wilson", "promo_heading": "Accessories" } },
+        "brands": { "type": "mega", "settings": { "item": "Brands", "az": true, "promo_label": "Brand focus", "promo_heading": "Bullpadel 2026", "promo_cta": "Shop Bullpadel", "promo_link": "shopify://collections/bullpadel" } }
+      },
+      "block_order": ["rackets", "shoes", "clothing", "bags", "accessories", "brands"],
+      "settings": { "menu": "main-menu", "help_link": "shopify://pages/help", "track_link": "/account" }
+    }
+  },
+  "order": ["header"]
+}

@@ -1,0 +1,122 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-hero",
+      "settings": {
+        "parent_link": "shopify://pages/help",
+        "label": "Delivery",
+        "heading": "Free UK delivery over \u00a375",
+        "text": "Tracked delivery to every UK address.",
+        "note": "stack of boxed rackets ready to go"
+      }
+    },
+    "s2": {
+      "type": "info-cards",
+      "settings": {
+        "note": "Tracked, 3 to 5 working days. Highlands, Islands and Northern Ireland take 4 to 7 working days at the same price. UK addresses only."
+      },
+      "blocks": {
+        "b1": {
+          "type": "card",
+          "settings": {
+            "label": "Orders over \u00a375",
+            "value": "Free",
+            "note": "racket box on a doorstep"
+          }
+        },
+        "b2": {
+          "type": "card",
+          "settings": {
+            "label": "Orders under \u00a375",
+            "value": "\u00a34.95",
+            "note": "small parcel of overgrips"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2"
+      ]
+    },
+    "s3": {
+      "type": "faq-list",
+      "settings": {
+        "heading": "Delivery questions",
+        "note": "courier handing over a parcel"
+      },
+      "blocks": {
+        "b1": {
+          "type": "q",
+          "settings": {
+            "q": "How much is delivery?",
+            "a": "<p>Standard UK delivery is free on orders over \u00a375. Below that it is \u00a34.95.</p>"
+          }
+        },
+        "b2": {
+          "type": "q",
+          "settings": {
+            "q": "How long will my order take?",
+            "a": "<p>Most UK addresses get their order in 3 to 5 working days. The Highlands, Islands and Northern Ireland take 4 to 7 working days.</p>"
+          }
+        },
+        "b3": {
+          "type": "q",
+          "settings": {
+            "q": "How do I track my order?",
+            "a": "<p>We email you a tracking link as soon as your parcel leaves us. You can also find it in your account.</p>"
+          }
+        },
+        "b4": {
+          "type": "q",
+          "settings": {
+            "q": "Do you deliver outside the UK?",
+            "a": "<p>Not at the moment. We deliver to UK addresses only.</p>"
+          }
+        },
+        "b5": {
+          "type": "q",
+          "settings": {
+            "q": "What if I am not in?",
+            "a": "<p>The courier will leave a card or message you with options to rearrange delivery or collect your parcel.</p>"
+          }
+        },
+        "b6": {
+          "type": "q",
+          "settings": {
+            "q": "Will my racket arrive in a box?",
+            "a": "<p>Yes. Every racket is checked and packed in a rigid box, never a bag.</p>"
+          }
+        },
+        "b7": {
+          "type": "q",
+          "settings": {
+            "q": "My parcel arrived damaged",
+            "a": "<p>Contact us with your order number and a photo of the parcel and item. We will put it right.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ]
+    },
+    "s4": {
+      "type": "help-banner",
+      "settings": {
+        "button_link": "shopify://pages/contact",
+        "link": "shopify://pages/help"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "s2",
+    "s3",
+    "s4"
+  ]
+}

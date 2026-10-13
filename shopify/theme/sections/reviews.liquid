@@ -1,0 +1,36 @@
+{%- if section.blocks.size > 0 or request.design_mode -%}
+<section class="tpr"><div class="wrap">
+  <div class="tph"><div><h2>{{ section.settings.heading }}</h2>
+    {%- if settings.tp_label != blank -%}<p class="tpsum"><b>{{ settings.tp_label }}</b>{% render 'stars' %}<span>{{ settings.tp_score }} out of 5 based on <a href="{{ settings.tp_link }}">{{ settings.tp_count }} reviews</a></span>{% render 'icon', name: 'tp' %}</p>{%- endif -%}</div>
+    <div class="arrows"><button type="button" data-arr="-1" aria-label="{{ 'general.previous' | t }}">&larr;</button><button type="button" data-arr="1" aria-label="{{ 'general.next' | t }}">&rarr;</button></div>
+  </div>
+  <div class="tprail">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when '@app' -%}{% render block %}
+        {%- when 'review' -%}
+          <article class="tpc" {{ block.shopify_attributes }}><div class="tpt">{% render 'stars', size: 's' %}<span class="ver">{% render 'icon', name: 'verified' %}Verified</span></div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.text }}</p><div class="tpw2"><b>{{ block.settings.name }}</b><span>{{ block.settings.when }}</span></div>{%- if block.settings.product != blank -%}<div class="tpb"><i>{%- if block.settings.product.featured_media -%}{{ block.settings.product.featured_media | image_url: width: 120 | image_tag: alt: '' }}{%- endif -%}</i><span>Bought <b>{{ block.settings.product.title }}</b></span></div>{%- endif -%}</article>
+      {%- endcase -%}
+    {%- else -%}
+      <p class="mute">Add your Trustpilot reviews as blocks, or add the Trustpilot app block. This section is hidden on the live store until it has reviews.</p>
+    {%- endfor -%}
+  </div>
+</div></section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Customer reviews",
+  "settings": [ { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    { "type": "paragraph", "content": "Add your real Trustpilot reviews as blocks, or add the Trustpilot app block." } ],
+  "blocks": [
+    { "type": "@app" },
+    { "type": "review", "name": "Review", "settings": [
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Review" },
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "when", "label": "When" },
+      { "type": "product", "id": "product", "label": "Product bought" } ] }
+  ],
+  "presets": [ { "name": "Customer reviews" } ]
+}
+{% endschema %}

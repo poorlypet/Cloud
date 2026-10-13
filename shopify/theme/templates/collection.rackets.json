@@ -1,0 +1,75 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "unit": "rackets",
+        "level_bar": true,
+        "help_link": "shopify://pages/help"
+      },
+      "blocks": {
+        "photo": {
+          "type": "photo",
+          "settings": {
+            "position": 4
+          }
+        },
+        "klarna": {
+          "type": "klarna",
+          "settings": {
+            "position": 10,
+            "link": "shopify://pages/klarna"
+          }
+        }
+      },
+      "block_order": [
+        "photo",
+        "klarna"
+      ]
+    },
+    "info": {
+      "type": "collection-info",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "q": "Which padel racket should I buy as a beginner?",
+            "a": "Start with a round racket with a soft core. It has the biggest sweet spot and is the easiest to control while you learn."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "q": "What is the difference between round, teardrop and diamond?",
+            "a": "Round shapes keep the weight low for control. Diamond shapes put the weight in the head for power. Teardrop sits in between."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "q": "How heavy should my racket be?",
+            "a": "Most players use a racket between 355 and 375g. Lighter rackets are easier to swing and kinder on the arm."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "q": "Can I pay with Klarna?",
+            "a": "Yes. Choose Klarna at checkout to split the cost into 3 interest free payments."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "info"
+  ]
+}
