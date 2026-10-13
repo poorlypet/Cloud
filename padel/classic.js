@@ -47,12 +47,12 @@ const P=[
  ['Selkirk','SLK Neo Starter Set',59,0,1,'','pickle',0],
  ['Franklin','Signature 14mm',119,139,2,'','pickle',0],
  ['Bullpadel','Vertex 24 Shoe',119,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
- ['Asics','Gel Padel Pro 5',99,0,0,'Omni','shoe',0,'Men\'s shoes','Men'],
+ ['Asics','Gel Padel Pro 5',99,0,0,'Omni','shoe',0,'Men\'s shoes','Men','wide'],
  ['Adidas Padel','Crazyquick Boost',129,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
  ['Head','Sprint Pro 3.5',99,119,0,'Omni','shoe',0,'Men\'s shoes','Men'],
  ['Babolat','Movea',109,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
  ['Nox','ML10 Hexa Shoe',89,0,0,'Clay','shoe',0,'Men\'s shoes','Men'],
- ['Nox','Pro Team Racket Bag',69,0,0,'','bag',1,'Racket bags'],
+ ['Nox','Pro Team Racket Bag',69,0,0,'','bag',1,'Racket bags','','3-5'],
  ['Head','Padel Pro Ball 3 Pack',6,0,0,'','ball',0,'Single tubes'],
  ['Bullpadel','GB 1200 Overgrip 3 Pack',8,0,0,'','acc',0,'Overgrips'],
  ['Nox','Frame Protector Tape',10,0,0,'','acc',0,'Protector tape'],
@@ -61,7 +61,7 @@ const P=[
  ['Bullpadel','Hack Vibram 25',99,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
  ['Adidas Padel','Adipower Ctrl',119,0,0,'Herringbone','shoe',0,'Women\'s shoes','Women'],
  ['Head','Revolt Pro 4.5',119,139,0,'Omni','shoe',0,'Men\'s shoes','Men'],
- ['Joma','Slam 25',69,0,0,'Clay','shoe',0,'Men\'s shoes','Men'],
+ ['Joma','Slam 25',69,0,0,'Clay','shoe',0,'Men\'s shoes','Men','wide'],
  ['Nox','AT10 Lux Shoe',99,0,0,'Herringbone','shoe',1,'Men\'s shoes','Men'],
  ['Asics','Gel Padel Junior',59,0,0,'Omni','shoe',0,'Junior shoes','Junior'],
  ['Bullpadel','Liria T-Shirt',35,0,0,'','cloth',1,'T-shirts','Men'],
@@ -77,13 +77,13 @@ const P=[
  ['Bullpadel','Performance Socks 3 Pack',15,0,0,'','cloth',0,'Socks','Unisex'],
  ['Head','Padel Cap',20,0,0,'','cloth',0,'Caps and visors','Unisex'],
  ['Nox','Team Visor',18,22,0,'','cloth',0,'Caps and visors','Unisex'],
- ['Bullpadel','Vertex Racket Bag',79,0,0,'','bag',1,'Racket bags'],
- ['Adidas Padel','Multigame Bag',65,0,0,'','bag',0,'Racket bags'],
- ['Head','Tour Team Padel Bag',75,89,0,'','bag',0,'Racket bags'],
- ['Babolat','RH Padel Lite',55,0,0,'','bag',0,'Racket bags'],
- ['Nox','AT10 Backpack',59,0,0,'','bag',0,'Backpacks'],
- ['Bullpadel','Tour Backpack',49,0,0,'','bag',0,'Backpacks'],
- ['Head','Pro Duffle',69,0,0,'','bag',0,'Holdalls'],
+ ['Bullpadel','Vertex Racket Bag',79,0,0,'','bag',1,'Racket bags','','6+'],
+ ['Adidas Padel','Multigame Bag',65,0,0,'','bag',0,'Racket bags','','3-5'],
+ ['Head','Tour Team Padel Bag',75,89,0,'','bag',0,'Racket bags','','6+'],
+ ['Babolat','RH Padel Lite',55,0,0,'','bag',0,'Racket bags','','3-5'],
+ ['Nox','AT10 Backpack',59,0,0,'','bag',0,'Backpacks','','1-2'],
+ ['Bullpadel','Tour Backpack',49,0,0,'','bag',0,'Backpacks','','1-2'],
+ ['Head','Pro Duffle',69,0,0,'','bag',0,'Holdalls','','1-2'],
  ['StarVie','Shoe Bag',15,0,0,'','bag',0,'Shoe bags'],
  ['Bullpadel','Premium Pro Balls 3 Pack',7,0,0,'','ball',0,'Single tubes'],
  ['Nox','Pro Titanium Balls 3 Pack',6,0,0,'','ball',0,'Single tubes'],
@@ -97,16 +97,59 @@ const P=[
  ['Adidas Padel','Wristbands 2 Pack',10,0,0,'','acc',0,'Wristbands'],
  ['Nox','Team Towel',18,0,0,'','acc',0,'Towels'],
  ['Bullpadel','Water Bottle',15,0,0,'','acc',0,'Water bottles'],
- ['Head','Racket Cover Pro',22,25,0,'','acc',0,'Racket covers']
-].filter(r=>r[6]!=='pickle').map(([b,n,p,w,l,sh,c,nw,t='',g=''],i)=>({i,b,n,p,w,l,sh,c,nw,t,g}));
+ ['Head','Racket Cover Pro',22,25,0,'','acc',0,'Racket covers'],
+ ['Dunlop','Galactica Pro',199,0,3,'Diamond','racket',0],
+ ['Dunlop','Aero-Star Team',89,0,1,'Round','racket',0],
+ ['Kombat','Attack Pro',209,0,3,'Diamond','racket',0],
+ ['Kombat','Control Soft',99,0,1,'Round','racket',0],
+ ['Royal Padel','Whip Hybrid',169,0,2,'Hybrid','racket',0],
+ ['Royal Padel','M27 Polietileno',119,0,1,'Round','racket',0],
+ ['Vibor-A','Yarara Edition',229,0,3,'Diamond','racket',1],
+ ['Vibor-A','King Cobra',159,179,2,'Teardrop','racket',0],
+ ['Drop Shot','Conqueror 12',239,0,3,'Diamond','racket',0],
+ ['Varlion','LW Carbon Soft',159,0,2,'Round','racket',0],
+ ['Wilson','Bela Pro',249,0,3,'Diamond','racket',0],
+ ['Black Crown','Special Soft',119,0,1,'Round','racket',0],
+ ['Siux','Diablo Revolution',259,0,3,'Diamond','racket',0],
+ ['Head','Extreme Pro',229,0,3,'Hybrid','racket',0],
+ ['Adidas Padel','Metalbone HRD+ 3.4',319,0,3,'Diamond','racket',1],
+ ['Bullpadel','Hack 04 Pro',309,0,3,'Diamond','racket',0],
+ ['Wilson','Hurakn Pro',99,0,0,'All court','shoe',0,'Men\'s shoes','Men'],
+ ['Adidas Padel','Barricade W',129,0,0,'All court','shoe',0,'Women\'s shoes','Women'],
+ ['Head','Club Tech Tee',30,0,0,'','cloth',0,'T-shirts','Men'],
+ ['Bullpadel','Arbol Polo',42,0,0,'','cloth',0,'Polos','Men'],
+ ['Adidas Padel','Club Jacket',60,0,0,'','cloth',0,'Hoodies and jackets','Men'],
+ ['Bullpadel','Mitin Shorts',32,0,0,'','cloth',0,'Shorts','Men'],
+ ['Adidas Padel','Club Tank',32,0,0,'','cloth',0,'Tops','Women'],
+ ['Nox','Team Leggings',38,0,0,'','cloth',0,'Leggings','Women'],
+ ['Siux','Club Shorts',30,0,0,'','cloth',0,'Shorts','Women'],
+ ['Head','Performance Socks 2 Pack',12,0,0,'','cloth',0,'Socks','Unisex'],
+ ['Bullpadel','Headband',8,0,0,'','cloth',0,'Headbands','Unisex'],
+ ['Nox','Pro Headband',8,0,0,'','cloth',0,'Headbands','Unisex'],
+ ['Bullpadel','Ball Holder',9,0,0,'','acc',0,'Ball holders'],
+ ['Nox','Ball Clip',7,0,0,'','acc',0,'Ball holders'],
+ ['Head','Insulated Bottle',20,0,0,'','acc',0,'Water bottles'],
+ ['Bullpadel','Court Towel',16,0,0,'','acc',0,'Towels'],
+ ['Head','Hydrosorb Grip',11,0,0,'','acc',0,'Grips'],
+ ['Nox','Wristbands 2 Pack',9,0,0,'','acc',0,'Wristbands']
+].filter(r=>r[6]!=='pickle').map(([b,n,p,w,l,sh,c,nw,t='',g='',x=''],i)=>({i,b,n,p,w,l,sh,c,nw,t,g,x}));
 
-const BRANDS=['Adidas Padel','Asics','Babolat','Black Crown','Bullpadel','Drop Shot','Dunlop','Franklin','Head','Kombat','Nox','Royal Padel','Siux','StarVie','Varlion','Vibor-A','Wilson'];
+const BRANDS=['Adidas Padel','Asics','Babolat','Black Crown','Bullpadel','Drop Shot','Dunlop','Head','Joma','Kombat','Nox','Royal Padel','Siux','StarVie','Varlion','Vibor-A','Wilson'];
 const STAR='<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2.5l2.8 6.6 7.2.6-5.5 4.7 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6z"/></svg>';
 const stars=c=>`<span class="stars ${c||''}">${('<i>'+STAR+'</i>').repeat(5)}</span>`;
 const tpLogo='<span class="tpw"><svg viewBox="0 0 24 24"><path fill="var(--tp)" d="M12 2.5l2.8 6.6 7.2.6-5.5 4.7 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6z"/></svg>Trustpilot</span>';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const gbp=n=>'£'+n;
 const hasImg=x=>x.c==='racket'||x.c==='pickle';
+/* every menu option has its own collection page */
+const BL=b=>b==='Bullpadel'?'brand.html':'brand-'+b.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html';
+const CATL={rackets:'collection.html',shoes:'shoes.html',clothing:'clothing.html',bags:'bags.html',accessories:'accessories.html',brands:'brands.html'};
+const MLINK={rackets:{'Shop by level|Beginner rackets':'rackets-beginner.html','Shop by level|Intermediate rackets':'rackets-intermediate.html','Shop by level|Advanced rackets':'rackets-advanced.html','Shop by level|Not sure? Racket guide':'g-how-to-choose-a-padel-racket.html','Shop by shape|Round':'rackets-round.html','Shop by shape|Teardrop':'rackets-teardrop.html','Shop by shape|Diamond':'rackets-diamond.html','Shop by shape|Hybrid':'rackets-hybrid.html','Shop by price|Under £100':'rackets-under-100.html','Shop by price|£100 to £200':'rackets-100-200.html','Shop by price|£200 to £300':'rackets-200-300.html','Shop by price|Over £300':'rackets-over-300.html','Shop by price|Sale rackets':'rackets-sale.html'},
+ shoes:{'Shop by sole|Herringbone':'shoes-herringbone.html','Shop by sole|Omni':'shoes-omni.html','Shop by sole|Clay':'shoes-clay.html','Shop by sole|All court':'shoes-all-court.html',"Shop by fit|Men's shoes":'shoes-mens.html',"Shop by fit|Women's shoes":'shoes-womens.html','Shop by fit|Junior shoes':'shoes-junior.html','Shop by fit|Wide fit':'shoes-wide-fit.html','Popular|New in':'shoes-new.html','Popular|Best sellers':'shoes-best-sellers.html','Popular|Sale shoes':'shoes-sale.html'},
+ clothing:{'Men|T-shirts':'clothing-mens-t-shirts.html','Men|Polos':'clothing-mens-polos.html','Men|Shorts':'clothing-mens-shorts.html','Men|Hoodies and jackets':'clothing-mens-hoodies-jackets.html','Women|Tops':'clothing-womens-tops.html','Women|Skirts and dresses':'clothing-womens-skirts-dresses.html','Women|Shorts':'clothing-womens-shorts.html','Women|Leggings':'clothing-womens-leggings.html','Kit|Socks':'clothing-socks.html','Kit|Caps and visors':'clothing-caps-visors.html','Kit|Wristbands':'clothing-wristbands.html','Kit|Headbands':'clothing-headbands.html'},
+ bags:{'Bags|Racket bags':'bags-racket-bags.html','Bags|Backpacks':'bags-backpacks.html','Bags|Holdalls':'bags-holdalls.html','Bags|Shoe bags':'bags-shoe-bags.html','By size|Holds 1 to 2 rackets':'bags-1-2-rackets.html','By size|Holds 3 to 5 rackets':'bags-3-5-rackets.html','By size|Holds 6 or more':'bags-6-rackets.html','Popular|New in':'bags-new.html','Popular|Best sellers':'bags-best-sellers.html','Popular|Sale bags':'bags-sale.html'},
+ accessories:{'Racket care|Overgrips':'accessories-overgrips.html','Racket care|Grips':'accessories-grips.html','Racket care|Protector tape':'accessories-protector-tape.html','Racket care|Racket covers':'accessories-racket-covers.html','On court|Balls':'balls.html','On court|Water bottles':'accessories-water-bottles.html','On court|Towels':'accessories-towels.html','On court|Ball holders':'accessories-ball-holders.html','Popular|Gift ideas':'gift-ideas.html','Popular|Sale accessories':'accessories-sale.html'}};
+const ML=(k,h,x)=>(MLINK[k]||{})[h+'|'+x]||'#';
 /* where menu and footer links go */
 const LINK={'Padel rackets':'collection.html','Shoes':'shoes.html','Clothing':'clothing.html','Bags':'bags.html','Balls':'balls.html','Accessories':'accessories.html','Sale':'sale.html','Beginner':'rackets-beginner.html','Intermediate':'rackets-intermediate.html','Advanced':'rackets-advanced.html','Bullpadel':'brand.html','Nox':'brand-nox.html','Head':'brand-head.html','All brands':'brands.html','Delivery':'delivery.html','Returns':'returns.html','Track my order':'track.html','Pay with Klarna':'klarna.html','Contact us':'contact.html','FAQs':'faqs.html','About PADEL':'about.html','Reviews':'reviews.html','The padel guide':'guide.html','Beginners':'beginners.html','Privacy':'privacy.html','Terms':'terms.html','Cookies':'cookies.html','Help':'help.html','Account':'signin.html'};
 const spec=x=>[x.l?LVL[x.l]:'',x.sh,x.c==='pickle'?'Pickleball':'',x.c!=='racket'&&x.c!=='shoe'?x.t:'',x.c==='shoe'&&x.g?x.g:''].filter(Boolean).join(', ');
@@ -127,8 +170,8 @@ const MEGA={
  rackets:{cols:[['Shop by brand',['Bullpadel','Nox','Head','Babolat','Adidas Padel','StarVie','Siux','All brands']],['Shop by level',['Beginner rackets','Intermediate rackets','Advanced rackets']],['Shop by shape',['Round','Teardrop','Diamond']],['Shop by price',['Under £100','£100 to £200','Over £200','Sale rackets']]],pics:['New season rackets','Beginner rackets']},
  brands:{az:1}};
 function megaHTML(k){const m=MEGA[k];
-  if(m.az){const per=Math.ceil(BRANDS.length/5);return `<div class="wrap in">${[0,1,2,3,4].map(c=>`<ul>${BRANDS.slice(c*per,c*per+per).map(b=>`<li><a href="#">${b}</a></li>`).join('')}</ul>`).join('')}</div>`;}
-  return `<div class="wrap in">${m.cols.map(([h,l])=>`<div><h5>${h}</h5><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`).join('')}<div class="pics">${m.pics.map(c=>`<a href="#">${ph(c)}<span class="c">${c}</span></a>`).join('')}</div></div>`;}
+  if(m.az){const per=Math.ceil(BRANDS.length/5);return `<div class="wrap in">${[0,1,2,3,4].map(c=>`<ul>${BRANDS.slice(c*per,c*per+per).map(b=>`<li><a href="${BL(b)}">${b}</a></li>`).join('')}</ul>`).join('')}</div>`;}
+  return `<div class="wrap in">${m.cols.map(([h,l])=>`<div><h5>${h}</h5><ul>${l.map(x=>`<li><a href="${ML(k,h,x)}">${x}</a></li>`).join('')}</ul></div>`).join('')}<div class="pics">${m.pics.map(c=>`<a href="#">${ph(c)}<span class="c">${c}</span></a>`).join('')}</div></div>`;}
 const IC={s:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>',
  u:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
  b:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
@@ -148,12 +191,12 @@ const MEGA2={
  accessories:{t:'Accessories',cols:[['Racket care',['Overgrips','Grips','Protector tape','Racket covers']],['On court',['Balls','Water bottles','Towels','Ball holders']],['Popular',['Gift ideas','Sale accessories']]],brands:['Head','Bullpadel','Nox','Adidas Padel','Dunlop','Wilson'],feat:['Padel Pro Ball 3 Pack']},
  brands:{t:'Brands',az:1}};
 function megaHTML(k){const m=MEGA2[k];
-  if(m.az){const per=Math.ceil(BRANDS.length/4);return `<div class="wrap in az">${[0,1,2,3].map(c=>`<ul>${BRANDS.slice(c*per,c*per+per).map(b=>`<li><a href="#">${b}</a></li>`).join('')}</ul>`).join('')}<a class="mpromo ph" href="#"><span class="note">Photo: brand campaign image</span><span class="mpt"><small>Brand focus</small><b>Bullpadel 2026</b><span class="ul">Shop Bullpadel</span></span></a></div>`;}
+  if(m.az){const per=Math.ceil(BRANDS.length/4);return `<div class="wrap in az">${[0,1,2,3].map(c=>`<ul>${BRANDS.slice(c*per,c*per+per).map(b=>`<li><a href="${BL(b)}">${b}</a></li>`).join('')}</ul>`).join('')}<a class="mpromo ph" href="#"><span class="note">Photo: brand campaign image</span><span class="mpt"><small>Brand focus</small><b>Bullpadel 2026</b><span class="ul">Shop Bullpadel</span></span></a></div>`;}
   const feat=(m.feat||[]).map(n=>P.find(x=>x.n===n)).filter(Boolean);
-  return `<div class="wrap in">${m.cols.map(([h,l])=>`<div><h5>${h}</h5><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`).join('')}
-  <div><h5>Top brands</h5><div class="mlogos">${m.brands.map(b=>`<a href="#">${b}</a>`).join('')}</div></div>
-  <div>${feat.length?`<h5>Featured</h5><div class="mfeat">${feat.map(x=>`<a href="#" class="mcard"><span class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</span><span><b>${x.b}</b><span>${x.n}</span><span class="pr">${gbp(x.p)}</span></span></a>`).join('')}</div>`:`<a class="mpromo ph" href="#"><span class="note">Photo: ${m.promo}</span><span class="mpt"><small>New season</small><b>${m.t}</b><span class="ul">Shop now</span></span></a>`}</div>
-  </div><div class="mfoot"><div class="wrap"><a class="ul" href="#">View all ${m.t.toLowerCase()}</a><span>Free UK delivery over £${STORE.freeOver}</span></div></div>`;}
+  return `<div class="wrap in">${m.cols.map(([h,l])=>`<div><h5>${h}</h5><ul>${l.map(x=>`<li><a href="${ML(k,h,x)}">${x}</a></li>`).join('')}</ul></div>`).join('')}
+  <div><h5>Top brands</h5><div class="mlogos">${m.brands.map(b=>`<a href="${BL(b)}">${b}</a>`).join('')}</div></div>
+  <div>${feat.length?`<h5>Featured</h5><div class="mfeat">${feat.map(x=>`<a href="product.html" class="mcard"><span class="th">${hasImg(x)?`<img src="${IMG}" alt="">`:''}</span><span><b>${x.b}</b><span>${x.n}</span><span class="pr">${gbp(x.p)}</span></span></a>`).join('')}</div>`:`<a class="mpromo ph" href="#"><span class="note">Photo: ${m.promo}</span><span class="mpt"><small>New season</small><b>${m.t}</b><span class="ul">Shop now</span></span></a>`}</div>
+  </div><div class="mfoot"><div class="wrap"><a class="ul" href="${CATL[k]}">View all ${m.t.toLowerCase()}</a><span>Free UK delivery over £${STORE.freeOver}</span></div></div>`;}
 function header(){
   const h=$('[data-hdr]');if(!h)return;
   const nav=[['rackets','Padel rackets'],['shoes','Shoes'],['clothing','Clothing'],['bags','Bags'],['','Balls'],['accessories','Accessories'],['brands','Brands'],['','Beginners'],['','Sale']];
@@ -170,9 +213,9 @@ function header(){
   document.body.insertAdjacentHTML('beforeend',`<div class="scrim" id="scrim"></div>
   <aside class="search" id="search"><div class="wrap"><div class="row">${IC.s.replace('<svg','<svg width="22" height="22"')}<input id="q" placeholder="Search rackets, brands and more" autocomplete="off"><button class="x" data-close aria-label="Close"></button></div><div class="res" id="sres"></div></div></aside>
   <aside class="drawer" id="bag"><div class="top">Bag<button class="x" data-close aria-label="Close"></button></div><div class="body" id="bagb"></div><div class="foot" id="bagf"></div></aside>
-  <aside class="drawer left" id="menu"><div class="top"><span class="logo">PADEL<i>.</i></span><button class="x" data-close aria-label="Close"></button></div><div class="body mn"><div class="mp main">${Object.entries(MEGA2).map(([k,m])=>`<button class="mi" data-sub="${k}">${m.t}${CHR}</button>`).join('')}<a class="mi" href="#">Balls</a><a class="mi" href="#">Beginners</a><a class="mi sale" href="#">Sale</a>
+  <aside class="drawer left" id="menu"><div class="top"><span class="logo">PADEL<i>.</i></span><button class="x" data-close aria-label="Close"></button></div><div class="body mn"><div class="mp main">${Object.entries(MEGA2).map(([k,m])=>`<button class="mi" data-sub="${k}">${m.t}${CHR}</button>`).join('')}<a class="mi" href="balls.html">Balls</a><a class="mi" href="beginners.html">Beginners</a><a class="mi sale" href="sale.html">Sale</a>
   <div class="mx"><a href="#">${IC.u}Account</a><a href="#">Help</a><a href="#">Track my order</a></div><div class="mtp"><b>Excellent</b>${stars('s')}<span>${STORE.tpScore} on Trustpilot</span></div></div>
-  ${Object.entries(MEGA2).map(([k,m])=>`<div class="mp sub" data-p="${k}"><button class="mback">${CHL}Back</button><div class="mhead"><h3>${m.t}</h3><a class="mva" href="#">View all</a></div>${m.az?`<div class="mgrp">${BRANDS.map(b=>`<a href="#">${b}</a>`).join('')}</div>`:m.cols.map(([h,l])=>`<h6>${h}</h6><div class="mgrp">${l.map(x=>`<a href="#">${x}</a>`).join('')}</div>`).join('')+(m.brands?`<h6>Top brands</h6><div class="mchips">${m.brands.map(b=>`<a href="#">${b}</a>`).join('')}</div>`:'')}</div>`).join('')}</div></aside><div class="toast" id="toast"></div>`);
+  ${Object.entries(MEGA2).map(([k,m])=>`<div class="mp sub" data-p="${k}"><button class="mback">${CHL}Back</button><div class="mhead"><h3>${m.t}</h3><a class="mva" href="${CATL[k]}">View all</a></div>${m.az?`<div class="mgrp">${BRANDS.map(b=>`<a href="${BL(b)}">${b}</a>`).join('')}</div>`:m.cols.map(([h,l])=>`<h6>${h}</h6><div class="mgrp">${l.map(x=>`<a href="${ML(k,h,x)}">${x}</a>`).join('')}</div>`).join('')+(m.brands?`<h6>Top brands</h6><div class="mchips">${m.brands.map(b=>`<a href="${BL(b)}">${b}</a>`).join('')}</div>`:'')}</div>`).join('')}</div></aside><div class="toast" id="toast"></div>`);
   $$('[data-sub]').forEach(b=>b.onclick=()=>{$('.mp.main').classList.add('off');$(`.mp.sub[data-p="${b.dataset.sub}"]`).classList.add('on');});
   $$('.mback').forEach(b=>b.onclick=()=>{b.closest('.mp').classList.remove('on');$('.mp.main').classList.remove('off');});
   const sf=$('#sf');sf.addEventListener('focus',()=>{sf.blur();open('search');});
@@ -345,10 +388,10 @@ const sl=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const R=[[/trustpilot|reviews?\b/,'reviews.html'],[/klarna|pay in 3|pay later/,'klarna.html'],[/\btrack/,'track.html'],[/return/,'returns.html'],[/deliver/,'delivery.html'],[/\bfaqs?\b|questions/,'faqs.html'],[/contact|customer team|ask the team/,'contact.html'],[/\bhelp/,'help.html'],[/sign in|sign out|my account|\baccount\b/,'signin.html'],[/about|behind the store/,'about.html'],[/racket map/,'map.html'],[/the court|\bshots?\b/,'court.html'],[/new in|new season|new arrivals|latest/,'new-in.html'],[/\bsale\b|reduced|last season/,'sale.html'],
  [/beginners|new to padel|first game|start here/,'beginners.html'],[/beginner|first year|first lesson/,'rackets-beginner.html'],[/intermediate|improving|every week/,'rackets-intermediate.html'],[/advanced|competing|competition/,'rackets-advanced.html'],[/\bround\b/,'rackets-round.html'],[/teardrop/,'rackets-teardrop.html'],[/diamond/,'rackets-diamond.html'],[/under £100/,'rackets-under-100.html'],
  [/guides?\b|technique|kit care|buying/,'guide.html'],[/shoe|footwear|\bsole\b|herringbone|\bomni\b|\bclay\b|all court|wide fit/,'shoes.html'],[/\btops\b|cloth|t-shirt|polo|shorts|skirt|legging|hoodie|\bkit\b|socks|caps|visor|headband/,'clothing.html'],[/\bbags?\b|backpack|holdall|holds \d/,'bags.html'],[/\bballs?\b/,'balls.html'],[/accessor|grip|tape|cover|towel|bottle|wristband|gift/,'accessories.html'],
- [/bullpadel/,'brand.html'],[/\bnox\b/,'brand-nox.html'],[/\bhead\b/,'brand-head.html'],[/babolat|adidas|starvie|siux|wilson|dunlop|drop shot|black crown|varlion|kombat|royal padel|joma|asics|franklin|vibor-a|brands?\b/,'brands.html'],[/racket|shop now|shop all|view all|see all|best sellers|hybrid|£/,'collection.html'],[/legal/,'privacy.html']];
-const txt=a=>{const c=a.cloneNode(true);c.querySelectorAll('.note,svg,img').forEach(n=>n.remove());return (c.textContent+' '+(a.getAttribute('aria-label')||'')).replace(/\s+/g,' ').trim().toLowerCase();};
-const to=a=>{if(a.matches('.card,.mcard,.pk'))return 'product.html';const t=txt(a);if(!t)return null;const g=GT.find(x=>t.includes(x.toLowerCase()));if(g)return 'g-'+sl(g)+'.html';for(const [r,u] of R)if(r.test(t))return u;return null;};
-const wire=()=>document.querySelectorAll('a[href="#"]').forEach(a=>{if([...a.attributes].some(x=>x.name.startsWith('data-')))return;const u=to(a);if(u&&!location.pathname.endsWith('/'+u))a.setAttribute('href',u);});
+ ...['Bullpadel','Adidas Padel','Asics','Babolat','Black Crown','Drop Shot','Dunlop','Head','Joma','Kombat','Nox','Royal Padel','Siux','StarVie','Varlion','Vibor-A','Wilson'].map(b=>[new RegExp('\\b'+b.toLowerCase().replace('-','.?')+'\\b'),b==='Bullpadel'?'brand.html':'brand-'+b.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.html']),[/brands?\b/,'brands.html'],[/racket|shop now|shop all|view all|see all|best sellers|hybrid|£/,'collection.html'],[/legal/,'privacy.html']];
+const txt=a=>{const c=a.cloneNode(true);c.querySelectorAll('.note,svg,img').forEach(n=>n.remove());c.querySelectorAll('*').forEach(e=>e.append(' '));return (c.textContent+' '+(a.getAttribute('aria-label')||'')).replace(/\s+/g,' ').trim().toLowerCase();};
+const to=a=>{if(a.matches('.card,.mcard,.pk,.im,.nm'))return 'product.html';const t=txt(a);if(!t)return null;const g=GT.find(x=>t.includes(x.toLowerCase()));if(g)return 'g-'+sl(g)+'.html';for(const [r,u] of R)if(r.test(t))return u;return null;};
+const wire=()=>document.querySelectorAll('a[href="#"]').forEach(a=>{if(['data-ty','data-lv','data-rm','data-q','data-qk'].some(k=>a.hasAttribute(k)))return;const u=to(a);if(u&&!location.pathname.endsWith('/'+u))a.setAttribute('href',u);});
 let tm;new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(wire,80);}).observe(document.documentElement,{childList:true,subtree:true});
 document.addEventListener('DOMContentLoaded',()=>setTimeout(wire,60));
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches&&e.target.matches('input[type=search],#sf'))location.href='search.html';});

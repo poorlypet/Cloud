@@ -834,3 +834,5 @@
 .h-sw p{font-size:17px;color:#444}
 .h-sw b{font-family:var(--head);font-size:22px;letter-spacing:-.02em;color:var(--accent)}
 @media(max-width:760px){.h-sw .sw{-webkit-text-stroke:1.5px #111}.h-sw p{font-size:15px}.h-sw b{font-size:18px}}
+.ranges.tys.n2 a{aspect-ratio:32/9}
+@media(max-width:760px){.ranges.tys.n2{grid-auto-columns:minmax(0,1fr)}.ranges.tys.n2 a{aspect-ratio:8/3}}
