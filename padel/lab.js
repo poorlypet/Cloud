@@ -12,61 +12,51 @@ const mini=(H,x,c='')=>`<div class="lcard ${c}"><a class="im" href="product.html
 const bars=x=>`<div class="lbars">${[['Power',pow],['Control',ctl],['Forgiveness',fgv]].map(([t,f])=>`<div><span>${t}</span><i><em style="width:${f(x)}%"></em></i></div>`).join('')}</div>`;
 const VID=(n,c='')=>`<div class="lvid ${c}"><span class="note">Video: ${n}</span></div>`;
 const hdrH=()=>{const h=document.querySelector('.hdr');return h?h.offsetHeight:0;};
-const fitHero=sel=>{const f=()=>document.querySelectorAll(sel).forEach(e=>e.style.minHeight=(innerHeight-hdrH())+'px');f();addEventListener('resize',f);};
+const fitHero=sel=>{const f=()=>document.querySelectorAll(sel).forEach(e=>e.style.minHeight=(innerHeight-hdrH()-4)+'px');f();addEventListener('resize',f);};
 
-/* ---------- the racket map: the slider is the hero ---------- */
+/* ---------- the racket map: one screen, built once, animated with transitions ---------- */
 const LABEL=n=>n<26?'All about control':n<44?'Control first':n<58?'A bit of both':n<74?'Power first':'All about power';
-const SUB=n=>n<36?'Round shapes with the weight low in your hand.':n<62?'Teardrop and hybrid shapes with the weight in the middle.':'Diamond shapes with the weight up in the head.';
-const matches=(R,n,b)=>R.filter(x=>x.p<=b).map(x=>({x,m:Math.max(0,Math.round(100-Math.abs(pow(x)-n)*2.2))})).sort((a,c)=>c.m-a.m);
+const SUB=n=>n<36?'Round shapes, weight low in your hand.':n<62?'Teardrop and hybrid shapes, weight in the middle.':'Diamond shapes, weight up in the head.';
 const BUD=(id,c='')=>`<label class="lbud ${c}"><span>Budget</span><select id="${id}"><option value="9999">Any price</option><option value="100">Up to £100</option><option value="150">Up to £150</option><option value="200">Up to £200</option><option value="300">Up to £300</option></select></label>`;
 const sorted=H=>[...H.rk].sort((a,b)=>pow(a)-pow(b)||a.p-b.p);
-X.map=H=>{const v=H.V;
- if(v===2){const R=sorted(H);return [`<section class="mh2 lhero"><div class="wrap top"><small>The racket map</small><h1>Every racket, from control to power.</h1><p>Drag the row, or the slider. The racket in the middle is yours to look at.</p></div>
-  <div class="m2lab"><b id="m2h">A bit of both</b><span id="m2s"></span></div>
-  <div class="m2row" id="m2row">${R.map((x,k)=>`<button class="m2c" data-k="${k}" aria-label="${x.b} ${x.n}"><span class="im">${H.IMGB(x)}</span></button>`).join('')}</div>
-  <div class="wrap m2bot"><div class="m2d" id="m2d"></div><div class="m2ctl"><span>Control</span><input type="range" id="m2r" min="0" max="${R.length-1}" value="${Math.floor(R.length/2)}" aria-label="Control to power"><span>Power</span></div>${BUD('m2b')}</div></section>`,
-  `<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];}
- if(v===3)return [`<section class="mh3 lhero"><div class="wrap"><div class="g"><div class="l"><small>The racket map</small><h1>Turn it up.</h1><p>Turn the dial from control to power. The racket in the middle is your closest match.</p>${BUD('m3b')}<div class="m3t" id="m3t"></div></div>
-  <div class="dial" id="dial"><div class="ring" id="ring"></div><button class="knob" id="knob" aria-label="Control to power. Use the arrow keys."></button><div class="ctr" id="m3c"></div><span class="ea">Control</span><span class="eb">Power</span></div></div></div></section>`,
-  `<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];
- return [`<section class="mh1 lhero" id="mh1"><div class="glow" id="m1g"></div><div class="wrap"><div class="top"><small>The racket map</small><h1 id="m1h">A bit of both</h1><p id="m1s"></p></div>
-  <div class="m1st" id="m1st"></div>
-  <div class="m1ctl"><span>Control</span><div class="trk"><div class="fill" id="m1f"></div><input type="range" id="m1r" min="4" max="96" value="50" aria-label="Control to power"></div><span>Power</span></div>
-  <div class="m1ft">${BUD('m1b','dk')}<a class="ul" href="#m1res">See every match</a></div></div></section>`,
-  `<section class="sec sx-sec" id="m1res"><div class="wrap"><div class="smh"><h2>Your matches</h2><span id="m1n"></span></div><div id="m1grid"></div>${NOTE}</div></section>`];};
-I.push((t,H)=>{if(t!=='map')return;const v=H.V;fitHero('.lhero');
- if(v===1){const R=H.rk;let pick=null;
-  const draw=()=>{const n=+H.$('#m1r').value,b=+H.$('#m1b').value,l=matches(R,n,b);
-   H.$('#m1h').textContent=LABEL(n);H.$('#m1s').textContent=`${SUB(n)} ${l.filter(r=>r.m>=70).length} close matches.`;
-   H.$('#m1f').style.width=((n-4)/92*100)+'%';
-   H.$('#m1g').style.background=`radial-gradient(55% 70% at ${n}% 62%,rgba(255,77,0,${(.08+n/260).toFixed(2)}),transparent 70%)`;
-   const top=l.slice(0,5),best=pick&&top.find(r=>r.x.i===pick)||top[0];const rest=top.filter(r=>r!==best);const ord=[rest[2],rest[0],best,rest[1],rest[3]];
-   H.$('#m1st').innerHTML=ord.map((r,k)=>r?`<button class="s s${k} ${r===best?'on':''}" data-pick="${r.x.i}"><span class="im">${H.IMGB(r.x)}</span><span class="tx"><small>${r.m}% match</small><b>${r.x.b} ${r.x.n}</b>${r===best?`<span class="row"><em>${H.gbp(r.x.p)}</em><span class="btn sm" data-add="${r.x.i}">Add to bag</span></span>`:''}</span></button>`:'<span class="s e"></span>').join('');
-   H.$('#m1n').textContent=`${l.filter(r=>r.m>=50).length} rackets`;H.$('#m1grid').innerHTML=H.GRID(l.filter(r=>r.m>=50).slice(0,8).map(r=>r.x));};
-  document.addEventListener('input',e=>{if(e.target.id==='m1r'){pick=null;draw();}});document.addEventListener('change',e=>{if(e.target.id==='m1b')draw();});
-  document.addEventListener('click',e=>{const s=e.target.closest('[data-pick]');if(s&&!e.target.closest('[data-add]')){pick=+s.dataset.pick;draw();}});draw();}
- if(v===2){const R=sorted(H),row=H.$('#m2row'),cs=H.$$('.m2c');let cur=-1;
-  const set=k=>{if(k===cur)return;cur=k;const x=R[k];cs.forEach((c,j)=>{c.classList.toggle('on',j===k);c.classList.toggle('near',Math.abs(j-k)===1);});H.$('#m2r').value=k;H.$('#m2h').textContent=LABEL(pow(x));H.$('#m2s').textContent=SUB(pow(x));
-   H.$('#m2d').innerHTML=`<div class="a"><small>${x.b}</small><h2>${x.n}</h2><span>${H.LVL[x.l]}, ${x.sh}</span></div>${bars(x)}<div class="c"><b>${H.gbp(x.p)}</b><button class="btn" data-add="${x.i}">Add to bag</button><a class="ul" href="product.html">View racket</a></div>`;};
-  const centre=()=>{const m=row.scrollLeft+row.clientWidth/2;let bk=0,bd=1e9;cs.forEach((c,j)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-m);if(d<bd){bd=d;bk=j;}});set(bk);};
-  const go=(k,sm)=>{const c=cs[k];row.scrollTo({left:c.offsetLeft+c.offsetWidth/2-row.clientWidth/2,behavior:sm?'smooth':'auto'});set(k);};
-  let raf=0;row.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(centre);},{passive:true});
-  let dn=null;row.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;dn={x:e.clientX,s:row.scrollLeft,m:0};row.classList.add('drag');});
-  addEventListener('pointermove',e=>{if(!dn)return;dn.m=Math.abs(e.clientX-dn.x);row.scrollLeft=dn.s-(e.clientX-dn.x);});
-  addEventListener('pointerup',()=>{if(!dn)return;const moved=dn.m>5;dn=null;row.classList.remove('drag');if(moved)centre();});
-  row.addEventListener('click',e=>{const c=e.target.closest('.m2c');if(c)go(+c.dataset.k,true);});
-  document.addEventListener('input',e=>{if(e.target.id==='m2r')go(+e.target.value,false);});
-  document.addEventListener('change',e=>{if(e.target.id!=='m2b')return;const b=+e.target.value;cs.forEach((c,j)=>c.classList.toggle('off',R[j].p>b));if(R[cur].p>b){const k=R.findIndex(x=>x.p<=b);if(k>=0)go(k,true);}});
-  requestAnimationFrame(()=>go(Math.floor(R.length/2),false));}
- if(v===3){const R=H.rk,dial=H.$('#dial'),knob=H.$('#knob');let n=50;
-  const draw=()=>{const a=-135+(n-4)/92*270;knob.style.transform=`rotate(${a}deg) translateY(calc(var(--r) * -1))`;H.$('#ring').style.setProperty('--a',(a+135)+'deg');
-   const b=+H.$('#m3b').value,l=matches(R,n,b),x=l[0];
-   H.$('#m3c').innerHTML=x?`<span class="im">${H.IMGB(x.x)}</span><small>${LABEL(n)}</small><b>${x.x.b} ${x.x.n}</b><span class="row"><em>${H.gbp(x.x.p)}</em><button class="btn sm" data-add="${x.x.i}">Add to bag</button></span>`:'<small>No rackets in that budget</small>';
-   H.$('#m3t').innerHTML=`<b>Also close</b>${l.slice(1,4).map(r=>`<div class="m3r"><span class="pct">${r.m}%</span>${mini(H,r.x)}</div>`).join('')}`;};
-  const fromPt=e=>{const r=dial.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);let a=Math.atan2(dx,-dy)*180/Math.PI;a=Math.max(-135,Math.min(135,a));n=Math.round(4+(a+135)/270*92);draw();};
-  let on=false;dial.addEventListener('pointerdown',e=>{if(e.target.closest('.ctr button'))return;on=true;dial.setPointerCapture(e.pointerId);fromPt(e);});dial.addEventListener('pointermove',e=>{if(on)fromPt(e);});dial.addEventListener('pointerup',()=>on=false);
-  knob.addEventListener('keydown',e=>{if(/Arrow(Right|Up)/.test(e.key)){n=Math.min(96,n+4);draw();e.preventDefault();}if(/Arrow(Left|Down)/.test(e.key)){n=Math.max(4,n-4);draw();e.preventDefault();}});
-  document.addEventListener('change',e=>{if(e.target.id==='m3b')draw();});draw();}});
+const nearest=(L,n)=>L.reduce((b,x)=>Math.abs(pow(x)-n)<Math.abs(pow(b)-n)?x:b,L[0]);
+const fitExact=sel=>{const f=()=>document.querySelectorAll(sel).forEach(e=>e.style.height=(innerHeight-hdrH()-4)+'px');f();addEventListener('resize',f);};
+const swapText=(el,t)=>{if(!el||el.textContent===t)return;el.classList.add('fo');setTimeout(()=>{el.textContent=t;el.classList.remove('fo');},140);};
+const SLIDER=(id,max,val)=>`<div class="mctl"><span>Control</span><input type="range" id="${id}" min="0" max="${max}" value="${val}" step="1" aria-label="Control to power"><span>Power</span></div>`;
+X.map=H=>{const v=H.V,R=sorted(H);
+ if(v===2)return [`<section class="mf mfb"><div class="wrap g"><div class="mhd"><div><small>The racket map</small><h1 id="bL">A bit of both</h1></div><p id="bS"></p></div>
+  <div class="mline" id="bLine">${R.map((x,k)=>`<a class="bc" href="product.html" data-k="${k}"><span class="im">${H.IMGB(x)}</span><span class="tx"><small>${x.b}</small><b>${x.n}</b><span>${H.LVL[x.l]}, ${x.sh}</span><em>${H.gbp(x.p)}</em></span></a>`).join('')}</div>
+  <div class="mft">${SLIDER('bR',96,50)}${BUD('bB')}</div></div></section>`,`<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];
+ if(v===3)return [`<section class="mf mfc" id="mfc"><div class="mcl" id="cC"><small>Control</small><b id="cCv">50%</b></div><div class="mcr" id="cP"><small>Power</small><b id="cPv">50%</b></div>
+  <div class="mhd wrap"><small>The racket map</small><h1>Drag the line to the way you play.</h1></div>
+  <div class="mcm" id="cMid"><div class="mpic" id="cPic"><span class="ly on">${H.IMGB(R[0])}</span><span class="ly">${H.IMGB(R[0])}</span></div><div class="mcn"><small id="cB"></small><b id="cN"></b><span><em id="cPr"></em><button class="btn sm" id="cAdd" data-add="">Add to bag</button></span></div></div>
+  <button class="mhdl" id="cH" aria-label="Drag between control and power. Use the arrow keys."><i></i></button></section>`,`<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];
+ return [`<section class="mf mfa"><div class="wrap g"><div class="mhd"><small>The racket map</small><h1 id="aL">A bit of both</h1></div>
+  <div class="mstg"><div class="mil"><p id="aS"></p><div class="lbars" id="aBars">${['Power','Control','Forgiveness'].map(t=>`<div><span>${t}</span><i><em></em></i></div>`).join('')}</div></div>
+  <div class="mpic" id="aPic"><span class="ly on">${H.IMGB(R[0])}</span><span class="ly">${H.IMGB(R[0])}</span></div>
+  <div class="mir"><small id="aB"></small><b id="aN"></b><span id="aM"></span><em id="aPr"></em><button class="btn" id="aAdd" data-add="">Add to bag</button><div class="malt" id="aAlt"></div></div></div>
+  ${SLIDER('aR',96,50)}</div></section>`,`<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];};
+I.push((t,H)=>{if(t!=='map')return;const v=H.V,R=sorted(H);fitExact('.mf');
+ const pic=(box,x,dir)=>{const ls=box.querySelectorAll('.ly'),on=box.querySelector('.ly.on'),off=[...ls].find(l=>l!==on);if(on.dataset.i==String(x.i))return;off.innerHTML=H.IMGB(x);off.dataset.i=x.i;off.style.setProperty('--dx',(dir>0?24:-24)+'px');off.classList.remove('on','out');void off.offsetWidth;off.classList.add('on');on.style.setProperty('--dx',(dir>0?-24:24)+'px');on.classList.remove('on');on.classList.add('out');};
+ if(v===1){let last=null,lastN=50;const s=H.$('#aR');
+  const draw=()=>{const n=+s.value,x=nearest(R,n),dir=n-lastN;lastN=n;swapText(H.$('#aL'),LABEL(n));swapText(H.$('#aS'),SUB(n));
+   if(last!==x){pic(H.$('#aPic'),x,dir);last=x;['aB','aN','aM','aPr'].forEach((id,k)=>swapText(H.$('#'+id),[x.b,x.n,`${H.LVL[x.l]}, ${x.sh}`,H.gbp(x.p)][k]));H.$('#aAdd').dataset.add=x.i;
+    H.$$('#aBars em').forEach((e,k)=>e.style.width=[pow,ctl,fgv][k](x)+'%');
+    const alts=R.filter(y=>y!==x).sort((a,b)=>Math.abs(pow(a)-n)-Math.abs(pow(b)-n)).slice(0,2);H.$('#aAlt').innerHTML=`<small>Also close</small>${alts.map(y=>`<button data-aj="${pow(y)}"><span class="im">${H.IMGB(y)}</span><span><b>${y.n}</b><em>${H.gbp(y.p)}</em></span></button>`).join('')}`;}
+   s.style.setProperty('--p',(n/96*100)+'%');};
+  s.addEventListener('input',draw);document.addEventListener('click',e=>{const b=e.target.closest('[data-aj]');if(b){s.value=b.dataset.aj;draw();}});draw();}
+ if(v===2){const s=H.$('#bR'),cs=H.$$('.bc');
+  const draw=()=>{const n=+s.value,b=+H.$('#bB').value;swapText(H.$('#bL'),LABEL(n));swapText(H.$('#bS'),SUB(n));s.style.setProperty('--p',(n/96*100)+'%');
+   const L=R.filter(x=>x.p<=b);if(!L.length)return;const best=nearest(L,n),bi=L.indexOf(best),st=Math.max(0,Math.min(L.length-5,bi-2));
+   cs.forEach(c=>{const x=R[+c.dataset.k],j=L.indexOf(x);const pos=j<0?null:j-st;c.style.setProperty('--x',pos===null?(R.indexOf(x)<R.indexOf(best)?-1.2:5.2):pos);c.classList.toggle('vis',pos!==null&&pos>=0&&pos<5);c.classList.toggle('on',x===best);});};
+  s.addEventListener('input',draw);document.addEventListener('change',e=>{if(e.target.id==='bB')draw();});draw();}
+ if(v===3){const sec=H.$('#mfc'),h=H.$('#cH');let n=50,last=null,drag=false;
+  const draw=()=>{sec.style.setProperty('--s',(100-n)+'%');H.$('#cCv').textContent=(100-n)+'%';H.$('#cPv').textContent=n+'%';const x=nearest(R,n);
+   if(last!==x){pic(H.$('#cPic'),x,last?pow(x)-pow(last):1);last=x;swapText(H.$('#cB'),x.b);swapText(H.$('#cN'),x.n);swapText(H.$('#cPr'),H.gbp(x.p));H.$('#cAdd').dataset.add=x.i;}};
+  const fromX=cx=>{const r=sec.getBoundingClientRect();n=Math.round(Math.max(4,Math.min(96,100-(cx-r.left)/r.width*100)));draw();};
+  h.addEventListener('pointerdown',e=>{drag=true;sec.classList.add('drag');h.setPointerCapture(e.pointerId);});h.addEventListener('pointermove',e=>{if(drag)fromX(e.clientX);});h.addEventListener('pointerup',()=>{drag=false;sec.classList.remove('drag');});
+  sec.addEventListener('click',e=>{if(e.target.closest('.mid,.hdl,a,button'))return;fromX(e.clientX);});
+  h.addEventListener('keydown',e=>{if(/Arrow(Right|Up)/.test(e.key)){n=Math.max(4,n-4);draw();e.preventDefault();}if(/Arrow(Left|Down)/.test(e.key)){n=Math.min(96,n+4);draw();e.preventDefault();}});draw();}});
 
 /* ---------- the court: nine shots, on video ---------- */
 const SHOTS=[
@@ -98,7 +88,7 @@ I.push((t,H)=>{if(t!=='court')return;const v=H.V;fitHero('.lhero');
  if(v===2){const show=i=>{const s=SHOTS[i];H.$('#czb').innerHTML=`${VID(s[2])}<div class="t"><small>${s[1]}</small><h2>${s[0]}</h2><p>${s[3]}</p>${GL(H,s)}${KITB(H,s)}</div>`;H.$$('[data-zs]').forEach(b=>b.classList.toggle('on',+b.dataset.zs===i));};
   const open=j=>H.$$('.zn').forEach(z=>z.classList.toggle('on',+z.dataset.zn===j));
   H.$$('.zn').forEach(z=>z.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches)open(+z.dataset.zn);}));
-  document.addEventListener('click',e=>{const b=e.target.closest('[data-zs]');if(b){show(+b.dataset.zs);H.$('#czd').scrollIntoView({behavior:'smooth',block:'start'});return;}const z=e.target.closest('.zn');if(z)open(+z.dataset.zn);});show(5);}
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-zs]');if(b){show(+b.dataset.zs);const el=H.$('#czb');scrollTo({top:el.getBoundingClientRect().top+scrollY-hdrH()-24,behavior:'smooth'});return;}const z=e.target.closest('.zn');if(z)open(+z.dataset.zn);});show(5);}
  if(v===3){const pv=H.$('#cipv');const show=i=>{const s=SHOTS[i];H.$$('.nm').forEach(b=>b.classList.toggle('on',+b.dataset.ci===i));pv.innerHTML=`${VID(s[2])}<small>${s[1]}</small><h2>${s[0]}</h2><p>${s[3]}</p>${GL(H,s)}${KITB(H,s)}`;
    if(matchMedia('(max-width:760px)').matches){const b=H.$(`.nm[data-ci="${i}"]`);b.after(H.$('.ci .pv'));}};
   H.$$('.nm').forEach(b=>b.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover) and (min-width:761px)').matches)show(+b.dataset.ci);}));
