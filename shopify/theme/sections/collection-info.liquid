@@ -1,13 +1,14 @@
 {%- liquid
-  assign seo_h = collection.metafields.custom.seo_heading.value | default: section.settings.heading
-  assign seo_t = collection.metafields.custom.seo_text.value
+  assign parent = collection.metafields.custom.parent.value
+  assign seo_h = collection.metafields.custom.seo_heading.value | default: parent.metafields.custom.seo_heading.value | default: section.settings.heading
+  assign seo_t = collection.metafields.custom.seo_text.value | default: parent.metafields.custom.seo_text.value
   assign related = collection.metafields.custom.related.value
 -%}
 <div class="wrap"><section class="pinfo">
   {%- if seo_t != blank or collection.description != blank -%}
     <div class="seo"><h2>{{ seo_h | default: collection.title }}</h2><div class="clip rte">{%- if seo_t != blank -%}{{ seo_t | newline_to_br | replace: '<br />', '</p><p>' | prepend: '<p>' | append: '</p>' }}{%- else -%}{{ collection.description }}{%- endif -%}</div><button class="ul" type="button" data-more data-more-label="{{ 'general.read_more' | t }}" data-less="{{ 'general.read_less' | t }}" style="margin-top:12px">{{ 'general.read_more' | t }}</button></div>
   {%- endif -%}
-  {%- assign faq = collection.metafields.custom.faq.value -%}
+  {%- assign faq = collection.metafields.custom.faq.value | default: parent.metafields.custom.faq.value -%}
   {%- if faq.size > 0 -%}
     <div class="faq"><h2>{{ section.settings.faq_heading }}</h2>
       {%- for qa in faq -%}<details><summary>{{ qa[0] }}</summary><p>{{ qa[1] }}</p></details>{%- endfor -%}
