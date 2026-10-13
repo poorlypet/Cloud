@@ -29,6 +29,10 @@ Design work for PADEL, a multi-brand padel retailer. Open `home.html` to browse 
 - Legal text is in `legal.js`. Company name, number, address, email and VAT number are set once in `LEGAL` at the top of `pages2.js`
 - Menu links are set in `MLINK`, brand links in `BL` and footer links in `LINK`, all in `classic.js`. Other links are matched to their page by their text, in the site wiring block at the end of `classic.js`
 
+## Shot list and products
+- `lists/shot-list.csv`: every photo, video and logo the site needs, with where it is used and the size to supply
+- `lists/product-list.csv`: every product the site shows, by category
+
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data
 - `plp.js`, `plp.css`: collection pages
