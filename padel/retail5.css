@@ -1,4 +1,4 @@
-/* PADEL v5: locked framed hero, homepage content modules. Loads after retail4.css */
+/* Raqello v5: locked framed hero, homepage content modules. Loads after retail4.css */
 :root{--head:'Jost','Helvetica Neue',Arial,sans-serif}
 .sh h2{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.01em;font-size:30px}
 

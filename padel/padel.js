@@ -1,4 +1,4 @@
-/* PADEL shared components: header, footer, brand rail, product cards */
+/* Raqello shared components: header, footer, brand rail, product cards */
 const BRANDS=['Bullpadel','Nox','Adidas Padel','Head','Babolat','StarVie','Siux','Varlion','Black Crown','Drop Shot','Vibor-A','Wilson','Royal Padel','Kombat','Joola','Selkirk'];
 
 // lvl: 1 starter, 2 club, 3 competitive
@@ -37,7 +37,7 @@ function mount(){
     ann.innerHTML=`<div class="rail">${[...m,...m,...m,...m].map(t=>`<span>${t}</span>`).join('')}</div>`;}
   const hdr=document.querySelector('[data-hdr]');
   if(hdr){hdr.innerHTML=`<div class="wrap in"><nav><a href="#">Padel</a><a href="#">Pickleball</a><a href="#">Shop by level</a><a href="#">Brands</a><a href="#">Sale</a></nav><button class="burger" aria-label="Menu"></button>
-    <a class="logo" href="./">PADEL<i>.</i></a><div class="tools"><a href="#">Search</a><a href="#">Account</a><a class="bag" href="#">Bag 0</a></div></div>`;
+    <a class="logo" href="./">RAQELLO<i>.</i></a><div class="tools"><a href="#">Search</a><a href="#">Account</a><a class="bag" href="#">Bag 0</a></div></div>`;
     if(hdr.classList.contains('over')){const a=document.querySelector('[data-ann]'),f=()=>{hdr.classList.toggle('solid',scrollY>innerHeight*.8);hdr.style.top=Math.max(0,(a?a.offsetHeight:0)-scrollY)+'px';};addEventListener('scroll',f,{passive:true});f();}}
   document.querySelectorAll('[data-brands]').forEach(el=>{el.innerHTML=`<div class="rail">${[...BRANDS,...BRANDS].map(b=>`<span>${b}</span>`).join('')}</div>`;});
   document.querySelectorAll('[data-products]').forEach(el=>{
@@ -51,7 +51,7 @@ function mount(){
   const ftr=document.querySelector('[data-ftr]');
   if(ftr){const col=(h,l)=>`<div><h4 class="lbl">${h}</h4><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`;
     ftr.innerHTML=`<div class="wrap"><div class="cols"><div><p style="max-width:300px">The best padel and pickleball gear from across Europe, picked by players and sorted by level.</p></div>${col('Shop',['Padel rackets','Pickleball paddles','Shoes','Bags','Balls','Apparel'])}${col('By level',['Starter','Club','Competitive','Racket finder'])}${col('Help',['Delivery','Returns','Racket demos','Contact'])}${col('Follow',['Instagram','TikTok','YouTube','Strava'])}</div>
-    <div class="big">PADEL<i>.</i></div><div class="base"><span>© 2026 PADEL</span><span>Privacy  ·  Terms  ·  Cookies</span></div></div>`;}
+    <div class="big">RAQELLO<i>.</i></div><div class="base"><span>© 2026 Raqello</span><span>Privacy  ·  Terms  ·  Cookies</span></div></div>`;}
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 }

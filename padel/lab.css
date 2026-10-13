@@ -1,4 +1,4 @@
-/* PADEL lab pages: racket map and court. Loaded after pages2.css. */
+/* Raqello lab pages: racket map and court. Loaded after pages2.css. */
 .lnote{font-size:13px;color:var(--mute)}
 .lcard{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center}
 .lcard .im{position:relative;aspect-ratio:1;background:var(--grey);display:block}

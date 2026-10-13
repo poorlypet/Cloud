@@ -1,4 +1,4 @@
-/* PADEL store pages. Same vocabulary as the homepage and product page. */
+/* Raqello store pages. Same vocabulary as the homepage and product page. */
 .sx{padding-bottom:0}
 .sx .sx-sec{padding-block:0;margin-top:88px}
 .sx .sx-sec.pt0{margin-top:24px}
@@ -1215,3 +1215,4 @@
  .btl .bf{margin-top:8px}
  .btl .ul{justify-self:start;margin-top:6px}
 }
+.zm .mask span{font-size:calc((min(100vw,1600px) - 2*var(--g)) / 3.7)}

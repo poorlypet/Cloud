@@ -1,4 +1,4 @@
-/* PADEL collection pages. Loads after retail4/5/6 + classic */
+/* Raqello collection pages. Loads after retail4/5/6 + classic */
 .crumbs{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--mute);padding-block:18px 14px}
 .crumbs a:hover{color:var(--fg);text-decoration:underline}
 .crumbs span:last-child{color:var(--fg)}

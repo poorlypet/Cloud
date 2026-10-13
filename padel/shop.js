@@ -1,4 +1,4 @@
-/* PADEL retail system v2: header, mega menu, search, bag, sections */
+/* Raqello retail system v2: header, mega menu, search, bag, sections */
 (()=>{
 const LV={1:{k:'Beginner',d:'Round shapes, soft cores and lighter frames. Forgiving on off centre hits and easy on the arm.',r:'£40 to £120',f:40},
           2:{k:'Intermediate',d:'Teardrop and hybrid shapes that add power without losing touch. For players on court every week.',r:'£120 to £220',f:120},
@@ -51,7 +51,7 @@ function megaHTML(k){const m=MEGA[k];
 function header(){
   const a=$('[data-ann]');if(a)a.innerHTML=`<div class="wrap"><span class="side">Free UK delivery over £75</span><span class="mid">${a.dataset.ann||'Demo any racket for 7 days before you buy'}</span><span class="side">Rated Excellent on Trustpilot</span></div>`;
   const h=$('[data-hdr]');if(!h)return;
-  h.innerHTML=`<div class="wrap bar"><div style="display:flex;align-items:center;gap:14px"><button class="burger tools" aria-label="Open menu" data-open="menu" style="height:40px;align-items:center">${ICON.menu}</button><a class="logo" href="./">PADEL<i>.</i></a></div>
+  h.innerHTML=`<div class="wrap bar"><div style="display:flex;align-items:center;gap:14px"><button class="burger tools" aria-label="Open menu" data-open="menu" style="height:40px;align-items:center">${ICON.menu}</button><a class="logo" href="./">RAQELLO<i>.</i></a></div>
   <nav class="nav"><button data-mega="padel">Padel</button><button data-mega="pickle">Pickleball</button><button data-mega="level">Shop by level</button><button data-mega="brands">Brands</button><a href="#">New in</a><a class="sale" href="#">Sale</a></nav>
   <div class="tools"><button data-open="search" aria-label="Search">${ICON.search}<span class="tx">Search</span></button><a href="#" class="tx" aria-label="Account">${ICON.user}</a><button class="bag" data-open="bag">Bag <b id="bagn">0</b></button></div></div>
   <div class="mega" id="mega"></div>`;
@@ -65,7 +65,7 @@ function header(){
   document.body.insertAdjacentHTML('beforeend',`<div class="scrim" id="scrim"></div>
   <aside class="search" id="search" aria-label="Search"><div class="wrap"><div class="row">${ICON.search.replace('<svg','<svg width="24" height="24"')}<input id="q" placeholder="Search rackets, brands or levels" autocomplete="off"><button class="x" data-close aria-label="Close search"></button></div><div class="res" id="sres"></div></div></aside>
   <aside class="drawer" id="bag" aria-label="Bag"><div class="top"><h4>Your bag</h4><button class="x" data-close aria-label="Close bag"></button></div><div class="body" id="bagb"></div><div class="foot" id="bagf"></div></aside>
-  <aside class="drawer left" id="menu" aria-label="Menu"><div class="top"><a class="logo" href="./">PADEL<i>.</i></a><button class="x" data-close aria-label="Close menu"></button></div><div class="body mnav">${Object.entries({padel:'Padel',pickle:'Pickleball',level:'Shop by level',brands:'Brands'}).map(([k,t])=>`<button data-acc>${t}<span>+</span></button><div class="subl">${MEGA[k].cols.map(([h,l])=>(l==='LV'?[1,2,3].map(j=>LV[j].k):l).map(x=>`<a href="#">${x}</a>`).join('')).join('')}</div>`).join('')}<a href="#">New in</a><a href="#" class="acc">Sale</a><a href="#">Account</a></div></aside>
+  <aside class="drawer left" id="menu" aria-label="Menu"><div class="top"><a class="logo" href="./">RAQELLO<i>.</i></a><button class="x" data-close aria-label="Close menu"></button></div><div class="body mnav">${Object.entries({padel:'Padel',pickle:'Pickleball',level:'Shop by level',brands:'Brands'}).map(([k,t])=>`<button data-acc>${t}<span>+</span></button><div class="subl">${MEGA[k].cols.map(([h,l])=>(l==='LV'?[1,2,3].map(j=>LV[j].k):l).map(x=>`<a href="#">${x}</a>`).join('')).join('')}</div>`).join('')}<a href="#">New in</a><a href="#" class="acc">Sale</a><a href="#">Account</a></div></aside>
   <div class="toast" id="toast"></div>`);
   $$('[data-acc]').forEach(b=>b.onclick=()=>{const s=b.nextElementSibling;s.classList.toggle('on');b.lastChild.textContent=s.classList.contains('on')?'−':'+';});
 }
@@ -116,7 +116,7 @@ const SEC={
  promo:o=>`<section class="promo ${o.flip?'flip':''}"><div class="m ${o.video?'':'ph'}">${o.video?`<video class="vid" autoplay muted loop playsinline poster="media/${o.video}.jpg" src="media/${o.video}.mp4"></video>`:`<span class="note">Photo: ${o.ph||'lifestyle shot'}</span>`}</div><div class="t">${o.kicker?`<span class="lbl acc">${o.kicker}</span>`:''}<h2 class="d h2">${o.title}</h2><p>${o.text}</p><a class="btn" href="#">${o.cta}</a></div></section>`,
  news:()=>`<section class="news"><div class="wrap in"><div><h2 class="d h2">Join the club</h2><p>New drops from across Europe, early access to sale and level guides written by coaches. One email a week.</p></div><form onsubmit="event.preventDefault();this.querySelector('button').textContent='You are in'"><input id="nl-email" type="email" placeholder="Email address" required><button>Sign up</button></form></div></section>`,
  ftr:()=>{const col=(h,l)=>`<div><h4 class="lbl">${h}</h4><ul>${l.map(x=>`<li><a href="#">${x}</a></li>`).join('')}</ul></div>`;
-  return `<footer class="ftr"><div class="wrap"><div class="cols"><div><span class="logo">PADEL<i class="acc" style="font-style:normal">.</i></span><p style="max-width:300px">Europe's best padel and pickleball brands, sorted by level.</p></div>${col('Shop',['Padel rackets','Pickleball paddles','Shoes','Bags','Balls','Sale'])}${col('By level',['Beginner','Intermediate','Advanced','Racket finder'])}${col('Help',['Delivery','Returns','Racket demos','Contact us'])}${col('Follow',['Instagram','TikTok','YouTube'])}</div><div class="base"><span>© 2026 PADEL</span><span>Privacy  ·  Terms  ·  Cookies</span></div></div></footer>`;}
+  return `<footer class="ftr"><div class="wrap"><div class="cols"><div><span class="logo">Raqello<i class="acc" style="font-style:normal">.</i></span><p style="max-width:300px">Europe's best padel and pickleball brands, sorted by level.</p></div>${col('Shop',['Padel rackets','Pickleball paddles','Shoes','Bags','Balls','Sale'])}${col('By level',['Beginner','Intermediate','Advanced','Racket finder'])}${col('Help',['Delivery','Returns','Racket demos','Contact us'])}${col('Follow',['Instagram','TikTok','YouTube'])}</div><div class="base"><span>© 2026 Raqello</span><span>Privacy  ·  Terms  ·  Cookies</span></div></div></footer>`;}
 };
 function sections(){
   $$('[data-sec]').forEach(el=>{const o={...el.dataset};el.outerHTML=SEC[o.sec](o);});

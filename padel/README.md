@@ -1,6 +1,6 @@
-# PADEL
+# Raqello
 
-Design work for PADEL, a multi-brand padel retailer. Open `home.html` to browse the whole store: every menu, footer, card and button link goes to its page. Open `index.html` for the design board.
+Design work for Raqello, a multi-brand padel retailer. Open `home.html` to browse the whole store: every menu, footer, card and button link goes to its page. Open `index.html` for the design board.
 
 ## Signed off
 - `home.html`: homepage (Classic, framed hero, black review strip on mobile)

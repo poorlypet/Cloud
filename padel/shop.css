@@ -1,4 +1,4 @@
-/* PADEL retail system v2. Each page overrides the scheme tokens in its own :root */
+/* Raqello retail system v2. Each page overrides the scheme tokens in its own :root */
 :root{
   --bg:#FFFFFF; --fg:#0B0B0B; --fog:#F6F6F6; --line:#E4E4E4; --mute:#6F6F6F;
   --accent:#FF4F00; --on-accent:#FFFFFF;

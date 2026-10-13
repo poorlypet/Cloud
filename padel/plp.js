@@ -1,4 +1,4 @@
-/* PADEL collection page. Reads window.PLPCFG, renders into #plp-root. Needs classic.js first. */
+/* Raqello collection page. Reads window.PLPCFG, renders into #plp-root. Needs classic.js first. */
 (()=>{
 const C=window.PLPCFG,K=window.PADEL;const {tpLogo,P,card,stars,IMG,LVL,gbp,hasImg}=K;
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];

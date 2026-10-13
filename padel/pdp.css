@@ -1,4 +1,4 @@
-/* PADEL product pages. Loads after retail4/5/6 + classic + plp (crumbs) */
+/* Raqello product pages. Loads after retail4/5/6 + classic + plp (crumbs) */
 .pdp{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;padding-bottom:64px}
 .pdp.fast{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 

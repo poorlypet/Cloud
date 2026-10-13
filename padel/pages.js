@@ -1,4 +1,4 @@
-/* PADEL store pages. Reads window.PG {t: type, v: version}, renders into #pg-root.
+/* Raqello store pages. Reads window.PG {t: type, v: version}, renders into #pg-root.
    Built from the homepage and product page blocks. Needs classic.js first. */
 (()=>{
 const G=window.PG,K=window.PADEL;const {M,P,card,stars,IMG,LVL,gbp,hasImg,tpLogo,STORE,PAYM}=K;
@@ -178,7 +178,7 @@ function help(){
 
 /* ---------- about ---------- */
 function about(){
- const zoom=`<section class="zm" id="zm"><div class="st" id="zst"><video autoplay muted loop playsinline poster="media/court.jpg" src="media/court.mp4"></video><div class="mask" id="zmk"><span id="zw">PADEL</span></div><div class="shade" id="zsh"></div><div class="end" id="zen"><div class="wrap"><h1>Europe's best padel brands, in one UK store</h1><div class="sstar">${RST(5)}<span><b>Excellent</b> on Trustpilot</span></div></div></div><span class="vn">Video: brand film, replace with your own</span></div></section>`;
+ const zoom=`<section class="zm" id="zm"><div class="st" id="zst"><video autoplay muted loop playsinline poster="media/court.jpg" src="media/court.mp4"></video><div class="mask" id="zmk"><span id="zw">RAQELLO</span></div><div class="shade" id="zsh"></div><div class="end" id="zen"><div class="wrap"><h1>Europe's best padel brands, in one UK store</h1><div class="sstar">${RST(5)}<span><b>Excellent</b> on Trustpilot</span></div></div></div><span class="vn">Video: brand film, replace with your own</span></div></section>`;
  return [zoom,`<section class="wst sxw"><div class="wrap"><p><span>We don't make rackets.</span><span>We stock over 40 of Europe's best padel brands.</span></p></div></section>`,'<div data-m="logostrip"></div>',SEC(SH('Behind the store')+BENTO(['Our warehouse','Where every order is checked','Delivery and packing','warehouse shelves of racket boxes','Every racket is checked by hand before it is boxed and sent.'],['Our team','Players, not just staff','Contact the team','team on court after work'],['Our guides','Written by players','The padel guide','team filming a racket review'])),'<div class="rgap"></div>',M.rated()];}
 
 /* ---------- the padel guide ---------- */

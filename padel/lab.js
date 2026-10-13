@@ -1,4 +1,4 @@
-/* PADEL lab pages: the racket map and the court. Three versions each.
+/* Raqello lab pages: the racket map and the court. Three versions each.
    Registers into window.PGX. Load before pages.js. Map positions come from each racket's shape and level. */
 (()=>{
 const X=window.PGX=window.PGX||{};const I=window.PGXI=window.PGXI||[];

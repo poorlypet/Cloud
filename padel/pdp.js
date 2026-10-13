@@ -1,4 +1,4 @@
-/* PADEL product page. Reads window.PDPCFG, renders into #pdp-root. Needs classic.js first. */
+/* Raqello product page. Reads window.PDPCFG, renders into #pdp-root. Needs classic.js first. */
 (()=>{
 const C=window.PDPCFG,K=window.PADEL;const {P,card,stars,IMG,LVL,gbp,hasImg,add}=K;
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];

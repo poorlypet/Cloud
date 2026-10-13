@@ -1,4 +1,4 @@
-/* PADEL v6: overrides on retail4 + retail5 */
+/* Raqello v6: overrides on retail4 + retail5 */
 :root{--head:'Inter Tight','Helvetica Neue',Arial,sans-serif}
 .sh h2{font-family:var(--head);text-transform:none;font-weight:700;letter-spacing:-.03em;font-size:34px}
 .hero h1{font-family:var(--head);text-transform:none;font-weight:700;letter-spacing:-.035em;line-height:1.02;font-size:clamp(32px,3.5vw,54px);max-width:17ch}

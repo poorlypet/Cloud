@@ -1,4 +1,4 @@
-/* PADEL store pages, part two: guide article, contact, legal, 404, no results, account, beginners, sale.
+/* Raqello store pages, part two: guide article, contact, legal, 404, no results, account, beginners, sale.
    Registers into window.PGX. Load before pages.js, which passes its helpers in as H. */
 (()=>{
 const X=window.PGX=window.PGX||{};const I=window.PGXI=window.PGXI||[];
@@ -99,7 +99,7 @@ X.signin=H=>{const v=H.V;
  const why=`<p class="why">Track orders, start returns and check out faster with your details saved.</p>`;
  if(v===2)return [H.SEC(`<div class="acc2b"><div class="tabs2" role="tablist"><button class="on" data-atab="0">Sign in</button><button data-atab="1">Create account</button></div><div class="pane on" data-apane="0"><h1>Welcome back</h1>${si}</div><div class="pane" data-apane="1"><h1>Create an account</h1>${why}${cr}</div><div class="tps">${H.RST(5)}<span><b>Excellent</b> on Trustpilot</span></div></div>`,'pt8 sic')];
  if(v===3)return [`<section class="acc3"><div class="wrap"><div class="in">${H.PH('player walking onto court with a racket bag','fill')}<div class="card" id="otp"><div class="s0"><small>Your account</small><h1>Sign in or create an account</h1><p>Enter your email and we will send you a 6 digit code. No password needed.</p><form class="tfx" data-otp onsubmit="event.preventDefault()"><label>Email address<input type="email" required></label><button class="btn hor">Send my code</button></form></div><div class="s1"><small>Check your email</small><h1>Enter your code</h1><p>We have sent a 6 digit code. It lasts 10 minutes.</p><div class="otpb">${'<input inputmode="numeric" maxlength="1" aria-label="Digit">'.repeat(6)}</div><a class="btn hor" href="account.html">Continue</a><button class="ul" data-otpback>Use a different email</button></div></div></div></div></section>`];
- return [H.crumbs('Account'),H.SEC(`<div class="acc1"><div class="forms"><div><h1>Sign in</h1>${si}</div><div class="new"><h2>New to PADEL?</h2>${why}${cr}</div></div>${H.PH('player packing a racket bag','sp')}</div>`,'pt0')];};
+ return [H.crumbs('Account'),H.SEC(`<div class="acc1"><div class="forms"><div><h1>Sign in</h1>${si}</div><div class="new"><h2>New to Raqello?</h2>${why}${cr}</div></div>${H.PH('player packing a racket bag','sp')}</div>`,'pt0')];};
 I.push((t,H)=>{if(t!=='signin')return;document.addEventListener('click',e=>{const b=e.target.closest('[data-atab]');if(b){H.$$('[data-atab]').forEach(x=>x.classList.toggle('on',x===b));H.$$('[data-apane]').forEach(p=>p.classList.toggle('on',p.dataset.apane===b.dataset.atab));}if(e.target.closest('[data-otpback]'))H.$('#otp').classList.remove('on');});
  document.addEventListener('submit',e=>{if(e.target.dataset.otp!==undefined){H.$('#otp').classList.add('on');setTimeout(()=>{const i=H.$('.otpb input');if(i)i.focus();},50);}});
  document.addEventListener('input',e=>{if(e.target.closest('.otpb')&&e.target.value){const n=e.target.nextElementSibling;if(n)n.focus();}});});

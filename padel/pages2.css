@@ -1,4 +1,4 @@
-/* PADEL store pages, part two. Loaded after pages.css. */
+/* Raqello store pages, part two. Loaded after pages.css. */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sxform select,.sxform textarea,.tfx select{border:1px solid #CFCFCF;padding:14px;font-size:16px;font-weight:400;outline:none;background:#fff;color:#111;width:100%;font-family:inherit}
 .sxform select{height:54px;padding:0 14px}
