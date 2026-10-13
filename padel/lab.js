@@ -26,7 +26,9 @@ const SLIDER=(id,max,val)=>`<div class="mctl"><span>Control</span><input type="r
 X.map=H=>{const v=H.V,R=sorted(H);
  if(v===2)return [`<section class="mf mfb"><div class="wrap g"><div class="mhd"><div><small>The racket map</small><h1 id="bL">A bit of both</h1></div><p id="bS"></p></div>
   <div class="mline" id="bLine">${R.map((x,k)=>`<a class="bc" href="product.html" data-k="${k}"><span class="im">${H.IMGB(x)}</span><span class="tx"><small>${x.b}</small><b>${x.n}</b><span>${H.LVL[x.l]}, ${x.sh}</span><em>${H.gbp(x.p)}</em></span></a>`).join('')}</div>
-  <div class="mft">${SLIDER('bR',96,50)}${BUD('bB')}</div></div></section>`,`<section class="sec sx-sec"><div class="wrap">${NOTE}</div></section>`];
+  <div class="mft">${SLIDER('bR',96,50)}${BUD('bB')}</div></div></section>`,
+  H.SEC(H.SH('Shop by shape','Where each shape sits on the map.')+H.TILES([['Round rackets','round racket at the net','Control, on the left'],['Teardrop rackets','teardrop racket mid volley','Balance, in the middle'],['Diamond rackets','diamond racket smash','Power, on the right']])),
+  H.SEC(H.SH('Not sure where you sit?','Three short guides that help.','All guides')+`<div class="gcards c3">${H.GUIDES2.slice(0,3).map(H.GC).join('')}</div>`+NOTE)];
  if(v===3)return [`<section class="mf mfc" id="mfc"><div class="mcl" id="cC"><small>Control</small><b id="cCv">50%</b></div><div class="mcr" id="cP"><small>Power</small><b id="cPv">50%</b></div>
   <div class="mhd wrap"><small>The racket map</small><h1>Drag the line to the way you play.</h1></div>
   <div class="mcm" id="cMid"><div class="mpic" id="cPic"><span class="ly on">${H.IMGB(R[0])}</span><span class="ly">${H.IMGB(R[0])}</span></div><div class="mcn"><small id="cB"></small><b id="cN"></b><span><em id="cPr"></em><button class="btn sm" id="cAdd" data-add="">Add to bag</button></span></div></div>
@@ -48,7 +50,7 @@ I.push((t,H)=>{if(t!=='map')return;const v=H.V,R=sorted(H);fitExact('.mf');
  if(v===2){const s=H.$('#bR'),cs=H.$$('.bc');
   const draw=()=>{const n=+s.value,b=+H.$('#bB').value;swapText(H.$('#bL'),LABEL(n));swapText(H.$('#bS'),SUB(n));s.style.setProperty('--p',(n/96*100)+'%');
    const L=R.filter(x=>x.p<=b);if(!L.length)return;const best=nearest(L,n),bi=L.indexOf(best),st=Math.max(0,Math.min(L.length-5,bi-2));
-   cs.forEach(c=>{const x=R[+c.dataset.k],j=L.indexOf(x);const pos=j<0?null:j-st;c.style.setProperty('--x',pos===null?(R.indexOf(x)<R.indexOf(best)?-1.2:5.2):pos);c.classList.toggle('vis',pos!==null&&pos>=0&&pos<5);c.classList.toggle('on',x===best);});};
+   cs.forEach(c=>{const x=R[+c.dataset.k],j=L.indexOf(x);const pos=j<0?null:j-st;const m=j<0?(R.indexOf(x)<R.indexOf(best)?-1.2:3.2):j-Math.min(bi,L.length-2);c.style.setProperty('--x',pos===null?(R.indexOf(x)<R.indexOf(best)?-1.2:5.2):pos);c.style.setProperty('--m',m);c.classList.toggle('vis',pos!==null&&pos>=0&&pos<5);c.classList.toggle('vm',j>=0&&m>=0&&m<3);c.classList.toggle('on',x===best);});};
   s.addEventListener('input',draw);document.addEventListener('change',e=>{if(e.target.id==='bB')draw();});draw();}
  if(v===3){const sec=H.$('#mfc'),h=H.$('#cH');let n=50,last=null,drag=false;
   const draw=()=>{sec.style.setProperty('--s',(100-n)+'%');H.$('#cCv').textContent=(100-n)+'%';H.$('#cPv').textContent=n+'%';const x=nearest(R,n);

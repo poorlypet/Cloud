@@ -24,13 +24,10 @@ Design work for PADEL, a multi-brand padel retailer. Open `index.html` for the d
 ## More final pages
 - Collections, built by `plp.js`: `rackets-beginner.html`, `rackets-intermediate.html`, `rackets-advanced.html`, `rackets-round.html`, `rackets-teardrop.html`, `rackets-diamond.html`, `rackets-under-100.html`, `shoes.html`, `clothing.html`, `bags.html`, `balls.html`, `accessories.html`, `new-in.html`, `sale.html`, `brand-nox.html`, `brand-head.html`
 - Built by `pages2.js` and `pages2.css`: `contact.html`, `privacy.html`, `terms.html`, `cookies.html`, `notfound.html`, `noresults.html`, `signin.html`, `account.html`, `account-new.html` (no racket bought yet), `beginners.html`
-- `court.html`: the court, built by `lab.js` and `lab.css`
+- `court.html` and `map.html`: the court and the racket map, built by `lab.js` and `lab.css`
 - All 12 guides: `g-*.html`, text in `guides.js`
 - Legal text is in `legal.js`. Company name, number, address, email and VAT number are set once in `LEGAL` at the top of `pages2.js`
 - Menu and footer links are set in `LINK` in `classic.js`
-
-## Still choosing
-- `map-1.html` to `map-3.html`: the racket map, built by `lab.js` and `lab.css`
 
 ## Shared files
 - `classic.js`, `classic.css` (with `retail4.css`, `retail5.css`, `retail6.css`): header, mega menus, search, bag, footer, product data

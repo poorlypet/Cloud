@@ -236,3 +236,17 @@
 .cz h1{max-width:none;white-space:nowrap;font-size:min(4.6vw,72px)}
 @media(max-width:760px){.cz h1{font-size:5.6vw;letter-spacing:-.045em}}
 .cz small,.ci .names>small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+/* map final: line up */
+.mfb .mhd p{max-width:none;white-space:nowrap}
+.mfb .lnote{margin-top:24px}
+@media(max-width:760px){
+ .mfb{height:auto!important}
+ .mfb .mhd p{white-space:normal}
+ .mline{height:calc((100vw - 2*var(--g)) * .44 + 92px)}
+ .bc{width:calc(44% - 6px);transform:translateX(calc(var(--m,0) * (100% + 10px)))}
+ .bc.vis{opacity:0;pointer-events:none}
+ .bc.vm{opacity:1;pointer-events:auto}
+ .bc .im{flex:none;aspect-ratio:1}
+ .bc .tx span{display:block}
+}
+@media(max-width:760px){.mfb~.sx-sec .gcards.c3>:nth-child(3){display:none}}
