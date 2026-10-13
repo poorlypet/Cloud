@@ -250,3 +250,4 @@
  .bc .tx span{display:block}
 }
 @media(max-width:760px){.mfb~.sx-sec .gcards.c3>:nth-child(3){display:none}}
+@media(max-width:760px){.mfb .lbud{display:none}}
