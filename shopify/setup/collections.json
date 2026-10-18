@@ -572,7 +572,7 @@
    {
     "column": "vendor",
     "relation": "equals",
-    "condition": "Adidas Padel"
+    "condition": "Adidas"
    }
   ],
   "metafields": {
@@ -2157,7 +2157,7 @@
    {
     "column": "tag",
     "relation": "equals",
-    "condition": "accessories"
+    "condition": "clothing"
    },
    {
     "column": "type",
