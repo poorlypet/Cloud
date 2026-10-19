@@ -45,6 +45,18 @@ const rel=`<section class="sec wrap"><h2>You may also like</h2><div class="rel">
 const faq=`<section class="sec wrap faq"><h2>Questions</h2>${[['Is it right for my level?','It suits advanced players with a fast, full swing. If you are newer to padel, a round racket with a lower balance is easier to control.'],['What is Custom Weight?','A system that lets you add 3, 6 or 9 g to fine-tune the balance and feel.'],['How much is delivery?',`Free UK delivery on orders over £${K.STORE.freeOver}. Other options are shown at checkout.`],['Can I pay with Klarna?',`Yes. Choose Klarna at checkout to pay in 3 interest free payments of ${money(R.p/3)}.`]].map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
 const BELOW={6:[about,tech,kit,rel,faq],1:[about,tech,kit,rel,faq],2:[tech,about,rel,kit,faq],3:[about,kit,tech,rel,faq],4:[about,tech,kit,rel,faq],5:[tech,kit,about,rel,faq]};
 
+
+const sqs=(n)=>R.imgs.slice(0,n).map((s,k)=>`<div class="sqi"><img src="${s}" alt="${name}, photo ${k+1}" ${k?'loading="lazy"':''}></div>`).join('');
+const bigT=`<h1 class="bigt"><small>${R.b} · Martin Di Nenno</small>${model}</h1>`;
+const buyCol=(t)=>`<div class="bc">${t||`<div><p class="brand">${R.b}</p><h1>${name}</h1></div>`}<p class="price">${gbp(R.p)}</p>${klarna}<p class="lede">${R.lede}</p><dl class="ks6">${R.key.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>${cta}${note}</div>`;
+const band=(txt,dark)=>`<section class="band ${dark?'dk':''}"><div class="bph"><span class="bn">Photo: ${txt}</span></div><div class="bt"><p class="brand">${R.b} · ${model}</p><h2>${['Built to finish points','The Di Nenno racket','Power with a plan','Made for the net','Explosive by design'][C.layout-7]}</h2></div></section>`;
+FOLD[7]=()=>`<section class="w7 fw"><div class="g4">${sqs(4)}</div>${buyCol()}</section>`;
+FOLD[8]=()=>`<section class="w8 fw"><div class="gv"><div class="vth">${R.imgs.slice(0,5).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"><img src="${s}" alt=""></button>`).join('')}</div><div class="sqi main"><img id="m6" src="${R.imgs[0]}" alt="${name}"></div></div>${buyCol()}</section>`;
+FOLD[9]=()=>`<section class="w9 fw"><div class="peek" id="pk">${sqs(5)}</div>${buyCol(bigT)}</section>`;
+FOLD[10]=()=>`<section class="w10 fw"><div class="stack">${sqs(4)}</div>${buyCol()}</section>`;
+FOLD[11]=()=>`<section class="w11"><div class="bleed"><div class="sqi"><img id="m6" src="${R.imgs[0]}" alt="${name}"></div><div class="dots11">${R.imgs.slice(0,5).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"></button>`).join('')}</div></div>${buyCol(bigT)}</section>`;
+Object.assign(BELOW,{7:[band('player with the racket on court, full width'),tech,about,kit,rel,faq],8:[about,band('Bullpadel brand image, full width',1),tech,kit,rel,faq],9:[band('racket close up in action, full width'),about,tech,rel,kit,faq],10:[tech,about,band('Di Nenno at the net, full width',1),kit,rel,faq],11:[band('brand campaign image, full width'),tech,about,kit,rel,faq]});
+
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){
  const root=$('#pdp-root');root.className=`p2 L${C.layout}`;
@@ -55,7 +67,7 @@ function render(){
 }
 let idx=0;
 document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
- if(t.dataset.six!==undefined){$('#m6').src=R.imgs[+t.dataset.six];$$('.th6 button').forEach(b=>b.classList.toggle('on',b===t));return;}
+ if(t.dataset.six!==undefined){$('#m6').src=R.imgs[+t.dataset.six];$$('[data-six]').forEach(b=>b.classList.toggle('on',b===t));return;}
  if(t.dataset.to){const s=$('#'+t.dataset.to);s.scrollTo({left:s.clientWidth*+t.dataset.i,behavior:'smooth'});return;}
  if(t.dataset.step){idx=(idx+ +t.dataset.step+shots.length)%shots.length;$('.stage .ph img').src=shots[idx];$('.stage .ctr').textContent=`${idx+1} / ${shots.length}`;return;}
  if(t.dataset.pane!==undefined){$$('.seg button').forEach(b=>b.classList.toggle('on',b===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.p===t.dataset.pane));return;}
