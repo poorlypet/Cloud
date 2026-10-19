@@ -94,6 +94,22 @@ Object.assign(BELOW,{17:[band('brand image, full width'),rel],18:[band('brand im
 let sx=0;
 document.addEventListener('click',e=>{const t=e.target.closest('[data-sx]');if(!t)return;sx=(sx+ +t.dataset.sx+6)%6;$('#m6').src=R.imgs[sx];$('#sxc').textContent=`${sx+1} / 6`;});
 
+
+/* ===== 22: More from Bullpadel, richer ===== */
+const fam=[{n:name,img:R.imgs[0],p:R.p,me:1},...R.also.slice(0,4)];
+FOLD[22]=()=>`<section class="cl cl22">${gThumbs}<div class="rc">
+ <div class="topline"><a href="#" class="bl">${R.b}</a><span class="new">New 2026</span></div>
+ <h1>${name}</h1><p class="sub">Advanced padel racket · Martin Di Nenno's own model</p>
+ <div class="prow"><p class="price">${gbp(R.p)}</p><span class="instock">In stock</span></div>${klarna}
+ <div class="tiles">${[['Shape','Diamond'],['Balance','High'],['Level','Advanced'],['Core','MultiEVA']].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>
+ <div class="fam"><div class="fh"><b>More from Bullpadel</b><a href="#">View all</a></div><div class="frow">${fam.map(a=>`<a href="#" class="${a.me?'me':''}" title="${a.n}"><img src="${a.img}" alt="${a.n}"></a>`).join('')}</div><p class="fn" id="fn">Selected: ${R.n}</p></div>
+ <button class="go" data-atc>Add to bag · ${gbp(R.p)}</button>
+ <ul class="u3"><li>${ico.truck}<span><b>Free delivery</b>UK orders over £${K.STORE.freeOver}</span></li><li>${ico.ret}<span><b>14-day returns</b>On unused items</span></li><li>${ico.card}<span><b>Klarna</b>Pay in 3, interest free</span></li></ul>
+ <div class="feel"><p class="fh2">How it plays</p><p>${R.plays}</p><dl>${R.pf.map(([t,v])=>`<div><dt>${t==='Manoeuvrability'?'Handling':t}</dt><dd>${word(v)}</dd></div>`).join('')}</dl></div>
+ ${accs(-1).replace(/<details ><summary>How it plays<\/summary>.*?<\/details>/s,'')}</div></section>`;
+const why=`<section class="why22 wrap"><p class="k">Why the ${model}</p><h2>Built for players who finish points</h2><div class="w4">${R.feat.map(([t,p])=>`<div><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></section>`;
+BELOW[22]=[band('brand image, full width'),why,rel,faq];
+
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){
  const root=$('#pdp-root');root.className=`p2 L${C.layout}`;
@@ -112,5 +128,6 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(t.classList.contains('wish')){t.classList.toggle('on');return;}
 });
 document.addEventListener('change',e=>{if(e.target.closest('.kit'))ktot();});
+document.addEventListener('mouseover',e=>{const a=e.target.closest('.frow a');const f=$('#fn');if(a&&f)f.textContent=(a.classList.contains('me')?'Selected: ':'')+a.title;});
 document.addEventListener('DOMContentLoaded',()=>setTimeout(render,0));
 })();
