@@ -76,6 +76,24 @@ FOLD[15]=()=>`<section class="r15 rx">${gGrid}<div class="rc"><div class="seg"><
 FOLD[16]=()=>`<section class="r16">${mainImg}<div class="rc c"><p class="brand">${R.b} · Martin Di Nenno</p><h1>${model}</h1><p class="lede">${R.best}.</p><p class="price">${gbp(R.p)}</p>${klarna}<button class="pill dark wide" data-atc>Add to bag</button><div class="thr">${R.imgs.slice(0,5).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"><img src="${s}" alt=""></button>`).join('')}</div></div></section>`;
 Object.assign(BELOW,{12:[band('brand image, full width'),rel],13:[band('player on court, full width',1),rel],14:[band('racket in action, full width'),rel],15:[band('Di Nenno campaign image, full width',1),rel],16:[about,band('brand campaign image, full width'),rel,faq]});
 
+
+/* ===== 17-21: Classic family ===== */
+const cTop=`<h1>${name}</h1><p class="sub">Advanced padel racket</p><p class="price">${gbp(R.p)}</p>${klarna}`;
+const cBtn=`<button class="pill dark" data-atc>Add to bag</button>`;
+const cLede=`<p class="lede">${R.lede}</p>`;
+const tags=`<div class="ctags">${R.key.map(([a,b])=>`<span>${a}: <b>${b}</b></span>`).join('')}</div>`;
+const thumbsH=`<div class="ht">${R.imgs.slice(0,6).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"><img src="${s}" alt=""></button>`).join('')}</div>`;
+const arrows=`<div class="ar"><button data-sx="-1" aria-label="Previous photo">←</button><span id="sxc">1 / 6</span><button data-sx="1" aria-label="Next photo">→</button></div>`;
+const swatch=`<div class="sw2"><p class="lab">More from Bullpadel</p><div class="row">${R.also.slice(0,4).map(a=>`<a href="#" title="${a.n}"><img src="${a.img}" alt="${a.n}"></a>`).join('')}</div></div>`;
+FOLD[17]=()=>`<section class="cl cl17">${gThumbs}<div class="rc">${cTop}${cBtn}${cLede}${accs(-1)}</div></section>`;
+FOLD[18]=()=>`<section class="cl cl18"><div class="gh">${mainImg}${thumbsH}</div><div class="rc">${cTop}${cBtn}${cLede}${accs(-1)}</div></section>`;
+FOLD[19]=()=>`<section class="cl cl19"><div class="ga">${mainImg}${arrows}</div><div class="rc">${cTop}${tags}${cBtn}${accs(-1)}</div></section>`;
+FOLD[20]=()=>`<section class="cl cl20">${gThumbs}<div class="rc">${cTop}${swatch}${cBtn}${usps}${accs(-1)}</div></section>`;
+FOLD[21]=()=>`<section class="cl cl21">${gThumbs}<div class="rc">${cTop}${cBtn}${cLede}${tags}${accs(0)}</div></section>`;
+Object.assign(BELOW,{17:[band('brand image, full width'),rel],18:[band('brand image, full width'),rel],19:[band('brand image, full width'),rel],20:[band('brand image, full width'),rel],21:[band('brand image, full width'),rel]});
+let sx=0;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-sx]');if(!t)return;sx=(sx+ +t.dataset.sx+6)%6;$('#m6').src=R.imgs[sx];$('#sxc').textContent=`${sx+1} / 6`;});
+
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){
  const root=$('#pdp-root');root.className=`p2 L${C.layout}`;
