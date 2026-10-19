@@ -18,6 +18,9 @@ const dots=(id)=>`<div class="dots" data-for="${id}">${shots.map((_,k)=>`<i clas
 const head=`<div><p class="brand">${R.b}</p><h1>${name}</h1></div>`;
 
 const FOLD={
+6:()=>`<section class="sq6 wrap"><div class="gl"><div class="main6"><img id="m6" src="${R.imgs[0]}" alt="${name}"></div><div class="th6">${R.imgs.slice(0,5).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"><img src="${s}" alt=""></button>`).join('')}</div></div>
+ <div class="in6"><p class="brand">${R.b}</p><h1>${name}</h1><p class="price">${gbp(R.p)}</p>${klarna}<p class="lede">${R.lede}</p>
+ <dl class="ks6">${R.key.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>${cta}${note}</div></section>`,
 1:()=>`<section class="fold wrap"><div class="media"><div class="thumbs">${shots.map((s,k)=>`<button class="${k?'':'on'}" data-to="g1" data-i="${k}" aria-label="Photo ${k+1}"><img src="${s}" alt=""></button>`).join('')}</div>${swipe('g1')}${dots('g1')}</div>
  <div class="info">${head}<p class="price">${gbp(R.p)}</p>${klarna}${facts}${cta}${note}</div></section>`,
 2:()=>`<section class="fold wrap"><div class="left">${head}<p class="lede">${R.best}.</p>${play}</div>
@@ -40,7 +43,7 @@ const tech=`<section class="sec wrap"><h2>Technology</h2><div class="tech">${R.f
 const kit=`<section class="sec wrap"><div class="kitw"><h2>Complete the set</h2><div class="kit">${R.kit.map(a=>`<label><input type="checkbox" ${a.on?'checked':''} data-p="${a.p}"><span class="th"><img src="${a.img}" alt=""></span><span>${a.n}</span><b>${gbp(a.p)}</b></label>`).join('')}</div><div class="kitf"><span>Racket and selected items: <b id="ktot"></b></span><button class="btn" data-atc>Add all to bag</button></div></div></section>`;
 const rel=`<section class="sec wrap"><h2>You may also like</h2><div class="rel">${R.also.map(a=>`<a href="#"><span class="ph"><img src="${a.img}" alt="" loading="lazy"></span><span><b>${a.n}</b></span><span>${gbp(a.p)}</span></a>`).join('')}</div></section>`;
 const faq=`<section class="sec wrap faq"><h2>Questions</h2>${[['Is it right for my level?','It suits advanced players with a fast, full swing. If you are newer to padel, a round racket with a lower balance is easier to control.'],['What is Custom Weight?','A system that lets you add 3, 6 or 9 g to fine-tune the balance and feel.'],['How much is delivery?',`Free UK delivery on orders over £${K.STORE.freeOver}. Other options are shown at checkout.`],['Can I pay with Klarna?',`Yes. Choose Klarna at checkout to pay in 3 interest free payments of ${money(R.p/3)}.`]].map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
-const BELOW={1:[about,tech,kit,rel,faq],2:[tech,about,rel,kit,faq],3:[about,kit,tech,rel,faq],4:[about,tech,kit,rel,faq],5:[tech,kit,about,rel,faq]};
+const BELOW={6:[about,tech,kit,rel,faq],1:[about,tech,kit,rel,faq],2:[tech,about,rel,kit,faq],3:[about,kit,tech,rel,faq],4:[about,tech,kit,rel,faq],5:[tech,kit,about,rel,faq]};
 
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){
@@ -52,6 +55,7 @@ function render(){
 }
 let idx=0;
 document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.six!==undefined){$('#m6').src=R.imgs[+t.dataset.six];$$('.th6 button').forEach(b=>b.classList.toggle('on',b===t));return;}
  if(t.dataset.to){const s=$('#'+t.dataset.to);s.scrollTo({left:s.clientWidth*+t.dataset.i,behavior:'smooth'});return;}
  if(t.dataset.step){idx=(idx+ +t.dataset.step+shots.length)%shots.length;$('.stage .ph img').src=shots[idx];$('.stage .ctr').textContent=`${idx+1} / ${shots.length}`;return;}
  if(t.dataset.pane!==undefined){$$('.seg button').forEach(b=>b.classList.toggle('on',b===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.p===t.dataset.pane));return;}
