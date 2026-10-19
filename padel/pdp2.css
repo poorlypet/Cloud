@@ -272,3 +272,91 @@
 .p2 .sec>h2{max-width:1200px;margin-inline:auto}
 .p2 .rel,.p2 .faq details{max-width:1200px;margin-inline:auto}
 @media(min-width:900px){.p2 .about{grid-template-columns:1fr 1fr;gap:96px}.p2 .sec{padding-block:72px}}
+
+/* ===== 12-16 ===== */
+.p2 .rx{display:grid;gap:24px;padding:0 0 40px}
+.p2 .rx>*,.p2 .r16>*{min-width:0}
+.p2 .mi{aspect-ratio:1;background:#F5F5F5;display:grid;place-items:center;overflow:hidden}
+.p2 .mi img{width:86%;height:86%;object-fit:contain;mix-blend-mode:multiply}
+.p2 .gx{display:grid;gap:10px}
+.p2 .vt{display:flex;gap:8px;overflow-x:auto;order:2;padding-inline:var(--g);scrollbar-width:none}
+.p2 .vt button{flex:0 0 64px;height:64px;padding:0;border:0;background:#F5F5F5;border-radius:6px;opacity:.6}
+.p2 .vt button.on{opacity:1;outline:1.5px solid #111;outline-offset:-1.5px}
+.p2 .vt img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.p2 .gg{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:4px;scrollbar-width:none}
+.p2 .gg .mi{flex:0 0 100%;scroll-snap-align:center}
+.p2 .rc{display:flex;flex-direction:column;gap:16px;padding-inline:var(--g)}
+.p2 .rc h1{font:600 26px/1.2 var(--head);margin:0;letter-spacing:-.01em}
+.p2 .rc .sub{margin:-12px 0 0;color:var(--mute);font:500 15px var(--head)}
+.p2 .rc .price{font:600 20px var(--head)}
+.p2 .pill{height:56px;border-radius:99px;border:1px solid #CFCFCF;background:#fff;font:600 16px var(--head);display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
+.p2 .pill svg{width:20px;height:20px}
+.p2 .pill.dark{background:#111;border-color:#111;color:#fff}
+.p2 .acc{border-top:1px solid var(--line);margin-top:8px}
+.p2 .acc details{border-bottom:1px solid var(--line)}
+.p2 .acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:20px 0;font:600 17px var(--head)}
+.p2 .acc summary::-webkit-details-marker{display:none}
+.p2 .acc summary::after{content:"";width:9px;height:9px;border-right:1.6px solid #111;border-bottom:1.6px solid #111;transform:rotate(45deg) translateY(-3px)}
+.p2 .acc details[open] summary::after{transform:rotate(-135deg)}
+.p2 .ab{padding-bottom:20px;color:#333;font-size:15px;line-height:1.65}
+.p2 .ab p{margin:0 0 10px}
+.p2 .sl{margin:0;display:grid}
+.p2 .sl div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid #F0F0F0;font-size:14px}
+.p2 .sl dt{color:var(--mute)}
+.p2 .sl dd{margin:0;font-weight:600;text-align:right}
+.p2 .sl.tl div{display:grid;gap:2px}
+.p2 .sl.tl dt{color:#111;font-weight:600}
+.p2 .sl.tl dd{font-weight:400;text-align:left;color:#444}
+.p2 .usp{list-style:none;margin:0;padding:0;display:grid;gap:10px;font:500 14px var(--head)}
+.p2 .usp li{display:flex;gap:10px;align-items:center}
+.p2 .usp svg{width:20px;height:20px;flex:none}
+/* 13 adidas-like */
+.r13 .crumbline{margin:0;font:500 13px var(--head);color:var(--mute)}
+.r13 h1.caps{font:800 30px/1.05 var(--head);text-transform:uppercase;letter-spacing:-.01em}
+.r13 .also .lab{margin:0 0 8px;font:600 13px var(--head)}
+.r13 .also .row{display:flex;gap:6px}
+.r13 .also a{width:64px;height:64px;background:#F5F5F5;display:block}
+.r13 .also img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.r13 .sqbtn{height:56px;border:0;background:#111;color:#fff;font:700 15px var(--head);text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;padding:0 20px;box-shadow:4px 4px 0 #fff,4px 4px 0 1px #111}
+.r13 .sqbtn span{font-size:20px}
+/* 14 padel-shop */
+.r14 .tags{display:flex;flex-wrap:wrap;gap:6px}
+.r14 .tags span{background:#F2F2F2;border-radius:99px;padding:6px 12px;font:600 13px var(--head)}
+.r14 .pbox{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:14px}
+.r14 .pp{display:flex;justify-content:space-between;align-items:baseline}
+.r14 .pp .price{font-size:26px;font-weight:700}
+.r14 .stk{margin:0;color:#1D7F46;font:600 13px var(--head)}
+/* 15 tabs */
+.r15 .seg{display:flex;gap:24px;border-bottom:1px solid var(--line)}
+.r15 .seg button{border:0;background:none;padding:12px 0;font:600 15px var(--head);color:var(--mute);border-bottom:2px solid transparent;margin-bottom:-1px}
+.r15 .seg button.on{color:#111;border-color:#111}
+.r15 .pane{display:none}.r15 .pane.on{display:grid;gap:14px}
+.r15 h1{font-size:30px}
+.r15 .buyrow{display:flex;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:18px}
+.r15 .buyrow .price{font-size:24px;font-weight:700;white-space:nowrap}
+.r15 .buyrow .btn{flex:1;margin:0;height:56px}
+/* 16 centred */
+.r16{display:grid;gap:20px;padding-bottom:40px}
+.r16 .c{text-align:center;align-items:center}
+.r16 .c h1{font:clamp(48px,9vw,88px)/.9 var(--mark);text-transform:uppercase}
+.r16 .c .lede{max-width:40ch}
+.p2 .pill.wide{max-width:420px}
+.r16 .thr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.r16 .thr button{width:56px;height:56px;border:0;border-radius:6px;background:#F5F5F5;padding:0;opacity:.6}
+.r16 .thr button.on{opacity:1;outline:1.5px solid #111}
+.r16 .thr img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.r16 .kl{justify-content:center}
+@media(min-width:900px){
+ .p2 .rx{grid-template-columns:minmax(0,1.35fr) minmax(360px,460px);gap:64px;padding:28px var(--g) 64px;max-width:1500px;margin:0 auto;align-items:start}
+ .p2 .gx{grid-template-columns:72px 1fr;gap:16px}
+ .p2 .vt{flex-direction:column;order:0;padding:0;overflow:visible}
+ .p2 .vt button{flex:0 0 72px;width:72px;height:72px}
+ .p2 .gx .mi,.p2 .r16 .mi{max-height:calc(100vh - 220px);width:min(100%,calc(100vh - 220px))}
+ .p2 .gg{display:grid;grid-template-columns:1fr 1fr;gap:8px;overflow:visible}
+ .p2 .rc{padding:0;position:sticky;top:24px}
+ .p2 .rc h1{font-size:30px}
+ .r13 h1.caps{font-size:36px}
+ .r16{grid-template-columns:1fr 1fr;align-items:center;max-width:1500px;margin:0 auto;padding:28px var(--g) 64px;gap:64px}
+ .r16 .rc{position:static}
+}
+.p2 .mi,.p2 .vt button,.r13 .also a,.r16 .thr button{background:#fff}.p2 .gg .mi{border:1px solid #EFEFEF}.p2 .mi img{width:92%;height:92%}
