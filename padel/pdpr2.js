@@ -43,7 +43,7 @@ const tech=`<section class="sec wrap"><h2>Technology</h2><div class="tech">${R.f
 const kit=`<section class="sec wrap"><div class="kitw"><h2>Complete the set</h2><div class="kit">${R.kit.map(a=>`<label><input type="checkbox" ${a.on?'checked':''} data-p="${a.p}"><span class="th"><img src="${a.img}" alt=""></span><span>${a.n}</span><b>${gbp(a.p)}</b></label>`).join('')}</div><div class="kitf"><span>Racket and selected items: <b id="ktot"></b></span><button class="btn" data-atc>Add all to bag</button></div></div></section>`;
 const rel=`<section class="sec wrap"><h2>You may also like</h2><div class="rel">${R.also.map(a=>`<a href="#"><span class="ph"><img src="${a.img}" alt="" loading="lazy"></span><span><b>${a.n}</b></span><span>${gbp(a.p)}</span></a>`).join('')}</div></section>`;
 const faq=`<section class="sec wrap faq"><h2>Questions</h2>${[['Is it right for my level?','It suits advanced players with a fast, full swing. If you are newer to padel, a round racket with a lower balance is easier to control.'],['What is Custom Weight?','A system that lets you add 3, 6 or 9 g to fine-tune the balance and feel.'],['How much is delivery?',`Free UK delivery on orders over £${K.STORE.freeOver}. Other options are shown at checkout.`],['Can I pay with Klarna?',`Yes. Choose Klarna at checkout to pay in 3 interest free payments of ${money(R.p/3)}.`]].map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</section>`;
-const BELOW={6:[about,tech,kit,rel,faq],1:[about,tech,kit,rel,faq],2:[tech,about,rel,kit,faq],3:[about,kit,tech,rel,faq],4:[about,tech,kit,rel,faq],5:[tech,kit,about,rel,faq]};
+const BELOW={6:[about,tech,rel,faq],1:[about,tech,rel,faq],2:[tech,about,rel,faq],3:[about,tech,rel,faq],4:[about,tech,rel,faq],5:[tech,about,rel,faq]};
 
 
 const sqs=(n)=>R.imgs.slice(0,n).map((s,k)=>`<div class="sqi"><img src="${s}" alt="${name}, photo ${k+1}" ${k?'loading="lazy"':''}></div>`).join('');
@@ -55,7 +55,7 @@ FOLD[8]=()=>`<section class="w8 fw"><div class="gv"><div class="vth">${R.imgs.sl
 FOLD[9]=()=>`<section class="w9 fw"><div class="peek" id="pk">${sqs(5)}</div>${buyCol(bigT)}</section>`;
 FOLD[10]=()=>`<section class="w10 fw"><div class="stack">${sqs(4)}</div>${buyCol()}</section>`;
 FOLD[11]=()=>`<section class="w11"><div class="bleed"><div class="sqi"><img id="m6" src="${R.imgs[0]}" alt="${name}"></div><div class="dots11">${R.imgs.slice(0,5).map((s,k)=>`<button class="${k?'':'on'}" data-six="${k}" aria-label="Photo ${k+1}"></button>`).join('')}</div></div>${buyCol(bigT)}</section>`;
-Object.assign(BELOW,{7:[band('player with the racket on court, full width'),tech,about,kit,rel,faq],8:[about,band('Bullpadel brand image, full width',1),tech,kit,rel,faq],9:[band('racket close up in action, full width'),about,tech,rel,kit,faq],10:[tech,about,band('Di Nenno at the net, full width',1),kit,rel,faq],11:[band('brand campaign image, full width'),tech,about,kit,rel,faq]});
+Object.assign(BELOW,{7:[band('player with the racket on court, full width'),tech,about,rel,faq],8:[about,band('Bullpadel brand image, full width',1),tech,rel,faq],9:[band('racket close up in action, full width'),about,tech,rel,faq],10:[tech,about,band('Di Nenno at the net, full width',1),rel,faq],11:[band('brand campaign image, full width'),tech,about,rel,faq]});
 
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){

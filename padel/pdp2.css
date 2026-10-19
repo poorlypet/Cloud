@@ -246,3 +246,29 @@
 }
 .p2 .fw>*,.L11 .w11>*,.p2 .gv>*{min-width:0}
 .p2 .bph{aspect-ratio:auto;height:max(340px,70vw);min-height:0;width:100%}@media(min-width:900px){.p2 .bph{height:auto;aspect-ratio:21/9;min-height:520px}}
+
+/* ---- refinements: smaller image, more breathing room ---- */
+@media(min-width:900px){
+ .p2 .fw{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:72px;padding:32px var(--g) 72px;max-width:1680px;margin:0 auto}
+ .L8 .gv .main,.L10 .stack .sqi,.L11 .bleed .sqi{width:min(100%,calc(100vh - 230px));margin-inline:auto}
+ .L9 .peek .sqi{flex:0 0 min(88%,calc(100vh - 230px))}
+ .L7 .g4{max-width:calc((100vh - 230px)*1.1);margin-inline:auto}
+ .p2 .bc{gap:22px;max-width:520px;padding-top:8px}
+ .p2 .bc h1{font-size:30px;line-height:1.15;margin:0}
+ .L11 .bc{padding:56px 56px 56px 64px}
+}
+.p2 .bc .brand{margin:0 0 8px}
+.p2 .bc h1{margin:0;line-height:1.15}
+.p2 .bc .lede{line-height:1.55}
+.p2 .ks6 div{padding:14px 0}
+.p2 .note2{gap:6px 18px}
+/* about + specs, cleaner */
+.p2 .about{max-width:1200px;margin:0 auto;gap:40px}
+.p2 .about h2{font-size:24px;margin-bottom:20px}
+.p2 .about p{font-size:16px;line-height:1.7;max-width:60ch}
+.p2 .spec{grid-template-columns:1fr;border-top:1px solid var(--line)}
+.p2 .spec div{padding:14px 0;font-size:15px}
+.p2 .tech{max-width:1200px;margin:0 auto}
+.p2 .sec>h2{max-width:1200px;margin-inline:auto}
+.p2 .rel,.p2 .faq details{max-width:1200px;margin-inline:auto}
+@media(min-width:900px){.p2 .about{grid-template-columns:1fr 1fr;gap:96px}.p2 .sec{padding-block:72px}}
