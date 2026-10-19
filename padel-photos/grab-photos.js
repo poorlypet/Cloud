@@ -1,4 +1,4 @@
-// Raqello photo grabber v2. Reload the page first, then Paste into the browser console on www.tiendapadelpoint.com and press Enter.
+// Raqello photo grabber v3. Reload the page first, then Paste into the browser console on www.tiendapadelpoint.com and press Enter.
 // It visits each product page slowly (about 1 every 1.5 seconds), collects the photo links,
 // and downloads raqello-photos.json at the end. You can leave the tab open and do other things.
 (async () => {
@@ -18,11 +18,18 @@
   for (const [id, url] of LIST) {
     n++;
     if (done[id]) continue;
-    try {
-      const html = await (await fetch(url, {credentials: 'include'})).text();
-      done[id] = [...new Set((html.match(re) || []).map(u => u.startsWith('http') ? u : 'https://www.tiendapadelpoint.com' + u))];
-      got++;
-    } catch (e) { console.warn('failed', id, url); }
+    for (let tries = 0; tries < 40 && !done[id]; tries++) {
+      try {
+        const res = await fetch(url, {credentials: 'include'});
+        if (!res.ok && res.status !== 404) throw new Error('status ' + res.status);
+        const html = await res.text();
+        done[id] = [...new Set((html.match(re) || []).map(u => u.startsWith('http') ? u : 'https://www.tiendapadelpoint.com' + u))];
+        got++;
+      } catch (e) {
+        console.warn('Connection problem, retrying in 30s', id);
+        await new Promise(r => setTimeout(r, 30000));
+      }
+    }
     if (n % 50 === 0) console.log('Raqello photos:', n, 'of', LIST.length);
     if (got && got % 300 === 0) { part++; save('raqello-photos-part' + part + '.json'); got++; }
     await new Promise(r => setTimeout(r, 1500));
