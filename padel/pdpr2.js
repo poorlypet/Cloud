@@ -121,6 +121,31 @@ const reviews=`<section class="rv22 wrap" id="reviews"><div class="rvh"><div><p 
  <div class="rvl">${RV.map(([n,h,p,who,how,lv])=>`<div class="rvi"><div class="rvtop">${st(n)}<span class="rvver">Verified buyer</span></div><h3>${h}</h3><p>${p}</p><p class="rvwho"><b>${who}</b> · ${how} · ${lv}</p></div>`).join('')}<p class="rvsmp">Sample reviews for the design. Live product reviews show here once the store is running.</p></div></div></section>`;
 BELOW[22]=[band('brand image, full width'),why,reviews,rel,faq];
 
+/* ===== 23: wide layout, add-ons in the buy box ===== */
+const kcat=n=>/bag/i.test(n)?'Bag':/grip/i.test(n)?'Grip':/ball/i.test(n)?'Balls':/protect|guard/i.test(n)?'Protector':'Extra';
+const ksplit=n=>{const m=n.match(/^(.*?)(?:,\s*([^,]+))?$/);return [m[1].replace(/^Bullpadel /,''),m[2]||''];};
+const plus='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg>';
+const tick='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const kit23=`<div class="k23"><div class="k23h"><b>Add to your racket</b><span>Tap to add to your order.</span></div><div class="k23g">${R.kit.map((a,i)=>{const [t,v]=ksplit(a.n);return `<button class="k23i" data-k="${i}" data-p="${a.p}" aria-pressed="false"><span class="k23im"><img src="${a.img}" alt=""></span><span class="k23t"><small>${kcat(a.n)}</small><b>${t} <em>${v}</em></b><span>${gbp(a.p)}</span></span><span class="k23b">${plus}${tick}</span></button>`}).join('')}</div><a href="#" class="k23l">Want more choice? Shop all accessories</a></div>`;
+const help23=`<a class="h23" href="mailto:${K.STORE.email||'hello@raqello.com'}"><span class="h23a"><i></i><i></i></span><span class="h23t"><b>Need help choosing?</b>Message us for honest advice on rackets and sizing</span><span class="h23l">Message us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></a>`;
+const pts23=[['Diamond shape','high balance for maximum leverage on the smash'],['X-Tend Carbon 12K','a reactive, elastic face with plenty of pace'],["Di Nenno's racket",'the 2026 Xplo, built for attacking players']];
+FOLD[23]=()=>`<nav class="bc23 w23"><a href="#">Home</a><span>/</span><a href="#">Padel rackets</a><span>/</span><a href="#">Advanced</a><span>/</span><b>${name}</b></nav>
+<section class="cl cl22 cl23 w23">${gThumbs}<div class="rc">
+ <p class="lv23">Advanced · ${R.b}</p>
+ <h1>${name}</h1><a class="rl22" href="#reviews">${st(5)} <b>4.7</b> <span>(24 reviews)</span></a>
+ <div class="pr23"><p class="price">${gbp(R.p)}</p><span class="instock">In stock</span></div>${klarna}
+ <ul class="pt23">${pts23.map(([a,b])=>`<li>${tick}<span><b>${a}</b> ${b}</span></li>`).join('')}</ul>
+ <div class="buy23"><div class="q23"><button data-q="-1" aria-label="Decrease quantity">−</button><span id="q23">1</span><button data-q="1" aria-label="Increase quantity">+</button></div><button class="go" data-atc id="go23">Add to bag · ${gbp(R.p)}</button></div>
+ ${kit23}${help23}
+ <ul class="d23"><li>${ico.truck}<span><b>Free UK delivery</b>On orders over £${K.STORE.freeOver}</span></li><li>${ico.ret}<span><b>14-day returns</b>Simple returns on unused items</span></li></ul>
+</div></section>`;
+const ov23=`<section class="ov23 w23"><div><p class="k">Overview</p><h2>About the ${model}</h2>${R.desc}</div><dl>${R.specs.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl></section>`;
+const tech23=`<section class="tc23 w23"><p class="k">The tech, explained</p><h2>What makes it hit</h2><div>${R.feat.map(([t,p,img])=>`<div><span><img src="${img}" alt="" loading="lazy"></span><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></section>`;
+BELOW[23]=[ov23,band('brand image, full width'),tech23,reviews,rel,faq];
+let q23=1;const tot23=()=>{const ex=$$('.k23i[aria-pressed="true"]').reduce((a,b)=>a+ +b.dataset.p,0);const g=$('#go23');if(g)g.textContent=`Add to bag · ${gbp(Math.round((R.p*q23+ex)*100)/100)}`;};
+document.addEventListener('click',e=>{const k=e.target.closest('.k23i');if(k){k.setAttribute('aria-pressed',k.getAttribute('aria-pressed')==='true'?'false':'true');tot23();return;}
+ const q=e.target.closest('[data-q]');if(q){q23=Math.max(1,q23+ +q.dataset.q);$('#q23').textContent=q23;tot23();}},true);
+
 function ktot(){const t=R.p+$$('.kit input:checked').reduce((a,i)=>a+ +i.dataset.p,0);const e=$('#ktot');if(e)e.textContent=gbp(t);}
 function render(){
  const root=$('#pdp-root');root.className=`p2 L${C.layout}`;
@@ -135,7 +160,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)r
  if(t.dataset.to){const s=$('#'+t.dataset.to);s.scrollTo({left:s.clientWidth*+t.dataset.i,behavior:'smooth'});return;}
  if(t.dataset.step){idx=(idx+ +t.dataset.step+shots.length)%shots.length;$('.stage .ph img').src=shots[idx];$('.stage .ctr').textContent=`${idx+1} / ${shots.length}`;return;}
  if(t.dataset.pane!==undefined){$$('.seg button').forEach(b=>b.classList.toggle('on',b===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.dataset.p===t.dataset.pane));return;}
- if(t.dataset.atc!==undefined){const o=t.textContent;t.textContent='Added to bag';setTimeout(()=>t.textContent=o,1400);return;}
+ if(t.dataset.atc!==undefined){if(t.id==='go23'){t.textContent='Added to bag';setTimeout(tot23,1400);return;}const o=t.textContent;t.textContent='Added to bag';setTimeout(()=>t.textContent=o,1400);return;}
  if(t.classList.contains('wish')){t.classList.toggle('on');return;}
 });
 document.addEventListener('change',e=>{if(e.target.closest('.kit'))ktot();});
