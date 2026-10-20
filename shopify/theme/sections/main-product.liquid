@@ -1,133 +1,220 @@
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign m = product.metafields.custom
-  assign has_play = false
-  if m.power.value != blank or m.control.value != blank
-    assign has_play = true
-  endif
+  assign bh = product.vendor | handleize
+  assign bc = collections[bh]
+  capture vurl
+    render 'brand-url', brand: product.vendor
+  endcapture
   capture specs
     render 'spec-rows', product: product, tag: 'dt', vtag: 'dd'
   endcapture
-  assign has_specs = false
-  if specs != blank
-    assign has_specs = true
+  assign feats = m.features.value | newline_to_br | split: '<br />'
+  assign addons = m.addons.value
+  if addons == blank
+    assign addons = section.settings.addons
   endif
+  assign imgs = product.media | where: 'media_type', 'image'
+  assign fo = settings.free_delivery_over
 -%}
-<div id="pdp-root" class="fin">
-<div class="wrap">
-  {%- capture vurl -%}{% render 'brand-url', brand: product.vendor %}{%- endcapture -%}
+<div class="p23" id="pdp-root">
+<div class="w23">
   {%- if collection -%}
     {% render 'crumbs', title: product.title, parent_title: collection.title, parent_url: collection.url %}
   {%- else -%}
     {% render 'crumbs', title: product.title, parent_title: product.vendor, parent_url: vurl %}
   {%- endif -%}
-  <div class="pdp flow">
-    <div style="min-width:0">
-      <div class="gal g2" id="gal">
-        {%- for media in product.media -%}
-          <div class="sq{% if media.media_type == 'image' %} zoom{% endif %}">
-            {%- if forloop.first and m.badge.value != blank -%}<span class="badge">{{ m.badge.value }}</span>{%- endif -%}
-            {%- case media.media_type -%}
-              {%- when 'image' -%}{%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}{{ media | image_url: width: 1400 | image_tag: widths: '450, 700, 1000, 1400', sizes: '(min-width: 990px) 30vw, 100vw', loading: ld, alt: media.alt }}
-              {%- when 'video', 'external_video' -%}{{ media | media_tag: image_size: '1000x', autoplay: false, loop: true, controls: true }}
-              {%- else -%}{{ media | media_tag }}
-            {%- endcase -%}
-          </div>
-        {%- else -%}
-          <div class="sq"><span class="note">{{ 'product.image' | t }}</span></div><div class="sq"><span class="note">{{ 'product.image' | t }}</span></div>
+</div>
+<section class="cl23 w23">
+  <div class="g23">
+    {%- comment -%} Desktop: vertical thumbs and one big photo that stays in view {%- endcomment -%}
+    <div class="gx23">
+      <div class="vt23">
+        {%- for img in imgs limit: 8 -%}
+          <button type="button" class="{% if forloop.first %}on{% endif %}" data-g23="{{ forloop.index0 }}" data-src="{{ img | image_url: width: 1400 }}" aria-label="{{ 'product.image' | t }} {{ forloop.index }}">{{ img | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>
         {%- endfor -%}
       </div>
-      {%- if product.media.size > 1 -%}<div class="gal"><div class="dots" id="dots">{%- for media in product.media -%}<i class="{% if forloop.first %}on{% endif %}"></i>{%- endfor -%}</div></div>{%- endif -%}
+      <div class="mi23">
+        {%- if product.featured_media -%}{%- assign fa = product.featured_media.alt | default: product.title -%}
+          {{ product.featured_media | image_url: width: 1400 | image_tag: id: 'm23', widths: '700, 1000, 1400', sizes: '(min-width: 900px) 50vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: fa }}
+        {%- else -%}<span class="note">{{ 'product.image' | t }}</span>{%- endif -%}
+        {%- if m.badge.value != blank -%}<span class="badge">{{ m.badge.value }}</span>{%- endif -%}
+      </div>
     </div>
-    <div class="buy flow" id="buy">
-      <div class="bl"><a href="{{ vurl }}">{{ product.vendor }}</a><span class="mute">{{ product.type }}</span></div>
-      <h1>{{ product.title }}</h1>
-      {%- assign r = product.metafields.reviews.rating.value -%}
-      {%- if r != blank -%}<div class="rl">{% render 'stars', size: 's' %}<b>{{ r.rating | round: 1 }}</b><a href="#reviews">{{ 'product.reviews' | t: count: product.metafields.reviews.rating_count.value }}</a></div>{%- endif -%}
-      {%- if m.lede.value != blank -%}<p class="lede">{{ m.lede.value }} <a href="#desc">{{ 'general.read_more' | t }}</a></p>{%- endif -%}
-      <div class="pr2" id="ppr"><b>{{ v.price | money_without_trailing_zeros }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}</div>
-      {%- if settings.klarna -%}
-        {%- assign third = v.price | divided_by: 3 | money -%}
-        <div class="kl2">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'product.klarna' | t: amount: third }}</span></div>
-      {%- endif -%}
-      {%- if m.best_for.value != blank -%}<p class="best"><span class="mute">{{ 'product.best_for' | t }}</span> {{ m.best_for.value }}</p>{%- endif -%}
-      {%- if has_play or has_specs -%}
-        <div class="hp hp-t"><div class="tl2">
-          {%- if has_play -%}<button type="button" class="on" data-bt="0">{{ 'product.how_it_plays' | t }}</button>{%- endif -%}
-          {%- if has_specs -%}<button type="button" data-bt="1"{% unless has_play %} class="on"{% endunless %}>{{ 'product.key_specs' | t }}</button>{%- endif -%}
+    {%- comment -%} Mobile: swipe photos, thumbs, and a bar that fills as you swipe {%- endcomment -%}
+    <div class="ms23">
+      <div class="ms23s" id="ms23">
+        {%- for img in imgs limit: 8 -%}
+          <div>{%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}{%- assign ia = img.alt | default: product.title -%}{{ img | image_url: width: 1000 | image_tag: widths: '450, 700, 1000', sizes: '100vw', loading: ld, alt: ia }}</div>
+        {%- endfor -%}
+      </div>
+      {%- if imgs.size > 1 -%}
+        <div class="mt23">
+          {%- for img in imgs limit: 8 -%}
+            <button type="button" class="{% if forloop.first %}on{% endif %}" data-mt="{{ forloop.index0 }}" aria-label="{{ 'product.image' | t }} {{ forloop.index }}">{{ img | image_url: width: 140 | image_tag: loading: 'lazy', alt: '' }}</button>
+          {%- endfor -%}
         </div>
-        {%- if has_play -%}<div class="btp on" data-btp="0">{%- if m.plays.value != blank -%}<p class="hp-s">{{ m.plays.value }}</p>{%- endif -%}{% render 'play-bars', product: product %}</div>{%- endif -%}
-        {%- if has_specs -%}<div class="btp{% unless has_play %} on{% endunless %}" data-btp="1"><dl class="kdl">{{ specs }}</dl><a class="ul allsp" href="#specs">{{ 'product.all_specs' | t }}</a></div>{%- endif -%}
-        </div>
+        {%- assign n = imgs.size | at_most: 8 -%}
+        <div class="sb23" aria-hidden="true"><i style="width:{{ 100.0 | divided_by: n }}%"></i></div>
       {%- endif -%}
+    </div>
+  </div>
 
-      {%- form 'product', product, data-product-form: '', id: 'pform' -%}
-        <input type="hidden" name="id" value="{{ v.id }}">
-        {%- unless product.has_only_default_variant -%}
-          <div class="vopts">
-            {%- for option in product.options_with_values -%}
-              <fieldset data-opt><legend>{{ option.name }}<span data-optv>{{ option.selected_value }}</span></legend><div class="sw">
-                {%- for value in option.values -%}
-                  {%- assign oid = section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
-                  <input type="radio" id="{{ oid }}" name="opt{{ forloop.parentloop.index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}{% unless value.available %} class="na"{% endunless %}><label for="{{ oid }}">{{ value }}</label>
-                {%- endfor -%}
-              </div></fieldset>
-            {%- endfor -%}
-          </div>
-        {%- endunless -%}
-        <div class="atc"><div class="qty2"><button type="button" data-qd="-1" aria-label="{{ 'cart.fewer' | t }}">&minus;</button><span id="qty">1</span><button type="button" data-qd="1" aria-label="{{ 'cart.more' | t }}">+</button></div>
-          <button class="btn big" id="atc" type="submit" data-l-add="{{ 'product.add' | t }}" data-l-soldout="{{ 'product.sold_out' | t }}" data-l-na="{{ 'product.unavailable' | t }}"{% unless v.available %} disabled{% endunless %}>{%- if v.available -%}{{ 'product.add' | t }}{%- else -%}{{ 'product.sold_out' | t }}{%- endif -%}</button>
+  <div class="rc23">
+    <p class="lv23">{%- if m.level.value != blank -%}{{ m.level.value }} · {% endif -%}<a href="{{ vurl }}">{{ product.vendor }}</a></p>
+    <h1>{{ product.title }}</h1>
+    {%- assign r = product.metafields.reviews.rating.value -%}
+    {%- if r != blank -%}<a class="rl23" href="#reviews">{% render 'stars', size: 's' %}<b>{{ r.rating | round: 1 }}</b><span>({{ 'product.reviews' | t: count: product.metafields.reviews.rating_count.value }})</span></a>{%- endif -%}
+    <div class="pr23" id="ppr"><b>{{ v.price | money }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
+    {%- if settings.klarna -%}
+      {%- assign third = v.price | divided_by: 3 | money -%}
+      <div class="kl23">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'product.klarna' | t: amount: third }}</span></div>
+    {%- endif -%}
+
+    {%- capture pts -%}{%- for line in feats limit: 3 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>{{ parts[0] | strip }}</b> {{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</span></li>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {%- if pts != blank -%}<ul class="pt23">{{ pts }}</ul>{%- elsif m.lede.value != blank -%}<p class="ld23">{{ m.lede.value }}</p>{%- endif -%}
+
+    {%- if bc.products_count > 1 -%}
+      <div class="fam23">
+        <div class="fh23"><b>More from {{ product.vendor }}</b><a href="{{ bc.url }}">View all</a></div>
+        <div class="fr23">
+          <a href="{{ product.url }}" class="me" title="{{ product.title | escape }}">{{ product.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}</a>
+          {%- assign shown = 0 -%}
+          {%- for p in bc.products -%}
+            {%- if p.id != product.id and shown < 4 -%}{%- assign shown = shown | plus: 1 -%}
+              <a href="{{ p.url }}" title="{{ p.title | escape }}">{{ p.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p.title }}</a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
-        {{ form | payment_button }}
-      {%- endform -%}
-      <script type="application/json" data-variants>[{%- for x in product.variants -%}{%- capture phtml -%}<b>{{ x.price | money_without_trailing_zeros }}</b>{%- if x.compare_at_price > x.price -%} <s>{{ x.compare_at_price | money_without_trailing_zeros }}</s>{%- endif -%}{%- endcapture -%}{"id":{{ x.id }},"available":{{ x.available | json }},"options":{{ x.options | json }},"price_html":{{ phtml | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
-      <ul class="perks">
-        <li>{%- if v.available -%}<span class="dot"></span><span><b>{{ 'product.in_stock' | t }}</b>, {{ 'product.ready' | t }}</span>{%- else -%}<span>{{ 'product.sold_out' | t }}</span>{%- endif -%}</li>
-        {%- assign fo = settings.free_delivery_over | times: 100 -%}
-        {%- if fo > 0 and v.price >= fo -%}<li><span><b>{{ 'product.free_delivery' | t }}</b> {{ 'product.on_this_order' | t }}</span></li>{%- elsif settings.delivery_line != blank -%}<li><span>{{ settings.delivery_line }}</span></li>{%- endif -%}
-        {%- if settings.tp_label != blank -%}<li><span>{{ 'product.rated' | t }} <b>{{ settings.tp_label }}</b> on Trustpilot</span></li>{%- endif -%}
-      </ul>
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}{% render block %}
-          {%- when 'help' -%}<p class="helpl" {{ block.shopify_attributes }}>{{ block.settings.text }} <a href="{{ block.settings.link }}">{{ block.settings.link_label }}</a></p>
-        {%- endcase -%}
-      {%- endfor -%}
-    </div>
+        <p class="fn23" id="fn23" >Selected: {{ product.title }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- form 'product', product, data-pform23: '', id: 'pform' -%}
+      <input type="hidden" name="id" value="{{ v.id }}">
+      {%- unless product.has_only_default_variant -%}
+        <div class="vopts">
+          {%- for option in product.options_with_values -%}
+            <fieldset data-opt><legend>{{ option.name }}<span data-optv>{{ option.selected_value }}</span></legend><div class="sw">
+              {%- for value in option.values -%}
+                {%- assign oid = section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                <input type="radio" id="{{ oid }}" name="opt{{ forloop.parentloop.index }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}{% unless value.available %} class="na"{% endunless %}><label for="{{ oid }}">{{ value }}</label>
+              {%- endfor -%}
+            </div></fieldset>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+      <div class="buy23"><div class="q23"><button type="button" data-q23="-1" aria-label="{{ 'cart.fewer' | t }}">&minus;</button><span id="qty">1</span><button type="button" data-q23="1" aria-label="{{ 'cart.more' | t }}">+</button></div>
+        <button class="go23" id="atc" type="submit" data-price="{{ v.price }}" data-l-add="{{ 'product.add' | t }}" data-l-soldout="{{ 'product.sold_out' | t }}" data-l-na="{{ 'product.unavailable' | t }}"{% unless v.available %} disabled{% endunless %}>{%- if v.available -%}{{ 'product.add' | t }} · {{ v.price | money }}{%- else -%}{{ 'product.sold_out' | t }}{%- endif -%}</button>
+      </div>
+    {%- endform -%}
+    <script type="application/json" data-variants>[{%- for x in product.variants -%}{%- capture phtml -%}<b>{{ x.price | money }}</b>{%- if x.compare_at_price > x.price -%} <s>{{ x.compare_at_price | money }}</s>{%- endif -%}{%- endcapture -%}{"id":{{ x.id }},"available":{{ x.available | json }},"options":{{ x.options | json }},"price":{{ x.price }},"price_html":{{ phtml | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
+
+    {%- if addons.size > 0 -%}
+      <div class="k23">
+        <div class="k23h"><b>{{ section.settings.addons_heading }}</b><span>{{ section.settings.addons_text }}</span></div>
+        <div class="k23g">
+          {%- for a in addons limit: 4 -%}
+            {%- assign av = a.selected_or_first_available_variant -%}
+            {%- if a.available and a.id != product.id -%}
+              <button type="button" class="k23i" data-addon="{{ av.id }}" data-p="{{ av.price }}" aria-pressed="false">
+                <span class="k23im">{{ a.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</span>
+                <span class="k23t"><small>{{ a.type }}</small><b>{{ a.title | remove_first: a.vendor | strip }}</b><span>{{ av.price | money }}</span></span>
+                <span class="k23b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.addons_link != blank -%}<a href="{{ section.settings.addons_link }}" class="k23l">{{ section.settings.addons_link_label }}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when '@app' -%}{% render block %}
+        {%- when 'help' -%}
+          <a class="h23" href="{{ block.settings.link | default: routes.root_url }}" {{ block.shopify_attributes }}>
+            <span class="h23a">{%- if block.settings.photo_1 -%}{{ block.settings.photo_1 | image_url: width: 96 | image_tag: alt: '' }}{%- else -%}<i></i>{%- endif -%}{%- if block.settings.photo_2 -%}{{ block.settings.photo_2 | image_url: width: 96 | image_tag: alt: '' }}{%- else -%}<i></i>{%- endif -%}</span>
+            <span class="h23t"><b>{{ block.settings.heading }}</b>{{ block.settings.text }}</span>
+            <span class="h23l">{{ block.settings.link_label }} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </a>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    <ul class="d23">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span><b>{{ 'product.free_delivery' | t }}</b>On orders over £{{ fo }}</span></li>
+      {%- if settings.klarna -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="5.5" width="19" height="13" rx="1.5"/><path d="M2.5 10h19"/></svg><span><b>Klarna</b>Pay in 3, interest free</span></li>{%- endif -%}
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/></svg><span><b>14-day returns</b>On unused items</span></li>
+    </ul>
   </div>
-</div>
-<div class="wrap"><section class="psec first" id="desc">
-  <div class="ptabs">
-    <button type="button" class="on" data-tabp="0">{{ 'product.description' | t }}</button>
-    {%- if has_play -%}<button type="button" data-tabp="1">{{ 'product.how_it_plays' | t }}</button>{%- endif -%}
-    {%- if has_specs -%}<button type="button" data-tabp="2">{{ 'product.key_specs' | t }}</button>{%- endif -%}
-    <button type="button" data-tabp="3">{{ 'product.delivery_returns' | t }}</button>
+</section>
+
+<section class="ov23 w23" id="desc">
+  <div><p class="k23k">Overview</p><h2>About the {{ product.title }}</h2><div class="rte">{{ product.description }}</div></div>
+  <dl><div><dt>{{ 'product.brand' | t }}</dt><dd>{{ product.vendor }}</dd></div>{{ specs }}</dl>
+</section>
+
+{%- if section.settings.brand_strip -%}
+<section class="bs23">
+  <div class="bs23i">{%- if bc.metafields.custom.brand_banner.value -%}{{ bc.metafields.custom.brand_banner.value | image_url: width: 2400 | image_tag: widths: '800, 1400, 2000, 2400', sizes: '100vw', loading: 'lazy', alt: product.vendor }}{%- endif -%}</div>
+  <div class="bs23t w23">
+    <div>{%- if bc.metafields.custom.logo.value -%}<span class="bs23lg">{{ bc.metafields.custom.logo.value | image_url: height: 120 | image_tag: alt: product.vendor }}</span>{%- else -%}<p class="bs23b">{{ product.vendor }}</p>{%- endif -%}{%- if bc.metafields.custom.brand_line.value != blank -%}<p class="bs23l">{{ bc.metafields.custom.brand_line.value }}</p>{%- endif -%}</div>
+    <a href="{{ vurl }}" class="bs23c">Shop {{ product.vendor }}</a>
   </div>
-  <div class="pane on" data-pane="0"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.description' | t }}</h3><div class="desc rte">{{ product.description }}</div></div>
-  {%- if has_play -%}<div class="pane" data-pane="1"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.how_it_plays' | t }}</h3><div class="hpx">{%- if m.plays.value != blank -%}<p class="hp-s">{{ m.plays.value }}</p>{%- endif -%}{% render 'play-bars', product: product %}</div></div>{%- endif -%}
-  {%- if has_specs -%}<div class="pane" data-pane="2"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.key_specs' | t }}</h3><div class="spec2" id="specs"><div><span>{{ 'product.brand' | t }}</span><b>{{ product.vendor }}</b></div>{% render 'spec-rows', product: product %}</div></div>{%- endif -%}
-  <div class="pane" data-pane="3"><h3 class="mh" style="font-family:var(--head);font-size:20px;margin:18px 0 12px">{{ 'product.delivery_returns' | t }}</h3><div class="rte">{{ section.settings.delivery }}</div></div>
-</section></div>
-{%- assign feats = m.features.value | newline_to_br | split: '<br />' -%}
+</section>
+{%- endif -%}
+
 {%- if m.features.value != blank -%}
-<section class="fband"><div class="wrap">
-  <div class="ph">{%- if m.feature_image.value -%}{{ m.feature_image.value | image_url: width: 1600 | image_tag: class: 'fill', loading: 'lazy', alt: '' }}{%- else -%}<span class="note">{{ 'general.photo' | t }}: {{ product.title }}</span>{%- endif -%}<h2>{{ 'product.what_makes' | t }}</h2></div>
-  <div class="f4">{%- for line in feats limit: 4 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div>{%- endif -%}{%- endfor -%}</div>
-</div></section>
+<section class="tc23 w23">
+  <p class="k23k">The tech, explained</p><h2>{{ 'product.what_makes' | t }}</h2>
+  <div>{%- for line in feats limit: 8 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div>{%- endif -%}{%- endfor -%}</div>
+</section>
+{%- endif -%}
+
+{%- if section.settings.faq_1_q != blank -%}
+<section class="fq23 w23">
+  <h2>{{ section.settings.faq_heading }}</h2>
+  {%- for i in (1..4) -%}
+    {%- assign qk = 'faq_' | append: i | append: '_q' -%}{%- assign ak = 'faq_' | append: i | append: '_a' -%}
+    {%- if section.settings[qk] != blank -%}<details><summary>{{ section.settings[qk] }}</summary><div class="rte">{{ section.settings[ak] }}</div></details>{%- endif -%}
+  {%- endfor -%}
+</section>
 {%- endif -%}
 </div>
+{{ 'pdp23.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pdp23.js' | asset_url }}" defer></script>
 {% schema %}
 {
   "name": "Product",
   "settings": [
-    { "type": "richtext", "id": "delivery", "label": "Delivery and returns text", "default": "<p>Free UK delivery on orders over £75. Delivery options and prices are shown at checkout.</p><p>You have 14 days to return anything unused, in its original packaging.</p>" }
+    { "type": "header", "content": "Add to your racket" },
+    { "type": "product_list", "id": "addons", "label": "Default add-ons", "limit": 4, "info": "Used when a product has no add-ons in its 'Add to your racket' metafield." },
+    { "type": "text", "id": "addons_heading", "label": "Heading", "default": "Add to your racket" },
+    { "type": "text", "id": "addons_text", "label": "Text", "default": "Tap to add to your order." },
+    { "type": "text", "id": "addons_link_label", "label": "Link text", "default": "Want more choice? Shop all accessories" },
+    { "type": "url", "id": "addons_link", "label": "Link" },
+    { "type": "header", "content": "Brand strip" },
+    { "type": "checkbox", "id": "brand_strip", "label": "Show brand strip", "default": true, "info": "Uses the brand collection's Brand banner, Brand logo and Brand strip line metafields. The brand collection handle must match the vendor name." },
+    { "type": "header", "content": "Questions" },
+    { "type": "text", "id": "faq_heading", "label": "Heading", "default": "Questions" },
+    { "type": "text", "id": "faq_1_q", "label": "Question 1", "default": "Is it right for my level?" },
+    { "type": "richtext", "id": "faq_1_a", "label": "Answer 1", "default": "<p>Check the level on this page. If you are not sure, message us and we will help you choose.</p>" },
+    { "type": "text", "id": "faq_2_q", "label": "Question 2", "default": "How much is delivery?" },
+    { "type": "richtext", "id": "faq_2_a", "label": "Answer 2", "default": "<p>Free UK delivery on orders over £75. Other options are shown at checkout.</p>" },
+    { "type": "text", "id": "faq_3_q", "label": "Question 3", "default": "Can I return it?" },
+    { "type": "richtext", "id": "faq_3_a", "label": "Answer 3", "default": "<p>You have 14 days to return anything unused, in its original packaging.</p>" },
+    { "type": "text", "id": "faq_4_q", "label": "Question 4", "default": "Can I pay with Klarna?" },
+    { "type": "richtext", "id": "faq_4_a", "label": "Answer 4", "default": "<p>Yes. Choose Klarna at checkout to pay in 3 interest free payments.</p>" }
   ],
   "blocks": [
     { "type": "@app" },
-    { "type": "help", "name": "Help line", "limit": 1, "settings": [
-      { "type": "text", "id": "text", "label": "Text", "default": "Not sure it is right for you?" },
-      { "type": "text", "id": "link_label", "label": "Link text", "default": "Read our racket guide" },
-      { "type": "url", "id": "link", "label": "Link" } ] }
+    { "type": "help", "name": "Help banner", "limit": 1, "settings": [
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Need help choosing?" },
+      { "type": "text", "id": "text", "label": "Text", "default": "Honest advice on rackets and sizing" },
+      { "type": "text", "id": "link_label", "label": "Button text", "default": "Message us" },
+      { "type": "url", "id": "link", "label": "Link" },
+      { "type": "image_picker", "id": "photo_1", "label": "Photo 1" },
+      { "type": "image_picker", "id": "photo_2", "label": "Photo 2" } ] }
   ]
 }
 {% endschema %}
