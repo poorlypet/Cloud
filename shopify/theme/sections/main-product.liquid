@@ -25,7 +25,6 @@
   if pc > 0
     assign vurl = bc.url
   endif
-  assign timg = m.feature_image.value | default: imgs[1] | default: product.featured_media
 -%}
 <div class="p23" id="pdp-root">
 <div class="w23">
@@ -78,7 +77,7 @@
     <div class="pr23" id="ppr"><b>{{ v.price | money }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
     {%- if settings.klarna -%}
       {%- assign third = v.price | divided_by: 3 | money -%}
-      <div class="kl23">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>3 interest free payments of <b>{{ third }}</b></span></div>
+      <div class="kl23">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<i class="klb">Klarna.</i>{%- endif -%}<span>Pay in 3 interest-free payments of <strong>{{ third }}</strong></span></div>
     {%- endif -%}
 
     {%- capture pts -%}{%- for line in feats limit: 3 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>{{ parts[0] | strip }}</b> {{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</span></li>{%- endif -%}{%- endfor -%}{%- endcapture -%}
@@ -177,25 +176,32 @@
 {%- endif -%}
 
 {%- if m.features.value != blank -%}
-<section class="tc23">
-  <div class="w23 tcg">
-    <div class="tci">{%- if timg -%}{{ timg | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(min-width: 900px) 45vw, 100vw', loading: 'lazy', alt: product.title }}{%- endif -%}</div>
-    <div class="tct">
-      <p class="k23k">The tech, explained</p><h2>{{ 'product.what_makes' | t }}</h2>
-      <ul class="tcl">{%- for line in feats limit: 8 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<li><span class="tcx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div></li>{%- endif -%}{%- endfor -%}</ul>
-      {%- if specs != blank -%}<a href="#desc" class="tca">See full specifications</a>{%- endif -%}
-    </div>
+<section class="tc23 w23">
+  <div class="tch"><div><p class="k23k">The tech, explained</p><h2>{{ 'product.what_makes' | t }}</h2></div>{%- if specs != blank -%}<a href="#desc" class="tca">Full specifications</a>{%- endif -%}</div>
+  <div class="tc4">
+    {%- assign fi = 0 -%}
+    {%- for line in feats limit: 8 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 and fi < 4 -%}
+      {%- assign fi = fi | plus: 1 -%}{%- assign tim = imgs[fi] | default: product.featured_media -%}
+      <div class="tcc"><div class="tcp">{%- if tim -%}{{ tim | image_url: width: 700 | image_tag: widths: '350, 500, 700', sizes: '(min-width: 900px) 25vw, 50vw', loading: 'lazy', alt: '' }}{%- endif -%}</div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div>
+    {%- endif -%}{%- endfor -%}
   </div>
 </section>
 {%- endif -%}
 
 {%- if section.settings.faq_1_q != blank -%}
 <section class="fq23 w23">
-  <h2>{{ section.settings.faq_heading }}</h2>
-  {%- for i in (1..4) -%}
+  <div class="fqh">
+    <p class="k23k">{{ section.settings.faq_kicker }}</p>
+    <h2>{{ section.settings.faq_heading }}</h2>
+    {%- if section.settings.faq_text != blank -%}<p class="fqt">{{ section.settings.faq_text }}</p>{%- endif -%}
+    {%- if section.settings.faq_link_label != blank -%}<a class="fqb" href="{{ section.settings.faq_link | default: '/pages/contact' }}">{{ section.settings.faq_link_label }}</a>{%- endif -%}
+  </div>
+  <div class="fql">
+  {%- for i in (1..6) -%}
     {%- assign qk = 'faq_' | append: i | append: '_q' -%}{%- assign ak = 'faq_' | append: i | append: '_a' -%}
-    {%- if section.settings[qk] != blank -%}<details><summary>{{ section.settings[qk] }}</summary><div class="rte">{{ section.settings[ak] }}</div></details>{%- endif -%}
+    {%- if section.settings[qk] != blank -%}<details{% if forloop.first %} open{% endif %}><summary>{{ section.settings[qk] }}<i aria-hidden="true"></i></summary><div class="rte">{{ section.settings[ak] }}</div></details>{%- endif -%}
   {%- endfor -%}
+  </div>
 </section>
 {%- endif -%}
 </div>
@@ -216,7 +222,11 @@
     { "type": "header", "content": "Brand strip" },
     { "type": "checkbox", "id": "brand_strip", "label": "Show brand strip", "default": true, "info": "Uses the brand collection's Brand banner, Brand logo and Brand strip line metafields. The brand collection handle must match the vendor name." },
     { "type": "header", "content": "Questions" },
+    { "type": "text", "id": "faq_kicker", "label": "Small heading", "default": "Before you buy" },
     { "type": "text", "id": "faq_heading", "label": "Heading", "default": "Questions" },
+    { "type": "text", "id": "faq_text", "label": "Text", "default": "Can't see your answer? Send us a message and we will help." },
+    { "type": "text", "id": "faq_link_label", "label": "Button text", "default": "Message us" },
+    { "type": "url", "id": "faq_link", "label": "Button link", "info": "Leave empty to use the contact page." },
     { "type": "text", "id": "faq_1_q", "label": "Question 1", "default": "Is it right for my level?" },
     { "type": "richtext", "id": "faq_1_a", "label": "Answer 1", "default": "<p>Check the level on this page. If you are not sure, message us and we will help you choose.</p>" },
     { "type": "text", "id": "faq_2_q", "label": "Question 2", "default": "How much is delivery?" },
@@ -224,7 +234,11 @@
     { "type": "text", "id": "faq_3_q", "label": "Question 3", "default": "Can I return it?" },
     { "type": "richtext", "id": "faq_3_a", "label": "Answer 3", "default": "<p>You have 14 days to return anything unused, in its original packaging.</p>" },
     { "type": "text", "id": "faq_4_q", "label": "Question 4", "default": "Can I pay with Klarna?" },
-    { "type": "richtext", "id": "faq_4_a", "label": "Answer 4", "default": "<p>Yes. Choose Klarna at checkout to pay in 3 interest free payments.</p>" }
+    { "type": "richtext", "id": "faq_4_a", "label": "Answer 4", "default": "<p>Yes. Choose Klarna at checkout to pay in 3 interest free payments.</p>" },
+    { "type": "text", "id": "faq_5_q", "label": "Question 5" },
+    { "type": "richtext", "id": "faq_5_a", "label": "Answer 5" },
+    { "type": "text", "id": "faq_6_q", "label": "Question 6" },
+    { "type": "richtext", "id": "faq_6_a", "label": "Answer 6" }
   ],
   "blocks": [
     { "type": "@app" },
