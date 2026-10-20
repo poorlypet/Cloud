@@ -51,3 +51,8 @@ img.fill,video.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:
 .expr.dyn{display:block}
 .search .row>svg{width:22px;height:22px;flex:none}
 .card .im img{mix-blend-mode:multiply}
+/* product photos everywhere: grey tile, white photo backgrounds blend away */
+.card .im,.line .th,.sgrid .th,.mcard .th,.btl .im,.tpb i{background:var(--pbg)}
+.card .im img,.line .th img,.sgrid .th img,.mcard .th img,.btl .im img,.tpb i img{mix-blend-mode:multiply}
+body .mi23,body .vt23 button,body .ms23s>div,body .mt23 button,body .fr23 a,body .k23im,body .tcp,body .tci{background:var(--pbg)}
+body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body .k23im img,body .tcp img{mix-blend-mode:multiply}
