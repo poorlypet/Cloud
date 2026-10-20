@@ -130,7 +130,7 @@ const kit23=`<div class="k23"><div class="k23h"><b>Add to your racket</b><span>T
 const help23=`<a class="h23" href="mailto:${K.STORE.email||'hello@raqello.com'}"><span class="h23a"><i></i><i></i></span><span class="h23t"><b>Need help choosing?</b>Honest advice on rackets and sizing</span><span class="h23l">Message us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></a>`;
 const pts23=[['Diamond shape','high balance for maximum leverage on the smash'],['X-Tend Carbon 12K','a reactive, elastic face with plenty of pace'],["Di Nenno's racket",'the 2026 Xplo, built for attacking players']];
 FOLD[23]=()=>`<nav class="bc23 w23"><a href="#">Home</a><span>/</span><a href="#">Padel rackets</a><span>/</span><a href="#">Advanced</a><span>/</span><b>${name}</b></nav>
-<section class="cl cl22 cl23 w23">${gThumbs}<div class="rc">
+<section class="cl cl22 cl23 w23">${gThumbs}<div class="ms23"><div class="ms23s" id="ms23">${R.imgs.slice(0,8).map((src,k)=>`<div><img src="${src}" alt="${name}, photo ${k+1}" ${k?'loading="lazy"':''}></div>`).join('')}</div><div class="sb23" aria-hidden="true"><i style="width:${100/Math.min(8,R.imgs.length)}%"></i></div></div><div class="rc">
  <p class="lv23">Advanced · ${R.b}</p>
  <h1>${name}</h1><a class="rl22" href="#reviews">${st(5)} <b>4.7</b> <span>(24 reviews)</span></a>
  <div class="pr23"><p class="price">${gbp(R.p)}</p></div>${klarna}
@@ -144,6 +144,7 @@ const band23=`<section class="bs23"><div class="bs23i" role="img" aria-label="${
 const ov23=`<section class="ov23 w23"><div><p class="k">Overview</p><h2>About the ${model}</h2>${R.desc}</div><dl>${R.specs.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl></section>`;
 const tech23=`<section class="tc23 w23"><p class="k">The tech, explained</p><h2>What makes it hit</h2><div>${R.feat.map(([t,p,img])=>`<div><span><img src="${img}" alt="" loading="lazy"></span><h3>${t}</h3><p>${p}</p></div>`).join('')}</div></section>`;
 BELOW[23]=[ov23,band23,tech23,reviews,rel,faq];
+document.addEventListener('scroll',e=>{const m=e.target;if(m.id!=='ms23')return;const t=m.nextElementSibling.firstElementChild,max=m.scrollWidth-m.clientWidth;t.style.transform=`translateX(${max?(m.scrollLeft/max)*(100/parseFloat(t.style.width)-1)*100:0}%)`;},true);
 let q23=1;const tot23=()=>{const ex=$$('.k23i[aria-pressed="true"]').reduce((a,b)=>a+ +b.dataset.p,0);const g=$('#go23');if(g)g.textContent=`Add to bag · ${gbp(Math.round((R.p*q23+ex)*100)/100)}`;};
 document.addEventListener('click',e=>{const k=e.target.closest('.k23i');if(k){k.setAttribute('aria-pressed',k.getAttribute('aria-pressed')==='true'?'false':'true');tot23();return;}
  const q=e.target.closest('[data-q]');if(q){q23=Math.max(1,q23+ +q.dataset.q);$('#q23').textContent=q23;tot23();}},true);
