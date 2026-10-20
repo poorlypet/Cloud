@@ -1,0 +1,29 @@
+/* Raqello product page, round 5: tech row, reviews */
+/* tech cards: equal widths for 2, 3 or 4, swipe row on mobile */
+@media(min-width:900px){.tc23>.tc4{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}}
+@media(max-width:899px){
+ .tc23>.tc4{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}
+ .tc23>.tc4::-webkit-scrollbar{display:none}
+ .tc4 .tcc{flex:0 0 74%;scroll-snap-align:start}
+ .tc23>.tch{flex-direction:column;align-items:flex-start}
+}
+
+/* reviews */
+.rv23{padding-block:56px;border-top:1px solid var(--line)}
+.rvh{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:32px}
+.rvh h2{font:clamp(32px,5vw,56px)/.95 var(--mark);text-transform:uppercase}
+.rvw{display:inline-flex;align-items:center;height:48px;padding:0 22px;border:1.5px solid var(--fg);font:700 14px var(--h);white-space:nowrap}
+.rvw:hover{background:var(--fg);color:#fff}
+.rvg{display:grid;gap:32px}
+.rvs{display:grid;gap:10px;align-content:start;justify-items:start}
+.rvn{font:800 64px/1 var(--h);letter-spacing:-.03em}
+.rvs .stars i{width:26px;height:26px}.rvs .stars i svg{width:18px;height:18px}
+.rvs .stars.rv0 i{background:#DCDCE6}
+.rvs>p{color:var(--mute);font-size:15px}
+.rvp{list-style:none;display:grid;gap:8px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line);width:100%}
+.rvp li{display:flex;gap:8px;align-items:center;font-size:14px;color:#444}
+.rvp svg{width:18px;height:18px;color:var(--tp)}
+.rve{background:var(--grey);padding:32px;display:grid;gap:8px;justify-items:start}
+.rve b{font:700 20px var(--h)}.rve p{color:#555;margin-bottom:10px}
+@media(min-width:900px){.rv23{padding-block:88px}.rvg{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:80px}}
+@media(max-width:520px){.rvh{flex-direction:column;align-items:flex-start}}

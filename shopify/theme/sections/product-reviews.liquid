@@ -1,8 +1,49 @@
-{%- if section.blocks.size > 0 or request.design_mode -%}
-<div class="wrap"><section class="psec" id="reviews">
-  {%- for block in section.blocks -%}{% render block %}{%- else -%}<p class="mute">Add the Trustpilot product reviews app block here. Hidden on the live store until an app block is added.</p>{%- endfor -%}
-</section></div>
-{%- endif -%}
+{%- comment -%} Product reviews: summary from the reviews metafields, review list from the reviews app block. {%- endcomment -%}
+{%- assign r = product.metafields.reviews.rating.value -%}
+{%- assign rc = product.metafields.reviews.rating_count.value | default: 0 -%}
+<section class="rv23 w23" id="reviews">
+  <div class="rvh">
+    <div><p class="k23k">{{ section.settings.kicker }}</p><h2>{{ section.settings.heading }}</h2></div>
+    {%- if section.settings.write_link != blank -%}<a class="rvw" href="{{ section.settings.write_link }}">{{ section.settings.write_label }}</a>{%- endif -%}
+  </div>
+  <div class="rvg">
+    <div class="rvs">
+      {%- if r != blank -%}
+        <b class="rvn">{{ r.rating | round: 1 }}</b>
+        {% render 'stars' %}
+        <p>{{ 'product.reviews' | t: count: rc }}</p>
+      {%- else -%}
+        <span class="stars rv0" aria-hidden="true">{%- for i in (1..5) -%}<i>{% render 'icon', name: 'star' %}</i>{%- endfor -%}</span>
+        <p>{{ section.settings.empty_title }}</p>
+      {%- endif -%}
+      {%- if section.settings.point_1 != blank or section.settings.point_2 != blank -%}
+      <ul class="rvp">
+        {%- if section.settings.point_1 != blank -%}<li>{% render 'icon', name: 'verified' %}<span>{{ section.settings.point_1 }}</span></li>{%- endif -%}
+        {%- if section.settings.point_2 != blank -%}<li>{% render 'icon', name: 'verified' %}<span>{{ section.settings.point_2 }}</span></li>{%- endif -%}
+      </ul>
+      {%- endif -%}
+    </div>
+    <div class="rvl">
+      {%- for block in section.blocks -%}{% render block %}{%- else -%}
+        <div class="rve"><b>{{ section.settings.empty_title }}</b><p>{{ section.settings.empty_text }}</p>{%- if section.settings.write_link != blank -%}<a class="rvw" href="{{ section.settings.write_link }}">{{ section.settings.write_label }}</a>{%- endif -%}</div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{{ 'pdp23c.css' | asset_url | stylesheet_tag }}
 {% schema %}
-{ "name": "Product reviews", "blocks": [ { "type": "@app" } ] }
+{
+  "name": "Product reviews",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small heading", "default": "Reviews" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What players say" },
+    { "type": "text", "id": "write_label", "label": "Button text", "default": "Write a review" },
+    { "type": "url", "id": "write_link", "label": "Button link", "info": "Link to your review form. Leave empty to hide the button." },
+    { "type": "text", "id": "point_1", "label": "Point 1", "info": "Optional, for example how your reviews app checks buyers." },
+    { "type": "text", "id": "point_2", "label": "Point 2" },
+    { "type": "text", "id": "empty_title", "label": "No reviews heading", "default": "No reviews yet" },
+    { "type": "text", "id": "empty_text", "label": "No reviews text", "default": "Bought this one? Tell other players how it plays." }
+  ],
+  "blocks": [ { "type": "@app" } ]
+}
 {% endschema %}
