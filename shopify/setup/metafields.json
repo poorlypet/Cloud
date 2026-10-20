@@ -314,5 +314,21 @@
   "name": "Short title for tiles",
   "type": "single_line_text_field",
   "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "brand_banner",
+  "name": "Brand banner",
+  "type": "file_reference",
+  "pin": true
+ },
+ {
+  "ownerType": "COLLECTION",
+  "namespace": "custom",
+  "key": "brand_line",
+  "name": "Brand strip line",
+  "type": "single_line_text_field",
+  "pin": true
  }
 ]
