@@ -1,0 +1,16 @@
+/* Raqello product page, round 3: tech section, sticky photo, search icon */
+.tc23{background:var(--grey);padding-block:48px;margin-block:8px}
+.tc23>.tcg{display:grid;gap:32px;align-items:center}
+.tci{aspect-ratio:1;background:#fff;display:grid;place-items:center}
+.tci img{width:86%;height:86%;object-fit:contain;mix-blend-mode:multiply}
+.tcl{list-style:none;display:grid}
+.tcl li{display:grid;grid-template-columns:36px 1fr;gap:16px;padding:20px 0;border-top:1px solid #DCDCDA}
+.tcl li:last-child{border-bottom:1px solid #DCDCDA}
+.tcx{width:36px;height:36px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.tcx svg{width:18px;height:18px}
+.tc23 .tcl h3{font-size:18px;margin-bottom:4px}
+.tc23 .tcl p{color:#444;line-height:1.55}
+.tca{display:inline-block;margin-top:24px;font:700 14px var(--h);text-decoration:underline;text-underline-offset:4px}
+@media(min-width:900px){.tc23{padding-block:88px}.tc23>.tcg{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px}}
+body.tpl-product{overflow-x:clip}
+.search .row>svg{width:22px;height:22px;flex:none}

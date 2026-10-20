@@ -17,6 +17,15 @@
   assign imgs = product.media | where: 'media_type', 'image'
   assign fo = settings.free_delivery_over
   assign pc = bc.products_count | plus: 0
+  if pc == 0
+    assign bh2 = bh | append: '-padel'
+    assign bc = collections[bh2]
+    assign pc = bc.products_count | plus: 0
+  endif
+  if pc > 0
+    assign vurl = bc.url
+  endif
+  assign timg = m.feature_image.value | default: imgs[1] | default: product.featured_media
 -%}
 <div class="p23" id="pdp-root">
 <div class="w23">
@@ -168,9 +177,15 @@
 {%- endif -%}
 
 {%- if m.features.value != blank -%}
-<section class="tc23 w23">
-  <p class="k23k">The tech, explained</p><h2>{{ 'product.what_makes' | t }}</h2>
-  <div>{%- for line in feats limit: 8 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div>{%- endif -%}{%- endfor -%}</div>
+<section class="tc23">
+  <div class="w23 tcg">
+    <div class="tci">{%- if timg -%}{{ timg | image_url: width: 1200 | image_tag: widths: '600, 900, 1200', sizes: '(min-width: 900px) 45vw, 100vw', loading: 'lazy', alt: product.title }}{%- endif -%}</div>
+    <div class="tct">
+      <p class="k23k">The tech, explained</p><h2>{{ 'product.what_makes' | t }}</h2>
+      <ul class="tcl">{%- for line in feats limit: 8 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<li><span class="tcx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><h3>{{ parts[0] | strip }}</h3><p>{{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</p></div></li>{%- endif -%}{%- endfor -%}</ul>
+      {%- if specs != blank -%}<a href="#desc" class="tca">See full specifications</a>{%- endif -%}
+    </div>
+  </div>
 </section>
 {%- endif -%}
 
@@ -185,6 +200,7 @@
 {%- endif -%}
 </div>
 {{ 'pdp23.css' | asset_url | stylesheet_tag }}
+{{ 'pdp23b.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'pdp23.js' | asset_url }}" defer></script>
 {% schema %}
 {
