@@ -440,7 +440,8 @@
 @media(min-width:900px){.cl22 .gx{top:calc(var(--hdrh,130px) + 16px)}.cl22 .mi{width:min(calc(100vh - var(--hdrh,130px) - 48px),720px)!important}}
 .cl22 .rl22{display:inline-flex;gap:6px;align-items:center;font:500 13px var(--head);color:#111;text-decoration:none;margin-top:-8px;letter-spacing:1px}
 .cl22 .rl22 b{letter-spacing:0}.cl22 .rl22 span{color:var(--mute);letter-spacing:0}
-.rvst{color:#111;letter-spacing:2px;display:inline-block}.rvst::before,.rvst::after{content:none!important}.rvst i{font-style:normal;color:#D6D6D6}
+.rvst{display:inline-flex;gap:2px;vertical-align:middle}.rvst::before,.rvst::after{content:none!important}.rvst i{width:1.15em;height:1.15em;background:#DCDCE6;display:inline-grid;place-items:center}.rvst i.on{background:#00B67A}.rvst svg{width:72%;height:72%}
+.tpw{display:inline-flex;align-items:center;gap:3px;font:700 13px var(--head);color:#191919;letter-spacing:-.01em}.tpw svg{width:16px;height:16px}
 .rv22{padding-block:64px;max-width:1200px;border-top:1px solid var(--line)}
 .rv22 .rvh{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px;flex-wrap:wrap}
 .rv22 .k{margin:0 0 6px;font:700 12px var(--head);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
@@ -449,7 +450,7 @@
 .rv22 .rvg{display:grid;gap:32px}
 .rv22 .rvs{display:grid;gap:8px;align-content:start}
 .rv22 .rvs>b{font:800 56px/1 var(--head)}
-.rv22 .rvs .rvst{font-size:20px}
+.rv22 .rvs .rvst{font-size:22px}
 .rv22 .rvs p{margin:0 0 8px;color:var(--mute);font:500 14px var(--head)}
 .rv22 .rvhr{display:grid;grid-template-columns:28px 1fr 36px;gap:10px;align-items:center;font:500 13px var(--head)}
 .rv22 .rvhr i{height:6px;background:#EEE;display:block}.rv22 .rvhr i b{display:block;height:100%;background:#111}
@@ -466,3 +467,4 @@
 .rv22 .rvsmp{margin:8px 0 0;font:500 12px var(--head);color:#9A9A9A}
 @media(min-width:900px){.rv22 .rvg{grid-template-columns:300px 1fr;gap:72px}}
 body{overflow-x:clip!important;overflow-y:visible!important}
+.rv22 .rvhr b{background:#00B67A!important}.rl22 .tpw{margin-left:4px}

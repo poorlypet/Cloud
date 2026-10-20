@@ -2,6 +2,9 @@
 (()=>{
 const C=window.PDPCFG,R=window.PRODUCT,K=window.PADEL,gbp=K.gbp;
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const TPS='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2.5l2.8 6.6 7.2.6-5.5 4.7 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6z"/></svg>';
+const st=(n=5)=>`<span class="rvst" aria-label="${n} out of 5 stars">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}">${TPS}</i>`).join('')}</span>`;
+const tpw=`<span class="tpw"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00B67A" d="M12 2.5l2.8 6.6 7.2.6-5.5 4.7 1.7 7-6.2-3.8-6.2 3.8 1.7-7L2 9.7l7.2-.6z"/></svg>Trustpilot</span>`;
 const money=n=>'£'+(Math.floor(n*100)/100).toFixed(2);
 const name=`${R.b} ${R.n}`, model=R.n.replace(' Martin Di Nenno','');
 const word=v=>v>=9?'Very high':v>=7?'High':v>=5?'Medium':'Low';
@@ -99,7 +102,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-sx]');if(!
 const fam=[{n:name,img:R.imgs[0],p:R.p,me:1},...R.also.slice(0,4)];
 FOLD[22]=()=>`<section class="cl cl22">${gThumbs}<div class="rc">
  <div class="topline"><a href="#" class="bl">${R.b}</a><span class="new">New 2026</span></div>
- <h1>${name}</h1><a class="rl22" href="#reviews">${'★★★★★'} <b>4.7</b> <span>(24 reviews)</span></a><p class="sub">Advanced padel racket · Martin Di Nenno's own model</p>
+ <h1>${name}</h1><a class="rl22" href="#reviews">${st(5)} <b>4.7</b> <span>(24 reviews)</span>${tpw}</a><p class="sub">Advanced padel racket · Martin Di Nenno's own model</p>
  <div class="prow"><p class="price">${gbp(R.p)}</p><span class="instock">In stock</span></div>${klarna}
  <div class="tiles">${[['Shape','Diamond'],['Balance','High'],['Level','Advanced'],['Core','MultiEVA']].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>
  <div class="fam"><div class="fh"><b>More from Bullpadel</b><a href="#">View all</a></div><div class="frow">${fam.map(a=>`<a href="#" class="${a.me?'me':''}" title="${a.n}"><img src="${a.img}" alt="${a.n}"></a>`).join('')}</div><p class="fn" id="fn">Selected: ${R.n}</p></div>
@@ -112,10 +115,9 @@ BELOW[22]=[band('brand image, full width'),why,rel,faq];
 
 
 /* reviews (design samples, replaced by live product reviews in Shopify) */
-const st=(n=5)=>`<span class="rvst" aria-label="${n} out of 5 stars">${'★★★★★'.slice(0,n)}<i>${'★★★★★'.slice(n)}</i></span>`;
 const RV=[[5,'Proper power on the smash','Moved up from a Vertex and the extra pace on overheads is obvious straight away. Needs a full swing but rewards it.','James T.','Plays 3x a week','Advanced'],[5,'Feels solid and well made','Heavy in the head but stable on volleys. Grip is comfortable and the finish looks great.','Sofia R.','Club league','Advanced'],[4,'Great racket, takes time to adjust','Brilliant for attacking. Defending off the back glass took a few sessions to get used to.','Dan M.','Plays weekly','Intermediate']];
 const reviews=`<section class="rv22 wrap" id="reviews"><div class="rvh"><div><p class="k">Reviews</p><h2>What players say</h2></div><button class="rvw">Write a review</button></div>
- <div class="rvg"><div class="rvs"><b>4.7</b>${st(5)}<p>Based on 24 reviews</p>${[[5,79],[4,17],[3,4],[2,0],[1,0]].map(([s,p])=>`<div class="rvhr"><span>${s}★</span><i><b style="width:${p}%"></b></i><span>${p}%</span></div>`).join('')}</div>
+ <div class="rvg"><div class="rvs"><b>4.7</b>${st(5)}<p>Based on 24 reviews ${tpw}</p>${[[5,79],[4,17],[3,4],[2,0],[1,0]].map(([s,p])=>`<div class="rvhr"><span>${s}★</span><i><b style="width:${p}%"></b></i><span>${p}%</span></div>`).join('')}</div>
  <div class="rvl">${RV.map(([n,h,p,who,how,lv])=>`<div class="rvi"><div class="rvtop">${st(n)}<span class="rvver">Verified buyer</span></div><h3>${h}</h3><p>${p}</p><p class="rvwho"><b>${who}</b> · ${how} · ${lv}</p></div>`).join('')}<p class="rvsmp">Sample reviews for the design. Live product reviews show here once the store is running.</p></div></div></section>`;
 BELOW[22]=[band('brand image, full width'),why,reviews,rel,faq];
 
