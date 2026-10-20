@@ -76,6 +76,17 @@ $$('[data-recs23]').forEach(async el => {
     else if (!el.querySelector('.card')) { const s = el.closest('.shopify-section'); if (s) s.hidden = true; } } catch (err) {}
 });
 
+/* subtle arrows on the main photo */
+const arr = d => `<button type="button" class="ar23 ${d < 0 ? 'p' : 'n'}" data-a23="${d}" aria-label="${d < 0 ? 'Previous photo' : 'Next photo'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${d < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'}"/></svg></button>`;
+[$('.mi23'), $('.ms23')].forEach(w => { if (w && $$('[data-g23]').length > 1) w.insertAdjacentHTML('beforeend', arr(-1) + arr(1)); });
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-a23]'); if (!a) return;
+  const d = +a.dataset.a23;
+  if (a.closest('.mi23')) { const t = $$('[data-g23]'), i = t.findIndex(b => b.classList.contains('on')); t[(i + d + t.length) % t.length].click(); return; }
+  const s = $('#ms23'); if (!s) return; const n = s.children.length, k = Math.round(s.scrollLeft / s.clientWidth);
+  s.scrollTo({ left: s.clientWidth * ((k + d + n) % n), behavior: 'smooth' });
+});
+
 /* keep the photo clear of the sticky header */
 const hb = () => { const h = $('.hdr'), r = $('.p23'); if (h && r) r.style.setProperty('--hdrh', Math.round(h.getBoundingClientRect().height) + 'px'); };
 hb(); addEventListener('resize', hb);

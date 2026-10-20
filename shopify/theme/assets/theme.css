@@ -56,3 +56,11 @@ img.fill,video.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:
 .card .im img,.line .th img,.sgrid .th img,.mcard .th img,.btl .im img,.tpb i img{mix-blend-mode:multiply}
 body .mi23,body .vt23 button,body .ms23s>div,body .mt23 button,body .fr23 a,body .k23im,body .tcp,body .tci{background:var(--pbg)}
 body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body .k23im img,body .tcp img{mix-blend-mode:multiply}
+/* header stays in view: the section wrapper sticks, not just the header inside it */
+.shopify-section-group-header-group:has(.hdr){position:sticky;top:0;z-index:60}
+/* product photo arrows */
+.ar23{position:absolute;top:50%;z-index:2;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(255,255,255,.85);color:var(--fg);display:grid;place-items:center;box-shadow:0 1px 6px rgba(0,0,0,.08);opacity:.75;transition:opacity .2s,background .2s}
+.ar23:hover{opacity:1;background:#fff}
+.ar23 svg{width:18px;height:18px}
+.ar23.p{left:14px}.ar23.n{right:14px}
+.ms23{position:relative}.ms23 .ar23{top:50vw;width:38px;height:38px;margin-top:-19px}.ms23 .ar23.p{left:10px}.ms23 .ar23.n{right:10px}
