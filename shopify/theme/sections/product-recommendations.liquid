@@ -1,8 +1,27 @@
 <div class="wrap"><section class="psec">
   {% render 'sec-head', heading: section.settings.heading, text: section.settings.text %}
-  <div class="grid" data-recs="{{ product.id }}" data-section="{{ section.id }}" data-limit="4">
+  <div class="grid" data-recs23="{{ product.id }}" data-section="{{ section.id }}" data-limit="4">
     {%- if recommendations.performed and recommendations.products_count > 0 -%}
       {%- for p in recommendations.products -%}{% render 'product-card', product: p %}{%- endfor -%}
+    {%- elsif product -%}
+      {%- comment -%} Until Shopify has recommendations: same type first, then same brand {%- endcomment -%}
+      {%- liquid
+        assign tmap = 'Padel racket:padel-rackets,Padel shoes:shoes,Padel balls:balls'
+        assign th = ''
+        assign pairs = tmap | split: ','
+        for pr in pairs
+          assign kv = pr | split: ':'
+          if kv[0] == product.type
+            assign th = kv[1]
+          endif
+        endfor
+        if th == ''
+          assign th = product.vendor | handleize
+        endif
+        assign src = collections[th].products
+      -%}
+      {%- assign shown = 0 -%}
+      {%- for p in src limit: 20 -%}{%- if p.id != product.id and p.available and shown < 4 -%}{%- assign shown = shown | plus: 1 -%}{% render 'product-card', product: p %}{%- endif -%}{%- endfor -%}
     {%- endif -%}
   </div>
 </section></div>

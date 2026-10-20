@@ -68,6 +68,14 @@ if (ms) ms.addEventListener('scroll', () => {
 const fn = $('#fn23');
 if (fn) { const def = fn.textContent; $$('.fr23 a').forEach(a => { a.addEventListener('mouseenter', () => fn.textContent = a.classList.contains('me') ? def : a.title); a.addEventListener('mouseleave', () => fn.textContent = def); }); }
 
+/* recommendations: swap in Shopify's picks when it has some, otherwise keep the fallback */
+$$('[data-recs23]').forEach(async el => {
+  try { const r = await fetch(`${RQ.recsUrl}?section_id=${el.dataset.section}&product_id=${el.dataset.recs23}&limit=${el.dataset.limit || 4}&intent=related`);
+    const d = new DOMParser().parseFromString(await r.text(), 'text/html'), n = d.querySelector('[data-recs23]');
+    if (n && n.querySelector('.card')) el.innerHTML = n.innerHTML;
+    else if (!el.querySelector('.card')) { const s = el.closest('.shopify-section'); if (s) s.hidden = true; } } catch (err) {}
+});
+
 /* keep the photo clear of the sticky header */
 const hb = () => { const h = $('.hdr'), r = $('.p23'); if (h && r) r.style.setProperty('--hdrh', Math.round(h.getBoundingClientRect().height) + 'px'); };
 hb(); addEventListener('resize', hb);

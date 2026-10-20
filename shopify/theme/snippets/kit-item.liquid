@@ -1,0 +1,7 @@
+{%- comment -%} One add-on tile in the product page kit box. {%- endcomment -%}
+{%- assign av = a.selected_or_first_available_variant -%}
+<button type="button" class="k23i" data-addon="{{ av.id }}" data-p="{{ av.price }}" aria-pressed="false">
+  <span class="k23im">{{ a.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</span>
+  <span class="k23t"><small>{{ a.type }}</small><b>{{ a.title | remove_first: a.vendor | strip }}</b><span>{{ av.price | money }}</span></span>
+  <span class="k23b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+</button>

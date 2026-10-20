@@ -16,6 +16,7 @@
   endif
   assign imgs = product.media | where: 'media_type', 'image'
   assign fo = settings.free_delivery_over
+  assign pc = bc.products_count | plus: 0
 -%}
 <div class="p23" id="pdp-root">
 <div class="w23">
@@ -68,13 +69,13 @@
     <div class="pr23" id="ppr"><b>{{ v.price | money }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
     {%- if settings.klarna -%}
       {%- assign third = v.price | divided_by: 3 | money -%}
-      <div class="kl23">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'product.klarna' | t: amount: third }}</span></div>
+      <div class="kl23">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>3 interest free payments of <b>{{ third }}</b></span></div>
     {%- endif -%}
 
     {%- capture pts -%}{%- for line in feats limit: 3 -%}{%- assign parts = line | strip | split: ':' -%}{%- if parts.size > 1 -%}<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>{{ parts[0] | strip }}</b> {{ line | strip | remove_first: parts[0] | remove_first: ':' | strip }}</span></li>{%- endif -%}{%- endfor -%}{%- endcapture -%}
     {%- if pts != blank -%}<ul class="pt23">{{ pts }}</ul>{%- elsif m.lede.value != blank -%}<p class="ld23">{{ m.lede.value }}</p>{%- endif -%}
 
-    {%- if bc.products_count > 1 -%}
+    {%- if pc > 1 -%}
       <div class="fam23">
         <div class="fh23"><b>More from {{ product.vendor }}</b><a href="{{ bc.url }}">View all</a></div>
         <div class="fr23">
@@ -110,21 +111,23 @@
     {%- endform -%}
     <script type="application/json" data-variants>[{%- for x in product.variants -%}{%- capture phtml -%}<b>{{ x.price | money }}</b>{%- if x.compare_at_price > x.price -%} <s>{{ x.compare_at_price | money }}</s>{%- endif -%}{%- endcapture -%}{"id":{{ x.id }},"available":{{ x.available | json }},"options":{{ x.options | json }},"price":{{ x.price }},"price_html":{{ phtml | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
 
-    {%- if addons.size > 0 -%}
+    {%- capture kit -%}
+      {%- assign kn = 0 -%}
+      {%- if addons.size > 0 -%}
+        {%- for a in addons -%}{%- if a.available and a.id != product.id and kn < 4 -%}{%- assign kn = kn | plus: 1 -%}{% render 'kit-item', a: a %}{%- endif -%}{%- endfor -%}
+      {%- else -%}
+        {%- assign khs = section.settings.kit_collections | split: ',' -%}
+        {%- for kh in khs -%}
+          {%- assign khh = kh | strip -%}{%- assign kc = collections[khh] -%}
+          {%- assign got = false -%}
+          {%- for a in kc.products limit: 12 -%}{%- if got == false and a.available and a.id != product.id and kn < 4 -%}{%- assign got = true -%}{%- assign kn = kn | plus: 1 -%}{% render 'kit-item', a: a %}{%- endif -%}{%- endfor -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if kit != blank -%}
       <div class="k23">
         <div class="k23h"><b>{{ section.settings.addons_heading }}</b><span>{{ section.settings.addons_text }}</span></div>
-        <div class="k23g">
-          {%- for a in addons limit: 4 -%}
-            {%- assign av = a.selected_or_first_available_variant -%}
-            {%- if a.available and a.id != product.id -%}
-              <button type="button" class="k23i" data-addon="{{ av.id }}" data-p="{{ av.price }}" aria-pressed="false">
-                <span class="k23im">{{ a.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</span>
-                <span class="k23t"><small>{{ a.type }}</small><b>{{ a.title | remove_first: a.vendor | strip }}</b><span>{{ av.price | money }}</span></span>
-                <span class="k23b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v12M6 12h12"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-              </button>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
+        <div class="k23g">{{ kit }}</div>
         {%- if section.settings.addons_link != blank -%}<a href="{{ section.settings.addons_link }}" class="k23l">{{ section.settings.addons_link_label }}</a>{%- endif -%}
       </div>
     {%- endif -%}
@@ -187,9 +190,10 @@
 {
   "name": "Product",
   "settings": [
-    { "type": "header", "content": "Add to your racket" },
-    { "type": "product_list", "id": "addons", "label": "Default add-ons", "limit": 4, "info": "Used when a product has no add-ons in its 'Add to your racket' metafield." },
-    { "type": "text", "id": "addons_heading", "label": "Heading", "default": "Add to your racket" },
+    { "type": "header", "content": "Add to your kit" },
+    { "type": "product_list", "id": "addons", "label": "Default add-ons", "limit": 4, "info": "Used when a product has no add-ons in its 'Add to your kit' metafield." },
+    { "type": "text", "id": "kit_collections", "label": "Fill from these collections", "default": "balls, accessories-overgrips, accessories-protector-tape, bags-racket-bags", "info": "Collection handles, comma separated. Used when neither the product nor the default list has add-ons. Takes the first in-stock product from each." },
+    { "type": "text", "id": "addons_heading", "label": "Heading", "default": "Add to your kit" },
     { "type": "text", "id": "addons_text", "label": "Text", "default": "Tap to add to your order." },
     { "type": "text", "id": "addons_link_label", "label": "Link text", "default": "Want more choice? Shop all accessories" },
     { "type": "url", "id": "addons_link", "label": "Link" },
