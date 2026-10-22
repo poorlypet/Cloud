@@ -1,7 +1,7 @@
-{%- if section.blocks.size > 0 or request.design_mode -%}
+{%- if section.blocks.size > 0 or request.design_mode or settings.review_preview -%}
 <section class="tpr"><div class="wrap">
   <div class="tph"><div><h2>{{ section.settings.heading }}</h2>
-    {%- if settings.tp_label == blank and request.design_mode -%}<p class="tpsum"><b>Excellent</b>{% render 'stars' %}<span>4.8 out of 5 based on <a href="#">126 reviews</a></span>{% render 'icon', name: 'tp' %}</p>{%- endif -%}{%- if settings.tp_label != blank -%}<p class="tpsum"><b>{{ settings.tp_label }}</b>{% render 'stars' %}<span>{{ settings.tp_score }} out of 5 based on <a href="{{ settings.tp_link }}">{{ settings.tp_count }} reviews</a></span>{% render 'icon', name: 'tp' %}</p>{%- endif -%}</div>
+    {%- if settings.tp_label == blank and settings.review_preview -%}<p class="tpsum"><b>Excellent</b>{% render 'stars' %}<span>4.8 out of 5 based on <a href="#">126 reviews</a></span>{% render 'icon', name: 'tp' %}</p>{%- endif -%}{%- if settings.tp_label != blank -%}<p class="tpsum"><b>{{ settings.tp_label }}</b>{% render 'stars' %}<span>{{ settings.tp_score }} out of 5 based on <a href="{{ settings.tp_link }}">{{ settings.tp_count }} reviews</a></span>{% render 'icon', name: 'tp' %}</p>{%- endif -%}</div>
     <div class="arrows"><button type="button" data-arr="-1" aria-label="{{ 'general.previous' | t }}">&larr;</button><button type="button" data-arr="1" aria-label="{{ 'general.next' | t }}">&rarr;</button></div>
   </div>
   <div class="tprail">

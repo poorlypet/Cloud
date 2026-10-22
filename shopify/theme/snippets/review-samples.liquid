@@ -1,8 +1,7 @@
 {%- comment -%}
-  Layout preview for the reviews areas. Renders only inside the theme editor
-  (request.design_mode), never on the storefront. Pass limit and product.
+  Shows in the theme editor, or anywhere when the Show example reviews setting is on. Pass limit and product.
 {%- endcomment -%}
-{%- if request.design_mode -%}
+{%- if request.design_mode or settings.review_preview -%}
 {%- capture rs -%}Great racket for the money|Really solid feel at the net and plenty of power once you are warmed up. Took a couple of sessions to get used to the balance.|James R.|2 days ago
 Fast delivery, well packed|Arrived quickly and well packed, racket came with a cover and the grip was spotless. Would order again.|Sophie T.|5 days ago
 Helpful advice before buying|Messaged about which shape suited my game and got a clear answer within the hour. Ended up with exactly what I needed.|Daniel M.|1 week ago

@@ -33,7 +33,8 @@
       { "type": "text", "id": "tp_label", "label": "Rating label", "info": "For example Excellent." },
       { "type": "text", "id": "tp_score", "label": "Score", "info": "For example 4.8" },
       { "type": "text", "id": "tp_count", "label": "Number of reviews" },
-      { "type": "url", "id": "tp_link", "label": "Reviews page link" }
+      { "type": "url", "id": "tp_link", "label": "Reviews page link" },
+      { "type": "checkbox", "id": "review_preview", "label": "Show example reviews", "default": false, "info": "Fills the Trustpilot bar, home reviews and product reviews with example reviews while you design. Turn this off before the store opens." }
     ]
   },
   {
