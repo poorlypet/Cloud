@@ -28,3 +28,5 @@
 @media(min-width:900px){.rv23{padding-block:88px}.rvg{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:80px}}
 @media(max-width:520px){.rvh{flex-direction:column;align-items:flex-start}}
 .bs23lg img{filter:none!important;background:#fff;padding:10px 16px;height:72px!important;width:auto}
+
+.rvsm{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rvsm .tpc p{-webkit-line-clamp:6}.rvtp{margin-top:6px}@media(max-width:760px){.rvsm{grid-template-columns:1fr}}

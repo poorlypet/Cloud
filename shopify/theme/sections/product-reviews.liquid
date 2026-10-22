@@ -12,6 +12,11 @@
         <b class="rvn">{{ r.rating | round: 1 }}</b>
         {% render 'stars' %}
         <p>{{ 'product.reviews' | t: count: rc }}</p>
+      {%- elsif request.design_mode -%}
+        <b class="rvn">4.8</b>
+        {% render 'stars' %}
+        <p>37 reviews</p>
+        <p class="rvtp">{% render 'icon', name: 'tp' %}</p>
       {%- else -%}
         <span class="stars rv0" aria-hidden="true">{%- for i in (1..5) -%}<i>{% render 'icon', name: 'star' %}</i>{%- endfor -%}</span>
         <p>{{ section.settings.empty_title }}</p>
@@ -25,7 +30,9 @@
     </div>
     <div class="rvl">
       {%- for block in section.blocks -%}{% render block %}{%- else -%}
+        {%- if request.design_mode -%}<div class="rvsm">{% render 'review-samples', limit: 4, product: product %}</div>{%- else -%}
         <div class="rve"><b>{{ section.settings.empty_title }}</b><p>{{ section.settings.empty_text }}</p>{%- if section.settings.write_link != blank -%}<a class="rvw" href="{{ section.settings.write_link }}">{{ section.settings.write_label }}</a>{%- endif -%}</div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </div>

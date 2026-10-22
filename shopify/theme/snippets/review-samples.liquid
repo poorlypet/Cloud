@@ -1,0 +1,16 @@
+{%- comment -%}
+  Layout preview for the reviews areas. Renders only inside the theme editor
+  (request.design_mode), never on the storefront. Pass limit and product.
+{%- endcomment -%}
+{%- if request.design_mode -%}
+{%- capture rs -%}Great racket for the money|Really solid feel at the net and plenty of power once you are warmed up. Took a couple of sessions to get used to the balance.|James R.|2 days ago
+Fast delivery, well packed|Arrived quickly and well packed, racket came with a cover and the grip was spotless. Would order again.|Sophie T.|5 days ago
+Helpful advice before buying|Messaged about which shape suited my game and got a clear answer within the hour. Ended up with exactly what I needed.|Daniel M.|1 week ago
+Comfortable from the first match|Light enough for long sessions and no arm ache afterwards. Good control on the bandeja.|Priya K.|1 week ago
+Easy return on the wrong size|Swapped my shoes for a half size up with no fuss. New pair was with me in a few days.|Tom H.|2 weeks ago
+Lovely shop to deal with|Good range of brands and prices clearly shown. Klarna made the bigger purchase easier.|Emma W.|3 weeks ago{%- endcapture -%}
+{%- assign rows = rs | newline_to_br | split: '<br />' -%}
+{%- for row in rows limit: limit -%}{%- assign c = row | strip | split: '|' -%}
+<article class="tpc"><div class="tpt">{% render 'stars', size: 's' %}<span class="ver">{% render 'icon', name: 'verified' %}Verified</span></div><h4>{{ c[0] }}</h4><p>{{ c[1] }}</p><div class="tpw2"><b>{{ c[2] }}</b><span>{{ c[3] }}</span></div>{%- if product != blank -%}<div class="tpb"><i>{%- if product.featured_media -%}{{ product.featured_media | image_url: width: 120 | image_tag: alt: '' }}{%- endif -%}</i><span>Bought <b>{{ product.title }}</b></span></div>{%- endif -%}</article>
+{%- endfor -%}
+{%- endif -%}

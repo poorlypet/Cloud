@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="tbar"><span style="display:inline-flex;gap:10px;align-items:center">
-    {%- if settings.tp_label != blank -%}<b>{{ settings.tp_label }}</b>{% render 'stars' %}<span>{{ settings.tp_score }} out of 5</span>{% render 'icon', name: 'tp' %}<span class="tbn">{{ settings.tp_score }}</span><span class="tbc">{{ settings.tp_count }} reviews on</span>{%- endif -%}
+    {%- if settings.tp_label != blank -%}<b>{{ settings.tp_label }}</b>{% render 'stars' %}<span>{{ settings.tp_score }} out of 5</span>{% render 'icon', name: 'tp' %}<span class="tbn">{{ settings.tp_score }}</span><span class="tbc">{{ settings.tp_count }} reviews on</span>{%- elsif request.design_mode -%}<b>Excellent</b>{% render 'stars' %}<span>4.8 out of 5</span><span class="tbc">126 reviews on</span>{% render 'icon', name: 'tp' %}{%- endif -%}
   </span>{%- if settings.delivery_line != blank -%}<span>{{ settings.delivery_line }}</span>{%- endif -%}</div>
   {%- if section.blocks.size > 0 -%}
   <div class="three" style="grid-template-columns:repeat({{ section.blocks.size }},minmax(0,1fr))">

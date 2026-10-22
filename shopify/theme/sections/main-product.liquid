@@ -73,7 +73,7 @@
     <p class="lv23">{%- if m.level.value != blank -%}{{ m.level.value }} · {% endif -%}<a href="{{ vurl }}">{{ product.vendor }}</a></p>
     <h1>{{ product.title }}</h1>
     {%- assign r = product.metafields.reviews.rating.value -%}
-    {%- if r != blank -%}<a class="rl23" href="#reviews">{% render 'stars', size: 's' %}<b>{{ r.rating | round: 1 }}</b><span>({{ 'product.reviews' | t: count: product.metafields.reviews.rating_count.value }})</span></a>{%- endif -%}
+    {%- if r != blank -%}<a class="rl23" href="#reviews">{% render 'stars', size: 's' %}<b>{{ r.rating | round: 1 }}</b><span>({{ 'product.reviews' | t: count: product.metafields.reviews.rating_count.value }})</span></a>{%- elsif request.design_mode -%}<a class="rl23" href="#reviews">{% render 'stars', size: 's' %}<b>4.8</b><span>(37 reviews)</span></a>{%- endif -%}
     <div class="pr23" id="ppr"><b>{{ v.price | money }}</b>{%- if v.compare_at_price > v.price -%} <s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
     {%- if settings.klarna -%}
       {%- assign third = v.price | divided_by: 3 | money -%}
