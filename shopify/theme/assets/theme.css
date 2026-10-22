@@ -70,3 +70,27 @@ body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body
 .ranges a{overflow:hidden;color:var(--fg);isolation:isolate}.ranges a span{position:relative;max-width:46%;line-height:1.1}
 .ranges a img.rp{position:absolute;top:10px;right:10px;bottom:10px;width:50%;height:calc(100% - 20px);object-fit:contain;object-position:right center;mix-blend-mode:multiply;transition:transform .3s}
 .ranges a:hover img.rp{transform:scale(1.04)}
+
+/* brands page: clean logo wall */
+.bw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.bwc{display:flex;flex-direction:column;border:1px solid var(--line);background:#fff;transition:border-color .2s,box-shadow .2s}
+.bwc:hover{border-color:var(--fg);box-shadow:0 6px 20px rgba(0,0,0,.06)}
+.bwl{height:150px;display:grid;place-items:center;padding:24px 28px;background:#fff}
+.bwl img{max-height:64px;max-width:80%;width:auto;height:auto;object-fit:contain}
+.bwl b{font-family:var(--head);font-size:26px;letter-spacing:-.02em}
+.bwn{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:14px 18px;border-top:1px solid var(--line)}
+.bwn b{font-size:16px}.bwn small{color:var(--mute);font-size:13px;white-space:nowrap}
+@media(max-width:1100px){.bw{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.bw{grid-template-columns:1fr 1fr;gap:10px}.bwl{height:110px;padding:16px}.bwl img{max-height:44px}.bwn{padding:10px 12px}.bwn b{font-size:14px}}
+/* shoes: range chips are plain text */
+.ranges.rtx{grid-auto-columns:max-content;gap:8px}
+.ranges.rtx a,.ranges.tys.n2.rtx a{aspect-ratio:auto;padding:10px 16px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:0;background:#fff;border:1px solid var(--line);align-items:center}
+.ranges.rtx a span{max-width:none}
+.ranges.rtx a:hover{border-color:var(--fg);text-decoration:none}
+/* brand logo strip: white tiles, even loop, no clipping */
+.logostrip{position:relative;z-index:1;background:#fff;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.logostrip .rail{gap:0;animation-duration:70s}
+.logostrip .lg{width:180px;height:84px;margin-right:16px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--fg);letter-spacing:.02em}
+.logostrip .lg img{height:38px;width:auto;max-width:76%;object-fit:contain}
+@media(max-width:899px){.logostrip .lg{width:130px;height:64px;margin-right:10px}.logostrip .lg img{height:28px}}
+@media(prefers-reduced-motion:reduce){.logostrip .rail{animation:none}}

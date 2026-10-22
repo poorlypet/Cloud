@@ -26,10 +26,6 @@
       <div class="hv phn3"><span class="note">{{ 'general.photo' | t }}: {{ collection.title }} {{ 'collection.hero_note' | t }}</span></div>
     {%- endif -%}
     <div class="in"><div>
-      {%- if s.brand -%}
-        {%- assign logo = collection.metafields.custom.logo.value -%}
-        <span class="blogo2">{%- if logo -%}{{ logo | image_url: height: 120 | image_tag: alt: collection.title }}{%- else -%}Logo: {{ collection.title }}{%- endif -%}</span>
-      {%- endif -%}
       <h1>{{ collection.title }}</h1>
       {%- if collection.description != blank -%}<p>{{ collection.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
       {%- if settings.tp_label != blank -%}<div class="htp">{% render 'stars', size: 's' %}<span><b>{{ settings.tp_label }}</b> on Trustpilot</span></div>{%- endif -%}
@@ -55,8 +51,9 @@
     {%- if settings.klarna -%}<span>{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: class: 'kb', alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%} {{ 'general.pay_in_3' | t }}</span>{%- endif -%}
   </div>
   {%- if tiles.size > 0 -%}
-    <div class="ranges{% unless s.brand %} tys n{{ tiles.size }}{% endunless %}">
-      {%- for t in tiles -%}{%- assign rp = nil -%}{%- for tp in t.products limit: 6 -%}{%- if tp.featured_media and tp.available -%}{%- assign rp = tp.featured_media -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- if rp == nil and t.products.first.featured_media -%}{%- assign rp = t.products.first.featured_media -%}{%- endif -%}<a href="{{ t.url }}">{%- if rp -%}{{ rp | image_url: width: 500 | image_tag: class: 'rp', loading: 'lazy', widths: '300, 500', sizes: '200px', alt: '' }}{%- endif -%}<span>{{ t.metafields.custom.short_title | default: t.title }}</span></a>{%- endfor -%}
+    {%- assign txt = false -%}{%- if collection.handle contains 'shoe' or collection.handle contains 'footwear' -%}{%- assign txt = true -%}{%- endif -%}
+    <div class="ranges{% unless s.brand %} tys n{{ tiles.size }}{% endunless %}{% if txt %} rtx{% endif %}">
+      {%- for t in tiles -%}{%- assign rp = nil -%}{%- for tp in t.products limit: 6 -%}{%- if tp.featured_media and tp.available -%}{%- assign rp = tp.featured_media -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- if rp == nil and t.products.first.featured_media -%}{%- assign rp = t.products.first.featured_media -%}{%- endif -%}<a href="{{ t.url }}">{%- if rp and txt == false -%}{{ rp | image_url: width: 500 | image_tag: class: 'rp', loading: 'lazy', widths: '300, 500', sizes: '200px', alt: '' }}{%- endif -%}<span>{{ t.metafields.custom.short_title | default: t.title }}</span></a>{%- endfor -%}
     </div>
   {%- endif -%}
 
