@@ -46,7 +46,7 @@
 /* photos dropped into the grey placeholders */
 .ct,.pt,.lp,.gt2,.mpromo,.ranges a,.bph,.pph,.ad.phd,.fcat,.gcd .pph,.lg{isolation:isolate}
 img.fill,video.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
-.logostrip .lg img{max-height:100%;max-width:100%;object-fit:contain}
+.logostrip .lg{overflow:hidden}.logostrip .lg img{height:40px;width:auto;max-width:78%;object-fit:contain}@media(max-width:899px){.logostrip .lg img{height:30px}}
 .qty2 a{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:100%;text-decoration:none}
 .expr.dyn{display:block}
 .search .row>svg{width:22px;height:22px;flex:none}
@@ -64,3 +64,5 @@ body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body
 .ar23 svg{width:18px;height:18px}
 .ar23.p{left:14px}.ar23.n{right:14px}
 .ms23{position:relative}.ms23 .ar23{top:50vw;width:38px;height:38px;margin-top:-19px}.ms23 .ar23.p{left:10px}.ms23 .ar23.n{right:10px}
+
+.mpromo{overflow:hidden;isolation:isolate}.mpromo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}.mpromo:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,0) 55%)}

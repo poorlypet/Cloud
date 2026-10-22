@@ -3,7 +3,8 @@
   Pass image, note (shown when there is no image), cls, sizes.
 {%- endcomment -%}
 {%- if image != blank -%}
-  {{ image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1200, 1500, 1800', sizes: sizes | default: '100vw', class: cls, alt: image.alt | escape }}
+  {%- assign phs = sizes | default: '100vw' -%}{%- assign pha = image.alt | escape -%}
+  {{ image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1200, 1500, 1800', sizes: phs, class: cls, alt: pha }}
 {%- elsif note != blank -%}
   <span class="note">{{ 'general.photo' | t }}: {{ note }}</span>
 {%- endif -%}
