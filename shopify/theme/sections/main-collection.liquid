@@ -56,7 +56,7 @@
   </div>
   {%- if tiles.size > 0 -%}
     <div class="ranges{% unless s.brand %} tys n{{ tiles.size }}{% endunless %}">
-      {%- for t in tiles -%}<a href="{{ t.url }}">{% render 'ph', image: t.image, note: t.title, cls: 'fill', sizes: '(min-width: 990px) 25vw, 50vw' %}{{ t.metafields.custom.short_title | default: t.title }}</a>{%- endfor -%}
+      {%- for t in tiles -%}{%- assign rp = nil -%}{%- for tp in t.products limit: 6 -%}{%- if tp.featured_media and tp.available -%}{%- assign rp = tp.featured_media -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- if rp == nil and t.products.first.featured_media -%}{%- assign rp = t.products.first.featured_media -%}{%- endif -%}<a href="{{ t.url }}">{%- if rp -%}{{ rp | image_url: width: 500 | image_tag: class: 'rp', loading: 'lazy', widths: '300, 500', sizes: '200px', alt: '' }}{%- endif -%}<span>{{ t.metafields.custom.short_title | default: t.title }}</span></a>{%- endfor -%}
     </div>
   {%- endif -%}
 
