@@ -169,7 +169,7 @@
 <section class="bs23">
   <div class="bs23i">{%- if bc.metafields.custom.brand_banner.value -%}{{ bc.metafields.custom.brand_banner.value | image_url: width: 2400 | image_tag: widths: '800, 1400, 2000, 2400', sizes: '100vw', loading: 'lazy', alt: product.vendor }}{%- endif -%}</div>
   <div class="bs23t w23">
-    <div>{%- if bc.metafields.custom.logo.value -%}<span class="bs23lg">{{ bc.metafields.custom.logo.value | image_url: height: 120 | image_tag: alt: product.vendor }}</span>{%- else -%}<p class="bs23b">{{ product.vendor }}</p>{%- endif -%}{%- if bc.metafields.custom.brand_line.value != blank -%}<p class="bs23l">{{ bc.metafields.custom.brand_line.value }}</p>{%- endif -%}</div>
+    <div><p class="bs23b">{{ product.vendor }}</p>{%- if bc.metafields.custom.brand_line.value != blank -%}<p class="bs23l">{{ bc.metafields.custom.brand_line.value }}</p>{%- endif -%}</div>
     <a href="{{ vurl }}" class="bs23c">Shop {{ product.vendor }}</a>
   </div>
 </section>

@@ -36,6 +36,11 @@
             <a href="{{ collection.url }}?{{ v.param_name }}={{ v.value | url_encode }}" data-furl class="{% if v.active and lv_filter.active_values.size == 1 %}on{% endif %}">{{ v.label }}</a>
           {%- endfor -%}
         </div>
+      {%- elsif s.level_bar -%}
+        <div class="wtabs">
+          <a href="{{ routes.collections_url }}/padel-rackets" class="{% if collection.handle == 'padel-rackets' %}on{% endif %}">{{ 'collection.all' | t }}</a>
+          {%- assign lhs = 'rackets-beginner,rackets-intermediate,rackets-advanced' | split: ',' -%}{%- for lh in lhs -%}{%- assign lc = collections[lh] -%}{%- if lc.id -%}<a href="{{ lc.url }}" class="{% if collection.handle == lh %}on{% endif %}">{{ lc.metafields.custom.short_title | default: lc.title | remove: ' rackets' | remove: ' Rackets' }}</a>{%- endif -%}{%- endfor -%}
+        </div>
       {%- endif -%}
     </div></div>
     {%- if settings.tp_label != blank -%}<a class="hrv" href="{{ settings.tp_link }}" aria-label="{{ settings.tp_label }} on Trustpilot">{% render 'stars', size: 's' %}</a>{%- endif -%}
