@@ -25,3 +25,20 @@
   function start(){scan();mo.observe(document.body,{childList:true,subtree:true});}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();
 })();
+
+/* Colour variants: show the photo that belongs to the chosen variant (the theme event only carries the variant title). */
+(function(){
+  function key(u){return String(u||"").split("?")[0].split("/").pop().replace(/_\d+x\d*(?=\.)/,"").toLowerCase()}
+  document.addEventListener("n2:variant",function(e){
+    var LP=window.LIVE_PRODUCT;
+    if(!LP||!e.detail||!e.detail.title)return;
+    var v=(LP.variants||[]).filter(function(x){return x.title===e.detail.title})[0];
+    var fi=v&&(v.featured_image||(v.featured_media&&v.featured_media.preview_image));
+    if(!fi||!fi.src)return;
+    var k=key(fi.src),idx=-1;
+    [].slice.call(document.querySelectorAll(".n2-slide img")).forEach(function(im,i){if(idx<0&&key(im.currentSrc||im.src)===k)idx=i});
+    if(idx<0)return;
+    var th=document.querySelector('.n2-th[data-gi="'+idx+'"]');
+    if(th)th.click();
+  });
+})();
