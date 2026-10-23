@@ -1,0 +1,4 @@
+/* Danish Design product photos: the studio backdrop is pale lilac. Lift it to white and multiply it
+   onto the page's green photo card so the photo sits on the card colour. Only runs on photos
+   detected as studio shots (class .ddp added by dd-photo-bg.js); lifestyle photos are untouched. */
+.dd-pdp .n2-gal img.ddp{mix-blend-mode:multiply;filter:brightness(1.045) contrast(1.01)}
