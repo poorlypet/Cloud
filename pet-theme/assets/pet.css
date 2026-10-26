@@ -48,3 +48,6 @@ html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 60%
 /* in the Shopify preview the grey preview bar covers the bottom edge, so lift the prompt above it */
 body:has(#PBarNextFrame) #pet-pop{bottom:84px}
 @media (max-width:767px){body:has(#PBarNextFrame) #pet-pop{bottom:76px;border-radius:22px}}
+
+/* mobile, cat side: section sub-lines stay on one line */
+@media (max-width:640px){html[data-pet="cat"] .sec-h p{font-size:clamp(12px,3.5vw,15px);white-space:nowrap}}

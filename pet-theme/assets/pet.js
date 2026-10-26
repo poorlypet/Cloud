@@ -171,7 +171,7 @@
   }
   PET.swap = swapStr;
   function swapScope() {
-    if (tmpl === "product") D.querySelectorAll(PDP_SCOPE).forEach(function (e) { swapIn(e); });
+    if (tmpl === "product") { if (speciesOf(ctx.title, ctx.tags, ctx.type) === "cat") D.querySelectorAll(PDP_SCOPE).forEach(function (e) { swapIn(e); }); }
     else swapIn(D.body);
   }
   var busy = false;
