@@ -15,7 +15,7 @@
 .pet-mbar,.pet-drawer{display:none}
 @media (max-width:1023px){
   .pet-tog.dk{display:none}
-  .pet-mbar{display:block;position:sticky;top:0;z-index:40;background:var(--teal,#0F4C48);padding:4px 14px 12px}
+  .pet-mbar{display:block;position:sticky;top:0;z-index:40;background:var(--teal,#0F4C48);padding:12px 14px 12px}
   .pet-mbar .pet-tog{display:flex;width:100%;margin:0}
   .pet-mbar .pet-tog button{flex:1;padding:11px 0;font-size:16px}
   .pet-drawer{display:block;background:var(--teal,#0F4C48);padding:2px 14px 14px}
@@ -41,3 +41,4 @@
 html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 60%,#2F7A62)}
 
 .pet-other{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#E1EBDD;color:#0F4C48;font:600 11.5px/1.4 var(--sans,Figtree,Arial,sans-serif);font-style:normal;vertical-align:1px}
+.bg-chips[hidden]{display:none!important}
