@@ -12,16 +12,21 @@
 .pet-tog button:not(.on):hover{background:rgba(255,255,255,.14)}
 .pet-tog button:focus-visible{outline:3px solid var(--lime,#DFE43A);outline-offset:2px}
 .pet-new{position:absolute;top:-12px;right:-6px;background:var(--lime,#DFE43A);color:var(--teal,#0F4C48);font:700 10.5px/1 var(--sans,'Figtree',Arial,sans-serif);letter-spacing:.06em;padding:3px 7px;border-radius:7px;pointer-events:none}
-.pet-mbar,.pet-drawer{display:none}
+.pet-drawer,.pet-tog.mh{display:none}
 @media (max-width:1023px){
   .pet-tog.dk{display:none}
-  .pet-mbar{display:block;position:sticky;top:0;z-index:40;background:var(--teal,#0F4C48);padding:12px 14px 12px}
-  .pet-mbar .pet-tog{display:flex;width:100%;margin:0}
-  .pet-mbar .pet-tog button{flex:1;padding:11px 0;font-size:16px}
+  .mhdr .wrap{display:flex!important;align-items:center;gap:8px}
+  .mhdr .wm{justify-self:auto;padding:6px 4px;margin-right:auto;flex:0 1 auto;min-width:0}
+  .mhdr .wm img{height:30px!important;width:auto}
+  .mhdr .macts{flex:0 0 auto;gap:0}
+  .pet-tog.mh{display:inline-flex;margin:0;padding:2px;border-width:1.5px;flex:0 0 auto}
+  .pet-tog.mh button{padding:7px 11px;font-size:13px}
+  .pet-tog.mh .pet-new{top:-11px;right:-4px;font-size:9px;padding:2px 5px}
   .pet-drawer{display:block;background:var(--teal,#0F4C48);padding:2px 14px 14px}
   .pet-drawer .pet-tog{display:flex;width:100%;margin:0}
   .pet-drawer .pet-tog button{flex:1;padding:11px 0;font-size:16px}
 }
+@media (max-width:370px){.pet-tog.mh button{padding:6px 8px;font-size:12px}.mhdr .wm img{height:26px!important}}
 /* bottom prompt */
 #pet-pop{position:fixed;left:50%;bottom:20px;z-index:2147483000;transform:translate(-50%,170%);width:calc(100% - 32px);max-width:640px;background:#fff;color:#0E2A28;border:1px solid #E3E8E6;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.28);padding:16px 44px 16px 20px;display:flex;align-items:center;gap:16px;transition:transform .5s cubic-bezier(.2,.8,.2,1);font-family:var(--sans,'Figtree',Arial,sans-serif)}
 #pet-pop.show{transform:translate(-50%,0)}
@@ -42,3 +47,7 @@ html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 60%
 
 .pet-other{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#E1EBDD;color:#0F4C48;font:600 11.5px/1.4 var(--sans,Figtree,Arial,sans-serif);font-style:normal;vertical-align:1px}
 .bg-chips[hidden]{display:none!important}
+
+/* in the Shopify preview the grey preview bar covers the bottom edge, so lift the prompt above it */
+body:has(#PBarNextFrame) #pet-pop{bottom:84px}
+@media (max-width:767px){body:has(#PBarNextFrame) #pet-pop{bottom:76px;border-radius:22px}}

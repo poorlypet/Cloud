@@ -16,9 +16,7 @@
   var PH = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#F1F5EF"/><g fill="#A9BDB4"><ellipse cx="100" cy="124" rx="34" ry="27"/><ellipse cx="58" cy="90" rx="14" ry="19"/><ellipse cx="86" cy="64" rx="14" ry="20"/><ellipse cx="114" cy="64" rx="14" ry="20"/><ellipse cx="142" cy="90" rx="14" ry="19"/></g></svg>');
   (window.PETCATP || []).forEach(function (p) { if (!have[p.handle]) { if (!p.cdn) { p.cdn = PH; p.img = PH; } SH.products.push(p); have[p.handle] = 1; } });
   SH.products.forEach(function (p) { p.sp = PET.speciesOf(p.title, p.tags, p.productType); });
-  if (!PET.isCat) return;
-
-  /* ---- 2. cat mode ---- */
+  /* ---- 2. the cat shelves are built in both modes (an account can hold a cat while the site shows dogs); only cat mode shows them ---- */
   var SC = SH.collections;
   var CP = SH.products.filter(function (p) { return p.sp !== "dog" && !/-bundle$/.test(p.handle); });
   function T(p) { return (p.title + " " + (p.productType || "") + " " + (p.tags || []).join(" ")).toLowerCase(); }
@@ -164,6 +162,7 @@
   coll("cat-sale", "Cat offers", CP.filter(function (p) { return p.compareAt && p.compareAt > p.price; }));
 
   /* ---- hand the data to the site ---- */
+  if (!PET.isCat) return;
   PP.groups = groups; PP.symGroups = symGroups; PP.symptoms = symptoms; PP.taxonomy = taxonomy;
   PP.depts = taxonomy.map(function (t) { return { l: t.l, n: t.n, prods: SC[t.s].products.slice(0, 10) }; });
   PP.best = best; PP.sale = SC["cat-sale"].products;
@@ -189,9 +188,9 @@
   C.heroSlides = [{ k: "welcome" }];
   C.legal = "Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your cat is in pain, deteriorating or unwell, speak to your vet.";
 
-  /* reviews: placeholders until real cat reviews exist. They show in preview so the layout can be judged. */
-  var phC = ["Post-surgery recovery", "Urinary problems", "Itchy skin", "Stress & anxiety"], phS = ["cat-post-surgery-recovery", "cat-urinary-problems", "cat-itchy-skin", "cat-stress-anxiety"];
-  C.stories = phC.map(function (c, i) { return { dog: "Cat name", owner: "Owner", head: "Headline from the owner goes here", q: "Owner review goes here once real cat reviews come in.", cond: c, coll: phS[i] }; });
+  /* reviews: cat visitors see the same real Judge.me reviews. Their "shop" links go to the closest cat shelf. */
+  var STORYMAP = { "post-surgery-recovery": "cat-post-surgery-recovery", "hip-dysplasia": "cat-arthritis", "arthritis": "cat-arthritis", "carpal-hyperextension": "cat-injury-support" };
+  C.stories = C.stories.map(function (st) { var c = Object.assign({}, st); if (STORYMAP[c.coll]) c.coll = STORYMAP[c.coll]; return c; });
 
   var f1 = { s: "cat-itchy-skin", l: "over-grooming", head: "over-grooming", sub: "One of the most common reasons owners come to us.",
     learn: [
@@ -228,6 +227,9 @@
       var h = a.getAttribute("href").replace("/collections/", "");
       if (PET.map[h]) a.setAttribute("href", "/collections/" + PET.map[h]);
     });
+    ["#dogs", "#reviews"].forEach(function (s) { var e = D.querySelector(s); if (e) e.setAttribute("data-pet-keep", ""); });
+    var rh = D.querySelector("#dogs-h"); if (rh) rh.innerHTML = "Real pets, <em>real results</em>";
+    var rp = D.querySelector("#dogs-h + p"); if (rp) rp.textContent = "Verified Judge.me reviews from owners who came to us with a poorly pet.";
     var sub = D.querySelector("#shop-h + p"); if (sub) sub.textContent = "Everything a poorly cat needs, in one place.";
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fixStatic); else fixStatic();

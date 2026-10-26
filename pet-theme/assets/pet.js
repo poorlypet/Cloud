@@ -36,6 +36,7 @@
   var ad = explicit(adText); ad = ad === "cat" || ad === "dog" ? ad : "";
   var page = "", tmpl = ctx.tmpl || "";
   if (tmpl === "product") page = speciesOf(ctx.title, ctx.tags, ctx.type);
+  else if (tmpl === "blog" && q.get("g")) page = explicit(String(q.get("g")).replace(/-/g, " "));
   else if (tmpl === "collection" && (/^cat(s)?-/.test(ctx.handle || "") || /^cats?-/.test(q.get("c") || ""))) page = "cat";
   else if (tmpl === "collection" || tmpl === "article" || tmpl === "page") page = explicit([ctx.title, (ctx.tags || []).join(" ")].join(" "));
   if (page === "both") page = "";
@@ -93,8 +94,8 @@
       var left = D.createElement("div"); left.className = "pet-left";
       wm.parentNode.insertBefore(left, wm); left.appendChild(wm); left.insertAdjacentHTML("beforeend", togHTML("dk"));
     }
-    var mh = D.getElementById("mhdr");
-    if (mh && !D.querySelector(".pet-mbar")) mh.insertAdjacentHTML("afterend", '<div class="pet-mbar">' + togHTML("mb") + "</div>");
+    var mw = D.querySelector("#mhdr .wrap"), mact = D.querySelector("#mhdr .macts");
+    if (mw && mact && !D.querySelector(".pet-tog.mh")) mact.insertAdjacentHTML("beforebegin", togHTML("mh"));
     var dr = D.querySelector("#drawer .dtop");
     if (dr && !D.querySelector(".pet-tog.dr")) dr.insertAdjacentHTML("afterend", '<div class="pet-drawer">' + togHTML("dr") + "</div>");
     D.querySelectorAll(".pet-tog button").forEach(function (b) {
