@@ -189,8 +189,8 @@
   C.legal = "Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your cat is in pain, deteriorating or unwell, speak to your vet.";
 
   /* "Real pets, real results" cards: the four cat photos (story-cat-1 to 4). The words are placeholders for real owner quotes. */
-  var CS = [["Injury & support", "cat-injury-support"], ["Post-surgery recovery", "cat-post-surgery-recovery"], ["Wound care", "cat-wound-care"], ["Sensitive tummy", "cat-sensitive-tummy"]];
-  C.stories = CS.map(function (x) { return { dog: "Cat name", owner: "Owner", head: "Headline from the owner goes here", q: "The owner's words go here.", cond: x[0], coll: x[1] }; });
+  var CS = [["Injury & support", "cat-injury-support", "Jessy", "Jessy wearing a hock brace"], ["Post-surgery recovery", "cat-post-surgery-recovery", "Binx", "Binx resting in a recovery suit"], ["Wound care", "cat-wound-care", "Roger", "Roger protecting a healing wound"], ["Sensitive tummy", "cat-sensitive-tummy", "Storm", "Storm at mealtime"]];
+  C.stories = CS.map(function (x) { return { dog: x[2], owner: "", head: x[3], q: "", cond: x[0], coll: x[1], cap: 1 }; });
 
   var f1 = { s: "cat-itchy-skin", l: "over-grooming", head: "over-grooming", sub: "One of the most common reasons owners come to us.",
     learn: [
