@@ -6,12 +6,12 @@
   .hdr .wrap .pet-tog.dk{margin-left:0}
 }
 .pet-left{display:flex;align-items:center;gap:22px;min-width:0}
-.pet-tog{position:relative;display:inline-flex;flex:0 0 auto;border:2px solid #fff;border-radius:999px;padding:3px;background:transparent;margin-left:18px;align-self:center}
-.pet-tog button{border:0;background:transparent;color:#fff;font:600 15px/1 var(--sans,'Figtree',Arial,sans-serif);padding:9px 22px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
-.pet-tog button.on{background:var(--lime,#DFE43A);color:var(--teal,#0F4C48)}
-.pet-tog button:not(.on):hover{background:rgba(255,255,255,.14)}
-.pet-tog button:focus-visible{outline:3px solid var(--lime,#DFE43A);outline-offset:2px}
-.pet-new{position:absolute;top:-12px;right:-6px;background:var(--lime,#DFE43A);color:var(--teal,#0F4C48);font:700 10.5px/1 var(--sans,'Figtree',Arial,sans-serif);letter-spacing:.06em;padding:3px 7px;border-radius:7px;pointer-events:none}
+.pet-tog{position:relative;display:inline-flex;flex:0 0 auto;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:2px;background:rgba(255,255,255,.06);margin-left:18px;align-self:center}
+.pet-tog button{border:0;background:transparent;color:rgba(255,255,255,.78);font:500 13px/1 var(--sans,'Figtree',Arial,sans-serif);padding:7px 15px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.pet-tog button.on{background:var(--lime,#DFE43A);color:var(--teal,#0F4C48);font-weight:600}
+.pet-tog button:not(.on):hover{color:#fff;background:rgba(255,255,255,.12)}
+.pet-tog button:focus-visible{outline:2px solid var(--lime,#DFE43A);outline-offset:2px}
+.pet-new{position:absolute;top:-8px;right:-2px;background:var(--lime,#DFE43A);color:var(--teal,#0F4C48);font:700 8.5px/1 var(--sans,'Figtree',Arial,sans-serif);letter-spacing:.07em;padding:2px 5px;border-radius:5px;pointer-events:none}
 .pet-drawer,.pet-tog.mh{display:none}
 @media (max-width:1023px){
   .pet-tog.dk{display:none}
@@ -19,12 +19,14 @@
   .mhdr .wm{justify-self:auto;padding:6px 4px;margin-right:auto;flex:0 1 auto;min-width:0}
   .mhdr .wm img{height:30px!important;width:auto}
   .mhdr .macts{flex:0 0 auto;gap:0}
-  .pet-tog.mh{display:inline-flex;margin:0;padding:2px;border-width:1.5px;flex:0 0 auto}
-  .pet-tog.mh button{padding:7px 11px;font-size:13px}
-  .pet-tog.mh .pet-new{top:-11px;right:-4px;font-size:9px;padding:2px 5px}
-  .pet-drawer{display:block;background:var(--teal,#0F4C48);padding:2px 14px 14px}
-  .pet-drawer .pet-tog{display:flex;width:100%;margin:0}
-  .pet-drawer .pet-tog button{flex:1;padding:11px 0;font-size:16px}
+  .pet-tog.mh{display:inline-flex;margin:0;padding:2px;flex:0 0 auto}
+  .pet-tog.mh button{padding:6px 11px;font-size:12.5px}
+  .pet-tog.mh .pet-new{top:-8px;right:-3px}
+  .pet-drawer{display:block;padding:12px 16px 4px}
+  .pet-drawer .pet-tog{display:inline-flex;margin:0;border-color:rgba(15,76,72,.35);background:rgba(15,76,72,.05)}
+  .pet-drawer .pet-tog button{color:rgba(15,76,72,.8);padding:7px 18px;font-size:13px}
+  .pet-drawer .pet-tog button.on{background:var(--teal,#0F4C48);color:#fff}
+  .pet-drawer .pet-tog .pet-new{display:none}
 }
 @media (max-width:370px){.pet-tog.mh button{padding:6px 8px;font-size:12px}.mhdr .wm img{height:26px!important}}
 /* bottom prompt */

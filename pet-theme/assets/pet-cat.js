@@ -229,7 +229,8 @@
     });
     ["#dogs", "#reviews"].forEach(function (s) { var e = D.querySelector(s); if (e) e.setAttribute("data-pet-keep", ""); });
     var rh = D.querySelector("#dogs-h"); if (rh) rh.innerHTML = "Real pets, <em>real results</em>";
-    var rp = D.querySelector("#dogs-h + p"); if (rp) rp.textContent = "Verified Judge.me reviews from owners who came to us with a poorly pet.";
+    var rp = D.querySelector("#dogs-h + p"); if (rp) rp.textContent = "Testimonials from owners who came to us with a poorly pet.";
+    var rv = D.querySelector("#rev-h + p"); if (rv) rv.textContent = "Our Judge.me rating, and what owners tell us.";
     var sub = D.querySelector("#shop-h + p"); if (sub) sub.textContent = "Everything a poorly cat needs, in one place.";
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fixStatic); else fixStatic();

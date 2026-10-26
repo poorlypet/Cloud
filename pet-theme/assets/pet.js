@@ -151,7 +151,10 @@
     var base = /^D/.test(w) ? (/^DOG/.test(w) && w.length > 1 && w === w.toUpperCase() ? "CAT" : "Cat") : "cat";
     return base + (suf || "");
   }
+  /* the account page holds dogs and cats together, so it talks about "pets" on both sides (lower case only, so breed names and the Dog / Cat labels stay) */
+  var isAcct = /^account/.test(ctx.handle || "");
   function swapStr(t) {
+    if (isAcct) return t.replace(/\bdogs\b/g, "pets").replace(/\bdog(['\u2019]s)\b/g, "pet$1").replace(/\bdog\b/g, "pet");
     if (!/dog|pupp/i.test(t)) return t;
     var keep = [];
     /* phrases that already name both pets stay exactly as they are */
@@ -175,9 +178,9 @@
   }
   var busy = false;
   function catWords() {
-    if (pet !== "cat") return;
+    if (pet !== "cat" && !isAcct) return;
     swapScope();
-    if (D.title && tmpl !== "product" && tmpl !== "article") D.title = swapStr(D.title);
+    if (D.title && !isAcct && tmpl !== "product" && tmpl !== "article") D.title = swapStr(D.title);
     new MutationObserver(function (muts) {
       if (busy) return; busy = true;
       setTimeout(function () { busy = false; swapScope(); }, 60);
@@ -186,5 +189,5 @@
 
   function ready() { mount(); prompt(); catWords(); /* run again once the page scripts have drawn their parts */ setTimeout(function () { mount(); catWords && 0; }, 700); }
   if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", ready); else ready();
-  W.addEventListener("load", function () { mount(); if (pet === "cat") swapScope(); });
+  W.addEventListener("load", function () { mount(); if (pet === "cat" || isAcct) swapScope(); });
 })();
