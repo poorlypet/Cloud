@@ -1,0 +1,43 @@
+/* Poorly Pet: dog / cat split. Toggle, bottom prompt, and the few cat-mode switches. */
+@media (min-width:1024px){
+  .hdr .wrap{grid-template-columns:auto minmax(260px,680px) 1fr;gap:28px}
+  .pet-left{margin-right:6px}
+  .hdr .wrap .acts{justify-self:end}
+  .hdr .wrap .pet-tog.dk{margin-left:0}
+}
+.pet-left{display:flex;align-items:center;gap:22px;min-width:0}
+.pet-tog{position:relative;display:inline-flex;flex:0 0 auto;border:2px solid #fff;border-radius:999px;padding:3px;background:transparent;margin-left:18px;align-self:center}
+.pet-tog button{border:0;background:transparent;color:#fff;font:600 15px/1 var(--sans,'Figtree',Arial,sans-serif);padding:9px 22px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.pet-tog button.on{background:var(--lime,#DFE43A);color:var(--teal,#0F4C48)}
+.pet-tog button:not(.on):hover{background:rgba(255,255,255,.14)}
+.pet-tog button:focus-visible{outline:3px solid var(--lime,#DFE43A);outline-offset:2px}
+.pet-new{position:absolute;top:-12px;right:-6px;background:var(--lime,#DFE43A);color:var(--teal,#0F4C48);font:700 10.5px/1 var(--sans,'Figtree',Arial,sans-serif);letter-spacing:.06em;padding:3px 7px;border-radius:7px;pointer-events:none}
+.pet-mbar,.pet-drawer{display:none}
+@media (max-width:1023px){
+  .pet-tog.dk{display:none}
+  .pet-mbar{display:block;position:sticky;top:0;z-index:40;background:var(--teal,#0F4C48);padding:4px 14px 12px}
+  .pet-mbar .pet-tog{display:flex;width:100%;margin:0}
+  .pet-mbar .pet-tog button{flex:1;padding:11px 0;font-size:16px}
+  .pet-drawer{display:block;background:var(--teal,#0F4C48);padding:2px 14px 14px}
+  .pet-drawer .pet-tog{display:flex;width:100%;margin:0}
+  .pet-drawer .pet-tog button{flex:1;padding:11px 0;font-size:16px}
+}
+/* bottom prompt */
+#pet-pop{position:fixed;left:50%;bottom:20px;z-index:2147483000;transform:translate(-50%,170%);width:calc(100% - 32px);max-width:640px;background:#fff;color:#0E2A28;border:1px solid #E3E8E6;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.28);padding:16px 44px 16px 20px;display:flex;align-items:center;gap:16px;transition:transform .5s cubic-bezier(.2,.8,.2,1);font-family:var(--sans,'Figtree',Arial,sans-serif)}
+#pet-pop.show{transform:translate(-50%,0)}
+#pet-pop .pp-t{flex:1;font:500 15.5px/1.4 var(--sans,'Figtree',Arial,sans-serif)}
+#pet-pop .pp-t b{display:block;font:700 18px/1.25 var(--serif,'Domine',Georgia,serif);color:var(--teal,#0F4C48);margin-bottom:2px}
+#pet-pop .pp-b{display:flex;gap:8px;flex:0 0 auto}
+#pet-pop .pp-b button{border:0;border-radius:999px;padding:11px 18px;font:700 15px/1 var(--sans,'Figtree',Arial,sans-serif);background:#F3F6F1;color:var(--teal,#0F4C48);cursor:pointer}
+#pet-pop .pp-b button.y{background:var(--teal,#0F4C48);color:#fff}
+#pet-pop .pp-x{position:absolute;top:8px;right:10px;border:0;background:transparent;color:#4B5E5B;font-size:24px;line-height:1;padding:4px 6px;cursor:pointer}
+@media (max-width:767px){
+  #pet-pop{left:0;right:0;bottom:0;width:100%;max-width:none;transform:translateY(110%);border-radius:22px 22px 0 0;flex-wrap:wrap;padding:18px 44px 22px 18px}
+  #pet-pop.show{transform:none}
+  #pet-pop .pp-b{width:100%}
+  #pet-pop .pp-b button{flex:1}
+}
+/* cat mode: the dog hero video and dog photo slots never show on the cat side */
+html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 60%,#2F7A62)}
+
+.pet-other{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#E1EBDD;color:#0F4C48;font:600 11.5px/1.4 var(--sans,Figtree,Arial,sans-serif);font-style:normal;vertical-align:1px}
