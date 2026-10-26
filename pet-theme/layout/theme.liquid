@@ -143,6 +143,7 @@
 <script src="{{ 'pet-cat.js' | asset_url }}"></script>
 <script src="{{ 'site-data.js' | asset_url }}"></script>
 {% render 'live-shop' %}
+{% if template.name == 'index' %}{% render 'live-home-reviews' %}{% endif %}
 {% if page.handle == 'reviews' %}{% render 'live-reviews' %}{% render 'judgeme-form-any' %}{% endif %}
 {% render 'newsletter-form' %}
 <script src="{{ 'live.js' | asset_url }}"></script>

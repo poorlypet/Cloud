@@ -96,8 +96,6 @@
     }
     var mw = D.querySelector("#mhdr .wrap"), mact = D.querySelector("#mhdr .macts");
     if (mw && mact && !D.querySelector(".pet-tog.mh")) mact.insertAdjacentHTML("beforebegin", togHTML("mh"));
-    var dr = D.querySelector("#drawer .dtop");
-    if (dr && !D.querySelector(".pet-tog.dr")) dr.insertAdjacentHTML("afterend", '<div class="pet-drawer">' + togHTML("dr") + "</div>");
     D.querySelectorAll(".pet-tog button").forEach(function (b) {
       if (b._pp) return; b._pp = 1;
       b.addEventListener("click", function () { var p = b.getAttribute("data-pet"); if (p !== pet) PET.set(p, "choice"); });

@@ -1,0 +1,2 @@
+{%- assign rg = shop.metafields.judgeme.reviews_grid.value -%}
+<script>window.LIVE_HOME_REVIEWS={avg:{{ rg.average_rating | json }},count:{{ rg.number_of_reviews | json }},reviews:[{% for r in rg.all_reviews.reviews limit: 25 %}{"t":{{ r.title | json }},"b":{{ r.body | json }},"n":{{ r.reviewer_name | json }},"r":{{ r.rating | json }},"v":{{ r.verified_buyer | json }},"p":{{ r.product_title | json }},"u":{{ r.product_url | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}]};</script>
