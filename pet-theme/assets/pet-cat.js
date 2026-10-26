@@ -189,8 +189,12 @@
   C.legal = "Poorly Pet is a UK online retailer. Nothing on this site replaces veterinary advice. If your cat is in pain, deteriorating or unwell, speak to your vet.";
 
   /* "Real pets, real results" cards: the four cat photos (story-cat-1 to 4). The words are placeholders for real owner quotes. */
-  var CS = [["Injury & support", "cat-injury-support", "Jessy", "Jessy wearing a hock brace"], ["Post-surgery recovery", "cat-post-surgery-recovery", "Binx", "Binx resting in a recovery suit"], ["Wound care", "cat-wound-care", "Roger", "Roger protecting a healing wound"], ["Sensitive tummy", "cat-sensitive-tummy", "Storm", "Storm at mealtime"]];
-  C.stories = CS.map(function (x) { return { dog: x[2], owner: "", head: x[3], q: "", cond: x[0], coll: x[1], cap: 1 }; });
+  var CS = [
+    ["Injury & support", "cat-injury-support", "Jessy", "Albie", "Seeing Jessy need extra support has been worrying.", "Here she is wearing her hock brace during some quiet time outside. We\u2019re taking things gently and following our vet\u2019s advice."],
+    ["Post-surgery recovery", "cat-post-surgery-recovery", "Binx", "Catherine", "Binx is having some well-earned rest after surgery.", "Here she is in her little recovery suit, taking it easy at home. For now, it\u2019s all about quiet days and plenty of company."],
+    ["Wound care", "cat-wound-care", "Roger", "Vivi", "Roger is taking a break while his wound heals.", "His cone is there to stop him reaching the area. We\u2019re keeping a close eye on him and following his care instructions."],
+    ["Sensitive tummy", "cat-sensitive-tummy", "Storm", "Ada", "With Storm\u2019s sensitive tummy, we pay close attention to mealtimes.", "We\u2019re keeping track of what he eats and how he gets on. We just want our ginger boy to feel comfortable and enjoy his food."]];
+  C.stories = CS.map(function (x) { return { dog: x[2], owner: x[3], head: x[4], q: x[5], cond: x[0], coll: x[1], cap: 1 }; });
 
   var f1 = { s: "cat-itchy-skin", l: "over-grooming", head: "over-grooming", sub: "One of the most common reasons owners come to us.",
     learn: [
