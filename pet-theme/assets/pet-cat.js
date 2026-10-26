@@ -35,12 +35,12 @@
       { s: "cat-urinary-problems", l: "Urinary problems", re: /\burin(e|ary)\b|cystitis|struvite|bladder|\bph\b/, info: "Straining, frequent trips to the litter tray or blood in the urine. Always worth a call to your vet, and urgent if your cat cannot pass urine." },
       { s: "cat-kidney-support", l: "Kidney support", re: /kidney|renal/, info: "Diets and daily support for cats with reduced kidney function, as your vet advises." } ] },
     { area: "Skin & allergies", s: "cat-area-skin-allergies", items: [
-      { s: "cat-itchy-skin", l: "Itchy skin & allergies", re: /\bskin\b|itch|allerg|derma|eczema|hot.?spot/, info: "Scratching, over-grooming, scabs or flaky skin. Fleas, allergies and stress are the usual suspects." },
-      { s: "cat-ear-problems", l: "Ear problems", re: /\bears?\b|ear care|otic/, info: "Head shaking, scratching at the ears or dark wax. Gentle cleaning keeps ears comfortable." },
+      { s: "cat-itchy-skin", l: "Itchy skin & allergies", re: /itch|allerg|derma|eczema|hot.?spot|skin (care|spray|support|balm|soothing|irritation|conditions?)|skin & coat/, info: "Scratching, over-grooming, scabs or flaky skin. Fleas, allergies and stress are the usual suspects." },
+      { s: "cat-ear-problems", l: "Ear problems", re: /\bears?\b|ear care|\botic/, info: "Head shaking, scratching at the ears or dark wax. Gentle cleaning keeps ears comfortable." },
       { s: "cat-eye-problems", l: "Eye problems", re: /\beyes?\b|tear.?stain/, info: "Watery or crusty eyes and tear staining, cleaned gently." } ] },
     { area: "Tummy & digestion", s: "cat-area-digestive", items: [
       { s: "cat-hairballs", l: "Hairballs", re: /hairball|furball|malt/, info: "Hair swallowed while grooming that comes back up. Fibre, malt and a good brush help." },
-      { s: "cat-sensitive-tummy", l: "Sensitive tummy", re: /digest|probiotic|gastro|sensitive|stomach|prebiotic|diarrh|tummy|\bgut\b/, info: "Loose stools, sickness or a fussy stomach. Gentle diets and gut support." } ] },
+      { s: "cat-sensitive-tummy", l: "Sensitive tummy", re: /digest|probiotic|gastro|stomach|prebiotic|diarrh|tummy|\bgut\b/, ex: /shampoo|groom|skin|coat|wipes|paw|flea|brush|balm|spray|comb/, info: "Loose stools, sickness or a fussy stomach. Gentle diets and gut support." } ] },
     { area: "Mobility & joints", s: "cat-area-joints", items: [
       { s: "cat-arthritis", l: "Arthritis & stiff joints", re: /joint|arthrit|glucosamine|chondro|mobility|\bhip\b/, info: "Slower to jump, stiff after rest or less keen on the stairs. Very common in older cats." },
       { s: "cat-injury-support", l: "Injury & support", re: /brace|splint|bandage|support tape|sleeve|compression|sprain/, info: "Braces, bandages and tape to support a sore leg while it heals, as your vet advises." } ] },
@@ -60,10 +60,10 @@
       { s: "cat-sym-over-grooming", l: "Over-grooming", re: /itch|\bskin\b|allerg|flea|calm|stress|anxi/ },
       { s: "cat-sym-scratching", l: "Scratching", re: /itch|allerg|flea|\bskin\b|mites?/ } ] },
     { area: "Eyes & ears", s: "cat-sym-area-eyes-ears", syms: [
-      { s: "cat-sym-scratching-ears", l: "Scratching at the ears", re: /\bears?\b/ },
+      { s: "cat-sym-scratching-ears", l: "Scratching at the ears", re: /\bears?\b|ear care/ },
       { s: "cat-sym-watery-eyes", l: "Watery eyes", re: /\beyes?\b|tear/ } ] },
     { area: "Tummy & gut", s: "cat-sym-area-tummy-gut", syms: [
-      { s: "cat-sym-hairballs", l: "Vomiting hairballs", re: /hairball|furball|malt|digest|probiotic/ },
+      { s: "cat-sym-hairballs", l: "Vomiting hairballs", re: /hairball|furball|malt|digest|probiotic/, ex: /shampoo|groom|skin|coat|wipes|paw|flea|brush|balm|spray|comb/ },
       { s: "cat-sym-not-eating", l: "Not eating", re: /appetite|topper|wet food|palatab|tempt|milk|recovery/ } ] },
     { area: "Toilet habits", s: "cat-sym-area-toilet", syms: [
       { s: "cat-sym-straining-to-wee", l: "Straining to wee", re: /\burin(e|ary)\b|cystitis|struvite|bladder/ } ] },
@@ -100,7 +100,7 @@
   AREAS.forEach(function (a) {
     var items = [], areaProds = {};
     a.items.forEach(function (it) {
-      var list = CP.filter(function (p) { return it.re.test(T(p)); });
+      var list = CP.filter(function (p) { return it.re.test(T(p)) && !(it.ex && it.ex.test(ty(p))); });
       if (!list.length) return;
       var hs = coll(it.s, it.l, list);
       hs.forEach(function (h) { areaProds[h] = 1; used[h] = 1; });
@@ -118,7 +118,7 @@
   SYMS.forEach(function (a) {
     var out = [], hsAll = {};
     a.syms.forEach(function (y) {
-      var list = CP.filter(function (p) { return y.re.test(T(p)); });
+      var list = CP.filter(function (p) { return y.re.test(T(p)) && !(y.ex && y.ex.test(ty(p))); });
       if (!list.length) return;
       var hs = coll(y.s, y.l, list);
       hs.forEach(function (h) { hsAll[h] = 1; });

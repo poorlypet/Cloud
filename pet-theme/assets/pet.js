@@ -36,7 +36,7 @@
   var ad = explicit(adText); ad = ad === "cat" || ad === "dog" ? ad : "";
   var page = "", tmpl = ctx.tmpl || "";
   if (tmpl === "product") page = speciesOf(ctx.title, ctx.tags, ctx.type);
-  else if (tmpl === "collection" && /^cat(s)?-/.test(ctx.handle || "")) page = "cat";
+  else if (tmpl === "collection" && (/^cat(s)?-/.test(ctx.handle || "") || /^cats?-/.test(q.get("c") || ""))) page = "cat";
   else if (tmpl === "collection" || tmpl === "article" || tmpl === "page") page = explicit([ctx.title, (ctx.tags || []).join(" ")].join(" "));
   if (page === "both") page = "";
   var pageBoth = tmpl === "product" && speciesOf(ctx.title, ctx.tags, ctx.type) === "both";
@@ -128,7 +128,7 @@
     }
     if (firstView && (rule === "link" || rule === "ad" || (rule === "page" && stored && stored !== pet))) { /* rules 1, 2 and 4 */
       ss("pp_pet_pop", "1");
-      var why = rule === "ad" ? "the link you followed was for " + NAME[pet] : "this " + (tmpl === "product" ? "product" : "page") + " is for " + NAME[pet];
+      var why = (rule === "ad" || rule === "link") ? "the link you followed was for " + NAME[pet] : "this " + (tmpl === "product" ? "product" : "page") + " is for " + NAME[pet];
       setTimeout(function () {
         pop('<div class="pp-t"><b>Showing ' + NAME[pet] + '.</b>We have tuned the site for ' + NAME[pet] + ' because ' + why + '.</div><div class="pp-b"><button type="button" data-pick="' + other + '">Switch to ' + NAME[other] + '</button></div>', 9000);
       }, 900);
