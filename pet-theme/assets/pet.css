@@ -74,18 +74,3 @@ body:has(#PBarNextFrame) #pet-pop{bottom:84px}
 
 /* cat side: the condition and symptom pages go without tile photos */
 html[data-pet="cat"] :is(.c3-area,.c3-acard,.c3-cond) .c3-ph,html[data-pet="cat"] .c3-ph-cond,html[data-pet="cat"] :is(.sy-area,.sy-acard,.sy-sym) .sy-ph,html[data-pet="cat"] .sy-ph-sym{display:none!important}
-
-/* cat side: product photos on cards are square, a little smaller, on white */
-html[data-pet="cat"] .pk.pk .well.well{height:auto!important;min-height:0!important;aspect-ratio:1/1;padding:0!important;background:#fff!important;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0}
-html[data-pet="cat"] .pk.pk .well.well img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain;mix-blend-mode:multiply}
-html[data-pet="cat"] .pb-gim.pb-gim{aspect-ratio:1/1;height:auto!important;min-height:0!important;padding:0!important;background:#fff!important;display:flex;align-items:center;justify-content:center;overflow:hidden}
-html[data-pet="cat"] .pb-gim.pb-gim img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain;mix-blend-mode:multiply}
-/* cat side: collection category bar has no tinted circles, and the main product photo sits at 85% of its frame */
-html[data-pet="cat"] .cl-ct .cl-cw{background:#fff!important;display:flex;align-items:center;justify-content:center}
-html[data-pet="cat"] .cl-ct:not(.on) .cl-cw{border:1px solid #E3E8E6!important}
-html[data-pet="cat"] .cl-ct .cl-cw img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain!important;mix-blend-mode:multiply}
-html[data-pet="cat"] .n2-slide{display:flex!important;align-items:center;justify-content:center}
-html[data-pet="cat"] .n2-slide img{width:100%!important;height:100%!important;object-fit:cover!important;transform:scale(.85);transform-origin:center}
-/* cat side home: the Shop by product circles are white too */
-html[data-pet="cat"] .pod .sq{background:#fff!important;box-shadow:inset 0 0 0 1px #E3E8E6}
-html[data-pet="cat"] .pod .sq img{mix-blend-mode:multiply}
