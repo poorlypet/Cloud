@@ -28,52 +28,119 @@
   function coll(h, title, list) { SC[h] = { title: title, description: "", paragraphs: [], image: null, products: handles(list) }; return SC[h].products; }
 
   /* conditions, grouped like the dog side */
+  var HX = /shampoo|groom|skin|coat|wipes|paw|flea|brush|balm|spray|comb/;
   var AREAS = [
     { area: "Urinary & kidney", s: "cat-area-urinary-kidney", items: [
       { s: "cat-urinary-problems", l: "Urinary problems", re: /\burin(e|ary)\b|cystitis|struvite|bladder|\bph\b/, info: "Straining, frequent trips to the litter tray or blood in the urine. Always worth a call to your vet, and urgent if your cat cannot pass urine." },
-      { s: "cat-kidney-support", l: "Kidney support", re: /kidney|renal/, info: "Diets and daily support for cats with reduced kidney function, as your vet advises." } ] },
+      { s: "cat-struvite-crystals", l: "Struvite & bladder stones", re: /struvite|crystal|calculi|urinary support|\bph\b/, info: "Diets that help dissolve and prevent urinary crystals and stones, as your vet advises." },
+      { s: "cat-kidney-support", l: "Kidney support", re: /kidney|renal|cardiac/, info: "Diets and daily support for cats with reduced kidney function, as your vet advises." },
+      { s: "cat-diabetes", l: "Diabetes", re: /diabet/, info: "Low-carbohydrate veterinary diets to help keep blood sugar steady, alongside your vet's treatment plan." },
+      { s: "cat-litter-tray", l: "Litter & toileting", re: /litter|urine test|tray/, info: "Litter and test kits to keep an eye on toilet habits at home." } ] },
     { area: "Skin & allergies", s: "cat-area-skin-allergies", items: [
-      { s: "cat-itchy-skin", l: "Itchy skin & allergies", re: /itch|allerg|derma|eczema|hot.?spot|skin (care|spray|support|balm|soothing|irritation|conditions?)|skin & coat/, info: "Scratching, over-grooming, scabs or flaky skin. Fleas, allergies and stress are the usual suspects." },
+      { s: "cat-itchy-skin", l: "Itchy skin & allergies", re: /itch|allerg|derma|eczema|skin (care|spray|support|balm|soothing|irritation|conditions?)|skin & coat|immunity/, info: "Scratching, over-grooming, scabs or flaky skin. Fleas, allergies and stress are the usual suspects." },
+      { s: "cat-hot-spots", l: "Sore patches & hot spots", re: /hot.?spot|soothing|medi fresh|antiseptic spray/, info: "Red, sore or weepy patches from licking and scratching. Keep them clean and protected." },
+      { s: "cat-dry-flaky-skin", l: "Dry & flaky skin", re: /dry skin|flaky|moistur|oatmeal|skin & coat/, info: "Dandruff, dull fur and dry skin. Gentle shampoos and omega oils help from the inside and out." },
+      { s: "cat-food-allergy", l: "Food intolerance", re: /hypoallergenic|hydrolys|allerg|limited ingredient/, ex: /shampoo|groom|wipes|brush|spray/, info: "Itchy skin or loose stools that come back with certain foods. Hypoallergenic and limited-ingredient diets." },
       { s: "cat-ear-problems", l: "Ear problems", re: /\bears?\b|ear care|\botic/, info: "Head shaking, scratching at the ears or dark wax. Gentle cleaning keeps ears comfortable." },
+      { s: "cat-ear-mites", l: "Ear mites", re: /ear mite|mites?\b.*ear|ear.*mite|mite/, info: "Dark, crumbly wax and constant ear scratching are the classic signs. Treat all pets in the home." },
       { s: "cat-eye-problems", l: "Eye problems", re: /\beyes?\b|tear.?stain/, info: "Watery or crusty eyes and tear staining, cleaned gently." } ] },
     { area: "Tummy & digestion", s: "cat-area-digestive", items: [
       { s: "cat-hairballs", l: "Hairballs", re: /hairball|furball|malt/, info: "Hair swallowed while grooming that comes back up. Fibre, malt and a good brush help." },
-      { s: "cat-sensitive-tummy", l: "Sensitive tummy", re: /digest|probiotic|gastro|stomach|prebiotic|diarrh|tummy|\bgut\b/, ex: /shampoo|groom|skin|coat|wipes|paw|flea|brush|balm|spray|comb/, info: "Loose stools, sickness or a fussy stomach. Gentle diets and gut support." } ] },
+      { s: "cat-sensitive-tummy", l: "Sensitive tummy", re: /digest|probiotic|gastro|stomach|prebiotic|diarrh|tummy|gut/, info: "Loose stools, sickness or a fussy stomach. Gentle diets and gut support." },
+      { s: "cat-diarrhoea", l: "Diarrhoea & loose stools", re: /diarrh|gastro|slippery elm|psyllium|probiotic|prebiotic|artichoke/, ex: HX, info: "Firming the stool and settling the gut. Speak to your vet if it lasts more than a day or two." },
+      { s: "cat-constipation", l: "Constipation", re: /psyllium|fibre|fiber|husk|laxative|hairball/, ex: /shampoo|wipes|brush|spray|comb/, info: "Straining or small, hard stools. Fibre and hydration can help; ask your vet if it persists." },
+      { s: "cat-weight", l: "Weight management", re: /light|weight|sterilised|sterilized|indoor|diet|neutered/, ex: /shampoo|wipes|brush|spray|comb|collar/, info: "Indoor and neutered cats put weight on easily. Lower-calorie, high-protein foods keep them lean." },
+      { s: "cat-kitten", l: "Kitten care", re: /kitten/, info: "Complete foods and gentle care for growing kittens." },
+      { s: "cat-senior", l: "Senior cats", re: /senior|mature|ageing|aging|7\+|11\+/, info: "Foods and support for older cats with changing needs." } ] },
     { area: "Mobility & joints", s: "cat-area-joints", items: [
-      { s: "cat-arthritis", l: "Arthritis & stiff joints", re: /joint|arthrit|glucosamine|chondro|mobility|\bhip\b/, info: "Slower to jump, stiff after rest or less keen on the stairs. Very common in older cats." },
-      { s: "cat-injury-support", l: "Injury & support", re: /brace|splint|bandage|support tape|sleeve|compression|sprain/, info: "Braces, bandages and tape to support a sore leg while it heals, as your vet advises." } ] },
+      { s: "cat-arthritis", l: "Arthritis & stiff joints", re: /joint|arthrit|glucosamine|chondro|mobility|\bhip\b|green lipped|mussel|devil.?s claw|rose hip/, info: "Slower to jump, stiff after rest or less keen on the stairs. Very common in older cats." },
+      { s: "cat-joint-supplements", l: "Joint supplements", re: /joint|glucosamine|mussel|devil.?s claw|rose hip|flexifit|4joints/, info: "Daily powders, pastes and treats with glucosamine and green-lipped mussel." },
+      { s: "cat-injury-support", l: "Injury & support", re: /brace|splint|bandage|support tape|sleeve|compression|sprain/, info: "Braces, bandages and tape to support a sore leg while it heals, as your vet advises." },
+      { s: "cat-fractures", l: "Fractures & broken bones", re: /fracture|splint|bone fracture|brace/, info: "Braces and splints that support a leg alongside your vet's care." },
+      { s: "cat-hock-leg", l: "Hock, leg & joint braces", re: /hock|pull brace|neck brace|splint brace|brace/, info: "Supports for hocks, front legs and necks, fitted as your vet advises." },
+      { s: "cat-bone-health", l: "Bone & calcium", re: /calcium|bone|eggshell|colostrum/, info: "Calcium and mineral support for growing, pregnant or older cats." } ] },
     { area: "Behaviour & mood", s: "cat-area-behaviour", items: [
-      { s: "cat-stress-anxiety", l: "Stress & anxiety", re: /calm|stress|anxi|pheromone|feliway|relax/, info: "Hiding, over-grooming, spraying or a change at home. Calming support for nervous cats." } ] },
+      { s: "cat-stress-anxiety", l: "Stress & anxiety", re: /calm|stress|anxi|pheromone|feliway|relax|bach|wellbeing/, info: "Hiding, over-grooming, spraying or a change at home. Calming support for nervous cats." },
+      { s: "cat-boredom", l: "Boredom & enrichment", re: /lick|enrichment|toy|slow feed|puzzle|play/, info: "Lick mats and slow feeders to keep clever cats busy and calm." },
+      { s: "cat-travel-vet", l: "Vet visits & travel", re: /carrier|crate|pheromone|feliway|calm.?down/, info: "Take the edge off carrier trips and vet visits." },
+      { s: "cat-fussy-eating", l: "Fussy eating", re: /topper|paste|nibbles|palatab|tempt|appetite/, info: "Tempting toppers, pastes and wet foods for cats that turn their nose up." } ] },
     { area: "Recovery", s: "cat-area-recovery", items: [
       { s: "cat-post-surgery-recovery", l: "Post-surgery recovery", re: /recovery|collar|\bcone\b|surgery|post.?op|stitch|\bsuit\b|vet bedding|underpad/, info: "Protecting stitches, keeping them comfortable and helping them heal after an operation." },
-      { s: "cat-wound-care", l: "Wound care", re: /wound|dressing|sterile|antiseptic|gauze|bandage/, info: "Cleaning, dressing and protecting cuts and sore patches." } ] },
+      { s: "cat-wound-care", l: "Wound care", re: /wound|dressing|sterile|antiseptic|gauze|bandage/, info: "Cleaning, dressing and protecting cuts and sore patches." },
+      { s: "cat-cones", l: "Cones & recovery collars", re: /collar|\bcone\b|buster|eco soft|neck/, info: "Stop licking and scratching while stitches and sore skin heal." },
+      { s: "cat-recovery-food", l: "Recovery food", re: /recovery (wet )?food|recovery.*(dog and cat|cats)|convalescence|critical care|recuperat/, ex: /collar|suit|shirt|bed|pad/, info: "Energy-dense foods for cats that are poorly or getting their strength back." },
+      { s: "cat-immune", l: "Immune & general health", re: /immun|colostrum|vitamin|multi|superfood|complete|4in1|feline 40|taurine|yeast/, ex: HX, info: "Daily vitamin, mineral and amino-acid support for overall health." } ] },
     { area: "Mouth & teeth", s: "cat-area-mouth-teeth", items: [
-      { s: "cat-dental-disease", l: "Dental disease", re: /dental|teeth|tooth|plaque|breath/, info: "Bad breath, tartar and sore gums. Daily care keeps teeth healthier for longer." } ] },
+      { s: "cat-dental-disease", l: "Dental disease", re: /dental|teeth|tooth|plaque|breath/, info: "Bad breath, tartar and sore gums. Daily care keeps teeth healthier for longer." },
+      { s: "cat-tartar", l: "Tartar & plaque", re: /dental powder|plaque|tartar|toothpaste|toothbrush|dental/, info: "Powders, pastes and brushes that tackle build-up before it becomes gum disease." } ] },
     { area: "Essential care", s: "cat-area-essential-care", items: [
       { s: "cat-fleas-ticks-worms", l: "Fleas, ticks & worms", re: /\bflea|\btick|worm|parasite|\bmites?\b|repel/, info: "Treatment and prevention for the parasites cats pick up indoors and out." },
-      { s: "cat-grooming-coat", l: "Grooming & coat", re: /groom|brush|comb|shampoo|\bcoat\b|nail|cologne|wipes/, info: "Brushing, bathing and coat care for a comfortable, healthy coat." } ] }
+      { s: "cat-flea-treatments", l: "Flea treatment & prevention", re: /\bflea|spot on|collar.*flea|flea.*collar|repellent|fiprotec|house spray/, info: "Spot-ons, collars, sprays and shampoos for fleas and ticks. Never use dog products on cats." },
+      { s: "cat-worming", l: "Worming", re: /worm/, info: "Tablets and spot-ons for roundworm and tapeworm." },
+      { s: "cat-grooming-coat", l: "Grooming & coat", re: /groom|brush|comb|shampoo|\bcoat\b|nail|cologne|wipes/, info: "Brushing, bathing and coat care for a comfortable, healthy coat." },
+      { s: "cat-shedding", l: "Shedding & matted fur", re: /deshed|detangl|dematt|rake|slicker|comb|brush/, info: "Brushes and sprays that cut down on loose hair and tackle tangles." },
+      { s: "cat-bathing", l: "Bathing & waterless wash", re: /shampoo|waterless|dry shampoo|no.?rinse|cologne|bath/, info: "Shampoos and no-rinse washes for cats that hate the bath." },
+      { s: "cat-paws-claws", l: "Paws & claws", re: /paw|nail|claw/, info: "Paw cleaners, balms and nail clippers." } ] }
   ];
   var SYMS = [
     { area: "Skin & coat", s: "cat-sym-area-skin-coat", syms: [
-      { s: "cat-sym-over-grooming", l: "Over-grooming", re: /itch|\bskin\b|allerg|flea|calm|stress|anxi/ },
-      { s: "cat-sym-scratching", l: "Scratching", re: /itch|allerg|flea|\bskin\b|mites?/ } ] },
+      { s: "cat-sym-over-grooming", l: "Over-grooming", re: /itch|allerg|calm|stress|anxi|pheromone/ },
+      { s: "cat-sym-scratching", l: "Scratching", re: /itch|allerg|flea|mites?/ },
+      { s: "cat-sym-bald-patches", l: "Hair loss or bald patches", re: /itch|allerg|derma|immunity|skin & coat/, ex: /brush|comb|collar/ },
+      { s: "cat-sym-scabs", l: "Scabs or sore patches", re: /hot.?spot|soothing|antiseptic|wound|itchy skin|skin spray/ },
+      { s: "cat-sym-dandruff", l: "Flaky skin or dandruff", re: /oatmeal|moistur|dry skin|flaky|skin & coat/ },
+      { s: "cat-sym-dull-coat", l: "Dull or greasy coat", re: /coat|omega|salmon oil|brewer/, ex: HX },
+      { s: "cat-sym-matted", l: "Matted or tangled fur", re: /detangl|dematt|rake|comb|slicker|conditioning/ },
+      { s: "cat-sym-shedding", l: "Heavy shedding", re: /deshed|brush|comb|slicker|glove/ },
+      { s: "cat-sym-smelly-coat", l: "Smelly coat", re: /cologne|deodori|shampoo|wipes|spray|fresh/ } ] },
     { area: "Eyes & ears", s: "cat-sym-area-eyes-ears", syms: [
-      { s: "cat-sym-scratching-ears", l: "Scratching at the ears", re: /\bears?\b|ear care/ },
-      { s: "cat-sym-watery-eyes", l: "Watery eyes", re: /\beyes?\b|tear/ } ] },
+      { s: "cat-sym-scratching-ears", l: "Scratching at the ears", re: /\bears?\b|ear care|mite/ },
+      { s: "cat-sym-head-shaking", l: "Head shaking", re: /\bears?\b|mite|ear care/ },
+      { s: "cat-sym-dark-wax", l: "Dark wax or ear odour", re: /\bears?\b|ear cleaner|ear wipes|mite/ },
+      { s: "cat-sym-watery-eyes", l: "Watery eyes", re: /\beyes?\b|tear/ },
+      { s: "cat-sym-tear-stains", l: "Tear staining", re: /\beyes?\b|tear|facial|wipes/ },
+      { s: "cat-sym-crusty-eyes", l: "Crusty or sticky eyes", re: /\beyes?\b|facial|wipes|saline/ } ] },
     { area: "Tummy & gut", s: "cat-sym-area-tummy-gut", syms: [
-      { s: "cat-sym-hairballs", l: "Vomiting hairballs", re: /hairball|furball|malt|digest|probiotic/, ex: /shampoo|groom|skin|coat|wipes|paw|flea|brush|balm|spray|comb/ },
-      { s: "cat-sym-not-eating", l: "Not eating", re: /appetite|topper|wet food|palatab|tempt|milk|recovery/ } ] },
+      { s: "cat-sym-hairballs", l: "Vomiting hairballs", re: /hairball|furball|malt|slippery elm/, ex: HX },
+      { s: "cat-sym-vomiting", l: "Sickness or vomiting", re: /gastro|digest|sensitive|stomach|probiotic|slippery elm/, ex: HX },
+      { s: "cat-sym-loose-stools", l: "Loose stools", re: /gastro|digest|slippery elm|psyllium|probiotic|prebiotic|moor/, ex: HX },
+      { s: "cat-sym-constipation", l: "Constipation or straining", re: /psyllium|fibre|husk|hairball/, ex: /shampoo|wipes|brush|spray|comb/ },
+      { s: "cat-sym-wind", l: "Wind or gurgling tummy", re: /gastro|probiotic|prebiotic|artichoke|digestive support/, ex: HX },
+      { s: "cat-sym-not-eating", l: "Not eating", re: /appetite|topper|paste|tempt|palatab|recovery (wet )?food/ },
+      { s: "cat-sym-weight-gain", l: "Putting on weight", re: /light|weight|sterilised|indoor|neutered/, ex: /shampoo|wipes|brush|spray|comb|collar/ },
+      { s: "cat-sym-weight-loss", l: "Losing weight", re: /recovery|convalescence|appetite|tempt|senior|mature/, ex: HX } ] },
     { area: "Toilet habits", s: "cat-sym-area-toilet", syms: [
-      { s: "cat-sym-straining-to-wee", l: "Straining to wee", re: /\burin(e|ary)\b|cystitis|struvite|bladder/ } ] },
+      { s: "cat-sym-straining-to-wee", l: "Straining to wee", re: /\burin(e|ary)\b|cystitis|struvite|bladder/ },
+      { s: "cat-sym-blood-urine", l: "Blood in the urine", re: /\burin(e|ary)\b|cystitis|struvite|bladder|urine test/ },
+      { s: "cat-sym-frequent-wee", l: "Weeing little and often", re: /\burin(e|ary)\b|cystitis|struvite|bladder|urine test/ },
+      { s: "cat-sym-drinking-more", l: "Drinking more than usual", re: /renal|kidney|diabet|urine test/ },
+      { s: "cat-sym-accidents", l: "Going outside the tray", re: /urin(e|ary)|pheromone|litter|odour|cleaner/ } ] },
     { area: "Mouth & teeth", s: "cat-sym-area-mouth", syms: [
-      { s: "cat-sym-bad-breath", l: "Bad breath", re: /dental|teeth|tooth|plaque|breath/ } ] },
+      { s: "cat-sym-bad-breath", l: "Bad breath", re: /dental|teeth|tooth|plaque|breath/ },
+      { s: "cat-sym-tartar", l: "Yellow or brown tartar", re: /dental|plaque|tartar|toothpaste|toothbrush/ },
+      { s: "cat-sym-red-gums", l: "Red or bleeding gums", re: /dental|gum|plaque|toothpaste/ },
+      { s: "cat-sym-drooling", l: "Drooling or dropping food", re: /dental|plaque|tooth|toothpaste/ } ] },
     { area: "Behaviour & mood", s: "cat-sym-area-behaviour", syms: [
-      { s: "cat-sym-hiding", l: "Hiding away or stressed", re: /calm|stress|anxi|pheromone|feliway|relax/ } ] },
+      { s: "cat-sym-hiding", l: "Hiding away or stressed", re: /calm|stress|anxi|pheromone|feliway|relax/ },
+      { s: "cat-sym-spraying", l: "Spraying or marking", re: /calm|stress|pheromone|feliway|enzym/ },
+      { s: "cat-sym-scared", l: "Scared of visitors or noise", re: /calm|stress|anxi|pheromone|relax|bach/ },
+      { s: "cat-sym-vet-fear", l: "Hates the carrier or vet", re: /calm|pheromone|relax|carrier|crate|bach/ },
+      { s: "cat-sym-bored", l: "Bored or too fast at meals", re: /lick|slow feed|enrichment|toy|bowl/ },
+      { s: "cat-sym-clingy", l: "Unusually clingy or restless", re: /calm|stress|anxi|relax|bach/ } ] },
     { area: "Legs & mobility", s: "cat-sym-area-legs", syms: [
-      { s: "cat-sym-limping", l: "Limping or stiff", re: /joint|brace|bandage|sleeve|mobility|sprain|support tape/ } ] },
+      { s: "cat-sym-limping", l: "Limping or stiff", re: /joint|brace|bandage|mobility|sprain|support tape/ },
+      { s: "cat-sym-stiff-rest", l: "Stiff after resting", re: /joint|glucosamine|mussel|devil|flexifit|4joints|mobility/ },
+      { s: "cat-sym-not-jumping", l: "Not jumping any more", re: /joint|glucosamine|mussel|devil|flexifit|4joints|mobility/ },
+      { s: "cat-sym-stairs", l: "Struggling on the stairs", re: /joint|glucosamine|mussel|flexifit|mobility|brace/ },
+      { s: "cat-sym-paw-licking", l: "Licking or chewing paws", re: /paw|itch|allerg|balm|wipes/ },
+      { s: "cat-sym-holding-leg", l: "Holding a leg up", re: /brace|splint|fracture|bandage/ },
+      { s: "cat-sym-claw-problems", l: "Overgrown or split claws", re: /nail|claw|clipper|paw/ } ] },
     { area: "Whole body", s: "cat-sym-area-whole-body", syms: [
       { s: "cat-sym-wound-stitches", l: "A wound or stitches", re: /wound|recovery|collar|\bsuit\b|bandage|dressing/ },
-      { s: "cat-sym-fleas", l: "Fleas or worms", re: /\bflea|\btick|worm|parasite/ } ] }
+      { s: "cat-sym-after-surgery", l: "Recovering after an operation", re: /recovery|collar|\bsuit\b|post.?op|vet bedding|underpad|convalescence/ },
+      { s: "cat-sym-fleas", l: "Fleas or worms", re: /\bflea|\btick|worm|parasite/ },
+      { s: "cat-sym-low-energy", l: "Low energy or lethargy", re: /superfood|feline 40|4in1|taurine|colostrum|vitamin|multi/, ex: HX },
+      { s: "cat-sym-senior-slowing", l: "Slowing down with age", re: /senior|mature|joint|mobility|feline 40/ } ] }
   ];
   /* departments (the tiles under Shop by product). Each product goes to the first department whose rule matches its type. */
   var DEPTS = [

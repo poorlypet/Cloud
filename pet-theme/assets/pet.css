@@ -57,3 +57,17 @@ body:has(#PBarNextFrame) #pet-pop{bottom:84px}
   html[data-pet="cat"] .shop-sec .sec-h .all{width:auto;white-space:nowrap}
   html[data-pet="cat"] .shop-sec .sec-h h2{white-space:nowrap}
 }
+
+/* quiz page hero: the heading and line of text, then one clear button, with the two help options as quiet text links beside it */
+.hq .hq-intro .hq-intro-l{gap:14px 28px!important;max-width:760px;align-items:center!important}
+.hq .hq-intro .hq-intro-t p{flex:1 1 100%!important;max-width:none!important;margin:0 0 6px!important}
+.hq .hq-intro .hq-go{flex:0 0 auto!important;width:auto!important;margin:0!important}
+.hq .hq-intro a.hq-hc{flex:0 1 auto!important;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;white-space:normal;gap:6px;align-items:baseline}
+.hq .hq-intro a.hq-hc:hover{background:transparent!important;color:#fff!important}
+.hq .hq-intro .hq-hc b{font:500 15px/1.3 var(--sans,'Figtree',Arial,sans-serif)!important;opacity:.82}
+.hq .hq-intro .hq-hc span{font:600 15px/1.3 var(--sans,'Figtree',Arial,sans-serif)!important;opacity:1;text-decoration:underline!important;text-underline-offset:3px}
+@media (max-width:599px){
+  .hq .hq-intro .hq-intro-l{gap:12px!important;justify-content:center!important}
+  .hq .hq-intro .hq-go{flex:1 1 100%!important;width:100%!important;max-width:none!important}
+  .hq .hq-intro a.hq-hc{flex:1 1 100%!important;justify-content:center;text-align:center;padding:2px 0!important;min-height:0!important;flex-wrap:wrap}
+}
