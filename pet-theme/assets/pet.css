@@ -40,7 +40,7 @@
   #pet-pop .pp-b button{flex:1}
 }
 /* cat mode: the dog hero video and dog photo slots never show on the cat side */
-html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 60%,#2F7A62)}
+html[data-pet="cat"] #hero{background:linear-gradient(135deg,#0F4C48,#1F6B55 85%,#2F7A62)}
 
 .pet-other{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#E1EBDD;color:#0F4C48;font:600 11.5px/1.4 var(--sans,Figtree,Arial,sans-serif);font-style:normal;vertical-align:1px}
 .bg-chips[hidden]{display:none!important}
@@ -77,6 +77,12 @@ html[data-pet="cat"] :is(.c3-area,.c3-acard,.c3-cond) .c3-ph,html[data-pet="cat"
 
 /* cat side: product photos on cards are square, a little smaller, on white */
 html[data-pet="cat"] .pk.pk .well.well{height:auto!important;min-height:0!important;aspect-ratio:1/1;padding:0!important;background:#fff!important;display:flex;align-items:center;justify-content:center;border-radius:12px 12px 0 0}
-html[data-pet="cat"] .pk.pk .well.well img{width:60%!important;height:60%!important;max-width:60%!important;max-height:60%!important;object-fit:contain;mix-blend-mode:multiply}
+html[data-pet="cat"] .pk.pk .well.well img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain;mix-blend-mode:multiply}
 html[data-pet="cat"] .pb-gim.pb-gim{aspect-ratio:1/1;height:auto!important;min-height:0!important;padding:0!important;background:#fff!important;display:flex;align-items:center;justify-content:center;overflow:hidden}
-html[data-pet="cat"] .pb-gim.pb-gim img{width:60%!important;height:60%!important;max-width:60%!important;max-height:60%!important;object-fit:contain;mix-blend-mode:multiply}
+html[data-pet="cat"] .pb-gim.pb-gim img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain;mix-blend-mode:multiply}
+/* cat side: collection category bar has no tinted circles, and the main product photo sits at 85% of its frame */
+html[data-pet="cat"] .cl-ct .cl-cw{background:#fff!important;display:flex;align-items:center;justify-content:center}
+html[data-pet="cat"] .cl-ct:not(.on) .cl-cw{border:1px solid #E3E8E6!important}
+html[data-pet="cat"] .cl-ct .cl-cw img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain!important;mix-blend-mode:multiply}
+html[data-pet="cat"] .n2-slide{display:flex!important;align-items:center;justify-content:center}
+html[data-pet="cat"] .n2-slide img{width:100%!important;height:100%!important;object-fit:cover!important;transform:scale(.85);transform-origin:center}
