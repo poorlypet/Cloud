@@ -72,5 +72,5 @@ body:has(#PBarNextFrame) #pet-pop{bottom:84px}
   .hq .hq-intro a.hq-hc{flex:1 1 100%!important;justify-content:center;text-align:center;padding:2px 0!important;min-height:0!important;flex-wrap:wrap}
 }
 
-/* cat side: tiles without a photo get a quiet paw instead of an empty box */
-html[data-pet="cat"] .c3-ph:not(.has-photo):not([data-photo="hero"]),html[data-pet="cat"] .sy-ph:not(.has-photo):not([data-photo="hero"]){background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='%23A9BDB4' fill-opacity='.55'%3E%3Cellipse cx='100' cy='124' rx='34' ry='27'/%3E%3Cellipse cx='58' cy='90' rx='14' ry='19'/%3E%3Cellipse cx='86' cy='64' rx='14' ry='20'/%3E%3Cellipse cx='114' cy='64' rx='14' ry='20'/%3E%3Cellipse cx='142' cy='90' rx='14' ry='19'/%3E%3C/g%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center 60%;background-size:34%}
+/* cat side: the condition and symptom pages go without tile photos */
+html[data-pet="cat"] :is(.c3-area,.c3-acard,.c3-cond) .c3-ph,html[data-pet="cat"] .c3-ph-cond,html[data-pet="cat"] :is(.sy-area,.sy-acard,.sy-sym) .sy-ph,html[data-pet="cat"] .sy-ph-sym{display:none!important}
