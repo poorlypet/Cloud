@@ -186,6 +186,16 @@
 
   window.PETAI = {
     sg: SG, conds: CD, areaName: AREA_NAME,
+    areas: [
+      { id: "cat-skin-coat", name: "Skin & coat", blurb: "Itching, over-grooming, scabs, tangles", tint: "#EAF0E6" },
+      { id: "cat-eyes-ears", name: "Eyes & ears", blurb: "Ear scratching, dark wax, weepy eyes", tint: "#E4EED6" },
+      { id: "cat-tummy-gut", name: "Tummy & gut", blurb: "Hairballs, sickness, loose stools, appetite", tint: "#F1EEDC" },
+      { id: "cat-toilet", name: "Toilet habits", blurb: "Straining, blood in urine, going outside the tray", tint: "#E7EEE9" },
+      { id: "cat-mouth-teeth", name: "Mouth & teeth", blurb: "Bad breath, tartar and sore gums", tint: "#EFEAE0" },
+      { id: "cat-behaviour-mood", name: "Behaviour & mood", blurb: "Hiding, spraying, stress and fear", tint: "#E9EDDC" },
+      { id: "cat-legs-mobility", name: "Legs & mobility", blurb: "Stiffness, not jumping, limping", tint: "#E4EED6" },
+      { id: "cat-whole-body", name: "Whole body", blurb: "Wounds, surgery, fleas, slowing down", tint: "#EAF0E6" }
+    ],
     linked: [["arthritis", /arthritis/i], ["itchy-skin", /allerg/i], ["stress-anxiety", /anxi|stress/i], ["dental-disease", /gum disease|dental|tartar/i], ["kidney-support", /kidney/i], ["urinary-problems", /urinary|bladder|cystitis/i], ["sensitive-tummy", /diet|digest|tummy/i]],
     start: ["My cat keeps scratching", "Stiff and not jumping", "Upset tummy", "Hiding or stressed", "Recovery after surgery", "Where is my order?"],
     ph: "Describe what you’re seeing, e.g. licking her belly bald",
