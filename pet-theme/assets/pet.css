@@ -86,3 +86,7 @@ html[data-pet="cat"] .cl-ct:not(.on) .cl-cw{border:1px solid #E3E8E6!important}
 html[data-pet="cat"] .cl-ct .cl-cw img{width:85%!important;height:85%!important;max-width:85%!important;max-height:85%!important;object-fit:contain!important;mix-blend-mode:multiply}
 html[data-pet="cat"] .n2-slide{display:flex!important;align-items:center;justify-content:center}
 html[data-pet="cat"] .n2-slide img{width:100%!important;height:100%!important;object-fit:cover!important;transform:scale(.85);transform-origin:center}
+/* cat side product page: the photo frame and thumbnails are white */
+html[data-pet="cat"] .n2-slide,html[data-pet="cat"] .n2-th{background:#fff!important}
+html[data-pet="cat"] .n2-th{box-shadow:inset 0 0 0 1px #E3E8E6}
+html[data-pet="cat"] .n2-th img{mix-blend-mode:multiply}
