@@ -14,7 +14,11 @@
   SH.products.forEach(function (p) { have[p.handle] = 1; });
   /* until a product has its own photo (they only exist once the product is active), cards show a quiet paw tile */
   var PH = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#F1F5EF"/><g fill="#A9BDB4"><ellipse cx="100" cy="124" rx="34" ry="27"/><ellipse cx="58" cy="90" rx="14" ry="19"/><ellipse cx="86" cy="64" rx="14" ry="20"/><ellipse cx="114" cy="64" rx="14" ry="20"/><ellipse cx="142" cy="90" rx="14" ry="19"/></g></svg>');
-  (window.PETCATP || []).forEach(function (p) { if (!have[p.handle]) { if (!p.cdn) { p.cdn = PH; p.img = PH; } SH.products.push(p); have[p.handle] = 1; } });
+  /* products that are live in the shop but were missing from the baked list, and baked ones that are no longer live */
+  var STALE = {}; (window.PETSTALE || []).forEach(function (h) { STALE[h] = 1; });
+  SH.products = SH.products.filter(function (p) { return !STALE[p.handle]; });
+  SH.products.forEach(function (p) { have[p.handle] = 1; });
+  (window.PETEXTRA || []).concat(window.PETCATP || []).forEach(function (p) { if (!have[p.handle]) { if (!p.cdn) { p.cdn = PH; p.img = PH; } SH.products.push(p); have[p.handle] = 1; } });
   SH.products.forEach(function (p) { p.sp = PET.speciesOf(p.title, p.tags, p.productType); });
   /* ---- 2. the cat shelves are built in both modes (an account can hold a cat while the site shows dogs); only cat mode shows them ---- */
   var SC = SH.collections;

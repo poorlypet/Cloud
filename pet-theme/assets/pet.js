@@ -156,7 +156,7 @@
     if (!/dog|pupp/i.test(t)) return t;
     var keep = [];
     /* phrases that already name both pets stay exactly as they are */
-    t = t.replace(/\b(dogs?\s*(&|&amp;|and|or|\/)\s*cats?|cats?\s*(&|&amp;|and|or|\/)\s*dogs?)\b/gi, function (m) { keep.push(m); return "\u0001" + (keep.length - 1) + "\u0001"; });
+    t = t.replace(/\b(True Dog(?: UK)?|Hackney Dog House|dogs?\s*(&|&amp;|and|or|\/)\s*cats?|cats?\s*(&|&amp;|and|or|\/)\s*dogs?)\b/gi, function (m) { keep.push(m); return "\u0001" + (keep.length - 1) + "\u0001"; });
     t = t.replace(/\b(dog)(s|['\u2019]s)?\b/gi, function (m, w, suf) { return swapWord(m, w, suf); })
          .replace(/\bpupp(y|ies)\b/gi, function (m, y) { return /^P/.test(m) ? (y === "y" ? "Kitten" : "Kittens") : (y === "y" ? "kitten" : "kittens"); });
     return t.replace(/\u0001(\d+)\u0001/g, function (m, i) { return keep[+i]; });
