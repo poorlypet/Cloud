@@ -74,3 +74,7 @@ body:has(#PBarNextFrame) #pet-pop{bottom:84px}
 
 /* cat side: the condition and symptom pages go without tile photos */
 html[data-pet="cat"] :is(.c3-area,.c3-acard,.c3-cond) .c3-ph,html[data-pet="cat"] .c3-ph-cond,html[data-pet="cat"] :is(.sy-area,.sy-acard,.sy-sym) .sy-ph,html[data-pet="cat"] .sy-ph-sym{display:none!important}
+
+/* search dropdown pet tag: dark green text on pale green, readable */
+.drop .pet-other,.pet-other{color:#0F4C48!important;background:#E1EBDD!important;font-weight:700!important;opacity:1!important}
+.drop .pet-other.pet-both{background:#EEF2D4!important}
