@@ -28,16 +28,19 @@
     if (path === "/api/login") { signedIn = true; return res({ ok: true }); }
     if (!signedIn) return res({ error: "Please sign in" }, 401);
     if (path === "/api/logout") { signedIn = false; return res({ ok: true }); }
-    if (path === "/api/me") return res({ user, mode: { drafts_only: true, sample_data: true } });
+    if (path === "/api/me") return res({ user, mode: { drafts_only: true, sample_data: true }, gmail: { connected: true, email: "hello@poorly-pet.com", lastSync: new Date(Date.now() - 2 * 60000).toISOString(), lastError: "" } });
+    if (path === "/api/sync") return res({ ok: true, skipped: true, gmail: { connected: true, email: "hello@poorly-pet.com", lastSync: new Date().toISOString(), lastError: "" } });
+    if (path === "/api/gmail/disconnect") return res({ ok: true });
     if (path === "/api/threads") { const list = THREADS.map((t) => shape(t)); list.sort((a, b) => RANK[a.priority] - RANK[b.priority] || new Date(a.received) - new Date(b.received)); return res({ threads: list }); }
     let m = path.match(/^\/api\/threads\/([\w-]+)$/);
     if (m) { const t = THREADS.find((x) => x.id === m[1]); return t ? res({ thread: shape(t, true) }) : res({ error: "Not found" }, 404); }
-    m = path.match(/^\/api\/threads\/([\w-]+)\/(draft|status|offer|send)$/);
+    m = path.match(/^\/api\/threads\/([\w-]+)\/(draft|status|offer|send|category)$/);
     if (m) {
       const t = THREADS.find((x) => x.id === m[1]); if (!t) return res({ error: "Not found" }, 404);
       const st = (state[t.id] = state[t.id] || {});
       if (m[2] === "draft") { st.draft = noDash(String(body.draft || "")); return res({ ok: true, draft: st.draft, gaps: gapsOf(st.draft) }); }
       if (m[2] === "status") { st.status = body.status; return res({ ok: true }); }
+      if (m[2] === "category") { st.status = body.category === "customer" ? "needs_reply" : "ignored"; return res({ ok: true }); }
       if (m[2] === "offer") {
         const base = t.suggestedDrafts && t.suggestedDrafts[body.option]; if (!base) return res({ error: "Choose one of the options" }, 400);
         let d = base; const note = String(body.note || "").trim(); if (note) d = d.replace(/\n\nKind regards$/, "\n\n" + note + "\n\nKind regards");

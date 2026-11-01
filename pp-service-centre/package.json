@@ -9,7 +9,7 @@
     "db:local": "wrangler d1 execute pp-service-centre --local --persist-to .wrangler/state --file=./schema.sql",
     "db:remote": "wrangler d1 execute pp-service-centre --remote --file=./schema.sql",
     "deploy": "wrangler deploy",
-    "test": "node test/nodash.test.mjs"
+    "test": "node --no-warnings test/nodash.test.mjs && node --no-warnings test/gmail-sync.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^3.114.0"

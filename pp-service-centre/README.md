@@ -2,7 +2,9 @@
 
 A website for the Poorly Pet team. It reads customer emails, writes a draft reply for each, and a person checks and sends it.
 
-**Step 1 (this version):** the portal itself, with sign in, the queue, the summary, the draft editor, the DO NOT SEND blocker and the team page. It runs on sample emails. Gmail, Shopify, tracking and the AI come in steps 2 to 5. Sending is switched off.
+**Step 2 added:** Gmail connection, reading the inbox every 3 minutes, and sorting customer emails from supplier, marketing and spam. Drafts and sending come next.
+
+**Step 1:** the portal itself, with sign in, the queue, the summary, the draft editor, the DO NOT SEND blocker and the team page. It runs on sample emails. Gmail, Shopify, tracking and the AI come in steps 2 to 5. Sending is switched off.
 
 ## What is in step 1
 - Email and password sign in. The owner is created once with a setup code. The owner adds staff on the Team page.
@@ -32,8 +34,33 @@ npm test           # checks no sample reply has a dash
 
 Secrets (passwords, tokens, API keys) are only ever entered in the Cloudflare dashboard or with `wrangler secret put`. They are never stored in this repository.
 
+## Step 2: connect Gmail (one-off set up)
+Do this once, as the Google Workspace admin for poorly-pet.com.
+
+1. Go to console.cloud.google.com, create a project called "PP customer service centre".
+2. APIs and services, Library: enable **Gmail API**.
+3. APIs and services, OAuth consent screen: choose **Internal** (this means only people in your Workspace can use it, and no Google review is needed). Add the scope `.../auth/gmail.readonly`.
+4. Credentials, Create credentials, **OAuth client ID**, type **Web application**. Under "Authorised redirect URIs" add `https://YOUR-PORTAL-ADDRESS/api/gmail/callback` (the address wrangler printed, or your custom one).
+5. Copy the client ID and client secret. In your terminal run, one at a time (each asks you to type or paste the value, nothing goes in a file):
+   ```
+   npx wrangler secret put GOOGLE_CLIENT_ID
+   npx wrangler secret put GOOGLE_CLIENT_SECRET
+   npx wrangler secret put ENCRYPTION_KEY      # any long random string, 32+ characters
+   npx wrangler secret put ANTHROPIC_API_KEY   # from console.anthropic.com
+   ```
+6. `npm run db:remote` again (it adds the new tables safely) and `npm run deploy`.
+7. Sign in as the owner, click **Connect Gmail**, choose hello@poorly-pet.com and allow read access.
+
+What it can do with that permission: **read** the mailbox only. It cannot send, delete or change anything yet. Step 4 asks for send permission separately, so you approve it again then.
+
+Without an Anthropic key the portal still works, using simple word rules to sort emails. The AI is better at the grey cases.
+
+**How sorting works.** Free rules first (a bulk mailing with an unsubscribe link is marketing), then the AI for the rest. Shopify contact form emails use the customer's address, not Shopify's. If you move an email to or from Ignored, the portal remembers that sender (or the whole domain for suppliers) and it is never overruled by the AI. Anything it is unsure about is treated as a customer, so a real customer is never hidden.
+
+**Local testing without Google.** `node test/mock-google.mjs` starts a pretend Google and AI, `npm run dev` points at it through `.dev.vars`, and `node --no-warnings test/gmail-sync.test.mjs` checks the reading, sorting and learning end to end.
+
 ## Next steps
-2. Connect Gmail (read, sort customer from supplier and marketing).
+2. DONE: Connect Gmail (read, sort customer from supplier and marketing).
 3. Shopify order lookups, courier tracking, and the AI drafts.
 4. Sending from hello@poorly-pet.com with your Gmail signature, labels and archive.
 5. Happiness dashboard and finishing touches.

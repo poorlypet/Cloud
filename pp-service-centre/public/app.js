@@ -1,6 +1,6 @@
 // PP customer service centre: the portal screen. Plain JavaScript, no frameworks, so it stays fast and easy to look after.
 const $app = document.getElementById("app");
-const S = { me: null, mode: null, threads: [], tab: "reply", current: null, thread: null, team: null, saveTimer: null, saved: "" };
+const S = { me: null, mode: null, gmail: null, flash: null, threads: [], tab: "reply", current: null, thread: null, team: null, saveTimer: null, saved: "" };
 
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const LOGO = `<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#DFE43A"/><path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z" fill="#0F4C48"/></svg>`;
@@ -30,10 +30,15 @@ function waitClass(t) {
   return h > 24 ? "red" : h > 4 ? "amber" : "";
 }
 const PRI = { urgent: "Urgent", high: "High", normal: "Normal", low: "Low" };
+const CAT = { customer: "Customer", supplier: "Supplier", marketing: "Marketing", spam: "Spam" };
 
 /* ---------- routing ---------- */
 function route() {
-  const h = location.hash.replace(/^#\/?/, "").split("/");
+  const raw = location.hash.replace(/^#\/?/, "");
+  const [path, query] = raw.split("?");
+  const h = path.split("/");
+  const q = new URLSearchParams(query || "");
+  if (q.get("gmail")) { S.flash = q.get("gmail"); history.replaceState(null, "", "#/" + (h[0] || "inbox") + (h[1] ? "/" + h[1] : "")); }
   return { page: h[0] || "inbox", id: h[1] || null };
 }
 window.addEventListener("hashchange", () => { render(); });
@@ -72,6 +77,7 @@ function loginView(setup) {
 const TABS = [
   ["reply", "To reply", (t) => t.category === "customer" && t.status === "needs_reply" && !t.needsDecision],
   ["decide", "Needs your decision", (t) => t.category === "customer" && t.status === "needs_reply" && t.needsDecision],
+  ["replied", "Replied", (t) => t.category === "customer" && t.status === "replied"],
   ["done", "Done", (t) => t.status === "done"],
   ["ignored", "Ignored", (t) => t.status === "ignored"]
 ];
@@ -88,6 +94,7 @@ function queueHTML() {
       <div class="meta">
         <span class="pill ${t.priority}">${PRI[t.priority]}</span>
         ${t.flags.map((f) => `<span class="pill ${t.priority === "urgent" ? "urgent" : ""}">${esc(f)}</span>`).join("")}
+        ${t.category !== "customer" ? `<span class="pill">${CAT[t.category] || t.category}</span>` : ""}
         ${t.needsDecision ? `<span class="pill high">Decision needed</span>` : t.hasDraft && t.category === "customer" ? (t.gaps ? `<span class="pill urgent">${t.gaps} to fill in</span>` : `<span class="pill ok">Draft ready</span>`) : ""}
       </div>
     </button>`).join("") : `<div class="empty">Nothing here. Nice.</div>`;
@@ -185,11 +192,13 @@ function customerHTML(t) {
   if (!c) return "";
   return `<section class="panel block cust"><h2>${esc(c.name)}</h2>
     <div class="row"><span>Customer since</span><b>${esc(c.since)}</b></div>
-    <div class="row"><span>Total spent</span><b>£${c.spend.toFixed(2)}</b></div>
+    ${c.spend == null ? "" : `<div class="row"><span>Total spent</span><b>£${c.spend.toFixed(2)}</b></div>`}
     <div class="row"><span>Mood</span><b>${esc(c.mood)}</b></div>
     <div class="row"><span>Pets</span><b>${c.pets.length ? c.pets.map(esc).join(", ") : "Not known"}</b></div>
     <div class="row"><span>Earlier emails</span><b>${c.pastEmails}</b></div>
-    ${c.orders.length ? c.orders.map((o) => `<div class="order"><b>${esc(o.number)}</b> · ${esc(o.date)} · £${o.total.toFixed(2)}<br>${o.items.map(esc).join(", ")}<br><span style="color:var(--mute)">${esc(o.status)}</span><br><span style="color:var(--mute)">Tracking: ${esc(o.tracking)}</span></div>`).join("") : `<div class="order">No orders yet</div>`}
+    ${c.email ? `<div class="row"><span>Email</span><b style="word-break:break-all">${esc(c.email)}</b></div>` : ""}
+    ${c.earlier && c.earlier.length ? `<div class="order"><b>Earlier emails</b>${c.earlier.map((e) => `<br>${esc(e.subject)}`).join("")}</div>` : ""}
+    ${c.orders.length ? c.orders.map((o) => `<div class="order"><b>${esc(o.number)}</b> · ${esc(o.date)} · £${o.total.toFixed(2)}<br>${o.items.map(esc).join(", ")}<br><span style="color:var(--mute)">${esc(o.status)}</span><br><span style="color:var(--mute)">Tracking: ${esc(o.tracking)}</span></div>`).join("") : S.gmail && S.gmail.connected ? `<div class="order" style="color:var(--mute)">Shopify orders appear here in step 3.</div>` : `<div class="order">No orders yet</div>`}
   </section>`;
 }
 
@@ -205,12 +214,29 @@ function detailHTML() {
     ${messagesHTML(t)}
     ${needsDraft && t.decision && !t.offer ? decisionHTML(t) : ""}
     ${needsDraft && t.draft ? draftBlockHTML(t) : ""}
+    ${needsDraft && !t.draft && !t.decision ? noDraftHTML(t) : ""}
     ${t.category !== "customer" ? `<div class="actions"><button class="btn dark" id="iscustomer" type="button">This is a customer email</button></div>` : ""}
   </div>`;
 }
 
+function noDraftHTML(t) {
+  return `<section class="panel block"><h2>Reply</h2><p style="margin:0 0 4px;color:var(--mute)">${S.gmail && S.gmail.connected ? "Drafts written by the AI arrive in step 3. For now, read the email and sort it." : "No draft for this one."}</p>
+    <div class="actions"><button class="btn ghost" id="markdone" type="button">Mark done, no reply</button><span class="sp"></span><button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button></div></section>`;
+}
+function gmailBarHTML() {
+  const g = S.gmail;
+  const flash = { connected: ["ok", "Gmail is connected. The first emails are being read now."], denied: ["err", "Google was not allowed access, so nothing was connected."], badstate: ["err", "That connect link expired. Please try again."], wrongaccount: ["err", "That was not the hello@poorly-pet.com account. Sign in with the shop mailbox."], norefresh: ["err", "Google did not give lasting access. Remove the app in your Google account permissions, then connect again."], failed: ["err", "Connecting Gmail failed. Check the Google details in Cloudflare and try again."] }[S.flash];
+  const parts = [];
+  if (flash) parts.push(`<div class="${flash[0] === "ok" ? "allgood" : "err"}" role="status">${flash[1]}</div>`);
+  if (g && g.connected) {
+    parts.push(`<div class="gbar"><span><b>Gmail connected</b> · ${esc(g.email)} · ${g.lastSync ? "last checked " + ago(g.lastSync) + " ago" : "not checked yet"}${g.lastError ? ` · <span style="color:var(--red)">${esc(g.lastError)}</span>` : ""}</span><button class="btn ghost sm" id="refresh" type="button">Check for new emails</button></div>`);
+  } else if (g) {
+    parts.push(`<div class="gbar warn"><span><b>Gmail is not connected.</b> You are looking at sample emails.${S.me.role === "owner" ? "" : " Ask the owner to connect it."}</span>${S.me.role === "owner" ? `<a class="btn sm" href="/api/gmail/connect">Connect Gmail</a>` : ""}</div>`);
+  }
+  return parts.join("");
+}
 function inboxView() {
-  return `<div class="inbox"><div>${queueHTML()}</div><div id="detail">${detailHTML()}</div><aside class="stack" id="cust">${S.thread ? customerHTML(S.thread) : ""}</aside></div>`;
+  return `${gmailBarHTML()}<div class="inbox"><div>${queueHTML()}</div><div id="detail">${detailHTML()}</div><aside class="stack" id="cust">${S.thread ? customerHTML(S.thread) : ""}</aside></div>`;
 }
 function dashboardView() {
   return `<section class="panel soon"><h2>Customer happiness</h2><p style="color:var(--mute);max-width:520px;margin:0 auto">Reply times, customer mood and trends will appear here once real emails are flowing. This is built in step 5.</p>
@@ -219,7 +245,9 @@ function dashboardView() {
 async function teamView() {
   if (!S.team) { try { S.team = await call("/api/team"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; } }
   const T = S.team;
-  return `<div class="grid2"><section class="panel block"><h2>Team</h2><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead><tbody>
+  const g = S.gmail;
+  const gcard = `<section class="panel block" style="margin-bottom:20px"><h2>Gmail</h2>${g && g.connected ? `<p style="margin:0 0 12px">Connected to <b>${esc(g.email)}</b>. ${g.lastSync ? "Last checked " + ago(g.lastSync) + " ago." : ""} The portal can read the mailbox. It cannot send until step 4.</p>${S.me.role === "owner" ? `<button class="btn ghost sm" id="gdisconnect" type="button">Disconnect Gmail</button>` : ""}` : `<p style="margin:0 0 12px;color:var(--mute)">Not connected. Connect the shop mailbox so customer emails appear here.</p>${S.me.role === "owner" ? `<a class="btn sm" href="/api/gmail/connect">Connect Gmail</a>` : "<p>Ask the owner to connect it.</p>"}`}</section>`;
+  return gcard + `<div class="grid2"><section class="panel block"><h2>Team</h2><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead><tbody>
     ${T.team.map((u) => `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role === "owner" ? "Owner" : "Staff"}${u.active ? "" : " (switched off)"}</td>
       <td>${T.canManage && u.id !== S.me.id ? `<button class="btn ghost sm" data-toggle="${u.id}" data-active="${u.active ? 0 : 1}">${u.active ? "Switch off" : "Switch on"}</button> <button class="btn ghost sm" data-reset="${u.id}">New password</button>` : ""}</td></tr>`).join("")}
     </tbody></table></section>
@@ -256,6 +284,7 @@ async function render() {
     if (!r.id) { S.current = null; S.thread = null; }
     $app.innerHTML = shell(inboxView(), "inbox");
     wireInbox();
+    S.flash = null;
   } else if (r.page === "dashboard") {
     $app.innerHTML = shell(dashboardView(), "dashboard");
   } else if (r.page === "team") {
@@ -294,9 +323,34 @@ function wireInbox() {
     document.getElementById("savedraft").onclick = () => saveDraft(true);
     document.getElementById("send").onclick = onSend;
     document.getElementById("markdone").onclick = () => setStatus("done", "Marked as done");
-    document.getElementById("notcustomer").onclick = () => setStatus("ignored", "Moved to Ignored, it will learn from this");
+    document.getElementById("notcustomer").onclick = notCustomer;
   }
-  const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setStatus("needs_reply", "Moved back to the customer queue");
+  const nc = document.getElementById("notcustomer"); if (nc && !ed) nc.onclick = notCustomer;
+  const md = document.getElementById("markdone"); if (md && !ed) md.onclick = () => setStatus("done", "Marked as done");
+  const rf = document.getElementById("refresh"); if (rf) rf.onclick = refreshInbox;
+  const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setCategory("customer", "Moved back to customers, future emails from them will stay here");
+}
+function notCustomer() {
+  const bg = document.createElement("div"); bg.className = "modal-bg";
+  bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">What kind of email is this?</h2>
+    <p style="margin:0;color:var(--mute)">It moves to Ignored, and future emails from the same sender are sorted the same way.</p>
+    <div class="decision"><div class="opts">${["supplier", "marketing", "spam"].map((k, i) => `<label class="o"><input type="radio" name="cat" value="${k}" ${i === 0 ? "checked" : ""}> ${CAT[k]}</label>`).join("")}</div></div>
+    <div class="acts"><button class="btn ghost" id="cancelcat" type="button">Cancel</button><button class="btn dark" id="gocat" type="button">Move to Ignored</button></div></div>`;
+  document.body.appendChild(bg);
+  bg.querySelector("#cancelcat").onclick = () => bg.remove();
+  bg.querySelector("#gocat").onclick = () => { const k = bg.querySelector('input[name="cat"]:checked').value; bg.remove(); setCategory(k, "Moved to Ignored, it will remember this sender"); };
+}
+async function setCategory(category, msg) {
+  try { await call(`/api/threads/${S.thread.id}/category`, { method: "POST", body: { category } }); toast(msg); location.hash = "#/inbox"; S.current = null; S.thread = null; await refreshList(); render(); } catch (e) { toast(e.message, true); }
+}
+async function refreshInbox() {
+  const b = document.getElementById("refresh"); if (b) { b.disabled = true; b.textContent = "Checking..."; }
+  try {
+    const r = await call("/api/sync", { method: "POST", body: {} });
+    if (r.gmail) S.gmail = r.gmail;
+    await refreshList(); toast(r.skipped ? "Already up to date" : `Checked Gmail: ${r.stats.read} email${r.stats.read === 1 ? "" : "s"} read`);
+  } catch (e) { toast(e.message, true); }
+  render();
 }
 function setSaved() { const s = document.getElementById("savedmsg"); if (s) s.textContent = S.saved; }
 async function saveDraft(manual) {
@@ -334,6 +388,8 @@ async function doSend() {
 }
 
 function wireTeam() {
+  const gd = document.getElementById("gdisconnect");
+  if (gd) gd.onclick = async () => { await call("/api/gmail/disconnect", { method: "POST", body: {} }).catch((e) => toast(e.message, true)); const me = await call("/api/me"); S.gmail = me.gmail; S.mode = me.mode; await refreshList(); toast("Gmail disconnected"); render(); };
   const f = document.getElementById("addstaff");
   if (f) f.addEventListener("submit", async (e) => {
     e.preventDefault(); const err = document.getElementById("formerr"); err.innerHTML = "";
@@ -349,7 +405,7 @@ function wireTeam() {
 
 async function boot() {
   try {
-    const me = await call("/api/me"); S.me = me.user; S.mode = me.mode; S.team = null;
+    const me = await call("/api/me"); S.me = me.user; S.mode = me.mode; S.gmail = me.gmail || null; S.team = null;
     await refreshList();
   } catch (e) { S.me = null; }
   render();

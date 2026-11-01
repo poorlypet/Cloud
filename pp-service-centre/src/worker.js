@@ -1,5 +1,9 @@
 import { THREADS } from "./sample.js";
 import { noDash, hasDash } from "./nodash.js";
+import { authUrl, exchangeCode, saveConnection, disconnect, connectionStatus, profileWithToken, clearTokenCache, kvGet } from "./gmail.js";
+import { makeState, checkState } from "./crypto.js";
+import { syncInbox } from "./sync.js";
+import * as inbox from "./inbox.js";
 
 const COOKIE = "pp_session";
 const SESSION_DAYS = 14;
@@ -88,7 +92,7 @@ function shape(t, st, full) {
   };
 }
 
-async function api(req, env, url) {
+async function api(req, env, url, ctx) {
   const p = url.pathname;
   const method = req.method;
 
@@ -135,9 +139,69 @@ async function api(req, env, url) {
     if (token) await env.DB.prepare("DELETE FROM sessions WHERE token_hash = ?").bind(await sha256(token)).run();
     return json({ ok: true }, 200, { "set-cookie": `${COOKIE}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0` });
   }
+  const gmailState = await connectionStatus(env);
   if (p === "/api/me" && method === "GET") {
-    return json({ user, mode: { drafts_only: true, sample_data: true } });
+    return json({ user, mode: { drafts_only: true, sample_data: !gmailState.connected }, gmail: gmailState });
   }
+
+  /* --- Gmail connection (owner connects once) --- */
+  if (p === "/api/gmail/status" && method === "GET") return json(gmailState);
+  if (p === "/api/gmail/connect" && method === "GET") {
+    if (user.role !== "owner") return bad("Only the owner can connect Gmail", 403);
+    if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET || !env.ENCRYPTION_KEY) return bad("Gmail is not set up yet. Add the Google client id, secret and ENCRYPTION_KEY in Cloudflare first.", 500);
+    const state = await makeState(user.id, env.ENCRYPTION_KEY);
+    return Response.redirect(authUrl(env, url.origin + "/api/gmail/callback", state), 302);
+  }
+  if (p === "/api/gmail/callback" && method === "GET") {
+    const back = (q) => Response.redirect(url.origin + "/#/inbox?gmail=" + q, 302);
+    if (url.searchParams.get("error")) return back("denied");
+    const uid = await checkState(url.searchParams.get("state"), env.ENCRYPTION_KEY || "");
+    if (!uid || uid !== user.id || user.role !== "owner") return back("badstate");
+    try {
+      const tokens = await exchangeCode(env, url.searchParams.get("code"), url.origin + "/api/gmail/callback");
+      const prof = await profileWithToken(env, tokens.access_token);
+      const want = String(env.MAILBOX || "").toLowerCase();
+      if (want && String(prof.emailAddress).toLowerCase() !== want) return back("wrongaccount");
+      if (!tokens.refresh_token) return back("norefresh");
+      await saveConnection(env, tokens, String(prof.emailAddress).toLowerCase());
+      clearTokenCache();
+      await audit(env, user.id, "gmail_connected", prof.emailAddress);
+      ctx.waitUntil(syncInbox(env, { days: 30 }).catch((e) => console.error("first sync", e.message)));
+      return back("connected");
+    } catch (e) { console.error("gmail callback", e.message); return back("failed"); }
+  }
+  if (p === "/api/gmail/disconnect" && method === "POST") {
+    if (user.role !== "owner") return bad("Only the owner can disconnect Gmail", 403);
+    await disconnect(env); clearTokenCache();
+    await audit(env, user.id, "gmail_disconnected", null);
+    return json({ ok: true });
+  }
+  if (p === "/api/sync" && method === "POST") {
+    if (!gmailState.connected) return bad("Gmail is not connected yet", 409);
+    const last = gmailState.lastSync ? Date.parse(gmailState.lastSync) : 0;
+    if (Date.now() - last < 15000) return json({ ok: true, skipped: true, gmail: gmailState });
+    try { const stats = await syncInbox(env); return json({ ok: true, stats, gmail: await connectionStatus(env) }); }
+    catch (e) { console.error("sync", e.message); return bad("Could not read Gmail just now: " + e.message, 502); }
+  }
+
+  /* --- real inbox (Gmail connected) --- */
+  if (gmailState.connected && p.startsWith("/api/threads")) {
+    if (p === "/api/threads" && method === "GET") return json({ threads: await inbox.listThreads(env) });
+    let mm = p.match(/^\/api\/threads\/([\w-]+)$/);
+    if (mm && method === "GET") { const t = await inbox.getThread(env, mm[1]); return t ? json({ thread: t }) : bad("Not found", 404); }
+    mm = p.match(/^\/api\/threads\/([\w-]+)\/(status|category|send|draft|offer)$/);
+    if (mm && method !== "GET") {
+      const b = await req.json().catch(() => ({}));
+      if (mm[2] === "status") { try { await inbox.setStatus(env, mm[1], b.status); } catch (e) { return bad(e.message); } await audit(env, user.id, "status_" + b.status, mm[1]); return json({ ok: true }); }
+      if (mm[2] === "category") {
+        try { const r = await inbox.setCategory(env, mm[1], b.category, user.id); if (!r) return bad("Not found", 404); await audit(env, user.id, "category_" + b.category, mm[1] + " " + r.rule); return json({ ok: true, ...r }); }
+        catch (e) { return bad(e.message); }
+      }
+      if (mm[2] === "send") { await audit(env, user.id, "send_attempt_blocked", mm[1]); return bad("Sending is switched off while the portal is being tested. Nothing was sent.", 409); }
+      return bad("Drafts arrive in step 3", 409);
+    }
+  }
+
 
   if (p === "/api/threads" && method === "GET") {
     const st = await loadState(env);
@@ -152,7 +216,7 @@ async function api(req, env, url) {
     const st = await loadState(env);
     return json({ thread: shape(t, st[t.id], true) });
   }
-  m = p.match(/^\/api\/threads\/([\w-]+)\/(draft|status|offer|send)$/);
+  m = p.match(/^\/api\/threads\/([\w-]+)\/(draft|status|offer|send|category)$/);
   if (m && method !== "GET") {
     const t = THREADS(Date.now()).find((x) => x.id === m[1]);
     if (!t) return bad("Not found", 404);
@@ -168,6 +232,13 @@ async function api(req, env, url) {
       await upsert({ draft });
       await audit(env, user.id, "draft_saved", t.id);
       return json({ ok: true, draft, gaps: gapsOf(draft) });
+    }
+    if (m[2] === "category") {
+      const status = b.category === "customer" ? "needs_reply" : ["supplier", "marketing", "spam"].includes(b.category) ? "ignored" : null;
+      if (!status) return bad("Unknown category");
+      await upsert({ status });
+      await audit(env, user.id, "category_" + b.category, t.id);
+      return json({ ok: true, status });
     }
     if (m[2] === "status") {
       const status = ["needs_reply", "done", "ignored"].includes(b.status) ? b.status : null;
@@ -235,10 +306,14 @@ async function api(req, env, url) {
 }
 
 export default {
-  async fetch(req, env) {
+  async scheduled(event, env, ctx) {
+    // runs every few minutes: read new customer emails
+    ctx.waitUntil((async () => { const c = await connectionStatus(env); if (c.connected) await syncInbox(env).catch((e) => console.error("cron sync", e.message)); })());
+  },
+  async fetch(req, env, ctx) {
     const url = new URL(req.url);
     try {
-      if (url.pathname.startsWith("/api/")) return await api(req, env, url);
+      if (url.pathname.startsWith("/api/")) return await api(req, env, url, ctx);
     } catch (e) {
       console.error(e);
       return bad("Something went wrong on our side", 500);
