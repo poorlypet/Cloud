@@ -1,0 +1,18 @@
+name = "pp-service-centre"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pp-service-centre"
+# Replace with the id printed by: npx wrangler d1 create pp-service-centre
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# Secrets (set with: npx wrangler secret put NAME). Never commit them.
+#   SETUP_TOKEN   one-off code that lets you create the first owner login
+# Added in later steps: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SHOPIFY_TOKEN, ANTHROPIC_API_KEY

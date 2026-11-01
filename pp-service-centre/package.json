@@ -1,0 +1,17 @@
+{
+  "name": "pp-service-centre",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "PP customer service centre: drafts replies to customer emails for a person to approve",
+  "scripts": {
+    "dev": "wrangler dev --local --persist-to .wrangler/state",
+    "db:local": "wrangler d1 execute pp-service-centre --local --persist-to .wrangler/state --file=./schema.sql",
+    "db:remote": "wrangler d1 execute pp-service-centre --remote --file=./schema.sql",
+    "deploy": "wrangler deploy",
+    "test": "node test/nodash.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^3.114.0"
+  }
+}
