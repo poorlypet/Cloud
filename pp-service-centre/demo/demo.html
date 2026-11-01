@@ -1,0 +1,612 @@
+<title>PP customer service centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0F4C48; --teal-dark:#0A3A37; --lime:#DFE43A; --pale:#F3F6F1; --ink:#0E2A28; --mute:#5B6F6C; --line:#E3E8E6; --white:#fff;
+  --red:#B3261E; --red-bg:#FCEBEA; --amber:#9A5B00; --amber-bg:#FFF3DC; --green:#1F7A4D; --green-bg:#E3F3EA;
+  --serif:'Domine',Georgia,serif; --sans:'Figtree',Arial,sans-serif; --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--pale);color:var(--ink);font:400 16px/1.5 var(--sans)}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--teal)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;color:var(--teal);margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:10px;border:2px solid transparent;background:var(--lime);color:var(--teal);font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(.96)}
+.btn.dark{background:var(--teal);color:#fff}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--teal)}
+.btn.ghost:hover{border-color:var(--teal)}
+.btn.danger{background:var(--red);color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.sm{min-height:36px;padding:0 14px;font-size:14px}
+
+/* header */
+.hdr{background:var(--teal);color:#fff;position:sticky;top:0;z-index:20}
+.hdr .in{max-width:1560px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:24px}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.logo svg{width:40px;height:40px;flex:0 0 auto}
+.logo b{font:700 22px/1.1 var(--serif);display:block}
+.logo small{display:block;font:600 12px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin-top:2px}
+.nav{display:flex;gap:4px;margin-left:12px}
+.nav a{color:#fff;text-decoration:none;font-weight:600;padding:10px 14px;border-radius:999px;font-size:15px}
+.nav a:hover{background:rgba(255,255,255,.12)}
+.nav a.on{background:var(--lime);color:var(--teal)}
+.nav .n{display:inline-block;min-width:22px;padding:0 6px;margin-left:6px;border-radius:999px;background:rgba(255,255,255,.2);font-size:12px;text-align:center}
+.nav a.on .n{background:var(--teal);color:#fff}
+.me{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px}
+.me b{display:block;line-height:1.2}.me span{color:rgba(255,255,255,.7);font-size:12px}
+.me button{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:600}
+.me button:hover{background:rgba(255,255,255,.12)}
+.mode{background:var(--lime);color:var(--teal);text-align:center;font-weight:600;font-size:14px;padding:7px 12px}
+.mode b{font-weight:800}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--teal);background-image:radial-gradient(circle at 100% 100%,var(--lime) 0 14%,transparent 14.2%)}
+.card{background:#fff;border-radius:20px;padding:36px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.card .logo{color:var(--teal);margin-bottom:22px}.card .logo b{color:var(--teal)}.card .logo small{color:var(--mute)}
+.card h1{font-size:28px;margin-bottom:6px}.card p{color:var(--mute);margin:0 0 20px}
+label.f{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+input.t,textarea.t,select.t{width:100%;min-height:46px;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+input.t:focus,textarea.t:focus,select.t:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(223,228,58,.5)}
+.err{background:var(--red-bg);color:var(--red);border-radius:10px;padding:10px 14px;margin:14px 0;font-weight:600;font-size:14px}
+.card .btn{width:100%;margin-top:20px}
+
+/* inbox layout */
+.wrap{max-width:1560px;margin:0 auto;padding:20px}
+.inbox{display:grid;grid-template-columns:380px minmax(0,1fr) 320px;gap:20px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer;color:var(--teal)}
+.tabs button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.tabs .n{opacity:.7;margin-left:4px}
+.queue{overflow:hidden;position:sticky;top:96px;max-height:calc(100vh - 120px);overflow-y:auto}
+.q{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid var(--line);border-left:6px solid var(--line);padding:14px 16px;cursor:pointer}
+.q:hover{background:var(--pale)}.q.on{background:var(--pale);box-shadow:inset 0 0 0 2px var(--teal)}
+.q.urgent{border-left-color:var(--red)}.q.high{border-left-color:#E08A00}.q.normal{border-left-color:var(--teal)}.q.low{border-left-color:#B5C2BF}
+.q .top{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute)}
+.q .who{font-weight:700;color:var(--ink);font-size:15px}
+.q .sub{font-weight:600;margin:2px 0;line-height:1.3}
+.q .snip{color:var(--mute);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.q .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;background:var(--pale);color:var(--teal);border:1px solid var(--line)}
+.pill.urgent{background:var(--red-bg);color:var(--red);border-color:#F2C1BE}
+.pill.high{background:var(--amber-bg);color:var(--amber);border-color:#F2D9A8}
+.pill.ok{background:var(--green-bg);color:var(--green);border-color:#BFE2CF}
+.wait{font-weight:700}.wait.red{color:var(--red)}.wait.amber{color:var(--amber)}
+.empty{padding:40px 20px;text-align:center;color:var(--mute)}
+
+.detail{display:grid;gap:16px}
+.block{padding:20px}
+.block h2{font-size:20px;margin-bottom:12px}
+.dh h1{font-size:26px;line-height:1.25;margin-bottom:6px}
+.dh .from{color:var(--mute);font-size:14px}
+.dh .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.summary{border:2px solid var(--lime);background:linear-gradient(0deg,#fff,#fff);}
+.summary .tag{display:inline-block;background:var(--lime);color:var(--teal);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:3px 8px;margin-bottom:10px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 20px;margin:10px 0 14px}
+.facts dt{font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.facts dd{margin:2px 0 0;font-weight:600}
+.summary ul{margin:0;padding-left:20px;color:var(--ink)}
+.summary li{margin:3px 0}
+.msg{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fff}
+.msg.us{background:var(--pale);margin-left:36px}
+.msg .h{display:flex;justify-content:space-between;color:var(--mute);font-size:13px;margin-bottom:6px}
+.msg .h b{color:var(--ink)}
+.msg p{margin:0;white-space:pre-wrap}
+.att{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.att div{border:1px dashed #9DB2AE;border-radius:10px;padding:10px 12px;font-size:13px;background:var(--pale);max-width:300px}
+.att b{display:block;color:var(--teal)}
+.decision{border:2px solid var(--teal)}
+.decision .opts{display:grid;gap:8px;margin:12px 0}
+.decision label.o{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;font-weight:600}
+.decision label.o:has(input:checked){border-color:var(--teal);background:var(--pale)}
+.blocker{background:var(--red-bg);border:2px solid var(--red);color:var(--red);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.blocker b{display:block;font:800 17px/1.3 var(--sans);letter-spacing:.02em}
+.blocker ul{margin:6px 0 0;padding-left:20px;color:var(--ink)}
+.allgood{background:var(--green-bg);border:1.5px solid #BFE2CF;color:var(--green);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-weight:700}
+.editor{border:1.5px solid var(--line);border-radius:12px;padding:16px;min-height:260px;white-space:pre-wrap;line-height:1.6;background:#fff;outline:none}
+.editor:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(223,228,58,.5)}
+.gapwrap{display:inline-block;vertical-align:baseline;white-space:nowrap;margin:0 1px}
+.gap{border:2px solid var(--red);background:var(--red-bg);color:var(--ink);border-radius:6px;padding:1px 8px;min-width:120px;font:600 15px var(--sans);text-align:center}
+.gap::placeholder{color:var(--red);font-weight:700}
+.gap:not(:placeholder-shown){border-color:var(--green);background:var(--green-bg)}
+.sig{margin-top:10px;padding:12px 16px;border-radius:10px;background:var(--pale);border:1px dashed #9DB2AE;color:var(--mute);font-size:14px}
+.checks{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 4px;font-size:14px;font-weight:600}
+.checks .ok{color:var(--green)}.checks .no{color:var(--red)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.actions .sp{flex:1}
+.saved{color:var(--mute);font-size:13px}
+
+.cust h2{font-size:18px}
+.cust .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.cust .row:last-child{border:0}.cust .row span{color:var(--mute)}
+.order{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:14px}
+.order b{color:var(--teal)}
+.stack{position:sticky;top:96px;display:grid;gap:16px}
+
+/* team + dashboard */
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:15px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+.soon{padding:60px 24px;text-align:center}
+.soon h2{font-size:26px;margin-bottom:8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px;opacity:.55}
+.tile{background:var(--pale);border:1px dashed #9DB2AE;border-radius:12px;padding:18px}
+.tile b{display:block;font:700 28px var(--serif);color:var(--teal)}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--teal);color:#fff;padding:14px 20px;border-radius:12px;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.3);z-index:60;max-width:92vw}
+.toast.warn{background:var(--amber-bg);color:var(--amber);border:2px solid #E0B25C}
+.modal-bg{position:fixed;inset:0;background:rgba(10,58,55,.6);display:grid;place-items:center;padding:20px;z-index:50}
+.modal{background:#fff;border-radius:16px;max-width:520px;width:100%;padding:26px}
+.modal h2{margin-bottom:8px}
+.modal .ck{display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-weight:600}
+.modal .ck input{width:20px;height:20px;margin-top:2px}
+.modal .acts{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+
+@media(max-width:1280px){.inbox{grid-template-columns:340px minmax(0,1fr)}.stack{grid-column:2;position:static}}
+@media(max-width:900px){
+  .inbox{grid-template-columns:1fr}.stack{grid-column:auto}
+  .queue{position:static;max-height:none}
+  .hdr .in{flex-wrap:wrap;gap:12px}.nav{order:3;width:100%;margin:0;overflow-x:auto}.me{margin-left:auto}
+  .grid2{grid-template-columns:1fr}.msg.us{margin-left:0}
+  body.reading .queue,body.reading .tabs{display:none}
+  .backbtn{display:inline-flex!important}
+}
+.backbtn{display:none;margin-bottom:12px}
+
+.card::after{content:'Demo only: any email and password signs you in.';display:block;margin-top:14px;color:var(--mute);font-size:13px}
+
+body{margin:0;background:var(--pale);color:var(--ink)}
+</style>
+<div id="app"></div>
+<script>
+window.__DEMO = { now: 1793572228712, threads: [{"id":"t-1001","category":"customer","status":"needs_reply","priority":"urgent","priorityReason":"Angry, mentions a chargeback and a public review","sentiment":"angry","flags":["Complaint","Chargeback threat","Review threat"],"received":"2026-11-01T20:55:28.712Z","from":{"name":"Helen Marsh","email":"helen.marsh@example.com"},"subject":"Absolutely disgusted. Third email, still no answer","messages":[{"from":"customer","name":"Helen Marsh","at":"2026-10-29T22:30:28.712Z","body":"Hi, my order PP-10431 was meant to arrive on Monday for my dog Barney who has just had surgery. It has not come. Can you tell me where it is please?"},{"from":"us","name":"Poorly Pet","at":"2026-10-30T02:10:28.712Z","body":"Hi Helen, thank you for getting in touch. I'm sorry for the wait. We are checking with the courier and will be back to you shortly."},{"from":"customer","name":"Helen Marsh","at":"2026-11-01T20:55:28.712Z","body":"It is now FIVE days late and nobody has come back to me. Barney needs that recovery suit now, not next week. This is the worst service I have had. If I do not have a full refund and an actual answer by tomorrow I will dispute the payment with my bank and leave reviews everywhere. Sort it out."}],"summary":{"order_number":"PP-10431","order_date":"14 Oct 2026","issue":"Recovery suit for Barney is 5 days late, customer has had no reply to her last two emails","wants":"A full refund and an answer by tomorrow","pet":"Barney (dog, recovering from surgery)","points":["Courier shows the parcel stuck at a depot since Tuesday","She has emailed three times and was answered once","Threatens a bank dispute and public reviews"]},"decision":{"key":"offer","question":"What are we offering Helen?","help":"She asked for a full refund. Choose what we will do and the reply is written around it.","options":[{"key":"refund","label":"Full refund now"},{"key":"reship","label":"Send a replacement by express courier"},{"key":"choice","label":"Offer her the choice of both"}]},"draft":null,"suggestedDrafts":{"refund":"Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The parcel has been held at the courier depot since Tuesday. Your tracking number is [[TRACKING_NUMBER|Tracking number]] and the courier has told us [[COURIER_UPDATE|What the courier has told us]].\n\nWe are refunding your order in full. The refund of [[REFUND_AMOUNT|Refund amount]] will show on your card within 3 to 5 working days.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney. I hope he is feeling better soon.\n\nKind regards","reship":"Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The original parcel has been held at the courier depot since Tuesday, so we are sending a replacement recovery suit today by express courier at no cost to you. Your new tracking number is [[TRACKING_NUMBER|New tracking number]] and it is due with you on [[DELIVERY_DATE|Expected delivery date]].\n\nIf the first parcel turns up, you are welcome to keep it. There is no need to send anything back.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney.\n\nKind regards","choice":"Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The parcel has been held at the courier depot since Tuesday. I would like you to choose how we put this right:\n\n1. A full refund of [[REFUND_AMOUNT|Refund amount]], back to your card within 3 to 5 working days.\n2. A replacement sent today by express courier at no cost to you.\n\nJust reply with 1 or 2 and I will sort it straight away.\n\nKind regards"},"customer":{"name":"Helen Marsh","since":"2024","spend":312.4,"mood":"Upset","pets":["Barney (dog)"],"pastEmails":4,"orders":[{"number":"PP-10431","date":"14 Oct 2026","total":46.99,"status":"In transit, delayed","items":["Medical recovery suit, size L"],"tracking":"Evri, held at depot since Tue"},{"number":"PP-9870","date":"3 Jun 2026","total":89.5,"status":"Delivered","items":["Joint supplement x2","Orthopaedic bed"],"tracking":"Delivered 6 Jun"}]}},{"id":"t-1002","category":"customer","status":"needs_reply","priority":"high","priorityReason":"Parcel 4 days late, waiting 3 hours","sentiment":"upset","flags":["Late delivery"],"received":"2026-11-01T19:20:28.712Z","from":{"name":"Aisha Rahman","email":"aisha.r@example.com"},"subject":"Where is my order PP-10466?","messages":[{"from":"customer","name":"Aisha Rahman","at":"2026-11-01T19:20:28.712Z","body":"Hello, I ordered a ramp for my Labrador Kito on the 20th and it still has not arrived. The tracking page just says label created. Could you let me know when I can expect it? Thanks, Aisha"}],"summary":{"order_number":"PP-10466","order_date":"20 Oct 2026","issue":"Ramp not delivered, tracking has not moved since the label was created","wants":"To know when it will arrive","pet":"Kito (Labrador)","points":["Order is paid and marked fulfilled","The tracking number is missing from our record, so it needs to be added before replying"]},"decision":null,"draft":"Hi Aisha,\n\nThank you for getting in touch, and I am sorry you have been left waiting for Kito's ramp.\n\nI have checked order PP-10466. It left us on [[DISPATCH_DATE|Dispatch date]] and your tracking number is [[TRACKING_NUMBER|Tracking number]]. The courier is showing [[COURIER_STATUS|Latest courier status]], so you should have it by [[DELIVERY_DATE|Expected delivery date]].\n\nIf it has not arrived by then, reply to this email and I will chase the courier for you straight away.\n\nKind regards","customer":{"name":"Aisha Rahman","since":"2025","spend":118,"mood":"Neutral","pets":["Kito (Labrador)"],"pastEmails":1,"orders":[{"number":"PP-10466","date":"20 Oct 2026","total":79,"status":"Fulfilled, no tracking on record","items":["Folding dog ramp 151cm"],"tracking":"Not recorded"}]}},{"id":"t-1003","category":"customer","status":"needs_reply","priority":"high","priorityReason":"Damaged item with photos, wants a fix","sentiment":"upset","flags":["Damaged item"],"received":"2026-11-01T17:20:28.712Z","from":{"name":"Tom Whitaker","email":"tom.w@example.com"},"subject":"Hock brace arrived torn","messages":[{"from":"customer","name":"Tom Whitaker","at":"2026-11-01T17:20:28.712Z","body":"Hi, the hock brace I ordered for Biscuit arrived this morning and the strap is torn where it joins the main part. I have attached photos. I do not know if you would rather send a new one or refund me, I just need something that works as she is limping badly. Thanks, Tom","attachments":[{"name":"torn-strap.jpg","note":"Photo 1: strap torn clean through at the stitching"},{"name":"packaging.jpg","note":"Photo 2: box looks undamaged"}]}],"summary":{"order_number":"PP-10459","order_date":"19 Oct 2026","issue":"Brace strap is torn at the stitching on arrival","wants":"A working brace, either a replacement or a refund","pet":"Biscuit (limping)","points":["Photos show a manufacturing fault, the box was undamaged","Customer is flexible about replacement or refund","Dog is in discomfort so speed matters"]},"decision":{"key":"offer","question":"What are we offering Tom?","help":"He is happy with either. Choose what we will do.","options":[{"key":"replace","label":"Send a replacement"},{"key":"refund","label":"Refund the brace"}]},"draft":null,"suggestedDrafts":{"replace":"Hi Tom,\n\nThank you for the photos, and I am sorry the brace arrived like that. I can see the strap has torn at the stitching, so that is a fault on our side and not anything you did.\n\nWe are sending a replacement today, free of charge, with express delivery so Biscuit is not waiting. Your tracking number is [[TRACKING_NUMBER|Tracking number]].\n\nThere is no need to send the damaged one back. I hope Biscuit is feeling more comfortable soon.\n\nKind regards","refund":"Hi Tom,\n\nThank you for the photos, and I am sorry the brace arrived like that. I can see the strap has torn at the stitching, so that is a fault on our side and not anything you did.\n\nI have refunded the brace in full, [[REFUND_AMOUNT|Refund amount]], and it will be back on your card within 3 to 5 working days. There is no need to send the damaged one back.\n\nI hope Biscuit is feeling more comfortable soon.\n\nKind regards"},"customer":{"name":"Tom Whitaker","since":"2026","spend":64.99,"mood":"Neutral","pets":["Biscuit (dog)"],"pastEmails":0,"orders":[{"number":"PP-10459","date":"19 Oct 2026","total":64.99,"status":"Delivered today","items":["Hock brace, size M"],"tracking":"Delivered 22 Oct"}]}},{"id":"t-1004","category":"customer","status":"needs_reply","priority":"normal","priorityReason":"Return request","sentiment":"neutral","flags":["Return"],"received":"2026-11-01T13:50:28.712Z","from":{"name":"Priya Shah","email":"priya.shah@example.com"},"subject":"Can I return the joint chews?","messages":[{"from":"customer","name":"Priya Shah","at":"2026-11-01T13:50:28.712Z","body":"Hi there, I bought the joint chews for Mango last week but she will not eat them at all. Can I send them back for a refund? The tub is unopened apart from one chew. Thanks, Priya"}],"summary":{"order_number":"PP-10441","order_date":"15 Oct 2026","issue":"Dog will not eat the joint chews, wants to return them","wants":"A refund for the chews","pet":"Mango (dog)","points":["Bought 7 days ago","Tub opened, one chew taken, and consumables may not be returnable","Needs a decision on what to offer"]},"decision":{"key":"offer","question":"What are we offering Priya?","help":"Opened supplements are not normally returnable. Choose what we will do.","options":[{"key":"refund","label":"Refund as a goodwill gesture"},{"key":"swap","label":"Swap for a different flavour"},{"key":"decline","label":"Politely decline, explain why"}]},"draft":null,"suggestedDrafts":{"refund":"Hi Priya,\n\nThank you for letting me know, and I am sorry Mango did not take to the joint chews.\n\nAs it has only been a week, I am happy to refund you as a goodwill gesture. I have refunded [[REFUND_AMOUNT|Refund amount]] and it will be back on your card within 3 to 5 working days. There is no need to send the tub back.\n\nIf you would like help finding something Mango will enjoy, just reply and I will happily suggest an option.\n\nKind regards","swap":"Hi Priya,\n\nThank you for letting me know, and I am sorry Mango did not take to the joint chews.\n\nWe would be glad to swap them for a different flavour. Mango's pick of [[REPLACEMENT_FLAVOUR|Which flavour]] is on its way, and your tracking number is [[TRACKING_NUMBER|Tracking number]]. There is no need to send the first tub back.\n\nKind regards","decline":"Hi Priya,\n\nThank you for letting me know, and I am sorry Mango did not take to the joint chews.\n\nBecause supplements are consumable, we cannot take back a tub once it has been opened. I am sorry I cannot do more on this occasion. If it would help, I am happy to suggest a powder or a different flavour that dogs who are fussy about chews often prefer.\n\nKind regards"},"customer":{"name":"Priya Shah","since":"2025","spend":210.5,"mood":"Happy","pets":["Mango (dog)"],"pastEmails":2,"orders":[{"number":"PP-10441","date":"15 Oct 2026","total":27.99,"status":"Delivered","items":["Joint chews, 120 pack"],"tracking":"Delivered 18 Oct"}]}},{"id":"t-1005","category":"customer","status":"needs_reply","priority":"normal","priorityReason":"Subscription change","sentiment":"neutral","flags":["Subscription"],"received":"2026-11-01T10:50:28.712Z","from":{"name":"Mark Ellison","email":"mark.ellison@example.com"},"subject":"Skip my next delivery","messages":[{"from":"customer","name":"Mark Ellison","at":"2026-11-01T10:50:28.712Z","body":"Hello, can you skip my next Subscribe & Save delivery please? We are away until mid November. Thanks, Mark"}],"summary":{"order_number":"Subscription SUB-2231","order_date":"Started 2 Mar 2026","issue":"Wants the next subscription delivery skipped","wants":"Skip one delivery, away until mid November","pet":"Not mentioned","points":["Next delivery is due soon","Needs the new delivery date adding after the skip is done"]},"decision":null,"draft":"Hi Mark,\n\nNo problem at all. I have skipped your next Subscribe & Save delivery, so nothing will be sent while you are away.\n\nYour next delivery is now due on [[NEXT_DELIVERY_DATE|New delivery date]]. If you would like it earlier or later, just reply and I will change it.\n\nEnjoy your trip.\n\nKind regards","customer":{"name":"Mark Ellison","since":"2026","spend":156,"mood":"Neutral","pets":[],"pastEmails":1,"orders":[{"number":"SUB-2231","date":"Started 2 Mar 2026","total":31.2,"status":"Active, next due 28 Oct","items":["Salmon oil, monthly"],"tracking":"n/a"}]}},{"id":"t-1006","category":"customer","status":"needs_reply","priority":"low","priorityReason":"Pre-sale question","sentiment":"neutral","flags":["Pre-sale"],"received":"2026-11-01T07:00:28.712Z","from":{"name":"Caroline Doyle","email":"c.doyle@example.com"},"subject":"Will the neck brace fit my 4kg cat?","messages":[{"from":"customer","name":"Caroline Doyle","at":"2026-11-01T07:00:28.712Z","body":"Hi, I am looking at the Balto neck brace for my cat Pickle who has had a dental operation. She weighs about 4kg and is quite small. Which size would you recommend and how quickly could it arrive? Thank you, Caroline"}],"summary":{"order_number":"None yet","order_date":"n/a","issue":"Size advice for a neck brace for a small cat","wants":"Which size to order and delivery time","pet":"Pickle (cat, 4kg, after a dental operation)","points":["New customer, no orders","Needs a measurement of Pickle's neck before recommending a size","Free delivery over 39 pounds, otherwise standard delivery"]},"decision":null,"draft":"Hi Caroline,\n\nThank you for getting in touch, and I hope Pickle is recovering well after her operation.\n\nThe best way to choose is by her neck measurement, as weight alone can be misleading. If you can measure around her neck, just behind the ears, and let me know the number in centimetres, I will tell you exactly which size to order.\n\nFor delivery, orders are dispatched within 1 to 2 working days and arrive in [[DELIVERY_TIME|Standard delivery time]]. Delivery is free on orders over 39 pounds.\n\nKind regards","customer":{"name":"Caroline Doyle","since":"New","spend":0,"mood":"Neutral","pets":["Pickle (cat)"],"pastEmails":0,"orders":[]}},{"id":"t-1007","category":"customer","status":"needs_reply","priority":"low","priorityReason":"Happy customer","sentiment":"happy","flags":["Thank you"],"received":"2026-10-31T21:30:28.712Z","from":{"name":"Janet Owusu","email":"janet.o@example.com"},"subject":"Thank you!","messages":[{"from":"customer","name":"Janet Owusu","at":"2026-10-31T21:30:28.712Z","body":"Just wanted to say thank you. The recovery suit for Bramble arrived the next day and fits perfectly. She is so much more comfortable. Will definitely order again. Janet"}],"summary":{"order_number":"PP-10419","order_date":"12 Oct 2026","issue":"None, a thank you","wants":"Nothing, just happy","pet":"Bramble","points":["Fast delivery, perfect fit","A good moment to ask for a review"]},"decision":null,"draft":"Hi Janet,\n\nThank you so much for taking the time to write, this really made our day. I am so glad the suit fits Bramble well and that she is more comfortable.\n\nIf you have a spare minute, a short review would help other owners find what they need. No pressure at all, and thank you again.\n\nKind regards","customer":{"name":"Janet Owusu","since":"2026","spend":46.99,"mood":"Happy","pets":["Bramble (dog)"],"pastEmails":1,"orders":[{"number":"PP-10419","date":"12 Oct 2026","total":46.99,"status":"Delivered","items":["Medical recovery suit, size M"],"tracking":"Delivered 13 Oct"}]}},{"id":"t-2001","category":"supplier","status":"ignored","priority":"low","priorityReason":"Supplier invoice","sentiment":"neutral","flags":[],"received":"2026-11-01T18:30:28.712Z","from":{"name":"Karnlea Accounts","email":"accounts@supplier.example"},"subject":"Invoice 2290 for October","messages":[{"from":"customer","name":"Karnlea Accounts","at":"2026-11-01T18:30:28.712Z","body":"Please find attached invoice 2290 for October supplies. Payment terms 30 days."}],"summary":{"order_number":"n/a","order_date":"n/a","issue":"Supplier invoice","wants":"Payment","pet":"n/a","points":[]},"decision":null,"draft":null,"why":"Sent by a supplier about an invoice, not a customer","customer":null},{"id":"t-2002","category":"marketing","status":"ignored","priority":"low","priorityReason":"Marketing email","sentiment":"neutral","flags":[],"received":"2026-11-01T11:30:28.712Z","from":{"name":"RankBoost SEO","email":"hello@seo-offers.example"},"subject":"Get your shop to page 1 of Google","messages":[{"from":"customer","name":"RankBoost SEO","at":"2026-11-01T11:30:28.712Z","body":"We can get your website to the top of Google in 30 days. Reply for a free audit."}],"summary":{"order_number":"n/a","order_date":"n/a","issue":"Cold sales email","wants":"A sales call","pet":"n/a","points":[]},"decision":null,"draft":null,"why":"Unsolicited marketing, no order or customer link","customer":null}] };
+// Replies must never contain em dashes (or en dashes used like them).
+// This is the last line of defence: every draft is passed through here before a person sees it or it is sent.
+function noDash(text) {
+  if (text == null) return text;
+  return String(text)
+    .replace(/\s*—\s*/g, ", ")          // em dash with or without spaces
+    .replace(/\s+–\s+/g, ", ")          // spaced en dash used as a dash
+    .replace(/(\d)–(\d)/g, "$1-$2")     // ranges such as 2-3 days
+    .replace(/–/g, "-")                 // any other en dash
+    .replace(/―|⸺|⸻/g, ", ")  // horizontal bar and other long dashes
+    .replace(/,\s*,/g, ",")
+    .replace(/ {2,}/g, " ");
+}
+function hasDash(text) {
+  return /[—–―⸺⸻]/.test(String(text || ""));
+}
+
+</script>
+<script>
+/* Demo only: a tiny in-browser stand-in for the Cloudflare API, so the portal can be tried without a server.
+   Nothing here is stored anywhere, it all resets when the page is reloaded. */
+(function () {
+  const BASE = window.__DEMO.now, SHIFT = Date.now() - BASE;
+  const RAW = window.__DEMO.threads;
+  const shiftIso = (s) => new Date(new Date(s).getTime() + SHIFT).toISOString();
+  const THREADS = RAW.map((t) => ({ ...t, received: shiftIso(t.received), messages: t.messages.map((m) => ({ ...m, at: shiftIso(m.at) })) }));
+  const state = {}; // thread id -> { status, draft, offer }
+  let signedIn = true, user = { id: 1, email: "hello@poorly-pet.com", name: "Joe", role: "owner" };
+  const team = [{ id: 1, email: "hello@poorly-pet.com", name: "Joe", role: "owner", active: 1 }, { id: 2, email: "lily@poorly-pet.com", name: "Lily", role: "staff", active: 1 }];
+  const RANK = { urgent: 0, high: 1, normal: 2, low: 3 };
+  const res = (data, status = 200) => Promise.resolve(new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } }));
+  const gapsOf = (text) => { const out = [], re = /\[\[([A-Z0-9_]+)\|([^\]]+)\]\]/g; let m; while ((m = re.exec(text || ""))) if (!out.some((g) => g.key === m[1])) out.push({ key: m[1], label: m[2] }); return out; };
+  function shape(t, full) {
+    const st = state[t.id] || {};
+    const status = st.status || t.status;
+    let draft = st.draft != null ? st.draft : t.draft; draft = draft == null ? null : noDash(draft);
+    const base = { id: t.id, category: t.category, status, priority: t.priority, priorityReason: t.priorityReason, sentiment: t.sentiment, flags: t.flags, received: t.received, from: t.from, subject: t.subject, snippet: t.messages[t.messages.length - 1].body.slice(0, 140), needsDecision: !!t.decision && !st.offer, hasDraft: !!draft, gaps: gapsOf(draft).length, handledBy: null };
+    return full ? { ...base, messages: t.messages, summary: t.summary, customer: t.customer, why: t.why || null, decision: t.decision, offer: st.offer || null, draft } : base;
+  }
+  const realFetch = window.fetch.bind(window);
+  window.fetch = async function (path, opts = {}) {
+    if (typeof path !== "string" || !path.startsWith("/api/")) return realFetch(path, opts);
+    const method = (opts.method || "GET").toUpperCase();
+    const body = opts.body ? JSON.parse(opts.body) : {};
+    await new Promise((r) => setTimeout(r, 120));
+    if (path === "/api/setup-status") return res({ needsSetup: false });
+    if (path === "/api/login") { signedIn = true; return res({ ok: true }); }
+    if (!signedIn) return res({ error: "Please sign in" }, 401);
+    if (path === "/api/logout") { signedIn = false; return res({ ok: true }); }
+    if (path === "/api/me") return res({ user, mode: { drafts_only: true, sample_data: true } });
+    if (path === "/api/threads") { const list = THREADS.map((t) => shape(t)); list.sort((a, b) => RANK[a.priority] - RANK[b.priority] || new Date(a.received) - new Date(b.received)); return res({ threads: list }); }
+    let m = path.match(/^\/api\/threads\/([\w-]+)$/);
+    if (m) { const t = THREADS.find((x) => x.id === m[1]); return t ? res({ thread: shape(t, true) }) : res({ error: "Not found" }, 404); }
+    m = path.match(/^\/api\/threads\/([\w-]+)\/(draft|status|offer|send)$/);
+    if (m) {
+      const t = THREADS.find((x) => x.id === m[1]); if (!t) return res({ error: "Not found" }, 404);
+      const st = (state[t.id] = state[t.id] || {});
+      if (m[2] === "draft") { st.draft = noDash(String(body.draft || "")); return res({ ok: true, draft: st.draft, gaps: gapsOf(st.draft) }); }
+      if (m[2] === "status") { st.status = body.status; return res({ ok: true }); }
+      if (m[2] === "offer") {
+        const base = t.suggestedDrafts && t.suggestedDrafts[body.option]; if (!base) return res({ error: "Choose one of the options" }, 400);
+        let d = base; const note = String(body.note || "").trim(); if (note) d = d.replace(/\n\nKind regards$/, "\n\n" + note + "\n\nKind regards");
+        st.draft = noDash(d); st.offer = body.option + (note ? ": " + note : ""); return res({ ok: true, draft: st.draft });
+      }
+      if (m[2] === "send") return res({ error: "Sending is switched off in this demo. Nothing was sent." }, 409);
+    }
+    if (path === "/api/team" && method === "GET") return res({ team, canManage: user.role === "owner" });
+    if (path === "/api/team" && method === "POST") {
+      if (!body.email || !body.name || String(body.password || "").length < 10) return res({ error: "Enter a name, a valid email and a password of at least 10 characters" }, 400);
+      team.push({ id: team.length + 2, email: body.email, name: body.name, role: "staff", active: 1 }); return res({ ok: true });
+    }
+    m = path.match(/^\/api\/team\/(\d+)$/);
+    if (m) { const u = team.find((x) => x.id === +m[1]); if (u && typeof body.active === "boolean") u.active = body.active ? 1 : 0; return res({ ok: true }); }
+    return res({ error: "Not found" }, 404);
+  };
+})();
+
+</script>
+<script type="module">
+// PP customer service centre: the portal screen. Plain JavaScript, no frameworks, so it stays fast and easy to look after.
+const $app = document.getElementById("app");
+const S = { me: null, mode: null, threads: [], tab: "reply", current: null, thread: null, team: null, saveTimer: null, saved: "" };
+
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const LOGO = `<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#DFE43A"/><path d="M26 14h12v12h12v12H38v12H26V38H14V26h12z" fill="#0F4C48"/></svg>`;
+
+async function call(path, opts = {}) {
+  const res = await fetch(path, { method: opts.method || "GET", headers: opts.body ? { "content-type": "application/json" } : {}, body: opts.body ? JSON.stringify(opts.body) : undefined, credentials: "same-origin" });
+  let data = {};
+  try { data = await res.json(); } catch (e) {}
+  if (res.status === 401 && path !== "/api/login") { S.me = null; render(); throw new Error("signed out"); }
+  if (!res.ok) { const err = new Error(data.error || "Something went wrong"); err.status = res.status; throw err; }
+  return data;
+}
+function toast(msg, warn) {
+  document.querySelectorAll(".toast").forEach((t) => t.remove());
+  const t = document.createElement("div");
+  t.className = "toast" + (warn ? " warn" : ""); t.textContent = msg; t.setAttribute("role", "status");
+  document.body.appendChild(t); setTimeout(() => t.remove(), warn ? 7000 : 3500);
+}
+function ago(iso) {
+  const mins = Math.max(1, Math.round((Date.now() - new Date(iso)) / 60000));
+  if (mins < 60) return mins + " min";
+  const h = Math.round(mins / 60); if (h < 24) return h + " h";
+  return Math.round(h / 24) + " d";
+}
+function waitClass(t) {
+  const h = (Date.now() - new Date(t.received)) / 3600000;
+  return h > 24 ? "red" : h > 4 ? "amber" : "";
+}
+const PRI = { urgent: "Urgent", high: "High", normal: "Normal", low: "Low" };
+
+/* ---------- routing ---------- */
+function route() {
+  const h = location.hash.replace(/^#\/?/, "").split(/\/|--/);
+  return { page: h[0] || "inbox", id: h[1] || null };
+}
+window.addEventListener("hashchange", () => { render(); });
+
+/* ---------- views ---------- */
+function shell(inner, page) {
+  const open = S.threads.filter((t) => t.status === "needs_reply" && t.category === "customer").length;
+  return `
+  <header class="hdr"><div class="in">
+    <a class="logo" href="#inbox">${LOGO}<span><b>Poorly Pet</b><small>PP customer service centre</small></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#inbox" class="${page === "inbox" ? "on" : ""}">Inbox<span class="n">${open}</span></a>
+      <a href="#dashboard" class="${page === "dashboard" ? "on" : ""}">Happiness</a>
+      <a href="#team" class="${page === "team" ? "on" : ""}">Team</a>
+    </nav>
+    <div class="me"><div><b>${esc(S.me.name)}</b><span>${S.me.role === "owner" ? "Owner" : "Staff"}</span></div><button id="logout" type="button">Sign out</button></div>
+  </div></header>
+  ${S.mode && S.mode.drafts_only ? `<div class="mode"><b>Test mode.</b> Drafts only, sending is switched off.${S.mode.sample_data ? " These are sample emails, Gmail is not connected yet." : ""}</div>` : ""}
+  <main class="wrap">${inner}</main>`;
+}
+
+function loginView(setup) {
+  return `<div class="login"><form class="card" id="loginform" novalidate>
+    <div class="logo">${LOGO}<span><b>Poorly Pet</b><small>PP customer service centre</small></span></div>
+    <h1>${setup ? "Set up the owner login" : "Welcome back"}</h1>
+    <p>${setup ? "This is a one-off step. You will need the setup code from your Cloudflare secrets." : "Sign in to see today's customer emails and the replies waiting for you."}</p>
+    ${setup ? `<label class="f" for="name">Your name</label><input class="t" id="name" autocomplete="name">` : ""}
+    <label class="f" for="email">Email</label><input class="t" id="email" type="email" autocomplete="username" required>
+    <label class="f" for="pw">Password${setup ? " (at least 10 characters)" : ""}</label><input class="t" id="pw" type="password" autocomplete="${setup ? "new-password" : "current-password"}" required>
+    ${setup ? `<label class="f" for="token">Setup code</label><input class="t" id="token" type="password" autocomplete="off">` : ""}
+    <div id="formerr"></div>
+    <button class="btn dark" type="submit">${setup ? "Create login and sign in" : "Sign in"}</button>
+  </form></div>`;
+}
+
+const TABS = [
+  ["reply", "To reply", (t) => t.category === "customer" && t.status === "needs_reply" && !t.needsDecision],
+  ["decide", "Needs your decision", (t) => t.category === "customer" && t.status === "needs_reply" && t.needsDecision],
+  ["done", "Done", (t) => t.status === "done"],
+  ["ignored", "Ignored", (t) => t.status === "ignored"]
+];
+function inTab(t) { const tab = TABS.find((x) => x[0] === S.tab); return tab[2](t); }
+
+function queueHTML() {
+  const list = S.threads.filter(inTab);
+  const tabs = TABS.map(([k, label, fn]) => `<button type="button" data-tab="${k}" class="${S.tab === k ? "on" : ""}">${label}<span class="n">${S.threads.filter(fn).length}</span></button>`).join("");
+  const items = list.length ? list.map((t) => `
+    <button type="button" class="q ${t.priority} ${S.current === t.id ? "on" : ""}" data-open="${t.id}">
+      <div class="top"><span class="who">${esc(t.from.name)}</span><span class="wait ${waitClass(t)}">${ago(t.received)}</span></div>
+      <div class="sub">${esc(t.subject)}</div>
+      <div class="snip">${esc(t.snippet)}</div>
+      <div class="meta">
+        <span class="pill ${t.priority}">${PRI[t.priority]}</span>
+        ${t.flags.map((f) => `<span class="pill ${t.priority === "urgent" ? "urgent" : ""}">${esc(f)}</span>`).join("")}
+        ${t.needsDecision ? `<span class="pill high">Decision needed</span>` : t.hasDraft && t.category === "customer" ? (t.gaps ? `<span class="pill urgent">${t.gaps} to fill in</span>` : `<span class="pill ok">Draft ready</span>`) : ""}
+      </div>
+    </button>`).join("") : `<div class="empty">Nothing here. Nice.</div>`;
+  return `<div class="tabs" role="tablist">${tabs}</div><div class="panel queue">${items}</div>`;
+}
+
+function summaryHTML(t) {
+  const s = t.summary;
+  if (t.category !== "customer") return `<section class="panel block summary"><span class="tag">Why it was ignored</span><p style="margin:0">${esc(t.why || "Not a customer email")}</p></section>`;
+  return `<section class="panel block summary"><span class="tag">PP summary</span>
+    <dl class="facts">
+      <div><dt>Order</dt><dd>${esc(s.order_number)}</dd></div><div><dt>Order date</dt><dd>${esc(s.order_date)}</dd></div>
+      <div><dt>Pet</dt><dd>${esc(s.pet)}</dd></div><div style="grid-column:1/-1"><dt>Issue</dt><dd>${esc(s.issue)}</dd></div>
+      <div style="grid-column:1/-1"><dt>What they want</dt><dd>${esc(s.wants)}</dd></div>
+    </dl>
+    ${s.points && s.points.length ? `<ul>${s.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}
+  </section>`;
+}
+function messagesHTML(t) {
+  return `<section class="panel block"><h2>The conversation</h2>${t.messages.map((m) => `
+    <div class="msg ${m.from === "us" ? "us" : ""}"><div class="h"><span><b>${esc(m.name)}</b></span><span>${new Date(m.at).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span></div>
+      <p>${esc(m.body)}</p>
+      ${m.attachments ? `<div class="att">${m.attachments.map((a) => `<div><b>${esc(a.name)}</b>${esc(a.note || "")}</div>`).join("")}</div>` : ""}
+    </div>`).join("")}</section>`;
+}
+function decisionHTML(t) {
+  const d = t.decision;
+  return `<section class="panel block decision"><h2>${esc(d.question)}</h2><p style="margin:0;color:var(--mute)">${esc(d.help)}</p>
+    <div class="opts" role="radiogroup">${d.options.map((o, i) => `<label class="o"><input type="radio" name="opt" value="${esc(o.key)}" ${i === 0 ? "" : ""}> ${esc(o.label)}</label>`).join("")}</div>
+    <label class="f" for="offernote">Anything extra to include? (optional)</label>
+    <textarea class="t" id="offernote" rows="2" placeholder="For example: a 10 percent code for next time"></textarea>
+    <div class="actions"><button class="btn dark" id="writereply" type="button">Write the reply</button></div>
+  </section>`;
+}
+function draftBlockHTML(t) {
+  const gaps = gapsIn(t.draft);
+  return `<section class="panel block"><h2>Draft reply</h2>
+    <div id="gapstatus">${gapStatusHTML(gaps)}</div>
+    <div class="editor" id="editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Draft reply" spellcheck="true">${editorHTML(t.draft)}</div>
+    <div class="sig">Your Gmail signature for hello@poorly-pet.com is added here when it is sent.</div>
+    <div class="checks" id="checks"></div>
+    <div class="actions">
+      <button class="btn dark" id="send" type="button">Send reply</button>
+      <button class="btn ghost" id="savedraft" type="button">Save draft</button>
+      <span class="saved" id="savedmsg">${esc(S.saved)}</span><span class="sp"></span>
+      <button class="btn ghost sm" id="markdone" type="button" title="Nothing needs sending">Mark done, no reply</button>
+      <button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button>
+    </div></section>`;
+}
+function gapsIn(text) {
+  const out = [], re = /\[\[([A-Z0-9_]+)\|([^\]]+)\]\]/g; let m;
+  while ((m = re.exec(text || ""))) if (!out.some((g) => g.key === m[1])) out.push({ key: m[1], label: m[2] });
+  return out;
+}
+function gapStatusHTML(gaps) {
+  return gaps.length
+    ? `<div class="blocker" role="alert"><b>DO NOT SEND until you have added:</b><ul>${gaps.map((g) => `<li>${esc(g.label)}</li>`).join("")}</ul></div>`
+    : `<div class="allgood">Nothing missing. Read it through, then send.</div>`;
+}
+function editorHTML(text) {
+  const re = /\[\[([A-Z0-9_]+)\|([^\]]+)\]\]/g; let out = "", last = 0, m;
+  const t = text || "";
+  while ((m = re.exec(t))) {
+    out += esc(t.slice(last, m.index));
+    out += `<span class="gapwrap" contenteditable="false"><input class="gap" data-key="${esc(m[1])}" data-label="${esc(m[2])}" placeholder="${esc(m[2])}" size="${Math.max(14, m[2].length + 2)}" aria-label="${esc(m[2])}"></span>`;
+    last = m.index + m[0].length;
+  }
+  return out + esc(t.slice(last));
+}
+function serialise(node) {
+  let out = "";
+  node.childNodes.forEach((n) => {
+    if (n.nodeType === 3) out += n.nodeValue;
+    else if (n.nodeName === "BR") out += "\n";
+    else if (n.classList && n.classList.contains("gapwrap")) { const i = n.querySelector("input"); out += i.value.trim() || `[[${i.dataset.key}|${i.dataset.label}]]`; }
+    else if (n.nodeName === "DIV" || n.nodeName === "P") { if (out && !out.endsWith("\n")) out += "\n"; out += serialise(n); if (!out.endsWith("\n")) out += "\n"; }
+    else out += serialise(n);
+  });
+  return out;
+}
+const draftText = () => serialise(document.getElementById("editor")).replace(/\n{3,}/g, "\n\n").replace(/\s+$/, "");
+const DASH = /[—–―]/;
+function refreshChecks() {
+  const ed = document.getElementById("editor"); if (!ed) return;
+  const text = draftText(), gaps = gapsIn(text);
+  document.getElementById("gapstatus").innerHTML = gapStatusHTML(gaps);
+  document.getElementById("checks").innerHTML =
+    `<span class="${DASH.test(text) ? "no" : "ok"}">${DASH.test(text) ? "Has a dash, it will be removed" : "No em dashes"}</span>` +
+    `<span class="${gaps.length ? "no" : "ok"}">${gaps.length ? gaps.length + " gap" + (gaps.length > 1 ? "s" : "") + " to fill" : "No gaps"}</span>` +
+    `<span class="ok">${text.split(/\s+/).filter(Boolean).length} words</span>`;
+}
+
+function customerHTML(t) {
+  const c = t.customer;
+  if (!c) return "";
+  return `<section class="panel block cust"><h2>${esc(c.name)}</h2>
+    <div class="row"><span>Customer since</span><b>${esc(c.since)}</b></div>
+    <div class="row"><span>Total spent</span><b>£${c.spend.toFixed(2)}</b></div>
+    <div class="row"><span>Mood</span><b>${esc(c.mood)}</b></div>
+    <div class="row"><span>Pets</span><b>${c.pets.length ? c.pets.map(esc).join(", ") : "Not known"}</b></div>
+    <div class="row"><span>Earlier emails</span><b>${c.pastEmails}</b></div>
+    ${c.orders.length ? c.orders.map((o) => `<div class="order"><b>${esc(o.number)}</b> · ${esc(o.date)} · £${o.total.toFixed(2)}<br>${o.items.map(esc).join(", ")}<br><span style="color:var(--mute)">${esc(o.status)}</span><br><span style="color:var(--mute)">Tracking: ${esc(o.tracking)}</span></div>`).join("") : `<div class="order">No orders yet</div>`}
+  </section>`;
+}
+
+function detailHTML() {
+  const t = S.thread;
+  if (!t) return `<div class="panel empty">Pick an email from the list to see the summary and the draft reply.</div>`;
+  const needsDraft = t.category === "customer";
+  return `<div class="detail">
+    <button class="btn ghost sm backbtn" id="back" type="button">Back to the list</button>
+    <section class="panel block dh"><h1>${esc(t.subject)}</h1><div class="from">${esc(t.from.name)} &lt;${esc(t.from.email)}&gt; · waiting ${ago(t.received)}</div>
+      <div class="tags"><span class="pill ${t.priority}">${PRI[t.priority]}</span>${t.flags.map((f) => `<span class="pill ${t.priority === "urgent" ? "urgent" : ""}">${esc(f)}</span>`).join("")}<span class="pill">${esc(t.priorityReason)}</span></div></section>
+    ${summaryHTML(t)}
+    ${messagesHTML(t)}
+    ${needsDraft && t.decision && !t.offer ? decisionHTML(t) : ""}
+    ${needsDraft && t.draft ? draftBlockHTML(t) : ""}
+    ${t.category !== "customer" ? `<div class="actions"><button class="btn dark" id="iscustomer" type="button">This is a customer email</button></div>` : ""}
+  </div>`;
+}
+
+function inboxView() {
+  return `<div class="inbox"><div>${queueHTML()}</div><div id="detail">${detailHTML()}</div><aside class="stack" id="cust">${S.thread ? customerHTML(S.thread) : ""}</aside></div>`;
+}
+function dashboardView() {
+  return `<section class="panel soon"><h2>Customer happiness</h2><p style="color:var(--mute);max-width:520px;margin:0 auto">Reply times, customer mood and trends will appear here once real emails are flowing. This is built in step 5.</p>
+    <div class="tiles"><div class="tile"><b>2h 14m</b>Average first reply</div><div class="tile"><b>92%</b>Happy after reply</div><div class="tile"><b>3</b>Upset customers this week</div><div class="tile"><b>41</b>Replies sent</div></div></section>`;
+}
+async function teamView() {
+  if (!S.team) { try { S.team = await call("/api/team"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; } }
+  const T = S.team;
+  return `<div class="grid2"><section class="panel block"><h2>Team</h2><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead><tbody>
+    ${T.team.map((u) => `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role === "owner" ? "Owner" : "Staff"}${u.active ? "" : " (switched off)"}</td>
+      <td>${T.canManage && u.id !== S.me.id ? `<button class="btn ghost sm" data-toggle="${u.id}" data-active="${u.active ? 0 : 1}">${u.active ? "Switch off" : "Switch on"}</button> <button class="btn ghost sm" data-reset="${u.id}">New password</button>` : ""}</td></tr>`).join("")}
+    </tbody></table></section>
+    ${T.canManage ? `<form class="panel block" id="addstaff"><h2>Add a staff login</h2>
+      <label class="f" for="sname">Name</label><input class="t" id="sname" required>
+      <label class="f" for="semail">Email</label><input class="t" id="semail" type="email" required>
+      <label class="f" for="spw">Password (at least 10 characters)</label><input class="t" id="spw" type="password" autocomplete="new-password" required>
+      <div id="formerr"></div><button class="btn dark" style="width:100%;margin-top:16px" type="submit">Add login</button>
+      <p style="color:var(--mute);font-size:14px">Staff can read emails and send replies. Only you can change the team.</p></form>` : `<section class="panel block"><p style="margin:0;color:var(--mute)">Only the owner can add or remove logins.</p></section>`}</div>`;
+}
+
+/* ---------- render + events ---------- */
+async function render() {
+  if (!S.me) {
+    let setup = false;
+    try { setup = (await call("/api/setup-status")).needsSetup; } catch (e) {}
+    $app.innerHTML = loginView(setup);
+    document.getElementById("email").focus();
+    document.getElementById("loginform").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = document.getElementById("formerr"); err.innerHTML = "";
+      try {
+        if (setup) await call("/api/setup", { method: "POST", body: { name: val("name"), email: val("email"), password: val("pw"), token: val("token") } });
+        else await call("/api/login", { method: "POST", body: { email: val("email"), password: val("pw") } });
+        await boot();
+      } catch (ex) { err.innerHTML = `<div class="err" role="alert">${esc(ex.message)}</div>`; }
+    });
+    return;
+  }
+  const r = route();
+  document.body.classList.toggle("reading", r.page === "inbox" && !!r.id);
+  if (r.page === "inbox") {
+    if (r.id && r.id !== S.current) await openThread(r.id, true);
+    if (!r.id) { S.current = null; S.thread = null; }
+    $app.innerHTML = shell(inboxView(), "inbox");
+    wireInbox();
+  } else if (r.page === "dashboard") {
+    $app.innerHTML = shell(dashboardView(), "dashboard");
+  } else if (r.page === "team") {
+    const v = await teamView();
+    $app.innerHTML = shell(v, "team");
+    wireTeam();
+  } else { location.hash = "#inbox"; return; }
+  document.getElementById("logout").onclick = async () => { await call("/api/logout", { method: "POST" }).catch(() => {}); S.me = null; S.thread = null; S.current = null; S.team = null; S.threads = []; render(); };
+}
+const val = (id) => (document.getElementById(id) || { value: "" }).value;
+
+async function refreshList() { S.threads = (await call("/api/threads")).threads; }
+async function openThread(id, silent) {
+  const d = await call("/api/threads/" + id);
+  S.current = id; S.thread = d.thread; S.saved = "";
+  if (!silent) { location.hash = "#inbox--" + id; }
+}
+
+function wireInbox() {
+  document.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; location.hash = "#inbox"; S.current = null; S.thread = null; render(); }));
+  document.querySelectorAll("[data-open]").forEach((b) => (b.onclick = () => { location.hash = "#inbox--" + b.dataset.open; }));
+  const back = document.getElementById("back"); if (back) back.onclick = () => { location.hash = "#inbox"; };
+  const t = S.thread; if (!t) return;
+  const writeBtn = document.getElementById("writereply");
+  if (writeBtn) writeBtn.onclick = async () => {
+    const opt = document.querySelector('input[name="opt"]:checked');
+    if (!opt) return toast("Choose what we are offering first", true);
+    writeBtn.disabled = true; writeBtn.textContent = "Writing...";
+    try { await call(`/api/threads/${t.id}/offer`, { method: "POST", body: { option: opt.value, note: val("offernote") } }); await reload(); S.tab = "reply"; } catch (e) { toast(e.message, true); writeBtn.disabled = false; writeBtn.textContent = "Write the reply"; }
+  };
+  const ed = document.getElementById("editor");
+  if (ed) {
+    refreshChecks();
+    const queueSave = () => { refreshChecks(); S.saved = "Unsaved changes"; setSaved(); clearTimeout(S.saveTimer); S.saveTimer = setTimeout(saveDraft, 1500); };
+    ed.addEventListener("input", queueSave);
+    document.getElementById("savedraft").onclick = () => saveDraft(true);
+    document.getElementById("send").onclick = onSend;
+    document.getElementById("markdone").onclick = () => setStatus("done", "Marked as done");
+    document.getElementById("notcustomer").onclick = () => setStatus("ignored", "Moved to Ignored, it will learn from this");
+  }
+  const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setStatus("needs_reply", "Moved back to the customer queue");
+}
+function setSaved() { const s = document.getElementById("savedmsg"); if (s) s.textContent = S.saved; }
+async function saveDraft(manual) {
+  const ed = document.getElementById("editor"); if (!ed || !S.thread) return;
+  try {
+    const r = await call(`/api/threads/${S.thread.id}/draft`, { method: "PUT", body: { draft: draftText() } });
+    S.saved = "Saved just now"; setSaved(); if (manual) toast("Draft saved");
+    return r;
+  } catch (e) { S.saved = "Not saved: " + e.message; setSaved(); }
+}
+async function setStatus(status, msg) {
+  await saveDraft();
+  try { await call(`/api/threads/${S.thread.id}/status`, { method: "POST", body: { status } }); toast(msg); location.hash = "#inbox"; S.current = null; S.thread = null; await refreshList(); render(); } catch (e) { toast(e.message, true); }
+}
+async function reload() { await refreshList(); await openThread(S.current, true); render(); }
+
+function onSend() {
+  const gaps = gapsIn(draftText());
+  if (!gaps.length) return doSend();
+  const bg = document.createElement("div"); bg.className = "modal-bg";
+  bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">This reply is missing information</h2>
+    <p style="margin:0 0 6px">The customer would see these gaps:</p><ul style="margin:0;padding-left:20px;color:var(--red);font-weight:700">${gaps.map((g) => `<li>${esc(g.label)}</li>`).join("")}</ul>
+    <label class="ck"><input type="checkbox" id="sure"> I understand and want to send it anyway</label>
+    <div class="acts"><button class="btn ghost" id="cancelsend" type="button">Go back and fix it</button><button class="btn danger" id="gosend" type="button" disabled>Send anyway</button></div></div>`;
+  document.body.appendChild(bg);
+  bg.querySelector("#sure").onchange = (e) => (bg.querySelector("#gosend").disabled = !e.target.checked);
+  bg.querySelector("#cancelsend").onclick = () => bg.remove();
+  bg.querySelector("#gosend").onclick = () => { bg.remove(); doSend(); };
+  bg.querySelector("#cancelsend").focus();
+}
+async function doSend() {
+  await saveDraft();
+  try { await call(`/api/threads/${S.thread.id}/send`, { method: "POST", body: {} }); toast("Sent"); }
+  catch (e) { toast(e.message, true); }
+}
+
+function wireTeam() {
+  const f = document.getElementById("addstaff");
+  if (f) f.addEventListener("submit", async (e) => {
+    e.preventDefault(); const err = document.getElementById("formerr"); err.innerHTML = "";
+    try { await call("/api/team", { method: "POST", body: { name: val("sname"), email: val("semail"), password: val("spw") } }); S.team = null; toast("Login added"); render(); }
+    catch (ex) { err.innerHTML = `<div class="err" role="alert">${esc(ex.message)}</div>`; }
+  });
+  document.querySelectorAll("[data-toggle]").forEach((b) => (b.onclick = async () => { await call("/api/team/" + b.dataset.toggle, { method: "PATCH", body: { active: b.dataset.active === "1" } }).catch((e) => toast(e.message, true)); S.team = null; render(); }));
+  document.querySelectorAll("[data-reset]").forEach((b) => (b.onclick = async () => {
+    const pw = prompt("New password (at least 10 characters). Tell them privately."); if (!pw) return;
+    try { await call("/api/team/" + b.dataset.reset, { method: "PATCH", body: { password: pw } }); toast("Password changed, they are signed out"); } catch (e) { toast(e.message, true); }
+  }));
+}
+
+async function boot() {
+  try {
+    const me = await call("/api/me"); S.me = me.user; S.mode = me.mode; S.team = null;
+    await refreshList();
+  } catch (e) { S.me = null; }
+  render();
+}
+setInterval(async () => { if (S.me && document.visibilityState === "visible" && route().page === "inbox" && !document.activeElement.closest?.("#editor")) { try { const before = S.threads.length; await refreshList(); if (!document.querySelector(".modal-bg") && !document.getElementById("editor")) { const q = document.querySelector(".queue"); if (q) { const keep = q.scrollTop; document.querySelector(".inbox > div").innerHTML = queueHTML(); wireQueueOnly(); document.querySelector(".queue").scrollTop = keep; } } } catch (e) {} } }, 60000);
+function wireQueueOnly() {
+  document.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; location.hash = "#inbox"; S.current = null; S.thread = null; render(); }));
+  document.querySelectorAll("[data-open]").forEach((b) => (b.onclick = () => { location.hash = "#inbox--" + b.dataset.open; }));
+}
+boot();
+
+</script>
