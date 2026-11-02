@@ -125,7 +125,7 @@ export async function generateFor(env, id, offer) {
 export async function draftsDue(env, limit) {
   const { results } = await env.DB.prepare(
     `SELECT t.id FROM threads t LEFT JOIN drafts d ON d.thread_id = t.id
-     WHERE t.category = 'customer' AND t.status = 'needs_reply' AND t.last_inbound_at IS NOT NULL AND (d.thread_id IS NULL OR d.for_inbound_at != t.last_inbound_at)
+     WHERE t.category = 'customer' AND t.status = 'needs_reply' AND t.last_inbound_at IS NOT NULL AND (d.thread_id IS NULL OR d.for_inbound_at != t.last_inbound_at OR (d.error IS NOT NULL AND d.error != '' AND d.generated_at < datetime('now','-15 minutes')))
      ORDER BY CASE t.priority WHEN 'urgent' THEN 0 WHEN 'high' THEN 1 WHEN 'normal' THEN 2 ELSE 3 END, t.last_inbound_at ASC LIMIT ?`
   ).bind(limit).all();
   return results.map((r) => r.id);
