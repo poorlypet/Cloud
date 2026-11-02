@@ -79,7 +79,7 @@ function shape(t, st, full) {
   let draft = st && st.draft != null ? st.draft : t.draft;
   draft = draft == null ? null : noDash(draft);
   const base = {
-    id: t.id, category: t.category, status, priority: t.priority, priorityReason: t.priorityReason, sentiment: t.sentiment,
+    id: t.id, category: st && st.status === "needs_reply" && t.category !== "customer" ? "customer" : t.category, status, priority: t.priority, priorityReason: t.priorityReason, sentiment: t.sentiment,
     flags: t.flags, received: t.received, from: t.from, subject: t.subject,
     snippet: t.messages[t.messages.length - 1].body.slice(0, 140),
     needsDecision: !!t.decision && !(st && st.offer), hasDraft: !!draft,

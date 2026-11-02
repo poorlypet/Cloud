@@ -15,7 +15,7 @@
     const st = state[t.id] || {};
     const status = st.status || t.status;
     let draft = st.draft != null ? st.draft : t.draft; draft = draft == null ? null : noDash(draft);
-    const base = { id: t.id, category: t.category, status, priority: t.priority, priorityReason: t.priorityReason, sentiment: t.sentiment, flags: t.flags, received: t.received, from: t.from, subject: t.subject, snippet: t.messages[t.messages.length - 1].body.slice(0, 140), needsDecision: !!t.decision && !st.offer, hasDraft: !!draft, gaps: gapsOf(draft).length, handledBy: null };
+    const base = { id: t.id, category: st.status === "needs_reply" && t.category !== "customer" ? "customer" : t.category, status, priority: t.priority, priorityReason: t.priorityReason, sentiment: t.sentiment, flags: t.flags, received: t.received, from: t.from, subject: t.subject, snippet: t.messages[t.messages.length - 1].body.slice(0, 140), needsDecision: !!t.decision && !st.offer, hasDraft: !!draft, gaps: gapsOf(draft).length, handledBy: null };
     return full ? { ...base, messages: t.messages, summary: t.summary, customer: t.customer, why: t.why || null, decision: t.decision, offer: st.offer || null, draft } : base;
   }
   const realFetch = window.fetch.bind(window);

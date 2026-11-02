@@ -210,6 +210,7 @@ function detailHTML() {
     <button class="btn ghost sm backbtn" id="back" type="button">Back to the list</button>
     <section class="panel block dh"><h1>${esc(t.subject)}</h1><div class="from">${esc(t.from.name)} &lt;${esc(t.from.email)}&gt; · waiting ${ago(t.received)}</div>
       <div class="tags"><span class="pill ${t.priority}">${PRI[t.priority]}</span>${t.flags.map((f) => `<span class="pill ${t.priority === "urgent" ? "urgent" : ""}">${esc(f)}</span>`).join("")}<span class="pill">${esc(t.priorityReason)}</span></div></section>
+    ${reopenHTML(t)}
     ${summaryHTML(t)}
     ${messagesHTML(t)}
     ${needsDraft && t.decision && !t.offer ? decisionHTML(t) : ""}
@@ -219,6 +220,12 @@ function detailHTML() {
   </div>`;
 }
 
+function reopenHTML(t) {
+  const ignored = t.status === "ignored" || t.category !== "customer";
+  if (!ignored && t.status !== "done" && t.status !== "replied") return "";
+  const label = ignored ? "This email was sorted as " + (CAT[t.category] || "not a customer email").toLowerCase() + " and is in Ignored." : t.status === "done" ? "This one is marked done." : "We replied last, so it is not in To reply.";
+  return `<section class="panel block reopen"><span>${esc(label)}</span><button class="btn" id="reopen" type="button">Put it back in To reply</button></section>`;
+}
 function noDraftHTML(t) {
   return `<section class="panel block"><h2>Reply</h2><p style="margin:0 0 4px;color:var(--mute)">${S.gmail && S.gmail.connected ? "Drafts written by the AI arrive in step 3. For now, read the email and sort it." : "No draft for this one."}</p>
     <div class="actions"><button class="btn ghost" id="markdone" type="button">Mark done, no reply</button><span class="sp"></span><button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button></div></section>`;
@@ -328,6 +335,8 @@ function wireInbox() {
   const nc = document.getElementById("notcustomer"); if (nc && !ed) nc.onclick = notCustomer;
   const md = document.getElementById("markdone"); if (md && !ed) md.onclick = () => setStatus("done", "Marked as done");
   const rf = document.getElementById("refresh"); if (rf) rf.onclick = refreshInbox;
+  const ro = document.getElementById("reopen");
+  if (ro) ro.onclick = () => { const ignored = t.status === "ignored" || t.category !== "customer"; if (ignored) setCategory("customer", "Back in To reply, and emails from this sender will stay in the customer queue"); else setStatus("needs_reply", "Back in To reply"); };
   const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setCategory("customer", "Moved back to customers, future emails from them will stay here");
 }
 function notCustomer() {

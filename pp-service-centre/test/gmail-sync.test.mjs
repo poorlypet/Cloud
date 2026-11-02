@@ -109,6 +109,16 @@ await syncInbox(env);
 assert.equal((await env.DB.prepare("SELECT status FROM threads WHERE id='th-wismo'").first()).status, "done");
 console.log("ok done sticks");
 
+// a person can bring back an email we already replied to, and it stays until something new happens
+await inbox.setStatus(env, "th-replied", "needs_reply");
+LIST.find((t) => t.id === "th-replied").historyId = "407";
+await syncInbox(env);
+assert.equal((await env.DB.prepare("SELECT status FROM threads WHERE id='th-replied'").first()).status, "needs_reply");
+// and an ignored email can be brought back too, even a supplier one
+await inbox.setCategory(env, "th-news", "customer", 1);
+assert.equal((await env.DB.prepare("SELECT status FROM threads WHERE id='th-news'").first()).status, "needs_reply");
+console.log("ok bring back to reply");
+
 // no AI key: the plain rules still sort the inbox
 env = mkEnv({ ANTHROPIC_API_KEY: undefined });
 await saveConnection(env, { refresh_token: "rt-1" }, MAILBOX);

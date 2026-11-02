@@ -159,3 +159,5 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .gbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px 16px;margin-bottom:16px;font-size:14px}
 .gbar.warn{background:var(--amber-bg);border-color:#F2D9A8;color:var(--amber)}
 .gbar .btn{flex:0 0 auto}
+
+.reopen{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:2px solid var(--lime);background:#fff;padding:14px 20px;font-weight:600}

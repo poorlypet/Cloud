@@ -63,7 +63,7 @@ export async function syncInbox(env, opts = {}) {
          ON CONFLICT(id) DO UPDATE SET history_id=excluded.history_id, subject=excluded.subject, customer_name=excluded.customer_name, customer_email=excluded.customer_email,
            last_message_at=excluded.last_message_at, last_inbound_at=excluded.last_inbound_at, last_from_us=excluded.last_from_us, category=excluded.category, category_source=excluded.category_source,
            category_reason=excluded.category_reason, confidence=excluded.confidence, priority=excluded.priority, priority_reason=excluded.priority_reason, sentiment=excluded.sentiment, flags=excluded.flags,
-           status=CASE WHEN threads.status IN ('done') AND excluded.status = 'needs_reply' AND threads.last_inbound_at = excluded.last_inbound_at THEN threads.status ELSE excluded.status END,
+           status=CASE WHEN threads.status IN ('done') AND excluded.status = 'needs_reply' AND threads.last_inbound_at = excluded.last_inbound_at THEN threads.status WHEN threads.status = 'needs_reply' AND threads.last_from_us = 1 AND excluded.status = 'replied' THEN threads.status ELSE excluded.status END,
            message_count=excluded.message_count, snippet=excluded.snippet, updated_at=excluded.updated_at`
       ).bind(
         t.id, t.historyId, noDashText(last.subject || firstInbound?.subject || "(no subject)"), who.name || who.email, who.email, last.at, lastInbound ? lastInbound.at : null, fromUs,
