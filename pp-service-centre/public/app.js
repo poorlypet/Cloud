@@ -117,9 +117,9 @@ function summaryHTML(t) {
   </section>`;
 }
 function messagesHTML(t) {
-  return `<section class="panel block"><h2>The conversation</h2>${t.messages.map((m) => `
+  return `<section class="panel block"><h2>The conversation <a href="#" class="jump" id="jumpreply">Jump to reply &darr;</a></h2>${t.messages.map((m) => `
     <div class="msg ${m.from === "us" ? "us" : ""}"><div class="h"><span><b>${esc(m.name)}</b></span><span>${new Date(m.at).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span></div>
-      <p>${esc(m.body)}</p>
+      <div class="mb ${m.body.length > 600 ? "long" : ""}"><p>${esc(m.body)}</p></div>${m.body.length > 600 ? `<button class="more" type="button">Show the whole email</button>` : ""}
       ${m.attachments ? `<div class="att">${m.attachments.map((a) => `<div><b>${esc(a.name)}</b>${esc(a.note || "")}</div>`).join("")}</div>` : ""}
     </div>`).join("")}</section>`;
 }
@@ -204,7 +204,7 @@ function customerHTML(t) {
     <div class="row"><span>Earlier emails</span><b>${c.pastEmails}</b></div>
     ${c.email ? `<div class="row"><span>Email</span><b style="word-break:break-all">${esc(c.email)}</b></div>` : ""}
     ${c.earlier && c.earlier.length ? `<div class="order"><b>Earlier emails</b>${c.earlier.map((e) => `<br>${esc(e.subject)}`).join("")}</div>` : ""}
-    ${c.orders.length ? c.orders.map((o) => `<div class="order"><b>${esc(o.number)}</b> · ${esc(o.date)} · £${o.total.toFixed(2)}<br>${o.items.map(esc).join(", ")}<br><span style="color:var(--mute)">${esc(o.status)}</span><br><span style="color:var(--mute)">Tracking: ${esc(o.tracking)}</span></div>`).join("") : S.gmail && S.gmail.connected ? `<div class="order" style="color:var(--mute)">Shopify orders appear here in step 3.</div>` : `<div class="order">No orders yet</div>`}
+    ${c.orders.length ? c.orders.map((o) => `<div class="order"><b>${esc(o.number)}</b> · ${esc(o.date)} · £${o.total.toFixed(2)}<br>${o.items.map(esc).join(", ")}<br><span style="color:var(--mute)">${esc(o.status)}</span><br><span style="color:var(--mute)">Tracking: ${esc(o.tracking)}</span></div>`).join("") : S.gmail && S.gmail.connected ? `<div class="order" style="color:var(--mute)">No Shopify orders found for this email address.</div>` : `<div class="order">No orders yet</div>`}
   </section>`;
 }
 
@@ -370,6 +370,8 @@ function wireInbox() {
   }
   const nc = document.getElementById("notcustomer"); if (nc && !ed) nc.onclick = notCustomer;
   const md = document.getElementById("markdone"); if (md && !ed) md.onclick = () => setStatus("done", "Marked as done");
+  document.querySelectorAll(".msg .more").forEach((b) => b.onclick = () => { const mb = b.previousElementSibling; const open = mb.classList.toggle("long"); b.textContent = open ? "Show the whole email" : "Show less"; });
+  const jr = document.getElementById("jumpreply"); if (jr) jr.onclick = (e) => { e.preventDefault(); (document.getElementById("editor") || document.getElementById("regen") || document.getElementById("writereply") || document.querySelector(".decision"))?.scrollIntoView({ behavior: "smooth", block: "center" }); };
   const rf = document.getElementById("refresh"); if (rf) rf.onclick = refreshInbox;
   const rg = document.getElementById("regen");
   if (rg) rg.onclick = async () => {

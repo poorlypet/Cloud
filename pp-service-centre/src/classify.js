@@ -72,7 +72,7 @@ export async function aiClassify(env, m, sender) {
     headers: { "content-type": "application/json", "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" },
     body: JSON.stringify({
       model: env.CLASSIFIER_MODEL || "claude-haiku-5-5", max_tokens: 400, system: SYSTEM,
-      tools: [TOOL], tool_choice: { type: "tool", name: "classify_email" },
+      tools: [TOOL],
       messages: [{ role: "user", content }]
     })
   });

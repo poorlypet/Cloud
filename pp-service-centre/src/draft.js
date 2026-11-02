@@ -113,12 +113,12 @@ export async function aiDraft(env, thread, msgs, facts, offer) {
     ex.own ? "EXAMPLES OF REPLIES THE OWNER LIKES (copy their voice, not their facts):\n" + ex.own : "",
     ex.learned.length ? "RECENT REPLIES WE SENT (copy this voice, not the facts):\n" + ex.learned.map((x, i) => `--- ${i + 1}\n${x}`).join("\n") : "",
     "BUSINESS KNOWLEDGE:\n" + knowledge].filter(Boolean).join("\n\n");
-  const user = `CONVERSATION:\n${convo}\n\nDATA (checked by the system):\n${data}\n\n${offer ? `OFFER chosen by the team (write the reply around exactly this): ${offer}\n` : "OFFER: none given yet\n"}\nWrite the summary and the reply now.`;
+  const user = `CONVERSATION:\n${convo}\n\nDATA (checked by the system):\n${data}\n\n${offer ? `OFFER chosen by the team (write the reply around exactly this): ${offer}\n` : "OFFER: none given yet\n"}\nWrite the summary and the reply now by calling the write_reply tool.`;
   const r = await fetch(base + "/v1/messages", {
     method: "POST", headers: { "content-type": "application/json", "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model: env.DRAFT_MODEL || "claude-sonnet-5-5", max_tokens: 2000, system, tools: [TOOL], tool_choice: { type: "tool", name: "write_reply" }, messages: [{ role: "user", content: user }] })
+    body: JSON.stringify({ model: env.DRAFT_MODEL || "claude-sonnet-5-5", max_tokens: 2000, system, tools: [TOOL], messages: [{ role: "user", content: user }] })
   });
-  if (!r.ok) throw new Error("AI drafting failed (" + r.status + ")");
+  if (!r.ok) { let m = ""; try { m = (await r.json()).error.message; } catch (e) {} throw new Error("AI drafting failed (" + r.status + ")" + (m ? ": " + m.slice(0, 160) : "")); }
   const d = await r.json();
   const call = (d.content || []).find((c) => c.type === "tool_use");
   if (!call) throw new Error("AI drafting gave no answer");
