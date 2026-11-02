@@ -173,3 +173,12 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .msg .mb.long{max-height:170px;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
 .msg .more{background:none;border:0;color:var(--teal,#0F4C48);font:inherit;font-weight:600;cursor:pointer;padding:6px 0 0}
 .jump{font-size:13px;font-weight:600;margin-left:10px;color:var(--teal,#0F4C48)}
+
+.sigbox{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;max-height:180px;overflow:auto;font-size:14px}
+select.t{width:100%}
+.mrow{display:grid;grid-template-columns:70px 1fr 34px;gap:10px;align-items:center;margin:8px 0}
+.mbar{background:var(--pale,#eef3f2);border-radius:99px;height:12px;overflow:hidden}.mbar i{display:block;height:100%;border-radius:99px}
+.days{display:flex;gap:6px;align-items:flex-end;height:140px}.day{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.day .col{flex:1;width:100%;display:flex;align-items:flex-end;background:var(--pale,#eef3f2);border-radius:6px;overflow:hidden}.day .col i{display:block;width:100%;background:var(--teal,#0F4C48)}.day small{color:var(--mute);font-size:11px}
+.att2{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.att2 em{font-style:normal;background:#fbe9e7;color:var(--red);border-radius:99px;padding:2px 8px;font-size:12px;margin-left:6px}

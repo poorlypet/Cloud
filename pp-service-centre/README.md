@@ -88,3 +88,11 @@ Notes:
 - Settings page (owner edits): tone guide, pasted example replies, and the knowledge text (delivery, returns, FAQs). Defaults come from the website.
 - Refunds and returns: the AI summarises, a person picks the offer (or types a custom one), and the AI writes the reply around it.
 - Sending is still switched off.
+
+## Step 4 and 5: sending and the happiness page
+
+- Sending needs Gmail re-connected once, with the send, modify and settings permissions (the Team page has a Reconnect button).
+- Settings, Sending: **Off** (nothing can be sent), **Test** (every send goes to the test address only, subject starts with [TEST], nothing is archived), **Live** (goes to the customer).
+- Live sends: your Gmail signature is read from Gmail and added, the reply is in the same thread (contact form emails get a fresh email to the customer), the thread gets the label "PP replied" and leaves the inbox, and the audit log records who sent it. Em dashes are removed again at send time.
+- Gaps still in a reply need a confirm; they are sent as plain [Label] text so they are obvious.
+- Happiness page: waiting count, typical first reply time, mood split, emails per day and anything flagged (complaint, chargeback, review threat, angry).

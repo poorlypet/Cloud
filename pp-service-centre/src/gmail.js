@@ -1,7 +1,10 @@
 // Google sign in and the Gmail API. Everything here only READS mail in step 2 (scope gmail.readonly).
 import { encrypt, decrypt } from "./crypto.js";
 
-export const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly", "openid", "email"];
+export const SCOPES = [
+  "https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send",
+  "https://www.googleapis.com/auth/gmail.modify", "https://www.googleapis.com/auth/gmail.settings.basic", "openid", "email"
+];
 const urls = (env) => ({
   auth: env.GOOGLE_AUTH_URL || "https://accounts.google.com/o/oauth2/v2/auth",
   token: env.GOOGLE_TOKEN_URL || "https://oauth2.googleapis.com/token",
@@ -40,15 +43,17 @@ export async function kvSet(env, key, value) {
 export async function saveConnection(env, tokens, email) {
   if (tokens.refresh_token) await kvSet(env, "gmail_refresh", await encrypt(tokens.refresh_token, env.ENCRYPTION_KEY));
   await kvSet(env, "gmail_email", email);
+  await kvSet(env, "gmail_scope", tokens.scope || "");
   await kvSet(env, "gmail_connected_at", new Date().toISOString());
 }
 export async function disconnect(env) {
-  for (const k of ["gmail_refresh", "gmail_email", "gmail_connected_at", "gmail_error"]) await env.DB.prepare("DELETE FROM kv WHERE key = ?").bind(k).run();
+  for (const k of ["gmail_refresh", "gmail_email", "gmail_connected_at", "gmail_error", "gmail_scope"]) await env.DB.prepare("DELETE FROM kv WHERE key = ?").bind(k).run();
 }
 export async function connectionStatus(env) {
   const email = await kvGet(env, "gmail_email");
   return {
     connected: !!(email && (await kvGet(env, "gmail_refresh"))), email,
+    canSend: /gmail\.send/.test((await kvGet(env, "gmail_scope")) || "") && /gmail\.modify/.test((await kvGet(env, "gmail_scope")) || "") && /gmail\.settings\.basic/.test((await kvGet(env, "gmail_scope")) || ""),
     lastSync: await kvGet(env, "last_sync_at"), lastError: await kvGet(env, "gmail_error")
   };
 }
@@ -71,6 +76,15 @@ export async function gmail(env, path, params) {
   if (r.status === 401) clearTokenCache();
   if (!r.ok) throw new Error(`Gmail ${path} failed (${r.status})`);
   return r.json();
+}
+
+// write calls (send, labels, archive)
+export async function gmailReq(env, method, path, body) {
+  const r = await fetch(urls(env).api + path, { method, headers: { authorization: "Bearer " + (await accessToken(env)), "content-type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  if (r.status === 401) clearTokenCache();
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(`Gmail ${path} failed (${r.status})${data.error && data.error.message ? ": " + data.error.message : ""}`);
+  return data;
 }
 
 /* ---- reading a message ---- */

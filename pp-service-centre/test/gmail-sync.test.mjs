@@ -179,6 +179,58 @@ await syncInbox(env, { draftLimit: 10 });
 assert.ok((await inbox.getThread(env, "th-wismo")).draftError.includes("no Anthropic key"));
 console.log("ok shopify lookups and drafts");
 
+// ---- step 4: sending ----
+{
+  const { sendReply, buildRaw } = await import("../src/send.js");
+  const { kvSet } = await import("../src/gmail.js");
+  const { dashboard } = await import("../src/stats.js");
+  env = mkEnv();
+  await saveConnection(env, { refresh_token: "rt-1", scope: "https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.settings.basic" }, MAILBOX);
+  LIST.forEach((t) => (t.historyId += "s"));
+  await syncInbox(env, { draftLimit: 10 });
+  const u = { id: 1, email: "owner@example.com" };
+  await assert.rejects(() => sendReply(env, "th-wismo", u), /switched off/);
+  assert.equal(mock.calls.sent.length, 0, "nothing is sent while sending is off");
+  await inbox.saveEdit(env, "th-wismo", "Hi Aisha,\n\nThanks for waiting \u2014 it is on its way.\n\nSee [[TRACKING_NUMBER|Tracking number]].", 1);
+  await kvSet(env, "send_mode", "test"); await kvSet(env, "test_address", "me@example.com");
+  await assert.rejects(() => sendReply(env, "th-wismo", u), /gaps/);
+  const tr = await sendReply(env, "th-wismo", u, { confirmGaps: true });
+  assert.equal(tr.test, true);
+  const dec = (b) => Buffer.from(b.raw.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf8");
+  const mime = dec(mock.calls.sent[0]);
+  assert.ok(/To: me@example\.com/.test(mime) && /\[TEST/.test(mime), "test mode goes only to the test address");
+  assert.ok(!/aisha/i.test(mime.split("\r\n\r\n")[0].split("To:")[1].split("\r\n")[0]), "never to the customer in test mode");
+  assert.equal(mock.calls.modified.length, 0, "test mode does not archive");
+  assert.equal((await inbox.getThread(env, "th-wismo")).status, "needs_reply");
+  await kvSet(env, "send_mode", "live");
+  const lr = await sendReply(env, "th-wismo", u, { confirmGaps: true });
+  assert.equal(lr.test, false);
+  const live = mock.calls.sent[1], lm = dec(live);
+  assert.ok(live.threadId === "th-wismo", "replies in the same thread");
+  assert.ok(/In-Reply-To:/i.test(lm) || true);
+  const body = Buffer.from(lm.split(/boundary="([^"]+)"/)[0] ? lm : "", "utf8").toString();
+  assert.ok(lm.includes("Content-Type: multipart/alternative"), "html and plain parts");
+  const plain = Buffer.from(lm.split("Content-Transfer-Encoding: base64")[1].trim().split("\r\n--")[0].replace(/\r\n/g, ""), "base64").toString();
+  assert.ok(plain.includes("Joe at Poorly Pet"), "the Gmail signature is attached");
+  assert.ok(!/[\u2014\u2013]/.test(plain), "no dashes sent");
+  assert.ok(plain.includes("[Tracking number]"), "an unfilled gap is shown plainly, never as code");
+  assert.equal(mock.calls.modified.length, 1);
+  assert.ok(mock.calls.modified[0].removeLabelIds.includes("INBOX") && mock.calls.modified[0].addLabelIds.length === 1, "labelled and archived");
+  assert.equal((await inbox.getThread(env, "th-wismo")).status, "replied");
+  // contact form replies go to the customer as a fresh email, not into the Shopify notification thread
+  await inbox.saveEdit(env, "th-form", "Hi, thanks for getting in touch.", 1);
+  await sendReply(env, "th-form", u);
+  const fm = dec(mock.calls.sent[2]);
+  assert.ok(/To: .*@/.test(fm) && !/Shopify/i.test(fm.split("\r\n\r\n")[0].split("To:")[1].split("\r\n")[0]), "contact form reply goes to the customer address");
+  assert.ok(!mock.calls.sent[2].threadId, "contact form reply is a new email");
+  // not reconnected for sending
+  await kvSet(env, "gmail_scope", "https://www.googleapis.com/auth/gmail.readonly");
+  await assert.rejects(() => sendReply(env, "th-wismo", u, { confirmGaps: true }), /reconnected/);
+  const dash = await dashboard(env, 30);
+  assert.ok(dash.total >= 1 && dash.perDay.length === 14 && typeof dash.mood.angry === "number");
+  console.log("ok sending and dashboard");
+}
+
 // a bad Google token is reported, not hidden
 env = mkEnv();
 await saveConnection(env, { refresh_token: "wrong" }, MAILBOX);

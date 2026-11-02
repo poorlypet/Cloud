@@ -11,7 +11,7 @@ const ORDERS = {
 };
 
 export function startMock(port = 8801, opts = {}) {
-  const calls = { token: 0, list: 0, thread: 0, ai: 0, profile: 0, shopify: 0, drafts: 0, lastDraftSystem: "", lastDraftUser: "" };
+  const calls = { token: 0, list: 0, thread: 0, ai: 0, profile: 0, shopify: 0, drafts: 0, lastDraftSystem: "", lastDraftUser: "", sent: [], modified: [], labels: [] };
   const server = http.createServer(async (req, res) => {
     const u = new URL(req.url, "http://x");
     const body = await new Promise((r) => { let d = ""; req.on("data", (c) => (d += c)); req.on("end", () => r(d)); });
@@ -27,13 +27,19 @@ export function startMock(port = 8801, opts = {}) {
     if (u.pathname === "/token") {
       calls.token++;
       const p = new URLSearchParams(body);
-      if (p.get("grant_type") === "authorization_code") return p.get("code") === "good-code" ? send(200, { access_token: "at-1", refresh_token: "rt-1", expires_in: 3600 }) : send(400, { error: "invalid_grant" });
+      if (p.get("grant_type") === "authorization_code") return p.get("code") === "good-code" ? send(200, { access_token: "at-1", refresh_token: "rt-1", expires_in: 3600, scope: "gmail.readonly gmail.send gmail.modify gmail.settings.basic openid email" }) : send(400, { error: "invalid_grant" });
       if (p.get("grant_type") === "refresh_token") return p.get("refresh_token") === "rt-1" ? send(200, { access_token: "at-2", expires_in: 3600 }) : send(400, { error: "invalid_grant" });
     }
     if (u.pathname.startsWith("/gmail/")) {
       if (!/^Bearer at-/.test(req.headers.authorization || "")) return send(401, { error: "no token" });
       if (u.pathname === "/gmail/users/me/profile") { calls.profile++; return send(200, { emailAddress: opts.account || MAILBOX, historyId: "999" }); }
       if (u.pathname === "/gmail/users/me/threads") { calls.list++; return send(200, { threads: LIST }); }
+      if (u.pathname === "/gmail/users/me/settings/sendAs") return send(200, { sendAs: [{ sendAsEmail: MAILBOX, displayName: "Poorly Pet", isPrimary: true, signature: "<div>Warm wishes,<br><b>Joe</b> at Poorly Pet</div>" }] });
+      if (u.pathname === "/gmail/users/me/messages/send" && req.method === "POST") { const b = JSON.parse(body); calls.sent.push(b); return send(200, { id: "sent-" + calls.sent.length, threadId: b.threadId || "new" }); }
+      if (u.pathname === "/gmail/users/me/labels" && req.method === "GET") return send(200, { labels: calls.labels });
+      if (u.pathname === "/gmail/users/me/labels" && req.method === "POST") { const l = { id: "Label_" + (calls.labels.length + 1), name: JSON.parse(body).name }; calls.labels.push(l); return send(200, l); }
+      const mod = u.pathname.match(/^\/gmail\/users\/me\/threads\/([\w-]+)\/modify$/);
+      if (mod && req.method === "POST") { calls.modified.push({ id: mod[1], ...JSON.parse(body) }); return send(200, { id: mod[1] }); }
       const m = u.pathname.match(/^\/gmail\/users\/me\/threads\/([\w-]+)$/);
       if (m && byId[m[1]]) { calls.thread++; return send(200, { id: m[1], historyId: byId[m[1]].historyId, messages: byId[m[1]].messages }); }
     }

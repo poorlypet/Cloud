@@ -57,7 +57,7 @@ function shell(inner, page) {
     </nav>
     <div class="me"><div><b>${esc(S.me.name)}</b><span>${S.me.role === "owner" ? "Owner" : "Staff"}</span></div><button id="logout" type="button">Sign out</button></div>
   </div></header>
-  ${S.mode && S.mode.drafts_only ? `<div class="mode"><b>Test mode.</b> Drafts only, sending is switched off.${S.mode.sample_data ? " These are sample emails, Gmail is not connected yet." : ""}</div>` : ""}
+  ${S.mode && S.mode.send === "test" ? `<div class="mode"><b>Sending is in test mode.</b> Replies go only to your test address, never to customers.</div>` : ""}${S.mode && S.mode.drafts_only ? `<div class="mode"><b>Test mode.</b> Drafts only, sending is switched off.${S.mode.sample_data ? " These are sample emails, Gmail is not connected yet." : ""}</div>` : ""}
   <main class="wrap">${inner}</main>`;
 }
 
@@ -245,6 +245,7 @@ function gmailBarHTML() {
   if (flash) parts.push(`<div class="${flash[0] === "ok" ? "allgood" : "err"}" role="status">${flash[1]}</div>`);
   if (g && g.connected) {
     parts.push(`<div class="gbar"><span><b>Gmail connected</b> · ${esc(g.email)} · ${g.lastSync ? "last checked " + ago(g.lastSync) + " ago" : "not checked yet"}${g.lastError ? ` · <span style="color:var(--red)">${esc(g.lastError)}</span>` : ""}</span><button class="btn ghost sm" id="refresh" type="button">Check for new emails</button></div>`);
+    if (!g.canSend && S.me.role === "owner") parts.push(`<div class="gbar warn"><span><b>Sending is not allowed yet.</b> Reconnect Gmail once and tick every permission, so replies can be sent with your signature.</span><a class="btn sm" href="/api/gmail/connect">Reconnect Gmail</a></div>`);
   } else if (g) {
     parts.push(`<div class="gbar warn"><span><b>Gmail is not connected.</b> You are looking at sample emails.${S.me.role === "owner" ? "" : " Ask the owner to connect it."}</span>${S.me.role === "owner" ? `<a class="btn sm" href="/api/gmail/connect">Connect Gmail</a>` : ""}</div>`);
   }
@@ -253,13 +254,36 @@ function gmailBarHTML() {
 function inboxView() {
   return `${gmailBarHTML()}<div class="inbox"><div>${queueHTML()}</div><div id="detail">${detailHTML()}</div><aside class="stack" id="cust">${S.thread ? customerHTML(S.thread) : ""}</aside></div>`;
 }
-function dashboardView() {
-  return `<section class="panel soon"><h2>Customer happiness</h2><p style="color:var(--mute);max-width:520px;margin:0 auto">Reply times, customer mood and trends will appear here once real emails are flowing. This is built in step 5.</p>
-    <div class="tiles"><div class="tile"><b>2h 14m</b>Average first reply</div><div class="tile"><b>92%</b>Happy after reply</div><div class="tile"><b>3</b>Upset customers this week</div><div class="tile"><b>41</b>Replies sent</div></div></section>`;
+async function dashboardView() {
+  let d; try { d = await call("/api/dashboard"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; }
+  if (d.sample) return `<section class="panel soon"><h2>Customer happiness</h2><p style="color:var(--mute);max-width:520px;margin:0 auto">Connect Gmail and this page fills in with reply times, customer mood and trends.</p></section>`;
+  const hrs = (h) => h == null ? "none yet" : h < 1 ? Math.round(h * 60) + " min" : h < 48 ? h.toFixed(1) + " hours" : Math.round(h / 24) + " days";
+  const m = d.mood, tot = Math.max(1, m.happy + m.neutral + m.upset + m.angry);
+  const bar = (k, label, col) => `<div class="mrow"><span>${label}</span><div class="mbar"><i style="width:${Math.round(100 * m[k] / tot)}%;background:${col}"></i></div><b>${m[k]}</b></div>`;
+  const max = Math.max(1, ...d.perDay.map((x) => x.total));
+  return `<div class="tiles">
+    <div class="tile"><b>${d.open}</b>Waiting for a reply</div><div class="tile"><b style="color:${d.urgent ? "var(--red)" : "inherit"}">${d.urgent}</b>Urgent or high priority</div>
+    <div class="tile"><b>${hrs(d.replyHours.median)}</b>Typical first reply</div><div class="tile"><b>${d.replyHours.within24h == null ? "none yet" : d.replyHours.within24h + "%"}</b>Answered within 24 hours</div></div>
+    <div class="grid2" style="margin-top:20px"><section class="panel block"><h2>How customers feel (last ${d.days} days)</h2>
+      ${bar("happy", "Happy", "var(--green)")}${bar("neutral", "Neutral", "#9aa7a5")}${bar("upset", "Upset", "#e0a33a")}${bar("angry", "Angry", "var(--red)")}
+      <p style="color:var(--mute);font-size:14px;margin:12px 0 0">${d.total} customer emails. The mood is read from the email by the AI, so treat it as a guide.</p></section>
+    <section class="panel block"><h2>Emails per day</h2><div class="days">${d.perDay.map((x) => `<div class="day" title="${esc(x.date)}: ${x.total} emails, ${x.upset} upset"><div class="col"><i style="height:${Math.round(100 * x.total / max)}%"></i></div><small>${esc(x.date.slice(8))}</small></div>`).join("")}</div></section></div>
+    <section class="panel block" style="margin-top:20px"><h2>Needs a careful look</h2>${d.attention.length ? d.attention.map((a) => `<a class="att2" href="#/inbox/${esc(a.id)}"><b>${esc(a.who)}</b> ${esc(a.subject || "")}<span>${a.flags.map((f) => `<em>${esc(f)}</em>`).join("")}${a.sentiment === "angry" ? "<em>angry</em>" : ""}</span></a>`).join("") : `<p style="color:var(--mute);margin:0">Nothing flagged right now.</p>`}</section>`;
 }
 async function settingsView() {
   let c; try { c = await call("/api/settings"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; }
   S.settings = c;
+  let sx = {}; try { sx = await call("/api/send-settings"); } catch (e) { sx = { error: e.message }; }
+  S.sendSettings = sx;
+  const sendCard = sx.error ? "" : `<section class="panel block" id="sendcard"><h2>Sending replies</h2>
+      <p style="margin:0 0 8px;color:var(--mute)">Replies go out from hello@poorly-pet.com with your Gmail signature, in the same email thread. Then the email is labelled "PP replied" and archived.</p>
+      <label class="f" for="sendmode">Sending is</label>
+      <select class="t" id="sendmode" ${sx.canEdit ? "" : "disabled"}><option value="off" ${sx.mode === "off" ? "selected" : ""}>Off (drafts only, nothing can be sent)</option><option value="test" ${sx.mode === "test" ? "selected" : ""}>Test (sends only to the test address below)</option><option value="live" ${sx.mode === "live" ? "selected" : ""}>Live (sends to customers)</option></select>
+      <label class="f" for="testaddr">Test address</label><input class="t" id="testaddr" type="email" value="${esc(sx.test_address || "")}" ${sx.canEdit ? "" : "disabled"}>
+      ${sx.canSend ? "" : `<div class="err" style="margin-top:10px">Gmail needs reconnecting before it can send. <a href="/api/gmail/connect">Reconnect Gmail</a></div>`}
+      ${sx.sigError ? `<div class="err" style="margin-top:10px">${esc(sx.sigError)}</div>` : ""}
+      ${sx.signature ? `<label class="f">Your signature (read from Gmail)</label><div class="sigbox">${sx.signature.html || "<i>No signature set in Gmail</i>"}</div>` : ""}
+      <div id="senderr"></div>${sx.canEdit ? `<button class="btn dark" style="width:100%;margin-top:12px" id="savesend" type="button">Save sending settings</button>` : ""}</section>`;
   const dis = c.canEdit ? "" : "disabled";
   return `<div class="grid2"><form class="panel block" id="settingsform"><h2>How replies are written</h2>
     <p style="margin:0 0 6px;color:var(--mute)">The AI follows these every time it drafts. Changes apply to the next draft. No dashes are ever allowed, whatever is written here.</p>
@@ -267,13 +291,20 @@ async function settingsView() {
     <label class="f" for="tone_examples">Replies you are proud of (paste a few, separated by a blank line and three dashes)</label><textarea class="t" id="tone_examples" rows="9" placeholder="Paste real replies here. The AI copies the voice, not the facts." ${dis}>${esc(c.tone_examples)}</textarea>
     <label class="f" for="knowledge">What the AI knows about the business (delivery, returns, offers)</label><textarea class="t" id="knowledge" rows="16" ${dis}>${esc(c.knowledge)}</textarea>
     <div id="formerr"></div>${c.canEdit ? `<button class="btn dark" style="width:100%;margin-top:16px" type="submit">Save</button>` : `<p style="color:var(--mute)">Only the owner can change these.</p>`}</form>
-    <section class="panel block"><h2>Connections</h2>
+    <div class="stack">${sendCard}<section class="panel block"><h2>Connections</h2>
       <div class="row2"><span>Gmail</span><b>${S.gmail && S.gmail.connected ? "Connected" : "Not connected"}</b></div>
       <div class="row2"><span>AI (Anthropic)</span><b style="color:${c.ai ? "var(--green)" : "var(--red)"}">${c.ai ? "Connected" : "Not set up"}</b></div>
       <div class="row2"><span>Shopify orders</span><b style="color:${c.shopify ? "var(--green)" : "var(--red)"}">${c.shopify ? "Connected" : "Not set up"}</b></div>
-      <p style="color:var(--mute);font-size:14px;margin-bottom:0">Keys are held in Cloudflare. They are never shown here.</p></section></div>`;
+      <p style="color:var(--mute);font-size:14px;margin-bottom:0">Keys are held in Cloudflare. They are never shown here.</p></section></div></div>`;
 }
 function wireSettings() {
+  const sv = document.getElementById("savesend");
+  if (sv) sv.onclick = async () => {
+    const mode = val("sendmode"), body = { mode, test_address: val("testaddr") };
+    if (mode === "live" && S.sendSettings.mode !== "live" && !(await confirm_("Live means real replies go to real customers when someone presses Send. Switch it on?", "Yes, go live"))) return;
+    try { await call("/api/send-settings", { method: "PUT", body }); const me = await call("/api/me"); S.mode = me.mode; S.gmail = me.gmail; toast("Saved. Sending is " + mode + "."); render(); }
+    catch (ex) { document.getElementById("senderr").innerHTML = `<div class="err" role="alert">${esc(ex.message)}</div>`; }
+  };
   const f = document.getElementById("settingsform"); if (!f || !S.settings.canEdit) return;
   f.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -285,7 +316,7 @@ async function teamView() {
   if (!S.team) { try { S.team = await call("/api/team"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; } }
   const T = S.team;
   const g = S.gmail;
-  const gcard = `<section class="panel block" style="margin-bottom:20px"><h2>Gmail</h2>${g && g.connected ? `<p style="margin:0 0 12px">Connected to <b>${esc(g.email)}</b>. ${g.lastSync ? "Last checked " + ago(g.lastSync) + " ago." : ""} The portal can read the mailbox. It cannot send until step 4.</p>${S.me.role === "owner" ? `<button class="btn ghost sm" id="gdisconnect" type="button">Disconnect Gmail</button>` : ""}` : `<p style="margin:0 0 12px;color:var(--mute)">Not connected. Connect the shop mailbox so customer emails appear here.</p>${S.me.role === "owner" ? `<a class="btn sm" href="/api/gmail/connect">Connect Gmail</a>` : "<p>Ask the owner to connect it.</p>"}`}</section>`;
+  const gcard = `<section class="panel block" style="margin-bottom:20px"><h2>Gmail</h2>${g && g.connected ? `<p style="margin:0 0 12px">Connected to <b>${esc(g.email)}</b>. ${g.lastSync ? "Last checked " + ago(g.lastSync) + " ago." : ""} ${g.canSend ? "It can read and send replies." : "It can read the mailbox, but it cannot send yet."}</p>${!g.canSend && S.me.role === "owner" ? `<p style="margin:0 0 12px"><a class="btn sm" href="/api/gmail/connect">Reconnect Gmail to allow sending</a></p>` : ""}${S.me.role === "owner" ? `<button class="btn ghost sm" id="gdisconnect" type="button">Disconnect Gmail</button>` : ""}` : `<p style="margin:0 0 12px;color:var(--mute)">Not connected. Connect the shop mailbox so customer emails appear here.</p>${S.me.role === "owner" ? `<a class="btn sm" href="/api/gmail/connect">Connect Gmail</a>` : "<p>Ask the owner to connect it.</p>"}`}</section>`;
   return gcard + `<div class="grid2"><section class="panel block"><h2>Team</h2><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th></th></tr></thead><tbody>
     ${T.team.map((u) => `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role === "owner" ? "Owner" : "Staff"}${u.active ? "" : " (switched off)"}</td>
       <td>${T.canManage && u.id !== S.me.id ? `<button class="btn ghost sm" data-toggle="${u.id}" data-active="${u.active ? 0 : 1}">${u.active ? "Switch off" : "Switch on"}</button> <button class="btn ghost sm" data-reset="${u.id}">New password</button>` : ""}</td></tr>`).join("")}
@@ -325,7 +356,7 @@ async function render() {
     wireInbox();
     S.flash = null;
   } else if (r.page === "dashboard") {
-    $app.innerHTML = shell(dashboardView(), "dashboard");
+    $app.innerHTML = shell(await dashboardView(), "dashboard");
   } else if (r.page === "settings") {
     const v = await settingsView();
     $app.innerHTML = shell(v, "settings");
@@ -383,10 +414,10 @@ function wireInbox() {
   if (ro) ro.onclick = () => { const ignored = t.status === "ignored" || t.category !== "customer"; if (ignored) setCategory("customer", "Back in To reply, and emails from this sender will stay in the customer queue"); else setStatus("needs_reply", "Back in To reply"); };
   const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setCategory("customer", "Moved back to customers, future emails from them will stay here");
 }
-function confirm_(msg) {
+function confirm_(msg, yes) {
   return new Promise(res => {
     const bg = document.createElement("div"); bg.className = "modal-bg";
-    bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><h2>Are you sure?</h2><p style="margin:0;color:var(--mute)"></p><div class="acts"><button class="btn ghost" type="button" id="cn">Cancel</button><button class="btn dark" type="button" id="cy">Yes, write a new one</button></div></div>`;
+    bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><h2>Are you sure?</h2><p style="margin:0;color:var(--mute)"></p><div class="acts"><button class="btn ghost" type="button" id="cn">Cancel</button><button class="btn dark" type="button" id="cy">${esc(yes || "Yes, write a new one")}</button></div></div>`;
     bg.querySelector("p").textContent = msg;
     document.body.appendChild(bg);
     bg.querySelector("#cn").onclick = () => { bg.remove(); res(false); };
@@ -432,7 +463,7 @@ async function reload() { await refreshList(); await openThread(S.current, true)
 
 function onSend() {
   const gaps = gapsIn(draftText());
-  if (!gaps.length) return doSend();
+  if (!gaps.length) { if (S.mode && S.mode.send === "live") return confirm_("Send this reply to " + (S.thread.from.email || "the customer") + " now?", "Send reply").then((ok) => ok && doSend(false)); return doSend(false); }
   const bg = document.createElement("div"); bg.className = "modal-bg";
   bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">This reply is missing information</h2>
     <p style="margin:0 0 6px">The customer would see these gaps:</p><ul style="margin:0;padding-left:20px;color:var(--red);font-weight:700">${gaps.map((g) => `<li>${esc(g.label)}</li>`).join("")}</ul>
@@ -441,13 +472,17 @@ function onSend() {
   document.body.appendChild(bg);
   bg.querySelector("#sure").onchange = (e) => (bg.querySelector("#gosend").disabled = !e.target.checked);
   bg.querySelector("#cancelsend").onclick = () => bg.remove();
-  bg.querySelector("#gosend").onclick = () => { bg.remove(); doSend(); };
+  bg.querySelector("#gosend").onclick = () => { bg.remove(); doSend(true); };
   bg.querySelector("#cancelsend").focus();
 }
-async function doSend() {
+async function doSend(confirmGaps) {
   await saveDraft();
-  try { await call(`/api/threads/${S.thread.id}/send`, { method: "POST", body: {} }); toast("Sent"); }
-  catch (e) { toast(e.message, true); }
+  const btn = document.getElementById("send"); if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+  try {
+    const r = await call(`/api/threads/${S.thread.id}/send`, { method: "POST", body: { confirmGaps: !!confirmGaps } });
+    if (r.test) { toast("Test email sent to " + r.to + ". Nothing went to the customer."); if (btn) { btn.disabled = false; btn.textContent = "Send reply"; } return; }
+    toast(r.warning || "Sent, labelled and archived"); S.current = null; S.thread = null; await refreshList(); location.hash = "#/inbox";
+  } catch (e) { toast(e.message, true); if (btn) { btn.disabled = false; btn.textContent = "Send reply"; } }
 }
 
 function wireTeam() {

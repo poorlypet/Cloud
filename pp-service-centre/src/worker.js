@@ -1,5 +1,7 @@
 import { THREADS } from "./sample.js";
 import { noDash, hasDash } from "./nodash.js";
+import { sendReply, sendMode, getSignature } from "./send.js";
+import { dashboard } from "./stats.js";
 import { authUrl, exchangeCode, saveConnection, disconnect, connectionStatus, profileWithToken, clearTokenCache, kvGet, kvSet } from "./gmail.js";
 import { makeState, checkState } from "./crypto.js";
 import { syncInbox } from "./sync.js";
@@ -144,7 +146,7 @@ async function api(req, env, url, ctx) {
   }
   const gmailState = await connectionStatus(env);
   if (p === "/api/me" && method === "GET") {
-    return json({ user, mode: { drafts_only: true, sample_data: !gmailState.connected }, gmail: gmailState });
+    return json({ user, mode: { drafts_only: (await sendMode(env)) === "off", send: await sendMode(env), sample_data: !gmailState.connected }, gmail: gmailState });
   }
 
   /* --- Gmail connection (owner connects once) --- */
@@ -200,7 +202,10 @@ async function api(req, env, url, ctx) {
         try { const r = await inbox.setCategory(env, mm[1], b.category, user.id); if (!r) return bad("Not found", 404); await audit(env, user.id, "category_" + b.category, mm[1] + " " + r.rule); return json({ ok: true, ...r }); }
         catch (e) { return bad(e.message); }
       }
-      if (mm[2] === "send") { await audit(env, user.id, "send_attempt_blocked", mm[1]); return bad("Sending is switched off while the portal is being tested. Nothing was sent.", 409); }
+      if (mm[2] === "send") {
+        try { const r = await sendReply(env, mm[1], user, { confirmGaps: !!b.confirmGaps }); await audit(env, user.id, r.test ? "send_test" : "sent", mm[1] + " to " + r.to); return json({ ok: true, ...r }); }
+        catch (e) { await audit(env, user.id, "send_failed", mm[1] + " " + String(e.message).slice(0, 120)); return bad(e.message, e.status || 500); }
+      }
       if (mm[2] === "draft") { const d = await inbox.saveEdit(env, mm[1], b.draft, user.id); await audit(env, user.id, "draft_saved", mm[1]); return json({ ok: true, draft: d }); }
       if (mm[2] === "offer") {
         try { const r = await inbox.chooseOffer(env, mm[1], b.option, b.custom, b.note, user.id); await audit(env, user.id, "offer_chosen", mm[1] + " " + r.text.slice(0, 80)); return r.out && r.out.error ? bad("Could not write the reply: " + r.out.error, 502) : json({ ok: true }); }
@@ -279,6 +284,31 @@ async function api(req, env, url, ctx) {
       await audit(env, user.id, "send_attempt_blocked", t.id);
       return bad("Sending is switched off while the portal is being tested. Nothing was sent.", 409);
     }
+  }
+
+  /* --- happiness page --- */
+  if (p === "/api/dashboard" && method === "GET") {
+    if (!gmailState.connected) return json({ sample: true });
+    return json(await dashboard(env, 30));
+  }
+
+  /* --- sending: off, test (goes to a test address only) or live --- */
+  if (p === "/api/send-settings" && method === "GET") {
+    let sig = null, sigError = null;
+    if (gmailState.canSend && user.role === "owner") { try { sig = await getSignature(env, true); } catch (e) { sigError = e.message; } }
+    return json({ mode: await sendMode(env), test_address: (await kvGet(env, "test_address")) || user.email, canSend: !!gmailState.canSend, canEdit: user.role === "owner", signature: sig ? { html: sig.html, name: sig.name, email: sig.email } : null, sigError });
+  }
+  if (p === "/api/send-settings" && method === "PUT") {
+    if (user.role !== "owner") return bad("Only the owner can change sending", 403);
+    const b = await req.json().catch(() => ({}));
+    if (b.test_address != null) { const a = String(b.test_address).trim(); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(a)) return bad("That test address does not look right"); await kvSet(env, "test_address", a); }
+    if (b.mode != null) {
+      if (!["off", "test", "live"].includes(b.mode)) return bad("Unknown mode");
+      if (b.mode !== "off" && !gmailState.canSend) return bad("Gmail needs to be reconnected first, so it can send. Use Reconnect on the Team page.", 409);
+      await kvSet(env, "send_mode", b.mode);
+      await audit(env, user.id, "send_mode_" + b.mode, null);
+    }
+    return json({ ok: true, mode: await sendMode(env) });
   }
 
   /* --- tone, rules and business knowledge the AI follows --- */
