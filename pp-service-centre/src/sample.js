@@ -15,12 +15,12 @@ export const THREADS = (now) => [
     from: { name: "Helen Marsh", email: "helen.marsh@example.com" },
     subject: "Absolutely disgusted. Third email, still no answer",
     messages: [
-      { from: "customer", name: "Helen Marsh", at: m(4320)(now), body: "Hi, my order PP-10431 was meant to arrive on Monday for my dog Barney who has just had surgery. It has not come. Can you tell me where it is please?" },
+      { from: "customer", name: "Helen Marsh", at: m(4320)(now), body: "Hi, my order #1431 was meant to arrive on Monday for my dog Barney who has just had surgery. It has not come. Can you tell me where it is please?" },
       { from: "us", name: "Poorly Pet", at: m(4100)(now), body: "Hi Helen, thank you for getting in touch. I'm sorry for the wait. We are checking with the courier and will be back to you shortly." },
       { from: "customer", name: "Helen Marsh", at: m(95)(now), body: "It is now FIVE days late and nobody has come back to me. Barney needs that recovery suit now, not next week. This is the worst service I have had. If I do not have a full refund and an actual answer by tomorrow I will dispute the payment with my bank and leave reviews everywhere. Sort it out." }
     ],
     summary: {
-      order_number: "PP-10431", order_date: "14 Oct 2026", issue: "Recovery suit for Barney is 5 days late, customer has had no reply to her last two emails",
+      order_number: "#1431", order_date: "14 Oct 2026", issue: "Recovery suit for Barney is 5 days late, customer has had no reply to her last two emails",
       wants: "A full refund and an answer by tomorrow", pet: "Barney (dog, recovering from surgery)",
       points: ["Courier shows the parcel stuck at a depot since Tuesday", "She has emailed three times and was answered once", "Threatens a bank dispute and public reviews"]
     },
@@ -29,13 +29,13 @@ export const THREADS = (now) => [
     ] },
     draft: null,
     suggestedDrafts: {
-      refund: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The parcel has been held at the courier depot since Tuesday. Your tracking number is [[TRACKING_NUMBER|Tracking number]] and the courier has told us [[COURIER_UPDATE|What the courier has told us]].\n\nWe are refunding your order in full. The refund of [[REFUND_AMOUNT|Refund amount]] will show on your card within 3 to 5 working days.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney. I hope he is feeling better soon.\n\nKind regards",
-      reship: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The original parcel has been held at the courier depot since Tuesday, so we are sending a replacement recovery suit today by express courier at no cost to you. Your new tracking number is [[TRACKING_NUMBER|New tracking number]] and it is due with you on [[DELIVERY_DATE|Expected delivery date]].\n\nIf the first parcel turns up, you are welcome to keep it. There is no need to send anything back.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney.\n\nKind regards",
-      choice: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order PP-10431. The parcel has been held at the courier depot since Tuesday. I would like you to choose how we put this right:\n\n1. A full refund of [[REFUND_AMOUNT|Refund amount]], back to your card within 3 to 5 working days.\n2. A replacement sent today by express courier at no cost to you.\n\nJust reply with 1 or 2 and I will sort it straight away.\n\nKind regards"
+      refund: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order #1431. The parcel has been held at the courier depot since Tuesday. Your tracking number is [[TRACKING_NUMBER|Tracking number]] and the courier has told us [[COURIER_UPDATE|What the courier has told us]].\n\nWe are refunding your order in full. The refund of [[REFUND_AMOUNT|Refund amount]] will show on your card within 3 to 5 working days.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney. I hope he is feeling better soon.\n\nKind regards",
+      reship: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order #1431. The original parcel has been held at the courier depot since Tuesday, so we are sending a replacement recovery suit today by express courier at no cost to you. Your new tracking number is [[TRACKING_NUMBER|New tracking number]] and it is due with you on [[DELIVERY_DATE|Expected delivery date]].\n\nIf the first parcel turns up, you are welcome to keep it. There is no need to send anything back.\n\nPlease do reply to me directly if there is anything else I can do for you and Barney.\n\nKind regards",
+      choice: "Hi Helen,\n\nI am so sorry. You asked a simple question, and you were left waiting for days while Barney needed his recovery suit. That is not the service we want to give you, and I understand why you are upset.\n\nI have looked into order #1431. The parcel has been held at the courier depot since Tuesday. I would like you to choose how we put this right:\n\n1. A full refund of [[REFUND_AMOUNT|Refund amount]], back to your card within 3 to 5 working days.\n2. A replacement sent today by express courier at no cost to you.\n\nJust reply with 1 or 2 and I will sort it straight away.\n\nKind regards"
     },
     customer: {
       name: "Helen Marsh", since: "2024", spend: 312.4, mood: "Upset", pets: ["Barney (dog)"], pastEmails: 4,
-      orders: [{ number: "PP-10431", date: "14 Oct 2026", total: 46.99, status: "In transit, delayed", items: ["Medical recovery suit, size L"], tracking: "Evri, held at depot since Tue" },
+      orders: [{ number: "#1431", date: "14 Oct 2026", total: 46.99, status: "In transit, delayed", items: ["Medical recovery suit, size L"], tracking: "Evri, held at depot since Tue" },
                { number: "PP-9870", date: "3 Jun 2026", total: 89.5, status: "Delivered", items: ["Joint supplement x2", "Orthopaedic bed"], tracking: "Delivered 6 Jun" }]
     }
   },
@@ -49,18 +49,18 @@ export const THREADS = (now) => [
     flags: ["Late delivery"],
     received: m(190)(now),
     from: { name: "Aisha Rahman", email: "aisha.r@example.com" },
-    subject: "Where is my order PP-10466?",
+    subject: "Where is my order #1466?",
     messages: [{ from: "customer", name: "Aisha Rahman", at: m(190)(now), body: "Hello, I ordered a ramp for my Labrador Kito on the 20th and it still has not arrived. The tracking page just says label created. Could you let me know when I can expect it? Thanks, Aisha" }],
     summary: {
-      order_number: "PP-10466", order_date: "20 Oct 2026", issue: "Ramp not delivered, tracking has not moved since the label was created",
+      order_number: "#1466", order_date: "20 Oct 2026", issue: "Ramp not delivered, tracking has not moved since the label was created",
       wants: "To know when it will arrive", pet: "Kito (Labrador)",
       points: ["Order is paid and marked fulfilled", "The tracking number is missing from our record, so it needs to be added before replying"]
     },
     decision: null,
-    draft: "Hi Aisha,\n\nThank you for getting in touch, and I am sorry you have been left waiting for Kito's ramp.\n\nI have checked order PP-10466. It left us on [[DISPATCH_DATE|Dispatch date]] and your tracking number is [[TRACKING_NUMBER|Tracking number]]. The courier is showing [[COURIER_STATUS|Latest courier status]], so you should have it by [[DELIVERY_DATE|Expected delivery date]].\n\nIf it has not arrived by then, reply to this email and I will chase the courier for you straight away.\n\nKind regards",
+    draft: "Hi Aisha,\n\nThank you for getting in touch, and I am sorry you have been left waiting for Kito's ramp.\n\nI have checked order #1466. It left us on [[DISPATCH_DATE|Dispatch date]] and your tracking number is [[TRACKING_NUMBER|Tracking number]]. The courier is showing [[COURIER_STATUS|Latest courier status]], so you should have it by [[DELIVERY_DATE|Expected delivery date]].\n\nIf it has not arrived by then, reply to this email and I will chase the courier for you straight away.\n\nKind regards",
     customer: {
       name: "Aisha Rahman", since: "2025", spend: 118.0, mood: "Neutral", pets: ["Kito (Labrador)"], pastEmails: 1,
-      orders: [{ number: "PP-10466", date: "20 Oct 2026", total: 79.0, status: "Fulfilled, no tracking on record", items: ["Folding dog ramp 151cm"], tracking: "Not recorded" }]
+      orders: [{ number: "#1466", date: "20 Oct 2026", total: 79.0, status: "Fulfilled, no tracking on record", items: ["Folding dog ramp 151cm"], tracking: "Not recorded" }]
     }
   },
   {
@@ -76,7 +76,7 @@ export const THREADS = (now) => [
     subject: "Hock brace arrived torn",
     messages: [{ from: "customer", name: "Tom Whitaker", at: m(310)(now), body: "Hi, the hock brace I ordered for Biscuit arrived this morning and the strap is torn where it joins the main part. I have attached photos. I do not know if you would rather send a new one or refund me, I just need something that works as she is limping badly. Thanks, Tom", attachments: [{ name: "torn-strap.jpg", note: "Photo 1: strap torn clean through at the stitching" }, { name: "packaging.jpg", note: "Photo 2: box looks undamaged" }] }],
     summary: {
-      order_number: "PP-10459", order_date: "19 Oct 2026", issue: "Brace strap is torn at the stitching on arrival",
+      order_number: "#1459", order_date: "19 Oct 2026", issue: "Brace strap is torn at the stitching on arrival",
       wants: "A working brace, either a replacement or a refund", pet: "Biscuit (limping)",
       points: ["Photos show a manufacturing fault, the box was undamaged", "Customer is flexible about replacement or refund", "Dog is in discomfort so speed matters"]
     },
@@ -90,7 +90,7 @@ export const THREADS = (now) => [
     },
     customer: {
       name: "Tom Whitaker", since: "2026", spend: 64.99, mood: "Neutral", pets: ["Biscuit (dog)"], pastEmails: 0,
-      orders: [{ number: "PP-10459", date: "19 Oct 2026", total: 64.99, status: "Delivered today", items: ["Hock brace, size M"], tracking: "Delivered 22 Oct" }]
+      orders: [{ number: "#1459", date: "19 Oct 2026", total: 64.99, status: "Delivered today", items: ["Hock brace, size M"], tracking: "Delivered 22 Oct" }]
     }
   },
   {
@@ -106,7 +106,7 @@ export const THREADS = (now) => [
     subject: "Can I return the joint chews?",
     messages: [{ from: "customer", name: "Priya Shah", at: m(520)(now), body: "Hi there, I bought the joint chews for Mango last week but she will not eat them at all. Can I send them back for a refund? The tub is unopened apart from one chew. Thanks, Priya" }],
     summary: {
-      order_number: "PP-10441", order_date: "15 Oct 2026", issue: "Dog will not eat the joint chews, wants to return them",
+      order_number: "#1441", order_date: "15 Oct 2026", issue: "Dog will not eat the joint chews, wants to return them",
       wants: "A refund for the chews", pet: "Mango (dog)",
       points: ["Bought 7 days ago", "Tub opened, one chew taken, and consumables may not be returnable", "Needs a decision on what to offer"]
     },
@@ -121,7 +121,7 @@ export const THREADS = (now) => [
     },
     customer: {
       name: "Priya Shah", since: "2025", spend: 210.5, mood: "Happy", pets: ["Mango (dog)"], pastEmails: 2,
-      orders: [{ number: "PP-10441", date: "15 Oct 2026", total: 27.99, status: "Delivered", items: ["Joint chews, 120 pack"], tracking: "Delivered 18 Oct" }]
+      orders: [{ number: "#1441", date: "15 Oct 2026", total: 27.99, status: "Delivered", items: ["Joint chews, 120 pack"], tracking: "Delivered 18 Oct" }]
     }
   },
   {
@@ -181,10 +181,10 @@ export const THREADS = (now) => [
     from: { name: "Janet Owusu", email: "janet.o@example.com" },
     subject: "Thank you!",
     messages: [{ from: "customer", name: "Janet Owusu", at: m(1500)(now), body: "Just wanted to say thank you. The recovery suit for Bramble arrived the next day and fits perfectly. She is so much more comfortable. Will definitely order again. Janet" }],
-    summary: { order_number: "PP-10419", order_date: "12 Oct 2026", issue: "None, a thank you", wants: "Nothing, just happy", pet: "Bramble", points: ["Fast delivery, perfect fit", "A good moment to ask for a review"] },
+    summary: { order_number: "#1419", order_date: "12 Oct 2026", issue: "None, a thank you", wants: "Nothing, just happy", pet: "Bramble", points: ["Fast delivery, perfect fit", "A good moment to ask for a review"] },
     decision: null,
     draft: "Hi Janet,\n\nThank you so much for taking the time to write, this really made our day. I am so glad the suit fits Bramble well and that she is more comfortable.\n\nIf you have a spare minute, a short review would help other owners find what they need. No pressure at all, and thank you again.\n\nKind regards",
-    customer: { name: "Janet Owusu", since: "2026", spend: 46.99, mood: "Happy", pets: ["Bramble (dog)"], pastEmails: 1, orders: [{ number: "PP-10419", date: "12 Oct 2026", total: 46.99, status: "Delivered", items: ["Medical recovery suit, size M"], tracking: "Delivered 13 Oct" }] }
+    customer: { name: "Janet Owusu", since: "2026", spend: 46.99, mood: "Happy", pets: ["Bramble (dog)"], pastEmails: 1, orders: [{ number: "#1419", date: "12 Oct 2026", total: 46.99, status: "Delivered", items: ["Medical recovery suit, size M"], tracking: "Delivered 13 Oct" }] }
   },
   {
     id: "t-2001",

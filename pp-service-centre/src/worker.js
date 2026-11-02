@@ -1,9 +1,12 @@
 import { THREADS } from "./sample.js";
 import { noDash, hasDash } from "./nodash.js";
-import { authUrl, exchangeCode, saveConnection, disconnect, connectionStatus, profileWithToken, clearTokenCache, kvGet } from "./gmail.js";
+import { authUrl, exchangeCode, saveConnection, disconnect, connectionStatus, profileWithToken, clearTokenCache, kvGet, kvSet } from "./gmail.js";
 import { makeState, checkState } from "./crypto.js";
 import { syncInbox } from "./sync.js";
 import * as inbox from "./inbox.js";
+import { DEFAULT_TONE } from "./draft.js";
+import { DEFAULT_KNOWLEDGE } from "./knowledge.default.js";
+import { shopifyReady } from "./shopify.js";
 
 const COOKIE = "pp_session";
 const SESSION_DAYS = 14;
@@ -189,7 +192,7 @@ async function api(req, env, url, ctx) {
     if (p === "/api/threads" && method === "GET") return json({ threads: await inbox.listThreads(env) });
     let mm = p.match(/^\/api\/threads\/([\w-]+)$/);
     if (mm && method === "GET") { const t = await inbox.getThread(env, mm[1]); return t ? json({ thread: t }) : bad("Not found", 404); }
-    mm = p.match(/^\/api\/threads\/([\w-]+)\/(status|category|send|draft|offer)$/);
+    mm = p.match(/^\/api\/threads\/([\w-]+)\/(status|category|send|draft|offer|regenerate)$/);
     if (mm && method !== "GET") {
       const b = await req.json().catch(() => ({}));
       if (mm[2] === "status") { try { await inbox.setStatus(env, mm[1], b.status); } catch (e) { return bad(e.message); } await audit(env, user.id, "status_" + b.status, mm[1]); return json({ ok: true }); }
@@ -198,7 +201,19 @@ async function api(req, env, url, ctx) {
         catch (e) { return bad(e.message); }
       }
       if (mm[2] === "send") { await audit(env, user.id, "send_attempt_blocked", mm[1]); return bad("Sending is switched off while the portal is being tested. Nothing was sent.", 409); }
-      return bad("Drafts arrive in step 3", 409);
+      if (mm[2] === "draft") { const d = await inbox.saveEdit(env, mm[1], b.draft, user.id); await audit(env, user.id, "draft_saved", mm[1]); return json({ ok: true, draft: d }); }
+      if (mm[2] === "offer") {
+        try { const r = await inbox.chooseOffer(env, mm[1], b.option, b.custom, b.note, user.id); await audit(env, user.id, "offer_chosen", mm[1] + " " + r.text.slice(0, 80)); return r.out && r.out.error ? bad("Could not write the reply: " + r.out.error, 502) : json({ ok: true }); }
+        catch (e) { return bad(e.message); }
+      }
+      if (mm[2] === "regenerate") {
+        const st = await env.DB.prepare("SELECT offer FROM thread_state WHERE thread_id = ?").bind(mm[1]).first();
+        await env.DB.prepare("UPDATE thread_state SET draft = NULL WHERE thread_id = ?").bind(mm[1]).run();
+        const out = await inbox.generateFor(env, mm[1], st && st.offer ? st.offer : undefined);
+        await audit(env, user.id, "draft_regenerated", mm[1]);
+        return out && out.error ? bad("Could not write the reply: " + out.error, 502) : json({ ok: true });
+      }
+      return bad("Unknown action", 400);
     }
   }
 
@@ -264,6 +279,18 @@ async function api(req, env, url, ctx) {
       await audit(env, user.id, "send_attempt_blocked", t.id);
       return bad("Sending is switched off while the portal is being tested. Nothing was sent.", 409);
     }
+  }
+
+  /* --- tone, rules and business knowledge the AI follows --- */
+  if (p === "/api/settings" && method === "GET") {
+    return json({ tone_guide: (await kvGet(env, "tone_guide")) || DEFAULT_TONE, knowledge: (await kvGet(env, "knowledge")) || DEFAULT_KNOWLEDGE, tone_examples: (await kvGet(env, "tone_examples")) || "", canEdit: user.role === "owner", ai: !!env.ANTHROPIC_API_KEY, shopify: shopifyReady(env) });
+  }
+  if (p === "/api/settings" && method === "PUT") {
+    if (user.role !== "owner") return bad("Only the owner can change these", 403);
+    const b = await req.json().catch(() => ({}));
+    for (const k of ["tone_guide", "knowledge", "tone_examples"]) if (typeof b[k] === "string") await kvSet(env, k, noDash(b[k]).slice(0, 40000));
+    await audit(env, user.id, "settings_saved", Object.keys(b).join(","));
+    return json({ ok: true });
   }
 
   /* --- team (owner only) --- */

@@ -1,8 +1,10 @@
 // Reads the Gmail inbox, files each thread in the database and sorts customer emails from the rest.
 import { gmail, parseMessage, customerOf, kvGet, kvSet } from "./gmail.js";
 import { classify, boostForWait } from "./classify.js";
+import { draftsDue, generateFor } from "./inbox.js";
 
-const MAX_PER_RUN = 20;   // threads read per run, the rest are picked up by the next run a few minutes later
+const MAX_PER_RUN = 10;   // threads read per run, the rest are picked up by the next run a few minutes later
+const DRAFTS_PER_RUN = 3;  // drafts written per run, the rest follow on the next run
 const noDashText = (s) => String(s || "").replace(/\s*[—–]\s*/g, ", ");
 
 async function senderRule(env, email) {
@@ -82,6 +84,9 @@ export async function syncInbox(env, opts = {}) {
       console.error("sync thread", t.id, e.message);
     }
   }
+  // write drafts for customer emails waiting for one
+  stats.drafted = 0;
+  if (!opts.noDrafts) for (const id of await draftsDue(env, opts.draftLimit || DRAFTS_PER_RUN)) { try { await generateFor(env, id); stats.drafted++; } catch (e) { console.error("draft", id, e.message); } }
   await kvSet(env, "last_sync_at", new Date().toISOString());
   await kvSet(env, "gmail_error", stats.errors && !stats.read ? "Some emails could not be read, check the Gmail connection" : "");
   return stats;

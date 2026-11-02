@@ -86,7 +86,7 @@ assert.equal(list[0].id, "th-angry", "urgent first");
 const detail = await inbox.getThread(env, "th-angry");
 assert.equal(detail.messages.length, 3);
 assert.equal(detail.messages[1].from, "us");
-assert.equal(detail.summary.order_number, "PP-10431");
+assert.equal(detail.summary.order_number, "#1431");
 assert.equal((await inbox.getThread(env, "th-form")).summary.order_number, "#10459");
 assert.equal((await inbox.getThread(env, "th-supplier")).messages[0].attachments[0].name, "invoice-2290.pdf");
 
@@ -128,6 +128,56 @@ assert.equal(s2.errors, 0);
 const r2 = Object.fromEntries((await env.DB.prepare("SELECT id, category FROM threads").all()).results.map((r) => [r.id, r.category]));
 assert.equal(r2["th-supplier"], "supplier"); assert.equal(r2["th-seo"], "marketing"); assert.equal(r2["th-angry"], "customer");
 console.log("ok works without the AI key");
+
+
+/* ---- step 3: Shopify lookups and AI drafts ---- */
+env = mkEnv({ SHOPIFY_SHOP: "x.myshopify.com", SHOPIFY_BASE: base, SHOPIFY_CLIENT_ID: "shop-id", SHOPIFY_CLIENT_SECRET: "shop-secret" });
+await saveConnection(env, { refresh_token: "rt-1" }, MAILBOX);
+{ const { clearTokenCache: c } = await import("../src/gmail.js"); c(); }
+LIST.forEach((t) => (t.historyId += "y"));
+const s3 = await syncInbox(env, { draftLimit: 10 });
+assert.ok(s3.drafted >= 4, "drafts were written: " + JSON.stringify(s3));
+const full = await inbox.getThread(env, "th-wismo");
+assert.equal(full.summary.order_number, "#1466");
+assert.ok(full.summary.checked.some((c) => /#1466/.test(c) && /no tracking number recorded/.test(c)), "Shopify said there is no tracking");
+assert.ok(full.draft.includes("[[TRACKING_NUMBER|Tracking number]]"), "missing tracking becomes a gap the person must fill");
+assert.equal(full.gaps, 1);
+assert.equal(full.customer.orders[0].number, "#1466");
+assert.equal(full.customer.spend, 118);
+// a known tracking number is filled in, never left as a gap
+const hel = await inbox.getThread(env, "th-angry");
+assert.equal(hel.needsDecision, true, "a refund request needs an offer chosen first");
+assert.ok(hel.decision.options.length >= 2 && hel.draft === null);
+assert.ok(hel.summary.checked.some((c) => /#1431/.test(c) && /H01ABC1234567890/.test(c)));
+// choosing an offer writes the reply around it, and invented facts are caught
+const chosen = await inbox.chooseOffer(env, "th-angry", "refund", "", "and a goodwill 10 percent code", 1);
+const after = await inbox.getThread(env, "th-angry");
+assert.ok(after.draft && after.draft.includes("Full refund now"), "the draft uses the chosen offer");
+assert.ok(!after.draft.includes("ZZ99FAKE12345"), "an invented tracking number is removed");
+assert.ok(!after.draft.includes("999.99"), "an invented amount is removed");
+assert.ok(after.draft.includes("[[TRACKING_NUMBER|Tracking number]]") && after.draft.includes("[[REFUND_AMOUNT|Amount]]"), "removed facts become gaps");
+assert.ok(!/[\u2014\u2013]/.test(after.draft), "no dashes in the draft");
+assert.equal(after.needsDecision, false);
+// a person's edit is kept, and a new customer message starts a fresh draft
+await inbox.saveEdit(env, "th-wismo", "Hi Aisha, edited by a person \u2014 test", 1);
+assert.ok(!/\u2014/.test((await inbox.getThread(env, "th-wismo")).draft), "dash removed from a person's edit too");
+// the AI sees our tone guide and the business knowledge
+assert.ok(mock.calls.lastDraftSystem.includes("Never use em dashes"));
+assert.ok(mock.calls.lastDraftSystem.includes("Free standard UK delivery") || mock.calls.lastDraftSystem.includes("free on orders over"), "business knowledge reached the AI");
+// no Shopify keys: drafts still work, with a note that orders were not checked
+env = mkEnv({});
+await saveConnection(env, { refresh_token: "rt-1" }, MAILBOX);
+LIST.forEach((t) => (t.historyId += "z"));
+const s4 = await syncInbox(env, { draftLimit: 10 });
+const noShop = await inbox.getThread(env, "th-wismo");
+assert.ok(noShop.summary.checked[0].includes("Shopify is not connected"));
+// no AI key: a clear message instead of a draft
+env = mkEnv({ ANTHROPIC_API_KEY: undefined });
+await saveConnection(env, { refresh_token: "rt-1" }, MAILBOX);
+LIST.forEach((t) => (t.historyId += "w"));
+await syncInbox(env, { draftLimit: 10 });
+assert.ok((await inbox.getThread(env, "th-wismo")).draftError.includes("no Anthropic key"));
+console.log("ok shopify lookups and drafts");
 
 // a bad Google token is reported, not hidden
 env = mkEnv();

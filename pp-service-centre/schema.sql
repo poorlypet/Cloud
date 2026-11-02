@@ -92,3 +92,17 @@ CREATE TABLE IF NOT EXISTS sender_rules (
   created_by INTEGER,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- step 3: the AI's summary and draft for each email
+CREATE TABLE IF NOT EXISTS drafts (
+  thread_id TEXT PRIMARY KEY,
+  for_inbound_at TEXT,        -- the customer message this draft answers
+  summary TEXT,               -- json
+  decision TEXT,              -- json, set when a refund or return needs an offer chosen first
+  draft TEXT,
+  facts TEXT,                 -- json: what was checked in Shopify
+  sentiment TEXT,
+  error TEXT,
+  offer TEXT,
+  generated_at TEXT
+);

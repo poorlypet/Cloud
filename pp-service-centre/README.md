@@ -64,3 +64,27 @@ Without an Anthropic key the portal still works, using simple word rules to sort
 3. Shopify order lookups, courier tracking, and the AI drafts.
 4. Sending from hello@poorly-pet.com with your Gmail signature, labels and archive.
 5. Happiness dashboard and finishing touches.
+
+## Step 3: Shopify lookups and AI drafts
+
+The portal looks up the customer's order and history in Shopify and the AI writes a draft reply for a person to check.
+
+### Shopify setup (Dev Dashboard app)
+1. Create an app in the Shopify Dev Dashboard with scopes `read_orders,read_customers` and install it on the store.
+2. Enter the app's client ID and secret as Cloudflare secrets (never in chat or in files):
+   ```
+   npx wrangler secret put SHOPIFY_CLIENT_ID
+   npx wrangler secret put SHOPIFY_CLIENT_SECRET
+   ```
+3. `SHOPIFY_SHOP` is set in `wrangler.toml` `[vars]`.
+
+Notes:
+- Without `read_all_orders`, only orders from the last 60 days are visible.
+- Evri: the portal shows the tracking number and link that Shopify holds. It does not read live Evri events. If an order has no tracking number recorded, the draft gets a red "DO NOT SEND until you add: tracking number" blocker.
+
+### Drafting
+- `ANTHROPIC_API_KEY` is needed. Models: `CLASSIFIER_MODEL` (default claude-haiku-5-5), `DRAFT_MODEL` (default claude-sonnet-5-5).
+- Drafts never contain em dashes. Order numbers, tracking numbers and amounts that are not in Shopify or the knowledge text are turned into gaps for a person to fill.
+- Settings page (owner edits): tone guide, pasted example replies, and the knowledge text (delivery, returns, FAQs). Defaults come from the website.
+- Refunds and returns: the AI summarises, a person picks the offer (or types a custom one), and the AI writes the reply around it.
+- Sending is still switched off.

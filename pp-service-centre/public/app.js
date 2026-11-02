@@ -53,6 +53,7 @@ function shell(inner, page) {
       <a href="#/inbox" class="${page === "inbox" ? "on" : ""}">Inbox<span class="n">${open}</span></a>
       <a href="#/dashboard" class="${page === "dashboard" ? "on" : ""}">Happiness</a>
       <a href="#/team" class="${page === "team" ? "on" : ""}">Team</a>
+      <a href="#/settings" class="${page === "settings" ? "on" : ""}">Settings</a>
     </nav>
     <div class="me"><div><b>${esc(S.me.name)}</b><span>${S.me.role === "owner" ? "Owner" : "Staff"}</span></div><button id="logout" type="button">Sign out</button></div>
   </div></header>
@@ -95,6 +96,7 @@ function queueHTML() {
         <span class="pill ${t.priority}">${PRI[t.priority]}</span>
         ${t.flags.map((f) => `<span class="pill ${t.priority === "urgent" ? "urgent" : ""}">${esc(f)}</span>`).join("")}
         ${t.category !== "customer" ? `<span class="pill">${CAT[t.category] || t.category}</span>` : ""}
+        ${t.draftError ? `<span class="pill urgent">Draft failed</span>` : ""}
         ${t.needsDecision ? `<span class="pill high">Decision needed</span>` : t.hasDraft && t.category === "customer" ? (t.gaps ? `<span class="pill urgent">${t.gaps} to fill in</span>` : `<span class="pill ok">Draft ready</span>`) : ""}
       </div>
     </button>`).join("") : `<div class="empty">Nothing here. Nice.</div>`;
@@ -111,6 +113,7 @@ function summaryHTML(t) {
       <div style="grid-column:1/-1"><dt>What they want</dt><dd>${esc(s.wants)}</dd></div>
     </dl>
     ${s.points && s.points.length ? `<ul>${s.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>` : ""}
+    ${s.checked && s.checked.length ? `<div class="checked"><b>What I checked</b><ul>${s.checked.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></div>` : ""}
   </section>`;
 }
 function messagesHTML(t) {
@@ -124,6 +127,8 @@ function decisionHTML(t) {
   const d = t.decision;
   return `<section class="panel block decision"><h2>${esc(d.question)}</h2><p style="margin:0;color:var(--mute)">${esc(d.help)}</p>
     <div class="opts" role="radiogroup">${d.options.map((o, i) => `<label class="o"><input type="radio" name="opt" value="${esc(o.key)}" ${i === 0 ? "" : ""}> ${esc(o.label)}</label>`).join("")}</div>
+    <label class="f" for="offercustom">Or type your own offer</label>
+    <input class="t" id="offercustom" placeholder="For example: a replacement plus a 10 percent code, posted first class">
     <label class="f" for="offernote">Anything extra to include? (optional)</label>
     <textarea class="t" id="offernote" rows="2" placeholder="For example: a 10 percent code for next time"></textarea>
     <div class="actions"><button class="btn dark" id="writereply" type="button">Write the reply</button></div>
@@ -131,7 +136,7 @@ function decisionHTML(t) {
 }
 function draftBlockHTML(t) {
   const gaps = gapsIn(t.draft);
-  return `<section class="panel block"><h2>Draft reply</h2>
+  return `<section class="panel block"><h2>Draft reply</h2>${t.draftedAt ? `<p style="margin:-6px 0 10px;color:var(--mute);font-size:13px">Drafted by the AI${t.offer ? " around your offer: " + esc(t.offer) : ""}. Check every line before it goes.</p>` : ""}
     <div id="gapstatus">${gapStatusHTML(gaps)}</div>
     <div class="editor" id="editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Draft reply" spellcheck="true">${editorHTML(t.draft)}</div>
     <div class="sig">Your Gmail signature for hello@poorly-pet.com is added here when it is sent.</div>
@@ -139,6 +144,7 @@ function draftBlockHTML(t) {
     <div class="actions">
       <button class="btn dark" id="send" type="button">Send reply</button>
       <button class="btn ghost" id="savedraft" type="button">Save draft</button>
+      ${S.gmail && S.gmail.connected ? `<button class="btn ghost" id="regen" type="button" title="Throw this draft away and write a new one">Write a new draft</button>` : ""}
       <span class="saved" id="savedmsg">${esc(S.saved)}</span><span class="sp"></span>
       <button class="btn ghost sm" id="markdone" type="button" title="Nothing needs sending">Mark done, no reply</button>
       <button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button>
@@ -227,8 +233,10 @@ function reopenHTML(t) {
   return `<section class="panel block reopen"><span>${esc(label)}</span><button class="btn" id="reopen" type="button">Put it back in To reply</button></section>`;
 }
 function noDraftHTML(t) {
-  return `<section class="panel block"><h2>Reply</h2><p style="margin:0 0 4px;color:var(--mute)">${S.gmail && S.gmail.connected ? "Drafts written by the AI arrive in step 3. For now, read the email and sort it." : "No draft for this one."}</p>
-    <div class="actions"><button class="btn ghost" id="markdone" type="button">Mark done, no reply</button><span class="sp"></span><button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button></div></section>`;
+  const real = S.gmail && S.gmail.connected;
+  const msg = !real ? "No draft for this one." : t.draftError ? "The draft could not be written: " + t.draftError : "A draft is being written. It usually appears within a few minutes.";
+  return `<section class="panel block"><h2>Reply</h2><p style="margin:0 0 4px;${t.draftError ? "color:var(--red);font-weight:600" : "color:var(--mute)"}">${esc(msg)}</p>
+    <div class="actions">${real ? `<button class="btn dark" id="regen" type="button">${t.draftError ? "Try again" : "Write it now"}</button>` : ""}<button class="btn ghost" id="markdone" type="button">Mark done, no reply</button><span class="sp"></span><button class="btn ghost sm" id="notcustomer" type="button">Not a customer email</button></div></section>`;
 }
 function gmailBarHTML() {
   const g = S.gmail;
@@ -248,6 +256,30 @@ function inboxView() {
 function dashboardView() {
   return `<section class="panel soon"><h2>Customer happiness</h2><p style="color:var(--mute);max-width:520px;margin:0 auto">Reply times, customer mood and trends will appear here once real emails are flowing. This is built in step 5.</p>
     <div class="tiles"><div class="tile"><b>2h 14m</b>Average first reply</div><div class="tile"><b>92%</b>Happy after reply</div><div class="tile"><b>3</b>Upset customers this week</div><div class="tile"><b>41</b>Replies sent</div></div></section>`;
+}
+async function settingsView() {
+  let c; try { c = await call("/api/settings"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; }
+  S.settings = c;
+  const dis = c.canEdit ? "" : "disabled";
+  return `<div class="grid2"><form class="panel block" id="settingsform"><h2>How replies are written</h2>
+    <p style="margin:0 0 6px;color:var(--mute)">The AI follows these every time it drafts. Changes apply to the next draft. No dashes are ever allowed, whatever is written here.</p>
+    <label class="f" for="tone_guide">Tone and style</label><textarea class="t" id="tone_guide" rows="11" ${dis}>${esc(c.tone_guide)}</textarea>
+    <label class="f" for="tone_examples">Replies you are proud of (paste a few, separated by a blank line and three dashes)</label><textarea class="t" id="tone_examples" rows="9" placeholder="Paste real replies here. The AI copies the voice, not the facts." ${dis}>${esc(c.tone_examples)}</textarea>
+    <label class="f" for="knowledge">What the AI knows about the business (delivery, returns, offers)</label><textarea class="t" id="knowledge" rows="16" ${dis}>${esc(c.knowledge)}</textarea>
+    <div id="formerr"></div>${c.canEdit ? `<button class="btn dark" style="width:100%;margin-top:16px" type="submit">Save</button>` : `<p style="color:var(--mute)">Only the owner can change these.</p>`}</form>
+    <section class="panel block"><h2>Connections</h2>
+      <div class="row2"><span>Gmail</span><b>${S.gmail && S.gmail.connected ? "Connected" : "Not connected"}</b></div>
+      <div class="row2"><span>AI (Anthropic)</span><b style="color:${c.ai ? "var(--green)" : "var(--red)"}">${c.ai ? "Connected" : "Not set up"}</b></div>
+      <div class="row2"><span>Shopify orders</span><b style="color:${c.shopify ? "var(--green)" : "var(--red)"}">${c.shopify ? "Connected" : "Not set up"}</b></div>
+      <p style="color:var(--mute);font-size:14px;margin-bottom:0">Keys are held in Cloudflare. They are never shown here.</p></section></div>`;
+}
+function wireSettings() {
+  const f = document.getElementById("settingsform"); if (!f || !S.settings.canEdit) return;
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try { await call("/api/settings", { method: "PUT", body: { tone_guide: val("tone_guide"), tone_examples: val("tone_examples"), knowledge: val("knowledge") } }); toast("Saved. New drafts will follow these."); }
+    catch (ex) { document.getElementById("formerr").innerHTML = `<div class="err" role="alert">${esc(ex.message)}</div>`; }
+  });
 }
 async function teamView() {
   if (!S.team) { try { S.team = await call("/api/team"); } catch (e) { return `<div class="panel empty">${esc(e.message)}</div>`; } }
@@ -294,6 +326,10 @@ async function render() {
     S.flash = null;
   } else if (r.page === "dashboard") {
     $app.innerHTML = shell(dashboardView(), "dashboard");
+  } else if (r.page === "settings") {
+    const v = await settingsView();
+    $app.innerHTML = shell(v, "settings");
+    wireSettings();
   } else if (r.page === "team") {
     const v = await teamView();
     $app.innerHTML = shell(v, "team");
@@ -317,10 +353,10 @@ function wireInbox() {
   const t = S.thread; if (!t) return;
   const writeBtn = document.getElementById("writereply");
   if (writeBtn) writeBtn.onclick = async () => {
-    const opt = document.querySelector('input[name="opt"]:checked');
-    if (!opt) return toast("Choose what we are offering first", true);
+    const opt = document.querySelector('input[name="opt"]:checked'), custom = val("offercustom").trim();
+    if (!opt && !custom) return toast("Choose what we are offering first", true);
     writeBtn.disabled = true; writeBtn.textContent = "Writing...";
-    try { await call(`/api/threads/${t.id}/offer`, { method: "POST", body: { option: opt.value, note: val("offernote") } }); await reload(); S.tab = "reply"; } catch (e) { toast(e.message, true); writeBtn.disabled = false; writeBtn.textContent = "Write the reply"; }
+    try { await call(`/api/threads/${t.id}/offer`, { method: "POST", body: { option: custom ? "" : opt.value, custom, note: val("offernote") } }); await reload(); S.tab = "reply"; } catch (e) { toast(e.message, true); writeBtn.disabled = false; writeBtn.textContent = "Write the reply"; }
   };
   const ed = document.getElementById("editor");
   if (ed) {
@@ -335,9 +371,25 @@ function wireInbox() {
   const nc = document.getElementById("notcustomer"); if (nc && !ed) nc.onclick = notCustomer;
   const md = document.getElementById("markdone"); if (md && !ed) md.onclick = () => setStatus("done", "Marked as done");
   const rf = document.getElementById("refresh"); if (rf) rf.onclick = refreshInbox;
+  const rg = document.getElementById("regen");
+  if (rg) rg.onclick = async () => {
+    if (ed && !(await confirm_("Throw this draft away, including any changes you made, and write a new one?"))) return;
+    rg.disabled = true; rg.textContent = "Writing...";
+    try { await call(`/api/threads/${t.id}/regenerate`, { method: "POST", body: {} }); await reload(); toast("New draft written"); } catch (e) { toast(e.message, true); rg.disabled = false; }
+  };
   const ro = document.getElementById("reopen");
   if (ro) ro.onclick = () => { const ignored = t.status === "ignored" || t.category !== "customer"; if (ignored) setCategory("customer", "Back in To reply, and emails from this sender will stay in the customer queue"); else setStatus("needs_reply", "Back in To reply"); };
   const isc = document.getElementById("iscustomer"); if (isc) isc.onclick = () => setCategory("customer", "Moved back to customers, future emails from them will stay here");
+}
+function confirm_(msg) {
+  return new Promise(res => {
+    const bg = document.createElement("div"); bg.className = "modal-bg";
+    bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><h2>Are you sure?</h2><p style="margin:0;color:var(--mute)"></p><div class="acts"><button class="btn ghost" type="button" id="cn">Cancel</button><button class="btn dark" type="button" id="cy">Yes, write a new one</button></div></div>`;
+    bg.querySelector("p").textContent = msg;
+    document.body.appendChild(bg);
+    bg.querySelector("#cn").onclick = () => { bg.remove(); res(false); };
+    bg.querySelector("#cy").onclick = () => { bg.remove(); res(true); };
+  });
 }
 function notCustomer() {
   const bg = document.createElement("div"); bg.className = "modal-bg";
@@ -357,7 +409,7 @@ async function refreshInbox() {
   try {
     const r = await call("/api/sync", { method: "POST", body: {} });
     if (r.gmail) S.gmail = r.gmail;
-    await refreshList(); toast(r.skipped ? "Already up to date" : `Checked Gmail: ${r.stats.read} email${r.stats.read === 1 ? "" : "s"} read`);
+    await refreshList(); toast(r.skipped ? "Already up to date" : `Checked Gmail: ${r.stats.read} email${r.stats.read === 1 ? "" : "s"} read, ${r.stats.drafted || 0} draft${r.stats.drafted === 1 ? "" : "s"} written`);
   } catch (e) { toast(e.message, true); }
   render();
 }

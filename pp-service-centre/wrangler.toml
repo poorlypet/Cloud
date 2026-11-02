@@ -5,6 +5,7 @@ compatibility_date = "2025-01-01"
 # the mailbox the portal reads and (from step 4) sends from
 [vars]
 MAILBOX = "hello@poorly-pet.com"
+SHOPIFY_SHOP = "bnq8ig-iq.myshopify.com"
 
 # read new customer emails every 3 minutes
 [triggers]
@@ -25,5 +26,5 @@ database_id = "00000000-0000-0000-0000-000000000000"
 #   SETUP_TOKEN   one-off code that lets you create the first owner login
 #   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET   from your Google Cloud OAuth client (step 2)
 #   ENCRYPTION_KEY    a long random string (32+ characters) that protects the stored Gmail token
-#   ANTHROPIC_API_KEY used to sort emails (and write drafts in step 3)
-# Added in later steps: SHOPIFY_TOKEN
+#   ANTHROPIC_API_KEY used to sort emails and write drafts
+#   SHOPIFY_CLIENT_ID, SHOPIFY_CLIENT_SECRET   from the Dev Dashboard app (step 3)
