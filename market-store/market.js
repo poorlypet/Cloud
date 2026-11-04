@@ -25,6 +25,11 @@
     [/UK orders go out tracked with Evri\. Once your order has been dispatched we email you the Evri tracking details/, 'Orders go out tracked. Once your order has been dispatched we email you the tracking details'],
     [/We deliver to addresses within the United Kingdom\. If you would like to order from outside the UK, please contact us first\./, 'We deliver to the Republic of Ireland. All orders are shipped from the UK.'],
     [/^Evri, tracked$/, 'Tracked'],
+    [/then 2 to 4 working days with Evri/, 'then 2 to 5 working days in total'],
+    [/We deliver to UK addresses only, by Evri, and standard delivery is free on orders over £39\./, 'We deliver to Ireland from the UK, and standard delivery is free on orders over £50.'],
+    [/Orders and delivery, returns, subscriptions and the Poorly Pet Club, answered on one page\./, 'Orders and delivery, returns and payments, answered on one page.'],
+    [/Answers on orders, delivery, returns, subscriptions and your account\./, 'Answers on orders, delivery, returns and your account.'],
+    [/Orders, products, subscriptions and your account/, 'Orders, products and your account'],
     [/We email the Evri tracking link/, 'We email the tracking link'],
     [/Usually 2 to 4 working days after dispatch/, 'Usually 2 to 5 working days'],
     [/Standard delivery usually arrives within 2 to 4 working days of dispatch\./, 'Delivery takes 2 to 5 working days in total. All orders are shipped from the UK.']
