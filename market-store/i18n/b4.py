@@ -1,0 +1,26 @@
+D = {
+"Remove one":"Eins entfernen","Add one":"Eins hinzufügen","Remove":"Entfernen","Delivery":"Lieferung","Free":"Kostenlos","Total":"Gesamt","Subtotal":"Zwischensumme","Checkout":"Zur Kasse","View basket":"Warenkorb ansehen","Added":"Hinzugefügt","Add all three":"Alle drei hinzufügen",
+"dog's":"","Ihr":"Ihr",
+"Find the right support for your":"Die passende Hilfe für Ihren Hund bei",
+"Free delivery on this order":"Kostenloser Versand für diese Bestellung",
+"Free UK delivery on this order":"Kostenloser Versand für diese Bestellung",
+"on this order":"für diese Bestellung",
+"Order value":"Bestellwert","Dispatch":"Versand","Arrives":"Lieferung",
+"Skip to content":"Zum Inhalt springen",
+}
+RULES = [
+ (r"^Showing (\d+)[–-](\d+) of ([\d,]+)$", r"\1–\2 von \3 angezeigt"),
+ (r"^Showing (\d+) of ([\d,]+)$", r"\1 von \2 angezeigt"),
+ (r"^1 product found$", "1 Produkt gefunden"), (r"^([\d,]+) products found$", r"\1 Produkte gefunden"),
+ (r"^1 product$", "1 Produkt"), (r"^([\d,]+) products$", r"\1 Produkte"),
+ (r"^Show ([\d,]+) results$", r"\1 Ergebnisse anzeigen"),
+ (r"^Page (\d+) of (\d+)$", r"Seite \1 von \2"), (r"^Page (\d+)$", r"Seite \1"),
+ (r"^from 1 review$", "aus 1 Bewertung"), (r"^from ([\d,]+) reviews$", r"aus \1 Bewertungen"),
+ (r"^1 review$", "1 Bewertung"), (r"^([\d,]+) reviews$", r"\1 Bewertungen"),
+ (r"^Show all (\d+)$", r"Alle \1 anzeigen"), (r"^Search (\d+) brands$", r"\1 Marken durchsuchen"),
+ (r"^Subtotal, 1 item$", "Zwischensumme, 1 Artikel"), (r"^Subtotal, (\d+) items$", r"Zwischensumme, \1 Artikel"),
+ (r"^Rated ([\d.]+) out of 5$", "Bewertet mit \\1 von 5"),
+ (r"^([\d.]+) out of 5$", "\\1 von 5"),
+ (r"^(\d+) questions$", r"\1 Fragen"),
+ (r"^Question (\d+)$", r"Frage \1"),
+]

@@ -1,0 +1,34 @@
+{%- comment -%} Sets window.PP_MARKET for the Germany and Ireland storefronts only. The UK store prints nothing here except the redirect/switch helper. {%- endcomment -%}
+{%- assign mk = localization.country.iso_code -%}
+{%- if mk == 'DE' or mk == 'IE' -%}
+<script>window.PP_MARKET={code:{{ mk | json }},currency:"EUR",lang:{% if mk == 'DE' %}"de"{% else %}"en"{% endif %},root:{{ routes.root_url | json }}};</script>
+<style>
+/* UK-only features, hidden in the Germany and Ireland stores */
+#club-btn,#clubdrawer,#club-sec,.club-promo,a[href*="/pages/poorly-pet-club"],a[href*="/pages/subscription"],a[href*="/pages/offers"],a[href*="/pages/track-order"]{display:none!important}
+</style>
+{%- else -%}
+<script>window.PP_MARKET=null;</script>
+{%- endif -%}
+{%- comment -%} Geo routing. Only runs on the UK site, once per visitor, never for bots, never once the visitor has chosen a site. {%- endcomment -%}
+<script>
+(function(){
+  try{
+    var p=location.pathname, M=window.PP_MARKET;
+    document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-market-choice]');if(a){try{localStorage.setItem('pp_market_choice',a.getAttribute('data-market-choice'));}catch(x){}}},true);
+    if(M||/^\/(de-de|en-ie)(\/|$)/.test(p)||/^\/(cart|checkouts|account|apps|admin|services|cdn)/.test(p))return;
+    if(/bot|crawl|spider|slurp|mediapartners|lighthouse|facebookexternalhit|preview/i.test(navigator.userAgent))return;
+    if(/[?&]nogeo=1/.test(location.search))return;
+    var done=null;try{done=localStorage.getItem('pp_market_choice')||sessionStorage.getItem('pp_geo_done');}catch(x){}
+    if(done)return;
+    try{sessionStorage.setItem('pp_geo_done','1');}catch(x){}
+    fetch('/browsing_context_suggestions.json?country[handle]=GB&language[handle]=en&source=geolocation_recommendation',{credentials:'same-origin'})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(j){
+        var d=j&&j.detected_values&&j.detected_values.country&&j.detected_values.country.handle;
+        d=String(d||'').toUpperCase();
+        var to=d==='DE'?'/de-de':d==='IE'?'/en-ie':'';
+        if(to)location.replace(to+(p==='/'?'/':p)+location.search+location.hash);
+      }).catch(function(){});
+  }catch(e){}
+})();
+</script>

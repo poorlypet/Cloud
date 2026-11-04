@@ -1,0 +1,11 @@
+{%- assign mk = localization.country.iso_code -%}
+<div class="pp-mswitch" aria-label="{% if mk == 'DE' %}Land und Währung{% else %}Country and currency{% endif %}">
+  <a href="/" data-market-choice="GB"{% unless mk == 'DE' or mk == 'IE' %} aria-current="true"{% endunless %}>United Kingdom (£)</a>
+  <a href="/de-de/" data-market-choice="DE"{% if mk == 'DE' %} aria-current="true"{% endif %}>Deutschland (€)</a>
+  <a href="/en-ie/" data-market-choice="IE"{% if mk == 'IE' %} aria-current="true"{% endif %}>Ireland (€)</a>
+</div>
+<style>
+.pp-mswitch{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:14px 16px;background:#0f3d3e;font:500 13px/1.2 Figtree,system-ui,sans-serif}
+.pp-mswitch a{color:#dff3ee;text-decoration:none;padding:7px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px}
+.pp-mswitch a[aria-current]{background:#d7f25a;color:#0f3d3e;border-color:#d7f25a}
+</style>
