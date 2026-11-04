@@ -146,7 +146,10 @@
   // whole headings and labels that arrive split across several text nodes: matched on the element's full text
   var BLOCKS = DE ? {
     'Dental care': 'Zahnpflege', 'Top brands': 'Beliebte Marken', 'Symptom guide': 'Symptom-Ratgeber', 'Keep reading': 'Weiterlesen',
-    'Built for Marble. Here for every dog.': 'F\u00fcr Marble gebaut. <em>F\u00fcr jeden Hund da.</em>'
+    'Built for Marble. Here for every dog.': 'F\u00fcr Marble gebaut. <em>F\u00fcr jeden Hund da.</em>',
+    'Auf der Suche nach help': 'Auf der Suche nach <em>Hilfe</em>', 'Poorly Pet was born': 'Poorly Pet <em>ist entstanden</em>',
+    'Was geholfen hat Marble': 'Was <em>Marble geholfen hat</em>', 'Lernen, Testen und Hilfe f\u00fcr': 'Lernen, testen <em>und helfen</em>',
+    'Da f\u00fcr jeden Hund': 'F\u00fcr <em>jeden Hund</em> da', 'Alle brands': 'Alle Marken', 'Gemeinsam f\u00fcr happier, healthier dogs': 'Gemeinsam f\u00fcr <em>gl\u00fccklichere, ges\u00fcndere Hunde</em>'
   } : {};
   function fixBlocks(root) {
     var els = root.querySelectorAll ? root.querySelectorAll('h1,h2,h3,h4,a,button,span') : [];
@@ -184,7 +187,7 @@
   function flush() {
     scheduled = false;
     var q = queue; queue = [];
-    q.forEach(function (n) { if (n.isConnected !== false) { if (DE && n.nodeType === 1) fixBlocks(n); fixNode(n); if (n.nodeType === 1) fixLinks(n); } });
+    q.forEach(function (n) { if (n.isConnected !== false) { if (DE && n.nodeType === 1) fixBlocks(n); fixNode(n); if (DE && n.nodeType === 1) fixBlocks(n); if (n.nodeType === 1) fixLinks(n); } });
     fixTitle();
   }
   function fixTitle() {
