@@ -229,5 +229,7 @@
     },
     translate: translate, money: money, prefix: prefix
   };
+  // the Club, Subscribe & Save and the UK offers pages are UK only: send anyone who lands on them to the market's home page
+  if (/\/pages\/(subscription|poorly-pet-club|offers)\/?$/.test(location.pathname)) { location.replace(ROOT + '/'); return; }
   applyData(); wireNetwork();
 })();
