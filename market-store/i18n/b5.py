@@ -72,7 +72,7 @@ D = {
 "What happens if I miss the delivery?":"Was passiert, wenn ich die Lieferung verpasse?","How do returns work?":"Wie funktioniert die Rückgabe?",
 "Working days are Monday to Friday, excluding UK bank holidays.":"Werktage sind Montag bis Freitag, ohne Feiertage.",
 # reviews
-"Every review is from a real customer, collected by Judge.me. Good and bad, we publish them all.":"Jede Bewertung stammt von einem echten Kunden und wird von Judge.me gesammelt. Gute wie schlechte, wir veröffentlichen alle.",
+"Every review is from a real customer, collected by Judge.me. Good and bad, we publish them all.":"Jede Bewertung stammt von einem echten Kunden und wird von Judge.me gesammelt. Gute wie schlechte, wir veröffentlichen alle. Auf Englisch verfasste Bewertungen wurden ins Deutsche übersetzt.",
 "out of 5":"von 5","Based on":"Basierend auf","from 201 reviews on Judge.me":"aus 201 Bewertungen auf Judge.me",
 "Step 1 of 4":"Schritt 1 von 4","Which product are you reviewing?":"Welches Produkt bewerten Sie?",
 "Search, or pick one of our most reviewed.":"Suchen Sie oder wählen Sie eines unserer meistbewerteten Produkte.",
