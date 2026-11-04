@@ -1,0 +1,500 @@
+{
+ "orthopaedic-dog-beds-guide": {
+  "title": "Orthopädische Hundebetten: Warum sie für die Gelenkgesundheit wichtig sind",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["5 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Ihr Hund verbringt einen großen Teil des Tages liegend. Das Bett, auf dem er ruht, ist deshalb wichtiger, als Sie vielleicht denken, besonders bei Hunden mit schmerzenden Gelenken. Ein stützendes orthopädisches Bett entlastet Druckstellen und erleichtert das Aufstehen. Hier erfahren Sie, worauf Sie achten sollten.",
+  "sections": [
+    {
+      "h": "Warum das richtige Bett wichtig ist",
+      "html": "<p>Dünne oder durchgelegene Betten lassen das Körpergewicht des Hundes die Gelenke gegen den harten Boden pressen. Das ist für Hunde mit Arthrose und für ältere Hunde unangenehm. Ein festes, stützendes Bett verteilt das Gewicht gleichmäßig, entlastet Hüften, Ellbogen und Schultern und erleichtert das Aufstehen.</p>"
+    },
+    {
+      "h": "Worauf Sie achten sollten",
+      "html": "<p>Nicht jedes „orthopädische“ Bett ist gleich gut.</p><ul><li>Echter Memory-Schaum oder hochdichter Schaum, der nicht durchgelegen wird</li><li>Eine feste, stützende Basis statt weicher Füllung</li><li>Niedriger oder bequemer Einstieg für Hunde, denen das Hineinsteigen schwerfällt</li><li>Ein waschbarer, strapazierfähiger Bezug</li><li>Die richtige Größe, damit sich der Hund ganz ausstrecken kann</li></ul>"
+    },
+    {
+      "h": "So holen Sie das Beste heraus",
+      "html": "<p>Auch der Standort und die Routine helfen.</p><ul><li>Stellen Sie das Bett an einen warmen, ruhigen, zugfreien Platz</li><li>Halten Sie es von kalten, harten Böden fern</li><li>Legen Sie eine vertraute Decke hinein, damit es nach Zuhause riecht</li><li>Stellen Sie je ein Bett oben und unten auf, wenn Treppen schwierig sind</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Unruhiger Schlaf", "Schwierigkeiten beim Aufstehen", "Steife Gelenke", "Älterer Hund"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Wenn Ihr Hund in jeder Liegeposition unbequem wirkt, schwer zur Ruhe kommt oder zunehmend steif ist, sprechen Sie Ihren Tierarzt darauf an. Ein stützendes Bett hilft, doch möglicherweise müssen auch Schmerzen behandelt werden.",
+  "shop": {
+    "h": "Shop orthopaedic beds & comfort",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Orthopädische Hundebetten: Antworten",
+  "faq": [
+    {
+      "q": "Helfen orthopädische Betten Hunden mit Arthrose wirklich?",
+      "a": "Ja, die richtige Unterstützung entlastet schmerzende Gelenke und Druckstellen, hilft Hunden, besser zu ruhen, und erleichtert das Aufstehen."
+    },
+    {
+      "q": "Welche Bettgröße sollte ich wählen?",
+      "a": "Das Bett sollte groß genug sein, damit Ihr Hund ganz ausgestreckt liegen kann. Messen Sie ihn im Liegen und addieren Sie einen Spielraum."
+    },
+    {
+      "q": "Ist Memory-Schaum am besten?",
+      "a": "Hochdichter Schaum oder Memory-Schaum, der seine Form behält, bietet die beste Unterstützung. Vermeiden Sie dünne Auflagen oder weiche Füllungen, die sich platt liegen."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "senior-dog-care-guide",
+    "dog-struggling-to-get-up"
+  ]
+ },
+ "exercise-for-dogs-with-joint-problems": {
+  "title": "Die richtige Bewegung für Hunde mit Gelenkproblemen",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["7 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Wenn ein Hund Gelenkprobleme hat, ist man versucht, ihn in Watte zu packen. Doch die richtige Bewegung hält Muskeln stark, Gelenke beweglich und das Gewicht im Griff. Der Trick besteht darin, gelenkschonende, regelmäßige Aktivität statt stoßbelastender Ausbrüche zu wählen. So finden Sie die richtige Balance.",
+  "sections": [
+    {
+      "h": "Warum Bewegung wichtig ist",
+      "html": "<p>Bewegung hält die Muskeln stark, die die Gelenke stützen, hilft, ein gesundes Gewicht zu halten, und erhält die Beweglichkeit der Gelenke selbst. Ein Hund, der sich nicht mehr bewegt, verliert schnell Muskeln, was Gelenkprobleme verschlimmert. Ziel ist also das richtige Maß, nicht gar keine Bewegung.</p>"
+    },
+    {
+      "h": "Die besten Bewegungsarten",
+      "html": "<p>Gelenkschonend, gleichmäßig und vorhersehbar lautet die Regel.</p><ul><li>Spaziergänge an der Leine auf weichem, ebenem Untergrund</li><li>Schwimmen und Hydrotherapie, hervorragend für die Gelenke</li><li>Sanfte, kontrollierte Schnüffelspaziergänge, die auch den Kopf beschäftigen</li><li>Kurze, häufige Einheiten statt eines langen Ausflugs</li></ul>"
+    },
+    {
+      "h": "Was Sie vermeiden sollten",
+      "html": "<p>Stoßbelastende Aktivitäten setzen schmerzende Gelenke plötzlicher, ruckartiger Belastung aus.</p><ul><li>Ständiges Ball- oder Frisbee-Jagen mit scharfen Wendungen</li><li>Springen auf und von Möbeln oder in und aus dem Auto</li><li>Wildes Toben und plötzliche Sprints</li><li>Lange, erschöpfende Spaziergänge, nach denen Ihr Hund am nächsten Tag steif ist</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Steif nach der Bewegung", "Ermüdet schnell", "Wird beim Spaziergang langsamer", "Bewegt sich ungern"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Wenn bei Ihrem Hund gerade erst eine Diagnose gestellt wurde oder er Schmerzen hat, bitten Sie Ihren Tierarzt oder einen Hundephysiotherapeuten, einen Bewegungsplan für ihn zu erstellen. Sie können das richtige Maß empfehlen und es sicher steigern.",
+  "shop": {
+    "h": "Shop mobility & rehab support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Die richtige Bewegung für Hunde mit Gelenkproblemen: Antworten",
+  "faq": [
+    {
+      "q": "Wie viel sollte ein Hund mit Arthrose laufen?",
+      "a": "Wenig und oft lautet die Regel. Mehrere kurze, sanfte Spaziergänge sind meist besser als ein langer. Ihr Tierarzt kann es auf Ihren Hund abstimmen."
+    },
+    {
+      "q": "Ist Schwimmen gut für Hunde mit Gelenkproblemen?",
+      "a": "Ja, es baut Kraft und Kondition auf und belastet die Gelenke dabei kaum. Deshalb wird Hydrotherapie so häufig empfohlen."
+    },
+    {
+      "q": "Sollte ich die Bewegung bei meinem steifen Hund einstellen?",
+      "a": "Nein, sanfte, regelmäßige Bewegung ist wichtig. Wählen Sie einfach gelenkschonende Aktivitäten und vermeiden Sie stoßbelastende Ausbrüche."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "hydrotherapy-swimming-for-dogs",
+    "stiff-joints-in-dogs"
+  ]
+ },
+ "dog-struggling-to-get-up": {
+  "title": "So helfen Sie einem Hund, der Mühe hat aufzustehen",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Es ist schwer mitanzusehen, wie Ihr Hund Mühe hat aufzustehen, auf glattem Boden rudert oder mehrere Anläufe braucht. Meist deutet das auf Gelenkschmerzen, Schwäche oder beides hin. Die gute Nachricht: Ein paar praktische Veränderungen können ihm Selbstvertrauen und Wohlbefinden zurückgeben.",
+  "sections": [
+    {
+      "h": "Warum das passiert",
+      "html": "<p>Schwierigkeiten beim Aufstehen werden meist durch Arthrose, Hüft- oder Gelenkschmerzen oder Muskelschwäche verursacht, oft durch eine Kombination, besonders bei älteren Hunden. Glatte Böden machen alles schwerer, weil Hunde nicht den Halt finden, den sie zum Hochdrücken brauchen.</p>"
+    },
+    {
+      "h": "Worauf Sie achten sollten",
+      "html": "<p>Beobachten Sie, wann und wie die Schwierigkeiten auftreten.</p><ul><li>Mehrere Anläufe zum Aufstehen, besonders nach dem Ruhen</li><li>Rudern oder Wegrutschen auf glatten Böden</li><li>Steifheit, die nachlässt, sobald er steht und sich bewegt</li><li>Zögern beim Hinlegen oder Bequemmachen</li></ul>"
+    },
+    {
+      "h": "So können Sie helfen",
+      "html": "<p>Denken Sie an Halt, Unterstützung und Komfort.</p><ul><li>Sorgen Sie für Grip: Teppiche und Läufer auf harten Böden machen einen enormen Unterschied</li><li>Ein Stützgeschirr, das ihm sanft beim Aufstehen hilft</li><li>Ein festes, stützendes orthopädisches Bett (nicht zu niedrig)</li><li>Halten Sie Ihren Hund schlank und seine Muskeln sanft aktiv</li><li>Gelenkunterstützung und Wärme, besonders im Winter</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Mehrere Anläufe zum Aufstehen", "Rutschen", "Steif nach dem Ruhen", "Rudern"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn Ihr Hund plötzlich nicht mehr aufstehen kann, Schmerzen zu haben scheint oder schwächer wird. Das muss abgeklärt werden, um die Ursache zu finden und zu behandeln.",
+  "shop": {
+    "h": "Shop support harnesses & beds",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "So helfen Sie einem Hund, der Mühe hat aufzustehen: Antworten",
+  "faq": [
+    {
+      "q": "Warum hat mein alter Hund Mühe zu stehen?",
+      "a": "Meist ist es eine Mischung aus Arthrose und Muskelabbau, die oft durch glatte Böden verschlimmert wird. Grip, Unterstützung und Gelenkpflege helfen viel."
+    },
+    {
+      "q": "Hilft ein Geschirr?",
+      "a": "Ja, mit einem Stützgeschirr können Sie sanft einen Teil des Gewichts übernehmen und Ihrem Hund beim Aufstehen helfen, ohne ihn oder sich selbst zu überlasten."
+    },
+    {
+      "q": "Sind glatte Böden wirklich ein Problem?",
+      "a": "Ja, sehr. Teppiche und Läufer geben Hunden den nötigen Halt und verhindern schmerzhaftes Wegrutschen und gescheiterte Aufstehversuche."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "rear-leg-weakness-in-dogs",
+    "senior-dog-care-guide"
+  ]
+ },
+ "stiff-joints-in-dogs": {
+  "title": "Steife Gelenke beim Hund: Ursachen und Hilfe",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Wenn Ihr Hund beim Aufstehen steif ist, auf Spaziergängen lange braucht, um warm zu werden, oder vor Treppen zögert, wollen seine Gelenke Ihnen vielleicht etwas sagen. Steifheit gehört zu den häufigsten und am besten behandelbaren frühen Anzeichen von Gelenkproblemen. So lindern Sie sie.",
+  "sections": [
+    {
+      "h": "Warum Hunde steife Gelenke bekommen",
+      "html": "<p>Steifheit beruht meist auf Entzündung und Verschleiß in den Gelenken, am häufigsten durch Arthrose, aber auch durch Verletzungen, Hüft- und Ellbogenprobleme oder schlicht Muskelabbau im Alter. Kaltes Wetter sowie harte, glatte Böden verschlimmern sie.</p>"
+    },
+    {
+      "h": "Wann Sie aufmerksam werden sollten",
+      "html": "<p>Ein Hund, der morgens steif ist, sich aber beim Bewegen lockert, zeigt ein klassisches frühes Anzeichen.</p><ul><li>Steifes oder langsames Aufstehen, besonders nach dem Ruhen</li><li>Es dauert, bis er zu Beginn eines Spaziergangs „warm“ wird</li><li>Zögern beim Springen, Klettern oder Treppensteigen</li><li>Steifheit, die bei kaltem oder feuchtem Wetter schlimmer ist</li></ul>"
+    },
+    {
+      "h": "Steife Gelenke lindern",
+      "html": "<p>Ziel ist, die Belastung zu verringern, die Gelenke in Bewegung zu halten und sie im Alltag zu unterstützen.</p><ul><li>Halten Sie Ihren Hund schlank: weniger Gewicht, weniger Belastung</li><li>Sanfte, regelmäßige Bewegung statt großer Ausbrüche</li><li>Wärme und ein stützendes orthopädisches Bett</li><li>Rutschfeste Böden und Rampen zum Schutz der Gelenke</li><li>Gelenkergänzungen als Teil einer langfristigen Routine</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Steif nach dem Ruhen", "Braucht lange zum Warmwerden", "Springt ungern", "Schlimmer bei Kälte"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn die Steifheit anhält, schlimmer wird oder Ihr Hund Schmerzen zu haben scheint. Er kann die Ursache eingrenzen und eine Schmerzlinderung besprechen, die unterstützende Produkte ergänzen.",
+  "shop": {
+    "h": "Shop joint & mobility support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Steife Gelenke beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Ist Steifheit immer Arthrose?",
+      "a": "Oft, aber nicht immer. Auch Verletzungen, Hüft- oder Ellbogenprobleme und Muskelabbau können sie verursachen. Eine tierärztliche Untersuchung klärt die Ursache."
+    },
+    {
+      "q": "Helfen Ergänzungsmittel bei steifen Gelenken?",
+      "a": "Gelenkergänzungen unterstützen die Gelenke auf Dauer als Teil eines umfassenderen Plans, zu dem Gewichtskontrolle und vernünftige Bewegung gehören."
+    },
+    {
+      "q": "Sollte ich mit einem steifen Hund spazieren gehen?",
+      "a": "In der Regel ja, sanfte, regelmäßige Bewegung hilft. Wenig und oft ist besser als gelegentliche lange Spaziergänge."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "dog-struggling-to-get-up",
+    "exercise-for-dogs-with-joint-problems"
+  ]
+ },
+ "spondylosis-in-dogs": {
+  "title": "Spondylose beim Hund: Steife Wirbelsäule bei älteren Hunden",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Die Spondylosis deformans ist eine degenerative Veränderung, bei der sich knöcherne Spangen entlang der Wirbelsäule bilden. Sie ist bei älteren Hunden sehr häufig und verursacht oft gar keine Symptome, bei manchen Hunden führt sie jedoch zu Steifheit und eingeschränkter Beweglichkeit. So erkennen Sie sie und helfen Ihrem Hund.",
+  "sections": [
+    {
+      "h": "Was ist Spondylose?",
+      "html": "<p>Im Laufe der Zeit können sich zwischen den Wirbeln der Wirbelsäule knöcherne Brücken (Osteophyten) bilden, meist als Reaktion auf Alterung und Verschleiß. Bei vielen Hunden sind sie ein Zufallsbefund auf dem Röntgenbild. Bei anderen verringern sie die Beweglichkeit der Wirbelsäule und verursachen Steifheit oder Beschwerden.</p>"
+    },
+    {
+      "h": "Anzeichen, dass sie Ihren Hund belasten könnte",
+      "html": "<p>Da sie sich langsam entwickelt, werden die Anzeichen leicht dem Alter zugeschrieben.</p><ul><li>Steifheit, besonders nach dem Ruhen oder bei kaltem Wetter</li><li>Verminderte Beweglichkeit, Drehen oder Verwinden fällt schwerer</li><li>Zögern beim Springen oder Klettern</li><li>Eine leicht steife oder „aufgekrümmte“ Haltung</li></ul>"
+    },
+    {
+      "h": "Die Wirbelsäule geschmeidig halten",
+      "html": "<p>Sanfte, regelmäßige Bewegung und gute Unterstützung sind die Eckpfeiler der Behandlung.</p><ul><li>Bewegung nach dem Prinzip wenig und oft, um den Rücken beweglich zu halten</li><li>Ein stützendes orthopädisches Bett und warme Ruheplätze</li><li>Rampen, damit die Wirbelsäule beim Springen auf und von Möbeln nicht erschüttert wird</li><li>Halten Sie Ihren Hund schlank, um die Belastung zu verringern</li><li>Gelenk- und Mobilitätsunterstützung als Teil der Routine</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Steifheit", "Weniger beweglich", "Springt ungern", "Steife Haltung"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn Ihr Hund Schmerzen zu haben scheint, plötzlich steifer wird oder in den Hinterbeinen Schwäche oder Unsicherheit zeigt. Das muss abgeklärt werden, um andere Wirbelsäulenerkrankungen auszuschließen.",
+  "shop": {
+    "h": "Shop spine & mobility support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Spondylose beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Ist Spondylose schmerzhaft?",
+      "a": "Oft nicht, und sie verursacht keine Probleme. Bei manchen Hunden führt sie zu Steifheit oder Beschwerden, die von Unterstützung und sanfter Bewegung profitieren."
+    },
+    {
+      "q": "Kann mein Hund weiterhin Bewegung bekommen?",
+      "a": "Ja, sanfte, regelmäßige Bewegung ist gut, um die Wirbelsäule beweglich zu halten. Vermeiden Sie stoßbelastendes Springen und Verdrehen."
+    },
+    {
+      "q": "Wird sie schlimmer?",
+      "a": "Sie kann mit dem Alter langsam fortschreiten, aber viele Hunde bleiben bei vernünftigem Management jahrelang beschwerdefrei."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "senior-dog-care-guide",
+    "ivdd-in-dogs"
+  ]
+ },
+ "elbow-dysplasia-in-dogs": {
+  "title": "Ellbogendysplasie beim Hund: Anzeichen und Unterstützung",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Ellbogendysplasie bezeichnet mehrere Entwicklungsstörungen im Ellbogengelenk, die zu einer schlechten Passform, Entzündung und mit der Zeit zu Arthrose führen. Sie ist eine häufige Ursache für Lahmheit der Vorderbeine, besonders bei heranwachsenden Hunden großer Rassen. Mit früher Unterstützung können betroffene Hunde beschwerdearm und aktiv bleiben.",
+  "sections": [
+    {
+      "h": "Ellbogendysplasie verstehen",
+      "html": "<p>Der Ellbogen ist ein komplexes Gelenk aus drei Knochen, die perfekt zusammenwachsen müssen. Tun sie das nicht, passen die Gelenkflächen nicht glatt aufeinander, was zu Reibung, Entzündung und sekundärer Arthrose führt. Sie ist größtenteils erblich und zeigt sich oft, während der junge Hund wächst.</p>"
+    },
+    {
+      "h": "Häufige Anzeichen",
+      "html": "<p>Eine Lahmheit der Vorderbeine, die kommt und geht, ist das klassische Bild.</p><ul><li>Hinken oder Steifheit in einem Vorderbein, oft nach Bewegung schlimmer</li><li>Unlust zu Bewegung oder Spiel</li><li>Der Ellbogen wird leicht vom Körper abgespreizt gehalten</li><li>Schwellung oder eingeschränkte Beweglichkeit im Ellbogen</li></ul>"
+    },
+    {
+      "h": "Management zu Hause",
+      "html": "<p>Neben jeder tierärztlichen Behandlung schützt die Unterstützung im Alltag das Gelenk und hält Ihren Hund beschwerdearm.</p><ul><li>Halten Sie Ihren Hund schlank, um den Ellbogen zu entlasten</li><li>Eine Ellbogenbandage oder -stütze für mehr Stabilität und Komfort</li><li>Kontrollierte, gelenkschonende Bewegung statt stoßbelastender Spiele</li><li>Weiche, stützende Liegeflächen und warme Ruheplätze</li><li>Gelenkunterstützung als Teil eines langfristigen Plans</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Hinken am Vorderbein", "Steifheit", "Ellbogen abgespreizt", "Schwellung"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie bei jeder anhaltenden Lahmheit eines Vorderbeins zum Tierarzt, besonders bei einem heranwachsenden Hund einer großen Rasse. Eine frühe Diagnose bedeutet mehr Möglichkeiten und langfristig mehr Wohlbefinden.",
+  "shop": {
+    "h": "Shop elbow & joint support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Ellbogendysplasie beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Welche Rassen neigen zu Ellbogendysplasie?",
+      "a": "Große und sehr große Rassen wie Labradore, Deutsche Schäferhunde, Rottweiler und Berner Sennenhunde sind am stärksten gefährdet."
+    },
+    {
+      "q": "Ist das dasselbe wie Arthrose?",
+      "a": "Nein, aber Ellbogendysplasie führt im Lauf der Zeit häufig zu Arthrose im Gelenk. Deshalb ist frühe Unterstützung wichtig."
+    },
+    {
+      "q": "Kann eine Ellbogenbandage helfen?",
+      "a": "Eine stützende Bandage kann Komfort und Stabilität verbessern, besonders während der Behandlung und Erholung, zusammen mit Gewichtskontrolle und vernünftiger Bewegung."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "stiff-joints-in-dogs"
+  ]
+ },
+ "luxating-patella-in-dogs": {
+  "title": "Patellaluxation beim Hund: Der hüpfende Schritt erklärt",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Wenn Ihr Hund gelegentlich einen Schritt überspringt, ein Hinterbein für einen oder zwei Schritte anhebt und dann normal weiterläuft, könnte eine Patellaluxation dahinterstecken. Sie ist ein häufiges Knieproblem, besonders bei kleineren Rassen, und die meisten Hunde kommen mit der richtigen Pflege sehr gut zurecht.",
+  "sections": [
+    {
+      "h": "Was ist eine Patellaluxation?",
+      "html": "<p>Die Patella ist die Kniescheibe, die normalerweise in einer Rinne an der Vorderseite des Knies gleitet. Bei einer Patellaluxation springt sie aus dieser Rinne, meist nach innen, und verursacht einen kurzen Hüpfer, bis sie wieder einrastet. Mit der Zeit kann die wiederholte Bewegung das Gelenk reizen und zu Arthrose beitragen.</p>"
+    },
+    {
+      "h": "Worauf Sie achten sollten",
+      "html": "<p>Sie tritt oft nur zeitweise auf, weshalb Besitzer sie manchmal eine Weile übersehen.</p><ul><li>Gelegentliches Überspringen oder Hüpfen beim Gehen oder Rennen</li><li>Kurzes Anheben eines Hinterbeins, danach normale Belastung</li><li>Sitzen mit zur Seite abgespreiztem Bein</li><li>Steifheit nach dem Ruhen in fortgeschritteneren Fällen</li></ul>"
+    },
+    {
+      "h": "Ihrem Hund zu Hause helfen",
+      "html": "<p>Leichte Fälle werden oft konservativ behandelt, eine Operation bleibt schwereren Graden vorbehalten. Unterstützende Pflege verbessert in beiden Fällen den Komfort und schützt das Gelenk.</p><ul><li>Halten Sie Ihren Hund schlank, um das Knie zu entlasten</li><li>Eine stützende Kniebandage, wo angebracht</li><li>Rutschfeste Böden und Rampen, um unglückliche Verdrehungen zu vermeiden</li><li>Gelenkschonende Bewegung statt Springen und abrupter Wendungen</li><li>Gelenkunterstützung als Teil eines langfristigen Plans</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Überspringt Schritte", "Hüpft kurz", "Bein abgespreizt", "Steif nach dem Ruhen"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn das Überspringen häufiger wird, Ihr Hund lahmt oder Schmerzen hat oder das Bein schlechter zu werden scheint. Er kann das Knie einstufen und beraten, ob Behandlung ohne Operation oder eine Operation am besten ist.",
+  "shop": {
+    "h": "Shop knee & joint support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Patellaluxation beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Welche Hunde bekommen eine Patellaluxation?",
+      "a": "Sie ist bei kleinen und Zwergrassen am häufigsten, kann aber auch größere Hunde betreffen, manchmal nach einer Verletzung."
+    },
+    {
+      "q": "Ist immer eine Operation nötig?",
+      "a": "Nein. Viele leichte Fälle lassen sich mit Gewichtskontrolle, vernünftiger Bewegung und Gelenkunterstützung gut behandeln. Höhere Grade können eine Operation erfordern."
+    },
+    {
+      "q": "Kann eine Bandage helfen?",
+      "a": "Eine stützende Kniebandage kann Stabilität und Komfort verbessern, besonders während einer konservativen Behandlung oder der Erholung."
+    }
+  ],
+  "related": [
+    "cruciate-ligament-injury-dogs",
+    "dog-arthritis-signs-and-support",
+    "exercise-for-dogs-with-joint-problems"
+  ]
+ },
+ "senior-dog-care-guide": {
+  "title": "Pflege älterer Hunde: So bleiben Senioren mobil und fühlen sich wohl",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["9 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Ihren Hund älter werden zu sehen, ist bittersüß, doch die Seniorenjahre können zu den schönsten gehören. Mit ein paar durchdachten Anpassungen an Alltag und Umgebung halten Sie einen älteren Hund noch viele Jahre wohlauf, mobil und zufrieden. So geht es.",
+  "sections": [
+    {
+      "h": "Wie sich Hunde mit dem Alter verändern",
+      "html": "<p>Wie wir werden Hunde mit dem Alter langsamer. Gelenke versteifen, Muskeln werden weicher, die Sinne lassen nach und der Schlaf nimmt zu. Sie vertragen Kälte schlechter, brauchen länger, um sich von Anstrengung zu erholen, und ein sanfteres Tempo. Das alles bedeutet nicht, dass sie keine hohe Lebensqualität genießen können, nur dass sich ihre Bedürfnisse ändern.</p>"
+    },
+    {
+      "h": "Anzeichen, dass Ihr Hund älter wird",
+      "html": "<p>Wer Veränderungen früh bemerkt, bleibt ihnen einen Schritt voraus.</p><ul><li>Steifheit, Verlangsamung oder Zögern beim Springen und Klettern</li><li>Mehr Schlaf und früheres Ermüden</li><li>Trübe Augen, nachlassendes Gehör oder Anstoßen an Gegenstände</li><li>Gewichtsveränderungen, nach oben oder unten</li><li>Ergrauende Schnauze und insgesamt sanfteres Tempo</li></ul>"
+    },
+    {
+      "h": "Einen Seniorhund bequem halten",
+      "html": "<p>Kleine, beständige Veränderungen machen für Komfort und Selbstvertrauen eines älteren Hundes einen großen Unterschied.</p><ul><li>Ein stützendes orthopädisches Bett an einem warmen, zugfreien Platz</li><li>Rutschfeste Böden und Rampen zum Schutz der alternden Gelenke</li><li>Kürzere, häufigere Spaziergänge, die ihn in Bewegung halten, ohne zu überfordern</li><li>Gelenkunterstützung und, wo nötig, ein Stützgeschirr</li><li>Halten Sie ihn schlank, die Zähne gesund und gehen Sie regelmäßig zur tierärztlichen Kontrolle</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Steifheit", "Schläft mehr", "Wird langsamer", "Ermüdet leicht"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Seniorhunde profitieren von regelmäßigen tierärztlichen Kontrollen, idealerweise zweimal im Jahr, damit Veränderungen früh erkannt werden. Lassen Sie plötzliche Veränderungen bei Beweglichkeit, Appetit, Trinken oder Verhalten stets abklären, denn sie können auf behandelbare Erkrankungen hinweisen.",
+  "shop": {
+    "h": "Shop senior mobility & comfort",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Pflege älterer Hunde: Antworten",
+  "faq": [
+    {
+      "q": "Ab wann gilt ein Hund als Senior?",
+      "a": "Das hängt von der Größe ab. Größere Rassen altern schneller und gelten oft ab etwa 6 bis 7 Jahren als Senioren, kleine Rassen erst ab 9 bis 10."
+    },
+    {
+      "q": "Wie kann ich meinen alten Hund mobil halten?",
+      "a": "Halten Sie ihn schlank, gehen Sie wenig und oft spazieren, sorgen Sie für Grip auf den Böden, nutzen Sie bei Bedarf Rampen und ein Geschirr und unterstützen Sie seine Gelenke. Sanfte, regelmäßige Bewegung ist entscheidend."
+    },
+    {
+      "q": "Mein Seniorhund schläft viel. Ist das normal?",
+      "a": "Mehr Schlaf ist im Alter normal, aber eine plötzliche Zunahme oder weitere Veränderungen dazu sollten tierärztlich abgeklärt werden, um etwas Behandelbares auszuschließen."
+    }
+  ],
+  "related": [
+    "dog-arthritis-signs-and-support",
+    "rear-leg-weakness-in-dogs",
+    "dental-disease-in-dogs"
+  ]
+ },
+ "rear-leg-weakness-in-dogs": {
+  "title": "Schwäche der Hinterbeine beim Hund: Ursachen und Hilfe",
+  "cat": "Mobilität & Gelenke",
+  "catKey": "mobility",
+  "meta": ["6 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Wenn die Hinterbeine Ihres Hundes wackelig, schwach werden oder nachgeben, ist das verständlicherweise beunruhigend. Schwäche der Hinterbeine ist keine einzelne Erkrankung, sondern ein Zeichen, das auf mehrere Ursachen hinweisen kann, von Arthrose bis zu Nervenproblemen. So gehen Sie damit um und helfen Ihrem Hund, auf den Beinen zu bleiben.",
+  "sections": [
+    {
+      "h": "Häufige Ursachen für Schwäche der Hinterbeine",
+      "html": "<p>Da die Hinterbeine auf gesunde Gelenke, Muskeln, Nerven und eine gesunde Wirbelsäule angewiesen sind, kann die Schwäche von jedem dieser Bereiche kommen. Die häufigsten Ursachen sind Arthrose und Hüftprobleme, Wirbelsäulenerkrankungen wie IVDD, Nervenerkrankungen wie die degenerative Myelopathie und schlichter Muskelabbau im Alter.</p>"
+    },
+    {
+      "h": "Worauf Sie achten sollten",
+      "html": "<p>Die Art, wie sich die Schwäche zeigt, liefert nützliche Hinweise. Notieren Sie sich deshalb die Einzelheiten für Ihren Tierarzt.</p><ul><li>Ein wackeliges, schwankendes oder unsicheres Hinterteil</li><li>Schwierigkeiten beim Aufstehen, besonders nach dem Ruhen</li><li>Schleifen oder Schaben der Hinterpfoten</li><li>Schnelles Ermüden oder Hinsetzen auf Spaziergängen</li><li>Wegrutschen auf glatten Böden</li></ul>"
+    },
+    {
+      "h": "Einem Hund mit schwachen Hinterbeinen helfen",
+      "html": "<p>Was auch immer die Ursache ist, die Grundsätze sind ähnlich: das Hinterteil stützen, vor Ausrutschern und Stürzen schützen und die Muskeln so kräftig wie möglich halten.</p><ul><li>Ein Hinterhand-Stützgeschirr für Treppen, zum Aufstehen und für Spaziergänge</li><li>Rutschfeste Teppiche und Läufer auf harten Böden</li><li>Rampen für Auto, Sofa und Stufen</li><li>Sanfte, regelmäßige Bewegung zum Muskelerhalt, wenig und oft</li><li>Ein stützendes Bett und ein warmer, zugfreier Ruheplatz</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Wackeliges Hinterteil", "Schleifen", "Mühe beim Aufstehen", "Ermüdet schnell"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Lassen Sie neue oder zunehmende Schwäche der Hinterbeine immer von Ihrem Tierarzt untersuchen, besonders wenn sie plötzlich auftritt. Wird die Ursache erkannt, erhält Ihr Hund die richtige Behandlung, und Sie können die Hilfsmittel wählen, die am meisten nützen.",
+  "shop": {
+    "h": "Shop support harnesses & aids",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Schwäche der Hinterbeine beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Warum werden die Hinterbeine meines alten Hundes schwach?",
+      "a": "Bei Seniorhunden ist es oft eine Mischung aus Arthrose und natürlichem Muskelabbau, manchmal mit einer Nervenkomponente. Eine tierärztliche Untersuchung klärt die Ursache, damit Sie ihn richtig unterstützen können."
+    },
+    {
+      "q": "Kann ein Geschirr bei schwachen Hinterbeinen helfen?",
+      "a": "Ja, mit einem Hinterhand-Stützgeschirr können Sie sanft einen Teil des Gewichts übernehmen und bei Treppen, beim Aufstehen und auf Spaziergängen helfen, sodass Ihr Hund aktiv und selbstbewusst bleibt."
+    },
+    {
+      "q": "Sollte ich einen Hund mit schwachen Hinterbeinen weiterhin bewegen?",
+      "a": "In der Regel ja, aber sanft und regelmäßig statt in großen Schüben. Ihr Tierarzt oder ein Physiotherapeut kann das richtige Maß für Ihren Hund empfehlen."
+    }
+  ],
+  "related": [
+    "degenerative-myelopathy-in-dogs",
+    "senior-dog-care-guide"
+  ]
+ },
+ "degenerative-myelopathy-in-dogs": {
+  "title": "Degenerative Myelopathie (CDRM) beim Hund: Unterstützung und Mobilitätshilfen",
+  "cat": "Neurologisch",
+  "catKey": "neuro",
+  "meta": ["7 Min. Lesezeit", "Tierärztlich fundierte Hinweise"],
+  "lead": "Die degenerative Myelopathie (DM, manchmal CDRM genannt) ist eine fortschreitende Erkrankung des Rückenmarks, die am häufigsten bei älteren Hunden großer Rassen auftritt. Sie beeinträchtigt nach und nach die Hinterbeine. Es gibt zwar keine Heilung, doch die richtige Unterstützung kann Hunde so lange wie möglich beschwerdearm, mobil und glücklich halten.",
+  "sections": [
+    {
+      "h": "Was ist degenerative Myelopathie?",
+      "html": "<p>DM ist ein langsamer Abbau der Nerven im Rückenmark, die Signale an die Hinterbeine weiterleiten. Entscheidend ist: Sie ist nicht schmerzhaft, verursacht aber mit der Zeit zunehmende Schwäche und Koordinationsverlust. Sie beginnt meist unauffällig und schreitet allmählich fort.</p>"
+    },
+    {
+      "h": "Die Anzeichen erkennen",
+      "html": "<p>Frühe Anzeichen sind leicht zu übersehen und können wie normales Altern oder Arthrose aussehen, deshalb sind sie einen Tierarztbesuch wert.</p><ul><li>Wackeligkeit oder Schwanken im Hinterteil</li><li>Schleifen oder Umknicken: Die Pfoten werden nachgezogen oder knicken nach unten um</li><li>Abgenutzte Krallen an den Hinterpfoten</li><li>Schwierigkeiten mit Treppen, Springen oder glatten Böden</li><li>Allmählich nachlassende Kraft in den Hinterbeinen</li></ul>"
+    },
+    {
+      "h": "Einen Hund mit DM unterstützen",
+      "html": "<p>Beim Management geht es darum, Beweglichkeit, Würde und Lebensqualität zu erhalten. Physiotherapie und Hydrotherapie können helfen, die Muskeln arbeiten zu lassen, und eine Reihe von Hilfsmitteln erleichtert den Alltag.</p><ul><li>Ein Hinterhand-Stützgeschirr als Hilfe beim Gehen und Aufstehen</li><li>Schuhe oder Socken gegen das Umknicken, um nachgezogene Pfoten zu schützen</li><li>Rampen und rutschfeste Böden im Haus</li><li>Sanfte, regelmäßige Bewegung und Physiotherapie zum Muskelerhalt</li><li>Weiche Liegeflächen und Hilfe, sauber und bequem zu bleiben</li></ul>"
+    }
+  ],
+  "signs": {
+    "h": "Worauf Sie achten sollten",
+    "items": ["Umknicken der Pfoten", "Schwäche hinten", "Wackeligkeit", "Abgenutzte Krallen"]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, um die Diagnose zu bestätigen und andere, behandelbare Ursachen für Schwäche der Hinterbeine wie Arthrose oder IVDD auszuschließen. Er kann Sie auch zu Physiotherapie, Hydrotherapie und den Mobilitätshilfen beraten, die am meisten nützen.",
+  "shop": {
+    "h": "Shop mobility aids & support",
+    "href": "/collections/joints-mobility"
+  },
+  "faqTitle": "Degenerative Myelopathie (CDRM) beim Hund: Antworten",
+  "faq": [
+    {
+      "q": "Ist die degenerative Myelopathie schmerzhaft?",
+      "a": "DM selbst gilt als nicht schmerzhaft, aber betroffene Hunde haben oft andere Erkrankungen wie Arthrose, die es sind. Deshalb bleiben Wohlbefinden und Schmerzmanagement wichtig."
+    },
+    {
+      "q": "Wie schnell schreitet sie fort?",
+      "a": "Das ist von Hund zu Hund verschieden, meist über viele Monate. Physiotherapie, Aktivität und unterstützende Hilfsmittel können helfen, die Lebensqualität dabei zu erhalten."
+    },
+    {
+      "q": "Welche Hilfsmittel helfen am meisten?",
+      "a": "Ein Hinterhand-Stützgeschirr, Schuhe gegen das Umknicken, Rampen und rutschfeste Böden machen im Alltag den größten Unterschied, zusammen mit Hydrotherapie und Physiotherapie."
+    }
+  ],
+  "related": [
+    "rear-leg-weakness-in-dogs",
+    "senior-dog-care-guide",
+    "ivdd-in-dogs"
+  ]
+ }
+}
