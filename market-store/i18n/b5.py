@@ -1,4 +1,5 @@
 D = {
+"Frequently asked":"Häufig gestellte","questions":"Fragen","Carrier":"Versanddienstleister","Evri, tracked":"Mit Sendungsverfolgung",
 # nav / hubs / product-by-department
 "Shop":"Shop","Shop by":"Einkaufen nach","Not sure what it is?":"Sie wissen nicht, was es ist?",
 "Each department's categories and best sellers, one tap away.":"Alle Kategorien und Bestseller jeder Abteilung, mit einem Tipp erreichbar.",

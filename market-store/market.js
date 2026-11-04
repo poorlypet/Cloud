@@ -24,6 +24,7 @@
     [/\bUK delivery\b/g, 'delivery'], [/\bUK bank holidays\b/g, 'bank holidays'],
     [/UK orders go out tracked with Evri\. Once your order has been dispatched we email you the Evri tracking details/, 'Orders go out tracked. Once your order has been dispatched we email you the tracking details'],
     [/We deliver to addresses within the United Kingdom\. If you would like to order from outside the UK, please contact us first\./, 'We deliver to the Republic of Ireland. All orders are shipped from the UK.'],
+    [/^Evri, tracked$/, 'Tracked'],
     [/We email the Evri tracking link/, 'We email the tracking link'],
     [/Usually 2 to 4 working days after dispatch/, 'Usually 2 to 5 working days'],
     [/Standard delivery usually arrives within 2 to 4 working days of dispatch\./, 'Delivery takes 2 to 5 working days in total. All orders are shipped from the UK.']
