@@ -1,4 +1,5 @@
 D = {
+"Key":"Die wichtigsten","recoveries":"Genesungen","What it’s made of":"Woraus es besteht","Choose your delivery frequency":"Lieferhäufigkeit wählen",
 "Frequently asked":"Häufig gestellte","questions":"Fragen","Carrier":"Versanddienstleister","Evri, tracked":"Mit Sendungsverfolgung",
 # nav / hubs / product-by-department
 "Shop":"Shop","Shop by":"Einkaufen nach","Not sure what it is?":"Sie wissen nicht, was es ist?",
@@ -111,6 +112,7 @@ D = {
 "Cat digestive supplement":"Katzen-Verdauungsergänzung","Cat feeding enrichment":"Katzen-Fütterungsbeschäftigung","Cat flea and tick spray":"Katzen-Floh- und Zeckenspray",
 }
 RULES = [
+ (r"^Photos of real dogs using (.+)\.$", r"Fotos echter Hunde bei der Anwendung von \1."),
  (r"^Shop all (.+) ›$", r"Alle \1 ansehen ›"),
  (r"^Next in (.+): (.+)$", r"Weiter in \1: \2"),
  (r"^Results for “(.+)”$", r"Ergebnisse für „\1“"),
