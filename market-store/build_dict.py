@@ -2,7 +2,7 @@
 import importlib, json, re, sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'i18n'))
 D = {}; RULES = []; WORDS = []
-for n in ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9']:
+for n in ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']:
     if not os.path.exists(os.path.join(os.path.dirname(__file__), 'i18n', n + '.py')): continue
     m = importlib.import_module(n)
     D.update(getattr(m, 'D', {}))
