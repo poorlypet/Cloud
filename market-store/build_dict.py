@@ -11,6 +11,8 @@ for n in ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11']:
 # fragment mappings that collide with other pages; these headings are handled whole in market.js (BLOCKS)
 for k in ['Symptom','guide','Dental','care','for','Built','Here','every','dog.','Top','Keep','reading','would','not','give','will','sell','brands']:
     D.pop(k, None)
+for k in list(D):
+    if '&amp;' in k: D[k.replace('&amp;', '&')] = D[k].replace('&amp;', '&')
 def jsre(p): return '/' + p.replace('/', '\\/') + '/'
 def jsrep(r): return json.dumps(re.sub(r'\\(\d)', r'$\1', r), ensure_ascii=False)
 out = ('/* de-dict.js: German text for the interface. Exact phrases (PP_DE) and patterns with numbers in them (PP_DE_RULES).\n'
