@@ -63,7 +63,9 @@
     var n = norm(s);
     if (!n) return s;
     var out = null;
+    var qm = /^([\u201c"])(.+)([\u201d"])$/.exec(n);
     if (Object.prototype.hasOwnProperty.call(DICT, n)) out = DICT[n];
+    else if (qm && Object.prototype.hasOwnProperty.call(DICT, qm[2])) out = '\u201e' + DICT[qm[2]] + '\u201c';
     else {
       for (var i = 0; i < RULES.length; i++) {
         var r = RULES[i];
