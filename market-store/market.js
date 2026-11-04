@@ -18,6 +18,16 @@
   var DICT = (DE && window.PP_DE) || {};
   var RULES = (DE ? window.PP_DE_RULES : window.PP_IE_RULES) || [];
 
+  // Ireland: English copy, with the UK-only wording and numbers changed
+  var IE_FIX = [
+    [/\bFree standard UK delivery\b/g, 'Free standard delivery'], [/\bFree UK delivery\b/g, 'Free delivery'], [/\bStandard UK delivery\b/g, 'Standard delivery'],
+    [/\bUK delivery\b/g, 'delivery'], [/\bUK bank holidays\b/g, 'bank holidays'],
+    [/UK orders go out tracked with Evri\. Once your order has been dispatched we email you the Evri tracking details/, 'Orders go out tracked. Once your order has been dispatched we email you the tracking details'],
+    [/We deliver to addresses within the United Kingdom\. If you would like to order from outside the UK, please contact us first\./, 'We deliver to the Republic of Ireland. All orders are shipped from the UK.'],
+    [/We email the Evri tracking link/, 'We email the tracking link'],
+    [/Usually 2 to 4 working days after dispatch/, 'Usually 2 to 5 working days'],
+    [/Standard delivery usually arrives within 2 to 4 working days of dispatch\./, 'Delivery takes 2 to 5 working days in total. All orders are shipped from the UK.']
+  ];
   /* ---------- helpers ---------- */
   function norm(s) { return String(s).replace(/\s+/g, ' ').trim(); }
   function prefix(u) {
@@ -34,6 +44,8 @@
   }
   var PRICE = /£\s?(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d{1,2}))?/g;
   function money(s) {
+    // the delivery numbers in the static copy are the UK ones: use the market's own
+    s = s.replace(/£39(?![\d.,])/g, '£' + FREE).replace(/£3\.99(?!\d)/g, '£' + SHIP.toFixed(2));
     return s.replace(PRICE, function (m, w, d) {
       if (d != null && d.length === 1) d += '0';
       // whole amounts with no pence (for example the free delivery amount) keep no decimals
@@ -51,6 +63,15 @@
         var r = RULES[i];
         if (r[0].test(n)) { out = n.replace(r[0], r[1]); break; }
       }
+    }
+    if (out == null && DE && /^(& cat|cat) /i.test(n)) {
+      var w = n.replace(/^& cat\b/i, '& Katze').replace(/^cat\b/i, 'Katzen-'), WL = window.PP_DE_WORDS || [];
+      for (var j = 0; j < WL.length; j++) w = w.replace(WL[j][0], WL[j][1]);
+      if (w !== n) out = w;
+    }
+    if (out == null && !DE) {
+      var iv = n; IE_FIX.forEach(function (r) { iv = iv.replace(r[0], r[1]); });
+      if (iv !== n) out = iv;
     }
     if (out == null) return s;
     var lead = (/^\s*/.exec(s) || [''])[0], trail = (/\s*$/.exec(s) || [''])[0];
@@ -109,7 +130,8 @@
   function fixLinks(root) {
     var list = (root.querySelectorAll ? root.querySelectorAll('a[href^="/"],form[action^="/"]') : []);
     [].forEach.call(list, function (e) {
-      if (e.hasAttribute('data-market-choice')) return;   // the country switcher keeps its own links
+      if (e.hasAttribute('data-market-choice')) return;
+      if (/\/pages\/(offers|subscription|poorly-pet-club)(\/|\?|#|$)/.test(e.getAttribute('href') || '')) { e.style.setProperty('display', 'none', 'important'); if (e.parentNode && e.parentNode.tagName === 'LI') e.parentNode.style.setProperty('display', 'none', 'important'); }   // the country switcher keeps its own links
       var attr = e.tagName === 'FORM' ? 'action' : 'href', v = e.getAttribute(attr), p = prefix(v);
       if (p !== v) e.setAttribute(attr, p);
     });

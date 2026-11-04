@@ -4,7 +4,7 @@
 <script>window.PP_MARKET={code:{{ mk | json }},currency:"EUR",lang:{% if mk == 'DE' %}"de"{% else %}"en"{% endif %},root:{{ routes.root_url | json }}};</script>
 <style>
 /* UK-only features, hidden in the Germany and Ireland stores */
-#club-btn,#clubdrawer,#club-sec,.club-promo,a[href*="/pages/poorly-pet-club"],a[href*="/pages/subscription"],a[href*="/pages/offers"],a[href*="/pages/track-order"]{display:none!important}
+#club-btn,#clubdrawer,#club-sec,.club-promo,a[href*="/pages/poorly-pet-club"],a[href*="/pages/subscription"],a[href*="/pages/offers"],button.nv.offers,li:has(>button.nv.offers),#mega-offers,.n2-bm,.pb-offer,.pb-tab{display:none!important}
 </style>
 {%- else -%}
 <script>window.PP_MARKET=null;</script>
