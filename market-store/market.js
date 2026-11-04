@@ -143,6 +143,20 @@
   }
 
   /* ---------- 3. text on the page ---------- */
+  // whole headings and labels that arrive split across several text nodes: matched on the element's full text
+  var BLOCKS = DE ? {
+    'Dental care': 'Zahnpflege', 'Top brands': 'Beliebte Marken', 'Symptom guide': 'Symptom-Ratgeber', 'Keep reading': 'Weiterlesen',
+    'Built for Marble. Here for every dog.': 'F\u00fcr Marble gebaut. <em>F\u00fcr jeden Hund da.</em>'
+  } : {};
+  function fixBlocks(root) {
+    var els = root.querySelectorAll ? root.querySelectorAll('h1,h2,h3,h4,a,button,span') : [];
+    [].forEach.call(els, function (e) {
+      if (e.children.length > 6) return;
+      var t = norm(e.textContent);
+      if (t.length < 40 && Object.prototype.hasOwnProperty.call(BLOCKS, t) && e.innerHTML.indexOf('data-mk') < 0) e.innerHTML = BLOCKS[t];
+      else if (t.length >= 40 && BLOCKS[t] && /^H[1-4]$/.test(e.tagName)) e.innerHTML = BLOCKS[t];
+    });
+  }
   var ATTRS = ['placeholder', 'aria-label', 'title', 'alt'];
   function fixNode(node) {
     if (node.nodeType === 3) {
@@ -170,7 +184,7 @@
   function flush() {
     scheduled = false;
     var q = queue; queue = [];
-    q.forEach(function (n) { if (n.isConnected !== false) { fixNode(n); if (n.nodeType === 1) fixLinks(n); } });
+    q.forEach(function (n) { if (n.isConnected !== false) { if (DE && n.nodeType === 1) fixBlocks(n); fixNode(n); if (n.nodeType === 1) fixLinks(n); } });
     fixTitle();
   }
   function fixTitle() {
