@@ -1,0 +1,578 @@
+{
+ "wound-care-for-dogs": {
+  "title": "Wundversorgung beim Hund zu Hause",
+  "cat": "Basispflege",
+  "catKey": "essential",
+  "meta": [
+   "6 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Schnitte, Schürfwunden und kleine Verletzungen gehören zum Leben eines aktiven Hundes dazu. Zu wissen, wie Sie eine kleine Wunde zu Hause reinigen und schützen, die Heilung unterstützen und erkennen, wann der Tierarzt gefragt ist, ist für jeden Hundehalter wirklich nützlich. Hier ist ein praktischer Ratgeber.",
+  "sections": [
+   {
+    "h": "Erste Schritte bei einer kleinen Wunde",
+    "html": "<p>Bei kleinen, sauberen Schürfwunden und Schnitten reicht meist eine sanfte Versorgung zu Hause. Wichtig ist, die Stelle zu reinigen, Ihren Hund daran zu hindern, sie zu verschlimmern, und die Heilung im Auge zu behalten. Alles, was tief ist, stark blutet oder an einer schwierigen Stelle liegt, gehört zum Tierarzt.</p>"
+   },
+   {
+    "h": "Pflege einer heilenden Wunde",
+    "html": "<p>Ziel ist eine saubere, geschützte und ungestörte Wunde.</p><ul><li>Reinigen Sie die Stelle sanft und halten Sie sie sauber und trocken</li><li>Verhindern Sie Lecken und Knabbern, ein Recovery-Anzug ist besser als ein Trichter</li><li>Prüfen Sie täglich auf Rötung, Schwellung, Wärme, Ausfluss oder Geruch</li><li>Halten Sie Ihren Hund ruhig und schränken Sie die Aktivität während der Heilung ein</li></ul>"
+   },
+   {
+    "h": "Die Heilung gut unterstützen",
+    "html": "<p>Schon ein wenig Unterstützung bewirkt viel.</p><ul><li>Ein weicher Recovery-Anzug oder ein geeigneter Verband schützt die Stelle</li><li>Ein sauberer, bequemer Ruheplatz</li><li>Beruhigende Pflege bei Reizungen in der Umgebung</li><li>Befolgen Sie die Wundversorgungshinweise Ihres Tierarztes genau</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Schnitt oder Schürfwunde",
+    "Lecken an der Wunde",
+    "Rötung",
+    "Schwellung"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt bei jeder Wunde, die tief ist, stark blutet, klafft, verschmutzt ist, in der Nähe der Augen liegt oder Anzeichen einer Infektion zeigt (Rötung, Schwellung, Wärme, Ausfluss oder Geruch). Im Zweifel lassen Sie sie prüfen, kleine Probleme bleiben klein, wenn sie früh behandelt werden.",
+  "shop": {
+   "h": "Wundpflege & Erholung entdecken",
+   "href": "/collections/recovery-immunity"
+  },
+  "faqTitle": "Wundversorgung beim Hund zu Hause, beantwortet",
+  "faq": [
+   {
+    "q": "Kann ich die Wunde meines Hundes selbst reinigen?",
+    "a": "Bei kleinen, sauberen Schürfwunden ist sanftes Reinigen und Schützen zu Hause in der Regel in Ordnung. Tiefere oder infizierte Wunden brauchen tierärztliche Versorgung."
+   },
+   {
+    "q": "Sollte ich einen Trichter oder einen Recovery-Anzug verwenden?",
+    "a": "Ein weicher Recovery-Anzug ist bei Wunden an Körper und Gliedmaßen oft bequemer und weniger belastend als ein Trichter und verhindert dennoch das Lecken."
+   },
+   {
+    "q": "Woran erkenne ich, ob eine Wunde infiziert ist?",
+    "a": "Achten Sie auf zunehmende Rötung, Schwellung, Wärme, Ausfluss oder einen üblen Geruch, dann ist es Zeit für den Tierarzt."
+   }
+  ],
+  "related": [
+   "post-surgery-recovery-for-dogs",
+   "recovery-suits-vs-cones"
+  ]
+ },
+ "dog-pacing-restless": {
+  "title": "Warum läuft mein Hund unruhig auf und ab?",
+  "cat": "Verhalten & Stimmung",
+  "catKey": "behaviour",
+  "meta": [
+   "5 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Ein Hund, der auf und ab läuft, sich im Kreis dreht oder einfach nicht zur Ruhe kommt, ist oft besorgt oder hat Unbehagen. Unruhe ist ein Signal, dem man Beachtung schenken sollte: Sie kann verhaltensbedingt sein, deutet aber manchmal auf Beschwerden oder ein gesundheitliches Problem hin. So gehen Sie der Sache auf den Grund.",
+  "sections": [
+   {
+    "h": "Häufige Ursachen für Unruhe",
+    "html": "<p>Auf und ab laufen und Nicht-zur-Ruhe-Kommen entstehen meist durch Stress oder Angst, können aber auch Schmerzen oder Unbehagen widerspiegeln, den Drang, sich zu lösen, zu wenig körperliche oder geistige Auslastung oder bei älteren Hunden altersbedingte kognitive Veränderungen.</p>"
+   },
+   {
+    "h": "Worauf Sie achten sollten",
+    "html": "<p>Achten Sie auf den Zusammenhang und auf weitere Anzeichen.</p><ul><li>Auf und ab laufen, Kreisen oder wiederholtes Neulegen</li><li>Unfähigkeit zu entspannen, auch in ruhiger Umgebung</li><li>Hecheln oder Winseln ohne erkennbaren Grund</li><li>Unruhe, die nachts schlimmer ist</li><li>Andere Veränderungen bei Appetit, Toilettengängen oder Verhalten</li></ul>"
+   },
+   {
+    "h": "So können Sie helfen",
+    "html": "<p>Sorgen Sie zuerst für die Grundlagen und fördern Sie dann die Ruhe.</p><ul><li>Achten Sie auf ausreichend Bewegung und Beschäftigung</li><li>Schaffen Sie eine ruhige, bequeme und vorhersehbare Umgebung</li><li>Bieten Sie einen sicheren Rückzugsort zum Zur-Ruhe-Kommen</li><li>Nutzen Sie beruhigende Unterstützung für ängstliche Hunde</li><li>Schließen Sie Beschwerden aus, besonders bei älteren Hunden</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Auf und ab laufen",
+    "Kommt nicht zur Ruhe",
+    "Hecheln",
+    "Nachts schlimmer"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn die Unruhe neu ist, anhält oder mit anderen Veränderungen einhergeht, denn Schmerzen und mehrere Erkrankungen können sie verursachen, und es ist wichtig, diese auszuschließen, besonders bei Senioren.",
+  "shop": {
+   "h": "Beruhigende Unterstützung entdecken",
+   "href": "/collections/calm-anxiety"
+  },
+  "faqTitle": "Warum läuft mein Hund unruhig auf und ab?, beantwortet",
+  "faq": [
+   {
+    "q": "Warum ist mein Hund plötzlich nachts unruhig?",
+    "a": "Nächtliche Unruhe kann auf Unbehagen, Angst oder bei älteren Hunden auf kognitive Veränderungen hinweisen. Wenn sie neu ist oder anhält, lohnt sich ein Besuch beim Tierarzt."
+   },
+   {
+    "q": "Könnte Auf-und-ab-Laufen bedeuten, dass mein Hund Schmerzen hat?",
+    "a": "Ja, Unbehagen ist eine häufige und leicht übersehene Ursache für Unruhe und sollte daher immer ausgeschlossen werden, besonders bei Senioren."
+   },
+   {
+    "q": "Helfen beruhigende Mittel einem unruhigen Hund?",
+    "a": "Bei ängstlichen Hunden kann beruhigende Unterstützung beim Zur-Ruhe-Kommen helfen, zusammen mit ausreichend Bewegung, einer ruhigen Umgebung und dem Ausschluss körperlicher Ursachen."
+   }
+  ],
+  "related": [
+   "dog-anxiety-and-stress",
+   "separation-anxiety-in-dogs",
+   "senior-dog-care-guide"
+  ]
+ },
+ "reactive-dog-calming": {
+  "title": "Einen übererregten oder reaktiven Hund beruhigen",
+  "cat": "Verhalten & Stimmung",
+  "catKey": "behaviour",
+  "meta": [
+   "7 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Ein Hund, der bei anderen Hunden, Menschen oder Bewegung in die Leine springt, bellt oder „ausrastet“, ist oft übererregt und überfordert, statt aggressiv zu sein. Reaktivität ist weit verbreitet und mit Geduld, den richtigen Techniken und Unterstützung gut in den Griff zu bekommen. So helfen Sie Ihrem Hund, sich ruhiger zu fühlen und zu verhalten.",
+  "sections": [
+   {
+    "h": "Reaktivität verstehen",
+    "html": "<p>Reaktivität ist eine übersteigerte Reaktion auf einen Auslöser, oft aus Angst, Frust oder Übererregung. Das Erregungsniveau des Hundes schnellt so hoch, dass er nicht mehr denken oder auf Sie reagieren kann. Ziel ist nicht Bestrafung, sondern dem Hund zu helfen, unterhalb der Schwelle zu bleiben, an der er kippt.</p>"
+   },
+   {
+    "h": "Wie sich das zeigen kann",
+    "html": "<p>Reaktivität folgt einem erkennbaren Muster rund um Auslöser.</p><ul><li>In die Leine springen, Bellen oder Drehen bei anderen Hunden, Menschen oder Verkehr</li><li>An einem Auslöser „kleben“ und sich nicht auf Sie konzentrieren können</li><li>Schwierigkeiten, nach einem aufregenden oder stressigen Ereignis zur Ruhe zu kommen</li><li>Starkes Ziehen und generell hohe Erregung</li></ul>"
+   },
+   {
+    "h": "Einem reaktiven Hund helfen",
+    "html": "<p>Ruhe, Abstand und Beständigkeit sind Ihre Werkzeuge.</p><ul><li>Schaffen Sie Abstand zu Auslösern, damit Ihr Hund unter der Schwelle bleibt</li><li>Belohnen Sie ruhige Konzentration auf Sie mit hochwertigen Leckerli</li><li>Halten Sie Spaziergänge vorhersehbar und überfluten Sie Ihren Hund nicht mit Auslösern</li><li>Sorgen Sie für ausreichend Ruhe, müde Hunde sind reaktiver</li><li>Nutzen Sie beruhigende Unterstützung und ziehen Sie eine Zusammenarbeit mit einem Verhaltensberater in Betracht</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "In die Leine springen",
+    "Bellen bei Auslösern",
+    "Kommt nicht zur Ruhe",
+    "Starkes Ziehen"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Ein qualifizierter, belohnungsbasiert arbeitender Verhaltensberater ist bei Reaktivität von unschätzbarem Wert. Ihr Tierarzt kann außerdem Schmerzen ausschließen (ein häufiger verborgener Auslöser) und besprechen, ob beruhigende Unterstützung Ihrem Hund das Lernen erleichtern würde.",
+  "shop": {
+   "h": "Beruhigende Unterstützung entdecken",
+   "href": "/collections/calm-anxiety"
+  },
+  "faqTitle": "Einen übererregten oder reaktiven Hund beruhigen, beantwortet",
+  "faq": [
+   {
+    "q": "Ist mein reaktiver Hund aggressiv?",
+    "a": "Oft nicht, bei Reaktivität geht es meist um Angst, Frust oder Übererregung und nicht um den Wunsch, jemandem zu schaden. Ein Verhaltensberater kann Ihnen helfen, die Auslöser Ihres Hundes zu verstehen."
+   },
+   {
+    "q": "Kann Ruhe Reaktivität wirklich verringern?",
+    "a": "Ja, übermüdete, überreizte Hunde sind deutlich reaktiver. Viel qualitativ gute Ruhe hilft tatsächlich."
+   },
+   {
+    "q": "Helfen beruhigende Mittel reaktiven Hunden?",
+    "a": "Beruhigende Unterstützung kann das Grunderregungsniveau senken, sodass Ihr Hund leichter lernt und besser zurechtkommt, zusammen mit einem belohnungsbasierten Trainingsplan."
+   }
+  ],
+  "related": [
+   "dog-anxiety-and-stress",
+   "dog-pacing-restless",
+   "firework-noise-fear-dogs"
+  ]
+ },
+ "firework-noise-fear-dogs": {
+  "title": "Hunden bei Angst vor Feuerwerk und Lärm helfen",
+  "cat": "Verhalten & Stimmung",
+  "catKey": "behaviour",
+  "meta": [
+   "7 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Für viele Hunde ist die Feuerwerkszeit wirklich beängstigend. Geräuschphobien sind weit verbreitet, und einem verängstigten Hund kann man nicht einfach sagen, er solle sich keine Sorgen machen. Mit Vorbereitung und der richtigen Unterstützung lassen sich laute Nächte aber deutlich weniger belastend gestalten. So geht es.",
+  "sections": [
+   {
+    "h": "Warum Geräusche Hunde ängstigen",
+    "html": "<p>Hunde hören weit empfindlicher als wir, und plötzliche, unvorhersehbare laute Geräusche wie Feuerwerk oder Donner können eine echte Angstreaktion auslösen. Manche Hunde sind von Natur aus empfindlicher, und die Angst kann mit der Zeit zunehmen, wenn beängstigende Erlebnisse nicht aufgefangen werden.</p>"
+   },
+   {
+    "h": "Anzeichen von Geräuschangst",
+    "html": "<p>Angst zeigt sich körperlich und im Verhalten.</p><ul><li>Zittern, Hecheln oder Sabbern</li><li>Verstecken, Auf-und-ab-Laufen oder Fluchtversuche</li><li>Anhänglichkeit oder Suche nach Beruhigung</li><li>Bellen, Winseln oder Weigerung, nach draußen zu gehen</li><li>Zerstörerisches Verhalten in Panik</li></ul>"
+   },
+   {
+    "h": "Vorbereiten und helfen",
+    "html": "<p>Richten Sie einen sicheren Rückzugsort ein und planen Sie voraus.</p><ul><li>Schaffen Sie eine gemütliche Höhle, in der sich Ihr Hund sicher fühlt</li><li>Schließen Sie die Vorhänge und schalten Sie Hintergrundgeräusche ein, um Knalle zu dämpfen</li><li>Bleiben Sie ruhig und beruhigend, bestrafen Sie ängstliches Verhalten niemals</li><li>Nutzen Sie beruhigende Hilfen oder eine Druckweste, und zwar schon vor dem Lärm</li><li>Gehen Sie an Feuerwerksabenden vor Einbruch der Dunkelheit Gassi und lassen Sie Ihren Hund sich lösen</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Zittern",
+    "Verstecken",
+    "Auf und ab laufen",
+    "Hecheln"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Wenn die Geräuschangst Ihres Hundes stark ist oder sich verschlimmert, sprechen Sie vor der Feuerwerkszeit mit Ihrem Tierarzt oder einem Verhaltensberater. Sie können einen langfristigen Desensibilisierungsplan empfehlen und, falls nötig, Medikamente, mit denen beruhigende Hilfen zusammenwirken.",
+  "shop": {
+   "h": "Beruhigende Unterstützung & Westen entdecken",
+   "href": "/collections/calm-anxiety"
+  },
+  "faqTitle": "Hunden bei Angst vor Feuerwerk und Lärm helfen, beantwortet",
+  "faq": [
+   {
+    "q": "Wie kann ich meinen Hund während des Feuerwerks beruhigen?",
+    "a": "Schaffen Sie eine sichere Höhle, dämpfen Sie den Lärm, bleiben Sie ruhig und nutzen Sie beruhigende Unterstützung, die Sie vor Beginn des Feuerwerks einsetzen. Vorausplanung macht einen großen Unterschied."
+   },
+   {
+    "q": "Sollte ich einen verängstigten Hund trösten?",
+    "a": "Ja, einen verängstigten Hund zu trösten „belohnt“ die Angst nicht. Ruhige Zuwendung und ein geschützter Raum helfen ihm, damit umzugehen. Bestrafen Sie ängstliches Verhalten niemals."
+   },
+   {
+    "q": "Funktionieren Druckwesten?",
+    "a": "Viele Hunde empfinden den sanften, gleichmäßigen Druck bei stressigen Ereignissen wie Feuerwerk als beruhigend, besonders zusammen mit einer ruhigen Umgebung."
+   }
+  ],
+  "related": [
+   "dog-anxiety-and-stress",
+   "separation-anxiety-in-dogs",
+   "reactive-dog-calming"
+  ]
+ },
+ "yeast-infections-smelly-skin-dogs": {
+  "title": "Hefepilzinfektionen und übel riechende Haut beim Hund",
+  "cat": "Haut & Allergien",
+  "catKey": "skin",
+  "meta": [
+   "5 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Wenn Ihr Hund einen eigentümlich muffigen Geruch nach „Maischips“ entwickelt hat, zusammen mit fettiger, juckender Haut, könnte ein Hefepilz-Überwuchs der Grund sein. Hefe lebt natürlicherweise auf der Haut, aber bestimmte Bedingungen lassen sie sich vermehren, und das Ergebnis ist unangenehm und riecht schlecht. So gehen Sie dagegen vor.",
+  "sections": [
+   {
+    "h": "Was ist ein Hefepilz-Überwuchs?",
+    "html": "<p>Hefe ist auf gesunder Haut normalerweise in kleinen Mengen vorhanden. Probleme beginnen, wenn etwas, oft Allergien, Feuchtigkeit oder eine warme Hautfalte, sie überwuchern lässt. Sie betrifft meist Pfoten, Ohren, Achseln, Hautfalten und Bauch und verursacht Juckreiz, fettige Haut und diesen verräterischen Geruch.</p>"
+   },
+   {
+    "h": "Worauf Sie achten sollten",
+    "html": "<p>Die Kombination aus Geruch und Juckreiz ist ein starker Hinweis.</p><ul><li>Ein muffiger, hefiger Geruch oder „Maischips“-Geruch</li><li>Fettige, schuppige oder verdickte Haut</li><li>Starker Juckreiz, Lecken und Knabbern</li><li>Braune Verfärbung des Fells, besonders an den Pfoten</li><li>Wiederkehrende Ohrenprobleme</li></ul>"
+   },
+   {
+    "h": "Hefige Haut in den Griff bekommen",
+    "html": "<p>Halten Sie die Haut sauber und trocken und gehen Sie den Auslöser an.</p><ul><li>Halten Sie Hautfalten und Pfoten sauber und gründlich trocken</li><li>Verwenden Sie beruhigende, juckreizlindernde Pflege auf den betroffenen Stellen</li><li>Behandeln Sie zugrunde liegende Allergien, ein sehr häufiger Auslöser</li><li>Unterstützen Sie die Hautbarriere mit Omega-Ölen</li><li>Lassen Sie nach dem Baden oder Schwimmen keine Feuchtigkeit zurückbleiben</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Muffiger Geruch",
+    "Fettige Haut",
+    "Juckreiz",
+    "Verfärbtes Fell"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, um eine Hefepilzinfektion bestätigen zu lassen und die richtige Behandlung zu erhalten, ein Überwuchs braucht oft spezielle medizinische Produkte, und wiederkehrende Fälle deuten auf eine zugrunde liegende Ursache wie Allergien hin, die angegangen werden sollte.",
+  "shop": {
+   "h": "Haut- & Fellpflege entdecken",
+   "href": "/collections/skin-coat"
+  },
+  "faqTitle": "Hefepilzinfektionen und übel riechende Haut beim Hund, beantwortet",
+  "faq": [
+   {
+    "q": "Warum riecht mein Hund muffig?",
+    "a": "Ein muffiger Geruch oder „Maischips“-Geruch bei fettiger, juckender Haut deutet oft auf einen Hefepilz-Überwuchs hin, den Ihr Tierarzt bestätigen und behandeln kann."
+   },
+   {
+    "q": "Hängt eine Hefepilzinfektion mit Allergien zusammen?",
+    "a": "Sehr oft, Allergien stören die Haut und lassen die Hefe überwuchern. Deshalb hilft es, die zugrunde liegende Allergie anzugehen, um Rückfälle zu verhindern."
+   },
+   {
+    "q": "Wie verhindere ich, dass es wiederkommt?",
+    "a": "Halten Sie Haut und Falten sauber und trocken, unterstützen Sie die Hautbarriere und arbeiten Sie mit Ihrem Tierarzt daran, die zugrunde liegende Ursache in den Griff zu bekommen."
+   }
+  ],
+  "related": [
+   "itchy-skin-allergies-in-dogs",
+   "ear-infections-in-dogs",
+   "dry-flaky-skin-dandruff-dogs"
+  ]
+ },
+ "ear-infections-in-dogs": {
+  "title": "Ohrenentzündungen beim Hund: Anzeichen und Pflege",
+  "cat": "Haut & Allergien",
+  "catKey": "skin",
+  "meta": [
+   "6 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Ohrenentzündungen gehören zu den häufigsten Gründen, warum Hunde zum Tierarzt müssen, und sie hängen oft mit Allergien zusammen. Sie jucken, schmerzen und kehren gern wieder, aber mit schneller Behandlung und guter Routinepflege können Sie die Ohren Ihres Hundes gesund und angenehm halten.",
+  "sections": [
+   {
+    "h": "Warum Hunde Ohrenprobleme bekommen",
+    "html": "<p>Der Gehörgang eines Hundes ist lang und L-förmig, was Feuchtigkeit und Ohrenschmalz festhält, ideale Bedingungen für Hefen und Bakterien. Allergien sind ein sehr häufiger zugrunde liegender Auslöser, ebenso Feuchtigkeit vom Schwimmen, Grassamen und die Ohrform (Hunde mit Schlappohren sind anfälliger).</p>"
+   },
+   {
+    "h": "Anzeichen einer Ohrenentzündung",
+    "html": "<p>Ohren, die Ihren Hund stören, sind meist offensichtlich, wenn man die Anzeichen kennt.</p><ul><li>Kopfschütteln oder Kopfschiefhaltung</li><li>Kratzen oder Pföteln an den Ohren</li><li>Ein unangenehmer Geruch aus den Ohren</li><li>Gerötete, entzündete oder schmalzige Ohrmuscheln und Gehörgänge</li><li>Schmerzen bei Berührung der Ohren</li></ul>"
+   },
+   {
+    "h": "Ohren gesund halten",
+    "html": "<p>Vorbeugung und sanfte Routinepflege verringern Rückfälle.</p><ul><li>Trocknen Sie die Ohren nach dem Schwimmen oder Baden gründlich</li><li>Kontrollieren Sie die Ohren regelmäßig, besonders bei Hunden mit Schlappohren</li><li>Halten Sie das Fell um die Ohröffnung ordentlich</li><li>Behandeln Sie zugrunde liegende Allergien, eine häufige Grundursache</li><li>Stecken Sie nichts tief in den Gehörgang</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Kopfschütteln",
+    "Kratzen an den Ohren",
+    "Geruch",
+    "Gerötete Ohrmuscheln"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie bei Verdacht auf eine Ohrenentzündung zum Tierarzt, es braucht die richtige Reinigung und Medikation, und es ist wichtig, keine übrig gebliebenen oder für Menschen bestimmten Produkte zu verwenden. Wiederkehrende Entzündungen deuten meist auf eine zugrunde liegende Ursache wie Allergien hin, die untersucht werden sollte.",
+  "shop": {
+   "h": "Ohren- & Hautpflege entdecken",
+   "href": "/collections/skin-coat"
+  },
+  "faqTitle": "Ohrenentzündungen beim Hund, beantwortet",
+  "faq": [
+   {
+    "q": "Warum bekommt mein Hund immer wieder Ohrenentzündungen?",
+    "a": "Wiederkehrende Entzündungen haben meist eine zugrunde liegende Ursache, am häufigsten Allergien. Wenn Sie diese zusammen mit guter Ohrenpflege angehen, treten weniger Schübe auf."
+   },
+   {
+    "q": "Kann ich eine Ohrenentzündung zu Hause behandeln?",
+    "a": "Routinemäßiges Reinigen und Trocknen hilft, Problemen vorzubeugen, aber eine akute Entzündung braucht die Diagnose Ihres Tierarztes und die richtige Medikation."
+   },
+   {
+    "q": "Sollte ich die Ohren meines Hundes regelmäßig reinigen?",
+    "a": "Sanfte Routinepflege der Ohren beugt Problemen vor, besonders bei Hunden mit Schlappohren und bei Schwimmern, aber stochern Sie niemals tief im Gehörgang."
+   }
+  ],
+  "related": [
+   "itchy-skin-allergies-in-dogs",
+   "seasonal-allergies-in-dogs",
+   "yeast-infections-smelly-skin-dogs"
+  ]
+ },
+ "omega-oils-for-dogs-skin-coat-and-beyond": {
+  "title": "Omega-Öle für Hunde: Haut, Fell und mehr",
+  "cat": "Haut & Allergien",
+  "catKey": "skin",
+  "meta": [
+   "5 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Wenn Ihr Hund trockene, juckende Haut oder ein stumpfes Fell hat, gehören Omega-Öle zu den beliebtesten und angesehensten Nahrungsergänzungen, zu denen man greifen kann. Aber sie können mehr, als nur Glanz zu verleihen. Hier erfahren Sie, was Omega-Öle sind, wobei sie helfen und wie Sie sie gut einsetzen.",
+  "sections": [
+   {
+    "h": "Was sind Omega-Öle?",
+    "html": "<p>Omega-3 und Omega-6 sind essenzielle Fettsäuren, Fette, die Ihr Hund über die Nahrung aufnehmen muss, weil er nicht genug selbst bilden kann. Sie sind Bausteine für gesunde Haut und spielen eine Rolle bei der Regulierung von Entzündungen, weshalb sie so oft bei juckender, gereizter Haut empfohlen werden.</p>"
+   },
+   {
+    "h": "Wobei sie helfen",
+    "html": "<p>Die Vorteile gehen über ein glänzendes Fell hinaus.</p><ul><li>Sie unterstützen die Hautbarriere und verringern Trockenheit und Reizungen</li><li>Sie verbessern Zustand und Glanz des Fells</li><li>Sie helfen, juckende, entzündete Haut im Rahmen eines umfassenderen Plans zu beruhigen</li><li>Sie unterstützen Gelenke, Herz und das allgemeine Wohlbefinden</li></ul>"
+   },
+   {
+    "h": "Omega-Öle richtig einsetzen",
+    "html": "<p>Bei jedem Nahrungsergänzungsmittel ist Regelmäßigkeit entscheidend.</p><ul><li>Wählen Sie ein hochwertiges Omega-Präparat, das für Hunde gemacht ist</li><li>Geben Sie es regelmäßig, die Wirkung baut sich über mehrere Wochen auf</li><li>Verwenden Sie es zusammen mit einer ausgewogenen Ernährung</li><li>Führen Sie es schrittweise ein, damit sich der Magen daran gewöhnen kann</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Trockene Haut",
+    "Stumpfes Fell",
+    "Juckreiz",
+    "Schuppige Haut"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Wenn die Haut Ihres Hundes stark juckt, gerötet, verletzt ist oder riecht, gehen Sie zum Tierarzt, Omega-Öle unterstützen gesunde Haut, aber zugrunde liegende Allergien oder Infektionen brauchen ebenfalls eine richtige Behandlung.",
+  "shop": {
+   "h": "Omega- & Fellunterstützung entdecken",
+   "href": "/collections/skin-coat"
+  },
+  "faqTitle": "Omega-Öle für Hunde, beantwortet",
+  "faq": [
+   {
+    "q": "Wie lange brauchen Omega-Öle, bis sie wirken?",
+    "a": "Die Vorteile für Haut und Fell bauen sich meist über mehrere Wochen regelmäßiger Anwendung auf, geben Sie ihnen also Zeit."
+   },
+   {
+    "q": "Können Omega-Öle bei juckender Haut helfen?",
+    "a": "Sie unterstützen die Hautbarriere und können im Rahmen eines umfassenderen Plans helfen, Reizungen zu beruhigen, zusammen mit der Behandlung der zugrunde liegenden Ursache."
+   },
+   {
+    "q": "Sind Omega-Öle auch gut für die Gelenke?",
+    "a": "Vor allem Omega-3-Fettsäuren unterstützen Gelenke und das allgemeine Wohlbefinden, ein schöner Zusatznutzen, wenn Sie sie für die Haut einsetzen."
+   }
+  ],
+  "related": [
+   "itchy-skin-allergies-in-dogs",
+   "dry-flaky-skin-dandruff-dogs",
+   "seasonal-allergies-in-dogs"
+  ]
+ },
+ "seasonal-allergies-in-dogs": {
+  "title": "Saisonale Allergien beim Hund: Juckreiz erkennen und lindern",
+  "cat": "Haut & Allergien",
+  "catKey": "skin",
+  "meta": [
+   "6 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Beginnt Ihr Hund jedes Frühjahr oder jeden Sommer zu kratzen? Saisonale Allergien, meist gegen Pollen, sind äußerst verbreitet und können juckenden Hunden das Leben schwer machen. Auch wenn es keine schnelle Heilung gibt, hält eine konsequente Routine den Juckreiz in den schlimmsten Monaten unter Kontrolle.",
+  "sections": [
+   {
+    "h": "Was sind saisonale Allergien?",
+    "html": "<p>Wie Menschen mit Heuschnupfen können Hunde auf Allergene in der Luft reagieren, etwa Gräser-, Baum- und Unkrautpollen, die zu bestimmten Jahreszeiten ihren Höhepunkt haben. Statt zu niesen zeigen Hunde es meist über die Haut, durch Juckreiz, Lecken und Reizungen, oft an Pfoten, Gesicht, Ohren und Bauch.</p>"
+   },
+   {
+    "h": "Anzeichen saisonaler Allergien",
+    "html": "<p>Der Zeitpunkt ist der größte Hinweis.</p><ul><li>Juckreiz, der jedes Jahr zur gleichen Zeit aufflammt</li><li>Lecken oder Knabbern an den Pfoten, besonders nach Spaziergängen</li><li>Gerötete, gereizte Haut und wiederkehrende Ohrenprobleme</li><li>Reiben des Gesichts oder Schlittenfahren auf dem Po</li></ul>"
+   },
+   {
+    "h": "Den Juckreiz in den Griff bekommen",
+    "html": "<p>Verringern Sie die Belastung und beruhigen Sie die Haut.</p><ul><li>Wischen Sie Fell und Pfoten nach Spaziergängen ab, um Pollen zu entfernen</li><li>Verwenden Sie beruhigende Produkte zum Auftragen auf gereizte Stellen</li><li>Unterstützen Sie die Hautbarriere mit Omega-Ölen</li><li>Bleiben Sie beim Flohschutz konsequent, damit sich Auslöser nicht summieren</li><li>Bleiben Sie die ganze Saison über konsequent, nicht nur bei Schüben</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Saisonaler Juckreiz",
+    "Pfotenlecken",
+    "Gerötete Haut",
+    "Gesichtsreiben"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn der Juckreiz stark ist, die Haut verletzt oder infiziert ist oder die Pflege zu Hause nicht für Wohlbefinden sorgt, Allergien profitieren oft von einem maßgeschneiderten Behandlungsplan, den unterstützende Produkte begleiten.",
+  "shop": {
+   "h": "Allergie- & Hautunterstützung entdecken",
+   "href": "/collections/skin-coat"
+  },
+  "faqTitle": "Saisonale Allergien beim Hund, beantwortet",
+  "faq": [
+   {
+    "q": "Können Hunde Heuschnupfen bekommen?",
+    "a": "Im Grunde ja, Hunde können auf Pollen allergisch sein, zeigen es aber meist durch juckende Haut statt durch Niesen."
+   },
+   {
+    "q": "Wie verringere ich die Pollenbelastung meines Hundes?",
+    "a": "Wischen Sie Fell und Pfoten nach Spaziergängen ab, meiden Sie wenn möglich die Zeiten mit starkem Pollenflug und pflegen Sie die Haut die ganze Saison über konsequent."
+   },
+   {
+    "q": "Geht die Allergie wieder weg?",
+    "a": "Saisonale Allergien kehren in der Regel jedes Jahr wieder, aber eine konsequente Routine hält die meisten Hunde auch in der schlimmsten Zeit wohlauf."
+   }
+  ],
+  "related": [
+   "itchy-skin-allergies-in-dogs",
+   "dog-licking-paws"
+  ]
+ },
+ "dry-flaky-skin-dandruff-dogs": {
+  "title": "Trockene, schuppige Haut und Schuppen beim Hund",
+  "cat": "Haut & Allergien",
+  "catKey": "skin",
+  "meta": [
+   "5 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Schuppen im Fell Ihres Hundes zu entdecken oder trockene, stumpfe Haut zu bemerken ist häufig und meist gut behandelbar. Die Ursache kann von trockener Luft über die Ernährung bis zu einem zugrunde liegenden Hautproblem reichen. So kommen Sie der Sache auf den Grund und bringen ein gesundes, glänzendes Fell zurück.",
+  "sections": [
+   {
+    "h": "Warum die Haut trocken und schuppig wird",
+    "html": "<p>Trockene, schuppige Haut entsteht, wenn die natürliche Barriere der Haut nicht so gut funktioniert, wie sie sollte. Häufige Ursachen sind geringe Luftfeuchtigkeit (besonders im Winter), zu häufiges Baden, eine Ernährung ohne die richtigen Fette, Allergien, Parasiten oder eine zugrunde liegende Hauterkrankung.</p>"
+   },
+   {
+    "h": "Worauf Sie achten sollten",
+    "html": "<p>Schauen Sie über die Schuppen hinaus auf Haut und Fell insgesamt.</p><ul><li>Weiße Schuppen im Fell oder dort, wo Ihr Hund gelegen hat</li><li>Trockenes, stumpfes oder raues Fell</li><li>Leichter Juckreiz oder Kratzen</li><li>Stellen mit schuppiger oder verhornter Haut</li></ul>"
+   },
+   {
+    "h": "Gesunde Haut wiederherstellen",
+    "html": "<p>Unterstützen Sie die Hautbarriere von innen und außen.</p><ul><li>Geben Sie Omega-Öle, um Haut und Fell zu unterstützen</li><li>Vermeiden Sie zu häufiges Baden, das die natürlichen Öle entzieht</li><li>Verwenden Sie sanfte, feuchtigkeitsspendende Pflegeprodukte</li><li>Bürsten Sie regelmäßig, um die natürlichen Öle zu verteilen</li><li>Achten Sie darauf, dass das Futter hochwertige Fette enthält</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Weiße Schuppen",
+    "Stumpfes Fell",
+    "Leichter Juckreiz",
+    "Schuppige Stellen"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn die Haut stark juckt, gerötet ist oder riecht, die Schuppen stark oder plötzlich auftreten oder kahle Stellen vorhanden sind, dies kann auf Allergien, Parasiten oder Infektionen hindeuten, die behandelt werden müssen.",
+  "shop": {
+   "h": "Haut- & Fellpflege entdecken",
+   "href": "/collections/skin-coat"
+  },
+  "faqTitle": "Trockene, schuppige Haut und Schuppen beim Hund, beantwortet",
+  "faq": [
+   {
+    "q": "Warum hat mein Hund Schuppen?",
+    "a": "Häufige Ursachen sind trockene Luft, zu häufiges Baden, eine Ernährung mit wenig guten Fetten, Allergien oder Parasiten. Omega-Unterstützung und sanfte Fellpflege helfen oft."
+   },
+   {
+    "q": "Helfen Omega-Öle bei trockener Haut?",
+    "a": "Ja, Omega-3- und Omega-6-Fettsäuren unterstützen die Hautbarriere und den Zustand des Fells und verringern mit der Zeit Trockenheit und Schuppenbildung."
+   },
+   {
+    "q": "Sollte ich meinen schuppigen Hund öfter baden?",
+    "a": "Meist eher seltener, nicht öfter, zu häufiges Baden entzieht die natürlichen Öle. Verwenden Sie sanfte, feuchtigkeitsspendende Produkte und übertreiben Sie es nicht."
+   }
+  ],
+  "related": [
+   "itchy-skin-allergies-in-dogs",
+   "seasonal-allergies-in-dogs"
+  ]
+ },
+ "sensitive-stomach-dogs": {
+  "title": "Empfindlicher Magen beim Hund: Ein praktischer Ratgeber",
+  "cat": "Innere Gesundheit",
+  "catKey": "internal",
+  "meta": [
+   "6 Min. Lesezeit",
+   "Tierärztlich fundierte Hinweise"
+  ],
+  "lead": "Manche Hunde haben einfach eine empfindliche Verdauung, bei der kleinste Veränderungen zu weichem Kot, Blähungen oder Erbrechen führen. Ein empfindlicher Magen ist frustrierend, aber meist gut in den Griff zu bekommen, sobald Sie die Auslöser verstehen und feste Routinen aufbauen. So beruhigen Sie die Verdauung.",
+  "sections": [
+   {
+    "h": "Was verursacht einen empfindlichen Magen?",
+    "html": "<p>Manche Hunde sind von Natur aus empfindlicher, andere reagieren auf bestimmte Zutaten, plötzliche Futterumstellungen, reichhaltige Leckerli, Stress oder das Fressen von Aufgelesenem. Ein Ungleichgewicht der natürlichen Darmbakterien kann den Kreislauf aufrechterhalten, weshalb Beständigkeit so wichtig ist.</p>"
+   },
+   {
+    "h": "Anzeichen eines empfindlichen Bauchs",
+    "html": "<p>Sie flammen meist rund um Auslöser auf.</p><ul><li>Häufiger weicher Kot oder Durchfall</li><li>Übermäßige Blähungen</li><li>Gelegentliches Erbrechen oder Hochwürgen</li><li>Ein gurgelnder, lauter Magen</li><li>Wählerischer oder schwankender Appetit</li></ul>"
+   },
+   {
+    "h": "Den Darm beruhigen",
+    "html": "<p>Bei einem empfindlichen Magen ist Beständigkeit alles.</p><ul><li>Füttern Sie eine gleichbleibende, leicht verdauliche Kost</li><li>Stellen Sie das Futter langsam über eine Woche oder länger um</li><li>Vermeiden Sie reichhaltige Leckerli und aufgelesene Essensreste</li><li>Unterstützen Sie den Darm mit einem Probiotikum</li><li>Führen Sie ein Futter- und Symptomtagebuch, um Muster zu erkennen</li></ul>"
+   }
+  ],
+  "signs": {
+   "h": "Worauf Sie achten sollten",
+   "items": [
+    "Weicher Kot",
+    "Blähungen",
+    "Wählerischer Appetit",
+    "Lauter Bauch"
+   ]
+  },
+  "vet": "<b>Wann Sie zum Tierarzt gehen sollten.</b> Gehen Sie zum Tierarzt, wenn die Beschwerden häufig oder stark auftreten, Blut enthalten oder Ihr Hund abnimmt, anhaltende Verdauungsprobleme müssen manchmal über die Maßnahmen zu Hause hinaus abgeklärt und behandelt werden.",
+  "shop": {
+   "h": "Verdauungs- & Darmunterstützung entdecken",
+   "href": "/collections/digestion"
+  },
+  "faqTitle": "Empfindlicher Magen beim Hund, beantwortet",
+  "faq": [
+   {
+    "q": "Was sollte ich einem Hund mit empfindlichem Magen füttern?",
+    "a": "Eine gleichbleibende, leicht verdauliche Kost passt zu den meisten empfindlichen Hunden. Ihr Tierarzt kann eine geeignete Option empfehlen, und alle Änderungen sollten schrittweise erfolgen."
+   },
+   {
+    "q": "Warum bekommt mein Hund so leicht einen verdorbenen Magen?",
+    "a": "Manche Hunde sind einfach empfindlicher. Beständiges Füttern, der Verzicht auf reichhaltige Leckerli und die Unterstützung des Darms machen meist einen großen Unterschied."
+   },
+   {
+    "q": "Helfen Probiotika bei empfindlichen Mägen?",
+    "a": "Ja, die Unterstützung gesunder Darmbakterien kann die Verdauung bei zu Beschwerden neigenden Hunden stabilisieren, besonders wenn sie regelmäßig gegeben werden."
+   }
+  ],
+  "related": [
+   "probiotics-for-dogs",
+   "dog-obesity-weight-management"
+  ]
+ }
+}
