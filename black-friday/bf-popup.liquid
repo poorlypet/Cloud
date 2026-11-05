@@ -1,0 +1,148 @@
+{%- comment -%}
+  Black Friday email pop-up. UK store only (not shown in the Germany and Ireland markets, not on the cart page).
+  Signs the visitor up through Shopify's own customer form (tag: blackfriday), then shows the voucher code BF10WWPPFC.
+  Shown from 5 to 30 November 2026, once per visitor (a dismissed pop-up stays away for 3 days).
+{%- endcomment -%}
+{%- assign mk = localization.country.iso_code -%}
+{%- unless mk == 'DE' or mk == 'IE' or request.page_type == 'cart' -%}
+<style>
+.bfp{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#fff}
+.bfp.on{display:flex}
+.bfp *{box-sizing:border-box}
+.bfp-scrim{position:absolute;inset:0;background:rgba(10,40,36,.6);backdrop-filter:blur(4px);opacity:0;transition:opacity .5s}
+.bfp.in .bfp-scrim{opacity:1}
+.bfp-card{position:relative;width:min(700px,100%);margin-top:78px;background:#0F4C48;border-radius:16px;box-shadow:0 24px 70px rgba(6,30,27,.45);text-align:center;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .8s cubic-bezier(.22,.8,.3,1),transform .8s cubic-bezier(.22,.8,.3,1);max-height:calc(100vh - 32px)}
+.bfp.in .bfp-card{opacity:1;transform:none}
+.bfp-x{position:absolute;top:12px;right:12px;z-index:6;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(10,58,55,.6);color:#fff;font-size:20px;line-height:1;display:grid;place-items:center;cursor:pointer;padding:0}
+.bfp-x:hover{background:#0A3A37}
+.bfp-crown{position:absolute;left:0;right:0;top:0;height:0;z-index:3;pointer-events:none}
+.bfp-c{position:absolute;left:calc(50% + var(--x));top:var(--y);width:var(--s);height:var(--s);margin-left:calc(var(--s) / -2);border-radius:50%;overflow:hidden;border:5px solid #fff;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.25);opacity:0;transform:translateY(12px);transition:opacity .8s cubic-bezier(.22,.8,.3,1),transform .8s cubic-bezier(.22,.8,.3,1);transition-delay:calc(var(--d) * .1s + .3s)}
+.bfp.in .bfp-c{opacity:1;transform:none}
+.bfp-c img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--p);animation:bfpkb 18s ease-in-out infinite alternate}
+@keyframes bfpkb{to{transform:scale(1.06)}}
+.bfp-mid{display:flex;flex-direction:column;align-items:center;gap:12px;padding:104px 44px 30px}
+.bfp h2{margin:0;font:400 clamp(27px,4.6vw,34px)/1.08 Domine,Georgia,"Times New Roman",serif;text-wrap:balance}
+.bfp h2 b{display:block;font-weight:700;color:#DFE43A}
+.bfp p{margin:0}
+.bfp-sub{font-size:17px;line-height:1.55;color:rgba(255,255,255,.9);max-width:46ch}
+.bfp-sub b{color:#DFE43A;font-weight:700}
+.bfp-fm{display:flex;gap:10px;width:min(480px,100%);margin-top:6px}
+.bfp-fm input{flex:1;min-width:0;height:48px;border:0;border-radius:8px;padding:0 16px;font:400 16px Figtree,"Segoe UI",Arial,sans-serif;color:#0E2A28;background:#fff}
+.bfp-fm input::placeholder{color:#7b8987}
+.bfp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border:0;border-radius:8px;background:#DFE43A;color:#0F4C48;font:600 16px/1.2 Figtree,"Segoe UI",Arial,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .2s}
+.bfp-btn:hover{background:#D2D82C}
+.bfp-btn[disabled]{opacity:.7;cursor:default}
+.bfp-fine{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;margin-top:-2px}
+.bfp-later{background:none;border:0;color:rgba(255,255,255,.7);font:400 14px Figtree,"Segoe UI",Arial,sans-serif;padding:10px 4px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.bfp-err{display:none;color:#ffd9d2;font-size:14px;line-height:1.4}
+.bfp-err.on{display:block}
+.bfp-ok{display:none;flex-direction:column;align-items:center;gap:14px}
+.bfp-mid.sent .bfp-form{display:none}
+.bfp-mid.sent .bfp-ok{display:flex}
+.bfp-code{display:flex;align-items:center;gap:10px;border:1px dashed rgba(255,255,255,.55);border-radius:8px;padding:8px 8px 8px 18px}
+.bfp-code span{font:700 26px/1 Domine,Georgia,serif;letter-spacing:.04em;color:#DFE43A}
+.bfp-copy{height:38px;min-height:38px;padding:0 14px;font-size:14px}
+.bfp-form{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+@media (max-width:620px){
+  .bfp-card{margin-top:50px}
+  .bfp-crown{transform:scale(.68);transform-origin:50% 0}
+  .bfp-c.far{display:none}
+  .bfp-mid{padding:78px 24px 26px}
+  .bfp-fm{flex-direction:column}
+  .bfp-fm input{flex:none;width:100%}
+  .bfp-fm .bfp-btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){.bfp *{transition-duration:.01ms!important;animation:none!important}}
+</style>
+
+<div class="bfp" id="bfp" role="dialog" aria-modal="true" aria-labelledby="bfp-h" hidden>
+  <div class="bfp-scrim" data-bfp-close></div>
+  <div class="bfp-card" tabindex="-1">
+    <button class="bfp-x" type="button" aria-label="Close" data-bfp-close>&times;</button>
+    <div class="bfp-crown" aria-hidden="true">
+      <div class="bfp-c far" style="--x:-196px;--y:-22px;--s:86px;--p:50% 40%;--d:0"><img src="{{ 'bf-dog-4.jpg' | asset_url }}" alt="" loading="lazy"></div>
+      <div class="bfp-c" style="--x:-114px;--y:-50px;--s:112px;--p:50% 22%;--d:1"><img src="{{ 'bf-dog-1.jpg' | asset_url }}" alt="" loading="lazy"></div>
+      <div class="bfp-c" style="--x:0px;--y:-74px;--s:150px;--p:50% 45%;--d:2"><img src="{{ 'bf-dog-2.jpg' | asset_url }}" alt="" loading="lazy"></div>
+      <div class="bfp-c" style="--x:114px;--y:-50px;--s:112px;--p:50% 10%;--d:3"><img src="{{ 'bf-dog-3.jpg' | asset_url }}" alt="" loading="lazy"></div>
+      <div class="bfp-c far" style="--x:196px;--y:-22px;--s:86px;--p:75% 12%;--d:4"><img src="{{ 'bf-dog-5.jpg' | asset_url }}" alt="" loading="lazy"></div>
+    </div>
+    <div class="bfp-mid" id="bfp-mid">
+      <h2 id="bfp-h">Look after them.<b>We'll look after you.</b></h2>
+      <div class="bfp-form" id="bfp-formwrap">
+        <p class="bfp-sub">Pop your email in and we'll send you a <b>£10 voucher</b> straight away. Use it on any order over £50 this November.</p>
+        {%- form 'customer', id: 'bfp-form', class: 'bfp-fm' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,blackfriday">
+          <label for="bfp-email" style="position:absolute;left:-9999px">Your email address</label>
+          <input type="email" name="contact[email]" id="bfp-email" placeholder="Your email address" autocomplete="email" required>
+          <button class="bfp-btn" type="submit" id="bfp-go">Send my voucher</button>
+        {%- endform -%}
+        <p class="bfp-err" id="bfp-err" role="alert">That didn't go through. Please check your email address and try again.</p>
+        <p class="bfp-fine">Black Friday offer. Minimum order £50. We'll also send you the odd email, and you can unsubscribe any time.</p>
+        <button class="bfp-later" type="button" data-bfp-close>No thanks</button>
+      </div>
+      <div class="bfp-ok" id="bfp-ok">
+        <p class="bfp-sub">Here's your <b>£10 voucher</b>. It works on any order over £50 until the end of November.</p>
+        <div class="bfp-code"><span id="bfp-code">BF10WWPPFC</span><button class="bfp-btn bfp-copy" type="button" id="bfp-copy">Copy</button></div>
+        <a class="bfp-btn" href="/discount/BF10WWPPFC?redirect={{ routes.all_products_collection_url | url_encode }}">Shop now, code applied</a>
+        <button class="bfp-later" type="button" data-bfp-close>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = 'pp_bf10', START = Date.UTC(2026, 10, 5), END = Date.UTC(2026, 10, 30, 23, 59, 59);
+  var el = document.getElementById('bfp'); if (!el) return;
+  var now = Date.now(); if (now < START || now > END) return;
+  var q = new URLSearchParams(location.search); if (q.get('bfp') === 'test') { try { localStorage.removeItem(KEY); } catch (e) {} }
+  try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && (v.done || now - v.t < 3 * 864e5)) return; } catch (e) {}
+  var shown = false, last = null, card = el.querySelector('.bfp-card');
+  function store(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function open() {
+    if (shown) return; shown = true; last = document.activeElement;
+    el.hidden = false; el.classList.add('on');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('in'); card.focus({ preventScroll: true }); }); });
+  }
+  function close() {
+    el.classList.remove('in'); setTimeout(function () { el.classList.remove('on'); el.hidden = true; }, 400);
+    if (!el.querySelector('.bfp-mid.sent')) store({ t: Date.now() });
+    if (last && last.focus) try { last.focus(); } catch (e) {}
+  }
+  [].forEach.call(el.querySelectorAll('[data-bfp-close]'), function (b) { b.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) {
+    if (!shown || !el.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = [].filter.call(el.querySelectorAll('button,a[href],input'), function (n) { return n.offsetParent !== null && !n.closest('[hidden]'); });
+      if (!f.length) return; var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === a || document.activeElement === card)) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  // when to show: after a short wait, or when the mouse leaves the top of the page on desktop
+  var delay = matchMedia('(max-width:620px)').matches ? 12000 : 8000;
+  var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : delay);
+  document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY < 8 && now) { clearTimeout(t); open(); } });
+
+  var form = document.getElementById('bfp-form'), go = document.getElementById('bfp-go'), err = document.getElementById('bfp-err');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); err.classList.remove('on'); go.disabled = true; var label = go.textContent; go.textContent = 'Sending...';
+    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(function (r) { return r.text().then(function (txt) { return { r: r, txt: txt }; }); })
+      .then(function (o) {
+        // Shopify sends a successful sign-up on to /contact?customer_posted=true
+        if (!/customer_posted=true/.test(o.r.url)) throw new Error('no');
+        store({ done: 1, t: Date.now() });
+        document.getElementById('bfp-mid').classList.add('sent');
+      })
+      .catch(function () { err.classList.add('on'); go.disabled = false; go.textContent = label; });
+  });
+  document.getElementById('bfp-copy').addEventListener('click', function () {
+    var b = this, c = document.getElementById('bfp-code').textContent;
+    function done() { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText(c).then(done, done); else done();
+  });
+})();
+</script>
+{%- endunless -%}
