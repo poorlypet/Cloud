@@ -1,10 +1,60 @@
 {%- comment -%}
-  Black Friday email pop-up. UK store only (not shown in the Germany and Ireland markets, not on the cart page).
-  Signs the visitor up through Shopify's own customer form (tag: blackfriday), then shows the voucher code BF10WWPPFC.
+  Black Friday email pop-up for the UK (pounds, English), Ireland (euro, English) and Germany (euro, German). Not shown on the cart page.
+  Signs the visitor up through Shopify's own customer form (tag: blackfriday), then shows the voucher code:
+  BF10WWPPFC for the UK, BF10EUWWPPFC for Ireland and Germany (the euro code is limited to those two markets in Shopify).
   Shown from 5 to 30 November 2026, once per visitor (a dismissed pop-up stays away for 3 days).
 {%- endcomment -%}
 {%- assign mk = localization.country.iso_code -%}
-{%- unless mk == 'DE' or mk == 'IE' or request.page_type == 'cart' -%}
+{%- unless request.page_type == 'cart' -%}
+{%- if mk == 'DE' -%}
+  {%- assign code = 'BF10EUWWPPFC' -%}
+  {%- assign t_close = "Schließen" -%}
+  {%- assign t_h = "Kümmern Sie sich um sie.<b>Wir kümmern uns um Sie.</b>" -%}
+  {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir senden Ihnen sofort einen <b>Gutschein über 10 €</b>. Einlösbar bei jeder Bestellung ab 50 € im November." -%}
+  {%- assign t_label = "Ihre E-Mail-Adresse" -%}
+  {%- assign t_go = "Gutschein senden" -%}
+  {%- assign t_err = "Das hat nicht geklappt. Bitte prüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut." -%}
+  {%- assign t_fine = "Black-Friday-Angebot. Mindestbestellwert 50 €. Wir senden Ihnen gelegentlich E-Mails, Sie können sich jederzeit abmelden." -%}
+  {%- assign t_no = "Nein danke" -%}
+  {%- assign t_ok = "Hier ist Ihr <b>Gutschein über 10 €</b>. Er gilt für jede Bestellung ab 50 € bis Ende November." -%}
+  {%- assign t_copy = "Kopieren" -%}
+  {%- assign t_copied = "Kopiert" -%}
+  {%- assign t_shop = "Jetzt einkaufen, Code angewendet" -%}
+  {%- assign t_sending = "Wird gesendet..." -%}
+  {%- assign t_closebtn = "Schließen" -%}
+{%- elsif mk == 'IE' -%}
+  {%- assign code = 'BF10EUWWPPFC' -%}
+  {%- assign t_close = "Close" -%}
+  {%- assign t_h = "Look after them.<b>We'll look after you.</b>" -%}
+  {%- assign t_sub = "Pop your email in and we'll send you a <b>€10 voucher</b> straight away. Use it on any order over €50 this November." -%}
+  {%- assign t_label = "Your email address" -%}
+  {%- assign t_go = "Send my voucher" -%}
+  {%- assign t_err = "That didn't go through. Please check your email address and try again." -%}
+  {%- assign t_fine = "Black Friday offer. Minimum order €50. We'll also send you the odd email, and you can unsubscribe any time." -%}
+  {%- assign t_no = "No thanks" -%}
+  {%- assign t_ok = "Here's your <b>€10 voucher</b>. It works on any order over €50 until the end of November." -%}
+  {%- assign t_copy = "Copy" -%}
+  {%- assign t_copied = "Copied" -%}
+  {%- assign t_shop = "Shop now, code applied" -%}
+  {%- assign t_sending = "Sending..." -%}
+  {%- assign t_closebtn = "Close" -%}
+{%- else -%}
+  {%- assign code = 'BF10WWPPFC' -%}
+  {%- assign t_close = "Close" -%}
+  {%- assign t_h = "Look after them.<b>We'll look after you.</b>" -%}
+  {%- assign t_sub = "Pop your email in and we'll send you a <b>£10 voucher</b> straight away. Use it on any order over £50 this November." -%}
+  {%- assign t_label = "Your email address" -%}
+  {%- assign t_go = "Send my voucher" -%}
+  {%- assign t_err = "That didn't go through. Please check your email address and try again." -%}
+  {%- assign t_fine = "Black Friday offer. Minimum order £50. We'll also send you the odd email, and you can unsubscribe any time." -%}
+  {%- assign t_no = "No thanks" -%}
+  {%- assign t_ok = "Here's your <b>£10 voucher</b>. It works on any order over £50 until the end of November." -%}
+  {%- assign t_copy = "Copy" -%}
+  {%- assign t_copied = "Copied" -%}
+  {%- assign t_shop = "Shop now, code applied" -%}
+  {%- assign t_sending = "Sending..." -%}
+  {%- assign t_closebtn = "Close" -%}
+{%- endif -%}
 <style>
 .bfp{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#fff}
 .bfp.on{display:flex}
@@ -59,7 +109,7 @@
 <div class="bfp" id="bfp" role="dialog" aria-modal="true" aria-labelledby="bfp-h" hidden>
   <div class="bfp-scrim" data-bfp-close></div>
   <div class="bfp-card" tabindex="-1">
-    <button class="bfp-x" type="button" aria-label="Close" data-bfp-close>&times;</button>
+    <button class="bfp-x" type="button" aria-label="{{ t_close }}" data-bfp-close>&times;</button>
     <div class="bfp-crown" aria-hidden="true">
       <div class="bfp-c far" style="--x:-196px;--y:-22px;--s:86px;--p:50% 40%;--d:0"><img src="{{ 'bf-dog-4.jpg' | asset_url }}" alt="" loading="lazy"></div>
       <div class="bfp-c" style="--x:-114px;--y:-50px;--s:112px;--p:50% 22%;--d:1"><img src="{{ 'bf-dog-1.jpg' | asset_url }}" alt="" loading="lazy"></div>
@@ -68,24 +118,24 @@
       <div class="bfp-c far" style="--x:196px;--y:-22px;--s:86px;--p:75% 12%;--d:4"><img src="{{ 'bf-dog-5.jpg' | asset_url }}" alt="" loading="lazy"></div>
     </div>
     <div class="bfp-mid" id="bfp-mid">
-      <h2 id="bfp-h">Look after them.<b>We'll look after you.</b></h2>
+      <h2 id="bfp-h">{{ t_h }}</h2>
       <div class="bfp-form" id="bfp-formwrap">
-        <p class="bfp-sub">Pop your email in and we'll send you a <b>£10 voucher</b> straight away. Use it on any order over £50 this November.</p>
+        <p class="bfp-sub">{{ t_sub }}</p>
         {%- form 'customer', id: 'bfp-form', class: 'bfp-fm' -%}
           <input type="hidden" name="contact[tags]" value="newsletter,blackfriday">
-          <label for="bfp-email" style="position:absolute;left:-9999px">Your email address</label>
-          <input type="email" name="contact[email]" id="bfp-email" placeholder="Your email address" autocomplete="email" required>
-          <button class="bfp-btn" type="submit" id="bfp-go">Send my voucher</button>
+          <label for="bfp-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
+          <input type="email" name="contact[email]" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
+          <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
         {%- endform -%}
-        <p class="bfp-err" id="bfp-err" role="alert">That didn't go through. Please check your email address and try again.</p>
-        <p class="bfp-fine">Black Friday offer. Minimum order £50. We'll also send you the odd email, and you can unsubscribe any time.</p>
-        <button class="bfp-later" type="button" data-bfp-close>No thanks</button>
+        <p class="bfp-err" id="bfp-err" role="alert">{{ t_err }}</p>
+        <p class="bfp-fine">{{ t_fine }}</p>
+        <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
       </div>
       <div class="bfp-ok" id="bfp-ok">
-        <p class="bfp-sub">Here's your <b>£10 voucher</b>. It works on any order over £50 until the end of November.</p>
-        <div class="bfp-code"><span id="bfp-code">BF10WWPPFC</span><button class="bfp-btn bfp-copy" type="button" id="bfp-copy">Copy</button></div>
-        <a class="bfp-btn" href="/discount/BF10WWPPFC?redirect={{ routes.all_products_collection_url | url_encode }}">Shop now, code applied</a>
-        <button class="bfp-later" type="button" data-bfp-close>Close</button>
+        <p class="bfp-sub">{{ t_ok }}</p>
+        <div class="bfp-code"><span id="bfp-code">{{ code }}</span><button class="bfp-btn bfp-copy" type="button" id="bfp-copy">{{ t_copy }}</button></div>
+        <a class="bfp-btn" href="{{ routes.root_url }}discount/{{ code }}?redirect={{ routes.all_products_collection_url | url_encode }}">{{ t_shop }}</a>
+        <button class="bfp-later" type="button" data-bfp-close>{{ t_closebtn }}</button>
       </div>
     </div>
   </div>
@@ -128,7 +178,7 @@
 
   var form = document.getElementById('bfp-form'), go = document.getElementById('bfp-go'), err = document.getElementById('bfp-err');
   form.addEventListener('submit', function (e) {
-    e.preventDefault(); err.classList.remove('on'); go.disabled = true; var label = go.textContent; go.textContent = 'Sending...';
+    e.preventDefault(); err.classList.remove('on'); go.disabled = true; var label = go.textContent; go.textContent = {{ t_sending | json }};
     fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
       .then(function (r) { return r.text().then(function (txt) { return { r: r, txt: txt }; }); })
       .then(function (o) {
@@ -141,7 +191,7 @@
   });
   document.getElementById('bfp-copy').addEventListener('click', function () {
     var b = this, c = document.getElementById('bfp-code').textContent;
-    function done() { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); }
+    function done() { b.textContent = {{ t_copied | json }}; setTimeout(function () { b.textContent = {{ t_copy | json }}; }, 1800); }
     if (navigator.clipboard) navigator.clipboard.writeText(c).then(done, done); else done();
   });
 })();
