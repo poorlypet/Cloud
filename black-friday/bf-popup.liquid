@@ -146,12 +146,13 @@
 
 <script>
 (function () {
+  function why(m) { if (window.console) console.info('bf popup: not showing,', m); }
   if (window.top !== window.self) return; // the hidden sign-up frame loads the whole page again: stay quiet in there
   var KEY = 'pp_bf10', START = Date.UTC(2026, 10, 5), END = Date.UTC(2026, 10, 30, 23, 59, 59);
-  var el = document.getElementById('bfp'); if (!el) return;
-  var now = Date.now(); if (now < START || now > END) return;
+  var el = document.getElementById('bfp'); if (!el) return why('no pop-up markup');
+  var now = Date.now(); var tst = /[?&]bfp=test/.test(location.search); if (!tst && (now < START || now > END)) return why('outside 5-30 November');
   var q = new URLSearchParams(location.search); if (q.get('bfp') === 'test') { try { localStorage.removeItem(KEY); } catch (e) {} }
-  try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && (v.done || now - v.t < 3 * 864e5)) return; } catch (e) {}
+  try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && (v.done || now - v.t < 3 * 864e5)) return why(v.done ? 'already signed up on this browser (add &bfp=test to the address to reset)' : 'closed in the last 3 days (add &bfp=test to the address to reset)'); } catch (e) {}
   var shown = false, last = null, card = el.querySelector('.bfp-card');
   function store(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
   function open() {
