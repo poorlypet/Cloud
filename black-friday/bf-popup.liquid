@@ -190,13 +190,13 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault(); if (wait) return;
     err.classList.remove('on'); go.disabled = true; go.textContent = {{ t_sending | json }}; wait = true;
-    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin', redirect: 'manual' })
+    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new URLSearchParams(new FormData(form)), credentials: 'same-origin', redirect: 'manual' })
       .then(function (r) {
         if (r.type === 'opaqueredirect' || (r.status >= 300 && r.status < 400) || /customer_posted=true/.test(r.url)) return win();
         return r.text().then(function (txt) {
           var m = /id="bfp-srv-err"[^>]*data-msg="([^"]*)"/.exec(txt), msg = m ? m[1] : '';
           if (/already|bereits|associated|zugeordnet|exist|vorhanden|account|konto|taken|registered/i.test(msg)) return win();
-          fail(r.type + ' ' + r.status + ' | ' + (msg || 'no message'));
+          fail(r.type + ' ' + r.status + ' | ' + (msg || 'no message') + ' | ' + txt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90));
         });
       })
       .catch(function (x) { fail('network: ' + (x && x.message)); });
