@@ -93,6 +93,7 @@
 .bfp-code{display:flex;align-items:center;gap:10px;border:1px dashed rgba(255,255,255,.55);border-radius:8px;padding:8px 8px 8px 18px}
 .bfp-code span{font:700 26px/1 Domine,Georgia,serif;letter-spacing:.04em;color:#DFE43A}
 .bfp-copy{height:38px;min-height:38px;padding:0 14px;font-size:14px}
+.bfp-frame{display:none;width:100%;height:430px;border:0;border-radius:8px;background:#fff}.bfp-frame.show{display:block}
 .bfp-form{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
 @media (max-width:620px){
   .bfp-card{margin-top:50px}
@@ -128,6 +129,7 @@
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
           {%- if form.errors -%}<span id="bfp-srv-err" hidden data-msg="{{ form.errors | default_errors | strip_html | strip | escape }}"></span>{%- endif -%}
         {%- endform -%}
+        <iframe name="bfp-frame" id="bfp-frame" class="bfp-frame" title="" tabindex="-1"></iframe>
         <p class="bfp-err" id="bfp-err" role="alert">{{ t_err }}</p>
         <p class="bfp-fine">{{ t_fine }}</p>
         <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
@@ -144,6 +146,7 @@
 
 <script>
 (function () {
+  if (window.top !== window.self) return; // the hidden sign-up frame loads the whole page again: stay quiet in there
   var KEY = 'pp_bf10', START = Date.UTC(2026, 10, 5), END = Date.UTC(2026, 10, 30, 23, 59, 59);
   var el = document.getElementById('bfp'); if (!el) return;
   var now = Date.now(); if (now < START || now > END) return;
@@ -177,26 +180,29 @@
   var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : delay);
   document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY < 8 && now) { clearTimeout(t); open(); } });
 
-  var form = document.getElementById('bfp-form'), go = document.getElementById('bfp-go'), err = document.getElementById('bfp-err');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); err.classList.remove('on'); go.disabled = true; var label = go.textContent; go.textContent = {{ t_sending | json }};
-    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-      .then(function (r) { return r.text().then(function (txt) { return { r: r, txt: txt }; }); })
-      .then(function (o) {
-        // Shopify sends a successful sign-up on to /contact?customer_posted=true.
-        // If the email already belongs to a customer, Shopify refuses the form but the person can still have the voucher.
-        var ok = /customer_posted=true/.test(o.r.url);
-        if (!ok) {
-          var m = /id="bfp-srv-err"[^>]*data-msg="([^"]*)"/.exec(o.txt);
-          var msg = m ? m[1] : '';
-          if (window.console) console.warn('bf popup: sign-up not accepted:', o.r.status, msg || '(no message)');
-          ok = /already|bereits|associated|zugeordnet|exist|vorhanden|account|konto|taken|registered/i.test(msg);
-        }
-        if (!ok) throw new Error('no');
-        store({ done: 1, t: Date.now() });
-        document.getElementById('bfp-mid').classList.add('sent');
-      })
-      .catch(function () { err.classList.add('on'); go.disabled = false; go.textContent = label; });
+  var form = document.getElementById('bfp-form'); form.setAttribute('target', 'bfp-frame'); var _unused = 0, go = document.getElementById('bfp-go'), err = document.getElementById('bfp-err');
+  // The form posts the normal Shopify way (like the newsletter box), into a hidden frame, so the page stays put.
+  // If Shopify asks for its spam check, the frame is shown so the person can pass it.
+  var fr = document.getElementById('bfp-frame'), wait = false, timer = 0, label = go.textContent;
+  function fail(why) {
+    if (window.console) console.warn('bf popup: sign-up not accepted:', why);
+    wait = false; clearTimeout(timer); fr.classList.remove('show'); err.classList.add('on'); go.disabled = false; go.textContent = label;
+  }
+  function win() { wait = false; clearTimeout(timer); store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }
+  form.addEventListener('submit', function () {
+    err.classList.remove('on'); go.disabled = true; go.textContent = {{ t_sending | json }}; wait = true;
+    clearTimeout(timer); timer = setTimeout(function () { if (wait) fail('timeout'); }, 25000);
+  });
+  fr.addEventListener('load', function () {
+    if (!wait) return;
+    var href = '', doc = null;
+    try { href = fr.contentWindow.location.href; doc = fr.contentDocument; } catch (e) { return fail('frame not readable: ' + e.message); }
+    if (!href || href === 'about:blank') return;
+    if (/customer_posted=true/.test(href)) return win();
+    if (/\/challenge/.test(href)) { fr.classList.add('show'); clearTimeout(timer); timer = setTimeout(function () { if (wait) fail('challenge timeout'); }, 180000); return; }
+    var m = doc && doc.getElementById('bfp-srv-err'), msg = m ? (m.getAttribute('data-msg') || '') : '';
+    if (/already|bereits|associated|zugeordnet|exist|vorhanden|account|konto|taken|registered/i.test(msg)) return win();
+    fail(href + ' | ' + (msg || 'no message'));
   });
   document.getElementById('bfp-copy').addEventListener('click', function () {
     var b = this, c = document.getElementById('bfp-code').textContent;
