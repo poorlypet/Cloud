@@ -56,7 +56,7 @@
   {%- assign t_closebtn = "Close" -%}
 {%- endif -%}
 <style>
-.bfp{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#fff}
+.bfp{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#fff}
 .bfp.on{display:flex}
 .bfp *{box-sizing:border-box}
 .bfp-scrim{position:absolute;inset:0;background:rgba(10,40,36,.6);backdrop-filter:blur(4px);opacity:0;transition:opacity .5s}
@@ -126,6 +126,7 @@
           <label for="bfp-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
           <input type="email" name="contact[email]" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
+          {%- if form.errors -%}<span id="bfp-srv-err" hidden data-msg="{{ form.errors | default_errors | strip_html | strip | escape }}"></span>{%- endif -%}
         {%- endform -%}
         <p class="bfp-err" id="bfp-err" role="alert">{{ t_err }}</p>
         <p class="bfp-fine">{{ t_fine }}</p>
@@ -182,8 +183,16 @@
     fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
       .then(function (r) { return r.text().then(function (txt) { return { r: r, txt: txt }; }); })
       .then(function (o) {
-        // Shopify sends a successful sign-up on to /contact?customer_posted=true
-        if (!/customer_posted=true/.test(o.r.url)) throw new Error('no');
+        // Shopify sends a successful sign-up on to /contact?customer_posted=true.
+        // If the email already belongs to a customer, Shopify refuses the form but the person can still have the voucher.
+        var ok = /customer_posted=true/.test(o.r.url);
+        if (!ok) {
+          var m = /id="bfp-srv-err"[^>]*data-msg="([^"]*)"/.exec(o.txt);
+          var msg = m ? m[1] : '';
+          if (window.console) console.warn('bf popup: sign-up not accepted:', o.r.status, msg || '(no message)');
+          ok = /already|bereits|associated|zugeordnet|exist|vorhanden|account|konto|taken|registered/i.test(msg);
+        }
+        if (!ok) throw new Error('no');
         store({ done: 1, t: Date.now() });
         document.getElementById('bfp-mid').classList.add('sent');
       })
