@@ -8,15 +8,16 @@
 {%- unless request.page_type == 'cart' -%}
 {%- if mk == 'DE' -%}
   {%- assign code = 'BF10EUWWPPFC' -%}
+  {%- assign t_bf = "Black Friday" -%}
   {%- assign t_close = "Schließen" -%}
   {%- assign t_h = "Kümmern Sie sich um sie.<b>Wir kümmern uns um Sie.</b>" -%}
-  {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir senden Ihnen sofort einen <b>Gutschein über 10 €</b>. Einlösbar bei jeder Bestellung ab 50 € im November." -%}
+  {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir senden Ihnen sofort einen <b>Gutschein über 5 €</b>. Einlösbar bei jeder Bestellung ab 40 € im November." -%}
   {%- assign t_label = "Ihre E-Mail-Adresse" -%}
   {%- assign t_go = "Gutschein senden" -%}
   {%- assign t_err_unused = "Das hat nicht geklappt. Bitte prüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut." -%}
-  {%- assign t_fine = "Black-Friday-Angebot. Mindestbestellwert 50 €. Wir senden Ihnen gelegentlich E-Mails, Sie können sich jederzeit abmelden." -%}
+  {%- assign t_fine = "Mindestbestellwert 40 €." -%}
   {%- assign t_no = "Nein danke" -%}
-  {%- assign t_ok = "Hier ist Ihr <b>Gutschein über 10 €</b>. Er gilt für jede Bestellung ab 50 € bis Ende November." -%}
+  {%- assign t_ok = "Hier ist Ihr <b>Black-Friday-Gutschein über 5 €</b>. Er gilt für jede Bestellung ab 40 € bis Ende November." -%}
   {%- assign t_copy = "Kopieren" -%}
   {%- assign t_copied = "Kopiert" -%}
   {%- assign t_shop = "Jetzt einkaufen, Code angewendet" -%}
@@ -24,15 +25,16 @@
   {%- assign t_closebtn = "Schließen" -%}
 {%- elsif mk == 'IE' -%}
   {%- assign code = 'BF10EUWWPPFC' -%}
+  {%- assign t_bf = "Black Friday" -%}
   {%- assign t_close = "Close" -%}
   {%- assign t_h = "Look after them.<b>We'll look after you.</b>" -%}
-  {%- assign t_sub = "Pop your email in and we'll send you a <b>€10 voucher</b> straight away. Use it on any order over €50 this November." -%}
+  {%- assign t_sub = "Pop your email in and we'll send you a <b>€5 voucher</b> straight away. Use it on any order over €40 this November." -%}
   {%- assign t_label = "Your email address" -%}
   {%- assign t_go = "Send my voucher" -%}
   {%- assign t_err_unused = "That didn't go through. Please check your email address and try again." -%}
-  {%- assign t_fine = "Black Friday offer. Minimum order €50. We'll also send you the odd email, and you can unsubscribe any time." -%}
+  {%- assign t_fine = "Minimum order €40." -%}
   {%- assign t_no = "No thanks" -%}
-  {%- assign t_ok = "Here's your <b>€10 voucher</b>. It works on any order over €50 until the end of November." -%}
+  {%- assign t_ok = "Here's your <b>Black Friday €5 voucher</b>. It works on any order over €40 until the end of November." -%}
   {%- assign t_copy = "Copy" -%}
   {%- assign t_copied = "Copied" -%}
   {%- assign t_shop = "Shop now, code applied" -%}
@@ -40,15 +42,16 @@
   {%- assign t_closebtn = "Close" -%}
 {%- else -%}
   {%- assign code = 'BF10WWPPFC' -%}
+  {%- assign t_bf = "Black Friday" -%}
   {%- assign t_close = "Close" -%}
   {%- assign t_h = "Look after them.<b>We'll look after you.</b>" -%}
-  {%- assign t_sub = "Pop your email in and we'll send you a <b>£10 voucher</b> straight away. Use it on any order over £50 this November." -%}
+  {%- assign t_sub = "Pop your email in and we'll send you a <b>£5 voucher</b> straight away. Use it on any order over £40 this November." -%}
   {%- assign t_label = "Your email address" -%}
   {%- assign t_go = "Send my voucher" -%}
   {%- assign t_err_unused = "That didn't go through. Please check your email address and try again." -%}
-  {%- assign t_fine = "Black Friday offer. Minimum order £50. We'll also send you the odd email, and you can unsubscribe any time." -%}
+  {%- assign t_fine = "Minimum order £40." -%}
   {%- assign t_no = "No thanks" -%}
-  {%- assign t_ok = "Here's your <b>£10 voucher</b>. It works on any order over £50 until the end of November." -%}
+  {%- assign t_ok = "Here's your <b>Black Friday £5 voucher</b>. It works on any order over £40 until the end of November." -%}
   {%- assign t_copy = "Copy" -%}
   {%- assign t_copied = "Copied" -%}
   {%- assign t_shop = "Shop now, code applied" -%}
@@ -72,6 +75,7 @@
 .bfp-c img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--p);animation:bfpkb 18s ease-in-out infinite alternate}
 @keyframes bfpkb{to{transform:scale(1.06)}}
 .bfp-mid{display:flex;flex-direction:column;align-items:center;gap:12px;padding:104px 44px 30px}
+.bfp-bfb{display:inline-block;background:#DFE43A;color:#0F4C48;font:700 clamp(20px,3.6vw,26px)/1 Domine,Georgia,serif;padding:9px 18px;border-radius:8px;margin-bottom:2px}
 .bfp h2{margin:0;font:400 clamp(27px,4.6vw,34px)/1.08 Domine,Georgia,"Times New Roman",serif;text-wrap:balance}
 .bfp h2 b{display:block;font-weight:700;color:#DFE43A}
 .bfp p{margin:0}
@@ -118,6 +122,7 @@
       <div class="bfp-c far" style="--x:196px;--y:-22px;--s:86px;--p:75% 12%;--d:4"><img src="{{ 'bf-dog-5.jpg' | asset_url }}" alt="" loading="lazy"></div>
     </div>
     <div class="bfp-mid" id="bfp-mid">
+      <div class="bfp-bfb">{{ t_bf }}</div>
       <h2 id="bfp-h">{{ t_h }}</h2>
       <div class="bfp-form" id="bfp-formwrap">
         <p class="bfp-sub">{{ t_sub }}</p>
@@ -127,7 +132,6 @@
           <input type="email" name="contact[email]" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
                   {%- endform -%}
-        <iframe name="bfp-frame" id="bfp-frame" title="" tabindex="-1" aria-hidden="true" style="display:none;width:0;height:0;border:0"></iframe>
         <p class="bfp-fine">{{ t_fine }}</p>
         <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
       </div>
@@ -178,12 +182,13 @@
   var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : delay);
   document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY < 8 && now) { clearTimeout(t); open(); } });
 
-  // Show the voucher straight away and send the email to Shopify in the background, the normal form-post way,
-  // into a hidden frame. The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
+  // Show the voucher straight away and send the email to Shopify in the background (a normal form-encoded post).
+  // The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
   var form = document.getElementById('bfp-form');
-  form.setAttribute('target', 'bfp-frame');
-  form.addEventListener('submit', function () {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
     document.getElementById('bfp-go').disabled = true;
+    try { fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new URLSearchParams(new FormData(form)), credentials: 'same-origin', redirect: 'manual', keepalive: true }).catch(function () {}); } catch (x) {}
     setTimeout(function () { store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }, 350);
   });
   document.getElementById('bfp-copy').addEventListener('click', function () {
