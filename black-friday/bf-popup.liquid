@@ -13,7 +13,7 @@
   {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir senden Ihnen sofort einen <b>Gutschein über 10 €</b>. Einlösbar bei jeder Bestellung ab 50 € im November." -%}
   {%- assign t_label = "Ihre E-Mail-Adresse" -%}
   {%- assign t_go = "Gutschein senden" -%}
-  {%- assign t_err = "Das hat nicht geklappt. Bitte prüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut." -%}
+  {%- assign t_err_unused = "Das hat nicht geklappt. Bitte prüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut." -%}
   {%- assign t_fine = "Black-Friday-Angebot. Mindestbestellwert 50 €. Wir senden Ihnen gelegentlich E-Mails, Sie können sich jederzeit abmelden." -%}
   {%- assign t_no = "Nein danke" -%}
   {%- assign t_ok = "Hier ist Ihr <b>Gutschein über 10 €</b>. Er gilt für jede Bestellung ab 50 € bis Ende November." -%}
@@ -29,7 +29,7 @@
   {%- assign t_sub = "Pop your email in and we'll send you a <b>€10 voucher</b> straight away. Use it on any order over €50 this November." -%}
   {%- assign t_label = "Your email address" -%}
   {%- assign t_go = "Send my voucher" -%}
-  {%- assign t_err = "That didn't go through. Please check your email address and try again." -%}
+  {%- assign t_err_unused = "That didn't go through. Please check your email address and try again." -%}
   {%- assign t_fine = "Black Friday offer. Minimum order €50. We'll also send you the odd email, and you can unsubscribe any time." -%}
   {%- assign t_no = "No thanks" -%}
   {%- assign t_ok = "Here's your <b>€10 voucher</b>. It works on any order over €50 until the end of November." -%}
@@ -45,7 +45,7 @@
   {%- assign t_sub = "Pop your email in and we'll send you a <b>£10 voucher</b> straight away. Use it on any order over £50 this November." -%}
   {%- assign t_label = "Your email address" -%}
   {%- assign t_go = "Send my voucher" -%}
-  {%- assign t_err = "That didn't go through. Please check your email address and try again." -%}
+  {%- assign t_err_unused = "That didn't go through. Please check your email address and try again." -%}
   {%- assign t_fine = "Black Friday offer. Minimum order £50. We'll also send you the odd email, and you can unsubscribe any time." -%}
   {%- assign t_no = "No thanks" -%}
   {%- assign t_ok = "Here's your <b>£10 voucher</b>. It works on any order over £50 until the end of November." -%}
@@ -126,9 +126,8 @@
           <label for="bfp-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
           <input type="email" name="contact[email]" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
-          {%- if form.errors -%}<span id="bfp-srv-err" hidden data-msg="{{ form.errors | default_errors | strip_html | strip | escape }}"></span>{%- endif -%}
-        {%- endform -%}
-        <p class="bfp-err" id="bfp-err" role="alert">{{ t_err }}</p>
+                  {%- endform -%}
+        <iframe name="bfp-frame" id="bfp-frame" title="" tabindex="-1" aria-hidden="true" style="display:none;width:0;height:0;border:0"></iframe>
         <p class="bfp-fine">{{ t_fine }}</p>
         <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
       </div>
@@ -179,27 +178,13 @@
   var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : delay);
   document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY < 8 && now) { clearTimeout(t); open(); } });
 
-  var form = document.getElementById('bfp-form'), go = document.getElementById('bfp-go'), err = document.getElementById('bfp-err');
-  var wait = false, label = go.textContent, errText = err.textContent;
-  function fail(why) {
-    if (window.console) console.warn('bf popup: sign-up not accepted:', why);
-    wait = false; err.textContent = errText + (tst ? ' [' + why + ']' : ''); err.classList.add('on'); go.disabled = false; go.textContent = label;
-  }
-  function win() { wait = false; store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }
-  // Shopify answers a good sign-up with a redirect (to ?customer_posted=true, or to its spam check), and a refused one with the page and an error.
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); if (wait) return;
-    err.classList.remove('on'); go.disabled = true; go.textContent = {{ t_sending | json }}; wait = true;
-    fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new URLSearchParams(new FormData(form)), credentials: 'same-origin', redirect: 'manual' })
-      .then(function (r) {
-        if (r.type === 'opaqueredirect' || (r.status >= 300 && r.status < 400) || /customer_posted=true/.test(r.url)) return win();
-        return r.text().then(function (txt) {
-          var m = /id="bfp-srv-err"[^>]*data-msg="([^"]*)"/.exec(txt), msg = m ? m[1] : '';
-          if (/already|bereits|associated|zugeordnet|exist|vorhanden|account|konto|taken|registered/i.test(msg)) return win();
-          fail(r.type + ' ' + r.status + ' | ' + (msg || 'no message') + ' | ' + txt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 90));
-        });
-      })
-      .catch(function (x) { fail('network: ' + (x && x.message)); });
+  // Show the voucher straight away and send the email to Shopify in the background, the normal form-post way,
+  // into a hidden frame. The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
+  var form = document.getElementById('bfp-form');
+  form.setAttribute('target', 'bfp-frame');
+  form.addEventListener('submit', function () {
+    document.getElementById('bfp-go').disabled = true;
+    setTimeout(function () { store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }, 350);
   });
   document.getElementById('bfp-copy').addEventListener('click', function () {
     var b = this, c = document.getElementById('bfp-code').textContent;
