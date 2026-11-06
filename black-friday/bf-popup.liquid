@@ -126,12 +126,14 @@
       <h2 id="bfp-h">{{ t_h }}</h2>
       <div class="bfp-form" id="bfp-formwrap">
         <p class="bfp-sub">{{ t_sub }}</p>
-        {%- form 'customer', id: 'bfp-form', class: 'bfp-fm' -%}
+        <form id="bfp-form" class="bfp-fm" method="post" action="{{ routes.root_url }}contact" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
           <input type="hidden" name="contact[tags]" value="newsletter,blackfriday">
           <label for="bfp-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
           <input type="email" name="contact[email]" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
-                  {%- endform -%}
+                  </form>
         <p class="bfp-fine">{{ t_fine }}</p>
         <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
       </div>
@@ -186,11 +188,11 @@
   // The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
   var form = document.getElementById('bfp-form');
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
+    e.preventDefault(); e.stopImmediatePropagation();
     document.getElementById('bfp-go').disabled = true;
     try { fetch(form.getAttribute('action') || '/contact', { method: 'POST', body: new URLSearchParams(new FormData(form)), credentials: 'same-origin', redirect: 'manual', keepalive: true }).catch(function () {}); } catch (x) {}
     setTimeout(function () { store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }, 350);
-  });
+  }, true);
   document.getElementById('bfp-copy').addEventListener('click', function () {
     var b = this, c = document.getElementById('bfp-code').textContent;
     function done() { b.textContent = {{ t_copied | json }}; setTimeout(function () { b.textContent = {{ t_copy | json }}; }, 1800); }
