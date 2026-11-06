@@ -1,6 +1,6 @@
 {%- comment -%}
   Black Friday email pop-up for the UK (pounds, English), Ireland (euro, English) and Germany (euro, German). Not shown on the cart page.
-  Signs the visitor up through Shopify's own customer form (tag: blackfriday), then shows the voucher code:
+  Collects the email in Klaviyo (list: Black Friday pop-up sign-ups, id VeTFNL), then shows the voucher code:
   BF10WWPPFC for the UK, BF10EUWWPPFC for Ireland and Germany (the euro code is limited to those two markets in Shopify).
   Shown from 5 to 30 November 2026, once per visitor (a dismissed pop-up stays away for 3 days).
 {%- endcomment -%}
@@ -131,12 +131,6 @@
           <input type="email" id="bfp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
           <button class="bfp-btn" type="submit" id="bfp-go">{{ t_go }}</button>
         </form>
-        <div hidden>
-          {%- form 'customer', id: 'bfp-sf' -%}
-            <input type="hidden" name="contact[tags]" value="newsletter,blackfriday">
-            <input type="hidden" name="contact[email]" id="bfp-sf-email">
-          {%- endform -%}
-        </div>
         <p class="bfp-fine">{{ t_fine }}</p>
         <button class="bfp-later" type="button" data-bfp-close>{{ t_no }}</button>
       </div>
@@ -189,15 +183,22 @@
 
   // Show the voucher straight away and send the email to Shopify in the background (a normal form-encoded post).
   // The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
-  // The visible form never goes to Shopify itself. On submit we copy the email into Shopify's own (hidden) sign-up form,
-  // so the post carries every field Shopify expects, send it in the background, and show the voucher at once.
-  // Nothing waits for Shopify, so a spam check or a slow reply can't stop the voucher or move the page.
-  var form = document.getElementById('bfp-form'), sf = document.getElementById('bfp-sf');
+  // Collect the email in Klaviyo (list "Black Friday pop-up sign-ups") and show the voucher at once.
+  // Shopify's own sign-up form is not used: it makes every background sign-up pass a captcha page. Nothing here waits for Klaviyo.
+  var form = document.getElementById('bfp-form');
   form.addEventListener('submit', function (e) {
     e.preventDefault(); e.stopImmediatePropagation();
     document.getElementById('bfp-go').disabled = true;
-    document.getElementById('bfp-sf-email').value = document.getElementById('bfp-email').value;
-    try { if (sf) fetch(sf.getAttribute('action') || '/contact', { method: 'POST', body: new URLSearchParams(new FormData(sf)), credentials: 'same-origin', redirect: 'manual' }).catch(function () {}); } catch (x) {}
+    var email = document.getElementById('bfp-email').value.trim();
+    try {
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UU3NF7', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/vnd.api+json', 'revision': '2024-10-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Black Friday pop-up',
+          profile: { data: { type: 'profile', attributes: { email: email, properties: { source: 'bf-popup', market: {{ mk | default: 'GB' | json }}, voucher: {{ code | json }} } } } } },
+          relationships: { list: { data: { type: 'list', id: 'VeTFNL' } } } } })
+      }).catch(function () {});
+    } catch (x) {}
     setTimeout(function () { store({ done: 1, t: Date.now() }); document.getElementById('bfp-mid').classList.add('sent'); }, 350);
   }, true);
   document.getElementById('bfp-copy').addEventListener('click', function () {
