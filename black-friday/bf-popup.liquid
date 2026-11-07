@@ -176,13 +176,9 @@
       else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
     }
   });
-  // when to show: after a short wait, or when the mouse leaves the top of the page on desktop
-  var delay = matchMedia('(max-width:620px)').matches ? 12000 : 8000;
-  var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : delay);
-  document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY < 8 && now) { clearTimeout(t); open(); } });
+  // when to show: 20 seconds after the page loads (straight away with ?bfp=test)
+  var t = setTimeout(open, q.get('bfp') === 'test' ? 600 : 20000);
 
-  // Show the voucher straight away and send the email to Shopify in the background (a normal form-encoded post).
-  // The page never waits for Shopify, so a spam check or a slow reply can't stop the voucher.
   // Collect the email in Klaviyo (list "Black Friday pop-up sign-ups") and show the voucher at once.
   // Shopify's own sign-up form is not used: it makes every background sign-up pass a captcha page. Nothing here waits for Klaviyo.
   var form = document.getElementById('bfp-form');
