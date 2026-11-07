@@ -5,6 +5,6 @@
 {%- if image != blank -%}
   {%- assign phs = sizes | default: '100vw' -%}{%- assign pha = image.alt | escape -%}
   {{ image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1200, 1500, 1800', sizes: phs, class: cls, alt: pha }}
-{%- elsif note != blank -%}
+{%- elsif note != blank and request.design_mode -%}
   <span class="note">{{ 'general.photo' | t }}: {{ note }}</span>
 {%- endif -%}
