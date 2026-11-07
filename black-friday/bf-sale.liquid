@@ -119,7 +119,29 @@ function offers(){
   O.lines=function(p){return sale(p)?[]:l0.call(O,p)};
   O.forProduct=function(p){return sale(p)?[]:f0.call(O,p)};
 }
-function run(){desktop();mobile();bar();offers()}
+function prices(){
+  var root=(window.Shopify&&Shopify.routes&&Shopify.routes.root)||'/',cur=(window.Shopify&&Shopify.currency&&Shopify.currency.active)||'',key='bfp1:'+root+cur,PM=null,now=Date.now();
+  function put(list){PM={};list.forEach(function(r){PM[r[0]]=r[1]})}
+  try{var c=JSON.parse(sessionStorage.getItem(key)||'null');if(c&&now-c.t<900000){put(c.d)}}catch(e){}
+  function apply(){
+    if(!PM)return;
+    var cards=document.querySelectorAll('article.pk');
+    for(var i=0;i<cards.length;i++){
+      var c=cards[i],a=c.querySelector('a.name'),m=a&&(a.getAttribute('href')||'').match(/\/products\/([^\/?#]+)/);if(!m)continue;
+      var x=PM[decodeURIComponent(m[1])],pr=c.querySelector('.price');if(!x||!pr)continue;
+      var k=x.join('|');if(pr.getAttribute('data-bfp')===k)continue;pr.setAttribute('data-bfp',k);
+      pr.innerHTML=(x[3]?'<span class="from">From</span>':'')+'<span class="now">'+esc(x[0])+'</span>'+(x[1]?'<s class="was">'+esc(x[1])+'</s>':'');
+      var tb=c.querySelector('.tab.sale');
+      if(x[1]){if(!tb){var tw=c.querySelector('.tabs');if(!tw){tw=document.createElement('div');tw.className='tabs';c.insertBefore(tw,c.firstChild)}tb=document.createElement('span');tb.className='tab sale';tw.insertBefore(tb,tw.firstChild)}tb.textContent=x[2]+D.off}
+      else if(tb&&/%/.test(tb.textContent)&&!/for|Free|Kit/i.test(tb.textContent)){tb.remove()}
+    }
+  }
+  prices.apply=apply;apply();
+  if(!prices.loading&&!PM){prices.loading=1;
+    fetch(root+'collections/black-friday-sale?view=bf-prices',{credentials:'same-origin'}).then(function(r){return r.json()}).then(function(d){put(d);try{sessionStorage.setItem(key,JSON.stringify({t:Date.now(),d:d}))}catch(e){}apply()}).catch(function(){});
+  }
+}
+function run(){desktop();mobile();bar();offers();prices();if(prices.apply)prices.apply()}
 run();
 var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(run,60)}).observe(document.documentElement,{childList:true,subtree:true});
 var n=0,iv=setInterval(function(){offers();if(window.PPOffers&&window.PPOffers.__bf||++n>40)clearInterval(iv)},250);

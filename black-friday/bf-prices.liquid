@@ -1,0 +1,8 @@
+{%- layout none -%}
+{%- paginate collection.products by 250 -%}[
+{%- for p in collection.products -%}
+{%- assign best = p.variants.first -%}
+{%- for v in p.variants -%}{%- if v.price < best.price -%}{%- assign best = v -%}{%- endif -%}{%- endfor -%}
+["{{ p.handle }}",[{{ best.price | money | json }},{% if best.compare_at_price > best.price %}{{ best.compare_at_price | money | json }}{% else %}null{% endif %},{% if best.compare_at_price > best.price %}{{ best.compare_at_price | minus: best.price | times: 100 | divided_by: best.compare_at_price }}{% else %}0{% endif %},{% if p.price_max > p.price_min %}1{% else %}0{% endif %}]]{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]{%- endpaginate -%}
