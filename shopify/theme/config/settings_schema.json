@@ -20,7 +20,7 @@
     "settings": [
       { "type": "image_picker", "id": "favicon", "label": "Favicon" },
       { "type": "number", "id": "free_delivery_over", "label": "Free UK delivery over (£)", "default": 75, "info": "Used in the bag, the menu and on product pages. Set your shipping rates to match." },
-      { "type": "text", "id": "delivery_line", "label": "Delivery line", "default": "Free UK delivery over £75" },
+      { "type": "text", "id": "delivery_line", "label": "Delivery line", "default": "Free UK delivery over £50" },
       { "type": "text", "id": "returns_days", "label": "Returns window", "default": "14 days" },
       { "type": "checkbox", "id": "klarna", "label": "Show Klarna Pay in 3", "default": true },
       { "type": "image_picker", "id": "klarna_badge", "label": "Klarna badge" }

@@ -94,3 +94,9 @@ body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body
 .logostrip .lg img{height:38px;width:auto;max-width:76%;object-fit:contain}
 @media(max-width:899px){.logostrip .lg{width:130px;height:64px;margin-right:10px}.logostrip .lg img{height:28px}}
 @media(prefers-reduced-motion:reduce){.logostrip .rail{animation:none}}
+/* level tabs as links look like the buttons */
+.wtabs a{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+@media(max-width:760px){.fin .h-po:has(.lvx){height:auto;min-height:190px}.fin .h-po .wtabs.lvx{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-top:12px;gap:6px}.fin .h-po .wtabs.lvx::-webkit-scrollbar{display:none}.fin .h-po .wtabs.lvx a{height:34px;padding:0 12px;font-size:13px}}
+/* card quick-add: label sits centred in the box (span and button alike) */
+.card span.add,.card button.add{display:inline-flex;align-items:center;justify-content:center;line-height:1;white-space:nowrap}
+.fco{padding-bottom:28px}.fco p{font-size:12px;line-height:1.5;opacity:.6;max-width:90ch}

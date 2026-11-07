@@ -72,7 +72,7 @@
     "free": "Free",
     "at_checkout": "At checkout",
     "total": "Total",
-    "klarna": "Or 3 interest free payments of <b>{{ amount }}</b>"
+    "klarna_html": "Or 3 interest free payments of <b>{{ amount }}</b>"
   },
   "product": {
     "image": "Product image",
@@ -113,7 +113,7 @@
     "grid": "Grid view",
     "two": "Two per row",
     "empty": "No products match these filters.",
-    "seen": "You have seen <b>{{ shown }}</b> of <b>{{ total }}</b> {{ unit }}",
+    "seen_html": "You have seen <b>{{ shown }}</b> of <b>{{ total }}</b> {{ unit }}",
     "show_more": "Show {{ count }} more {{ unit }}",
     "from": "From {{ price }}",
     "filter_sort": "Filter and sort",

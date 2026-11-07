@@ -40,6 +40,7 @@
       {%- for link in linklists[section.settings.legal_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
     </div>
   </div>
+  {%- if section.settings.company != blank -%}<div class="wrap fco"><p>{{ section.settings.company }}</p></div>{%- endif -%}
 </footer>
 
 {% schema %}
@@ -51,7 +52,8 @@
     { "type": "text", "id": "nl_text", "label": "Sign up text", "default": "New rackets, restocks and sale previews." },
     { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "Raqello" },
     { "type": "text", "id": "tagline", "label": "Tagline", "default": "Europe's best padel brands, in one UK store." },
-    { "type": "link_list", "id": "legal_menu", "label": "Legal menu", "default": "footer" }
+    { "type": "link_list", "id": "legal_menu", "label": "Legal menu", "default": "footer" },
+    { "type": "textarea", "id": "company", "label": "Company details", "default": "Raqello is a trading name of Poorly Pet Ltd. Registered in England and Wales, company number 17086223. Registered office: 4 Lomas Road, Sandbach, Cheshire, CW11 3EE, United Kingdom. Email hello@raqello.com." }
   ],
   "blocks": [
     { "type": "menu", "name": "Link column", "limit": 5, "settings": [

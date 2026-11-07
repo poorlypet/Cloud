@@ -36,7 +36,7 @@
       <textarea name="note" hidden>{{ cart.note }}</textarea>
       <button class="btn big co" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
       {%- if additional_checkout_buttons -%}<div class="expr dyn">{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
-      {%- if settings.klarna -%}{%- assign third = cart.total_price | divided_by: 3 | money -%}<div class="kln">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: class: 'klb', alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'cart.klarna' | t: amount: third }}</span></div>{%- endif -%}
+      {%- if settings.klarna -%}{%- assign third = cart.total_price | divided_by: 3 | money -%}<div class="kln">{%- if settings.klarna_badge -%}{{ settings.klarna_badge | image_url: width: 120 | image_tag: class: 'klb', alt: 'Klarna' }}{%- else -%}<b>Klarna</b>{%- endif -%}<span>{{ 'cart.klarna_html' | t: amount: third }}</span></div>{%- endif -%}
     </aside>
   </form>
   {%- endif -%}
