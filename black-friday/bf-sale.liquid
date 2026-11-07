@@ -9,12 +9,14 @@
   {%- assign t_sub = 'Ausgewählte Produkte reduziert' -%}
   {%- assign t_shop = 'Jetzt shoppen' -%}
   {%- assign t_all = 'Zum Black Friday Sale' -%}
+  {%- assign t_short = 'Zum Sale' -%}
   {%- assign t_off = '% Rabatt' -%}
 {%- else -%}
   {%- assign t_name = 'Black Friday sale' -%}
   {%- assign t_sub = 'Selected products reduced' -%}
   {%- assign t_shop = 'Shop now' -%}
   {%- assign t_all = 'Shop the Black Friday sale' -%}
+  {%- assign t_short = 'Shop the sale' -%}
   {%- assign t_off = '% off' -%}
 {%- endif -%}
 {%- assign seen = '#' -%}
@@ -43,7 +45,8 @@
 .bfm .pt .tag,.bfd .pt .tag{position:absolute;top:12px;left:12px;background:var(--lime);color:var(--teal);font:600 12px/1 var(--sans);padding:6px 8px;border-radius:7px}
 .bfm .pt .c{position:absolute;left:0;right:0;bottom:0;padding:50px 14px 14px;background:linear-gradient(transparent,rgba(10,58,55,.9));font:700 20px/1.2 var(--serif)}
 .bfm .pt .c small{display:block;font:500 14px/1.3 var(--sans);margin:4px 0 14px}
-.bfm .pt .btn,.bfd .go{display:flex;width:100%;min-height:46px;font:700 15px/1 var(--sans);background:var(--lime);color:var(--teal);border-radius:10px;align-items:center;justify-content:center}
+.bfm .pt .btn{display:flex;width:100%;min-height:46px;font:700 15px/1 var(--sans);background:var(--lime);color:var(--teal);border-radius:10px;align-items:center;justify-content:center}
+.bfd .go{display:flex;box-sizing:border-box;min-height:46px;font:700 15px/1 var(--sans);background:var(--lime);color:var(--teal);border-radius:10px;align-items:center;justify-content:center;text-align:center}
 .bf-vp{flex:1;min-width:0;height:100%;overflow:hidden;border-radius:12px;position:relative}
 .bf-vp:after{content:"";position:absolute;top:0;right:0;bottom:0;width:60px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none}
 .bf-trk{display:flex;gap:12px;width:max-content;height:100%;animation:bfmq 44s linear infinite}
@@ -67,14 +70,16 @@
 .bfd .pt .c{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;background:linear-gradient(transparent,rgba(10,58,55,.9));font:700 19px/1.2 var(--serif)}
 .bfd .bf-vp{height:230px;margin-top:14px;border-radius:0}
 .bfd .bf-vp:after{display:none}
-.bfd .go{margin:14px 24px 0;min-height:52px;font-size:16px;text-decoration:none}
-.bfbar{display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--deep);color:#fff;height:50px;padding:0 12px 0 16px;font:600 15px/1.2 var(--sans);text-decoration:none}
-.bfbar .btn{min-height:32px;padding:0 12px;font-size:14px;border-radius:6px}
-@media (max-width:1023px){.bfbar{display:flex}}
+.bfd .go{margin:14px 24px 0;min-height:52px;font-size:16px;text-decoration:none;width:auto;max-width:calc(100% - 48px)}
+.util.bfu>.wrap,.util.bfu>.ui{display:none!important}
+.util.bfu{height:auto!important}
+.bfbar{display:flex;align-items:center;justify-content:center;gap:14px;background:var(--deep);color:#fff;min-height:40px;padding:5px 16px;font:600 15px/1.2 var(--sans);text-decoration:none}
+.bfbar .btn{min-height:30px;padding:0 12px;font-size:14px;border-radius:6px}
+@media (max-width:1023px){.bfbar{justify-content:space-between;min-height:50px;padding:0 12px 0 16px}.bfbar .btn{min-height:32px}}
 </style>
 <script>
 (function(){
-var D={items:{{ bf_json }},name:{{ t_name | json }},sub:{{ t_sub | json }},shop:{{ t_shop | json }},all:{{ t_all | json }},off:{{ t_off | json }},url:{{ bfc.url | json }},dog:{{ 'bf-sale-dog.jpg' | asset_url | json }}};
+var D={items:{{ bf_json }},name:{{ t_name | json }},sub:{{ t_sub | json }},shop:{{ t_shop | json }},all:{{ t_all | json }},short:{{ t_short | json }},off:{{ t_off | json }},url:{{ bfc.url | json }},dog:{{ 'bf-sale-dog.jpg' | asset_url | json }}};
 if(!D.items.length)return;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function card(x){return '<a class="bf-mc" href="'+esc(x.u)+'"><span class="tg">'+x.o+D.off+'</span><span class="im"><img src="'+esc(x.i)+'" alt="" loading="lazy"></span><b>'+esc(x.t)+'</b><span class="pr">'+esc(x.p)+'<s>'+esc(x.c)+'</s></span></a>'}
@@ -92,14 +97,17 @@ function mobile(){
   if(!a)return;
   var btn=document.createElement('button');btn.type='button';btn.className='dr bf';btn.setAttribute('aria-expanded','false');btn.innerHTML='<span>'+esc(D.name)+'</span><span class="car" aria-hidden="true">›</span>';
   var p=document.createElement('div');p.className='bfd';p.hidden=true;
-  p.innerHTML=photo('',false)+track()+'<a class="go" href="'+esc(D.url)+'">'+esc(D.all)+'</a>';
+  p.innerHTML=photo('',false)+track()+'<a class="go" href="'+esc(D.url)+'">'+esc(D.short)+'</a>';
   btn.addEventListener('click',function(){var o=p.hidden;p.hidden=!o;btn.setAttribute('aria-expanded',o)});
   a.replaceWith(btn);btn.after(p);
 }
 function bar(){
-  if(!/^\/([a-z]{2}(-[a-z]{2})?\/)?products\//i.test(location.pathname)||document.querySelector('.bfbar'))return;
-  var a=document.createElement('a');a.className='bfbar';a.href=D.url;a.innerHTML='<span>'+esc(D.name)+'</span><span class="btn">'+esc(D.shop)+'</span>';
-  document.body.insertBefore(a,document.body.firstChild);
+  var us=document.querySelectorAll('.util');
+  if(!us.length){if(!document.querySelector('.bfbar')){var u0=document.createElement('div');u0.className='util';document.body.insertBefore(u0,document.body.firstChild);us=[u0]}else return}
+  [].forEach.call(us,function(u){
+    if(u.querySelector('.bfbar'))return;u.classList.add('bfu');
+    var a=document.createElement('a');a.className='bfbar';a.href=D.url;a.innerHTML='<span>'+esc(D.name)+'</span><span class="btn">'+esc(D.shop)+'</span>';u.appendChild(a);
+  });
 }
 function offers(){
   var O=window.PPOffers;if(!O||O.__bf)return;O.__bf=1;

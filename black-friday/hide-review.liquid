@@ -1,0 +1,25 @@
+<script>
+(function(){
+/* Hides one review (a test entry left on the Shop app) from the review data and from the page. */
+var T=/only received one leg bootie splint/i;
+function bad(s){return T.test(s)}
+function card(el){
+  while(el.parentElement&&el.parentElement!==document.body){
+    var p=el.parentElement,sib=false;
+    for(var i=0;i<p.children.length;i++){var c=p.children[i];if(c!==el&&c.tagName===el.tagName&&c.className===el.className){sib=true;break}}
+    if(sib||(p.textContent||'').length>1600||/^(MAIN|SECTION|BODY)$/.test(p.tagName))break;
+    el=p;
+  }
+  return el;
+}
+function deepest(root){var out=[],all=root.querySelectorAll('*');for(var i=0;i<all.length;i++){var el=all[i];if(/^(SCRIPT|STYLE|BODY|HTML|NOSCRIPT)$/.test(el.tagName))continue;var t=el.textContent||'';if(t.length<1600&&bad(t)){var kid=false;for(var j=0;j<el.children.length;j++){if(bad(el.children[j].textContent||'')){kid=true;break}}if(!kid)out.push(el)}}return out}
+function cleanStr(s){if(s.indexOf('<')<0||!bad(s))return s;try{var d=new DOMParser().parseFromString('<body>'+s,'text/html');deepest(d.body).forEach(function(e){var c=card(e);if(c&&c.parentElement)c.remove()});return d.body.innerHTML}catch(e){return s}}
+function walk(o){if(Array.isArray(o)){for(var i=o.length-1;i>=0;i--){var x=o[i];if(x&&typeof x==='object'){var s=JSON.stringify(x);if(s.length<3500&&bad(s)){o.splice(i,1);continue}walk(x)}else if(typeof x==='string'){o[i]=cleanStr(x)}}}else if(o&&typeof o==='object'){for(var k in o){var v=o[k];if(typeof v==='string'){o[k]=cleanStr(v)}else if(v&&typeof v==='object'){walk(v)}}}}
+['LIVE_REVIEWS','LIVE_ALL_REVIEWS','LIVE_REVIEWS_GRID','LIVE_HOME_REVIEWS'].forEach(function(k){try{if(window[k])walk(window[k])}catch(e){}});
+if(window.__hideRev)return;window.__hideRev=1;
+function sweep(){try{if(!bad(document.body.textContent||''))return;deepest(document.body).forEach(function(e){var c=card(e);if(c&&c.parentElement)c.remove()})}catch(e){}}
+var tm;function later(){clearTimeout(tm);tm=setTimeout(sweep,150)}
+function start(){sweep();new MutationObserver(later).observe(document.body,{childList:true,subtree:true})}
+if(document.body)start();else document.addEventListener('DOMContentLoaded',start);
+})();
+</script>
