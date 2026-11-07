@@ -1,0 +1,118 @@
+{%- comment -%}
+  Black Friday sale: lime tab with dropdown, phone menu panel, product page bar, offers excluded on sale products.
+  Products come from the collection with the handle black-friday-sale. Rendered once at the end of the body.
+{%- endcomment -%}
+{%- assign bfc = collections['black-friday-sale'] -%}
+{%- if bfc and bfc.all_products_count > 0 -%}
+{%- if request.locale.iso_code == 'de' -%}
+  {%- assign t_name = 'Black Friday Sale' -%}
+  {%- assign t_sub = 'Ausgewählte Produkte reduziert' -%}
+  {%- assign t_shop = 'Jetzt shoppen' -%}
+  {%- assign t_all = 'Zum Black Friday Sale' -%}
+  {%- assign t_off = '% Rabatt' -%}
+{%- else -%}
+  {%- assign t_name = 'Black Friday sale' -%}
+  {%- assign t_sub = 'Selected products reduced' -%}
+  {%- assign t_shop = 'Shop now' -%}
+  {%- assign t_all = 'Shop the Black Friday sale' -%}
+  {%- assign t_off = '% off' -%}
+{%- endif -%}
+{%- assign seen = '#' -%}
+{%- assign shown = 0 -%}
+{%- capture bf_json -%}[
+{%- for p in bfc.products limit: 50 -%}
+  {%- if shown < 14 and p.available and p.compare_at_price > p.price -%}
+    {%- capture vk -%}|{{ p.vendor | handleize }}|{%- endcapture -%}
+    {%- assign vc = seen | split: vk | size | minus: 1 -%}
+    {%- if vc < 2 -%}
+      {%- capture seen -%}{{ seen }}{{ vk }}#{%- endcapture -%}
+      {%- if shown > 0 -%},{%- endif -%}
+      {%- assign shown = shown | plus: 1 -%}
+      {"t":{{ p.title | json }},"u":{{ p.url | json }},"i":{{ p.featured_image | image_url: width: 240 | json }},"p":{{ p.price | money | json }},"c":{{ p.compare_at_price | money | json }},"o":{{ p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price }}}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+]{%- endcapture -%}
+<style>
+.nv.bf{background:var(--lime)!important;color:var(--teal)!important;font-weight:700;padding:0 24px;margin-left:6px}
+.nv.bf:hover,.nv.bf[aria-expanded=true]{background:var(--lime)!important;color:var(--teal)!important}
+.mega.bfm{left:0;right:0;width:auto;height:auto!important;min-height:0!important;padding:24px 32px}
+.bfm .eq{display:flex;gap:20px;height:290px}
+.bfm .pt{position:relative;display:block;width:270px;flex:none;height:100%;border-radius:16px;overflow:hidden;background:#dfe8e5;color:#fff}
+.bfm .pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfm .pt .tag,.bfd .pt .tag{position:absolute;top:12px;left:12px;background:var(--lime);color:var(--teal);font:600 12px/1 var(--sans);padding:6px 8px;border-radius:7px}
+.bfm .pt .c{position:absolute;left:0;right:0;bottom:0;padding:50px 14px 14px;background:linear-gradient(transparent,rgba(10,58,55,.9));font:700 20px/1.2 var(--serif)}
+.bfm .pt .c small{display:block;font:500 14px/1.3 var(--sans);margin:4px 0 14px}
+.bfm .pt .btn,.bfd .go{display:flex;width:100%;min-height:46px;font:700 15px/1 var(--sans);background:var(--lime);color:var(--teal);border-radius:10px;align-items:center;justify-content:center}
+.bf-vp{flex:1;min-width:0;height:100%;overflow:hidden;border-radius:12px;position:relative}
+.bf-vp:after{content:"";position:absolute;top:0;right:0;bottom:0;width:60px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);pointer-events:none}
+.bf-trk{display:flex;gap:12px;width:max-content;height:100%;animation:bfmq 44s linear infinite}
+@keyframes bfmq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.bf-vp:hover .bf-trk{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.bf-trk{animation:none}.bf-vp{overflow-x:auto}}
+.bf-mc{width:150px;flex:none;display:flex;flex-direction:column;background:#fff;border:1px solid #E6EAE3;border-radius:14px;overflow:hidden;position:relative;color:var(--ink);text-decoration:none}
+.bf-mc .im{flex:1;min-height:0;display:grid;place-items:center;padding:8px}
+.bf-mc .im img{max-width:100%;max-height:100%;object-fit:contain}
+.bf-mc .tg{position:absolute;top:8px;left:8px;background:var(--lime);color:var(--teal);font:600 11px/1 var(--sans);padding:5px 6px;border-radius:7px}
+.bf-mc b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:33px;line-height:16.5px;font:700 12.5px/16.5px var(--serif);padding:0 9px}
+.bf-mc .pr{display:block;padding:4px 9px 10px;font:700 15px/1.2 var(--sans)}
+.bf-mc .pr s{font:400 12px var(--sans);color:var(--mute);margin-left:5px}
+.drawer .dr.bf{background:var(--lime);color:var(--teal);font-weight:700;border-bottom:0}
+.drawer .dr.bf .car{transition:transform .15s}
+.drawer .dr.bf[aria-expanded=true] .car{transform:rotate(90deg)}
+.bfd{background:var(--mist);padding:14px 0 18px}
+.bfd[hidden]{display:none}
+.bfd .pt{position:relative;display:block;margin:0 24px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;color:#fff;background:#dfe8e5}
+.bfd .pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfd .pt .c{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;background:linear-gradient(transparent,rgba(10,58,55,.9));font:700 19px/1.2 var(--serif)}
+.bfd .bf-vp{height:230px;margin-top:14px;border-radius:0}
+.bfd .bf-vp:after{display:none}
+.bfd .go{margin:14px 24px 0;min-height:52px;font-size:16px;text-decoration:none}
+.bfbar{display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--deep);color:#fff;height:50px;padding:0 12px 0 16px;font:600 15px/1.2 var(--sans);text-decoration:none}
+.bfbar .btn{min-height:32px;padding:0 12px;font-size:14px;border-radius:6px}
+@media (max-width:1023px){.bfbar{display:flex}}
+</style>
+<script>
+(function(){
+var D={items:{{ bf_json }},name:{{ t_name | json }},sub:{{ t_sub | json }},shop:{{ t_shop | json }},all:{{ t_all | json }},off:{{ t_off | json }},url:{{ bfc.url | json }},dog:{{ 'bf-sale-dog.jpg' | asset_url | json }}};
+if(!D.items.length)return;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function card(x){return '<a class="bf-mc" href="'+esc(x.u)+'"><span class="tg">'+x.o+D.off+'</span><span class="im"><img src="'+esc(x.i)+'" alt="" loading="lazy"></span><b>'+esc(x.t)+'</b><span class="pr">'+esc(x.p)+'<s>'+esc(x.c)+'</s></span></a>'}
+function track(h){var one=D.items.map(card).join('');return '<div class="bf-vp"><div class="bf-trk">'+one+one+'</div></div>'}
+function photo(cls,btn){return '<a class="pt" href="'+esc(D.url)+'"><img src="'+esc(D.dog)+'" alt=""><span class="tag">'+esc(D.name)+'</span><span class="c">'+esc(D.sub)+(btn?'<small></small><span class="btn">'+esc(D.all)+'</span>':'')+'</span></a>'}
+function desktop(){
+  var b=document.querySelector('#navlist .nv.offers,#navlist [data-mega="offers"]');if(!b)return;
+  var li=b.closest('li'),m=li&&li.querySelector('.mega');if(!m)return;
+  if(!b.dataset.bf){b.dataset.bf='1';b.textContent=D.name;b.classList.add('bf');li.classList.remove('has-small');m.classList.remove('small');m.classList.add('bfm')}
+  if(!m.querySelector('.eq'))m.innerHTML='<div class="eq">'+photo('',true)+track()+'</div>'
+}
+function mobile(){
+  var dl=document.querySelector('.drawer .dlist');if(!dl||dl.querySelector('.dr.bf'))return;
+  var a=null,rows=dl.querySelectorAll('.dr');for(var i=0;i<rows.length;i++){var h=rows[i].getAttribute('href')||'';if(/offers|sale/i.test(h)||/^\s*Offers\s*$/i.test(rows[i].textContent)){a=rows[i];break}}
+  if(!a)return;
+  var btn=document.createElement('button');btn.type='button';btn.className='dr bf';btn.setAttribute('aria-expanded','false');btn.innerHTML='<span>'+esc(D.name)+'</span><span class="car" aria-hidden="true">›</span>';
+  var p=document.createElement('div');p.className='bfd';p.hidden=true;
+  p.innerHTML=photo('',false)+track()+'<a class="go" href="'+esc(D.url)+'">'+esc(D.all)+'</a>';
+  btn.addEventListener('click',function(){var o=p.hidden;p.hidden=!o;btn.setAttribute('aria-expanded',o)});
+  a.replaceWith(btn);btn.after(p);
+}
+function bar(){
+  if(!/^\/([a-z]{2}(-[a-z]{2})?\/)?products\//i.test(location.pathname)||document.querySelector('.bfbar'))return;
+  var a=document.createElement('a');a.className='bfbar';a.href=D.url;a.innerHTML='<span>'+esc(D.name)+'</span><span class="btn">'+esc(D.shop)+'</span>';
+  document.body.insertBefore(a,document.body.firstChild);
+}
+function offers(){
+  var O=window.PPOffers;if(!O||O.__bf)return;O.__bf=1;
+  function sale(p){return p&&p.compareAt&&p.compareAt>p.price}
+  var b0=O.badge,l0=O.lines,f0=O.forProduct;
+  O.badge=function(p){return sale(p)?Math.round((1-p.price/p.compareAt)*100)+D.off:b0.call(O,p)};
+  O.lines=function(p){return sale(p)?[]:l0.call(O,p)};
+  O.forProduct=function(p){return sale(p)?[]:f0.call(O,p)};
+}
+function run(){desktop();mobile();bar();offers()}
+run();
+var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(run,60)}).observe(document.documentElement,{childList:true,subtree:true});
+var n=0,iv=setInterval(function(){offers();if(window.PPOffers&&window.PPOffers.__bf||++n>40)clearInterval(iv)},250);
+})();
+</script>
+{%- endif -%}
