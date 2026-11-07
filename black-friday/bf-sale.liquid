@@ -57,9 +57,9 @@
 .bf-mc .im{flex:1;min-height:0;display:grid;place-items:center;padding:8px}
 .bf-mc .im img{max-width:100%;max-height:100%;object-fit:contain}
 .bf-mc .tg{position:absolute;top:8px;left:8px;background:var(--lime);color:var(--teal);font:600 11px/1 var(--sans);padding:5px 6px;border-radius:7px}
-.bf-mc b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:33px;line-height:16.5px;font:700 12.5px/16.5px var(--serif);padding:0 9px}
-.bf-mc .pr{display:block;padding:4px 9px 10px;font:700 15px/1.2 var(--sans)}
-.bf-mc .pr s{font:400 12px var(--sans);color:var(--mute);margin-left:5px}
+.bf-mc b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:33px!important;margin:0;padding:0 9px;font-family:var(--serif)!important;font-weight:700!important;font-size:12.5px!important;line-height:16.5px!important}
+.bf-mc .pr{display:block;flex:none;padding:6px 9px 12px;font-family:var(--sans)!important;font-weight:700!important;font-size:15px!important;line-height:1.2!important}
+.bf-mc .pr s{font-weight:400!important;font-size:12px!important;color:var(--mute);margin-left:5px}
 .drawer .dr.bf{background:var(--lime);color:var(--teal);font-weight:700;border-bottom:0}
 .drawer .dr.bf .car{transition:transform .15s}
 .drawer .dr.bf[aria-expanded=true] .car{transform:rotate(90deg)}
@@ -68,7 +68,9 @@
 .bfd .pt{position:relative;display:block;margin:0 24px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;color:#fff;background:#dfe8e5}
 .bfd .pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bfd .pt .c{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;background:linear-gradient(transparent,rgba(10,58,55,.9));font:700 19px/1.2 var(--serif)}
-.bfd .bf-vp{height:230px;margin-top:14px;border-radius:0}
+.bfd .bf-vp{height:auto;margin-top:14px;border-radius:0}
+.bfd .bf-trk{height:auto}
+.bfd .bf-mc .im{flex:none;height:140px}
 .bfd .bf-vp:after{display:none}
 .bfd .go{margin:14px 24px 0;min-height:52px;font-size:16px;text-decoration:none;width:auto;max-width:calc(100% - 48px)}
 .util.bfu>.wrap,.util.bfu>.ui{display:none!important}
