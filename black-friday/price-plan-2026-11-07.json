@@ -13,7 +13,10 @@
     "original": 14.49,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 20.95,
+    "eur_was": 22.99,
+    "eur_now": 20.99
    }
   ]
  },
@@ -31,7 +34,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 9.99
+    "now": 9.99,
+    "eur_original": 14.95,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    },
    {
     "id": "58007382851916",
@@ -39,7 +45,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 18.99
    },
    {
     "id": "58007382884684",
@@ -47,7 +56,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 28.99
    },
    {
     "id": "58007382917452",
@@ -55,7 +67,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 41.99
    }
   ]
  },
@@ -73,7 +88,10 @@
     "original": 26.95,
     "original_compare_at": null,
     "was": 29.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 37.99
    },
    {
     "id": "58728293531980",
@@ -81,7 +99,10 @@
     "original": 14.95,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 21.95,
+    "eur_was": 23.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -99,7 +120,10 @@
     "original": 12.5,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 17.95,
+    "eur_was": 19.99,
+    "eur_now": 17.99
    }
   ]
  },
@@ -117,7 +141,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    },
    {
     "id": "58043623702860",
@@ -125,7 +152,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    },
    {
     "id": "58043623735628",
@@ -133,7 +163,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    },
    {
     "id": "58043623768396",
@@ -141,7 +174,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    },
    {
     "id": "58043623801164",
@@ -149,7 +185,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    },
    {
     "id": "58043623833932",
@@ -157,7 +196,10 @@
     "original": 19.99,
     "original_compare_at": null,
     "was": 21.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 28.95,
+    "eur_was": 31.99,
+    "eur_now": 26.99
    }
   ]
  },
@@ -175,7 +217,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -193,7 +238,10 @@
     "original": 49.95,
     "original_compare_at": null,
     "was": 54.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 70.95,
+    "eur_was": 77.99,
+    "eur_now": 61.99
    }
   ]
  },
@@ -211,7 +259,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "58226197987660",
@@ -219,7 +270,10 @@
     "original": 44.49,
     "original_compare_at": null,
     "was": 48.99,
-    "now": 41.99
+    "now": 41.99,
+    "eur_original": 62.95,
+    "eur_was": 68.99,
+    "eur_now": 58.99
    },
    {
     "id": "58226198020428",
@@ -227,7 +281,10 @@
     "original": 62.49,
     "original_compare_at": null,
     "was": 68.99,
-    "now": 58.99
+    "now": 58.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "58226198053196",
@@ -235,7 +292,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "58226198085964",
@@ -243,7 +303,10 @@
     "original": 78.99,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    }
   ]
  },
@@ -261,7 +324,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -279,7 +345,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -297,7 +366,10 @@
     "original": 4.79,
     "original_compare_at": null,
     "was": 4.99,
-    "now": 3.99
+    "now": 3.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -315,7 +387,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -333,7 +408,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -351,7 +429,10 @@
     "original": 5.99,
     "original_compare_at": null,
     "was": 6.99,
-    "now": 5.99
+    "now": 5.99,
+    "eur_original": 8.95,
+    "eur_was": 9.99,
+    "eur_now": 8.99
    },
    {
     "id": "58728274067788",
@@ -359,7 +440,10 @@
     "original": 59.99,
     "original_compare_at": null,
     "was": 65.99,
-    "now": 58.99
+    "now": 58.99,
+    "eur_original": 84.95,
+    "eur_was": 92.99,
+    "eur_now": 83.99
    }
   ]
  },
@@ -377,7 +461,10 @@
     "original": 16.99,
     "original_compare_at": null,
     "was": 18.99,
-    "now": 15.99
+    "now": 15.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    },
    {
     "id": "58226198348108",
@@ -385,7 +472,10 @@
     "original": 23.49,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "58226198380876",
@@ -393,7 +483,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "58226198413644",
@@ -401,7 +494,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "58226198446412",
@@ -409,7 +505,10 @@
     "original": 39.49,
     "original_compare_at": null,
     "was": 42.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 55.95,
+    "eur_was": 61.99,
+    "eur_now": 52.99
    }
   ]
  },
@@ -427,7 +526,10 @@
     "original": 7.79,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -445,7 +547,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 12.99
    }
   ]
  },
@@ -463,7 +568,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 18.99
    }
   ]
  },
@@ -481,7 +589,10 @@
     "original": 39.99,
     "original_compare_at": null,
     "was": 43.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "58065619747148",
@@ -489,7 +600,10 @@
     "original": 39.99,
     "original_compare_at": null,
     "was": 43.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "58065619779916",
@@ -497,7 +611,10 @@
     "original": 45.99,
     "original_compare_at": null,
     "was": 50.99,
-    "now": 42.99
+    "now": 42.99,
+    "eur_original": 64.95,
+    "eur_was": 70.99,
+    "eur_now": 59.99
    },
    {
     "id": "58065619812684",
@@ -505,7 +622,10 @@
     "original": 45.99,
     "original_compare_at": null,
     "was": 50.99,
-    "now": 42.99
+    "now": 42.99,
+    "eur_original": 64.95,
+    "eur_was": 70.99,
+    "eur_now": 59.99
    },
    {
     "id": "58065619845452",
@@ -513,7 +633,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "58065619878220",
@@ -521,7 +644,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "58065619910988",
@@ -529,7 +655,10 @@
     "original": 53.99,
     "original_compare_at": null,
     "was": 58.99,
-    "now": 49.99
+    "now": 49.99,
+    "eur_original": 75.95,
+    "eur_was": 83.99,
+    "eur_now": 70.99
    },
    {
     "id": "58065619943756",
@@ -537,7 +666,10 @@
     "original": 53.99,
     "original_compare_at": null,
     "was": 58.99,
-    "now": 49.99
+    "now": 49.99,
+    "eur_original": 75.95,
+    "eur_was": 83.99,
+    "eur_now": 70.99
    },
    {
     "id": "58065619976524",
@@ -545,7 +677,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "58065620009292",
@@ -553,7 +688,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    }
   ]
  },
@@ -571,7 +709,10 @@
     "original": 13.49,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    },
    {
     "id": "58226201690444",
@@ -579,7 +720,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "58226201723212",
@@ -587,7 +731,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    },
    {
     "id": "58226201755980",
@@ -595,7 +742,10 @@
     "original": 42.99,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 60.95,
+    "eur_was": 66.99,
+    "eur_now": 56.99
    }
   ]
  },
@@ -613,7 +763,10 @@
     "original": 5.99,
     "original_compare_at": null,
     "was": 6.99,
-    "now": 4.99
+    "now": 4.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -631,7 +784,10 @@
     "original": 62.49,
     "original_compare_at": null,
     "was": 68.99,
-    "now": 58.99
+    "now": 58.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "59422911398220",
@@ -639,7 +795,10 @@
     "original": 44.49,
     "original_compare_at": null,
     "was": 48.99,
-    "now": 41.99
+    "now": 41.99,
+    "eur_original": 62.95,
+    "eur_was": 68.99,
+    "eur_now": 58.99
    },
    {
     "id": "59422911430988",
@@ -647,7 +806,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422911463756",
@@ -655,7 +817,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "59422911496524",
@@ -663,7 +828,10 @@
     "original": 78.99,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    }
   ]
  },
@@ -681,7 +849,10 @@
     "original": 15.99,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 22.95,
+    "eur_was": 24.99,
+    "eur_now": 20.99
    },
    {
     "id": "58927312535884",
@@ -689,7 +860,10 @@
     "original": 34.99,
     "original_compare_at": null,
     "was": 37.99,
-    "now": 31.99
+    "now": 31.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    }
   ]
  },
@@ -707,7 +881,10 @@
     "original": 9.95,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 9.99
+    "now": 9.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -725,7 +902,10 @@
     "original": 4.99,
     "original_compare_at": null,
     "was": 4.99,
-    "now": 3.99
+    "now": 3.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -743,7 +923,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -761,7 +944,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    },
    {
     "id": "58043416084812",
@@ -769,7 +955,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    },
    {
     "id": "58043416117580",
@@ -777,7 +966,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    },
    {
     "id": "58043416150348",
@@ -785,7 +977,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    },
    {
     "id": "58043416183116",
@@ -793,7 +988,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    }
   ]
  },
@@ -811,7 +1009,10 @@
     "original": 74.99,
     "original_compare_at": null,
     "was": 81.99,
-    "now": 69.99
+    "now": 69.99,
+    "eur_original": 105.95,
+    "eur_was": 116.99,
+    "eur_now": 98.99
    },
    {
     "id": "58042998489420",
@@ -819,7 +1020,10 @@
     "original": 74.99,
     "original_compare_at": null,
     "was": 81.99,
-    "now": 69.99
+    "now": 69.99,
+    "eur_original": 105.95,
+    "eur_was": 116.99,
+    "eur_now": 98.99
    },
    {
     "id": "58042998522188",
@@ -827,7 +1031,10 @@
     "original": 74.99,
     "original_compare_at": null,
     "was": 81.99,
-    "now": 69.99
+    "now": 69.99,
+    "eur_original": 105.95,
+    "eur_was": 116.99,
+    "eur_now": 98.99
    },
    {
     "id": "58042998554956",
@@ -835,7 +1042,10 @@
     "original": 74.99,
     "original_compare_at": null,
     "was": 81.99,
-    "now": 69.99
+    "now": 69.99,
+    "eur_original": 105.95,
+    "eur_was": 116.99,
+    "eur_now": 98.99
    },
    {
     "id": "58042998587724",
@@ -843,7 +1053,10 @@
     "original": 74.99,
     "original_compare_at": null,
     "was": 81.99,
-    "now": 69.99
+    "now": 69.99,
+    "eur_original": 105.95,
+    "eur_was": 116.99,
+    "eur_now": 98.99
    }
   ]
  },
@@ -861,7 +1074,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 9.99
+    "now": 9.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -879,7 +1095,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "59435730960716",
@@ -887,7 +1106,10 @@
     "original": 44.49,
     "original_compare_at": null,
     "was": 48.99,
-    "now": 41.99
+    "now": 41.99,
+    "eur_original": 62.95,
+    "eur_was": 68.99,
+    "eur_now": 58.99
    },
    {
     "id": "59435730993484",
@@ -895,7 +1117,10 @@
     "original": 50.99,
     "original_compare_at": null,
     "was": 55.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 71.95,
+    "eur_was": 78.99,
+    "eur_now": 66.99
    },
    {
     "id": "59435731026252",
@@ -903,7 +1128,10 @@
     "original": 83.49,
     "original_compare_at": null,
     "was": 91.99,
-    "now": 77.99
+    "now": 77.99,
+    "eur_original": 117.95,
+    "eur_was": 129.99,
+    "eur_now": 110.99
    },
    {
     "id": "59435731059020",
@@ -911,7 +1139,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    },
    {
     "id": "59435731091788",
@@ -919,7 +1150,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "59435731124556",
@@ -927,7 +1161,10 @@
     "original": 44.49,
     "original_compare_at": null,
     "was": 48.99,
-    "now": 41.99
+    "now": 41.99,
+    "eur_original": 62.95,
+    "eur_was": 68.99,
+    "eur_now": 58.99
    },
    {
     "id": "59435731157324",
@@ -935,7 +1172,10 @@
     "original": 50.99,
     "original_compare_at": null,
     "was": 55.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 71.95,
+    "eur_was": 78.99,
+    "eur_now": 66.99
    },
    {
     "id": "59435731190092",
@@ -943,7 +1183,10 @@
     "original": 83.49,
     "original_compare_at": null,
     "was": 91.99,
-    "now": 77.99
+    "now": 77.99,
+    "eur_original": 117.95,
+    "eur_was": 129.99,
+    "eur_now": 110.99
    },
    {
     "id": "59435731222860",
@@ -951,7 +1194,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -969,7 +1215,10 @@
     "original": 26.99,
     "original_compare_at": null,
     "was": 29.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435647631692",
@@ -977,7 +1226,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -995,7 +1247,10 @@
     "original": 45.0,
     "original_compare_at": null,
     "was": 49.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 63.95,
+    "eur_was": 69.99,
+    "eur_now": 55.99
    },
    {
     "id": "58578070274380",
@@ -1003,7 +1258,10 @@
     "original": 45.0,
     "original_compare_at": null,
     "was": 49.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 63.95,
+    "eur_was": 69.99,
+    "eur_now": 55.99
    },
    {
     "id": "58578070307148",
@@ -1011,7 +1269,10 @@
     "original": 45.0,
     "original_compare_at": null,
     "was": 49.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 63.95,
+    "eur_was": 69.99,
+    "eur_now": 55.99
    },
    {
     "id": "58578070339916",
@@ -1019,7 +1280,10 @@
     "original": 50.0,
     "original_compare_at": null,
     "was": 54.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 70.95,
+    "eur_was": 77.99,
+    "eur_now": 61.99
    },
    {
     "id": "58578070372684",
@@ -1027,7 +1291,10 @@
     "original": 50.0,
     "original_compare_at": null,
     "was": 54.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 70.95,
+    "eur_was": 77.99,
+    "eur_now": 61.99
    },
    {
     "id": "58578070405452",
@@ -1035,7 +1302,10 @@
     "original": 50.0,
     "original_compare_at": null,
     "was": 54.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 70.95,
+    "eur_was": 77.99,
+    "eur_now": 61.99
    }
   ]
  },
@@ -1053,7 +1323,10 @@
     "original": 4.99,
     "original_compare_at": null,
     "was": 4.99,
-    "now": 3.99
+    "now": 3.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -1071,7 +1344,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 11.95,
+    "eur_was": 12.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -1089,7 +1365,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -1107,7 +1386,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -1125,7 +1407,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 9.99
+    "now": 9.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -1143,7 +1428,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 65.99
+    "now": 65.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 92.99
    },
    {
     "id": "58042955989324",
@@ -1151,7 +1439,10 @@
     "original": 83.99,
     "original_compare_at": null,
     "was": 91.99,
-    "now": 68.99
+    "now": 68.99,
+    "eur_original": 118.95,
+    "eur_was": 130.99,
+    "eur_now": 97.99
    },
    {
     "id": "58042956022092",
@@ -1159,7 +1450,10 @@
     "original": 86.99,
     "original_compare_at": null,
     "was": 95.99,
-    "now": 71.99
+    "now": 71.99,
+    "eur_original": 122.95,
+    "eur_was": 134.99,
+    "eur_now": 100.99
    },
    {
     "id": "58042956054860",
@@ -1167,7 +1461,10 @@
     "original": 89.99,
     "original_compare_at": null,
     "was": 98.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 126.95,
+    "eur_was": 139.99,
+    "eur_now": 104.99
    },
    {
     "id": "58042956087628",
@@ -1175,7 +1472,10 @@
     "original": 92.99,
     "original_compare_at": null,
     "was": 101.99,
-    "now": 76.99
+    "now": 76.99,
+    "eur_original": 130.95,
+    "eur_was": 143.99,
+    "eur_now": 107.99
    }
   ]
  },
@@ -1193,7 +1493,10 @@
     "original": 10.99,
     "original_compare_at": null,
     "was": 11.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 15.95,
+    "eur_was": 17.99,
+    "eur_now": 15.99
    }
   ]
  },
@@ -1211,7 +1514,10 @@
     "original": 5.94,
     "original_compare_at": null,
     "was": 6.99,
-    "now": 5.99
+    "now": 5.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -1229,7 +1535,10 @@
     "original": 6.99,
     "original_compare_at": null,
     "was": 7.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -1247,7 +1556,10 @@
     "original": 123.99,
     "original_compare_at": null,
     "was": 135.99,
-    "now": 101.99
+    "now": 101.99,
+    "eur_original": 174.95,
+    "eur_was": 191.99,
+    "eur_now": 143.99
    },
    {
     "id": "59489171341644",
@@ -1255,7 +1567,10 @@
     "original": 123.99,
     "original_compare_at": null,
     "was": 135.99,
-    "now": 101.99
+    "now": 101.99,
+    "eur_original": 174.95,
+    "eur_was": 191.99,
+    "eur_now": 143.99
    },
    {
     "id": "59489171374412",
@@ -1263,7 +1578,10 @@
     "original": 123.99,
     "original_compare_at": null,
     "was": 135.99,
-    "now": 101.99
+    "now": 101.99,
+    "eur_original": 174.95,
+    "eur_was": 191.99,
+    "eur_now": 143.99
    },
    {
     "id": "59489171407180",
@@ -1271,7 +1589,10 @@
     "original": 123.99,
     "original_compare_at": null,
     "was": 135.99,
-    "now": 101.99
+    "now": 101.99,
+    "eur_original": 174.95,
+    "eur_was": 191.99,
+    "eur_now": 143.99
    },
    {
     "id": "59489171439948",
@@ -1279,7 +1600,10 @@
     "original": 123.99,
     "original_compare_at": null,
     "was": 135.99,
-    "now": 101.99
+    "now": 101.99,
+    "eur_original": 174.95,
+    "eur_was": 191.99,
+    "eur_now": 143.99
    }
   ]
  },
@@ -1297,7 +1621,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    },
    {
     "id": "59435826708812",
@@ -1305,7 +1632,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435826741580",
@@ -1313,7 +1643,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 11.99
+    "now": 11.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 17.99
    },
    {
     "id": "59435826774348",
@@ -1321,7 +1654,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    },
    {
     "id": "59435826807116",
@@ -1329,7 +1665,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435826839884",
@@ -1337,7 +1676,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 11.99
+    "now": 11.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 17.99
    },
    {
     "id": "59435826872652",
@@ -1345,7 +1687,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    },
    {
     "id": "59435826905420",
@@ -1353,7 +1698,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    }
   ]
  },
@@ -1371,7 +1719,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435709792588",
@@ -1379,7 +1730,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435709825356",
@@ -1387,7 +1741,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435709858124",
@@ -1395,7 +1752,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435709890892",
@@ -1403,7 +1763,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435709923660",
@@ -1411,7 +1774,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435709956428",
@@ -1419,7 +1785,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435709989196",
@@ -1427,7 +1796,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435710021964",
@@ -1435,7 +1807,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435710054732",
@@ -1443,7 +1818,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435710087500",
@@ -1451,7 +1829,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435710120268",
@@ -1459,7 +1840,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435710153036",
@@ -1467,7 +1851,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435710185804",
@@ -1475,7 +1862,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435710218572",
@@ -1483,7 +1873,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435710251340",
@@ -1491,7 +1884,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435710284108",
@@ -1499,7 +1895,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435710316876",
@@ -1507,7 +1906,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435710349644",
@@ -1515,7 +1917,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435710382412",
@@ -1523,7 +1928,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435710415180",
@@ -1531,7 +1939,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435710447948",
@@ -1539,7 +1950,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435710480716",
@@ -1547,7 +1961,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435710513484",
@@ -1555,7 +1972,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435710546252",
@@ -1563,7 +1983,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435710579020",
@@ -1571,7 +1994,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435710611788",
@@ -1579,7 +2005,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435710644556",
@@ -1587,7 +2016,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435710677324",
@@ -1595,7 +2027,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435710710092",
@@ -1603,7 +2038,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435710742860",
@@ -1611,7 +2049,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435710775628",
@@ -1619,7 +2060,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435710808396",
@@ -1627,7 +2071,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435710841164",
@@ -1635,7 +2082,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435710873932",
@@ -1643,7 +2093,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435710906700",
@@ -1651,7 +2104,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435710939468",
@@ -1659,7 +2115,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59435710972236",
@@ -1667,7 +2126,10 @@
     "original": 28.99,
     "original_compare_at": null,
     "was": 31.99,
-    "now": 26.99
+    "now": 26.99,
+    "eur_original": 40.95,
+    "eur_was": 44.99,
+    "eur_now": 37.99
    },
    {
     "id": "59435711005004",
@@ -1675,7 +2137,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59435711037772",
@@ -1683,7 +2148,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435711070540",
@@ -1691,7 +2159,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435711103308",
@@ -1699,7 +2170,10 @@
     "original": 55.49,
     "original_compare_at": null,
     "was": 60.99,
-    "now": 51.99
+    "now": 51.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    }
   ]
  },
@@ -1717,7 +2191,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435706777932",
@@ -1725,7 +2202,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59435706810700",
@@ -1733,7 +2213,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435706843468",
@@ -1741,7 +2224,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59435706876236",
@@ -1749,7 +2235,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435706909004",
@@ -1757,7 +2246,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    }
   ]
  },
@@ -1775,7 +2267,10 @@
     "original": 13.49,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    },
    {
     "id": "59422986109260",
@@ -1783,7 +2278,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59422986142028",
@@ -1791,7 +2289,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    }
   ]
  },
@@ -1809,7 +2310,10 @@
     "original": 4.99,
     "original_compare_at": null,
     "was": 4.99,
-    "now": 3.99
+    "now": 3.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -1827,7 +2331,10 @@
     "original": 6.99,
     "original_compare_at": null,
     "was": 7.99,
-    "now": 5.99
+    "now": 5.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -1845,7 +2352,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 11.99
    },
    {
     "id": "58228483359052",
@@ -1853,7 +2363,10 @@
     "original": 22.99,
     "original_compare_at": null,
     "was": 24.99,
-    "now": 18.99
+    "now": 18.99,
+    "eur_original": 32.95,
+    "eur_was": 35.99,
+    "eur_now": 26.99
    }
   ]
  },
@@ -1871,7 +2384,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "58226199888204",
@@ -1879,7 +2395,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "58226199920972",
@@ -1887,7 +2406,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -1905,7 +2427,10 @@
     "original": 17.99,
     "original_compare_at": null,
     "was": 19.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 25.95,
+    "eur_was": 28.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -1923,7 +2448,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -1941,7 +2469,10 @@
     "original": 14.99,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 21.95,
+    "eur_was": 23.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -1959,7 +2490,10 @@
     "original": 35.99,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 31.99
+    "now": 31.99,
+    "eur_original": 50.95,
+    "eur_was": 55.99,
+    "eur_now": 44.99
    }
   ]
  },
@@ -1977,7 +2511,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 18.99
    }
   ]
  },
@@ -2013,7 +2550,10 @@
     "original": 8.99,
     "original_compare_at": null,
     "was": 9.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -2031,7 +2571,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -2049,7 +2592,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -2067,7 +2613,10 @@
     "original": 49.95,
     "original_compare_at": null,
     "was": 54.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 70.95,
+    "eur_was": 77.99,
+    "eur_now": 61.99
    }
   ]
  },
@@ -2085,7 +2634,10 @@
     "original": 22.99,
     "original_compare_at": null,
     "was": 24.99,
-    "now": 20.99
+    "now": 20.99,
+    "eur_original": 32.95,
+    "eur_was": 35.99,
+    "eur_now": 30.99
    }
   ]
  },
@@ -2103,7 +2655,10 @@
     "original": 14.99,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 21.95,
+    "eur_was": 23.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -2121,7 +2676,10 @@
     "original": 8.99,
     "original_compare_at": null,
     "was": 9.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 12.95,
+    "eur_was": 13.99,
+    "eur_now": 12.99
    }
   ]
  },
@@ -2139,7 +2697,10 @@
     "original": 10.99,
     "original_compare_at": null,
     "was": 11.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 15.95,
+    "eur_was": 17.99,
+    "eur_now": 13.99
    },
    {
     "id": "59549351313740",
@@ -2147,7 +2708,10 @@
     "original": 17.99,
     "original_compare_at": null,
     "was": 19.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 25.95,
+    "eur_was": 28.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -2165,7 +2729,10 @@
     "original": 13.99,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 19.99
    }
   ]
  },
@@ -2183,7 +2750,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -2201,7 +2771,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 71.99
    },
    {
     "id": "59489114849612",
@@ -2209,7 +2782,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 71.99
    },
    {
     "id": "59489114882380",
@@ -2217,7 +2793,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 71.99
    },
    {
     "id": "59489114915148",
@@ -2225,7 +2804,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 71.99
    },
    {
     "id": "59489114947916",
@@ -2233,7 +2815,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 71.99
    }
   ]
  },
@@ -2251,7 +2836,10 @@
     "original": 13.49,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    },
    {
     "id": "59435903517004",
@@ -2259,7 +2847,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435903549772",
@@ -2267,7 +2858,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    },
    {
     "id": "59435903582540",
@@ -2275,7 +2869,10 @@
     "original": 42.99,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 60.95,
+    "eur_was": 66.99,
+    "eur_now": 56.99
    },
    {
     "id": "59435903615308",
@@ -2283,7 +2880,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    }
   ]
  },
@@ -2301,7 +2901,10 @@
     "original": 16.49,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    },
    {
     "id": "59435903156556",
@@ -2309,7 +2912,10 @@
     "original": 16.49,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -2327,7 +2933,10 @@
     "original": 48.49,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 68.95,
+    "eur_was": 75.99,
+    "eur_now": 64.99
    },
    {
     "id": "59435860230476",
@@ -2335,7 +2944,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "59435860263244",
@@ -2343,7 +2955,10 @@
     "original": 89.99,
     "original_compare_at": null,
     "was": 98.99,
-    "now": 83.99
+    "now": 83.99,
+    "eur_original": 126.95,
+    "eur_was": 139.99,
+    "eur_now": 118.99
    },
    {
     "id": "59435860296012",
@@ -2351,7 +2966,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "59435860328780",
@@ -2359,7 +2977,10 @@
     "original": 89.99,
     "original_compare_at": null,
     "was": 98.99,
-    "now": 83.99
+    "now": 83.99,
+    "eur_original": 126.95,
+    "eur_was": 139.99,
+    "eur_now": 118.99
    },
    {
     "id": "59435860361548",
@@ -2367,7 +2988,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "59435860394316",
@@ -2375,7 +2999,10 @@
     "original": 89.99,
     "original_compare_at": null,
     "was": 98.99,
-    "now": 83.99
+    "now": 83.99,
+    "eur_original": 126.95,
+    "eur_was": 139.99,
+    "eur_now": 118.99
    }
   ]
  },
@@ -2393,7 +3020,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435859968332",
@@ -2401,7 +3031,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435860001100",
@@ -2409,7 +3042,10 @@
     "original": 38.49,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 54.95,
+    "eur_was": 59.99,
+    "eur_now": 50.99
    },
    {
     "id": "59435860033868",
@@ -2417,7 +3053,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435860066636",
@@ -2425,7 +3064,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435860099404",
@@ -2433,7 +3075,10 @@
     "original": 38.49,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 54.95,
+    "eur_was": 59.99,
+    "eur_now": 50.99
    }
   ]
  },
@@ -2451,7 +3096,10 @@
     "original": 61.99,
     "original_compare_at": null,
     "was": 67.99,
-    "now": 57.99
+    "now": 57.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "59435852136780",
@@ -2459,7 +3107,10 @@
     "original": 93.49,
     "original_compare_at": null,
     "was": 102.99,
-    "now": 87.99
+    "now": 87.99,
+    "eur_original": 131.95,
+    "eur_was": 144.99,
+    "eur_now": 122.99
    },
    {
     "id": "59435852169548",
@@ -2467,7 +3118,10 @@
     "original": 61.99,
     "original_compare_at": null,
     "was": 67.99,
-    "now": 57.99
+    "now": 57.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "59435852202316",
@@ -2475,7 +3129,10 @@
     "original": 93.49,
     "original_compare_at": null,
     "was": 102.99,
-    "now": 87.99
+    "now": 87.99,
+    "eur_original": 131.95,
+    "eur_was": 144.99,
+    "eur_now": 122.99
    }
   ]
  },
@@ -2493,7 +3150,10 @@
     "original": 26.49,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435851841868",
@@ -2501,7 +3161,10 @@
     "original": 32.49,
     "original_compare_at": null,
     "was": 35.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 45.95,
+    "eur_was": 50.99,
+    "eur_now": 42.99
    },
    {
     "id": "59435851874636",
@@ -2509,7 +3172,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "59435851907404",
@@ -2517,7 +3183,10 @@
     "original": 26.49,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435851940172",
@@ -2525,7 +3194,10 @@
     "original": 32.49,
     "original_compare_at": null,
     "was": 35.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 45.95,
+    "eur_was": 50.99,
+    "eur_now": 42.99
    },
    {
     "id": "59435851972940",
@@ -2533,7 +3205,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "59435852005708",
@@ -2541,7 +3216,10 @@
     "original": 26.49,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435852038476",
@@ -2549,7 +3227,10 @@
     "original": 32.49,
     "original_compare_at": null,
     "was": 35.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 45.95,
+    "eur_was": 50.99,
+    "eur_now": 42.99
    }
   ]
  },
@@ -2567,7 +3248,10 @@
     "original": 31.49,
     "original_compare_at": null,
     "was": 34.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 44.95,
+    "eur_was": 48.99,
+    "eur_now": 41.99
    },
    {
     "id": "59435848171852",
@@ -2575,7 +3259,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435848204620",
@@ -2583,7 +3270,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    },
    {
     "id": "59435848237388",
@@ -2591,7 +3281,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -2609,7 +3302,10 @@
     "original": 26.49,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435847876940",
@@ -2617,7 +3313,10 @@
     "original": 36.99,
     "original_compare_at": null,
     "was": 40.99,
-    "now": 34.99
+    "now": 34.99,
+    "eur_original": 52.95,
+    "eur_was": 57.99,
+    "eur_now": 48.99
    },
    {
     "id": "59435847909708",
@@ -2625,7 +3324,10 @@
     "original": 51.49,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 72.95,
+    "eur_was": 79.99,
+    "eur_now": 67.99
    },
    {
     "id": "59435847942476",
@@ -2633,7 +3335,10 @@
     "original": 26.49,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 37.95,
+    "eur_was": 41.99,
+    "eur_now": 35.99
    },
    {
     "id": "59435847975244",
@@ -2641,7 +3346,10 @@
     "original": 36.99,
     "original_compare_at": null,
     "was": 40.99,
-    "now": 34.99
+    "now": 34.99,
+    "eur_original": 52.95,
+    "eur_was": 57.99,
+    "eur_now": 48.99
    },
    {
     "id": "59435848008012",
@@ -2649,7 +3357,10 @@
     "original": 51.49,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 72.95,
+    "eur_was": 79.99,
+    "eur_now": 67.99
    }
   ]
  },
@@ -2667,7 +3378,10 @@
     "original": 257.49,
     "original_compare_at": null,
     "was": 282.99,
-    "now": 240.99
+    "now": 240.99,
+    "eur_original": 362.95,
+    "eur_was": 398.99,
+    "eur_now": 338.99
    },
    {
     "id": "59435827855692",
@@ -2675,7 +3389,10 @@
     "original": 37.49,
     "original_compare_at": null,
     "was": 40.99,
-    "now": 34.99
+    "now": 34.99,
+    "eur_original": 52.95,
+    "eur_was": 57.99,
+    "eur_now": 48.99
    },
    {
     "id": "59435827888460",
@@ -2683,7 +3400,10 @@
     "original": 257.49,
     "original_compare_at": null,
     "was": 282.99,
-    "now": 240.99
+    "now": 240.99,
+    "eur_original": 362.95,
+    "eur_was": 398.99,
+    "eur_now": 338.99
    },
    {
     "id": "59435827921228",
@@ -2691,7 +3411,10 @@
     "original": 37.49,
     "original_compare_at": null,
     "was": 40.99,
-    "now": 34.99
+    "now": 34.99,
+    "eur_original": 52.95,
+    "eur_was": 57.99,
+    "eur_now": 48.99
    },
    {
     "id": "59435827953996",
@@ -2699,7 +3422,10 @@
     "original": 19.49,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 27.95,
+    "eur_was": 30.99,
+    "eur_now": 25.99
    },
    {
     "id": "59435827986764",
@@ -2707,7 +3433,10 @@
     "original": 37.49,
     "original_compare_at": null,
     "was": 40.99,
-    "now": 34.99
+    "now": 34.99,
+    "eur_original": 52.95,
+    "eur_was": 57.99,
+    "eur_now": 48.99
    },
    {
     "id": "59435828019532",
@@ -2715,7 +3444,10 @@
     "original": 19.49,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 27.95,
+    "eur_was": 30.99,
+    "eur_now": 25.99
    },
    {
     "id": "59435828052300",
@@ -2723,7 +3455,10 @@
     "original": 257.49,
     "original_compare_at": null,
     "was": 282.99,
-    "now": 240.99
+    "now": 240.99,
+    "eur_original": 362.95,
+    "eur_was": 398.99,
+    "eur_now": 338.99
    },
    {
     "id": "59435828085068",
@@ -2731,7 +3466,10 @@
     "original": 19.49,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 27.95,
+    "eur_was": 30.99,
+    "eur_now": 25.99
    }
   ]
  },
@@ -2749,7 +3487,10 @@
     "original": 14.49,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 20.95,
+    "eur_was": 22.99,
+    "eur_now": 19.99
    },
    {
     "id": "59435751407948",
@@ -2757,7 +3498,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435751440716",
@@ -2765,7 +3509,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435751473484",
@@ -2773,7 +3520,10 @@
     "original": 42.49,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 59.95,
+    "eur_was": 65.99,
+    "eur_now": 55.99
    },
    {
     "id": "59435751506252",
@@ -2781,7 +3531,10 @@
     "original": 14.49,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 20.95,
+    "eur_was": 22.99,
+    "eur_now": 19.99
    },
    {
     "id": "59435751539020",
@@ -2789,7 +3542,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435751571788",
@@ -2797,7 +3553,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435751604556",
@@ -2805,7 +3564,10 @@
     "original": 42.49,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 59.95,
+    "eur_was": 65.99,
+    "eur_now": 55.99
    },
    {
     "id": "59435751637324",
@@ -2813,7 +3575,10 @@
     "original": 14.49,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 20.95,
+    "eur_was": 22.99,
+    "eur_now": 19.99
    },
    {
     "id": "59435751670092",
@@ -2821,7 +3586,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435751702860",
@@ -2829,7 +3597,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435751735628",
@@ -2837,7 +3608,10 @@
     "original": 42.49,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 59.95,
+    "eur_was": 65.99,
+    "eur_now": 55.99
    }
   ]
  },
@@ -2855,7 +3629,10 @@
     "original": 15.99,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 22.95,
+    "eur_was": 24.99,
+    "eur_now": 20.99
    },
    {
     "id": "59435751276876",
@@ -2863,7 +3640,10 @@
     "original": 15.99,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 22.95,
+    "eur_was": 24.99,
+    "eur_now": 20.99
    }
   ]
  },
@@ -2881,7 +3661,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59435730239820",
@@ -2889,7 +3672,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59435730272588",
@@ -2897,7 +3683,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59435730305356",
@@ -2905,7 +3694,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59435730338124",
@@ -2913,7 +3705,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59435730370892",
@@ -2921,7 +3716,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -2939,7 +3737,10 @@
     "original": 51.99,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 73.95,
+    "eur_was": 80.99,
+    "eur_now": 68.99
    },
    {
     "id": "59435708547404",
@@ -2947,7 +3748,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "59435708580172",
@@ -2955,7 +3759,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "59435708612940",
@@ -2963,7 +3770,10 @@
     "original": 39.99,
     "original_compare_at": null,
     "was": 43.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "59435708645708",
@@ -2971,7 +3781,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -2989,7 +3802,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435652284748",
@@ -2997,7 +3813,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    }
   ]
  },
@@ -3015,7 +3834,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435652186444",
@@ -3023,7 +3845,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59435652219212",
@@ -3031,7 +3856,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -3049,7 +3877,10 @@
     "original": 54.49,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 76.95,
+    "eur_was": 84.99,
+    "eur_now": 71.99
    },
    {
     "id": "59435651236172",
@@ -3057,7 +3888,10 @@
     "original": 101.99,
     "original_compare_at": null,
     "was": 111.99,
-    "now": 94.99
+    "now": 94.99,
+    "eur_original": 143.95,
+    "eur_was": 157.99,
+    "eur_now": 133.99
    }
   ]
  },
@@ -3075,7 +3909,10 @@
     "original": 14.49,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 20.95,
+    "eur_was": 22.99,
+    "eur_now": 19.99
    },
    {
     "id": "59435651039564",
@@ -3083,7 +3920,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59435651072332",
@@ -3091,7 +3931,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59435651105100",
@@ -3099,7 +3942,10 @@
     "original": 42.49,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 59.95,
+    "eur_was": 65.99,
+    "eur_now": 55.99
    }
   ]
  },
@@ -3117,7 +3963,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435650941260",
@@ -3125,7 +3974,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59435650974028",
@@ -3133,7 +3985,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -3151,7 +4006,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435649368396",
@@ -3159,7 +4017,10 @@
     "original": 64.49,
     "original_compare_at": null,
     "was": 70.99,
-    "now": 59.99
+    "now": 59.99,
+    "eur_original": 90.95,
+    "eur_was": 99.99,
+    "eur_now": 84.99
    },
    {
     "id": "59435649401164",
@@ -3167,7 +4028,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -3185,7 +4049,10 @@
     "original": 11.99,
     "original_compare_at": null,
     "was": 12.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 16.95,
+    "eur_was": 18.99,
+    "eur_now": 15.99
    },
    {
     "id": "59435649204556",
@@ -3193,7 +4060,10 @@
     "original": 18.99,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 26.95,
+    "eur_was": 29.99,
+    "eur_now": 25.99
    },
    {
     "id": "59435649237324",
@@ -3201,7 +4071,10 @@
     "original": 25.49,
     "original_compare_at": null,
     "was": 27.99,
-    "now": 23.99
+    "now": 23.99,
+    "eur_original": 35.95,
+    "eur_was": 39.99,
+    "eur_now": 33.99
    },
    {
     "id": "59435649270092",
@@ -3209,7 +4082,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -3227,7 +4103,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435649106252",
@@ -3235,7 +4114,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    }
   ]
  },
@@ -3253,7 +4135,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59435648942412",
@@ -3261,7 +4146,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -3279,7 +4167,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59435648844108",
@@ -3287,7 +4178,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    }
   ]
  },
@@ -3305,7 +4199,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59435648745804",
@@ -3313,7 +4210,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -3331,7 +4231,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    },
    {
     "id": "59435647533388",
@@ -3339,7 +4242,10 @@
     "original": 61.99,
     "original_compare_at": null,
     "was": 67.99,
-    "now": 57.99
+    "now": 57.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    }
   ]
  },
@@ -3357,7 +4263,10 @@
     "original": 61.99,
     "original_compare_at": null,
     "was": 67.99,
-    "now": 57.99
+    "now": 57.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "59435647435084",
@@ -3365,7 +4274,10 @@
     "original": 93.49,
     "original_compare_at": null,
     "was": 102.99,
-    "now": 87.99
+    "now": 87.99,
+    "eur_original": 131.95,
+    "eur_was": 144.99,
+    "eur_now": 122.99
    }
   ]
  },
@@ -3383,7 +4295,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "59435647238476",
@@ -3391,7 +4306,10 @@
     "original": 81.99,
     "original_compare_at": null,
     "was": 89.99,
-    "now": 76.99
+    "now": 76.99,
+    "eur_original": 115.95,
+    "eur_was": 127.99,
+    "eur_now": 108.99
    }
   ]
  },
@@ -3409,7 +4327,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    },
    {
     "id": "59435647107404",
@@ -3417,7 +4338,10 @@
     "original": 68.49,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 96.95,
+    "eur_was": 106.99,
+    "eur_now": 90.99
    },
    {
     "id": "59435647140172",
@@ -3425,7 +4349,10 @@
     "original": 98.49,
     "original_compare_at": null,
     "was": 107.99,
-    "now": 91.99
+    "now": 91.99,
+    "eur_original": 138.95,
+    "eur_was": 152.99,
+    "eur_now": 129.99
    }
   ]
  },
@@ -3443,7 +4370,10 @@
     "original": 53.49,
     "original_compare_at": null,
     "was": 58.99,
-    "now": 49.99
+    "now": 49.99,
+    "eur_original": 75.95,
+    "eur_was": 83.99,
+    "eur_now": 70.99
    },
    {
     "id": "59435639013708",
@@ -3451,7 +4381,10 @@
     "original": 75.99,
     "original_compare_at": null,
     "was": 83.99,
-    "now": 70.99
+    "now": 70.99,
+    "eur_original": 106.95,
+    "eur_was": 117.99,
+    "eur_now": 99.99
    },
    {
     "id": "59435639046476",
@@ -3459,7 +4392,10 @@
     "original": 100.49,
     "original_compare_at": null,
     "was": 110.99,
-    "now": 93.99
+    "now": 93.99,
+    "eur_original": 141.95,
+    "eur_was": 155.99,
+    "eur_now": 132.99
    }
   ]
  },
@@ -3477,7 +4413,10 @@
     "original": 61.99,
     "original_compare_at": null,
     "was": 67.99,
-    "now": 57.99
+    "now": 57.99,
+    "eur_original": 87.95,
+    "eur_was": 96.99,
+    "eur_now": 81.99
    },
    {
     "id": "59435638948172",
@@ -3485,7 +4424,10 @@
     "original": 93.49,
     "original_compare_at": null,
     "was": 102.99,
-    "now": 87.99
+    "now": 87.99,
+    "eur_original": 131.95,
+    "eur_was": 144.99,
+    "eur_now": 122.99
    }
   ]
  },
@@ -3503,7 +4445,10 @@
     "original": 31.49,
     "original_compare_at": null,
     "was": 34.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 44.95,
+    "eur_was": 48.99,
+    "eur_now": 41.99
    },
    {
     "id": "59435635409228",
@@ -3511,7 +4456,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -3529,7 +4477,10 @@
     "original": 66.49,
     "original_compare_at": null,
     "was": 72.99,
-    "now": 61.99
+    "now": 61.99,
+    "eur_original": 93.95,
+    "eur_was": 102.99,
+    "eur_now": 87.99
    },
    {
     "id": "59435635343692",
@@ -3537,7 +4488,10 @@
     "original": 100.49,
     "original_compare_at": null,
     "was": 110.99,
-    "now": 93.99
+    "now": 93.99,
+    "eur_original": 141.95,
+    "eur_was": 155.99,
+    "eur_now": 132.99
    }
   ]
  },
@@ -3555,7 +4509,10 @@
     "original": 33.49,
     "original_compare_at": null,
     "was": 36.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 47.95,
+    "eur_was": 52.99,
+    "eur_now": 44.99
    },
    {
     "id": "59435630526796",
@@ -3563,7 +4520,10 @@
     "original": 51.99,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 73.95,
+    "eur_was": 80.99,
+    "eur_now": 68.99
    }
   ]
  },
@@ -3581,7 +4541,10 @@
     "original": 54.49,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 76.95,
+    "eur_was": 84.99,
+    "eur_now": 71.99
    },
    {
     "id": "59435630395724",
@@ -3589,7 +4552,10 @@
     "original": 77.99,
     "original_compare_at": null,
     "was": 85.99,
-    "now": 72.99
+    "now": 72.99,
+    "eur_original": 109.95,
+    "eur_was": 120.99,
+    "eur_now": 102.99
    },
    {
     "id": "59435630428492",
@@ -3597,7 +4563,10 @@
     "original": 101.99,
     "original_compare_at": null,
     "was": 111.99,
-    "now": 94.99
+    "now": 94.99,
+    "eur_original": 143.95,
+    "eur_was": 157.99,
+    "eur_now": 133.99
    }
   ]
  },
@@ -3615,7 +4584,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    }
   ]
  },
@@ -3633,7 +4605,10 @@
     "original": 71.49,
     "original_compare_at": null,
     "was": 78.99,
-    "now": 66.99
+    "now": 66.99,
+    "eur_original": 100.95,
+    "eur_was": 110.99,
+    "eur_now": 93.99
    }
   ]
  },
@@ -3651,7 +4626,10 @@
     "original": 5.99,
     "original_compare_at": null,
     "was": 6.99,
-    "now": 5.99
+    "now": 5.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -3669,7 +4647,10 @@
     "original": 13.99,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    }
   ]
  },
@@ -3687,7 +4668,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    }
   ]
  },
@@ -3705,7 +4689,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    }
   ]
  },
@@ -3723,7 +4710,10 @@
     "original": 44.99,
     "original_compare_at": null,
     "was": 48.99,
-    "now": 41.99
+    "now": 41.99,
+    "eur_original": 63.95,
+    "eur_was": 69.99,
+    "eur_now": 59.99
    }
   ]
  },
@@ -3741,7 +4731,10 @@
     "original": 13.99,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    }
   ]
  },
@@ -3759,7 +4752,10 @@
     "original": 41.49,
     "original_compare_at": null,
     "was": 45.99,
-    "now": 38.99
+    "now": 38.99,
+    "eur_original": 58.95,
+    "eur_was": 64.99,
+    "eur_now": 54.99
    }
   ]
  },
@@ -3777,7 +4773,10 @@
     "original": 11.99,
     "original_compare_at": null,
     "was": 12.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 16.95,
+    "eur_was": 18.99,
+    "eur_now": 15.99
    }
   ]
  },
@@ -3795,7 +4794,10 @@
     "original": 42.99,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 60.95,
+    "eur_was": 66.99,
+    "eur_now": 56.99
    }
   ]
  },
@@ -3813,7 +4815,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    }
   ]
  },
@@ -3831,7 +4836,10 @@
     "original": 68.49,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 96.95,
+    "eur_was": 106.99,
+    "eur_now": 90.99
    }
   ]
  },
@@ -3849,7 +4857,10 @@
     "original": 53.99,
     "original_compare_at": null,
     "was": 58.99,
-    "now": 49.99
+    "now": 49.99,
+    "eur_original": 75.95,
+    "eur_was": 83.99,
+    "eur_now": 70.99
    }
   ]
  },
@@ -3867,7 +4878,10 @@
     "original": 12.99,
     "original_compare_at": null,
     "was": 13.99,
-    "now": 11.99
+    "now": 11.99,
+    "eur_original": 18.95,
+    "eur_was": 20.99,
+    "eur_now": 17.99
    }
   ]
  },
@@ -3885,7 +4899,10 @@
     "original": 7.49,
     "original_compare_at": null,
     "was": 7.99,
-    "now": 6.99
+    "now": 6.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    },
    {
     "id": "59423072485708",
@@ -3893,7 +4910,10 @@
     "original": 6.49,
     "original_compare_at": null,
     "was": 6.99,
-    "now": 5.99
+    "now": 5.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -3911,7 +4931,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59423065997644",
@@ -3919,7 +4942,10 @@
     "original": 16.99,
     "original_compare_at": null,
     "was": 18.99,
-    "now": 15.99
+    "now": 15.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    },
    {
     "id": "59423066030412",
@@ -3927,7 +4953,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -3945,7 +4974,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    },
    {
     "id": "59423065899340",
@@ -3953,7 +4985,10 @@
     "original": 46.99,
     "original_compare_at": null,
     "was": 51.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 66.95,
+    "eur_was": 73.99,
+    "eur_now": 62.99
    }
   ]
  },
@@ -3971,7 +5006,10 @@
     "original": 18.99,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 26.95,
+    "eur_was": 29.99,
+    "eur_now": 25.99
    },
    {
     "id": "59423065801036",
@@ -3979,7 +5017,10 @@
     "original": 25.49,
     "original_compare_at": null,
     "was": 27.99,
-    "now": 23.99
+    "now": 23.99,
+    "eur_original": 35.95,
+    "eur_was": 39.99,
+    "eur_now": 33.99
    }
   ]
  },
@@ -3997,7 +5038,10 @@
     "original": 8.99,
     "original_compare_at": null,
     "was": 9.99,
-    "now": 8.99
+    "now": 8.99,
+    "eur_original": 12.95,
+    "eur_was": 13.99,
+    "eur_now": 11.99
    }
   ]
  },
@@ -4015,7 +5059,10 @@
     "original": 84.99,
     "original_compare_at": null,
     "was": 92.99,
-    "now": 78.99
+    "now": 78.99,
+    "eur_original": 119.95,
+    "eur_was": 131.99,
+    "eur_now": 111.99
    }
   ]
  },
@@ -4033,7 +5080,10 @@
     "original": 58.99,
     "original_compare_at": null,
     "was": 64.99,
-    "now": 54.99
+    "now": 54.99,
+    "eur_original": 82.95,
+    "eur_was": 90.99,
+    "eur_now": 76.99
    }
   ]
  },
@@ -4051,7 +5101,10 @@
     "original": 40.49,
     "original_compare_at": null,
     "was": 44.99,
-    "now": 37.99
+    "now": 37.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "59422985978188",
@@ -4059,7 +5112,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    }
   ]
  },
@@ -4077,7 +5133,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "59422985748812",
@@ -4085,7 +5144,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    }
   ]
  },
@@ -4103,7 +5165,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59422979227980",
@@ -4111,7 +5176,10 @@
     "original": 57.49,
     "original_compare_at": null,
     "was": 62.99,
-    "now": 53.99
+    "now": 53.99,
+    "eur_original": 80.95,
+    "eur_was": 88.99,
+    "eur_now": 75.99
    }
   ]
  },
@@ -4129,7 +5197,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    },
    {
     "id": "59422972838220",
@@ -4137,7 +5208,10 @@
     "original": 57.49,
     "original_compare_at": null,
     "was": 62.99,
-    "now": 53.99
+    "now": 53.99,
+    "eur_original": 80.95,
+    "eur_was": 88.99,
+    "eur_now": 75.99
    }
   ]
  },
@@ -4155,7 +5229,10 @@
     "original": 51.99,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 73.95,
+    "eur_was": 80.99,
+    "eur_now": 68.99
    }
   ]
  },
@@ -4173,7 +5250,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422972641612",
@@ -4181,7 +5261,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    }
   ]
  },
@@ -4199,7 +5282,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    },
    {
     "id": "59422972510540",
@@ -4207,7 +5293,10 @@
     "original": 36.49,
     "original_compare_at": null,
     "was": 39.99,
-    "now": 33.99
+    "now": 33.99,
+    "eur_original": 51.95,
+    "eur_was": 56.99,
+    "eur_now": 47.99
    }
   ]
  },
@@ -4225,7 +5314,10 @@
     "original": 11.99,
     "original_compare_at": null,
     "was": 12.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 16.95,
+    "eur_was": 18.99,
+    "eur_now": 15.99
    },
    {
     "id": "59422972379468",
@@ -4233,7 +5325,10 @@
     "original": 18.99,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 26.95,
+    "eur_was": 29.99,
+    "eur_now": 25.99
    },
    {
     "id": "59422972412236",
@@ -4241,7 +5336,10 @@
     "original": 25.49,
     "original_compare_at": null,
     "was": 27.99,
-    "now": 23.99
+    "now": 23.99,
+    "eur_original": 35.95,
+    "eur_was": 39.99,
+    "eur_now": 33.99
    },
    {
     "id": "59422972445004",
@@ -4249,7 +5347,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -4267,7 +5368,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59422972084556",
@@ -4275,7 +5379,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59422972117324",
@@ -4283,7 +5390,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -4301,7 +5411,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "59422971789644",
@@ -4309,7 +5422,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -4327,7 +5443,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422971560268",
@@ -4335,7 +5454,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    }
   ]
  },
@@ -4353,7 +5475,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "59422971429196",
@@ -4361,7 +5486,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "59422971461964",
@@ -4369,7 +5497,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -4387,7 +5518,10 @@
     "original": 11.99,
     "original_compare_at": null,
     "was": 12.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 16.95,
+    "eur_was": 18.99,
+    "eur_now": 15.99
    },
    {
     "id": "59422964908364",
@@ -4395,7 +5529,10 @@
     "original": 18.99,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 26.95,
+    "eur_was": 29.99,
+    "eur_now": 25.99
    },
    {
     "id": "59422964941132",
@@ -4403,7 +5540,10 @@
     "original": 25.49,
     "original_compare_at": null,
     "was": 27.99,
-    "now": 23.99
+    "now": 23.99,
+    "eur_original": 35.95,
+    "eur_was": 39.99,
+    "eur_now": 33.99
    }
   ]
  },
@@ -4421,7 +5561,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "59422963859788",
@@ -4429,7 +5572,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -4447,7 +5593,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422962483532",
@@ -4455,7 +5604,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    }
   ]
  },
@@ -4473,7 +5625,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    },
    {
     "id": "59422962057548",
@@ -4481,7 +5636,10 @@
     "original": 68.49,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 96.95,
+    "eur_was": 106.99,
+    "eur_now": 90.99
    },
    {
     "id": "59422962090316",
@@ -4489,7 +5647,10 @@
     "original": 97.99,
     "original_compare_at": null,
     "was": 107.99,
-    "now": 91.99
+    "now": 91.99,
+    "eur_original": 137.95,
+    "eur_was": 151.99,
+    "eur_now": 128.99
    }
   ]
  },
@@ -4507,7 +5668,10 @@
     "original": 13.99,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    },
    {
     "id": "59422961893708",
@@ -4515,7 +5679,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59422961926476",
@@ -4523,7 +5690,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59422961959244",
@@ -4531,7 +5701,10 @@
     "original": 42.49,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 59.95,
+    "eur_was": 65.99,
+    "eur_now": 55.99
    }
   ]
  },
@@ -4549,7 +5722,10 @@
     "original": 101.49,
     "original_compare_at": null,
     "was": 111.99,
-    "now": 94.99
+    "now": 94.99,
+    "eur_original": 142.95,
+    "eur_was": 156.99,
+    "eur_now": 132.99
    },
    {
     "id": "59422955045196",
@@ -4557,7 +5733,10 @@
     "original": 66.49,
     "original_compare_at": null,
     "was": 72.99,
-    "now": 61.99
+    "now": 61.99,
+    "eur_original": 93.95,
+    "eur_was": 102.99,
+    "eur_now": 87.99
    }
   ]
  },
@@ -4575,7 +5754,10 @@
     "original": 51.99,
     "original_compare_at": null,
     "was": 56.99,
-    "now": 47.99
+    "now": 47.99,
+    "eur_original": 73.95,
+    "eur_was": 80.99,
+    "eur_now": 68.99
    },
    {
     "id": "59422954946892",
@@ -4583,7 +5765,10 @@
     "original": 33.49,
     "original_compare_at": null,
     "was": 36.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 47.95,
+    "eur_was": 52.99,
+    "eur_now": 44.99
    }
   ]
  },
@@ -4601,7 +5786,10 @@
     "original": 87.99,
     "original_compare_at": null,
     "was": 96.99,
-    "now": 81.99
+    "now": 81.99,
+    "eur_original": 123.95,
+    "eur_was": 135.99,
+    "eur_now": 115.99
    },
    {
     "id": "59422954684748",
@@ -4609,7 +5797,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 53.99
+    "now": 53.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 76.99
    }
   ]
  },
@@ -4627,7 +5818,10 @@
     "original": 45.99,
     "original_compare_at": null,
     "was": 50.99,
-    "now": 42.99
+    "now": 42.99,
+    "eur_original": 64.95,
+    "eur_was": 70.99,
+    "eur_now": 59.99
    },
    {
     "id": "59422954553676",
@@ -4635,7 +5829,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    }
   ]
  },
@@ -4653,7 +5850,10 @@
     "original": 79.49,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    },
    {
     "id": "59422948098380",
@@ -4661,7 +5861,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    }
   ]
  },
@@ -4679,7 +5882,10 @@
     "original": 40.49,
     "original_compare_at": null,
     "was": 44.99,
-    "now": 37.99
+    "now": 37.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "59422947869004",
@@ -4687,7 +5893,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    }
   ]
  },
@@ -4705,7 +5914,10 @@
     "original": 40.49,
     "original_compare_at": null,
     "was": 44.99,
-    "now": 37.99
+    "now": 37.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "59422947737932",
@@ -4713,7 +5925,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    }
   ]
  },
@@ -4731,7 +5946,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "59422941217100",
@@ -4739,7 +5957,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    }
   ]
  },
@@ -4757,7 +5978,10 @@
     "original": 24.49,
     "original_compare_at": null,
     "was": 26.99,
-    "now": 22.99
+    "now": 22.99,
+    "eur_original": 34.95,
+    "eur_was": 37.99,
+    "eur_now": 31.99
    },
    {
     "id": "59422926864716",
@@ -4765,7 +5989,10 @@
     "original": 33.99,
     "original_compare_at": null,
     "was": 36.99,
-    "now": 30.99
+    "now": 30.99,
+    "eur_original": 47.95,
+    "eur_was": 52.99,
+    "eur_now": 44.99
    },
    {
     "id": "59422926897484",
@@ -4773,7 +6000,10 @@
     "original": 38.99,
     "original_compare_at": null,
     "was": 42.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 54.95,
+    "eur_was": 59.99,
+    "eur_now": 50.99
    },
    {
     "id": "59422926930252",
@@ -4781,7 +6011,10 @@
     "original": 45.99,
     "original_compare_at": null,
     "was": 50.99,
-    "now": 42.99
+    "now": 42.99,
+    "eur_original": 64.95,
+    "eur_was": 70.99,
+    "eur_now": 59.99
    },
    {
     "id": "59422926963020",
@@ -4789,7 +6022,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    }
   ]
  },
@@ -4807,7 +6043,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "59422926537036",
@@ -4815,7 +6054,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -4833,7 +6075,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59422926307660",
@@ -4841,7 +6086,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    }
   ]
  },
@@ -4859,7 +6107,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422926111052",
@@ -4867,7 +6118,10 @@
     "original": 31.49,
     "original_compare_at": null,
     "was": 34.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 44.95,
+    "eur_was": 48.99,
+    "eur_now": 41.99
    },
    {
     "id": "59422926143820",
@@ -4875,7 +6129,10 @@
     "original": 21.99,
     "original_compare_at": null,
     "was": 23.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 30.95,
+    "eur_was": 33.99,
+    "eur_now": 28.99
    },
    {
     "id": "59422926176588",
@@ -4883,7 +6140,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "59422926209356",
@@ -4891,7 +6151,10 @@
     "original": 58.99,
     "original_compare_at": null,
     "was": 64.99,
-    "now": 54.99
+    "now": 54.99,
+    "eur_original": 82.95,
+    "eur_was": 90.99,
+    "eur_now": 76.99
    }
   ]
  },
@@ -4909,7 +6172,10 @@
     "original": 39.49,
     "original_compare_at": null,
     "was": 42.99,
-    "now": 36.99
+    "now": 36.99,
+    "eur_original": 55.95,
+    "eur_was": 61.99,
+    "eur_now": 52.99
    },
    {
     "id": "59422919622988",
@@ -4917,7 +6183,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    },
    {
     "id": "59422919655756",
@@ -4925,7 +6194,10 @@
     "original": 23.49,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    },
    {
     "id": "59422919688524",
@@ -4933,7 +6205,10 @@
     "original": 16.99,
     "original_compare_at": null,
     "was": 18.99,
-    "now": 15.99
+    "now": 15.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    },
    {
     "id": "59422919721292",
@@ -4941,7 +6216,10 @@
     "original": 35.49,
     "original_compare_at": null,
     "was": 38.99,
-    "now": 32.99
+    "now": 32.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 46.99
    }
   ]
  },
@@ -4959,7 +6237,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422919098700",
@@ -4967,7 +6248,10 @@
     "original": 46.99,
     "original_compare_at": null,
     "was": 51.99,
-    "now": 43.99
+    "now": 43.99,
+    "eur_original": 66.95,
+    "eur_was": 73.99,
+    "eur_now": 62.99
    }
   ]
  },
@@ -4985,7 +6269,10 @@
     "original": 105.99,
     "original_compare_at": null,
     "was": 116.99,
-    "now": 98.99
+    "now": 98.99,
+    "eur_original": 149.95,
+    "eur_was": 164.99,
+    "eur_now": 139.99
    },
    {
     "id": "59422918836556",
@@ -4993,7 +6280,10 @@
     "original": 79.99,
     "original_compare_at": null,
     "was": 87.99,
-    "now": 74.99
+    "now": 74.99,
+    "eur_original": 112.95,
+    "eur_was": 123.99,
+    "eur_now": 104.99
    },
    {
     "id": "59422918869324",
@@ -5001,7 +6291,10 @@
     "original": 56.99,
     "original_compare_at": null,
     "was": 62.99,
-    "now": 53.99
+    "now": 53.99,
+    "eur_original": 80.95,
+    "eur_was": 88.99,
+    "eur_now": 75.99
    }
   ]
  },
@@ -5019,7 +6312,10 @@
     "original": 72.49,
     "original_compare_at": null,
     "was": 79.99,
-    "now": 67.99
+    "now": 67.99,
+    "eur_original": 101.95,
+    "eur_was": 111.99,
+    "eur_now": 94.99
    },
    {
     "id": "59422912446796",
@@ -5027,7 +6323,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    }
   ]
  },
@@ -5045,7 +6344,10 @@
     "original": 37.99,
     "original_compare_at": null,
     "was": 41.99,
-    "now": 35.99
+    "now": 35.99,
+    "eur_original": 53.95,
+    "eur_was": 58.99,
+    "eur_now": 49.99
    },
    {
     "id": "59422912315724",
@@ -5053,7 +6355,10 @@
     "original": 23.99,
     "original_compare_at": null,
     "was": 25.99,
-    "now": 21.99
+    "now": 21.99,
+    "eur_original": 33.95,
+    "eur_was": 36.99,
+    "eur_now": 30.99
    }
   ]
  },
@@ -5071,7 +6376,10 @@
     "original": 79.49,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    },
    {
     "id": "59422905008460",
@@ -5079,7 +6387,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    }
   ]
  },
@@ -5097,7 +6408,10 @@
     "original": 40.49,
     "original_compare_at": null,
     "was": 44.99,
-    "now": 37.99
+    "now": 37.99,
+    "eur_original": 56.95,
+    "eur_was": 62.99,
+    "eur_now": 53.99
    },
    {
     "id": "59422904582476",
@@ -5105,7 +6419,10 @@
     "original": 25.99,
     "original_compare_at": null,
     "was": 28.99,
-    "now": 24.99
+    "now": 24.99,
+    "eur_original": 36.95,
+    "eur_was": 40.99,
+    "eur_now": 34.99
    }
   ]
  },
@@ -5123,7 +6440,10 @@
     "original": 79.49,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    },
    {
     "id": "59422904516940",
@@ -5131,7 +6451,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    }
   ]
  },
@@ -5149,7 +6472,10 @@
     "original": 54.49,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 76.95,
+    "eur_was": 84.99,
+    "eur_now": 71.99
    },
    {
     "id": "59422898028876",
@@ -5157,7 +6483,10 @@
     "original": 77.99,
     "original_compare_at": null,
     "was": 85.99,
-    "now": 72.99
+    "now": 72.99,
+    "eur_original": 109.95,
+    "eur_was": 120.99,
+    "eur_now": 102.99
    },
    {
     "id": "59422898061644",
@@ -5165,7 +6494,10 @@
     "original": 101.99,
     "original_compare_at": null,
     "was": 111.99,
-    "now": 94.99
+    "now": 94.99,
+    "eur_original": 143.95,
+    "eur_was": 157.99,
+    "eur_now": 133.99
    }
   ]
  },
@@ -5183,7 +6515,10 @@
     "original": 79.49,
     "original_compare_at": null,
     "was": 86.99,
-    "now": 73.99
+    "now": 73.99,
+    "eur_original": 111.95,
+    "eur_was": 122.99,
+    "eur_now": 104.99
    },
    {
     "id": "59422897602892",
@@ -5191,7 +6526,10 @@
     "original": 52.99,
     "original_compare_at": null,
     "was": 57.99,
-    "now": 48.99
+    "now": 48.99,
+    "eur_original": 74.95,
+    "eur_was": 81.99,
+    "eur_now": 69.99
    }
   ]
  },
@@ -5209,7 +6547,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "59422897406284",
@@ -5217,7 +6558,10 @@
     "original": 30.99,
     "original_compare_at": null,
     "was": 33.99,
-    "now": 28.99
+    "now": 28.99,
+    "eur_original": 43.95,
+    "eur_was": 47.99,
+    "eur_now": 40.99
    }
   ]
  },
@@ -5235,7 +6579,10 @@
     "original": 54.49,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 76.95,
+    "eur_was": 84.99,
+    "eur_now": 71.99
    },
    {
     "id": "59422890819916",
@@ -5243,7 +6590,10 @@
     "original": 77.99,
     "original_compare_at": null,
     "was": 85.99,
-    "now": 72.99
+    "now": 72.99,
+    "eur_original": 109.95,
+    "eur_was": 120.99,
+    "eur_now": 102.99
    },
    {
     "id": "59422890852684",
@@ -5251,7 +6601,10 @@
     "original": 101.99,
     "original_compare_at": null,
     "was": 111.99,
-    "now": 94.99
+    "now": 94.99,
+    "eur_original": 143.95,
+    "eur_was": 157.99,
+    "eur_now": 133.99
    }
   ]
  },
@@ -5269,7 +6622,10 @@
     "original": 13.49,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 12.99
+    "now": 12.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 18.99
    },
    {
     "id": "59422890623308",
@@ -5277,7 +6633,10 @@
     "original": 20.99,
     "original_compare_at": null,
     "was": 22.99,
-    "now": 19.99
+    "now": 19.99,
+    "eur_original": 29.95,
+    "eur_was": 32.99,
+    "eur_now": 27.99
    },
    {
     "id": "59422890656076",
@@ -5285,7 +6644,10 @@
     "original": 29.99,
     "original_compare_at": null,
     "was": 32.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 42.95,
+    "eur_was": 46.99,
+    "eur_now": 39.99
    },
    {
     "id": "59422890688844",
@@ -5293,7 +6655,10 @@
     "original": 42.99,
     "original_compare_at": null,
     "was": 46.99,
-    "now": 39.99
+    "now": 39.99,
+    "eur_original": 60.95,
+    "eur_was": 66.99,
+    "eur_now": 56.99
    }
   ]
  },
@@ -5311,7 +6676,10 @@
     "original": 17.99,
     "original_compare_at": null,
     "was": 19.99,
-    "now": 16.99
+    "now": 16.99,
+    "eur_original": 25.95,
+    "eur_was": 28.99,
+    "eur_now": 24.99
    },
    {
     "id": "58927318597964",
@@ -5319,7 +6687,10 @@
     "original": 31.99,
     "original_compare_at": null,
     "was": 34.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 45.95,
+    "eur_was": 50.99,
+    "eur_now": 42.99
    },
    {
     "id": "58927318630732",
@@ -5327,7 +6698,10 @@
     "original": 55.99,
     "original_compare_at": null,
     "was": 61.99,
-    "now": 52.99
+    "now": 52.99,
+    "eur_original": 78.95,
+    "eur_was": 86.99,
+    "eur_now": 73.99
    },
    {
     "id": "58927318663500",
@@ -5335,7 +6709,10 @@
     "original": 131.99,
     "original_compare_at": null,
     "was": 144.99,
-    "now": 122.99
+    "now": 122.99,
+    "eur_original": 185.95,
+    "eur_was": 204.99,
+    "eur_now": 173.99
    }
   ]
  },
@@ -5353,7 +6730,10 @@
     "original": 17.99,
     "original_compare_at": null,
     "was": 19.99,
-    "now": 16.99
+    "now": 16.99,
+    "eur_original": 25.95,
+    "eur_was": 28.99,
+    "eur_now": 24.99
    }
   ]
  },
@@ -5371,7 +6751,10 @@
     "original": 18.99,
     "original_compare_at": null,
     "was": 20.99,
-    "now": 17.99
+    "now": 17.99,
+    "eur_original": 26.95,
+    "eur_was": 29.99,
+    "eur_now": 25.99
    },
    {
     "id": "58927182741836",
@@ -5379,7 +6762,10 @@
     "original": 31.99,
     "original_compare_at": null,
     "was": 34.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 45.95,
+    "eur_was": 50.99,
+    "eur_now": 42.99
    },
    {
     "id": "58927182774604",
@@ -5387,7 +6773,10 @@
     "original": 58.99,
     "original_compare_at": null,
     "was": 64.99,
-    "now": 54.99
+    "now": 54.99,
+    "eur_original": 82.95,
+    "eur_was": 90.99,
+    "eur_now": 76.99
    },
    {
     "id": "58927182807372",
@@ -5395,7 +6784,10 @@
     "original": 119.99,
     "original_compare_at": null,
     "was": 131.99,
-    "now": 111.99
+    "now": 111.99,
+    "eur_original": 168.95,
+    "eur_was": 185.99,
+    "eur_now": 157.99
    }
   ]
  },
@@ -5413,7 +6805,10 @@
     "original": 10.95,
     "original_compare_at": null,
     "was": 11.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 15.95,
+    "eur_was": 17.99,
+    "eur_now": 15.99
    }
   ]
  },
@@ -5431,7 +6826,10 @@
     "original": 15.95,
     "original_compare_at": null,
     "was": 17.99,
-    "now": 14.99
+    "now": 14.99,
+    "eur_original": 22.95,
+    "eur_was": 24.99,
+    "eur_now": 20.99
    }
   ]
  },
@@ -5449,7 +6847,10 @@
     "original": 14.95,
     "original_compare_at": null,
     "was": 15.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 21.95,
+    "eur_was": 23.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -5467,7 +6868,10 @@
     "original": 16.95,
     "original_compare_at": null,
     "was": 18.99,
-    "now": 15.99
+    "now": 15.99,
+    "eur_original": 23.95,
+    "eur_was": 25.99,
+    "eur_now": 21.99
    }
   ]
  },
@@ -5485,7 +6889,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 27.99
+    "now": 27.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 39.99
    },
    {
     "id": "58728288223564",
@@ -5493,7 +6900,10 @@
     "original": 13.99,
     "original_compare_at": null,
     "was": 14.99,
-    "now": 13.99
+    "now": 13.99,
+    "eur_original": 19.95,
+    "eur_was": 21.99,
+    "eur_now": 19.99
    }
   ]
  },
@@ -5511,7 +6921,10 @@
     "original": 34.99,
     "original_compare_at": null,
     "was": 37.99,
-    "now": 29.99
+    "now": 29.99,
+    "eur_original": 49.95,
+    "eur_was": 54.99,
+    "eur_now": 43.99
    }
   ]
  },
@@ -5529,7 +6942,10 @@
     "original": 27.99,
     "original_compare_at": null,
     "was": 30.99,
-    "now": 25.99
+    "now": 25.99,
+    "eur_original": 39.95,
+    "eur_was": 43.99,
+    "eur_now": 36.99
    }
   ]
  },
@@ -5547,7 +6963,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "58226201526604",
@@ -5555,7 +6974,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "58226201559372",
@@ -5563,7 +6985,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -5581,7 +7006,10 @@
     "original": 47.99,
     "original_compare_at": null,
     "was": 52.99,
-    "now": 44.99
+    "now": 44.99,
+    "eur_original": 67.95,
+    "eur_was": 74.99,
+    "eur_now": 63.99
    },
    {
     "id": "58226199232844",
@@ -5589,7 +7017,10 @@
     "original": 69.49,
     "original_compare_at": null,
     "was": 75.99,
-    "now": 64.99
+    "now": 64.99,
+    "eur_original": 97.95,
+    "eur_was": 107.99,
+    "eur_now": 91.99
    },
    {
     "id": "58226199265612",
@@ -5597,7 +7028,10 @@
     "original": 91.49,
     "original_compare_at": null,
     "was": 100.99,
-    "now": 85.99
+    "now": 85.99,
+    "eur_original": 128.95,
+    "eur_was": 141.99,
+    "eur_now": 120.99
    }
   ]
  },
@@ -5615,7 +7049,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506520908",
@@ -5623,7 +7060,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506553676",
@@ -5631,7 +7071,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506586444",
@@ -5639,7 +7082,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506619212",
@@ -5647,7 +7093,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506651980",
@@ -5655,7 +7104,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506684748",
@@ -5663,7 +7115,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506717516",
@@ -5671,7 +7126,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506750284",
@@ -5679,7 +7137,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506783052",
@@ -5687,7 +7148,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506815820",
@@ -5695,7 +7159,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506848588",
@@ -5703,7 +7170,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506881356",
@@ -5711,7 +7181,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506914124",
@@ -5719,7 +7192,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506946892",
@@ -5727,7 +7203,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038506979660",
@@ -5735,7 +7214,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038507012428",
@@ -5743,7 +7225,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    },
    {
     "id": "58038507045196",
@@ -5751,7 +7236,10 @@
     "original": 67.99,
     "original_compare_at": null,
     "was": 74.99,
-    "now": 63.99
+    "now": 63.99,
+    "eur_original": 95.95,
+    "eur_was": 105.99,
+    "eur_now": 89.99
    }
   ]
  },
@@ -5769,7 +7257,10 @@
     "original": 11.99,
     "original_compare_at": null,
     "was": 12.99,
-    "now": 10.99
+    "now": 10.99,
+    "eur_original": 16.95,
+    "eur_was": 18.99,
+    "eur_now": 15.99
    }
   ]
  },
@@ -5787,7 +7278,10 @@
     "original": 54.99,
     "original_compare_at": null,
     "was": 59.99,
-    "now": 50.99
+    "now": 50.99,
+    "eur_original": 77.95,
+    "eur_was": 85.99,
+    "eur_now": 72.99
    },
    {
     "id": "58043585560908",
@@ -5795,7 +7289,10 @@
     "original": 57.99,
     "original_compare_at": null,
     "was": 63.99,
-    "now": 53.99
+    "now": 53.99,
+    "eur_original": 81.95,
+    "eur_was": 89.99,
+    "eur_now": 76.99
    },
    {
     "id": "58043585593676",
@@ -5803,7 +7300,10 @@
     "original": 59.99,
     "original_compare_at": null,
     "was": 65.99,
-    "now": 55.99
+    "now": 55.99,
+    "eur_original": 84.95,
+    "eur_was": 92.99,
+    "eur_now": 78.99
    }
   ]
  },
@@ -5821,7 +7321,10 @@
     "original": 7.99,
     "original_compare_at": null,
     "was": 8.99,
-    "now": 7.99
+    "now": 7.99,
+    "eur_original": 14.99,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  },
@@ -5839,7 +7342,10 @@
     "original": 9.99,
     "original_compare_at": null,
     "was": 10.99,
-    "now": 9.99
+    "now": 9.99,
+    "eur_original": 14.95,
+    "eur_was": 15.99,
+    "eur_now": 13.99
    }
   ]
  }
