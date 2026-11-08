@@ -47,3 +47,31 @@
   .tpw .tpvb{display:none}
   .tpw .trvs{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80%;overflow-x:auto;scrollbar-width:none}
 }
+
+/* softer reviews: lighter type, smaller stars, scrolling with two quiet arrows */
+.tpw.soft .in{grid-template-columns:minmax(180px,210px) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:center}
+.tpw.soft .tsum b{font:500 24px/1.1 var(--display);letter-spacing:0}
+.tpw.soft .tps.big i{width:28px;height:28px}
+.tpw.soft .tps.big i::before{inset:5px}
+.tpw.soft .tbased{font-size:13.5px;color:var(--ink2)}
+.tpw.soft .tlogo{font-size:17px;margin-top:8px}
+.tpw.soft .tlogo::before{width:20px;height:20px}
+.tpw.soft .tps i{width:16px;height:16px}
+.tpw.soft .tps i::before{inset:3px}
+.tpw.soft .tcar{min-width:0}
+.tpw.soft .trvs{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:calc((100% - 3*32px)/4);gap:32px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
+.tpw.soft .trvs::-webkit-scrollbar{display:none}
+.tpw.soft .tr{scroll-snap-align:start}
+.tpw.soft .vf{font-size:12.5px;color:var(--mute);text-decoration:none}
+.tpw.soft .vf::before{width:14px;height:14px;font-size:9px;background:#9A9A9A}
+.tpw.soft .tby{font-size:12.5px}
+.tpw.soft .tr h4{font:500 15px/1.35 var(--sans)}
+.tpw.soft .tr p{font-size:14px;color:var(--mute)}
+.tpw.soft .tctl{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+.tpw.soft .tnote{margin:0;font-size:12.5px;color:var(--mute)}
+.tarr{display:flex;gap:8px}
+.tarr button{width:34px;height:34px;border-radius:50%;border:1px solid #E6E6E6;display:flex;align-items:center;justify-content:center;color:#8A8A8A;transition:border-color .2s,color .2s,opacity .2s}
+.tarr button:hover{border-color:#BDBDBD;color:var(--ink)}
+.tarr button:disabled{opacity:.35;cursor:default}
+.tarr svg{width:7px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
+@media (max-width:900px){.tpw.soft .in{grid-template-columns:1fr}.tpw.soft .trvs{grid-auto-columns:80%;gap:20px}}

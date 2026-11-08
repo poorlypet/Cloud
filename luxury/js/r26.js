@@ -13,3 +13,15 @@
     place(); sync();
   });
 })();
+/* reviews: two soft arrows scroll the row */
+(function () {
+  "use strict";
+  document.querySelectorAll(".tpw .tcar").forEach(function (c) {
+    var tr = c.querySelector(".trvs"), pv = c.querySelector(".tprev"), nx = c.querySelector(".tnext");
+    function step() { var r = tr.querySelector(".tr"); return r ? r.getBoundingClientRect().width + 32 : 300; }
+    function sync() { pv.disabled = tr.scrollLeft < 4; nx.disabled = tr.scrollLeft + tr.clientWidth > tr.scrollWidth - 4; }
+    pv.addEventListener("click", function () { tr.scrollBy({ left: -step() }); });
+    nx.addEventListener("click", function () { tr.scrollBy({ left: step() }); });
+    tr.addEventListener("scroll", sync, { passive: true }); sync();
+  });
+})();
