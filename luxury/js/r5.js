@@ -316,23 +316,28 @@
       '</p><span class="track"><i style="width:' + Math.min(100, t.sub / FREE * 100) + '%"></i></span></div>';
   }
   var RECS = [PRODUCTS[2], PRODUCTS[7], PRODUCTS[4], PRODUCTS[6]];
-  var TRUST = '<ul class="trust"><li>Complimentary returns within 30 days</li><li>Gift wrapping on every order</li><li>Secure checkout</li></ul>';
+  var TRUST = '<ul class="trust"><li>Free returns within 14 days</li><li>Secure checkout</li></ul>';
   var PAY = '<p class="paynote">Pay in 3 at 0% APR with <b>Shop Pay</b> or <b>Klarna</b></p>';
+  /* payment marks drawn as badges in each brand's colours; on Shopify swap for the official
+     icons with {{ 'shop_pay' | payment_type_svg_tag }} and {{ 'klarna' | payment_type_svg_tag }} */
+  var SHOPPAY = '<span class="pm pm-shop" role="img" aria-label="Shop Pay"><b>shop</b><span>Pay</span></span>';
+  var KLARNA = '<span class="pm pm-klarna" role="img" aria-label="Klarna">Klarna.</span>';
   var EXPRESS = '<div class="express"><button type="button">Shop Pay</button><button type="button">Apple Pay</button><button type="button">PayPal</button></div>';
   function head(title, t) { return '<div class="side-h"><h2>' + title + "<small>(" + t.count + ")</small></h2>" + X + "</div>"; }
   function emptyState() { return '<div class="side-b"><div class="bempty"><p class="bempty-t">Your basket is empty</p><p>Have a look at what is new this week.</p><a class="wbtn" href="#">Shop new in' + ARW + "</a></div></div>"; }
 
   var BASKETS = {
-    /* 1 · Editorial: larger photos, serif names, quiet delivery line, express payment */
+    /* 1 · Editorial: square photos, serif names, quiet delivery line, pay-in-3 with Shop Pay and Klarna */
     "1": function (t) {
+      var inst = money(Math.ceil(t.sub / 3 * 100) / 100);
       return head("Your basket", t) + shipLine(t, "freeline top") + '<div class="side-b">' +
         basket.map(function (i, n) {
           return '<div class="b1-item"><a href="#" class="b1-img">' + ph(i.p, 300) + '</a><div class="b1-info"><p class="b1-n">' + esc(i.n) + '</p><p class="b1-meta">' + esc(i.v) + '</p>' +
             '<div class="b1-row">' + qtyCtl(n, i.q, "qty-bare") + '<span class="b1-p">' + money(i.pr * i.q) + '</span></div><button type="button" class="b1-rm" data-rm="' + n + '">Remove</button></div></div>';
-        }).join("") +
-        '<label class="giftrow"><input id="gift1" type="checkbox" data-gift' + (bstate.gift ? " checked" : "") + '><span><b>Gift wrapping</b>Wrapped in tissue with a handwritten card. Complimentary.</span></label>' + TRUST + "</div>" +
-        '<div class="side-f"><div class="sum total"><span>Subtotal</span><span>' + money(t.sub) + '</span></div><p class="fine">Delivery and taxes are calculated at checkout.</p>' +
-        '<button type="button" class="wbtn">Checkout securely' + ARW + "</button>" + EXPRESS + PAY + "</div>";
+        }).join("") + "</div>" +
+        '<div class="side-f"><div class="sum total"><span>Subtotal</span><span>' + money(t.sub) + '</span></div><p class="fine">Delivery and taxes are calculated at checkout. Free returns within 14 days.</p>' +
+        '<button type="button" class="wbtn">Checkout securely' + ARW + "</button>" +
+        '<div class="pay3"><p>Or pay in 3 interest-free instalments of <b>' + inst + '</b> with</p><div class="pay3-logos">' + SHOPPAY + KLARNA + "</div></div></div>";
     },
     /* 2 · Wide sheet: items left, order summary column right */
     "2": function (t) {
