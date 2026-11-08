@@ -54,3 +54,8 @@
   .rx-h{flex-direction:column;gap:8px}
 }
 @media (max-width:560px){.x1 .grid,.x2 .grid,.x4 .grid{grid-template-columns:1fr}}
+/* green Trustpilot stars; no black rules */
+.rx .st{display:inline-flex}
+.rx .score .tp{color:var(--ink);font-size:13.5px}
+.x3 .grid{border-top-color:var(--line);border-bottom-color:var(--line)}
+.x5 .c.s{border-top-color:var(--line)}
