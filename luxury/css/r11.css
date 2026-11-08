@@ -1,0 +1,84 @@
+/* ==================================================================
+   Axel & Hound · shop-by-category, five refined treatments (version K)
+   Inside the page margins, compact, black and white.
+   ================================================================== */
+.hc{padding:clamp(56px,6vw,88px) var(--gut)}
+.hc-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:28px}
+.hc-h h2{font:500 clamp(26px,2.2vw,34px)/1.1 var(--display)}
+.hc-k{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.hc .all{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.hc svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3;transition:transform .45s var(--ease)}
+.hc a:hover svg.a{transform:translateX(4px)}
+.hc .ph{display:block;overflow:hidden;background:var(--stone)}
+.hc .ph::after{display:none}
+.hc .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.ul{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s var(--ease)}
+a:hover > .ul,a:hover .ul{background-size:100% 1px}
+
+/* H1 · a centred line of names; a small photo follows the cursor */
+.h1{text-align:center;position:relative}
+.h1 .hc-k{display:block;margin-bottom:22px}
+.h1 .runon{max-width:1300px;margin:0 auto;font:400 clamp(30px,3.3vw,50px)/1.25 var(--display);color:var(--ink);text-wrap:balance}
+.h1 .runon a{transition:color .3s}
+.h1 .runon:hover a{color:#BDBDBD}
+.h1 .runon a:hover{color:var(--ink);font-style:italic}
+.h1 .sep{color:#BDBDBD}
+.h1 .all{margin-top:30px}
+.h1 .float{position:fixed;left:0;top:0;width:180px;aspect-ratio:4/5;pointer-events:none;z-index:30;opacity:0;transform:translate(-50%,-50%) scale(.92);transition:opacity .3s,transform .4s var(--ease)}
+.h1 .float.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.h1 .float img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+.h1 .float img.on{opacity:1}
+
+/* H2 · arch-topped photos */
+.h2 .row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(14px,2vw,32px)}
+.h2 .ph{aspect-ratio:3/4;border-radius:999px 999px 0 0}
+.h2 a{text-align:center}
+.h2 b{display:inline-block;margin-top:16px;font:500 21px/1.1 var(--display)}
+.h2 a:hover .ph img{transform:scale(1.05)}
+
+/* H3 · gallery cards: photo in a pale mount, name inside */
+.h3 .row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.h3 .card{display:block;background:#F4F4F4;padding:14px 14px 18px;transition:background .3s}
+.h3 .card:hover{background:#ECECEC}
+.h3 .ph{aspect-ratio:1/1}
+.h3 .card b{display:block;margin-top:14px;text-align:center;font:500 20px/1.1 var(--display)}
+.h3 .card small{display:block;margin-top:4px;text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+
+/* H4 · category tabs that show a few products */
+.h4 .tabs6{display:flex;gap:clamp(18px,2.6vw,40px);border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto;scrollbar-width:none}
+.h4 .tabs6::-webkit-scrollbar{display:none}
+.h4 .tabs6 button{flex:none;padding:0 0 14px;font:500 clamp(20px,1.7vw,26px)/1 var(--display);color:#9A9A9A;border-bottom:1px solid transparent;margin-bottom:-1px;transition:color .25s,border-color .25s}
+.h4 .tabs6 button:hover{color:var(--ink)}
+.h4 .tabs6 button[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+.h4 .panel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(180px,.9fr);gap:clamp(12px,1.6vw,22px);align-items:start}
+.h4 .panel[hidden]{display:none}
+.h4 .pd .ph{aspect-ratio:1/1}
+.h4 .pd b{display:block;margin-top:12px;font-size:13.5px;font-weight:500}
+.h4 .pd small{display:block;font-size:13px;color:var(--mute)}
+.h4 .cta{align-self:stretch;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:22px;border:1px solid var(--line)}
+.h4 .cta p{font:500 22px/1.15 var(--display)}
+
+/* H5 · two editorial panels, home and outdoors */
+.h5 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
+.h5 .pan{position:relative;color:#fff;overflow:hidden}
+.h5 .pan .ph{aspect-ratio:16/9}
+.h5 .pan::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,.05) 60%);pointer-events:none}
+.h5 .pan:hover .ph img{transform:scale(1.03)}
+.h5 .txt{position:absolute;left:clamp(20px,2.4vw,36px);right:clamp(20px,2.4vw,36px);bottom:clamp(20px,2.4vw,32px);z-index:2}
+.h5 .txt .hc-k{color:rgba(255,255,255,.8)}
+.h5 .txt h3{font:500 clamp(28px,2.6vw,40px)/1 var(--display);margin:8px 0 16px}
+.h5 .txt ul{display:flex;flex-wrap:wrap;gap:8px 26px}
+.h5 .txt li a{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+
+@media (max-width:900px){
+  .h1 .runon{font-size:clamp(30px,8vw,40px);line-height:1.35}
+  .h1 .float{display:none}
+  .h2 .row,.h3 .row{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:40%;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1*var(--gut));padding-right:var(--gut)}
+  .h2 .row::-webkit-scrollbar,.h3 .row::-webkit-scrollbar{display:none}
+  .h2 b,.h3 .card b{font-size:18px}
+  .h4 .panel{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .h4 .cta{grid-column:1/-1}
+  .h5 .two{grid-template-columns:1fr}
+  .h5 .pan .ph{aspect-ratio:4/3}
+}
+@media (prefers-reduced-motion:reduce){.h1 .float{display:none}}
