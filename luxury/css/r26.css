@@ -1,0 +1,49 @@
+/* Axel & Hound · nkuku-style carousels (category, size) and Trustpilot-style reviews */
+.nk .sp-h{margin-bottom:22px}
+.nk .car{position:relative}
+.nk .nktrack{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2*12px) / 3.25);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
+.nk .nktrack::-webkit-scrollbar{display:none}
+.nk .nkit{scroll-snap-align:start;display:block;min-width:0}
+.nk .nkit .ph{aspect-ratio:8/9}
+.nk .nkit .ph img{transition:transform 1.4s var(--ease)}
+.nk .nkit:hover .ph img{transform:scale(1.03)}
+.nk .nkit h3{margin-top:18px;font:400 clamp(26px,2.2vw,34px)/1.1 var(--display)}
+.nk .nkit p{margin-top:8px;font-size:15px;color:var(--ink2);max-width:420px}
+.nk .nkit .sn{display:inline-block;margin-top:10px;font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.nk .nkav{position:absolute;top:0;width:46px;height:54px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.85);border:1px solid var(--line);transform:translateY(-50%);transition:opacity .2s;z-index:2}
+.nk .nkav svg{width:12px;height:20px;fill:none;stroke:currentColor;stroke-width:1.3}
+.nk .nkav.nx{right:0}.nk .nkav.pv{left:0}
+.nk .nkav:disabled{opacity:0;pointer-events:none}
+@media (max-width:900px){.nk .nktrack{grid-auto-columns:78%;gap:10px}.nk .nkav{display:none}.nk .nkit h3{font-size:24px}.nk .nkit p{font-size:14px}}
+
+/* Trustpilot-style reviews, white background */
+.tpw{padding:clamp(48px,5vw,72px) var(--gut)}
+.tpw .in{display:grid;grid-template-columns:minmax(200px,240px) 40px minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:start}
+.tpw .tsum{text-align:center}
+.tpw .tsum b{display:block;font:500 30px/1.1 var(--sans);letter-spacing:-.01em}
+.tps{display:inline-flex;gap:3px}
+.tps i{position:relative;width:20px;height:20px;background:#00B67A}
+.tps i::before{content:"";position:absolute;inset:4px;background:#fff;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tps i.half{background:linear-gradient(90deg,#00B67A 55%,#DCDCE6 55%)}
+.tps.big i{width:40px;height:40px}.tps.big{gap:4px;margin:8px 0}
+.tpw .tsum .tbased{font-size:15px}
+.tpw .tsum .tbased a{text-decoration:underline;text-underline-offset:3px}
+.tpw .tlogo{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font:600 22px/1 var(--sans);letter-spacing:-.02em}
+.tpw .tlogo::before{content:"";width:26px;height:26px;background:#00B67A;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tpw .tpvb{align-self:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mute)}
+.tpw .tpvb svg{width:8px;height:12px;fill:none;stroke:currentColor;stroke-width:1.4}
+.tpw .trvs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.4vw,40px);min-width:0}
+.tpw .tr{display:flex;flex-direction:column;min-width:0}
+.tpw .tr .ttop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tpw .vf{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
+.tpw .vf::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#6B6B6B;color:#fff;font-size:10px;text-decoration:none}
+.tpw .tr .tby{margin-top:12px;font-size:14px;color:var(--mute)}
+.tpw .tr .tby b{font-weight:500;color:var(--ink2)}
+.tpw .tr h4{margin:8px 0 0;font:600 16px/1.3 var(--sans)}
+.tpw .tr p{margin-top:6px;font-size:15px;color:var(--ink2);line-height:1.5}
+.tpw .tnote{margin-top:22px;font-size:14px;color:var(--ink2)}
+@media (max-width:900px){
+  .tpw .in{grid-template-columns:1fr}
+  .tpw .tpvb{display:none}
+  .tpw .trvs{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80%;overflow-x:auto;scrollbar-width:none}
+}
