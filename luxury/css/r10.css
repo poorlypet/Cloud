@@ -1,0 +1,69 @@
+/* ==================================================================
+   Axel & Hound · shop-by-category, full width (version K)
+   Photos run edge to edge across the screen; heights stay compact.
+   ================================================================== */
+.fw{padding:clamp(40px,4.5vw,64px) 0 0}
+.fw-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:0 var(--gut);margin-bottom:22px}
+.fw-h h2{font:500 clamp(24px,2vw,30px)/1.1 var(--display)}
+.fw-h .all,.fw .all{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.fw svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3;transition:transform .45s var(--ease)}
+.fw a:hover svg.a{transform:translateX(4px)}
+.fw .ph{display:block;overflow:hidden;background:var(--stone)}
+.fw .ph::after{display:none}
+.fw .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.fw a:hover .ph img{transform:scale(1.04)}
+.row6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;background:#fff}
+.tl{position:relative;display:block;min-width:0}
+
+/* F1 · six squares edge to edge, names under in capitals */
+.f1 .ph{aspect-ratio:1/1}
+.f1 .nm{display:flex;justify-content:space-between;align-items:center;padding:14px 18px 0;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.f1{padding-bottom:clamp(40px,4.5vw,64px)}
+
+/* F2 · six squares edge to edge, serif names centred on the photos */
+.f2 .tl{color:#fff}
+.f2 .ph{aspect-ratio:1/1}
+.f2 .tl::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.26);transition:background .4s;pointer-events:none}
+.f2 .tl:hover::after{background:rgba(0,0,0,.4)}
+.f2 .tl b{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;font:500 clamp(22px,2vw,30px)/1 var(--display);text-shadow:0 1px 16px rgba(0,0,0,.25)}
+
+/* F3 · a low band of wide photos, names bottom left */
+.f3 .tl{color:#fff}
+.f3 .ph{aspect-ratio:4/3}
+.f3 .tl::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 55%);pointer-events:none}
+.f3 .tl > span:not(.ph){position:absolute;left:18px;right:18px;bottom:14px;z-index:2;display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+
+/* F4 · names across the full width; the photo appears on hover */
+.f4{padding-bottom:0}
+.f4 .names{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.f4 .tl{height:clamp(130px,11vw,170px);display:flex;align-items:flex-end;padding:0 22px 20px;color:var(--ink);overflow:hidden}
+.f4 .tl + .tl{border-left:1px solid var(--line)}
+.f4 .tl .ph{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+.f4 .tl::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 60%);opacity:0;transition:opacity .5s;pointer-events:none}
+.f4 .tl:hover .ph,.f4 .tl:hover::after{opacity:1}
+.f4 .tl b{position:relative;z-index:2;display:flex;width:100%;justify-content:space-between;align-items:center;font:500 clamp(22px,2vw,30px)/1 var(--display);transition:color .4s}
+.f4 .tl:hover b{color:#fff}
+
+/* F5 · a black heading square, then six photos, all edge to edge */
+.f5{padding-top:0}
+.f5 .row7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;background:#fff}
+.f5 .head{aspect-ratio:1/1;background:#111;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(16px,1.8vw,26px)}
+.f5 .head h2{font:500 clamp(24px,2.1vw,32px)/1.05 var(--display)}
+.f5 .tl{color:#fff}
+.f5 .ph{aspect-ratio:1/1}
+.f5 .tl::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 50%);pointer-events:none}
+.f5 .tl b{position:absolute;left:16px;bottom:14px;z-index:2;font:500 clamp(19px,1.6vw,24px)/1 var(--display)}
+
+@media (max-width:900px){
+  .row6,.f5 .row7{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:38%;overflow-x:auto;scrollbar-width:none}
+  .row6::-webkit-scrollbar,.f5 .row7::-webkit-scrollbar{display:none}
+  .f3 .row6{grid-auto-columns:60%}
+  .f1 .nm{padding:10px 10px 0;font-size:10.5px;letter-spacing:.1em}
+  .f4 .names{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .f4 .tl{height:84px;padding:0 14px 14px}
+  .f4 .tl:nth-child(odd){border-left:0}
+  .f4 .tl:nth-child(n+3){border-top:1px solid var(--line)}
+  .f4 .tl .ph,.f4 .tl::after{opacity:0}
+  .f4 .tl b{font-size:20px}
+  .f5 .head{aspect-ratio:auto}
+}
