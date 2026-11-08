@@ -1,0 +1,17 @@
+/* Axel & Hound · dachshund and greyhound section (version K) */
+.bd2{padding:clamp(40px,4vw,56px) var(--gut) clamp(56px,5vw,80px)}
+.bd2-h{max-width:640px;margin-bottom:28px}
+.bd2-h h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.bd2-h h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.bd2-h p{margin-top:12px;font-size:15px;line-height:1.6;color:var(--ink2)}
+.bd2 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bd2 .pan{position:relative;display:block;overflow:hidden;color:#fff;background:#E9E9EA}
+.bd2 .pan img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform 1.4s var(--ease)}
+.bd2 .pan:hover img{transform:scale(1.03)}
+.bd2 .pan::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 45%);pointer-events:none}
+.bd2 .tx{position:absolute;left:clamp(20px,2.6vw,36px);right:clamp(20px,2.6vw,36px);bottom:clamp(20px,2.4vw,32px);z-index:2}
+.bd2 .tx b{display:block;font:500 clamp(28px,2.6vw,40px)/1 var(--display)}
+.bd2 .tx small{display:block;margin-top:8px;font-size:14px;opacity:.9}
+.bd2 .tx .lk{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.bd2 svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+@media (max-width:900px){.bd2 .two{grid-template-columns:1fr}}
