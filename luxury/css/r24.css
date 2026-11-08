@@ -1,0 +1,58 @@
+/* Axel & Hound · reviews round 2, all in the spirit of version 1 */
+.rw{padding:clamp(56px,5vw,80px) var(--gut)}
+.rw h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.rw h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.rw .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.rw svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.rw .num{display:block;font:500 clamp(56px,5vw,80px)/1 var(--display)}
+.rw .meta{font-size:14px;color:var(--ink2)}
+.rw .cd .rq{margin-top:14px}
+.rw .cd .st{display:flex}
+.rw .tp{font-size:13.5px}
+
+/* A: heading row, score inline, three columns with top rule */
+.a1 .top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:30px;flex-wrap:wrap}
+.a1 .sc{display:flex;align-items:center;gap:16px}
+.a1 .sc b{font:500 34px/1 var(--display)}
+.a1 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,48px)}
+.a1 .cd{border-top:1px solid var(--ink);padding-top:22px}
+
+/* B: score on top-left, four reviews in a 2x2 grid, no rules, airy */
+.a2 .wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,3fr);gap:clamp(24px,4vw,64px)}
+.a2 .cards{display:grid;grid-template-columns:1fr 1fr;gap:36px clamp(24px,3vw,56px)}
+.a2 .sc p{margin:10px 0 18px}
+
+/* C: score centred above, three reviews below with vertical rules */
+.a3 .sc{text-align:center;margin-bottom:36px}
+.a3 .sc .st{justify-content:center;margin:10px 0}
+.a3 .sc .meta{display:block}
+.a3 .sc .lk{margin-top:16px}
+.a3 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.a3 .cd{padding:28px clamp(20px,2.4vw,40px) 0}
+.a3 .cd + .cd{border-left:1px solid var(--line)}
+.a3 .cd:first-child{padding-left:0}
+
+/* D: grey score panel left, three ruled reviews right */
+.a4 .wrap{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,3fr);gap:clamp(24px,3vw,48px);align-items:stretch}
+.a4 .sc{background:#F3F3F3;padding:clamp(24px,2.6vw,36px);display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.a4 .sc .meta{margin-top:10px}
+.a4 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.a4 .cd{border-top:1px solid var(--ink);padding-top:22px}
+
+/* E: score left, reviews as a ruled list with name column */
+.a5 .wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,3fr);gap:clamp(24px,4vw,64px)}
+.a5 .sc p{margin:10px 0 18px}
+.a5 .list{border-top:1px solid var(--ink)}
+.a5 .li{display:grid;grid-template-columns:minmax(0,3fr) minmax(160px,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--line)}
+.a5 .li .rq{margin:0}
+.a5 .li .rn{margin:0}
+.a5 .li .st{margin-bottom:8px}
+
+@media (max-width:900px){
+  .a1 .cards,.a2 .cards,.a3 .cards,.a4 .cards{grid-template-columns:1fr}
+  .a2 .wrap,.a4 .wrap,.a5 .wrap{grid-template-columns:1fr}
+  .a3 .cd,.a3 .cd:first-child{padding:24px 0 0}
+  .a3 .cd + .cd{border-left:0;border-top:1px solid var(--line);margin-top:24px}
+  .a5 .li{grid-template-columns:1fr;gap:10px}
+}
+.rw .num + .st{margin-top:12px}
