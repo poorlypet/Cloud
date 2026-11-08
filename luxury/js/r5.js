@@ -282,7 +282,7 @@
     { p: "still1", n: "Bolster Bed, Moss Bouclé", v: "Medium", pr: 245 },
     { p: "poodle", n: "Cable Knit Jumper, Cream", v: "Dachshund fit", pr: 85 }
   ];
-  var FREE = 150;
+  var FREE = 100;
   var X = '<button type="button" class="x" data-close-side>Close<svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button>';
   var sides = {};
   function makeSide(id, label) {

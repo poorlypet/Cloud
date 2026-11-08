@@ -1,0 +1,70 @@
+/* ==================================================================
+   Axel & Hound · full-screen hero with a reassurance strip (version K)
+   Five strip treatments share one markup; the class on .strip picks one.
+   ================================================================== */
+.hero{height:100svh;min-height:640px}
+.hero-shade{background:linear-gradient(15deg,rgba(12,10,8,.58) 0%,rgba(12,10,8,.16) 36%,rgba(12,10,8,0) 56%),linear-gradient(to top,rgba(12,10,8,.35),rgba(12,10,8,0) 22%)}
+.hero-copy{bottom:calc(var(--strip-h) + clamp(36px,6vh,64px))}
+:root{--strip-h:72px;--tp:#00B67A}
+
+.strip{position:absolute;left:0;right:0;bottom:0;z-index:3;display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));align-items:center;height:var(--strip-h);padding:0 var(--gut);color:#fff;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.si{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0;white-space:nowrap}
+.si svg{flex:none;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.2}
+.si:first-child{justify-content:flex-start}
+.si:last-child{justify-content:flex-end}
+
+/* Trustpilot block: placeholder until the TrustBox widget is added */
+.tp{gap:10px}
+.tp-l{font-weight:600}
+.tp-stars{display:inline-flex;gap:2px}
+.tp-stars i{position:relative;width:17px;height:17px;background:var(--tp)}
+.tp-stars i::before{content:"";position:absolute;inset:3px;background:#fff;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tp-stars i.half{background:linear-gradient(90deg,var(--tp) 60%,#DCDCE6 60%)}
+.tp-n{text-transform:none;letter-spacing:.02em;font-weight:400;opacity:.9}
+.tp-logo{display:inline-flex;align-items:center;gap:4px;text-transform:none;letter-spacing:0;font-weight:600;font-size:13px}
+.tp-logo::before{content:"";width:14px;height:14px;background:var(--tp);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+
+/* S1 · clear, hairline over the film */
+.s1{border-top:1px solid rgba(255,255,255,.28)}
+.s1 .si + .si{border-left:1px solid rgba(255,255,255,.18)}
+.s1 .si{height:28px}
+
+/* S2 · solid white bar */
+.s2{background:#fff;color:var(--ink)}
+.s2 .si + .si{border-left:1px solid var(--line)}
+.s2 .si{height:30px}
+.s2 .si:first-child,.s2 .si:last-child{justify-content:center}
+.s2 .tp-n{opacity:1;color:var(--ink2)}
+
+/* S3 · black bar, items separated by dots */
+.s3{background:#111;display:flex;justify-content:center;gap:0;font-size:11px;letter-spacing:.14em}
+.s3 .si{flex:none;padding:0 28px;position:relative}
+.s3 .si + .si::before{content:"";position:absolute;left:-2px;top:50%;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.45);transform:translateY(-50%)}
+.s3 .si svg{display:none}
+
+/* S4 · frosted panel, inset */
+.s4{left:var(--gut);right:var(--gut);bottom:var(--gut);padding:0 32px;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.22)}
+.has-s4 .hero-copy{bottom:calc(var(--strip-h) + var(--gut) + clamp(32px,5vh,56px))}
+
+/* S5 · black bar, reviews given more room */
+.s5{background:#111;grid-template-columns:1.6fr repeat(3,minmax(0,1fr));height:84px}
+.has-s5{--strip-h:84px}
+.s5 .si{justify-content:center;border-left:1px solid rgba(255,255,255,.14);height:36px}
+.s5 .tp{justify-content:flex-start;border:0;gap:14px}
+.s5 .tp-stars i{width:22px;height:22px}
+.s5 .tp-l{font-size:14px;letter-spacing:.08em}
+.s5 .tp-n{font-size:13px}
+
+@media (max-width:1080px){
+  :root{--strip-h:auto}
+  .strip,.s5{grid-template-columns:repeat(2,minmax(0,1fr));height:auto;padding:14px var(--gut);gap:12px 16px;font-size:10.5px;letter-spacing:.08em}
+  .strip .si,.s5 .si{justify-content:flex-start!important;border:0!important;height:auto;white-space:normal}
+  .tp{flex-wrap:wrap}
+  .tp-logo,.tp-n{display:none}
+  .s3{display:grid}
+  .s3 .si{padding:0}
+  .s3 .si::before{display:none}
+  .s4{left:12px;right:12px;bottom:12px}
+  .hero-copy,.has-s4 .hero-copy{bottom:150px}
+  .has-s5 .hero-copy{bottom:150px}
+}
