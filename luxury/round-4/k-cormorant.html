@@ -21,6 +21,8 @@
 .hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
 .hide-d{display:none}
 @media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
 </style>
 </head>
 <body data-layout="lib" data-basket="1" class="has-over">
