@@ -1,0 +1,71 @@
+/* Axel & Hound · new puppy collection, five versions (version K) */
+.np{padding:clamp(56px,5vw,80px) var(--gut)}
+.np-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:24px}
+.np-h h2,.np h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.np h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.np .k{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.np p.t{font-size:15px;line-height:1.6;color:var(--ink2);margin-top:12px;max-width:440px}
+.np .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.np svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.np .ph{display:block;overflow:hidden;background:var(--stone)}
+.np .ph img{width:100%;height:100%;object-fit:cover}
+.np .btnk{display:inline-flex;align-items:center;gap:12px;height:50px;padding:0 26px;background:#111;color:#fff;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-top:24px}
+.np .btnk:hover{background:#333}
+.np .price{font-size:15px;margin-top:14px}
+.np .price s{color:var(--mute);margin-left:8px}
+.np .save{display:inline-block;margin-left:10px;font-size:12px;padding:2px 8px;border:1px solid var(--ink)}
+.inc{display:grid;gap:10px;margin-top:20px}
+.inc li{display:flex;align-items:center;gap:14px;font-size:14px}
+.inc .ph{flex:none;width:52px;height:52px}
+.inc small{display:block;color:var(--mute);font-size:12.5px}
+
+/* P1 bundle box: photo left, contents and price right */
+.p1 .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center}
+.p1 .ph.big{aspect-ratio:5/4}
+
+/* P2 collection: intro left, four products right */
+.p2 .wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,3fr);gap:clamp(24px,4vw,56px);align-items:start}
+
+/* P3 three bundles to choose from */
+.p3 .three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.p3 .bd{display:flex;flex-direction:column;border:1px solid var(--line);padding:16px 16px 22px;transition:border-color .2s}
+.p3 .bd:hover{border-color:var(--ink)}
+.p3 .bd .ph{aspect-ratio:4/3}
+.p3 .bd b{display:block;margin-top:16px;font:500 22px/1.1 var(--display)}
+.p3 .bd .d{font-size:13.5px;color:var(--mute);margin-top:6px;flex:1}
+.p3 .bd.hi{border-color:var(--ink)}
+.p3 .bd .tag{align-self:flex-start;margin-bottom:10px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:#111;color:#fff;padding:4px 8px}
+
+/* P4 build your bundle checklist */
+.p4 .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:clamp(24px,4vw,56px);align-items:start}
+.p4 .picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.p4 .pk{position:relative;display:block;cursor:pointer}
+.p4 .pk input{position:absolute;opacity:0}
+.p4 .pk .ph{aspect-ratio:1/1;outline:1px solid transparent;outline-offset:-1px;transition:outline-color .2s}
+.p4 .pk input:checked + .ph{outline:2px solid var(--ink);outline-offset:-2px}
+.p4 .pk .tick{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;justify-content:center}
+.p4 .pk input:checked ~ .tick{background:var(--ink)}
+.p4 .pk .tick svg{width:11px;height:9px;fill:none;stroke:#fff;stroke-width:1.6}
+.p4 .pk input:focus-visible + .ph{outline:2px solid var(--ink)}
+.p4 .pk b{display:block;margin-top:10px;font-size:13.5px;font-weight:500}
+.p4 .pk small{font-size:13px;color:var(--mute)}
+.p4 .bsum{position:sticky;top:120px;background:#F3F3F3;padding:26px}
+.p4 .bsum .row{display:flex;justify-content:space-between;font-size:14px;margin-top:8px;font-variant-numeric:tabular-nums}
+.p4 .bsum .row.tot{font-size:16px;font-weight:600;margin-top:14px;padding-top:14px;border-top:1px solid #DDD}
+.p4 .bsum .btnk{width:100%;justify-content:center}
+.p4 .bsum .note{font-size:12.5px;color:var(--mute);margin-top:10px}
+
+/* P5 wide photo with the bundle card on it */
+.p5 .stage{position:relative}
+.p5 .stage .ph{aspect-ratio:21/9}
+.p5 .card{position:absolute;right:clamp(16px,3vw,44px);top:50%;transform:translateY(-50%);width:min(380px,40%);background:#fff;padding:clamp(22px,2.4vw,34px)}
+
+@media (max-width:900px){
+  .p1 .wrap,.p2 .wrap,.p4 .wrap{grid-template-columns:1fr}
+  .p3 .three{grid-template-columns:1fr}
+  .p4 .picks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .p4 .bsum{position:static}
+  .p5 .stage .ph{aspect-ratio:4/3}
+  .p5 .card{position:static;transform:none;width:auto;padding:22px 0 0}
+  .np-h{flex-direction:column;gap:8px}
+}
