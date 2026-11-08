@@ -76,3 +76,17 @@
 .tarr svg{width:7px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
 @media (max-width:900px){.tpw.soft .in{grid-template-columns:1fr}.tpw.soft .trvs{grid-auto-columns:80%;gap:20px}}
 .tpw .tlogo-img{display:block;height:24px;width:auto;margin:10px auto 0}
+/* level heights: every review the same height, score centred against them */
+.tpw.soft .trvs{align-items:stretch}
+.tpw.soft .tr{display:flex;flex-direction:column;height:100%}
+.tpw.soft .tr p{flex:1}
+.tpw.soft .tctl{justify-content:flex-end;margin-top:18px}
+.tpw.soft .in{align-items:center}
+/* arrows either side of the reviews, everything on one level */
+.tpw.soft .tcar{display:grid;grid-template-columns:34px minmax(0,1fr) 34px;gap:20px;align-items:center}
+.tpw.soft .tctl{display:contents}
+.tpw.soft .tarr{display:contents}
+.tpw.soft .tprev{grid-column:1;grid-row:1}
+.tpw.soft .trvs{grid-column:2;grid-row:1}
+.tpw.soft .tnext{grid-column:3;grid-row:1}
+@media (max-width:900px){.tpw.soft .tcar{grid-template-columns:1fr}.tpw.soft .tprev,.tpw.soft .tnext{display:none}.tpw.soft .trvs{grid-column:1}}
