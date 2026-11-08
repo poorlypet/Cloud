@@ -1,0 +1,75 @@
+/* ==================================================================
+   Axel & Hound · shop-by-category, compact (version K)
+   Each layout keeps the whole section to about a third of the screen.
+   ================================================================== */
+.cc{padding:clamp(40px,4.5vw,64px) var(--gut)}
+.cc-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:22px}
+.cc-h h2{font:500 clamp(24px,2vw,30px)/1.1 var(--display)}
+.cc-h .all{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.cc svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3;transition:transform .45s var(--ease)}
+.cc a:hover svg.a{transform:translateX(4px)}
+.cc .ph{display:block;overflow:hidden;background:var(--stone)}
+.cc .ph::after{display:none}
+.cc .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.cc a:hover .ph img{transform:scale(1.04)}
+.nm6{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+
+/* K1 · six small squares in one row */
+.k1 .row6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(10px,1.4vw,20px)}
+.k1 .ph{aspect-ratio:1/1}
+.k1 .nm6{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+
+/* K2 · one line of names, each with a small photo */
+.k2 .cc-h{margin-bottom:18px}
+.k2 .line{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.k2 .it{display:flex;align-items:center;gap:14px;padding:14px 16px;min-width:0;transition:background .25s}
+.k2 .it + .it{border-left:1px solid var(--line)}
+.k2 .it:hover{background:#F7F7F7}
+.k2 .ph{flex:none;width:56px;height:56px}
+.k2 .it b{font:500 21px/1 var(--display)}
+
+/* K3 · six short portrait tiles, names on the photos */
+.k3 .row6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}
+.k3 .row6 a{position:relative;display:block;color:#fff}
+.k3 .ph{aspect-ratio:1/1}
+.k3 .row6 a::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 45%);pointer-events:none}
+.k3 b{position:absolute;left:16px;bottom:14px;z-index:2;font:500 22px/1 var(--display)}
+
+/* K4 · six landscape photos, serif names underneath */
+.k4 .row6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+.k4 .ph{aspect-ratio:3/2}
+.k4 b{display:block;margin-top:10px;font:500 20px/1.1 var(--display)}
+.k4 small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
+
+/* K5 · heading beside a three-by-two list of small cards */
+.k5{display:grid;grid-template-columns:minmax(200px,.8fr) minmax(0,3fr);gap:clamp(24px,4vw,64px);align-items:start}
+.k5 .cc-h{flex-direction:column;align-items:flex-start;gap:14px;margin:0}
+.k5 .cc-h p{font-size:14px;color:var(--ink2);max-width:240px;line-height:1.5}
+.k5 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.k5 .cd{display:flex;align-items:center;gap:16px;padding:10px;border:1px solid var(--line);transition:border-color .25s;min-width:0}
+.k5 .cd:hover{border-color:var(--ink)}
+.k5 .ph{flex:none;width:76px;height:76px}
+.k5 .cd b{display:block;font:500 21px/1.05 var(--display)}
+.k5 .cd small{display:block;font-size:12.5px;color:var(--mute);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:900px){
+  .k1 .row6,.k3 .row6,.k4 .row6{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:32%;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1*var(--gut));padding-right:var(--gut)}
+  .k1 .row6::-webkit-scrollbar,.k3 .row6::-webkit-scrollbar,.k4 .row6::-webkit-scrollbar{display:none}
+  .k3 .row6{grid-auto-columns:38%}
+  .k4 .row6{grid-auto-columns:46%}
+  .k2 .line{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .k2 .it:nth-child(odd){border-left:0}
+  .k2 .it:nth-child(n+3){border-top:1px solid var(--line)}
+  .k2 .ph{width:44px;height:44px}
+  .k2 .it{padding:10px 10px;gap:10px}
+  .k2 .it b{font-size:18px}
+  .k5{grid-template-columns:1fr}
+  .k5 .cc-h{flex-direction:row;justify-content:space-between;align-items:baseline}
+  .k5 .cc-h p{display:none}
+  .k5 .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .k5 .ph{width:52px;height:52px}
+  .k5 .cd{gap:10px;padding:6px}
+  .k5 .cd b{font-size:17px}
+  .k5 .cd small{display:none}
+  .k3 b{font-size:18px;left:12px}
+}
