@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Bodoni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/r3.css">
+<link rel="stylesheet" href="../css/r4.css">
+<style>
+/* L · Bodoni Moda with Hanken Grotesk. Spaced capital logo, search field in the header. Menus: a row of links over four photo tiles. */
+:root{--display:"Bodoni Moda",Didot,Georgia,serif;--sans:"Hanken Grotesk",system-ui,sans-serif}
+.logo{font-size:21px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.logo .amp{font-style:normal;letter-spacing:0;padding:0 .35em 0 .1em}
+.nav{margin-left:clamp(28px,3vw,48px);gap:clamp(14px,1.5vw,24px)}
+.nav .nl{font-size:11.5px;letter-spacing:.12em}
+.tools{gap:16px;padding-left:24px}
+.hsearch{width:clamp(180px,14vw,240px)}
+@media (max-width:1280px){.help{display:none}}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1 var(--display);letter-spacing:-.01em}
+.hero-copy h1 i{font-weight:500}
+@media (max-width:1080px){.logo{font-size:16px;letter-spacing:.18em}}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+</style>
+</head>
+<body data-layout="tiles">
+
+<header class="hdr clear">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="hsearch" type="button" data-open="search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>Search for… beds</button><span class="hide-d"><button class="ico" type="button" data-open="search" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button></span>
+      <button class="ico hide-m" type="button" data-open="account" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></button>
+      <button class="ico hide-m" type="button" data-open="saved" aria-label="Saved items"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></button>
+      <button class="ico" type="button" data-open="basket" aria-label="Basket"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="n" data-count></span></button>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="Welcome to Axel &amp; Hound">
+    <video autoplay muted loop playsinline preload="auto" poster="../media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="../media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="../media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div><div class="hero-top"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Welcome to Axel &amp; Hound</p>
+      <h1>The finest beds, collars and coats <i>for dogs.</i></h1>
+      <p class="intro">Chosen for comfort, made to last, and good enough to live with.</p>
+      <div class="btns"><a class="sqbtn" href="#">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="#">Winter Sale</a></div>
+    </div>
+
+  </section>
+  <section class="next"><h2>New in for winter</h2><p>Next section placeholder</p></section>
+  <div class="next-grid"><span></span><span></span><span></span><span></span></div>
+</main>
+
+<script src="../js/r4.js"></script>
+</body>
+</html>

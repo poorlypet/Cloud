@@ -2,7 +2,8 @@
 
 Open `index.html` (served locally, for example `python3 -m http.server` in this folder).
 
-- `round-3/`: latest. F to J, built on A and C. Search, account, saved and basket all open working panels; add `#search`, `#basket`, `#account` or `#saved` to a URL to open one directly.
+- `round-4/`: latest. K to O, black and white, New In mega with four photo tiles, store intro in the hero.
+- `round-3/`: F to J, built on A and C. Search, account, saved and basket all open working panels; add `#search`, `#basket`, `#account` or `#saved` to a URL to open one directly.
 - `round-2/`: A to E, each with a different display and body pairing.
   A, C and E have the menu transparent over the film, turning white on hover, when a menu opens and on scroll.
 - `version-1.html` to `version-5.html`: round 1 (DM Mono body).
