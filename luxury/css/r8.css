@@ -1,0 +1,95 @@
+/* ==================================================================
+   Axel & Hound · shop-by-category section, five layouts (version K)
+   Sleeping, Walking, Clothing, Dining, Playing, Travelling
+   ================================================================== */
+.cats{padding:clamp(56px,7vw,104px) var(--gut)}
+.cats-h{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(28px,3vw,44px)}
+.cats-h .eyebrow{font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+.cats-h h2{font:500 clamp(32px,3vw,46px)/1.05 var(--display);text-wrap:balance}
+.cats-h .all{flex:none;display:inline-flex;align-items:center;gap:12px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.cats-h .all svg,.cl svg{width:18px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3;transition:transform .45s var(--ease)}
+.cats-h .all:hover svg,.ct:hover .cl svg{transform:translateX(5px)}
+.ct{display:block;position:relative;min-width:0;color:var(--ink)}
+.ct .ph{background:var(--stone)}
+.ct .ph::after{display:none}
+.ct .ph img{transition:transform 1.4s var(--ease)}
+.ct:hover .ph img{transform:scale(1.035)}
+.cl{display:inline-flex;align-items:center;gap:12px;margin-top:16px;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.cs{display:block;margin-top:4px;font-size:13.5px;color:var(--mute)}
+
+/* C1 · three by two, label under each photo */
+.c1 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px clamp(16px,2vw,28px)}
+.c1 .ph{aspect-ratio:4/5}
+
+/* C2 · sideways rail, serif names on the photos */
+.c2 .rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*20px) / 3.4);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-right:calc(-1 * var(--gut));padding-right:var(--gut)}
+.c2 .rail::-webkit-scrollbar{display:none}
+.c2 .ct{scroll-snap-align:start;color:#fff}
+.c2 .ph{aspect-ratio:3/4}
+.c2 .ph::after{display:block;background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,0) 45%)}
+.c2 .on-ph{position:absolute;left:24px;right:24px;bottom:22px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end}
+.c2 .on-ph b{font:500 clamp(28px,2.4vw,38px)/1 var(--display)}
+.c2 .on-ph svg{width:20px;height:12px;fill:none;stroke:currentColor;stroke-width:1.3;margin-bottom:8px;transition:transform .45s var(--ease)}
+.c2 .ct:hover .on-ph svg{transform:translateX(5px)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);transition:border-color .2s,opacity .2s}
+.arrows button:hover{border-color:var(--ink)}
+.arrows button:disabled{opacity:.35;cursor:default}
+.arrows svg{width:18px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
+.arrows .prev svg{transform:scaleX(-1)}
+
+/* C3 · two wide over four square */
+.c3 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px clamp(16px,2vw,24px)}
+.c3 .wide{grid-column:span 2}
+.c3 .wide .ph{aspect-ratio:16/10}
+.c3 .sq .ph{aspect-ratio:1/1}
+.c3 .wide .cl{font-size:13.5px}
+
+/* C4 · names as a list, the photo changes as you hover */
+.c4 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(32px,5vw,96px);align-items:center}
+.c4 .names{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.c4 .nm{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);color:var(--mute);transition:color .3s,padding .5s var(--ease)}
+.c4 .nm b{font:500 clamp(30px,3.2vw,50px)/1 var(--display)}
+.c4 .nm span{font-size:13px;opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .45s var(--ease)}
+.c4 .nm.on,.c4 .nm:hover{color:var(--ink);padding-left:12px}
+.c4 .nm.on span,.c4 .nm:hover span{opacity:1;transform:none}
+.c4 .stage{position:relative;aspect-ratio:4/5;background:var(--stone);overflow:hidden}
+.c4 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity .6s ease,transform 1.4s var(--ease)}
+.c4 .stage img.on{opacity:1;transform:none}
+.c4 .thumb{display:none}
+
+/* C5 · edge-to-edge mosaic, names centred on the photos */
+.c5{padding-left:0;padding-right:0}
+.c5 .cats-h{padding:0 var(--gut)}
+.c5 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#fff}
+.c5 .ct{color:#fff}
+.c5 .ph{aspect-ratio:1/1}
+.c5 .ph::after{display:block;background:rgba(0,0,0,.18);transition:background .4s}
+.c5 .ct:hover .ph::after{background:rgba(0,0,0,.32)}
+.c5 .on-ph{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.c5 .on-ph b{font:500 clamp(30px,2.8vw,44px)/1 var(--display)}
+.c5 .on-ph span{font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:3px;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .45s var(--ease)}
+.c5 .ct:hover .on-ph span{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .cats-h{align-items:flex-start;flex-direction:column}
+  .c1 .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 12px}
+  .c2 .rail{grid-auto-columns:72%;gap:12px}
+  .arrows{display:none}
+  .c3 .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 12px}
+  .c3 .wide{grid-column:span 2}
+  .c4 .split{grid-template-columns:1fr}
+  .c4 .stage{display:none}
+  .c4 .nm{padding:12px 0}
+  .c4 .nm span{display:none}
+  .c4 .thumb{display:block;flex:none;width:64px;height:64px;object-fit:cover}
+  .c4 .nm.on,.c4 .nm:hover{padding-left:0}
+  .c4 .nm{color:var(--ink)}
+  .c5 .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .c5 .on-ph span{opacity:1;transform:none}
+  .cl{font-size:11.5px;letter-spacing:.1em}
+}
+.c5 .ph::after{background:rgba(0,0,0,.28)}
+.c5 .ct:hover .ph::after{background:rgba(0,0,0,.4)}
+.c5 .on-ph b,.c2 .on-ph b{text-shadow:0 1px 18px rgba(0,0,0,.25)}
+@media (max-width:900px){.c4 .nm{justify-content:flex-start;gap:18px}.c4 .nm b{font-size:28px}}
