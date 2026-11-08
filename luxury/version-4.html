@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Classic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+/* VERSION 4 · CLASSIC
+   Marcellus, an engraved Roman capital, like a jeweller's sign. Small tracked
+   capitals in the menu. Mega: link columns left, one large photograph right
+   that changes as you move down the links. */
+:root{--display:"Marcellus",Georgia,serif;--hh:82px}
+.logo{font-size:22px;letter-spacing:.32em;text-transform:uppercase}
+.logo .amp{font-style:normal;letter-spacing:0;padding:0 .3em 0 0}
+.nav{margin-left:clamp(36px,4.4vw,72px);gap:clamp(18px,2.2vw,34px);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.tools{gap:20px}
+.help{font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin-right:4px}
+.help:hover{color:var(--mute)}
+
+.mp-in{display:grid;grid-template-columns:1fr minmax(420px,46%);gap:56px;padding:44px var(--gut) 48px}
+.mp-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;align-content:start}
+.mp-col li a{display:inline-block;padding:5px 0;font-size:13px}
+.mp-feature{position:relative;display:block;color:#fff}
+.mp-feature .mp-img{aspect-ratio:16/10.5}
+.mp-feature img{transition:transform 1.2s var(--ease),opacity .22s ease}
+.mp-feature.swap img{opacity:0}
+.mp-feature::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,12,10,.5),rgba(14,12,10,0) 40%);pointer-events:none}
+.mp-fcap{position:absolute;left:24px;bottom:20px;z-index:1;display:flex;flex-direction:column;gap:4px;transition:opacity .22s}
+.mp-feature.swap .mp-fcap{opacity:0}
+.mp-fcap b{font:400 26px/1.1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.mp-fcap span{font-size:12px;opacity:.88}
+
+.hero-copy h1{font:400 clamp(30px,3vw,46px)/1.12 var(--display);letter-spacing:.07em;text-transform:uppercase;margin:0 0 18px}
+.saleline{display:flex;align-items:center;gap:14px;margin-bottom:28px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.saleline::before{content:"";width:36px;height:1px;background:currentColor}
+@media (max-width:1080px){.logo{font-size:17px;letter-spacing:.24em}}
+</style>
+</head>
+<body data-layout="split">
+
+<header class="hdr">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico hide-m" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <a class="ico hide-m" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></a>
+      <a class="ico hide-m" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></a>
+      <a class="ico" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <h1>Slow walks.<br>Warm coats.</h1>
+      <p class="saleline">Winter Sale · up to 30% off</p>
+      <a class="btn ghost" href="#">Shop the sale</a>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+</main>
+
+<script src="js/menu.js"></script>
+</body>
+</html>

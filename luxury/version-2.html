@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Atelier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500;1,6..96,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+/* VERSION 2 · ATELIER
+   Bodoni Moda 600, fashion-house feel. Spaced capital logo left, categories
+   centred, text-only tools right. Mega: large Bodoni list (italic on hover)
+   + three portrait photos. Hero sits inside a white frame. */
+:root{--display:"Bodoni Moda",Didot,Georgia,serif;--hh:78px}
+.logo{font-size:21px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.nav{position:absolute;left:50%;top:0;transform:translateX(-50%);gap:clamp(18px,2vw,32px);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+.tools{gap:26px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+.tools a:hover{color:var(--mute)}
+.tools .ico{display:none}
+.tools .burger{display:none}
+@media (max-width:1080px){.tools .burger,.tools .bag-i{display:inline-flex}.tools .bag-t{display:none}.logo{font-size:16px;letter-spacing:.16em}}
+
+.mp-in{display:grid;grid-template-columns:minmax(220px,280px) 190px 1fr;gap:44px;padding:48px var(--gut) 54px;align-items:start}
+.mp-big li a{display:inline-block;font:500 clamp(24px,2.1vw,32px)/1.32 var(--display)}
+.mp-big li a:hover{font-style:italic;color:var(--ink)}
+.mp-side li a{display:inline-block;padding:4px 0;font-size:13px}
+.mp-imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:820px;margin-left:auto;width:100%}
+.mp-img{aspect-ratio:4/5}
+.mp-cap{display:flex;flex-direction:column;gap:3px;margin-top:12px;font-size:12px}
+.mp-cap b{font:italic 500 19px/1.15 var(--display)}
+.mp-cap span{color:var(--mute)}
+
+.frame{padding:0 var(--gut) var(--gut)}
+.hero{height:calc(100svh - var(--hh) - var(--gut))}
+.hero-copy h1{font:600 clamp(38px,4vw,62px)/1 var(--display);margin:14px 0 14px}
+.hero-copy h1 i{font-weight:500}
+.hero-copy p.sub{font-size:13px;opacity:.9;margin-bottom:28px;max-width:360px}
+@media (max-width:1080px){.frame{padding:0}.hero{height:calc(100svh - var(--hh))}}
+</style>
+</head>
+<body data-layout="editorial">
+
+<header class="hdr">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <a class="hide-m" href="#">Search</a>
+      <a class="hide-m" href="#">Account</a>
+      <a class="bag-t" href="#">Basket (0)</a>
+      <a class="ico bag-i" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="frame">
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Sale now on</p>
+      <h1>Winter, <i>made softer.</i></h1>
+      <p class="sub">Up to 30% off beds, coats and wool throws, until 5 January.</p>
+      <a class="btn" href="#">Shop the sale</a>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+</main>
+
+<script src="js/menu.js"></script>
+</body>
+</html>

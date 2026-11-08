@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Maison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+/* VERSION 1 · MAISON
+   Cormorant Garamond 600 for display. Logo, then categories straight after it,
+   Help and icons to the right. Mega: three text columns + two portrait photos. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--hh:80px}
+.logo{font-size:31px;font-weight:600;letter-spacing:.005em}
+.nav{margin-left:clamp(32px,4vw,64px);gap:clamp(22px,2.4vw,36px);font-size:13px}
+.help{font-size:13px;margin-right:6px}
+.help:hover{color:var(--mute)}
+.tools{gap:20px}
+
+.mp-in{display:grid;grid-template-columns:1fr auto;gap:64px;padding:46px var(--gut) 52px}
+.mp-cols{display:grid;grid-template-columns:repeat(3,minmax(150px,210px));gap:40px}
+.mp-col li a{display:inline-block;padding:5px 0;font-size:13.5px}
+.mp-imgs{display:grid;grid-template-columns:repeat(2,clamp(200px,17vw,270px));gap:18px}
+.mp-img{aspect-ratio:4/5}
+.mp-cap{display:flex;flex-direction:column;gap:2px;margin-top:14px}
+.mp-cap b{font:600 21px/1.1 var(--display)}
+.mp-cap span{font-size:12px;color:var(--mute)}
+
+.hero-copy h1{font:600 clamp(36px,3.6vw,56px)/1.02 var(--display);letter-spacing:-.005em;margin:16px 0 28px}
+.eyebrow b{font-weight:400;color:#F2D9C9}
+</style>
+</head>
+<body data-layout="columns">
+
+<header class="hdr">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico hide-m" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <a class="ico hide-m" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></a>
+      <a class="ico hide-m" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></a>
+      <a class="ico" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">The Winter Sale <b>· up to 30% off</b></p>
+      <h1>Considered pieces for the dogs we live with.</h1>
+      <a class="btn" href="#">Shop the sale <svg class="arrow" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+</main>
+
+<script src="js/menu.js"></script>
+</body>
+</html>

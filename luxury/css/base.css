@@ -1,0 +1,115 @@
+/* ==================================================================
+   Luxury pet store: shared base for the five header + hero versions.
+   Body type is DM Mono throughout. Each version sets its own display
+   face in --display and styles its own mega-menu layout.
+   ================================================================== */
+
+:root{
+  --ink:#161412;
+  --ink2:#3A3631;
+  --mute:#7A746C;
+  --paper:#FFFFFF;
+  --stone:#F4F1EC;
+  --line:#E8E4DE;
+  --sale:#7B2A22;
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --display:Georgia,serif;
+  --gut:clamp(16px,3.2vw,48px);
+  --hh:76px;                         /* header height, set per version */
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 14px/1.6 var(--mono);letter-spacing:.01em;overflow-x:hidden}
+h1,h2,h3,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+img,video{display:block;max-width:100%}
+:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- header shell ---------- */
+.hdr{position:sticky;top:0;z-index:50;background:var(--paper)}
+.hdr-bar{position:relative;display:flex;align-items:center;height:var(--hh);padding:0 var(--gut);background:var(--paper)}
+.logo{font-family:var(--display);color:var(--ink);line-height:1;white-space:nowrap}
+
+.nav{display:flex;align-items:center}
+.nl{position:relative;display:inline-flex;align-items:center;height:var(--hh);white-space:nowrap;transition:color .25s}
+.nl::after{content:"";position:absolute;left:0;right:0;bottom:calc(50% - 14px);height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nl:hover::after,.nl[aria-expanded="true"]::after{transform:scaleX(1)}
+.nav.dim .nl:not([aria-expanded="true"]){color:var(--mute)}
+.nl.sale{color:var(--sale)}
+
+.tools{display:flex;align-items:center;gap:22px;margin-left:auto}
+.ico{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;position:relative}
+.ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.15;stroke-linecap:square}
+.ico .n{position:absolute;top:-3px;right:-7px;font-size:9px;line-height:1;letter-spacing:0}
+.burger{display:none}
+
+/* ---------- mega menu mechanics ---------- */
+.mega{position:absolute;left:0;right:0;top:100%;height:0;overflow:hidden;background:var(--paper);transition:height .5s var(--ease)}
+.mega.open{box-shadow:0 1px 0 var(--line)}
+.mega::before{content:"";position:absolute;left:var(--gut);right:var(--gut);top:0;height:1px;background:var(--line);z-index:2}
+.mp{position:absolute;left:0;right:0;top:0;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .3s ease,transform .5s var(--ease),visibility 0s .3s}
+.mp.on{opacity:1;visibility:visible;transform:none;transition:opacity .4s ease .08s,transform .6s var(--ease) .04s,visibility 0s}
+.mp a{transition:color .2s,opacity .2s}
+.mp-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:18px}
+.mp ul a:hover{color:var(--mute)}
+.mp .is-sale{color:var(--sale)}
+.mp-img{display:block;overflow:hidden;background:var(--stone)}
+.mp-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(.98);transition:transform 1.2s var(--ease)}
+a:hover > .mp-img img,.mp-fig:hover .mp-img img{transform:scale(1.035)}
+.mp-all{display:inline-block;margin-top:26px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
+
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(22,20,18,.32);opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s .45s}
+.scrim.on{opacity:1;visibility:visible;transition:opacity .45s ease,visibility 0s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:calc(100svh - var(--hh));min-height:560px;overflow:hidden;background:#2B2620;color:#fff}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(20deg,rgba(14,12,10,.62) 0%,rgba(14,12,10,.18) 38%,rgba(14,12,10,0) 60%)}
+.hero-copy{position:absolute;left:var(--gut);bottom:clamp(28px,6vh,64px);max-width:540px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;height:52px;padding:0 30px;border:1px solid #fff;background:#fff;color:var(--ink);font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:background .35s,color .35s,border-color .35s}
+.btn:hover{background:transparent;color:#fff}
+.btn.ghost{background:transparent;color:#fff}
+.btn.ghost:hover{background:#fff;color:var(--ink)}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.dark:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.arrow{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.1}
+
+.pause{position:absolute;right:var(--gut);bottom:clamp(28px,6vh,64px);width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.45);color:#fff;transition:border-color .25s}
+.pause:hover{border-color:#fff}
+.pause svg{width:10px;height:10px;fill:currentColor}
+.pause .i-play{display:none}
+.pause.paused .i-play{display:block}
+.pause.paused .i-pause{display:none}
+
+/* ---------- mobile drawer ---------- */
+.drawer{position:fixed;inset:0;z-index:80;background:var(--paper);transform:translateX(100%);transition:transform .55s var(--ease);display:flex;flex-direction:column;overflow-y:auto;visibility:hidden}
+.drawer.on{transform:none;visibility:visible}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 var(--gut);border-bottom:1px solid var(--line);flex:none}
+.drawer-body{padding:8px var(--gut) 40px}
+.drawer details{border-bottom:1px solid var(--line)}
+.drawer summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--display);font-size:22px;cursor:pointer}
+.drawer summary::-webkit-details-marker{display:none}
+.drawer summary::after{content:"+";font-family:var(--mono);font-size:16px;color:var(--mute)}
+.drawer details[open] summary::after{content:"\2013"}
+.drawer details ul{padding:0 0 18px}
+.drawer details li a{display:block;padding:7px 0;color:var(--ink2)}
+.drawer-foot{display:flex;flex-direction:column;gap:12px;margin-top:28px;font-size:13px}
+
+@media (max-width:1080px){
+  :root{--hh:64px}
+  .nav,.tools .hide-m,.mega,.help{display:none!important}
+  .burger{display:inline-flex}
+  .hero{height:calc(100svh - var(--hh));min-height:520px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important}
+}
+
+/* brand: Axel & Hound. The ampersand takes the display face's italic. */
+.logo .amp{font-style:italic;font-weight:400;padding:0 .04em}

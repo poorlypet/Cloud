@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Salon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Red+Hat+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/r2.css">
+<style>
+/* E · SALON. Transparent header, tracked capitals. Newsreader 600 display, Red Hat Text body. Mega: four link columns and one image that changes as you move down the links. */
+:root{--display:"Newsreader",Georgia,serif;--sans:"Red Hat Text",system-ui,sans-serif;--hh:84px}
+.logo{font-size:30px;font-weight:600;letter-spacing:-.01em}
+.nav{margin-left:clamp(36px,4.4vw,72px);gap:clamp(18px,2.2vw,32px);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.help{font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-right:4px}
+.mp-in{grid-template-columns:repeat(4,minmax(120px,1fr)) minmax(280px,1.7fr)}
+.mp-swap img{transition:transform 1.4s var(--ease),opacity .2s}
+.mp-swap.swap img,.mp-swap.swap .mp-t,.mp-swap.swap .mp-s{opacity:0}
+.mp-swap .mp-t,.mp-swap .mp-s{transition:opacity .2s}
+.mp-swap .mp-t{font:italic 500 21px/1.2 var(--display)}
+.mp-swap .mp-img{aspect-ratio:5/4!important}
+.hero-copy h1{font:600 clamp(30px,2.9vw,46px)/1.04 var(--display);letter-spacing:-.01em;margin:0 0 16px}
+.saleline{display:flex;align-items:center;gap:14px;margin-bottom:24px;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.saleline::before{content:"";width:32px;height:1px;background:currentColor}
+</style>
+</head>
+<body class="tx" data-layout="colshover">
+
+<header class="hdr">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico hide-m" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <a class="ico hide-m" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></a>
+      <a class="ico hide-m" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></a>
+      <a class="ico" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="../media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="../media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="../media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div><div class="hero-top"></div>
+    <div class="hero-copy">
+      <h1>Slow mornings,<br>soft landings.</h1>
+      <p class="saleline">Winter Sale · up to 30% off</p>
+      <a class="btn ghost" href="#">Shop the sale</a>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+  <section class="next"><h2>New in for winter</h2><p>Next section placeholder · scroll to see the header change</p></section>
+  <div class="next-grid"><span></span><span></span><span></span><span></span></div>
+</main>
+
+<script src="../js/r2.js"></script>
+</body>
+</html>

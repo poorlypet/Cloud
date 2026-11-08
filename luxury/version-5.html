@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Heritage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<style>
+/* VERSION 5 · HERITAGE
+   Libre Caslon Text 700, the warmest and most traditional of the five.
+   Sale sits at the end of the menu in oxblood. Mega shows three product
+   cards (name and price only) and an edit story on the right. */
+:root{--display:"Libre Caslon Text",Georgia,serif;--hh:78px}
+.logo{font-size:25px;font-weight:700;letter-spacing:-.01em}
+.nav{margin-left:clamp(32px,4vw,64px);gap:clamp(20px,2.2vw,32px);font-size:13px}
+.tools{gap:20px}
+.help{font-size:13px;margin-right:6px}
+.help:hover{color:var(--mute)}
+
+.mp-in{display:grid;grid-template-columns:200px 1fr minmax(240px,22%);gap:52px;padding:44px var(--gut) 50px}
+.mp-side li a{display:inline-block;padding:4px 0;font-size:13.5px}
+.mp-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mp-prod .mp-img{aspect-ratio:4/5;background:var(--stone)}
+.mp-pn{display:block;margin-top:12px;font-size:12.5px}
+.mp-pp{display:block;font-size:12.5px;color:var(--mute)}
+.mp-prod:hover .mp-pn{text-decoration:underline;text-underline-offset:3px}
+.mp-story{position:relative;display:block;color:#fff;align-self:stretch}
+.mp-story .mp-img{height:100%;min-height:340px}
+.mp-story::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,12,10,.55),rgba(14,12,10,0) 45%)}
+.mp-fcap{position:absolute;left:20px;bottom:18px;z-index:1;display:flex;flex-direction:column;gap:6px}
+.mp-fcap b{font:700 24px/1.1 var(--display)}
+.mp-fcap span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;align-self:flex-start;padding-bottom:2px}
+
+.hero-copy h1{font:700 clamp(34px,3.4vw,52px)/1.04 var(--display);letter-spacing:-.015em;margin:0 0 14px}
+.hero-copy .sub{font-size:13px;margin-bottom:28px;opacity:.92}
+.hero-copy .sub b{font-weight:500}
+.ctas{display:flex;align-items:center;gap:28px}
+.tl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.6);padding-bottom:3px;transition:border-color .25s}
+.tl:hover{border-color:#fff}
+</style>
+</head>
+<body data-layout="products">
+
+<header class="hdr">
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav data-sale aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico hide-m" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <a class="ico hide-m" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></a>
+      <a class="ico" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-copy">
+      <h1>Made to be lived with.</h1>
+      <p class="sub"><b>The Winter Sale</b> · up to 30% off, until 5 January</p>
+      <div class="ctas">
+        <a class="btn dark" href="#">Shop the sale</a>
+        <a class="tl" href="#">New in</a>
+      </div>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+</main>
+
+<script src="js/menu.js"></script>
+</body>
+</html>

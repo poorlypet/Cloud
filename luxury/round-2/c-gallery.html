@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/r2.css">
+<style>
+/* C · GALLERY. Transparent two-row header. Gloock display, Jost body. Mega: two link columns and three portrait images. */
+:root{--display:"Gloock",Georgia,serif;--sans:"Jost",system-ui,sans-serif;--row1:74px;--row2:46px;--hh:120px}
+.hdr-bar.two{display:block;height:auto;padding:0}
+.top{display:flex;align-items:center;height:var(--row1);padding:0 var(--gut)}
+.logo{font-size:32px;letter-spacing:-.01em}
+.logo .amp{font-style:normal}
+.tools{font-size:14px}
+.navrow{padding:0 var(--gut);border-top:1px solid var(--line);transition:border-color .45s}
+body.tx .hdr.clear .navrow{border-color:rgba(255,255,255,.28)}
+.nav{gap:clamp(22px,2.6vw,40px);font-size:14px;letter-spacing:.02em}
+.nl{height:var(--row2)}
+.nl::after{bottom:-1px}
+.mp-in{grid-template-columns:minmax(150px,1fr) minmax(130px,.85fr) repeat(3,minmax(170px,1.4fr))}
+.mp-card .mp-t{font:400 20px/1.15 var(--display);margin-top:14px}
+.tag{display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;background:var(--sale);color:#fff;font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.hero-copy h1{font:400 clamp(36px,3.8vw,58px)/1 var(--display);letter-spacing:-.01em}
+.hero-copy .sub{font-size:14px;max-width:320px;margin:14px 0 22px;opacity:.92}
+.sq{display:inline-flex;align-items:center;gap:16px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.sq i{display:flex;align-items:center;justify-content:center;width:54px;height:54px;background:#fff;color:var(--ink);border:1px solid #fff;transition:background .35s,color .35s}
+.sq:hover i{background:transparent;color:#fff}
+@media (max-width:1080px){:root{--hh:64px}.top{height:var(--hh)}.navrow{display:none}.logo{font-size:26px}}
+</style>
+</head>
+<body class="tx" data-layout="cols3img">
+
+<header class="hdr">
+  <div class="hdr-bar two">
+    <div class="top">
+      <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+      <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico hide-m" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <a class="ico hide-m" href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></a>
+      <a class="ico hide-m" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></a>
+      <a class="ico" href="#" aria-label="Basket, 0 items"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></a>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+      </div>
+    </div>
+    <div class="navrow"><ul class="nav" data-nav aria-label="Shop"></ul></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="The Winter Sale">
+    <video autoplay muted loop playsinline preload="auto" poster="../media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="../media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="../media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div><div class="hero-top"></div>
+    <div class="hero-copy">
+      <span class="tag">Sale</span>
+      <h1>The Winter Sale</h1>
+      <p class="sub">Up to 30% off selected beds, coats and throws. Until 5 January.</p>
+      <a class="sq" href="#"><i><svg class="arrow" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></i>Shop the sale</a>
+    </div>
+    <button class="pause" type="button" data-pause aria-label="Pause video">
+      <svg class="i-pause" viewBox="0 0 10 10"><rect x="1" width="2.6" height="10"/><rect x="6.4" width="2.6" height="10"/></svg>
+      <svg class="i-play" viewBox="0 0 10 10"><path d="M1.5 0l8 5-8 5z"/></svg>
+    </button>
+  </section>
+  <section class="next"><h2>New in for winter</h2><p>Next section placeholder · scroll to see the header change</p></section>
+  <div class="next-grid"><span></span><span></span><span></span><span></span></div>
+</main>
+
+<script src="../js/r2.js"></script>
+</body>
+</html>
