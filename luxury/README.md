@@ -2,7 +2,8 @@
 
 Open `index.html` (served locally, for example `python3 -m http.server` in this folder).
 
-- `round-2/`: latest. A to E, each with a different display and body pairing.
+- `round-3/`: latest. F to J, built on A and C. Search, account, saved and basket all open working panels; add `#search`, `#basket`, `#account` or `#saved` to a URL to open one directly.
+- `round-2/`: A to E, each with a different display and body pairing.
   A, C and E have the menu transparent over the film, turning white on hover, when a menu opens and on scroll.
 - `version-1.html` to `version-5.html`: round 1 (DM Mono body).
 - `css/r2.css` and `js/r2.js` drive round 2. The menu content (categories, links, images,
