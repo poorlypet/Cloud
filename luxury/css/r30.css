@@ -1,0 +1,77 @@
+/* Axel & Hound · newsletter + footer, round 2 (no journal) */
+.fq{margin-top:var(--sec,86px)}
+.fq a{color:inherit}
+.fq .lg{font:500 clamp(26px,2.2vw,32px)/1 var(--display)}
+.fq .lg .amp{font-style:italic;font-weight:400}
+.fq h2{font:500 clamp(26px,2.4vw,36px)/1.1 var(--display)}
+.fq h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.fq p.s{margin-top:10px;font-size:14.5px;color:var(--ink2);max-width:420px}
+.fq h5{margin:0 0 14px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.fq ul a{display:inline-block;padding:4px 0;font-size:14px;color:var(--ink2)}
+.fq ul a:hover{color:var(--ink)}
+.fq .f{display:flex;align-items:center;max-width:440px;height:52px;border:1px solid var(--ink)}
+.fq .f input{flex:1;min-width:0;height:100%;padding:0 16px;border:0;outline:0;background:transparent;font-size:14.5px;color:inherit}
+.fq .f input::placeholder{color:var(--mute)}
+.fq .f button{height:100%;padding:0 22px;background:#111;color:#fff;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.fq .f.line{border:0;border-bottom:1px solid currentColor;height:46px}
+.fq .f.line input{padding:0}
+.fq .f.line button{background:none;color:inherit;padding:0 0 0 16px}
+.fq .ok{font:500 20px/1.3 var(--display)}
+.fq small.n{display:block;margin-top:10px;font-size:12px;color:var(--mute)}
+.fq .soc{display:flex;gap:18px;font-size:13px}
+.fq .soc a{color:var(--ink2)}
+.fq .soc a:hover{color:var(--ink)}
+.fq .base{display:flex;justify-content:space-between;align-items:center;gap:16px 24px;flex-wrap:wrap;font-size:12.5px;color:var(--mute)}
+.fq .pay{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.fq .pay img{height:18px;width:auto}
+.fq .pay span{font-size:10.5px;font-weight:600;letter-spacing:.08em;border:1px solid var(--line);padding:3px 7px;color:var(--ink2)}
+.fq .legal{display:flex;gap:18px}
+.fq .in{padding-left:var(--gut);padding-right:var(--gut)}
+
+/* Q1 grey band sign-up, then a plain footer */
+.q1 .qband{background:#F4F4F4;padding:clamp(48px,5vw,72px) var(--gut);display:grid;grid-template-columns:1fr minmax(320px,440px);gap:32px;align-items:center}
+.q1 .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;padding:clamp(48px,5vw,64px) 0 40px}
+.q1 .base{padding:20px 0 28px;border-top:1px solid var(--line)}
+
+/* Q2 one block: sign-up on the left, links on the right */
+.q2 .top{display:grid;grid-template-columns:minmax(300px,1.2fr) repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,56px);padding:clamp(48px,5vw,72px) 0 48px;border-top:1px solid var(--line)}
+.q2 .top .f{margin-top:22px}
+.q2 .base{padding:20px 0 28px;border-top:1px solid var(--line)}
+
+/* Q3 black footer with sign-up inside */
+.q3{background:#111;color:#fff}
+.q3 h2 i,.q3 p.s,.q3 ul a,.q3 .soc a,.q3 small.n{color:rgba(255,255,255,.65)}
+.q3 ul a:hover,.q3 .soc a:hover{color:#fff}
+.q3 .f{border-color:#fff}.q3 .f button{background:#fff;color:#111}.q3 .f input::placeholder{color:rgba(255,255,255,.5)}
+.q3 .top{display:grid;grid-template-columns:1fr minmax(320px,440px);gap:32px;align-items:end;padding:clamp(56px,6vw,88px) 0 48px;border-bottom:1px solid rgba(255,255,255,.15)}
+.q3 .cols{display:grid;grid-template-columns:1.2fr repeat(3,minmax(0,1fr));gap:32px;padding:48px 0}
+.q3 .base{padding:20px 0 28px;border-top:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
+.q3 .pay span{border-color:rgba(255,255,255,.25);color:#fff}
+.q3 .pay img{background:#fff;padding:3px 6px;border-radius:3px;height:24px}
+
+/* Q4 centred and quiet */
+.q4{text-align:center;border-top:1px solid var(--line);padding:clamp(56px,6vw,88px) 0 28px}
+.q4 p.s{margin-left:auto;margin-right:auto}
+.q4 .f{margin:24px auto 0}
+.q4 .links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.q4 .links a{font-size:13px;color:var(--ink2)}
+.q4 .soc{justify-content:center;margin-top:20px}
+.q4 .base{justify-content:center;flex-direction:column;margin-top:28px}
+
+/* Q5 photo with sign-up, then footer */
+.q5 .split{display:grid;grid-template-columns:1fr 1fr;min-height:360px}
+.q5 .split .img{background:#E9E9EA center/cover}
+.q5 .split .tx{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,5vw,80px);background:#F4F4F4}
+.q5 .split .f{margin-top:22px;background:#fff}
+.q5 .cols{display:grid;grid-template-columns:1.2fr repeat(3,minmax(0,1fr));gap:32px;padding:clamp(48px,5vw,64px) 0 40px}
+.q5 .base{padding:20px 0 28px;border-top:1px solid var(--line)}
+
+@media (max-width:900px){
+  .q1 .qband,.q3 .top,.q5 .split{grid-template-columns:1fr}
+  .q1 .cols,.q2 .top,.q3 .cols,.q5 .cols{grid-template-columns:1fr 1fr}
+  .q2 .top > :first-child,.q3 .cols > :first-child,.q5 .cols > :first-child{grid-column:1/-1}
+  .q5 .split .img{min-height:240px}
+  .fq .base{flex-direction:column;align-items:flex-start}
+  .q4 .base{align-items:center}
+  .fq .f{max-width:none}
+}
