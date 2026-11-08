@@ -106,3 +106,4 @@ body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body
 .faqp.one{grid-template-columns:minmax(0,1fr)}.faqp.one .sxfaq{max-width:880px}
 .hact a{grid-template-columns:minmax(0,1fr) auto}.hact a::after{content:"\2192";font-weight:700;font-size:18px}
 .dcd .dcp{overflow:hidden}
+.gcat5 a{isolation:isolate}.gcat5 a:before{z-index:0}.gcat5 a img.fill{z-index:-1}

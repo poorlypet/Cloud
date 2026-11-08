@@ -9,7 +9,12 @@
 </div></div></section>
 {%- if blog.all_tags.size > 0 -%}
 <section class="sec sx-sec pt0"><div class="wrap"><div class="gcat5">
-  {%- for tag in blog.all_tags limit: 5 -%}<a href="{{ blog.url }}/tagged/{{ tag | handleize }}"{% if current_tags contains tag %} class="on"{% endif %}><span class="note">{{ 'general.photo' | t }}: {{ tag }}</span><span><b>{{ tag }}</b></span></a>{%- endfor -%}
+  {%- assign used = '' -%}
+  {%- for tag in blog.all_tags limit: 5 -%}
+    {%- assign timg = nil -%}
+    {%- for a in blog.articles -%}{%- if a.tags contains tag and a.image -%}{%- assign key = a.image.src | append: '|' -%}{%- unless used contains key -%}{%- assign timg = a.image -%}{%- assign used = used | append: key -%}{%- break -%}{%- endunless -%}{%- endif -%}{%- endfor -%}
+    <a href="{{ blog.url }}/tagged/{{ tag | handleize }}"{% if current_tags contains tag %} class="on"{% endif %}>{%- if timg -%}{{ timg | image_url: width: 700 | image_tag: class: 'fill', loading: 'lazy', widths: '350, 500, 700', sizes: '(min-width: 990px) 20vw, 50vw', alt: '' }}{%- endif -%}<span><b>{{ tag }}</b></span></a>
+  {%- endfor -%}
 </div></div></section>
 {%- endif -%}
 {%- paginate blog.articles by 12 -%}
