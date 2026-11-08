@@ -1,0 +1,69 @@
+/* Axel & Hound · shop by size, round 2 (version K) */
+.zs{padding:clamp(48px,5vw,80px) var(--gut)}
+.zs-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:24px}
+.zs-h h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.zs-h h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.zs .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.zs svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.zs .ph{display:block;overflow:hidden;background:var(--stone)}
+.zs .ph::after{display:none}
+.zs .ph img{width:100%;height:100%;object-fit:cover}
+.zs a:hover .ph img{opacity:.9}
+
+/* Z1 squares like the categories, weight beside the name */
+.z1 .zg{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.z1 .ph{aspect-ratio:1/1}
+.z1 .ln{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:12px}
+.z1 .ln b{font:500 20px/1.15 var(--display)}
+.z1 .ln span{font-size:12px;color:var(--mute);white-space:nowrap}
+
+/* Z2 size filter with products */
+.z2 .pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.z2 .pills button{height:40px;padding:0 20px;border:1px solid var(--line);border-radius:999px;font-size:13.5px;transition:border-color .2s,background .2s,color .2s}
+.z2 .pills button:hover{border-color:var(--ink)}
+.z2 .pills button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.z2 .pills small{color:inherit;opacity:.6;margin-left:6px;font-size:12px}
+.z2 .g4{transition:opacity .25s}
+.z2 .g4.fade{opacity:.2}
+
+/* Z3 little dogs / big dogs */
+.z3 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.z3 .pan{position:relative;color:#fff;overflow:hidden}
+.z3 .pan .ph{aspect-ratio:16/10}
+.z3 .pan::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,0) 55%);pointer-events:none}
+.z3 .tx{position:absolute;left:28px;right:28px;bottom:24px;z-index:2}
+.z3 .tx h3{font:500 clamp(28px,2.4vw,38px)/1 var(--display);margin-bottom:14px}
+.z3 .tx nav{display:flex;flex-wrap:wrap;gap:8px}
+.z3 .tx nav a{display:inline-flex;flex-direction:column;padding:8px 14px;border:1px solid rgba(255,255,255,.55);transition:background .2s,color .2s}
+.z3 .tx nav a:hover{background:#fff;color:var(--ink)}
+.z3 .tx nav b{font-size:13.5px;font-weight:500}
+.z3 .tx nav small{font-size:11px;opacity:.8}
+
+/* Z4 black box, sizes in a row */
+.z4 .zbox{background:#111;color:#fff;padding:clamp(28px,3vw,44px) clamp(24px,3vw,48px)}
+.z4 .zs-h h2 i{color:rgba(255,255,255,.55)}
+.z4 .row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.18)}
+.z4 .row a{padding:22px 0 4px;transition:opacity .2s}
+.z4 .row a + a{padding-left:20px;border-left:1px solid rgba(255,255,255,.18)}
+.z4 .row b{display:block;font:500 clamp(22px,2vw,30px)/1 var(--display)}
+.z4 .row span{display:block;margin-top:6px;font-size:12.5px;color:rgba(255,255,255,.6)}
+.z4 .row a:hover b{font-style:italic}
+
+/* Z5 grey tiles like the product cards, no photos */
+.z5 .zg{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.z5 .t{display:flex;flex-direction:column;align-items:center;justify-content:center;aspect-ratio:1/1;background:#E9E9EA;text-align:center;transition:background .25s}
+.z5 .t:hover{background:#DEDEDF}
+.z5 .t b{font:500 clamp(24px,2.2vw,34px)/1 var(--display)}
+.z5 .t span{margin-top:8px;font-size:12.5px;color:var(--mute)}
+
+@media (max-width:900px){
+  .z1 .zg,.z5 .zg{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .z1 .ln{flex-direction:column;gap:2px}
+  .z3 .two{grid-template-columns:1fr}
+  .z4 .row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .z4 .row a:nth-child(4){border-left:0;padding-left:0}
+  .zs-h{flex-direction:column;gap:8px}
+  .z5 .t b{font-size:22px}
+}
+
+.z3 .pan:first-child .ph img{object-position:center 85%}
