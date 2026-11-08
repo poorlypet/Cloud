@@ -179,3 +179,7 @@ body:has(.side.pop.on) .scrim{background:rgba(17,17,17,.12);-webkit-backdrop-fil
 .pm-shop b{font-weight:800;letter-spacing:-.02em}
 .pm-shop span{font-weight:500;background:#fff;color:#5A31F4;border-radius:3px;padding:2px 4px;margin-left:3px;font-size:11px}
 .pm-klarna{background:#FFB3C7;color:#0B051D;font-size:12.5px;font-weight:800;letter-spacing:-.01em}
+.pay3-logos{align-items:center;gap:12px}
+.pm-img{display:block;width:auto}
+.pm-shop-img{height:18px}
+.pm-klarna-img{height:24px}

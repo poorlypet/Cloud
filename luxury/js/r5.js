@@ -318,10 +318,9 @@
   var RECS = [PRODUCTS[2], PRODUCTS[7], PRODUCTS[4], PRODUCTS[6]];
   var TRUST = '<ul class="trust"><li>Free returns within 14 days</li><li>Secure checkout</li></ul>';
   var PAY = '<p class="paynote">Pay in 3 at 0% APR with <b>Shop Pay</b> or <b>Klarna</b></p>';
-  /* payment marks drawn as badges in each brand's colours; on Shopify swap for the official
-     icons with {{ 'shop_pay' | payment_type_svg_tag }} and {{ 'klarna' | payment_type_svg_tag }} */
-  var SHOPPAY = '<span class="pm pm-shop" role="img" aria-label="Shop Pay"><b>shop</b><span>Pay</span></span>';
-  var KLARNA = '<span class="pm pm-klarna" role="img" aria-label="Klarna">Klarna.</span>';
+  /* official Shop Pay and Klarna marks, supplied by Axel & Hound */
+  var SHOPPAY = '<img class="pm-img pm-shop-img" src="../media/pay/shop-pay.png" alt="Shop Pay" width="75" height="18">';
+  var KLARNA = '<img class="pm-img pm-klarna-img" src="../media/pay/klarna.png" alt="Klarna" width="57" height="24">';
   var EXPRESS = '<div class="express"><button type="button">Shop Pay</button><button type="button">Apple Pay</button><button type="button">PayPal</button></div>';
   function head(title, t) { return '<div class="side-h"><h2>' + title + "<small>(" + t.count + ")</small></h2>" + X + "</div>"; }
   function emptyState() { return '<div class="side-b"><div class="bempty"><p class="bempty-t">Your basket is empty</p><p>Have a look at what is new this week.</p><a class="wbtn" href="#">Shop new in' + ARW + "</a></div></div>"; }
