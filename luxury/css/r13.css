@@ -73,3 +73,26 @@
   .qa{display:none}
   .pn{font-size:13px}
 }
+
+/* Winter Sale 1: five heading treatments (products unchanged) */
+.hx{margin-bottom:28px}
+.hx a.all{flex:none}
+.hx1{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+.hx1 h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.hx1 h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.hx2{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.hx2 h2{font:500 clamp(28px,2.4vw,36px)/1.05 var(--display)}
+.hx2 p{margin-top:6px;font-size:14px;color:var(--mute)}
+.hx3{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.hx3 h2{font:500 clamp(30px,2.6vw,40px)/1.05 var(--display)}
+.hx3 p{font-size:14px;color:var(--mute)}
+.hx3 .all{margin-top:8px;text-decoration:underline;text-underline-offset:5px;letter-spacing:.04em;text-transform:none;font-size:14px;font-weight:500}
+.hx4{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.hx4 .l{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.hx4 h2{font:500 clamp(26px,2.2vw,32px)/1.1 var(--display)}
+.hx4 .pill{font-size:12.5px;padding:4px 10px;border:1px solid var(--ink);border-radius:999px}
+.hx5{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px}
+.hx5 h2{font:italic 500 clamp(28px,2.4vw,36px)/1 var(--display)}
+.hx5 .rule{height:1px;background:var(--line)}
+.hx5 .end{font-size:13px;color:var(--mute);margin-right:20px}
+@media (max-width:900px){.hx1,.hx2,.hx4{flex-direction:column;align-items:flex-start;gap:10px}.hx5{grid-template-columns:1fr auto}.hx5 .rule,.hx5 .end{display:none}}
