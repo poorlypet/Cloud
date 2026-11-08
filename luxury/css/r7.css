@@ -68,3 +68,18 @@
 }
 .tp-n,.tp-logo{white-space:nowrap}
 @media (max-width:1080px){.b5 .tp > span:first-child{display:none}.b5 .tp{justify-content:center}}
+
+/* phones: reviews only, centred */
+@media (max-width:1080px){
+  .usp .usp-in,.b4 .usp-in,.b5 .usp-in{display:flex;justify-content:center;align-items:center;min-height:0;padding:16px var(--gut)}
+  .usp .u:not(.tp){display:none}
+  .usp .tp{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;flex-wrap:nowrap;gap:10px;width:100%;height:auto!important;padding:4px 0!important;border:0!important;font-size:11px;letter-spacing:.1em}
+  .usp .tp > span:first-child:not(.tp-stars){display:inline!important}
+  .usp .tp .tp-stars{display:inline-flex!important}
+  .usp .tp .tp-n,.usp .tp .tp-logo{display:inline-flex}
+  .usp .tp small{display:none}
+  .usp .tp-stars i{width:17px;height:17px}
+  .b3 .tp{font-size:15px;letter-spacing:0}
+  .hero{height:calc(100svh - 58px)}
+}
+@media (max-width:360px){.usp .tp .tp-logo{display:none}}
