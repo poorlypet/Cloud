@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axel &amp; Hound · Black footer 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/r3.css">
+<link rel="stylesheet" href="../css/r4.css">
+<link rel="stylesheet" href="../css/r5.css">
+<link rel="stylesheet" href="../css/r7.css">
+<link rel="stylesheet" href="../css/r12.css">
+<link rel="stylesheet" href="../css/r13.css">
+<link rel="stylesheet" href="../css/r16.css">
+<link rel="stylesheet" href="../css/r22.css">
+<link rel="stylesheet" href="../css/r23.css">
+<link rel="stylesheet" href="../css/r26.css">
+<link rel="stylesheet" href="../css/r27.css">
+<link rel="stylesheet" href="../css/r28.css">
+<link rel="stylesheet" href="../css/r31.css">
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+</head>
+<body data-layout="lib" data-basket="1" class="has-over">
+
+<header class="hdr clear">
+  <div class="announce">Complimentary UK delivery over £100<a href="#">Winter Sale: up to 30% off</a><span class="r">GB / £</span></div>
+  <div class="hdr-bar">
+    <a class="logo" href="#" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="#">Help</a>
+      <button class="ico" type="button" data-open="search" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <button class="ico hide-m" type="button" data-open="account" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></button>
+      <button class="ico hide-m" type="button" data-open="saved" aria-label="Saved items"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/></svg></button>
+      <button class="ico" type="button" data-open="basket" aria-label="Basket"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="n" data-count></span></button>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="Welcome to Axel &amp; Hound">
+    <video autoplay muted loop playsinline preload="auto" poster="../media/dachshund-poster.jpg">
+      <source media="(max-width: 700px)" src="../media/dachshund-mobile.mp4" type="video/mp4">
+      <source src="../media/dachshund-1080.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div><div class="hero-top"></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Axel &amp; Hound</p>
+      <h1>Beautiful things for dogs, and the homes they share.</h1>
+      <div class="btns"><a class="sqbtn" href="#">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="#">Winter Sale</a></div>
+    </div>
+    <div class="usp usp-over" aria-label="Why shop with us">
+      <div class="usp-in">
+        <a class="u tp" href="#" aria-label="Rated excellent on Trustpilot"><span class="tp-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="half"></i></span><span>Rated excellent</span></a>
+        <div class="u"><span>Free delivery over £100</span></div>
+        <div class="u"><span>Free 14-day returns</span></div>
+        <div class="u"><span>Based in the UK</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="sp" aria-label="Shop by category">
+    <div class="sp-h"><h2>Shop by category</h2><a class="all" href="#">Shop all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g sq"><a href="#"><span class="ph"><img src="../media/still-1.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Sleeping</span></a><a href="#"><span class="ph"><img src="../img/goldenWalk.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Walking</span></a><a href="#"><span class="ph"><img src="../img/poodle.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Clothing</span></a><a href="#"><span class="ph"><img src="../img/darkDog.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Dining</span></a><a href="#"><span class="ph"><img src="../img/goldenToy.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Playing</span></a><a href="#"><span class="ph"><img src="../img/beach.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Travelling</span></a></div>
+  </section>
+  <section class="ws w1" aria-label="Winter Sale">
+    <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="#">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4"><div class="pcd"><a class="im" href="#"><img src="../img/products/raincoat-dublin-olive.jpg" alt="Dog Raincoat Dublin 2.0, Dark Olive" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Raincoat Dublin 2.0</a><span class="pr"><b>£59</b><s>£84</s></span><div class="sw"><button type="button" data-c="Dark Olive" aria-label="Dark Olive" aria-pressed="true" style="background:#4B5139"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><button type="button" data-c="Sage" aria-label="Sage" aria-pressed="false" style="background:#A9B8A0"></button><button type="button" data-c="Sand" aria-label="Sand" aria-pressed="false" style="background:#B9A38A"></button><span class="more">+1</span><span class="cn">Dark Olive</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/coat-alaska-camo.jpg" alt="Dog Coat Alaska AKTIV, Camo" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Alaska AKTIV</a><span class="pr"><b>£126</b><s>£180</s></span><div class="sw"><button type="button" data-c="Camo" aria-label="Camo" aria-pressed="true" style="background:#7C7A4E"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><span class="cn">Camo</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/puffer-dachshund-plum.jpg" alt="Dog Coat Dachshund Puffer, Plum" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Dachshund Puffer</a><span class="pr"><b>£105</b><s>£150</s></span><div class="sw"><button type="button" data-c="Plum" aria-label="Plum" aria-pressed="true" style="background:#5B2D3A"></button><button type="button" data-c="Navy" aria-label="Navy" aria-pressed="false" style="background:#1F2A3C"></button><button type="button" data-c="Sand" aria-label="Sand" aria-pressed="false" style="background:#B9A38A"></button><span class="cn">Plum</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/coat-alaska-camo.jpg" alt="Dog Coat Dachshund Alaska AKTIV, Camo" class="flip" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Dachshund Alaska AKTIV</a><span class="pr"><b>£126</b><s>£180</s></span><div class="sw"><button type="button" data-c="Camo" aria-label="Camo" aria-pressed="true" style="background:#7C7A4E"></button><span class="cn">Camo</span></div></div></div>
+  </section>
+  <section class="bh v2" aria-label="Cloud7"><div class="vid"><video autoplay muted loop playsinline preload="none" poster="../media/cloud7-poster.jpg"><source src="../media/cloud7.mp4" type="video/mp4"></video><div class="ov"><span class="k">The brand edit</span><h2>Cloud7</h2><p>Cloud7 is a Berlin label making coats, beds and accessories for dogs. Every piece is designed to be lived in: warm on cold walks, easy to wash, and good-looking enough for the city.</p><a class="lk" href="#">Discover Cloud7 <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div></div><div class="prods"><div class="prods-h"><h3>Shop Cloud7</h3><a href="#">View all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4"><div class="pcd"><a class="im" href="#"><img src="../img/products/raincoat-dublin-olive.jpg" alt="Dog Raincoat Dublin 2.0" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Raincoat Dublin 2.0</a><span class="pr"><b style="font-weight:400">£84</b></span><div class="sw"><button type="button" data-c="Dark Olive" aria-label="Dark Olive" aria-pressed="true" style="background:#4B5139"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><button type="button" data-c="Sage" aria-label="Sage" aria-pressed="false" style="background:#A9B8A0"></button><button type="button" data-c="Sand" aria-label="Sand" aria-pressed="false" style="background:#B9A38A"></button><span class="more">+1</span><span class="cn">Dark Olive</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/coat-alaska-camo.jpg" alt="Dog Coat Alaska AKTIV" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Alaska AKTIV</a><span class="pr"><b style="font-weight:400">£180</b></span><div class="sw"><button type="button" data-c="Camo" aria-label="Camo" aria-pressed="true" style="background:#7C7A4E"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><span class="cn">Camo</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/puffer-dachshund-plum.jpg" alt="Dog Coat Dachshund Puffer" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Dachshund Puffer</a><span class="pr"><b style="font-weight:400">£150</b></span><div class="sw"><button type="button" data-c="Plum" aria-label="Plum" aria-pressed="true" style="background:#5B2D3A"></button><button type="button" data-c="Navy" aria-label="Navy" aria-pressed="false" style="background:#1F2A3C"></button><button type="button" data-c="Sand" aria-label="Sand" aria-pressed="false" style="background:#B9A38A"></button><span class="cn">Plum</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/raincoat-dublin-olive.jpg" alt="Dog Raincoat Dublin 2.0 Long" class="flip" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Raincoat Dublin 2.0 Long</a><span class="pr"><b style="font-weight:400">£92</b></span><div class="sw"><button type="button" data-c="Dark Olive" aria-label="Dark Olive" aria-pressed="true" style="background:#4B5139"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><span class="cn">Dark Olive</span></div></div></div></div></section>
+  <section class="sp sp-size" aria-label="Shop by size">
+    <div class="sp-h"><h2>Shop by size</h2><a class="all" href="#">Size guide <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g sq"><a href="#"><span class="ph"><img src="../img/goldenWalk.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Puppy</span></a><a href="#"><span class="ph"><img src="../img/cavalier.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Petite</span></a><a href="#"><span class="ph"><img src="../img/jack.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Small</span></a><a href="#"><span class="ph"><img src="../img/poodle.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Medium</span></a><a href="#"><span class="ph"><img src="../img/beach.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Large</span></a><a href="#"><span class="ph"><img src="../img/samoyed.jpg" alt="" loading="lazy" decoding="async"></span><span class="n-serif">Giant</span></a></div>
+  </section>
+  <section class="pv v3 pv-k" aria-label="New puppy"><div class="pv-h"><h2>New puppy <i>for the first months home</i></h2><a class="lk" href="#">Shop puppy <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="row"><div class="film"><video autoplay muted loop playsinline preload="none" poster="../media/puppy-poster.jpg"><source src="../media/puppy.mp4" type="video/mp4"></video></div><div class="pcd"><a class="im" href="#"><img src="../img/products/puffer-dachshund-plum.jpg" alt="Dog Coat Dachshund Puffer" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Coat Dachshund Puffer</a><span class="pr"><b style="font-weight:400">£150</b></span><div class="sw"><button type="button" data-c="Plum" aria-label="Plum" aria-pressed="true" style="background:#5B2D3A"></button><button type="button" data-c="Navy" aria-label="Navy" aria-pressed="false" style="background:#1F2A3C"></button><button type="button" data-c="Sand" aria-label="Sand" aria-pressed="false" style="background:#B9A38A"></button><span class="cn">Plum</span></div></div><div class="pcd"><a class="im" href="#"><img src="../img/products/raincoat-dublin-olive.jpg" alt="Dog Raincoat Dublin 2.0" loading="lazy" decoding="async"></a><span class="br">Cloud7</span><a class="pn" href="#">Dog Raincoat Dublin 2.0</a><span class="pr"><b style="font-weight:400">£84</b></span><div class="sw"><button type="button" data-c="Dark Olive" aria-label="Dark Olive" aria-pressed="true" style="background:#4B5139"></button><button type="button" data-c="Black" aria-label="Black" aria-pressed="false" style="background:#1C1C1C"></button><button type="button" data-c="Sage" aria-label="Sage" aria-pressed="false" style="background:#A9B8A0"></button><span class="cn">Dark Olive</span></div></div></div></section>
+  <section class="rv tpw soft" aria-label="Customer reviews">
+    <div class="in"><div class="tsum"><b>Excellent</b><span class="tps big" aria-label="Rated 4.8 out of 5"><i></i><i></i><i></i><i></i><i class="half"></i></span><div class="tbased">Based on <a href="#">1,240 reviews</a></div><img class="tlogo-img" src="../media/pay/trustpilot.png" alt="Trustpilot" width="100" height="25"></div><div class="tcar"><div class="trvs"><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Christopher S.,</b> 3 days ago</span><h4>Beautiful quality</h4><p>The bouclé bed is even nicer in person, and Biscuit has barely left it.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Arthur C.,</b> 3 days ago</span><h4>Perfect fit for our dachshund</h4><p>Long enough in the back and easy to wash.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Morley S.,</b> 4 days ago</span><h4>Delivered the next day</h4><p>Lovely packaging and the coat is beautifully made.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Rob,</b> 5 days ago</span><h4>Quality of materials</h4><p>Quality of materials, design and solid stitching.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Hannah W.,</b> 1 week ago</span><h4>Lovely to deal with</h4><p>Helpful with sizing and quick to reply.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Emma L.,</b> 1 week ago</span><h4>Gift for my sister</h4><p>Wrapped beautifully with a handwritten card.</p></div></div><div class="tctl"><div class="tarr"><button type="button" class="tprev" aria-label="Previous reviews"><svg viewBox="0 0 8 12"><path d="M7 1L2 6l5 5"/></svg></button><button type="button" class="tnext" aria-label="More reviews"><svg viewBox="0 0 8 12"><path d="M1 1l5 5-5 5"/></svg></button></div></div></div></div>
+  </section>
+  <section class="bd2" aria-label="Dachshund and greyhound">
+    <div class="bd2-h"><h2>Long backs, deep chests <i>cut to fit</i></h2><p>Dachshunds and greyhounds need a different shape. These coats, harnesses and beds are cut for a long back or a deep chest and slim waist, so they fit properly and stay put.</p></div><div class="two"><a class="pan" href="#"><img src="../media/still-1.jpg" alt="A dachshund resting on a bed" loading="lazy" decoding="async"><span class="tx"><b>Dachshund</b><small>Coats and harnesses with a longer back.</small><span class="lk">Shop dachshund <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></span></span></a><a class="pan" href="#"><img src="../img/products/coat-alaska-camo.jpg" alt="A lean hound in a winter coat" loading="lazy" decoding="async"><span class="tx"><b>Greyhound &amp; whippet</b><small>Deep-chested coats that stay put on a slim waist.</small><span class="lk">Shop greyhound <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></span></span></a></div>
+  </section>
+  <section class="hdg v1" aria-label="Happy dogs"><div class="hdg-h"><div><h2>Happy dogs <i>at home with Axel &amp; Hound</i></h2></div><a class="lk" href="#">Share yours on Instagram <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g"><div><div class="vt"><video muted loop playsinline preload="none" poster="../media/happy/h1548.jpg"><source src="../media/happy/h1548.mp4" type="video/mp4"></video></div><span class="cap">Juno<small>border collie</small></span></div><div><div class="vt"><video muted loop playsinline preload="none" poster="../media/happy/hpuppy.jpg"><source src="../media/happy/hpuppy.mp4" type="video/mp4"></video></div><span class="cap">Fig<small>dachshund puppy</small></span></div><div><div class="vt"><video muted loop playsinline preload="none" poster="../media/happy/h1562.jpg"><source src="../media/happy/h1562.mp4" type="video/mp4"></video></div><span class="cap">Bonnie<small>rough collie</small></span></div><div><div class="vt"><video muted loop playsinline preload="none" poster="../media/happy/h1556.jpg"><source src="../media/happy/h1556.mp4" type="video/mp4"></video></div><span class="cap">Ted<small>border collie</small></span></div></div></section>
+</main>
+<footer class="bf s4"><div class="su"><div class="card"><div><h2>Join the list <i>10% off your first order</i></h2><p>New arrivals first, early access to the sale, and nothing you don&rsquo;t need.</p></div><div><form class="f" novalidate><input id="em4" type="email" placeholder="Your email address" aria-label="Email address" autocomplete="email"><button type="submit">Sign up</button></form><small class="n">Unsubscribe any time.</small></div></div></div><div class="bk"><span class="wm" aria-hidden="true">Axel <i>&amp;</i> Hound</span><div class="cols"><div><h5>Axel &amp; Hound</h5><p class="about">Beautiful things for dogs, and the homes they share.</p><div class="soc"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Pinterest</a></div></div><div><h5>Shop</h5><ul><li><a href="#">New in</a></li><li><a href="#">Winter Sale</a></li><li><a href="#">Sleeping</a></li><li><a href="#">Walking</a></li><li><a href="#">Clothing</a></li><li><a href="#">Gift cards</a></li></ul></div><div><h5>Help</h5><ul><li><a href="#">Contact us</a></li><li><a href="#">Delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Size guide</a></li><li><a href="#">Track an order</a></li></ul></div><div><h5>About</h5><ul><li><a href="#">Our story</a></li><li><a href="#">Brands we stock</a></li><li><a href="#">Instagram</a></li></ul></div></div><div style="height:40px"></div><div class="base"><span>&copy; 2026 Axel &amp; Hound. Based in the UK.</span><div class="pay"><img src="../media/pay/shop-pay.png" alt="Shop Pay"><img src="../media/pay/klarna.png" alt="Klarna"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>APPLE PAY</span></div><div class="legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div></div></footer>
+
+<script src="../js/r5.js"></script>
+<script src="../js/r26.js"></script>
+<script src="../js/r28.js"></script>
+<script src="../js/r30.js"></script>
+<script src="../js/r13.js"></script>
+</body>
+</html>

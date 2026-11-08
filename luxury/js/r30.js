@@ -1,7 +1,7 @@
 /* Newsletter forms: validate, then thank (not yet connected to Klaviyo) */
 (function () {
   "use strict";
-  document.querySelectorAll(".fq form.f").forEach(function (f) {
+  document.querySelectorAll(".fq form.f, .bf form.f").forEach(function (f) {
     f.addEventListener("submit", function (e) {
       e.preventDefault();
       var i = f.querySelector("input"), v = i.value.trim();
