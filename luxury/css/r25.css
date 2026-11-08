@@ -1,0 +1,56 @@
+/* Axel & Hound · reviews round 3: white, black stars only, every card the same height */
+.rx{padding:clamp(56px,5vw,80px) var(--gut)}
+.rx-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:28px;flex-wrap:wrap}
+.rx h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.rx h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.rx .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.rx svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.bst{display:inline-flex;gap:3px;font-size:14px;letter-spacing:0;color:var(--ink);line-height:1}
+.bst.big{font-size:20px}
+.rx .sm{font-size:13.5px;color:var(--mute)}
+.rx .grid{display:grid;gap:16px;align-items:stretch}
+.rx .c{display:flex;flex-direction:column;height:100%;min-width:0}
+.rx .c .q{flex:1;margin-top:16px;font:400 clamp(18px,1.4vw,21px)/1.45 var(--display)}
+.rx .c .who{margin-top:22px;font-size:13px;font-weight:500}
+.rx .c .who small{display:block;font-weight:400;color:var(--mute);margin-top:2px}
+.rx .score{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--mute)}
+.rx .score b{font:500 24px/1 var(--display);color:var(--ink)}
+
+/* X1 four outlined boxes */
+.x1 .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.x1 .c{border:1px solid var(--line);padding:26px}
+
+/* X2 the score is the first box */
+.x2 .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.x2 .c{border:1px solid var(--line);padding:26px}
+.x2 .c.s{justify-content:space-between}
+.x2 .c.s .n{font:500 64px/1 var(--display);margin:18px 0 12px}
+
+/* X3 three columns between two rules, vertical dividers */
+.x3 .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.x3 .c{padding:32px clamp(20px,2.6vw,44px)}
+.x3 .c + .c{border-left:1px solid var(--line)}
+.x3 .c:first-child{padding-left:0}.x3 .c:last-child{padding-right:0}
+
+/* X4 centred, no boxes */
+.x4 .rx-h{flex-direction:column;align-items:center;text-align:center;gap:10px}
+.x4 .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(24px,3vw,48px)}
+.x4 .c{text-align:center;align-items:center}
+.x4 .foot{display:flex;justify-content:center;margin-top:36px}
+
+/* X5 score column plus three boxes, all one height */
+.x5 .grid{grid-template-columns:minmax(220px,1fr) repeat(3,minmax(0,1.3fr))}
+.x5 .c{border:1px solid var(--line);padding:26px}
+.x5 .c.s{border:0;border-top:1px solid var(--ink);padding:22px 0 0;justify-content:space-between}
+.x5 .c.s .n{font:500 64px/1 var(--display);margin:16px 0 12px}
+
+@media (max-width:900px){
+  .x1 .grid,.x2 .grid,.x4 .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .x3 .grid,.x5 .grid{grid-template-columns:1fr}
+  .x3 .c,.x3 .c:first-child,.x3 .c:last-child{padding:26px 0}
+  .x3 .c + .c{border-left:0;border-top:1px solid var(--line)}
+  .x1 .c,.x2 .c,.x5 .c{padding:18px}
+  .rx .c .q{font-size:17px}
+  .rx-h{flex-direction:column;gap:8px}
+}
+@media (max-width:560px){.x1 .grid,.x2 .grid,.x4 .grid{grid-template-columns:1fr}}
