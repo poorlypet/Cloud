@@ -83,3 +83,19 @@
   .hero{height:calc(100svh - 58px)}
 }
 @media (max-width:360px){.usp .tp .tp-logo{display:none}}
+
+/* Row 3 on the film, transparent (chosen) */
+.hero:has(.usp-over){height:100svh}
+.usp-over{position:absolute;left:0;right:0;bottom:0;z-index:3;background:transparent;border:0;color:#fff}
+.usp-over .usp-in{min-height:76px}
+.usp-over .u{font:400 19px/1.2 var(--display);letter-spacing:0;text-transform:none;gap:10px;height:34px}
+.usp-over .u + .u{border-left:1px solid rgba(255,255,255,.28)}
+.usp-over .u svg{display:none}
+.has-over .hero-copy{bottom:calc(76px + clamp(32px,5vh,56px))}
+.has-over .hero-shade{background:linear-gradient(15deg,rgba(12,10,8,.56) 0%,rgba(12,10,8,.15) 36%,rgba(12,10,8,0) 56%),linear-gradient(to top,rgba(12,10,8,.42),rgba(12,10,8,0) 18%)}
+@media (max-width:1080px){
+  .hero:has(.usp-over){height:100svh}
+  .usp-over .usp-in{padding:18px var(--gut) 22px}
+  .usp-over .tp{font-size:16px!important;letter-spacing:0!important}
+  .has-over .hero-copy{bottom:84px}
+}
