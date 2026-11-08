@@ -1,0 +1,69 @@
+/* Axel & Hound · happy dogs video section, five versions */
+
+.hdg-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:24px}
+.hdg-h h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.hdg-h h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.hdg-h p{font-size:14px;color:var(--mute);margin-top:8px}
+.hdg .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.hdg svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.vt{position:relative;display:block;overflow:hidden;background:#E9E9EA;min-width:0}
+.vt video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cap{display:block;margin-top:12px;font-size:13.5px}
+.cap small{color:var(--mute);margin-left:6px}
+.cap.on{position:absolute;left:16px;bottom:14px;margin:0;color:#fff;z-index:2;font-size:13px}
+.cap.on small{color:rgba(255,255,255,.75)}
+.vt.shade::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4),rgba(0,0,0,0) 35%);pointer-events:none}
+
+/* H1 four portrait clips in a row, names underneath */
+.hdg.v1 .g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hdg.v1 .vt{aspect-ratio:4/5}
+
+/* H2 one large clip and two stacked */
+.hdg.v2 .g{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:16px;height:clamp(420px,42vw,620px)}
+.hdg.v2 .vt:first-child{grid-row:1/3}
+
+/* H3 tall reel row that scrolls, with arrows */
+.hdg.v3 .row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 4*14px)/5);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}
+.hdg.v3 .row::-webkit-scrollbar{display:none}
+.hdg.v3 .vt{aspect-ratio:9/16;scroll-snap-align:start}
+.harr{display:flex;gap:8px}
+.harr button{width:34px;height:34px;border-radius:50%;border:1px solid #E6E6E6;display:flex;align-items:center;justify-content:center;color:#8A8A8A;transition:border-color .2s,color .2s,opacity .2s}
+.harr button:hover{border-color:#BDBDBD;color:var(--ink)}
+.harr button:disabled{opacity:.35}
+.harr svg{width:7px;height:11px;fill:none;stroke:currentColor;stroke-width:1.3}
+
+/* H4 one wide clip, three small clips below choose it */
+.hdg.v4 .main{aspect-ratio:21/9}
+.hdg.v4 .thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:16px}
+.hdg.v4 .th{position:relative;aspect-ratio:16/9;overflow:hidden;background:#E9E9EA;outline:1px solid transparent;outline-offset:3px;transition:outline-color .2s}
+.hdg.v4 .th img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .25s}
+.hdg.v4 .th:hover img,.hdg.v4 .th[aria-pressed="true"] img{opacity:1}
+.hdg.v4 .th[aria-pressed="true"]{outline-color:var(--ink)}
+.hdg.v4 .th span{position:absolute;left:10px;bottom:8px;color:#fff;font-size:12px;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+
+/* H5 five clips: tall centre, two each side */
+.hdg.v5 .g{display:grid;grid-template-columns:1fr 1.4fr 1fr;grid-template-rows:1fr 1fr;gap:16px;height:clamp(440px,44vw,640px)}
+.hdg.v5 .vt:nth-child(3){grid-column:2;grid-row:1/3}
+
+@media (max-width:900px){
+  .hdg-h{flex-direction:column;gap:8px}
+  .hdg.v1 .g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .hdg.v2 .g,.hdg.v5 .g{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .hdg.v2 .vt,.hdg.v5 .vt{aspect-ratio:4/5}
+  .hdg.v2 .vt:first-child,.hdg.v5 .vt:nth-child(3){grid-column:1/-1;grid-row:auto;aspect-ratio:16/10}
+  .hdg.v3 .row{grid-auto-columns:46%;gap:10px}
+  .harr{display:none}
+  .hdg.v4 .main{aspect-ratio:4/5}
+  .hdg.v4 .thumbs{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .hdg.v4 .th span{display:none}
+}
+.hdg{padding-left:var(--gut)!important;padding-right:var(--gut)!important}
+.hdg.v3 .row{grid-template-columns:none}
+@media (max-width:900px){
+  .hdg.v1 .g{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .hdg.v2 .g,.hdg.v5 .g{display:grid;height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .hdg.v2 .vt,.hdg.v5 .vt{aspect-ratio:4/5}
+  .hdg.v2 .vt:first-child,.hdg.v5 .vt:nth-child(3){grid-column:1/-1;grid-row:auto;aspect-ratio:16/10}
+}
+@media (max-width:900px){.hdg .g{grid-auto-flow:row!important;grid-auto-columns:auto!important;overflow:visible!important;margin-right:0!important;padding-right:0!important}}
+@media (max-width:900px){.hdg.v1 .g{grid-template-columns:repeat(2,minmax(0,1fr))!important}.hdg.v5 .g{grid-template-columns:1fr 1fr!important}.hdg.v5 .vt{aspect-ratio:4/5!important}.hdg.v5 .vt:nth-child(3){grid-column:1/-1!important;aspect-ratio:16/10!important}}
