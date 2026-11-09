@@ -29,6 +29,8 @@
         });
         c.hidden = !ok; if (ok) n++;
       });
+      var anyF = Object.keys(f).length > 0;
+      Array.prototype.forEach.call(grid.querySelectorAll(".vt2, .story"), function (v) { v.hidden = anyF; });
       count.forEach(function (el) { el.textContent = n + (n === 1 ? " product" : " products"); });
       var empty = $(".cx-empty", grid);
       if (!n && !empty) { empty = document.createElement("p"); empty.className = "cx-empty"; empty.textContent = "Nothing matches those filters. Try removing one."; grid.appendChild(empty); }
