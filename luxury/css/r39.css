@@ -1,0 +1,42 @@
+/* Axel & Hound · sitewide mobile polish: payment line, reviews, newsletter */
+
+/* payment line: one line at every width */
+.p3{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap}
+.p3 img{flex:none}
+.p3 .p3m{display:none}
+@media (max-width:640px){
+  .p3{font-size:13px}
+  .p3 .p3l{display:none}.p3 .p3m{display:inline}
+  .p3 img{height:18px!important;width:auto}
+}
+
+/* ---------- reviews on phones ---------- */
+@media (max-width:640px){
+  .tpw.soft .in{display:block}
+  .tpw.soft .tsum{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"t s" "b l";align-items:center;column-gap:14px;row-gap:8px;text-align:left;padding-bottom:22px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+  .tpw.soft .tsum b{grid-area:t;font-size:26px}
+  .tpw.soft .tsum .tps.big{grid-area:s;justify-self:end;margin:0}
+  .tpw.soft .tps.big i{width:24px;height:24px}
+  .tpw.soft .tsum .tbased{grid-area:b;margin:0}
+  .tpw.soft .tsum .tlogo-img{grid-area:l;justify-self:end;margin:0;height:20px;width:auto}
+  .tpw.soft .trvs{grid-auto-columns:84%;gap:12px;scroll-padding-left:0;align-items:stretch}
+  .tpw.soft .tr{background:#F6F6F5;border-radius:4px;padding:20px 18px 22px}
+  .tpw.soft .tr h4{font-size:16px;margin-top:10px}
+  .tpw.soft .tr p{font-size:14.5px;color:var(--ink2)}
+  .tpw.soft .rvdots{display:flex;justify-content:center;gap:6px;margin-top:16px}
+  .tpw.soft .rvdots i{width:6px;height:6px;border-radius:50%;background:#D0D0CE;transition:width .2s,background .2s}
+  .tpw.soft .rvdots i.on{width:16px;border-radius:3px;background:var(--ink)}
+  .tpw.soft .tarr,.tpw.soft .arr{display:none}
+}
+.rvdots{display:none}
+
+/* ---------- newsletter on phones ---------- */
+@media (max-width:640px){
+  .bf.s5 .su{display:block;padding:40px var(--gut) 36px;background:#F4F4F3;border-top:0}
+  .bf.s5 .su h2{font-size:30px;line-height:1.1}
+  .bf.s5 .su h2 i{display:block;font-size:20px;margin-top:6px}
+  .bf.s5 .su>div{width:100%;margin-top:24px}
+  .bf.s5 .f.line{display:grid;grid-template-columns:1fr;gap:10px;width:100%;max-width:none;height:auto;border:0;padding:0}
+  .bf.s5 .f.line input{height:52px;padding:0 16px;background:#fff;border:1px solid #E4E4E2;border-radius:4px;font-size:16px;width:100%}
+  .bf.s5 .f.line button{height:52px;padding:0;background:var(--ink);color:#fff;border-radius:4px;width:100%;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+}

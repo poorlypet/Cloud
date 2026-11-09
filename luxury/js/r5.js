@@ -366,7 +366,7 @@
         '<p class="b3-ship">' + (t.left ? "Complimentary UK delivery on orders over £" + FREE + ". You are " + money(t.left) + " away." : "Your order qualifies for complimentary UK delivery.") + "</p>" +
         basket.map(function (i, n) {
           return '<div class="b3-item">' + ph(i.p, 200) + '<div class="b3-info"><p class="b3-n">' + esc(i.n) + '</p><p class="b3-meta">' + esc(i.v) + '</p><p class="b3-meta">Qty ' + qtyCtl(n, i.q, "qty-caps") + '</p>' +
-            '<div class="b3-links"><a href="#">Edit</a><button type="button" data-rm="' + n + '">Remove</button><button type="button" data-save="' + n + '">Save for later</button></div></div><span class="b3-p">' + money(i.pr * i.q) + "</span></div>";
+            '<div class="b3-links"><a href="#">Edit</a><button type="button" data-rm="' + n + '">Remove</button></div></div><span class="b3-p">' + money(i.pr * i.q) + "</span></div>";
         }).join("") +
         '<div class="b3-recs"><p class="hd">You may also like</p><div class="b3-rail">' + RECS.map(function (p, k) {
           return '<div class="b3-rec">' + ph(p.p, 260, "4/5") + '<p class="b3-meta">' + esc(p.n) + "</p><p class=\"b3-meta\">" + money(p.pr) + '</p><button type="button" class="b3-add" data-addrec="' + k + '">Add</button></div>';
@@ -389,7 +389,7 @@
     "5": function (t) {
       var del = DELIV.filter(function (d) { return d.id === bstate.deliv; })[0];
       var dc = t.left || del.id !== "std" ? del.pr : 0;
-      var tabs = '<div class="tabs"><button type="button" data-tab="basket" class="' + (bstate.tab === "basket" ? "on" : "") + '">Basket (' + t.count + ')</button><button type="button" data-tab="saved" class="' + (bstate.tab === "saved" ? "on" : "") + '">Saved (' + saved.length + ")</button></div>";
+      var tabs = '<div class="tabs"><button type="button" data-tab="basket" class="' + (bstate.tab === "basket" ? "on" : "") + '">Basket (' + t.count + ')</button></div>';
       if (bstate.tab === "saved") {
         return '<div class="side-h"><h2>Your selection</h2>' + X + "</div>" + tabs + '<div class="side-b">' + (saved.length ? saved.map(function (i, n) {
           return '<div class="b1-item"><div class="b1-img">' + ph(i.p, 300) + '</div><div class="b1-info"><p class="b1-n">' + esc(i.n) + '</p><p class="b1-meta">' + esc(i.v) + '</p><p class="b1-p" style="margin-top:10px">' + money(i.pr) + '</p><button type="button" class="b5-move" data-add5="' + n + '">Move to basket</button></div></div>';
@@ -398,7 +398,7 @@
       return '<div class="side-h"><h2>Your selection</h2>' + X + "</div>" + tabs + '<div class="side-b">' + shipLine(t) +
         basket.map(function (i, n) {
           return '<div class="b1-item"><div class="b1-img">' + ph(i.p, 300) + '</div><div class="b1-info"><p class="b1-n">' + esc(i.n) + '</p><p class="b1-meta">' + esc(i.v) + '</p>' +
-            '<div class="b1-row">' + qtyCtl(n, i.q, "qty-bare") + '<span class="b1-p">' + money(i.pr * i.q) + '</span></div><div class="b3-links"><button type="button" data-save="' + n + '">Save for later</button><button type="button" data-rm="' + n + '">Remove</button></div></div></div>';
+            '<div class="b1-row">' + qtyCtl(n, i.q, "qty-bare") + '<span class="b1-p">' + money(i.pr * i.q) + '</span></div><div class="b3-links"><button type="button" data-rm="' + n + '">Remove</button></div></div></div>';
         }).join("") +
         '<div class="b5-block"><p class="hd">Delivery</p><div class="chips">' + DELIV.map(function (d) {
           return '<button type="button" class="chip' + (bstate.deliv === d.id ? " on" : "") + '" data-chip="' + d.id + '"><b>' + d.t + "</b><span>" + (d.id === "std" && !t.left ? "Free" : money(d.pr)) + "</span></button>";
@@ -445,7 +445,7 @@
     '<label class="field"><span>Password</span><input id="pw" type="password" autocomplete="current-password"></label>' +
     '<button class="wbtn" type="submit">Sign in</button><p style="margin-top:14px"><a class="small-link" href="#">Forgotten your password?</a></p></form>' +
     '<div style="margin-top:40px;padding-top:28px;border-top:1px solid var(--line)"><h3 style="font:400 22px/1.2 var(--display)">New to Axel &amp; Hound?</h3>' +
-    '<ul class="perks"><li>Track orders and arrange returns</li><li>Keep a list of saved pieces</li><li>Store your dog’s sizes for quicker checkout</li><li>Early access to the sale</li></ul>' +
+    '<ul class="perks"><li>Track orders and arrange returns</li><li>Store your dog’s sizes for quicker checkout</li><li>Early access to the sale</li></ul>' +
     '<button type="button" class="wbtn line" style="margin-top:24px">Create an account</button></div></div>';
   sides.account.querySelector("#signin").addEventListener("submit", function (e) { e.preventDefault(); toast("Sign-in is a preview on this page"); });
 
@@ -537,4 +537,20 @@
   var h = location.hash.replace("#", "");
   if (h === "search") searchSet(true); else if (sides[h]) sideSet(h);
   paint();
+
+  /* reviews on phones: dots under the swipeable cards */
+  Array.prototype.forEach.call(document.querySelectorAll(".tpw.soft .trvs"), function (row) {
+    var cards = row.querySelectorAll(".tr"), dots = document.createElement("div"), raf = 0;
+    dots.className = "rvdots"; dots.setAttribute("aria-hidden", "true");
+    dots.innerHTML = Array.prototype.map.call(cards, function (c, k) { return '<i class="' + (k ? "" : "on") + '"></i>'; }).join("");
+    row.parentNode.appendChild(dots);
+    row.addEventListener("scroll", function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        var w = cards[0] ? cards[0].offsetWidth + 12 : 1, k = Math.round(row.scrollLeft / w);
+        if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 4) k = cards.length - 1;
+        Array.prototype.forEach.call(dots.children, function (d, j) { d.classList.toggle("on", j === k); });
+      });
+    }, { passive: true });
+  });
 })();
