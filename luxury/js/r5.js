@@ -516,7 +516,7 @@
       return "<details><summary>" + esc(c.label) + "</summary><ul>" + c.g[0].l.concat(["Shop all " + c.label.toLowerCase()]).map(function (x) {
         return '<li><a href="#">' + esc(x) + "</a></li>";
       }).join("") + "</ul></details>";
-    }).join("") + '<div class="drawer-foot"><a href="#" style="color:var(--sale)">Sale</a><a href="#">Help</a><a href="#" data-open-m="account">Account</a><a href="#" data-open-m="saved">Saved</a></div></div>';
+    }).join("") + '<div class="drawer-foot"><a href="#" style="color:var(--sale)">Sale</a><a href="#">Help</a><a href="#" data-open-m="account">Account</a></div></div>';
   body.appendChild(drawer);
   function drawerSet(on) { drawer.classList.toggle("on", on); drawer.setAttribute("aria-hidden", on ? "false" : "true"); body.style.overflow = on ? "hidden" : ""; }
   document.querySelectorAll("[data-burger]").forEach(function (b) { b.addEventListener("click", function () { drawerSet(true); }); });
