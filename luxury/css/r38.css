@@ -61,3 +61,34 @@
   .b8-l{grid-column:1 / -1;justify-self:start;margin:18px var(--gut)}
 }
 .p8 .zunits button[aria-pressed="true"]{background:var(--soft);color:var(--ink);font-weight:600}
+
+/* ---------- mobile: photos full width, swipe through ---------- */
+.gcount{display:none}
+@media (max-width:1080px){
+  .p8 .gw{position:relative}
+  .p8 .gg{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .p8 .gg::-webkit-scrollbar{display:none}
+  .p8 .gg .gt{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:1}
+  .p8 .gcount{display:block;position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,.92);padding:5px 10px;border-radius:3px;font-size:12px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+  .p8 .gdots{display:flex;justify-content:center;gap:6px;padding:12px 0 0}
+  .p8 .gdots i{width:6px;height:6px;border-radius:50%;background:#D0D0CE;transition:background .2s,width .2s}
+  .p8 .gdots i.on{background:var(--ink);width:16px;border-radius:3px}
+}
+@media (min-width:1081px){.p8 .gdots{display:none}}
+@media (max-width:640px){
+  .p8 .gi{padding-top:16px}
+  .p8 .gi .crumb{font-size:12px;padding-bottom:12px!important}
+  .p8 .zi h1{font-size:28px}
+  .p8 .szs{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .p8 .szs button{height:46px;font-size:13px}
+  .p8 .g7fit em{display:none}
+  .p8 .zi .zbag{grid-template-columns:auto 1fr;}
+  .p8 .zi .zsave{grid-column:1 / -1;height:48px}
+  .p8 .zt-seg.t7 .ztabs{grid-template-columns:repeat(4,max-content);overflow-x:auto;scrollbar-width:none}
+  .p8 .zt-seg.t7 .ztabs button{padding:0 14px;white-space:nowrap}
+  .p8 .t7-sz .zsz th,.p8 .t7-sz .zsz td{padding:8px 6px;font-size:12.5px}
+  .p8 .yd3-g{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(-1 * var(--gut));padding:0 var(--gut)}
+  .p8 .yd3-g>div{flex:0 0 78%;scroll-snap-align:start}
+}
+@media (max-width:640px){.p8 .g7fit span{margin-right:auto}.p8 .zi .zsave{height:46px}}
+@media (max-width:640px){.p8 .yd3-g{scroll-padding-left:var(--gut)}}

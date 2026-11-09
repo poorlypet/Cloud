@@ -16,6 +16,25 @@
     if ("ResizeObserver" in window) new ResizeObserver(fit).observe(gi);
   }
 
+  /* phones: swipeable photo row gets a counter and dots */
+  var gg = $(".p8 .gg");
+  if (gg) {
+    var tiles = $$(".gt", gg), cnt = document.createElement("span"), dots = document.createElement("div");
+    cnt.className = "gcount"; cnt.textContent = "1 / " + tiles.length;
+    dots.className = "gdots"; dots.setAttribute("aria-hidden", "true");
+    dots.innerHTML = tiles.map(function (t, k) { return '<i class="' + (k ? "" : "on") + '"></i>'; }).join("");
+    gg.parentNode.insertBefore(cnt, gg.nextSibling); cnt.parentNode.insertBefore(dots, cnt.nextSibling);
+    var di = $$("i", dots), raf = 0;
+    gg.addEventListener("scroll", function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        var k = Math.round(gg.scrollLeft / (gg.clientWidth || 1));
+        cnt.textContent = (k + 1) + " / " + tiles.length;
+        di.forEach(function (d, j) { d.classList.toggle("on", j === k); });
+      });
+    }, { passive: true });
+  }
+
   /* photo tiles open the viewer at that photo */
   var lb = $(".zlb");
   $$("[data-lb]").forEach(function (t) {
