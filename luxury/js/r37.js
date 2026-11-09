@@ -35,6 +35,16 @@
     }, { passive: true });
   }
 
+  /* size as a drop-down row */
+  $$(".sdd").forEach(function (dd) {
+    var btn = $(".sdd-b", dd), panel = $(".sdd-p", dd);
+    function set(o) { panel.hidden = !o; btn.setAttribute("aria-expanded", o ? "true" : "false"); }
+    btn.addEventListener("click", function () { set(panel.hidden); });
+    $$(".szs button", panel).forEach(function (b) { b.addEventListener("click", function () { if (!b.hasAttribute("data-oos")) set(false); }); });
+    document.addEventListener("click", function (e) { if (!dd.contains(e.target) && !panel.hidden) set(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) { set(false); btn.focus(); } });
+  });
+
   /* photo tiles open the viewer at that photo */
   var lb = $(".zlb");
   $$("[data-lb]").forEach(function (t) {

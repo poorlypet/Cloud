@@ -94,16 +94,27 @@
 @media (max-width:640px){.p8 .yd3-g{scroll-padding-left:var(--gut)}}
 @media (max-width:640px){.p8 .zi .zrow{margin-top:20px}.p8 .sws{gap:10px}.p8 .sws button{width:32px;height:32px}.p8 .zi .price{margin-top:10px}.p8 .zi .p3{margin-top:8px}}
 
-/* ---------- information order: colour on one line between rules, quantity + find my fit, then add to bag ---------- */
+/* ---------- information order: colour and size as rows between rules, links, then quantity + add to bag ---------- */
 .i8 .crow{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:22px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .i8 .crow .zlbl{margin:0;font-size:14px}
 .i8 .crow .sws{margin:0}
-.i8 .zrow{margin-top:20px}
-.i8 .stock:empty{display:none}
-.i8 .qrow{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
-.i8 .qrow .q{border:1px solid var(--edge,#E4E4E2);border-radius:4px;height:52px}
-.i8 .fitl{font-size:15px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;color:var(--ink)}
-.i8 .fitl:hover{text-decoration-thickness:2px}
-.i8 .a8{display:flex;width:100%;height:56px;margin-top:16px;border-radius:4px}
+.i8 .sdd{position:relative;border-bottom:1px solid var(--line)}
+.i8 .sdd-b{display:flex;justify-content:space-between;align-items:center;width:100%;padding:20px 0;font-size:14px;text-align:left}
+.i8 .sdd-b b{font-weight:600}
+.i8 .sdd-c{width:9px;height:9px;border-right:1.4px solid var(--ink);border-bottom:1.4px solid var(--ink);transform:translateY(-3px) rotate(45deg);transition:transform .2s;margin-right:4px}
+.i8 .sdd-b[aria-expanded="true"] .sdd-c{transform:translateY(2px) rotate(-135deg)}
+.i8 .sdd-p{padding:0 0 12px}
+.i8 .sdd-p .szs{display:block}
+.i8 .sdd-p .szs button{display:flex;justify-content:space-between;align-items:center;width:100%;height:48px;padding:0 14px;margin:0 0 6px;border:1px solid var(--edge,#E4E4E2);border-radius:4px;background:#fff;font-size:14px;text-decoration:none;box-shadow:none}
+.i8 .sdd-p .szs button:hover{border-color:#9A9A9A}
+.i8 .sdd-p .szs button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.i8 .sdd-p .szs button[data-low]::after{content:"Only " attr(data-low) " left";font-size:12.5px;color:var(--mute)}
+.i8 .sdd-p .szs button[data-oos]{color:#9A9A9A;background:var(--soft,#F4F4F3);border-color:var(--soft,#F4F4F3);text-decoration:none}
+.i8 .sdd-p .szs button[data-oos]::after{content:"Out of stock";font-size:12.5px}
+.i8 .stock{margin-top:10px}.i8 .stock:empty{display:none}
+.i8 .lrow{display:flex;gap:28px;margin-top:18px}
+.i8 .lrow button{font-size:14px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;color:var(--ink)}
+.i8 .zbag{margin-top:20px}
+.i8 .zbag .btn-k{border-radius:4px}
 .i8 .msg:empty{display:none}
 .i8 .zdel{margin-top:14px}
