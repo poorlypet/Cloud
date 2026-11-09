@@ -538,6 +538,16 @@
   if (h === "search") searchSet(true); else if (sides[h]) sideSet(h);
   paint();
 
+  /* footer on phones: Shop, Help and About open and close */
+  Array.prototype.forEach.call(document.querySelectorAll(".bf .cols > div + div"), function (col) {
+    var h = col.querySelector("h5");
+    if (!h) return;
+    h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+    function t() { if (window.innerWidth > 640) return; var o = col.classList.toggle("open"); h.setAttribute("aria-expanded", o ? "true" : "false"); }
+    h.addEventListener("click", t);
+    h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); t(); } });
+  });
+
   /* reviews on phones: dots under the swipeable cards */
   Array.prototype.forEach.call(document.querySelectorAll(".tpw.soft .trvs"), function (row) {
     var cards = row.querySelectorAll(".tr"), dots = document.createElement("div"), raf = 0;

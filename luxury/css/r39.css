@@ -30,13 +30,47 @@
 }
 .rvdots{display:none}
 
-/* ---------- newsletter on phones ---------- */
+/* ---------- newsletter on phones: thin, white, one line ---------- */
 @media (max-width:640px){
-  .bf.s5 .su{display:block;padding:40px var(--gut) 36px;background:#F4F4F3;border-top:0}
-  .bf.s5 .su h2{font-size:30px;line-height:1.1}
-  .bf.s5 .su h2 i{display:block;font-size:20px;margin-top:6px}
-  .bf.s5 .su>div{width:100%;margin-top:24px}
-  .bf.s5 .f.line{display:grid;grid-template-columns:1fr;gap:10px;width:100%;max-width:none;height:auto;border:0;padding:0}
-  .bf.s5 .f.line input{height:52px;padding:0 16px;background:#fff;border:1px solid #E4E4E2;border-radius:4px;font-size:16px;width:100%}
-  .bf.s5 .f.line button{height:52px;padding:0;background:var(--ink);color:#fff;border-radius:4px;width:100%;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .bf.s5 .su{display:block;padding:26px var(--gut) 28px;background:#fff;border-top:1px solid var(--line)}
+  .bf.s5 .su h2{font-size:21px;line-height:1.2}
+  .bf.s5 .su h2 i{font-size:17px}
+  .bf.s5 .su>div{width:100%;margin-top:14px}
+  .bf.s5 .f.line{display:flex;width:100%;max-width:none;height:44px;border:0;border-bottom:1px solid var(--ink)}
+  .bf.s5 .f.line input{flex:1;min-width:0;padding:0;font-size:16px;background:none;border:0}
+  .bf.s5 .f.line button{background:none;color:var(--ink);padding:0 0 0 14px;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
 }
+
+/* ---------- footer on phones: stacked, columns open and close ---------- */
+@media (max-width:640px){
+  .bf .cols{display:block}
+  .bf .cols>div:first-child{padding-bottom:24px}
+  .bf .cols>div+div{border-top:1px solid rgba(255,255,255,.15)}
+  .bf .cols>div+div:last-child{border-bottom:1px solid rgba(255,255,255,.15)}
+  .bf .cols>div+div h5{display:flex;justify-content:space-between;align-items:center;margin:0;padding:18px 0;cursor:pointer}
+  .bf .cols>div+div h5::after{content:"+";font-size:18px;font-weight:300;letter-spacing:0}
+  .bf .cols>div+div.open h5::after{content:"\2013"}
+  .bf .cols>div+div ul{display:none;padding:0 0 18px}
+  .bf .cols>div+div.open ul{display:block}
+  .bf.s5 .base{margin-top:28px}
+  .bf.s5 .wm{font-size:17.9vw;margin-left:calc(-1 * var(--gut) + 2px);margin-right:calc(-1 * var(--gut));white-space:nowrap}
+}
+
+/* ---------- price, then the pay-in-3 note on the same line ---------- */
+.prow{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:14px}
+.prow .price{margin:0!important}
+.prow .p3{margin:0!important;padding-left:14px;border-left:1px solid var(--line);font-size:13px;color:var(--ink2);gap:5px}
+.prow .p3 .p3l{display:none}.prow .p3 .p3m{display:inline}
+.prow .p3 img{height:15px!important;width:auto}.prow .p3 img.k{height:18px!important}
+@media (max-width:640px){
+  .prow{gap:6px 10px}
+  .prow .price{font-size:19px;gap:8px}
+  .prow .p3{padding-left:10px;font-size:12px}
+  .prow .p3 img{height:13px!important}.prow .p3 img.k{height:16px!important}
+}
+
+/* ---------- product rating: smaller and softer than the price ---------- */
+.zi .rate{gap:8px;font-size:12.5px;color:var(--mute);margin-top:8px}
+.zi .rate .tps i{width:14px!important;height:14px!important}
+.zi .rate .tps i::before{inset:2.5px!important}
+.zi .rate a{color:var(--mute);font-weight:400}
