@@ -76,7 +76,7 @@
               {%- endfor -%}
               {%- assign brands = mb.settings.brands | split: ',' -%}
               {%- if brands.size > 0 -%}
-                <div><h5><a href="{{ routes.collections_url }}">{{ 'header.top_brands' | t }}</a></h5><div class="mlogos">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{% render 'brand-url', brand: bn %}">{{ bn }}</a>{%- endfor -%}</div></div>
+                {%- capture bh -%}{%- if mb.settings.brands_heading != blank -%}{{ mb.settings.brands_heading }}{%- else -%}{{ 'header.top_brands' | t }}{%- endif -%}{%- endcapture -%}<div><h5><a href="{{ mb.settings.brands_all_link | default: routes.collections_url }}">{{ bh }}</a></h5><div class="mlogos">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{%- if mb.settings.brands_suffix != blank -%}{{ routes.collections_url }}/{{ bn | handleize }}{{ mb.settings.brands_suffix }}{%- else -%}{% render 'brand-url', brand: bn %}{%- endif -%}">{{ bn }}</a>{%- endfor -%}</div>{%- if mb.settings.brands_all_link != blank -%}<a class="ul mball" href="{{ mb.settings.brands_all_link }}">{{ mb.settings.brands_all_label }}</a>{%- endif -%}</div>
               {%- endif -%}
               {%- if mb.settings.featured != blank -%}
                 <div><h5><a href="{{ link.url }}">{{ 'header.featured' | t }}</a></h5><div class="mfeat">
@@ -144,8 +144,8 @@
             {%- endfor -%}
             {%- assign brands = mb.settings.brands | split: ',' -%}
             {%- if brands.size > 0 -%}
-              <h6><a href="{{ routes.collections_url }}">{{ 'header.top_brands' | t }}</a></h6>
-              <div class="mchips">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{% render 'brand-url', brand: bn %}">{{ bn }}</a>{%- endfor -%}</div>
+              <h6><a href="{{ mb.settings.brands_all_link | default: routes.collections_url }}">{%- if mb.settings.brands_heading != blank -%}{{ mb.settings.brands_heading }}{%- else -%}{{ 'header.top_brands' | t }}{%- endif -%}</a></h6>
+              <div class="mchips">{%- for b in brands -%}{%- assign bn = b | strip -%}<a href="{%- if mb.settings.brands_suffix != blank -%}{{ routes.collections_url }}/{{ bn | handleize }}{{ mb.settings.brands_suffix }}{%- else -%}{% render 'brand-url', brand: bn %}{%- endif -%}">{{ bn }}</a>{%- endfor -%}{%- if mb.settings.brands_all_link != blank -%}<a href="{{ mb.settings.brands_all_link }}">{{ mb.settings.brands_all_label }}</a>{%- endif -%}</div>
             {%- endif -%}
           {%- endif -%}
         </div>
@@ -175,6 +175,10 @@
         { "type": "text", "id": "item", "label": "Menu item title", "info": "Must match the top level menu item, for example Padel rackets." },
         { "type": "checkbox", "id": "az", "label": "Show every brand A to Z", "default": false },
         { "type": "text", "id": "brands", "label": "Top brands", "info": "Comma separated, for example Bullpadel, Nox, Head" },
+        { "type": "text", "id": "brands_heading", "label": "Brands heading", "info": "Leave empty for Top brands" },
+        { "type": "text", "id": "brands_suffix", "label": "Brand link ending", "info": "For example -padel-rackets links each brand to its racket collection. Leave empty to link to the brand page." },
+        { "type": "text", "id": "brands_all_label", "label": "All brands link text", "default": "All brands" },
+        { "type": "url", "id": "brands_all_link", "label": "All brands link" },
         { "type": "product_list", "id": "featured", "label": "Featured products", "limit": 2 },
         { "type": "header", "content": "Promo tile" },
         { "type": "image_picker", "id": "promo_image", "label": "Image" },

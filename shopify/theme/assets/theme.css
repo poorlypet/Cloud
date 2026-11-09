@@ -107,3 +107,17 @@ body .mi23 img,body .vt23 img,body .ms23s img,body .mt23 img,body .fr23 img,body
 .hact a{grid-template-columns:minmax(0,1fr) auto}.hact a::after{content:"\2192";font-weight:700;font-size:18px}
 .dcd .dcp{overflow:hidden}
 .gcat5 a{isolation:isolate}.gcat5 a:before{z-index:0}.gcat5 a img.fill{z-index:-1}
+.mball{display:inline-block;margin-top:12px;font-size:13px;font-weight:700}
+/* racket brands page: small photo tile per brand */
+.bgx-h{margin:8px 0 28px}.bgx-h small{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.bgx-h h1{font-family:var(--head);font-weight:700;letter-spacing:-.04em;line-height:1;font-size:clamp(34px,4vw,56px)}.bgx-h p{margin-top:12px;max-width:60ch;color:#444}
+.bgx-g{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.bgx-t{display:flex;flex-direction:column;gap:10px}
+.bgx-p{position:relative;isolation:isolate;aspect-ratio:4/3;background:var(--grey);overflow:hidden;display:grid;place-items:center}
+.bgx-p img.fill{transition:transform .4s}.bgx-t:hover .bgx-p img.fill{transform:scale(1.05)}
+.bgx-l{position:relative;background:#fff;padding:6px 10px;display:grid;place-items:center;max-width:72%;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.bgx-l img{height:26px;width:auto;max-width:100%;object-fit:contain}
+.bgx-n{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.bgx-n b{font-size:15px}.bgx-n small{color:var(--mute);font-size:12.5px;white-space:nowrap}
+.bgx-t:hover .bgx-n b{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1100px){.bgx-g{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){.bgx-g{grid-template-columns:1fr 1fr;gap:10px}.bgx-l img{height:22px}}
