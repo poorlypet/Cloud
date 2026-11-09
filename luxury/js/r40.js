@@ -108,6 +108,19 @@
     b.addEventListener("click", function () { var p = b.parentNode.querySelector("p"); p.textContent = b.textContent === "Yes" ? "Thank you. Glad it helped." : "Thank you. We’ll use this to improve the page. You can also contact us."; });
   });
 
+  /* ---------- help centre: square topic tabs swap the answers ---------- */
+  var hy = $$("[data-hy]");
+  if ($("[data-hyp]")) hy.forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      hy.forEach(function (x) { if (x === a) x.setAttribute("aria-current", "page"); else x.removeAttribute("aria-current"); });
+      $$("[data-hyp]").forEach(function (p) { p.hidden = p.dataset.hyp !== a.dataset.hy; });
+    });
+  });
+  $$(".hy-nav a").forEach(function (a) {
+    a.addEventListener("click", function () { $$(".hy-nav a").forEach(function (x) { x.removeAttribute("aria-current"); }); a.setAttribute("aria-current", "true"); });
+  });
+
   /* ---------- contact: choose a topic first ---------- */
   var c5 = $$("[data-c5]");
   c5.forEach(function (b) {

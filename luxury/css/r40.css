@@ -572,3 +572,33 @@ html body main > section.br1-hero.half{margin-top:0!important}
   .hx-sec{padding:36px 0}
   .hx-facts b{font-size:18px}
 }
+
+/* ===== round 12: help centre, simple ===== */
+.hy .head{margin-bottom:8px}
+.hy-sub{margin-top:24px}
+.hy .v9-acc,.hy-qa,.hy-s{max-width:900px}
+.hy1 .hy-p{margin-top:32px}
+.hy-s{margin-top:48px;scroll-margin-top:calc(var(--hh) + 24px)}
+.hy-h{font:500 clamp(24px,2vw,30px)/1.15 var(--display);margin:0 0 12px}
+.hy-qa{margin:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(24px,4vw,64px)}
+.hy-qa div{padding:20px 0;border-bottom:1px solid var(--line)}
+.hy-qa dt{font-weight:500;margin-bottom:6px}
+.hy-qa dd{margin:0;font-size:15px;line-height:1.7;color:var(--ink2)}
+.hy3 .hy-qa{max-width:none}.hy3 .hy-s{max-width:1100px}
+.hy-g{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(32px,6vw,120px);align-items:start;margin-top:40px}
+.hy-g .hy-s:first-child{margin-top:0}
+.hy-nav{position:sticky;top:calc(var(--hh) + 24px);display:flex;flex-direction:column}
+.hy-nav a{padding:10px 0 10px 14px;border-left:1px solid var(--line);font-size:14.5px;color:var(--ink2)}
+.hy-nav a[aria-current="true"]{border-color:var(--ink);color:var(--ink);font-weight:500}
+.hy5 .v9-sbar{margin:24px 0 0;max-width:640px}
+.hy5 .v9-hnone{text-align:left}
+.hy-all{margin-top:40px}
+.hy-all summary .t{display:block;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.hy-all summary{flex-wrap:wrap}
+.hy-all summary{display:grid;grid-template-columns:1fr auto}.hy-all summary .t{grid-column:1}.hy-all summary::after{grid-column:2;grid-row:1 / span 2}
+.hy-ct{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;max-width:900px;margin-top:56px;padding-top:32px;border-top:1px solid var(--ink)}
+.hy-ct p{color:var(--ink2);margin-top:6px}
+.hy-ct .btn-k{border-radius:4px;height:52px;padding:0 36px}
+.hy4 .hy-ct{max-width:none}
+@media (max-width:980px){.hy-g{grid-template-columns:1fr}.hy-nav{position:static;flex-direction:row;flex-wrap:wrap;gap:8px}.hy-nav a{border:1px solid var(--edge,#E4E4E2);border-radius:4px;padding:8px 12px;font-size:13px}}
+@media (max-width:640px){.hy-qa{grid-template-columns:1fr}.hy-ct .btn-k{width:100%}.hy-sub{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.hy-sub a{flex:none}}
