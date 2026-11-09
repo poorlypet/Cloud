@@ -56,18 +56,12 @@
   .bf.s5 .wm{font-size:17.9vw;margin-left:calc(-1 * var(--gut) + 2px);margin-right:calc(-1 * var(--gut));white-space:nowrap}
 }
 
-/* ---------- price, then the pay-in-3 note on the same line ---------- */
-.prow{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:14px}
+/* ---------- price, with a quiet pay-in-3 note underneath ---------- */
+.prow{display:block;margin-top:14px}
 .prow .price{margin:0!important}
-.prow .p3{margin:0!important;padding-left:14px;border-left:1px solid var(--line);font-size:13px;color:var(--ink2);gap:5px}
+.prow .p3{margin:7px 0 0!important;padding:0;border:0;font-size:12.5px;color:var(--mute);gap:6px}
 .prow .p3 .p3l{display:none}.prow .p3 .p3m{display:inline}
-.prow .p3 img{height:15px!important;width:auto}.prow .p3 img.k{height:18px!important}
-@media (max-width:640px){
-  .prow{gap:6px 10px}
-  .prow .price{font-size:19px;gap:8px}
-  .prow .p3{padding-left:10px;font-size:12px}
-  .prow .p3 img{height:13px!important}.prow .p3 img.k{height:16px!important}
-}
+.prow .p3 img{height:13px!important;width:auto;opacity:.85}.prow .p3 img.k{height:16px!important}
 
 /* ---------- product rating: smaller and softer than the price ---------- */
 .zi .rate{gap:8px;font-size:12.5px;color:var(--mute);margin-top:8px}
