@@ -137,3 +137,12 @@
     $$("[data-sg-close]").forEach(function (b) { b.addEventListener("click", function () { dlg.close(); }); });
   }
 })();
+/* full product pages: sticky add-to-basket bar, thumbnails for G2/G4 */
+(function () {
+  "use strict";
+  var bar = document.querySelector(".sbar"), atc = document.querySelector(".fp .info .atc");
+  if (bar && atc && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { bar.classList.toggle("on", !es[0].isIntersecting && es[0].boundingClientRect.top < 0); }).observe(atc);
+    bar.querySelector(".btn-k").addEventListener("click", function () { atc.scrollIntoView({ behavior: "smooth", block: "center" }); setTimeout(function () { atc.click(); }, 450); });
+  }
+})();
