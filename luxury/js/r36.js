@@ -43,7 +43,7 @@
       if (n > 0) h += rowHTML("Neck", n, prev[4], s[4], n > s[4] ? "collar will sit open" : "fits");
       $(".yf-bars", d).innerHTML = h;
       $(".yf-note", d).textContent = "Free 14-day returns, so you can swap sizes at no cost.";
-      $$(".zsz tr[data-s]").forEach(function (tr) { tr.classList.toggle("hit", tr.dataset.s === pick); });
+      $$(".zsz tr[data-s], .yq1-g .yqc[data-s]").forEach(function (tr) { tr.classList.toggle("hit", tr.dataset.s === pick); });
       return true;
     }
     next.addEventListener("click", function () {
@@ -102,6 +102,36 @@
         bs.forEach(function (x, j) { x.setAttribute("aria-selected", j === k ? "true" : "false"); });
         ims.forEach(function (im, j) { im.hidden = j !== k; });
       });
+    });
+  });
+
+  /* ---------- round 6: units on card values ---------- */
+  $$(".zunits button").forEach(function (b) {
+    b.addEventListener("click", function () { $$("span[data-cm]").forEach(function (x) { x.textContent = b.dataset.u === "in" ? x.dataset.in : x.dataset.cm; }); });
+  });
+
+  /* ---------- round 6: sentence form ---------- */
+  $$(".yq5").forEach(function (w) {
+    var f = $(".yq5-f", w), r = $(".yq5-r", w), e = $(".yq5-e", w), pick5 = null;
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var v = $$("input", f).map(function (x) { return parseFloat(x.value); }), b = v[0], c = v[1];
+      if (!(b > 0) || !(c > 0)) { e.textContent = "Fill in both measurements in centimetres."; r.hidden = true; return; }
+      if (b > 55 || c > 75) { e.textContent = "That is bigger than this coat’s largest size. Have a look at our Large and Giant collections."; r.hidden = true; return; }
+      e.textContent = "";
+      var a = S.findIndex(function (s) { return b <= s[1]; }), ci = S.findIndex(function (s) { return c <= s[3]; });
+      if (a < 0) a = S.length - 1; if (ci < 0) ci = S.length - 1;
+      var k = Math.max(a, ci), s = S[k]; pick5 = s[0];
+      $(".big", r).textContent = s[0];
+      var near = ((b > s[1] - 1.5) || (c > s[3] - 1.5)) && k < S.length - 1;
+      $("p", r).textContent = "Size " + s[0] + " fits a back up to " + s[1] + " cm and a chest of " + s[2] + " to " + s[3] + " cm." + (near ? " You are near the top of this size, so choose " + S[k + 1][0] + " for room over a jumper." : " It will fit comfortably.");
+      $("[data-yq5-use]", r).textContent = "Choose size " + s[0];
+      r.hidden = false;
+      $$(".zsz tr[data-s]").forEach(function (tr) { tr.classList.toggle("hit", tr.dataset.s === pick5); });
+    });
+    $("[data-yq5-use]", r).addEventListener("click", function () {
+      var btn = $('.szs button[data-s="' + pick5 + '"]');
+      if (btn) { btn.scrollIntoView({ behavior: "smooth", block: "center" }); if (!btn.hasAttribute("data-oos")) btn.click(); }
     });
   });
 })();
