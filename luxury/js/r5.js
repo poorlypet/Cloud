@@ -27,7 +27,7 @@
     kitten: U + "1533743983669-94fa5c4338ec", corgi: U + "1597633425046-08f5110420b5"
   };
   function src(k, w) {
-    var s = IMG[k];
+    var s = IMG[k] || k;
     return s.indexOf("http") === 0 ? s + "?w=" + w + "&q=80&auto=format&fit=crop" : s;
   }
 
@@ -179,7 +179,7 @@
     var scrolled = window.scrollY > 8;
     hdr.classList.toggle("scrolled", scrolled);
     hdr.classList.toggle("open-any", !!(cur || searchOn));
-    hdr.classList.toggle("clear", !scrolled && !hovering && !cur && !searchOn);
+    hdr.classList.toggle("clear", !body.classList.contains("solid") && !scrolled && !hovering && !cur && !searchOn);
     scrim.classList.toggle("on", !!(cur || searchOn || sideOn));
     scrim.classList.toggle("top", !!sideOn);
   }
@@ -467,6 +467,12 @@
     } else { saved.splice(+b.getAttribute("data-unsave"), 1); renderSaved(); }
   });
   renderBasket(); renderSaved();
+  /* page hook: product pages add to the basket and open it */
+  window.AHBasket = { add: function (it) {
+    var hit = basket.filter(function (b) { return b.n === it.n && b.v === it.v; })[0];
+    if (hit) hit.q += it.q || 1; else basket.push({ p: it.p, n: it.n, v: it.v, pr: it.pr, q: it.q || 1 });
+    renderBasket(); sideSet("basket");
+  } };
 
   var lastFocus = null;
   function sideSet(id) {
