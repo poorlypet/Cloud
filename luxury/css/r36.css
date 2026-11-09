@@ -308,3 +308,15 @@
   .yq-mq div>span:last-child{display:none}
   .yd2-r{grid-template-columns:1fr}
 }
+
+/* ===== round 6 fix: square photo sits right next to the information, no gap ===== */
+@media (min-width:1081px){
+  .zp{--sq:min(var(--zh),calc((100vw - 2 * var(--gut)) * .58 - 82px))}
+  .zp .ztop{grid-template-columns:auto minmax(360px,620px);justify-content:center;column-gap:clamp(40px,4.5vw,88px);padding-top:28px}
+  .zp .zg.left{grid-template-columns:72px var(--sq)}
+  .zp .zg.left .zm{width:var(--sq);height:var(--sq);aspect-ratio:auto}
+  .zp .zg.left .zth{max-height:var(--sq)}
+  .zp .zgw{top:calc(var(--hh) + 24px)}
+}
+.zi .crumb{padding:0 0 18px!important;margin:0}
+.zi .stock:empty,.zi .msg:empty{display:none}
