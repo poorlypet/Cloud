@@ -1,0 +1,60 @@
+{%- comment -%}
+  Axel & Hound · "Four things worth knowing" (product details)
+  ---------------------------------------------------------------
+  Content comes from metafields, so every product can have its own details
+  without editing the theme.
+
+  Set up once in Shopify admin:
+  1. Settings › Custom data › Metaobjects › Add definition
+       Name: Product detail      Type (handle): product_detail
+       Fields:
+         title  · Single line text  (required)
+         text   · Multi-line text
+         image  · File (images only)
+  2. Settings › Custom data › Products › Add definition
+       Name: Details             Namespace and key: custom.details
+       Type: Metaobject › Product detail › List of entries
+  3. On each product, pick or create up to four entries under "Details".
+
+  If a product has no details, the section does not show.
+{%- endcomment -%}
+
+{%- assign details = product.metafields.custom.details.value -%}
+{%- if details != blank -%}
+  <section class="zsec zin yd3 d8" id="details-{{ section.id }}">
+    <div class="yhd">
+      <div>
+        {%- if section.settings.kicker != blank -%}<span class="zkick">{{ section.settings.kicker }}</span>{%- endif -%}
+        <h2 class="zh2">{{ section.settings.heading }} <i>{{ section.settings.heading_italic }}</i></h2>
+      </div>
+    </div>
+    <div class="yd3-g">
+      {%- for d in details limit: section.settings.limit -%}
+        <div>
+          <span class="im">
+            {%- if d.image != blank -%}
+              {{ d.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 980px) 25vw, 100vw', alt: d.title }}
+            {%- endif -%}
+          </span>
+          <em>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</em>
+          <h3>{{ d.title }}</h3>
+          {%- if d.text != blank -%}<p>{{ d.text }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product details",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small label", "default": "The details" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four things" },
+    { "type": "text", "id": "heading_italic", "label": "Heading (italic part)", "default": "worth knowing" },
+    { "type": "range", "id": "limit", "label": "Most to show", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Product details" }],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

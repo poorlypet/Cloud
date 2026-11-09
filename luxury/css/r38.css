@@ -1,0 +1,63 @@
+/* Axel & Hound · product page round 8 (refined P3)
+   Softer, clearer information column; thin full-width brand strip. */
+.p8{--soft:#F4F4F3;--edge:#E4E4E2;--r:4px}
+
+/* sizes */
+.p8 .szs{gap:8px}
+.p8 .szs button{height:48px;border:1px solid var(--edge);border-radius:var(--r);background:#fff;font-size:14px;color:var(--ink)}
+.p8 .szs button:hover{border-color:#9A9A9A}
+.p8 .szs button[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.p8 .szs button[data-oos]{color:#B8B8B8;background:var(--soft);border-color:var(--soft)}
+
+/* find my fit: a quiet row, not a box */
+.p8 .g7fit{height:auto;padding:14px 16px;margin-top:12px;border:0;border-radius:var(--r);background:var(--soft);justify-content:flex-start;gap:12px;text-align:left}
+.p8 .g7fit span{font-size:14px;font-weight:600;letter-spacing:0;text-transform:none}
+.p8 .g7fit em{font-size:13.5px;color:var(--ink2);margin-right:auto}
+.p8 .g7fit::after{content:"";width:7px;height:7px;border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;transform:rotate(-45deg);flex:none}
+.p8 .g7fit:hover{background:#EBEBE9;color:var(--ink)}.p8 .g7fit:hover em{color:var(--ink2)}
+.p8 button:focus{outline:none}
+.p8 button:focus-visible,.p8 summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* quantity, add to bag, save */
+.p8 .zi .zbag{gap:8px}
+.p8 .zi .q{border:1px solid var(--edge);border-radius:var(--r);height:56px}
+.p8 .zi .zbag .btn-k{border-radius:var(--r)}
+.p8 .zi .zsave{border:1px solid var(--edge);border-radius:var(--r)}
+.p8 .zi .zsave[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:var(--ink)}
+.p8 .zdel{color:var(--ink2)}
+
+/* tabs: a soft track, the open one lifts out in white */
+.p8 .zt-seg.t7 .ztabs{border:0;background:var(--soft);border-radius:6px;padding:4px;gap:4px}
+.p8 .zt-seg.t7 .ztabs button{height:42px;border:0!important;border-radius:var(--r);font-size:12.5px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink2);transition:background .2s,color .2s}
+.p8 .zt-seg.t7 .ztabs button:hover{color:var(--ink)}
+.p8 .zt-seg.t7 .ztabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06),0 0 0 1px var(--edge)}
+.p8 .t7 .ztp{padding-top:22px;font-size:15px}
+.p8 .t7-sz .zunits{border-color:var(--edge);border-radius:var(--r);overflow:hidden}
+.p8 .zsz tr.hit td{background:var(--soft)}
+
+/* find my fit pop-up, same softness */
+.p8 ~ .fm7,.fm7{border-radius:8px}
+.fm7-g .f{border-radius:var(--r,4px);border-color:#E4E4E2}
+.fm7 .btn-k{border-radius:4px}
+
+/* details: blocks are filled from product metafields */
+.d8 .yd3-g .im{border-radius:2px}
+
+/* brand: thin strip, full width, text on grey */
+.b8{display:grid;grid-template-columns:clamp(200px,20vw,300px) minmax(0,1fr) auto;align-items:center;column-gap:clamp(32px,4vw,72px);background:#F4F4F4;padding-right:var(--gut)}
+.b8-m{aspect-ratio:1;overflow:hidden;background:#ddd}
+.b8-m video{width:100%;height:100%;object-fit:cover;display:block}
+.b8-t{display:grid;grid-template-columns:auto minmax(0,520px);column-gap:clamp(28px,4vw,64px);align-items:center}
+.b8-t .zkick{grid-column:1 / -1;margin-bottom:6px}
+.b8-wm{font:500 clamp(44px,4.6vw,72px)/1 var(--display)}
+.b8-t p{font-size:15px;line-height:1.65;color:var(--ink2);margin:0}
+.b8-l{white-space:nowrap}
+
+@media (max-width:900px){
+  .b8{grid-template-columns:120px minmax(0,1fr);row-gap:0;padding-right:0}
+  .b8-t{grid-template-columns:1fr;padding:16px var(--gut) 16px 0}
+  .b8-wm{font-size:36px}
+  .b8-t p{display:none}
+  .b8-l{grid-column:1 / -1;justify-self:start;margin:18px var(--gut)}
+}
+.p8 .zunits button[aria-pressed="true"]{background:var(--soft);color:var(--ink);font-weight:600}

@@ -5,6 +5,17 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   var S = [["XS", 30, 40, 46], ["S", 35, 46, 52], ["M", 40, 52, 58], ["L", 45, 58, 64], ["XL", 50, 64, 70]];
 
+  /* information column: sticks, but when it is taller than the screen it scrolls first and sticks at its bottom */
+  var gi = $(".gi");
+  if (gi) {
+    var fit = function () {
+      var hh = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hh")) || 84;
+      gi.style.top = Math.min(hh + 24, window.innerHeight - gi.offsetHeight - 24) + "px";
+    };
+    fit(); window.addEventListener("resize", fit);
+    if ("ResizeObserver" in window) new ResizeObserver(fit).observe(gi);
+  }
+
   /* photo tiles open the viewer at that photo */
   var lb = $(".zlb");
   $$("[data-lb]").forEach(function (t) {
