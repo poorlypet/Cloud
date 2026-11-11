@@ -68,3 +68,22 @@
 .zi .rate .tps i{width:14px!important;height:14px!important}
 .zi .rate .tps i::before{inset:2.5px!important}
 .zi .rate a{color:var(--mute);font-weight:400}
+
+/* ---------- product cards: every card lines up, one line each ---------- */
+.pcd{min-width:0}
+.pcd .br{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcd .pn{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.pcd .pr{display:flex;align-items:baseline;gap:8px;white-space:nowrap;overflow:hidden}
+.pcd .sw{display:flex;align-items:center;flex-wrap:nowrap;min-width:0;overflow:hidden;height:26px}
+.pcd .sw button{flex:none}
+.pcd .sw .more{flex:none;white-space:nowrap}
+.pcd .sw .cn{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:640px){
+  .pcd .pn{font-size:14px}
+  .pcd .pr{font-size:14px}
+  .pcd .sw{gap:6px;margin-top:8px;height:22px}
+  .pcd .sw button{width:16px;height:16px}
+  .pcd .sw .cn{display:none}
+}
+.pcd .sw{padding:0 4px;margin-left:-4px}
+.pcd .sw .more{border:0;padding:0 0 0 2px;height:auto;border-radius:0;font-size:12px;color:var(--mute)}
