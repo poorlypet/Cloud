@@ -960,3 +960,34 @@ html body main > div.rz:not(#z){margin-top:0!important}
   .rz-cta .rz-btn,.rz-more .rz-btn{width:100%}
 }
 @media (prefers-reduced-motion:reduce){.rz4-row > div{animation:none}.rz-rise{opacity:1;transform:none}}
+
+/* round 37: reviews, Trustpilot theme */
+.rz{--tp:#00B67A;--tpo:#DCDCE6}
+.rz-st{display:inline-flex;gap:3px;font-size:0}
+.rz-st i{position:relative;width:22px;height:22px;background:var(--tp)}
+.rz-st i::before{content:"";position:absolute;inset:4px;background:#fff;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.rz-st i.o{background:var(--tpo)}
+.rz-st i.p{background:linear-gradient(90deg,var(--tp) var(--f),var(--tpo) var(--f))}
+.rz-st.big i{width:36px;height:36px}.rz-st.big i::before{inset:6px}.rz-st.big{gap:4px}
+.rz-tp{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin-top:18px}
+.rz-tp img{height:30px;width:auto}
+.rz-tp span{font-size:14px;color:var(--ink2)}
+.rz-tp b{color:var(--ink);font-weight:600}
+.rz-tp a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.rz-c .rz-tp,.rz2-score .rz-tp{justify-content:center}
+.rz-bars b{background:var(--tp)}
+.rz-bars i{height:6px;background:#E8E8EE;border-radius:3px;overflow:hidden}
+.rz-who{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.rz-av{flex:none;width:38px;height:38px;border-radius:50%;background:#F1F1F4;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;color:var(--ink)}
+.rz-who > div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rz-who b{font-size:14.5px;font-weight:600;color:var(--ink)}
+.rz-who > div > span{font-size:12.5px;color:var(--ink2)}
+.rz-who em{margin-left:auto;font-style:normal;font-size:12.5px;color:var(--ink2);white-space:nowrap}
+.rz-it h3{font-family:var(--sans,inherit);font-family:inherit;font-weight:600;font-size:17px;line-height:1.35;margin-top:12px;color:var(--ink)}
+.rz2-it h3{font-family:var(--display);font-weight:500;font-size:clamp(28px,2.8vw,40px)}
+.rz2-it .rz-who{justify-content:center}.rz2-it .rz-who em{margin-left:12px}
+.rz-btn.rz-g{background:var(--tp);border-color:var(--tp);color:#fff}
+.rz-tpl{display:block;height:36px;width:auto;margin:0 auto 18px}
+.rz1-score span,.rz2-score > span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2)}
+.rz5-it,.rz4-it,.rz1-grid .rz-it,.rz3-it{background:#fff}
+@media (max-width:640px){.rz-st.big i{width:30px;height:30px}.rz-st.big i::before{inset:5px}}
