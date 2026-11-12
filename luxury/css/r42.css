@@ -619,3 +619,28 @@ html body main > section.br1-hero.half:first-child{margin-top:0!important}
 .br1-hero .tx .zkick a{text-decoration:underline;text-underline-offset:3px}
 @media (max-width:640px){.cbw .cx-sub{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--gut))}.cbw .cx-sub a{flex:none}}
 .br1-hero>img{width:100%;height:100%;object-fit:cover;display:block}
+/* round 22: thinner hero, text sub-categories */
+.br1-hero.half.thin{height:clamp(300px,38svh,420px)}
+.br1-hero.half.thin h1{font-size:clamp(48px,5vw,80px)}
+.cbw [class^="ct"]{margin:30px 0 4px}
+.ct1{display:flex;flex-wrap:wrap;gap:10px 30px;border-bottom:1px solid var(--line)}
+.ct1 a{font-size:14.5px;color:var(--ink2);padding-bottom:12px;border-bottom:1px solid transparent;margin-bottom:-1px}
+.ct1 a:hover,.ct1 a[aria-current]{color:var(--ink);border-color:var(--ink)}
+.ct2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.ct2 span{color:#C9C9C7}.ct2 a{color:var(--mute)}.ct2 a:hover,.ct2 a[aria-current]{color:var(--ink)}
+.ct3{display:grid;gap:8px}
+.ct3 div{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;font-size:14.5px}
+.ct3 b{width:96px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.ct3 a{color:var(--ink2)}.ct3 a:hover{color:var(--ink)}.ct3 a[aria-current]{color:var(--ink);text-decoration:underline;text-underline-offset:5px}
+.ct4{display:flex;flex-wrap:wrap;gap:4px 26px;font:500 clamp(20px,1.7vw,24px)/1.5 var(--display)}
+.ct4 a{color:var(--mute)}.ct4 a:hover{color:var(--ink)}.ct4 a[aria-current]{color:var(--ink);font-style:italic}
+.ct5{display:flex;justify-content:safe center;flex-wrap:wrap;gap:10px 28px;padding:4px 0 16px;border-bottom:1px solid var(--line)}
+.ct5 a{font-size:14.5px;color:var(--ink2)}.ct5 a sup{font-size:10px;color:var(--mute);margin-left:3px}
+.ct5 a:hover,.ct5 a[aria-current]{color:var(--ink)}.ct5 a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+@media (max-width:640px){
+  .br1-hero.half.thin{height:300px}
+  .ct1,.ct2,.ct4,.ct5{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--gut))!important}
+  .ct1 a,.ct2 a,.ct2 span,.ct4 a,.ct5 a{flex:none;white-space:nowrap}
+  .ct3 div{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.ct3 a,.ct3 b{flex:none;white-space:nowrap}
+}
+.br1-hero.thin>img{object-position:center 22%}
