@@ -1111,3 +1111,12 @@ html body main > div.rz:not(#z){margin-top:0!important}
 }
 @media (max-width:640px){.lg .dw-tb td{display:block;text-align:left;padding:6px 0}.lg .dw-tb td::before{display:block;margin-bottom:2px;font-size:12px}.lg .dw-tb td span{text-align:left;display:block;font-weight:400}.lg .dw-tb td:last-child{white-space:normal}}
 .lg .dw-main a.dw-btn{color:#fff;text-decoration:none}.nr .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* round 40: email overview */
+.em-g{padding-top:clamp(40px,4vw,56px)}.em-g:last-child{padding-bottom:clamp(56px,6vw,88px)}
+.em-g h2{font-family:var(--display);font-weight:500;font-size:clamp(28px,2.6vw,38px);margin:0 0 20px}
+.em-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 24px}
+.em-c{display:flex;flex-direction:column;gap:10px}
+.em-c b{font-weight:500;font-size:14.5px}
+.em-f{display:block;position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line);background:#fff}
+.em-f iframe{position:absolute;top:0;left:0;width:640px;height:1600px;border:0;transform-origin:0 0;transform:scale(var(--s,.5));pointer-events:none}
+@media (max-width:1000px){.em-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
