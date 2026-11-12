@@ -43,7 +43,7 @@
         : b === "Reset password" ? "<h2 class=\"zh2\">Password updated</h2><p>You can now sign in with your new password.</p>"
         : "<h2 class=\"zh2\">Welcome</h2><p>Taking you to your account&hellip;</p>";
       f.hidden = true; sent.hidden = false;
-      if (b === "Sign in" || b === "Create account") setTimeout(function () { location.href = location.pathname.replace(/(acc?\d)-[a-z]+\.html$/, "$1-overview.html"); }, 900);
+      if (b === "Sign in" || b === "Create account") setTimeout(function () { location.href = location.pathname.replace(/(ac(?:c\d|s|\d))-[a-z]+\.html$/, "$1-overview.html"); }, 900);
     });
   });
 
