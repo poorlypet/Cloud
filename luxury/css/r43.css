@@ -417,3 +417,7 @@ html body main > div.dz:not(#z){margin-top:0!important}
 .dz-hero .dy-form input,.dz-hero .dy-form button{height:44px}
 .dz-hero .dy-res{font-size:13px}
 @media (max-width:640px){.dz-hero h1{font-size:36px}.dz-hero .dz-in{font-size:16px}.dz-hero .dz-ck h2{font-size:21px}}
+.dz-hero h1{grid-column:1;grid-row:2}
+.dz-hero .dz-in{grid-column:1;grid-row:3;align-self:start}
+.dz-hero .dz-ck{grid-column:2;grid-row:2/4;align-self:end}
+@media (max-width:900px){.dz-hero .dz-ck{grid-column:1;grid-row:4}}
