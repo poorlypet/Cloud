@@ -95,3 +95,4 @@ html body main > section.cq1-hero:not(#z),html body main > section.cq2-strip:not
 .cq3 .cq-note p{margin-top:10px;color:var(--ink2);font-size:13.5px;line-height:1.6}
 .cq3 .cq-note a{margin-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;align-self:flex-start;padding-bottom:2px}
 @media (max-width:640px){.cq3 .cq-note{padding:16px}.cq3 .cq-note h3{font-size:20px}.cq3 .cq-note p{font-size:12.5px}}
+@media (max-width:640px){.cq .pcd .im .tag{top:auto;bottom:8px;left:8px;font-size:9.5px;padding:4px 7px}}
