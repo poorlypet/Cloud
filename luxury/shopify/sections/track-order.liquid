@@ -1,0 +1,95 @@
+{%- comment -%}
+  Axel & Hound · Track an order
+  ------------------------------------------------------------------
+  Uses Shopify's own order and fulfilment data. Nothing is tracked by hand.
+
+  Signed-in customers
+    Every order is listed from `customer.orders`. For each one we show
+    `order.fulfillment_status_label`, and for each fulfilment its carrier
+    (`fulfillment.tracking_company`), tracking number and link
+    (`fulfillment.tracking_numbers`, `fulfillment.tracking_urls`). These are
+    filled in automatically when an order is fulfilled in Shopify admin, or by
+    a shipping app such as Royal Mail Click & Drop.
+    "View order" opens Shopify's own order status page (`order.order_status_url`),
+    which shows the live carrier timeline.
+
+  Guests (order number + email)
+    Shopify themes cannot look up another person's order on their own: Liquid
+    only sees the signed-in customer's orders. The form below posts to an app
+    proxy at /apps/track, which looks the order up with the Admin API (name +
+    email must both match) and redirects to that order's `order_status_url`.
+    Any order-tracking app that offers an app proxy (or a small private app)
+    can serve /apps/track. Until one is set up, the form falls back to
+    Shopify's sign-in page.
+
+  The design matches luxury/pages/track-1.html to track-5.html.
+{%- endcomment -%}
+
+<div class="cx c1 tk tk1">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span aria-current="page">Track an order</span></nav>
+  <div class="head">
+    <h1 class="cx-t">{{ section.settings.heading }}</h1>
+    <p class="cx-d">{{ section.settings.intro }}</p>
+  </div>
+
+  {%- if customer -%}
+    {%- if customer.orders.size == 0 -%}
+      <p class="tk-note">You haven't placed any orders yet.</p>
+    {%- endif -%}
+    {%- for order in customer.orders limit: 10 -%}
+      <section class="tk-res">
+        <div class="tk-top">
+          <div>
+            <span class="zkick">Order {{ order.name }} · {{ order.created_at | date: '%-d %b %Y' }}</span>
+            <h2 class="zh2">{{ order.fulfillment_status_label }}</h2>
+          </div>
+          <div class="v9-btns">
+            <a class="btn-k" href="{{ order.order_status_url }}">View order</a>
+            <a class="btn-o" href="{{ section.settings.returns_url }}">Start a return</a>
+          </div>
+        </div>
+        {%- assign fulfilments = order.fulfillments -%}
+        {%- if fulfilments.size > 0 -%}
+          <dl class="tk-meta">
+            {%- for f in fulfilments -%}
+              <div><dt>Carrier</dt><dd>{{ f.tracking_company | default: 'Courier' }}</dd></div>
+              {%- for n in f.tracking_numbers -%}
+                <div><dt>Tracking number</dt><dd>
+                  {%- if f.tracking_urls[forloop.index0] -%}<a href="{{ f.tracking_urls[forloop.index0] }}" target="_blank" rel="noopener">{{ n }}</a>{%- else -%}{{ n }}{%- endif -%}
+                </dd></div>
+              {%- endfor -%}
+            {%- endfor -%}
+          </dl>
+        {%- endif -%}
+        <div class="tk-items">
+          {%- for item in order.line_items -%}
+            <div class="it">
+              <span class="im">{{ item.image | image_url: width: 160 | image_tag: alt: item.title }}</span>
+              <span><b>{{ item.product.title | default: item.title }}</b><em>{{ item.variant.title }}</em></span>
+              <span class="p">{{ item.final_line_price | money }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endfor -%}
+  {%- else -%}
+    <form class="tk-f row" method="get" action="{{ section.settings.lookup_url }}">
+      <label><span>Order number</span><input class="v9-in" name="order" placeholder="#AH1042" required autocomplete="off"></label>
+      <label><span>Email address</span><input class="v9-in" type="email" name="email" placeholder="The email you ordered with" required autocomplete="email"></label>
+      <button type="submit" class="btn-k">Track order</button>
+    </form>
+    <p class="tk-note">No order number? It's in your confirmation email, or <a href="{{ routes.account_login_url }}">sign in</a> to see every order.</p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Track an order",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Track an order" },
+    { "type": "text", "id": "intro", "label": "Intro", "default": "Enter your order number and the email you used. We'll show you where your parcel is." },
+    { "type": "text", "id": "lookup_url", "label": "Guest lookup address (app proxy)", "default": "/apps/track" },
+    { "type": "url", "id": "returns_url", "label": "Returns page" }
+  ]
+}
+{% endschema %}
