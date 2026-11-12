@@ -262,3 +262,4 @@ a.ss-tile:hover img,a.ss-tile:hover video{transform:scale(1.04)}
 .pb .pp-err{position:absolute;left:0;right:0;bottom:4px;text-align:center;margin:0!important}
 @media (max-width:980px){.pb .pp-f,.pb .pp-ok{grid-column:1 / -1;grid-row:2;margin:0 0 4px 16px}.pb.b3 .pp-f,.pb.b3 .pp-ok{grid-column:1 / -1}}
 .ss-auth .card{color:var(--ink)}.ss-auth .card a{color:var(--ink)}
+.ss-pnav+.ss-sec{margin-top:56px}
