@@ -605,3 +605,10 @@ body:has(.ss > .ss-end:last-child) .bf{margin-top:0}
 @media (max-width:980px){.cz4 .cz-hp .ph{max-height:220px;aspect-ratio:16/9}}
 .cz4 .cz-hp .ph{position:relative;max-height:none;height:auto}.cz4 .cz-hp .ph img{position:absolute;inset:0;width:100%;height:100%}@media (max-width:980px){.cz4 .cz-hp .ph{height:200px}}
 @media (max-width:980px){.cz4 .cz-hp .ph{display:none}.cz4 .cz-hp{margin-top:0}}
+/* round 20: categories inside the filter panel */
+.cy .head .cx-d{max-width:620px;line-height:1.7}
+.fcat{display:flex;flex-direction:column;gap:2px;padding-bottom:14px}
+.fcat a{display:block;padding:7px 0;font-size:14.5px;color:var(--ink2)}
+.fcat a:hover{color:var(--ink)}
+.fcat a[aria-current]{color:var(--ink);font-weight:500}
+.fd .opts.fcat{display:flex!important;flex-direction:column;gap:0!important;padding:0 0 14px}.fd .opts.fcat a{padding:6px 0;line-height:1.4}
