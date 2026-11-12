@@ -612,3 +612,10 @@ body:has(.ss > .ss-end:last-child) .bf{margin-top:0}
 .fcat a:hover{color:var(--ink)}
 .fcat a[aria-current]{color:var(--ink);font-weight:500}
 .fd .opts.fcat{display:flex!important;flex-direction:column;gap:0!important;padding:0 0 14px}.fd .opts.fcat a{padding:6px 0;line-height:1.4}
+/* round 21: collection in the brand layout */
+.cbw .cx-sub{margin:32px 0 8px}
+.cbw .cx-bar{margin-top:16px}
+html body main > section.br1-hero.half:first-child{margin-top:0!important}
+.br1-hero .tx .zkick a{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px){.cbw .cx-sub{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1 * var(--gut))}.cbw .cx-sub a{flex:none}}
+.br1-hero>img{width:100%;height:100%;object-fit:cover;display:block}
