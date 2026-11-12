@@ -1120,3 +1120,9 @@ html body main > div.rz:not(#z){margin-top:0!important}
 .em-f{display:block;position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--line);background:#fff}
 .em-f iframe{position:absolute;top:0;left:0;width:640px;height:1600px;border:0;transform-origin:0 0;transform:scale(var(--s,.5));pointer-events:none}
 @media (max-width:1000px){.em-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* collection intro: two short paragraphs */
+.cq-head{max-width:720px}
+.cq-txt p{margin:14px auto 0;color:var(--ink2);font-size:15px;line-height:1.65}
+.cq-txt p + p{margin-top:10px}
+@media (max-width:640px){.cq-txt p{font-size:13.5px;line-height:1.55}}
+.cq-txt{max-width:560px;margin:0 auto}
