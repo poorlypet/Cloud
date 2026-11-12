@@ -991,3 +991,7 @@ html body main > div.rz:not(#z){margin-top:0!important}
 .rz1-score span,.rz2-score > span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2)}
 .rz5-it,.rz4-it,.rz1-grid .rz-it,.rz3-it{background:#fff}
 @media (max-width:640px){.rz-st.big i{width:30px;height:30px}.rz-st.big i::before{inset:5px}}
+.rz-tp{align-items:baseline}
+.rz-tp img{height:26px;margin-bottom:-3.5px;display:block}
+.rz-tp img{margin-bottom:-7px}
+.rz-tp img{margin-bottom:0;position:relative;top:4px}
