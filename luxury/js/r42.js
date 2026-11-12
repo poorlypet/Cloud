@@ -18,4 +18,8 @@
     b.addEventListener("click", function (e) { e.stopPropagation(); ul.hidden = !ul.hidden; b.setAttribute("aria-expanded", ul.hidden ? "false" : "true"); });
     document.addEventListener("click", function (e) { if (!b.parentNode.contains(e.target)) { ul.hidden = true; b.setAttribute("aria-expanded", "false"); } });
   });
+  document.querySelectorAll(".ct2").forEach(function (n) {
+    function f() { n.classList.toggle("more-l", n.scrollLeft > 2); n.classList.toggle("more-r", n.scrollLeft + n.clientWidth < n.scrollWidth - 2); }
+    n.addEventListener("scroll", f, { passive: true }); window.addEventListener("resize", f); f();
+  });
 })();
