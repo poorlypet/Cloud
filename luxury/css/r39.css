@@ -87,3 +87,16 @@
 }
 .pcd .sw{padding:0 4px;margin-left:-4px}
 .pcd .sw .more{border:0;padding:0 0 0 2px;height:auto;border-radius:0;font-size:12px;color:var(--mute)}
+
+/* ---------- collection bar on phones: filter, count and sort on one row ---------- */
+@media (max-width:640px){
+  .cx-bar{flex-wrap:nowrap;gap:10px}
+  .cx-bar .l{flex-wrap:nowrap;gap:10px;min-width:0}
+  .cx-bar .l .cx-chips{display:none}
+  .cx-bar .cx-count{font-size:12.5px;white-space:nowrap}
+  .cx-bar .cx-btn{flex:none;height:40px;padding:0 12px}
+  .cx-bar .cx-sel{flex:none;gap:0}
+  .cx-bar .cx-sel .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .cx-bar .cx-sel select{min-width:0;width:150px;font-size:13px;padding:0 32px 0 12px}
+}
+.cx-chips:empty{display:none}
