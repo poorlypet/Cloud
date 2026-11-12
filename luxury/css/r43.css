@@ -396,3 +396,24 @@ html body main > div.dz:not(#z){margin-top:0!important}
 .dz-hero .dy-form button{background:#fff;color:var(--ink);border-color:#fff}
 .dz-hero .dy-res{color:rgba(255,255,255,.8)}
 @media (max-width:640px){.dz-hero{min-height:0;padding:40px var(--gut) 44px}.dz-hero h1{font-size:60px}}
+/* round 29: softer, left-aligned, shorter delivery hero */
+.dz-hero{background:#F4F4F2;color:var(--ink);text-align:left;min-height:0;padding:clamp(28px,3vw,40px) 0 clamp(40px,4.4vw,60px)}
+.dz-hw{max-width:1440px;padding:0 var(--gut);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px clamp(40px,6vw,96px);align-items:end}
+.dz-hero .dz-crumb{grid-column:1/-1;justify-content:flex-start;color:var(--ink2)}
+.dz-hero .dz-crumb span[aria-current]{color:var(--ink)}
+.dz-hero h1{font-size:clamp(48px,5vw,72px);margin-top:4px}
+.dz-hero .dz-in{color:var(--ink2);margin:12px 0 0;font-size:clamp(18px,1.6vw,21px)}
+.dz-hero .dz-ck{margin:0;max-width:none;text-align:left}
+.dz-hero .dz-ck h2{font-size:clamp(24px,2vw,30px)}
+.dz-hero .dy-form{margin-top:14px}
+.dz-hero .dy-form input{border-color:#DDDDDA;background:#fff}
+.dz-hero .dy-form button{background:var(--ink);color:#fff;border-color:var(--ink)}
+.dz-hero .dy-res{color:var(--ink2);text-align:left}
+@media (max-width:900px){.dz-hw{grid-template-columns:minmax(0,1fr)}.dz-hero .dz-ck{margin-top:20px}}
+@media (max-width:640px){.dz-hero{padding:22px 0 32px}.dz-hero h1{font-size:46px}}
+.dz-hero h1{font-size:clamp(38px,3.6vw,52px)}
+.dz-hero .dz-in{font-size:clamp(16px,1.3vw,18px);margin-top:8px}
+.dz-hero .dz-ck h2{font-size:clamp(20px,1.6vw,24px)}
+.dz-hero .dy-form input,.dz-hero .dy-form button{height:44px}
+.dz-hero .dy-res{font-size:13px}
+@media (max-width:640px){.dz-hero h1{font-size:36px}.dz-hero .dz-in{font-size:16px}.dz-hero .dz-ck h2{font-size:21px}}
