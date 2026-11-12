@@ -384,3 +384,15 @@ html body main > div.dz:not(#z){margin-top:0!important}
   .dz-btn{width:100%}
 }
 @media (max-width:380px){.dz .dy-form{flex-wrap:wrap}.dz .dy-form input,.dz .dy-form button{flex:1 1 100%}}
+/* round 28: delivery hero */
+.dz-hero{background:#111;color:#fff;text-align:center;min-height:clamp(440px,42vw,580px);display:flex;align-items:center;padding:clamp(40px,5vw,72px) var(--gut)}
+.dz-hw{width:100%;max-width:760px;margin:0 auto}
+.dz-hero .dz-crumb{justify-content:center;color:rgba(255,255,255,.7)}
+.dz-hero .dz-crumb span[aria-current]{color:#fff}
+.dz-hero h1{font-size:clamp(64px,8vw,120px);margin-top:20px}
+.dz-hero .dz-in{color:rgba(255,255,255,.78);margin-left:auto;margin-right:auto}
+.dz-hero .dz-ck{margin-top:clamp(36px,4vw,52px)}
+.dz-hero .dy-form input{border-color:#fff}
+.dz-hero .dy-form button{background:#fff;color:var(--ink);border-color:#fff}
+.dz-hero .dy-res{color:rgba(255,255,255,.8)}
+@media (max-width:640px){.dz-hero{min-height:0;padding:40px var(--gut) 44px}.dz-hero h1{font-size:60px}}
