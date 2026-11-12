@@ -97,3 +97,88 @@ html body main > section.cq1-hero:not(#z),html body main > section.cq2-strip:not
 @media (max-width:640px){.cq3 .cq-note{padding:16px}.cq3 .cq-note h3{font-size:20px}.cq3 .cq-note p{font-size:12.5px}}
 @media (max-width:640px){.cq .pcd .im .tag{top:auto;bottom:8px;left:8px;font-size:9.5px;padding:4px 7px}}
 @media (max-width:640px){.cq .pcd .im .tag{bottom:0;left:0;font-size:8.5px;letter-spacing:.1em;padding:3px 6px}}
+
+/* round 25: delivery page */
+html body main > div.dv:not(#z){margin-top:0!important}
+.dv .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dv{--dvc:#111;--dvt:#fff}
+.dv h1,.dv h2{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.05;margin:0}
+.dv-head,.dv-opts,.dv-two{max-width:1440px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.dv-head{padding-top:clamp(20px,2.4vw,32px);padding-bottom:clamp(20px,2.4vw,30px)}
+.dv-crumb{display:flex;gap:8px;font-size:12px;color:var(--ink2)}
+.dv-crumb span[aria-current]{color:var(--ink)}
+.dv-head h1{font-size:clamp(44px,5vw,68px);margin-top:14px}
+.dv-band{display:grid;grid-template-columns:5fr 7fr;min-height:clamp(380px,34vw,500px);max-width:1440px;margin:0 auto;padding:0 var(--gut)}
+.dv-pan{background:var(--dvc);color:var(--dvt);display:flex;align-items:center;padding:clamp(28px,4vw,64px)}
+.dv-ck{width:100%;max-width:420px}
+.dv-ck h2{font-size:clamp(32px,3.2vw,46px);color:inherit}
+.dv-form{display:flex;gap:8px;margin-top:28px}
+.dv-form input{flex:1;min-width:0;height:48px;border:0;background:#fff;color:var(--ink);padding:0 16px;font:inherit;font-size:14px;border-radius:0}
+.dv-form button{height:48px;padding:0 20px;background:#fff;color:var(--ink);border:0;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.dv-form input:focus-visible,.dv-form button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.dv-res{margin-top:14px;font-size:14px;line-height:1.55;min-height:1.55em;opacity:.9}
+.dv-im{position:relative;overflow:hidden}
+.dv-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dv-opts{padding-top:clamp(48px,6vw,80px)}
+.dv-opts h2{font-size:clamp(36px,3.8vw,52px)}
+.dv-note{margin-top:10px;font-size:14px;color:var(--ink2);font-style:italic}
+.dv-t{margin-top:26px;border-top:1px solid var(--line)}
+.dv-r{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.dv-r b{font-weight:500}
+.dv-r span{color:var(--ink2)}
+.dv-r em{font-style:normal;font-weight:500;font-size:17px}
+.dv-free{grid-template-columns:1fr}
+.dv-small{margin-top:18px;font-size:13.5px;line-height:1.65;color:var(--ink2);max-width:820px}
+.dv-two{display:grid;grid-template-columns:1fr 1fr;padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(56px,7vw,96px)}
+.dv-two > div{padding-right:clamp(24px,4vw,64px)}
+.dv-faq{border-left:1px solid var(--line);padding-left:clamp(24px,4vw,64px);padding-right:0!important}
+.dv-two h2{font-size:clamp(32px,3.2vw,44px)}
+.dv-trk p{margin-top:16px;font-size:15px;line-height:1.7;color:var(--ink2);max-width:440px}
+.dv-btn{display:inline-flex;align-items:center;height:48px;padding:0 32px;margin-top:26px;background:var(--dvc);color:var(--dvt);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.dv-faq h2{margin-bottom:14px}
+.dv-faq details{border-bottom:1px solid var(--line)}
+.dv-faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;font-size:15.5px}
+.dv-faq summary::-webkit-details-marker{display:none}
+.dv-faq summary::after{content:"";width:7px;height:7px;border-right:1.2px solid currentColor;border-bottom:1.2px solid currentColor;transform:rotate(45deg) translateY(-3px);flex:none;transition:transform .25s}
+.dv-faq details[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.dv-faq details p{padding:0 0 18px;font-size:14.5px;line-height:1.7;color:var(--ink2);max-width:560px}
+.dv-help{margin-top:20px;font-size:14.5px;color:var(--ink2)}
+.dv-help a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+/* the five takes */
+.dvw2 .dv-band,.dvw3 .dv-band,.dvw4 .dv-band,.dvw5 .dv-band{max-width:none;padding:0}
+.dvw2{--dvc:#2B2A28}
+.dvw3{--dvc:#EBECEE;--dvt:var(--ink)}
+.dvw3 .dv-band{grid-template-columns:7fr 5fr}.dvw3 .dv-im{order:-1}
+.dvw3 .dv-form input{background:#fff}.dvw3 .dv-form button{background:var(--ink);color:#fff}
+.dvw3 .dv-btn{background:var(--ink);color:#fff}
+.dvw4{--dvc:#E9E3DA;--dvt:var(--ink)}
+.dvw4 .dv-form button{background:var(--ink);color:#fff}.dvw4 .dv-btn{background:var(--ink);color:#fff}
+.dvw5 .dv-band{grid-template-columns:1fr;position:relative;min-height:clamp(420px,40vw,560px)}
+.dvw5 .dv-im{position:absolute;inset:0}
+.dvw5 .dv-pan{position:relative;z-index:1;align-self:center;margin-left:max(var(--gut),calc((100vw - 1440px)/2 + var(--gut)));width:min(480px,calc(100% - 2*var(--gut)));background:rgba(17,17,17,.88)}
+@media (max-width:900px){
+  .dv-band,.dvw3 .dv-band{grid-template-columns:1fr;min-height:0;padding:0}
+  .dv-im{aspect-ratio:4/3;order:-1}
+  .dvw5 .dv-band{min-height:0}
+  .dvw5 .dv-im{position:relative;inset:auto}
+  .dvw5 .dv-pan{margin:0;width:100%;background:#111}
+  .dv-two{grid-template-columns:1fr}
+  .dv-faq{border-left:0;padding-left:0;margin-top:48px}
+}
+@media (max-width:640px){
+  .dv-head h1{font-size:40px;margin-top:10px}
+  .dv-pan{padding:28px var(--gut)}
+  .dv-ck h2{font-size:28px}
+  .dv-form{margin-top:18px}
+  .dv-form input,.dv-form button{height:44px}
+  .dv-form button{padding:0 14px;font-size:10.5px}
+  .dv-opts h2,.dv-two h2{font-size:32px}
+  .dv-r{grid-template-columns:1fr auto;gap:2px 12px;padding:16px 0;font-size:14.5px}
+  .dv-r span{grid-column:1;grid-row:2;font-size:13px}
+  .dv-r em{grid-row:1/3;grid-column:2;font-size:15px}
+  .dv-free{grid-template-columns:1fr}
+  .dv-btn{width:100%;justify-content:center}
+}
+.dv-band > *,.dv-two > *{min-width:0}
+@media (max-width:900px){.dv-band,.dvw3 .dv-band{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:380px){.dv-form{flex-wrap:wrap}.dv-form input,.dv-form button{flex:1 1 100%}}
