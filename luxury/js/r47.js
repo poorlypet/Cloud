@@ -35,6 +35,15 @@
     io.observe(el);
   });
 
+  // rotating latest reviews
+  document.querySelectorAll(".rq4-r").forEach(function (box) {
+    var qs = box.querySelectorAll(".rq4-q"), ds = box.querySelectorAll(".rq4-dots button"), i = 0, t;
+    function go(n) { i = (n + qs.length) % qs.length; qs.forEach(function (q, j) { q.classList.toggle("on", j === i); }); ds.forEach(function (d, j) { d.classList.toggle("on", j === i); }); }
+    function play() { clearInterval(t); if (!reduce) t = setInterval(function () { go(i + 1); }, 5000); }
+    ds.forEach(function (d, j) { d.addEventListener("click", function () { go(j); play(); }); });
+    play();
+  });
+
   // reviews rise in as they come into view
   if (!reduce && "IntersectionObserver" in window) {
     var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io2.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
