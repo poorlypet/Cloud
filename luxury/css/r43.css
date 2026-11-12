@@ -182,3 +182,101 @@ html body main > div.dv:not(#z){margin-top:0!important}
 .dv-band > *,.dv-two > *{min-width:0}
 @media (max-width:900px){.dv-band,.dvw3 .dv-band{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:380px){.dv-form{flex-wrap:wrap}.dv-form input,.dv-form button{flex:1 1 100%}}
+
+/* round 26: delivery, brand serif, black and white */
+html body main > div.dy:not(#z){margin-top:0!important}
+.dy .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dy h1,.dy h2{font-family:var(--display);font-weight:500;letter-spacing:0;line-height:1.05;margin:0;color:var(--ink)}
+.dy-head,.dy-opts,.dy-two{max-width:1440px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.dy-head{padding-top:clamp(20px,2.4vw,30px);padding-bottom:clamp(22px,2.6vw,32px)}
+.dy-crumb{display:flex;gap:8px;font-size:12px;color:var(--ink2)}
+.dy-crumb span[aria-current]{color:var(--ink)}
+.dy-head h1{font-size:clamp(46px,5vw,72px);margin-top:16px}
+.dy-band{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:clamp(380px,34vw,500px)}
+.dy-band > *{min-width:0}
+.dy-pan{display:flex;align-items:center;padding:clamp(28px,4vw,64px)}
+.dy-ck{width:100%;max-width:440px}
+.dy-ck h2{font-size:clamp(34px,3.4vw,50px);color:inherit}
+.dy-form{display:flex;gap:8px;margin-top:28px}
+.dy-form input{flex:1;min-width:0;height:48px;border:1px solid #CFCFCF;background:#fff;color:var(--ink);padding:0 16px;font:inherit;font-size:14px;border-radius:0}
+.dy-form button{height:48px;padding:0 22px;background:var(--ink);color:#fff;border:1px solid var(--ink);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+.dy-res{margin-top:14px;font-size:14px;line-height:1.55;min-height:1.55em;color:inherit;opacity:.85}
+.dy-im{position:relative;overflow:hidden;min-height:260px}
+.dy-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+.dy-opts{padding-top:clamp(48px,6vw,80px)}
+.dy-opts h2{font-size:clamp(38px,4vw,56px)}
+.dy-note{margin-top:8px;font-family:var(--display);font-style:italic;font-size:18px;color:var(--ink2)}
+.dy-t{margin-top:24px;border-top:1px solid var(--line)}
+.dy-r{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line);font-size:16px}
+.dy-r b{font-weight:500}
+.dy-r span{color:var(--ink2)}
+.dy-r em{font-style:normal;font-weight:500;font-size:17px}
+.dy-free{grid-template-columns:1fr}
+.dy-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(56px,7vw,96px)}
+.dy-trk{padding-right:clamp(24px,4vw,64px)}
+.dy-faq{border-left:1px solid var(--line);padding-left:clamp(24px,4vw,64px)}
+.dy-two h2{font-size:clamp(34px,3.4vw,48px)}
+.dy-trk p{margin-top:16px;font-size:15.5px;line-height:1.7;color:var(--ink2);max-width:440px}
+.dy-btn{display:inline-flex;align-items:center;height:48px;padding:0 34px;margin-top:26px;background:var(--ink);color:#fff;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.dy-faq h2{margin-bottom:12px}
+.dy-faq details{border-bottom:1px solid var(--line)}
+.dy-faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;font-size:16px}
+.dy-faq summary::-webkit-details-marker{display:none}
+.dy-faq summary::after{content:"";width:7px;height:7px;border-right:1.2px solid currentColor;border-bottom:1.2px solid currentColor;transform:rotate(45deg) translateY(-3px);flex:none;transition:transform .25s}
+.dy-faq details[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.dy-faq details p{padding:0 0 18px;font-size:14.5px;line-height:1.7;color:var(--ink2)}
+.dy-help{margin-top:20px;font-size:15px;color:var(--ink2)}
+.dy-help a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+/* 1: set in, hairline frame */
+.dyw1 .dy-band{max-width:calc(1440px - 2*var(--gut));margin:0 auto;border:1px solid var(--line)}
+@media (min-width:901px){.dyw1 .dy-band{margin:0 var(--gut)}}
+@media (min-width:1540px){.dyw1 .dy-band{margin:0 auto}}
+/* 2: black panel, edge to edge */
+.dyw2 .dy-pan{background:#111;color:#fff}
+.dyw2 .dy-ck h2{color:#fff}
+.dyw2 .dy-form input{border-color:#fff}
+.dyw2 .dy-form button{background:#fff;color:var(--ink);border-color:#fff}
+/* 3: photo left, white panel, edge to edge */
+.dyw3 .dy-band{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+/* 4: no photo, checker on a hairline row */
+.dyw4 .dy-band{display:block;min-height:0;max-width:1440px;margin:0 auto;padding:0 var(--gut)}
+.dyw4 .dy-pan{padding:28px 0 32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dyw4 .dy-ck{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 40px;align-items:center}
+.dyw4 .dy-ck h2{font-size:clamp(28px,2.6vw,38px)}
+.dyw4 .dy-form{margin-top:0}
+.dyw4 .dy-res{grid-column:2;margin-top:0}
+/* 5: full-width photo, checker centred under it */
+.dyw5 .dy-band{grid-template-columns:1fr;min-height:0}
+.dyw5 .dy-im{height:clamp(300px,34vw,480px)}
+.dyw5 .dy-pan{justify-content:center;padding:clamp(36px,4.6vw,64px) var(--gut) 0;text-align:center}
+.dyw5 .dy-ck{max-width:560px}
+.dyw5 .dy-res{text-align:center}
+@media (max-width:900px){
+  .dy-band,.dyw3 .dy-band{grid-template-columns:minmax(0,1fr);min-height:0}
+  .dy-im{aspect-ratio:4/3;order:-1}
+  .dyw1 .dy-band{border:0}
+  .dyw4 .dy-ck{grid-template-columns:minmax(0,1fr)}
+  .dyw4 .dy-res{grid-column:1}
+  .dyw5 .dy-im{height:auto}
+  .dy-two{grid-template-columns:minmax(0,1fr)}
+  .dy-trk{padding-right:0}
+  .dy-faq{border-left:0;padding-left:0;margin-top:48px}
+}
+@media (max-width:640px){
+  .dy-head h1{font-size:44px;margin-top:10px}
+  .dy-pan{padding:28px var(--gut)}
+  .dyw4 .dy-band{padding:0 var(--gut)}.dyw4 .dy-pan{padding:24px 0}
+  .dyw5 .dy-pan{padding:28px var(--gut) 0}
+  .dy-ck h2{font-size:30px}
+  .dy-form{margin-top:18px}
+  .dy-form input,.dy-form button{height:44px}
+  .dy-form button{padding:0 14px;font-size:10.5px}
+  .dy-opts h2,.dy-two h2{font-size:34px}
+  .dy-r{grid-template-columns:1fr auto;gap:2px 12px;padding:16px 0;font-size:15px}
+  .dy-r span{grid-column:1;grid-row:2;font-size:13.5px}
+  .dy-r em{grid-row:1/3;grid-column:2;font-size:16px}
+  .dy-free{grid-template-columns:1fr}
+  .dy-btn{width:100%;justify-content:center}
+}
+@media (max-width:380px){.dy-form{flex-wrap:wrap}.dy-form input,.dy-form button{flex:1 1 100%}}
+@media (max-width:900px){.dy-im{min-height:0;width:100%}}
