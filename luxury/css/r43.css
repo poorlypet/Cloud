@@ -421,3 +421,86 @@ html body main > div.dz:not(#z){margin-top:0!important}
 .dz-hero .dz-in{grid-column:1;grid-row:3;align-self:start}
 .dz-hero .dz-ck{grid-column:2;grid-row:2/4;align-self:end}
 @media (max-width:900px){.dz-hero .dz-ck{grid-column:1;grid-row:4}}
+
+/* round 31: delivery help page */
+html body main > div.dw:not(#z){margin-top:0!important}
+.dw h1,.dw h2{font-family:var(--display);font-weight:500;letter-spacing:0;line-height:1.08;margin:0;color:var(--ink)}
+.dw-w{max-width:1440px;margin:0 auto;padding:0 var(--gut)}
+.dw-hero{background:#F4F4F2;padding:clamp(24px,2.6vw,34px) 0 clamp(32px,3.6vw,48px)}
+.dw-hero h1{font-size:clamp(40px,3.8vw,56px);margin-top:16px}
+.dw-hero p{margin-top:10px;max-width:620px;font-size:15.5px;line-height:1.7;color:var(--ink2)}
+.dw-keys{border-bottom:1px solid var(--line)}
+.dw-keys .dw-w{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.dw-keys .dw-w > div{padding:22px 24px;display:flex;flex-direction:column;gap:4px;text-align:center}
+.dw-keys .dw-w > div + div{border-left:1px solid var(--line)}
+.dw-keys b{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.2}
+.dw-keys span{font-size:13.5px;color:var(--ink2)}
+.dw-body{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(40px,6vw,96px);padding-top:clamp(40px,4.6vw,64px);padding-bottom:clamp(64px,7vw,104px)}
+.dw-side{position:sticky;top:120px;align-self:start}
+.dw-nav{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.dw-nav a{padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--ink2)}
+.dw-nav a[aria-current]{color:var(--ink);font-weight:500}
+.dw-nav a:hover{color:var(--ink)}
+.dw-on{margin-top:32px;display:flex;flex-direction:column;gap:9px}
+.dw-on span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);margin-bottom:4px}
+.dw-on a{font-size:14px;color:var(--ink2)}
+.dw-on a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.dw-main{max-width:900px}
+.dw-main > section{scroll-margin-top:130px}
+.dw-main > section + section{margin-top:clamp(48px,5vw,72px);padding-top:clamp(48px,5vw,72px);border-top:1px solid var(--line)}
+.dw-main h2{font-size:clamp(30px,2.8vw,40px)}
+.dw-main p{margin-top:14px;font-size:15.5px;line-height:1.75;color:var(--ink2);max-width:720px}
+.dw-main p.dw-lead{color:var(--ink)}
+.dw-tw{margin-top:26px}
+.dw-tb{width:100%;border-collapse:collapse;font-size:15px}
+.dw-tb thead th{background:#F4F4F2;text-align:left;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding:14px 18px}
+.dw-tb tbody th,.dw-tb td{text-align:left;padding:18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.dw-tb tbody th{font-weight:500;color:var(--ink)}
+.dw-tb td{color:var(--ink2)}
+.dw-tb td:last-child{color:var(--ink);font-weight:500;white-space:nowrap}
+.dw-tb small{display:block;font-weight:400;font-size:13px;color:var(--ink2);margin-top:2px}
+.dw-notes{margin-top:22px;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.dw-notes li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.7;color:var(--ink2)}
+.dw-notes li::before{content:"";position:absolute;left:0;top:.8em;width:6px;height:1px;background:var(--ink2)}
+.dw-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.dw-btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 32px;background:var(--ink);color:#fff;border:1px solid var(--ink);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.dw-btn.dw-o{background:#fff;color:var(--ink)}
+.dw-help .dw-btn{margin-top:22px}
+.dw-faq{margin-top:20px;border-top:1px solid var(--line)}
+.dw-faq details{border-bottom:1px solid var(--line)}
+.dw-faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-size:16px;color:var(--ink)}
+.dw-faq summary::-webkit-details-marker{display:none}
+.dw-faq summary::after{content:"";width:7px;height:7px;border-right:1.2px solid currentColor;border-bottom:1.2px solid currentColor;transform:rotate(45deg) translateY(-3px);flex:none;transition:transform .25s}
+.dw-faq details[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.dw-faq details p{margin:0;padding:0 0 20px;font-size:15px}
+@media (max-width:960px){
+  .dw-body{grid-template-columns:minmax(0,1fr);gap:28px;padding-top:0}
+  .dw-side{position:static}
+  .dw-nav{flex-direction:row;overflow-x:auto;scrollbar-width:none;gap:24px;border-top:0;border-bottom:1px solid var(--line);margin:0 calc(-1*var(--gut));padding:0 var(--gut)}
+  .dw-nav::-webkit-scrollbar{display:none}
+  .dw-nav a{flex:none;border:0;padding:16px 0 14px;white-space:nowrap;font-size:13.5px}
+  .dw-nav a[aria-current]{box-shadow:inset 0 -1px 0 var(--ink)}
+  .dw-on{display:none}
+}
+@media (max-width:640px){
+  .dw-keys .dw-w{grid-template-columns:minmax(0,1fr);padding:0}
+  .dw-keys .dw-w > div{padding:16px var(--gut);flex-direction:row;justify-content:space-between;align-items:baseline;text-align:left;gap:12px}
+  .dw-keys .dw-w > div + div{border-left:0;border-top:1px solid var(--line)}
+  .dw-keys b{font-size:19px;flex:none}
+  .dw-keys span{text-align:right;font-size:12.5px}
+  .dw-hero h1{font-size:40px}
+  .dw-hero p{font-size:14.5px}
+  .dw-tb thead{display:none}
+  .dw-tb,.dw-tb tbody,.dw-tb tr{display:block}
+  .dw-tb tr{border-top:1px solid var(--line);padding:14px 0}
+  .dw-tb tbody tr:last-child{border-bottom:1px solid var(--line)}
+  .dw-tb tbody th,.dw-tb td{display:flex;justify-content:space-between;gap:16px;padding:4px 0;border:0;font-size:14px}
+  .dw-tb tbody th{font-size:15.5px;padding-bottom:8px}
+  .dw-tb td::before{content:attr(data-l);color:var(--ink2);font-weight:400;flex:none}
+  .dw-tb td{color:var(--ink);text-align:right}
+  .dw-tb small{display:inline;margin:0 0 0 6px}
+  .dw-btn{width:100%}
+}
+.dw-main > section + section{margin-top:clamp(36px,3.4vw,48px);padding-top:clamp(36px,3.4vw,48px)}
+.dw-tb td small{display:block}
+@media (max-width:640px){.dw-tb td span{text-align:right}.dw-tb td small{margin:2px 0 0}}
