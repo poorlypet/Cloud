@@ -504,3 +504,36 @@ html body main > div.dw:not(#z){margin-top:0!important}
 .dw-main > section + section{margin-top:clamp(36px,3.4vw,48px);padding-top:clamp(36px,3.4vw,48px)}
 .dw-tb td small{display:block}
 @media (max-width:640px){.dw-tb td span{text-align:right}.dw-tb td small{margin:2px 0 0}}
+
+/* round 32: help hub */
+.hb-sec{padding-top:clamp(48px,5vw,72px)}
+.hb-sec:last-child{padding-bottom:clamp(64px,7vw,104px)}
+.hb-sec h2{font-family:var(--display);font-weight:500;font-size:clamp(30px,2.8vw,40px);line-height:1.08;margin:0;color:var(--ink)}
+.hb-list{margin-top:24px;border-top:1px solid var(--line)}
+.hb-list a{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr) auto;gap:24px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--line);transition:padding .3s}
+.hb-list b{font-family:var(--display);font-weight:500;font-size:clamp(22px,1.9vw,27px);line-height:1.2}
+.hb-list span{font-size:15px;line-height:1.6;color:var(--ink2)}
+.hb-list em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px;white-space:nowrap}
+.hb-list a:hover{padding-left:10px}
+.hb-two{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,5vw,80px);align-items:start}
+.hb-two p{margin-top:12px;font-size:15.5px;line-height:1.7;color:var(--ink2);max-width:420px}
+.hb-two p a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.hb-two .dw-faq{margin-top:0}
+.hb-ct .dw-w{border-top:1px solid var(--line);padding-top:clamp(40px,4.6vw,64px)}
+.hb-cd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) auto;gap:24px;align-items:end}
+.hb-cd span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px}
+.hb-cd a:not(.dw-btn),.hb-cd p{font-size:15.5px;color:var(--ink);margin:0}
+.dw-steps th:first-child{width:22%}.dw-steps td:nth-child(2){width:28%}
+.dw-steps td:last-child{white-space:normal;font-weight:400;color:var(--ink2)}
+@media (max-width:900px){
+  .hb-two{grid-template-columns:minmax(0,1fr);gap:20px}
+  .hb-cd{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .hb-list a{grid-template-columns:minmax(0,1fr);gap:6px;padding:20px 0}
+  .hb-list em{justify-self:start;margin-top:6px}
+  .hb-list a:hover{padding-left:0}
+  .dw-steps th:first-child,.dw-steps td:nth-child(2){width:auto}
+  .dw-steps td:last-child{text-align:right}
+}
+.hb-sec:last-child{padding-bottom:clamp(48px,5vw,72px)}
