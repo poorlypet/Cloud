@@ -62,6 +62,11 @@
       s.querySelector(".sy5-a").style.transform = "translateX(" + (-55 * (1 - p)) + "%)";
       s.querySelector(".sy5-b").style.transform = "translateX(" + (55 * (1 - p)) + "%)";
     });
+    if (!reduce) $$(".sy6-hero").forEach(function (h) {
+      var r = h.getBoundingClientRect(); if (r.bottom < 0) return; var p = cl(-r.top / r.height, 0, 1);
+      h.querySelector(".sy6-bg").style.transform = "translateY(" + p * 20 + "%) scale(" + (1 + p * 0.06) + ")";
+      h.querySelector(".sy6-t").style.transform = "translateY(" + p * -40 + "px)"; h.querySelector(".sy6-t").style.opacity = 1 - p * 1.2;
+    });
     run.forEach(function (s) { var t = s.querySelector(".sy5-track"), p = prog(s); t.style.transform = "translateX(" + (-(t.scrollWidth - W()) * p) + "px)"; });
   }
   var tk = false;

@@ -821,3 +821,13 @@ html body main > div.sy:not(#z){margin-top:0!important}
 }
 .sy-cover .sy-hph{width:calc(100% + 2*var(--gut));margin-left:calc(-1*var(--gut));aspect-ratio:21/9}
 @media (min-width:1440px){.sy-cover .sy-hph{width:100vw;margin-left:calc(50% - 50vw)}}
+/* round 35: half-height hero */
+html body main > div.sy:not(#z) > .sy6-hero{margin-top:0}
+.sy6-hero{position:relative;height:clamp(380px,52svh,560px);overflow:hidden;display:flex;align-items:flex-end}
+.sy6-bg{position:absolute;inset:0;aspect-ratio:auto;height:100%;will-change:transform}
+.sy6-bg span{position:absolute;right:0;bottom:0}
+.sy6-t{position:relative;z-index:1;width:100%;max-width:1440px;margin:0 auto;padding:0 var(--gut) clamp(36px,5vw,64px)}
+.sy6-t h1{font-size:clamp(56px,8vw,128px);line-height:1}
+.sy6-t p{margin-top:14px;font-family:var(--display);font-style:italic;font-size:clamp(19px,1.7vw,25px);color:var(--ink2)}
+.syv6 .sy2-route{margin-top:clamp(56px,6vw,96px)}
+@media (max-width:640px){.sy6-hero{height:300px}.sy6-t h1{font-size:52px}}
