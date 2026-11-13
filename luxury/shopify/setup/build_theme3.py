@@ -31,8 +31,8 @@ head='''{%- liquid
 '''
 m=m[:i]+head+m[j:]
 g=m.index('<div class="cx-grid">'); ge=m.index('<div class="cx-more">'); me=block_end(m,ge)
-grid='''{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- for product in collection.products -%}{%- render 'card', product: product -%}{%- else -%}<p class="cx-empty">Nothing here yet. New pieces are on their way.</p>{%- endfor -%}</div>
-<div class="cx-more"><p>Showing {{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} products</p><div class="prog"><i style="width:{{ paginate.current_offset | plus: collection.products.size | times: 100 | divided_by: collection.products_count | default: 100 }}%"></i></div>{%- if paginate.next -%}<a class="btn-o" href="{{ paginate.next.url }}" style="margin-top:16px">Load more</a>{%- endif -%}</div>{%- endpaginate -%}'''
+grid='''{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- for product in collection.products -%}{%- render 'card', product: product -%}{%- else -%}<p class="cx-empty" style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--ink2)">Nothing here yet. New pieces are on their way.</p>{%- endfor -%}</div>
+<div class="cx-more"><p>Showing {{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} products</p><div class="prog"><i style="width:{% if collection.products_count > 0 %}{{ paginate.current_offset | plus: collection.products.size | times: 100 | divided_by: collection.products_count }}{% else %}100{% endif %}%"></i></div>{%- if paginate.next -%}<a class="btn-o" href="{{ paginate.next.url }}" style="margin-top:16px">Load more</a>{%- endif -%}</div>{%- endpaginate -%}'''
 m=m[:g]+grid+m[me:]
 section('main-collection',m,'Collection',head_styles(p))
 tpl('collection',[('main','main-collection')])
