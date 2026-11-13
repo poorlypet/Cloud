@@ -80,14 +80,13 @@ def HIDDEN(f):
     b = f.rsplit('.', 1)[0]
     if b in PHOTO_BRANDS: return f.endswith('.mp4')
     return (f in GONE or f.startswith('happy-dogs-') or 'cats' in f or f.startswith('brand-dventotto')
-            or (f.startswith('brand-') and f.endswith('.jpg')) or f.startswith('collection-'))
+            or (f.startswith('brand-') and f.endswith('.jpg')) or f.startswith('collection-') or f.startswith('story-'))
 for g in GROUPS: g['files'] = [f for f in g['files'] if not HIDDEN(f)]
-GROUPS = [g for g in GROUPS if g['files'] or g['id'] == 'film-portrait']
 # collection films are a shared pool: any film whose name starts with "collection"
 for g in GROUPS:
     if g['id'] == 'film-portrait':
         g['tip'] = 'Collection films sit in among the products, the size of four product cards: one after the 4th product and one after the 14th. Any film whose name starts with "collection" joins the pool, and each collection picks two from it, so they mix across the shop. Add more whenever you like.'
-        g['files'] = ['collection-*.mp4']
+        g['files'] = []
 # every named slot in the theme must be in a group
 named=set(k for k in M if '.' in k)
 grouped=set(f for g in GROUPS for f in g['files'])
@@ -104,6 +103,7 @@ def status(f):
         if base in MM['stills']: return ('photo', 'Arrived as a photo, not a film. It shows as a still for now.')
         return (None, '')
     return ('up', '') if base in MM['stills'] else (None, '')
+GROUPS = [g for g in GROUPS if g['files']]
 for g in GROUPS:
     g['items']=[]
     for f in g['files']:

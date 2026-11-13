@@ -65,27 +65,45 @@ main > section.next{margin-top:var(--sec)}
   endif
   assign cat_pics = 'menu-,home-category-,story-collect-' | split: ','
 -%}
-<header class="cq-head">{%- if is_sub -%}<a class="cq-back" href="{{ parent.url }}">{{ parent.title }}</a>{%- endif -%}<h1>{{ collection.title }}</h1>{%- if collection.description != blank -%}<div class="cq-txt">{{ collection.description }}</div>{%- endif -%}</header>
-{%- if parent and parent.links.size > 0 -%}<nav class="ct2 cq-c cq-subs-t" aria-label="{{ parent.title | escape }}"><a href="{{ parent.url }}"{% unless is_sub %} aria-current="page"{% endunless %}>All {{ parent.title | downcase }}</a>{%- for c in parent.links -%}<span>·</span><a href="{{ c.url }}"{% if c.object.handle == collection.handle %} aria-current="page"{% endif %}>{{ c.title }}</a>{%- endfor -%}</nav>{%- endif -%}
+<header class="cs1">
+  <div class="cs1-top">
+    <div>
+      <nav class="cs1-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span>{%- if is_sub -%}<a href="{{ parent.url }}">{{ parent.title }}</a><span>/</span>{%- endif -%}<span aria-current="page">{{ collection.title }}</span></nav>
+      <h1>{{ collection.title }}</h1>
+    </div>
+    {%- if collection.description != blank -%}<div class="cs1-d">{{ collection.description }}</div>{%- endif -%}
+  </div>
+  {%- if parent and parent.links.size > 0 -%}
+  <nav class="cs1-bar" aria-label="{{ parent.title | escape }}">
+    <a href="{{ parent.url }}"{% unless is_sub %} aria-current="page"{% endunless %}>All {{ parent.title | downcase }}</a>
+    {%- for c in parent.links -%}<a href="{{ c.url }}"{% if c.object.handle == collection.handle %} aria-current="page"{% endif %}>{{ c.title }}</a>{%- endfor -%}
+  </nav>
+  {%- else -%}<div class="cs1-bar cs1-empty" aria-hidden="true"></div>{%- endif -%}
+</header>
 <style>
-  .cq-hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:min(62svh,600px);overflow:hidden;background:#1a1a18;color:#fff}
-  .cq-hero video,.cq-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .cq-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,0) 60%);pointer-events:none}
-  .cq-hero-tx{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(28px,4vw,56px);z-index:1;max-width:620px}
-  .cq-hk{display:block;font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:14px;text-decoration:none}
-  a.cq-hk:hover{color:#fff}
-  .cq-hero h1{font:500 clamp(44px,5.4vw,80px)/1 var(--display);margin:0;color:#fff}
-  .cq-hero-tx p{margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.9)}
-  .cq-subs-t{margin-top:clamp(24px,2.6vw,36px)!important}
-  .cq-subs-t + .cx-bar{margin-top:clamp(18px,2vw,28px)}
-  .cq-subs .cs-w{margin-top:0}
-  .cq-subs .cs-r{grid-auto-columns:calc((100vw - 2 * var(--gut,24px) - 60px) / 6.3)}
-  .cq-subs .cs-t[aria-current] .cs-l{text-decoration:underline;text-underline-offset:5px}
-  .cq-subs .cs-t[aria-current]{outline:2px solid var(--ink);outline-offset:-2px}
-  .cq-subs + .cx-bar,.cq-hero + .cx-bar{margin-top:clamp(24px,3vw,40px)}
-  @media (max-width:800px){.cq-hero{height:min(70svh,520px)}.cq-subs .cs-r{grid-auto-columns:42vw}}
+  .cs1{margin-top:clamp(28px,3.4vw,48px)}
+  .cs1-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:end;padding-bottom:clamp(22px,2.4vw,32px)}
+  .cs1-crumb{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--ink2)}
+  .cs1-crumb a{color:inherit;text-decoration:none}
+  .cs1-crumb a:hover{color:var(--ink)}
+  .cs1 h1{font:500 clamp(52px,6vw,88px)/.95 var(--display);margin:14px 0 0;letter-spacing:-.005em}
+  .cs1-d{max-width:54ch}
+  .cs1-d p{margin:0;font-size:15.5px;line-height:1.7;color:var(--ink2)}
+  .cs1-d p + p{margin-top:.8em}
+  .cs1-bar{display:flex;gap:30px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;border-top:1px solid var(--ink);border-bottom:1px solid #E4E4E0;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+  .cs1-bar::-webkit-scrollbar{display:none}
+  .cs1-bar a{flex:none;font:500 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);text-decoration:none;padding:17px 0}
+  .cs1-bar a:hover{color:var(--ink)}
+  .cs1-bar a[aria-current]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+  .cs1-empty{height:0;border-bottom:0}
+  .cs1 + .cx-bar{margin-top:8px}
+  @media (max-width:800px){
+    .cs1-top{grid-template-columns:1fr;gap:14px}
+    .cs1-bar{gap:24px}
+    .cs1-bar a{padding:15px 0}
+  }
 </style>
-
+<script>(function(){var b=document.querySelector('.cs1-bar');if(!b)return;var c=b.querySelector('[aria-current]');if(c&&c.offsetLeft+c.offsetWidth>b.clientWidth)b.scrollLeft=c.offsetLeft-24;})();</script>
 <div class="cx-bar"><div class="l"><button type="button" class="cx-btn" data-filters><svg viewBox="0 0 14 14"><path d="M1 3h12M3 7h8M5 11h4"/></svg> Filter</button><span class="cx-count"></span><div class="cx-chips l"></div></div><label class="cx-sel"><span class="sr">Sort by</span><select class="cx-sort" id="sort6" aria-label="Sort by"><option value="feat">Most relevant</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select></label></div>{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- liquid
   assign f1 = cf | append: '-1.mp4'
   assign f2 = cf | append: '-2.mp4'
