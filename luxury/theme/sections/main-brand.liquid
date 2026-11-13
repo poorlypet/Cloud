@@ -22,14 +22,59 @@
 main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
 main > section.next{margin-top:var(--sec)}
 </style>
-
-<section class="br1-hero half"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" class="ah-blank"><div class="tx"><span class="zkick">The brand</span><h1>{{ collection.title }}</h1><p>Cloud7 is a Berlin label making coats, beds and accessories for dogs. Clean shapes, honest fabrics and fits made for real dogs, designed to be worn every day and kept for years.</p></div></section><div class="v9"><nav class="cx-sub v9-sub" aria-label="Cloud7"><a href="#" aria-current=page>All Cloud7</a><a href="#">Coats</a><a href="#">Raincoats</a><a href="#">Beds</a><a href="#">Accessories</a></nav><div class="v9-bar"><p class="v9-lead">12 products</p><label class="v9-sort"><span>Sort by</span><select class="v9-in"><option>Most relevant</option><option>Price, low to high</option><option>Price, high to low</option><option>Newest</option></select></label></div><div class="g4">{%- for product in collection.products limit: 8 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></div>
-
-
+{%- liquid
+  assign origin = collection.metafields.custom.origin.value
+  assign tagline = collection.metafields.custom.tagline.value
+  assign sort = collection.sort_by | default: collection.default_sort_by
+-%}
+<section class="br1-hero half">
+  {%- if collection.image -%}{{ collection.image | image_url: width: 2400 | image_tag: loading: 'eager', sizes: '100vw', alt: collection.title }}{%- else -%}<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" class="ah-blank">{%- endif -%}
+  <div class="tx">
+    <span class="zkick">The brand{% if origin != blank %} &middot; {{ origin }}{% endif %}</span>
+    <h1>{{ collection.title }}</h1>
+    {%- if tagline != blank -%}<p>{{ tagline }}</p>{%- endif -%}
+  </div>
+</section>
+<div class="v9">
+  {%- if collection.all_types.size > 1 -%}
+    <nav class="cx-sub v9-sub" aria-label="{{ collection.title | escape }}">
+      <a href="{{ collection.url }}"{% unless collection.current_type %} aria-current="page"{% endunless %}>All {{ collection.title }}</a>
+      {%- for t in collection.all_types -%}<a href="{{ collection.url }}?filter.p.product_type={{ t | url_encode }}">{{ t }}</a>{%- endfor -%}
+    </nav>
+  {%- endif -%}
+  {%- paginate collection.products by 24 -%}
+  <div class="v9-bar">
+    <p class="v9-lead">{{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</p>
+    <label class="v9-sort"><span>Sort by</span>
+      <select class="v9-in" onchange="var u=new URL(location.href);u.searchParams.set('sort_by',this.value);location.href=u">
+        {%- for o in collection.sort_options -%}<option value="{{ o.value }}"{% if o.value == sort %} selected{% endif %}>{{ o.name }}</option>{%- endfor -%}
+      </select>
+    </label>
+  </div>
+  {%- if collection.products.size > 0 -%}
+    <div class="g4">{%- for product in collection.products -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
+    {%- if paginate.next -%}<div style="text-align:center;margin-top:48px"><a class="btn-o" href="{{ paginate.next.url }}">Load more</a></div>{%- endif -%}
+  {%- else -%}
+    <div style="text-align:center;padding:56px 0 24px"><h2 class="zh2">Pieces from {{ collection.title }} are on their way</h2><p class="v9-lead" style="margin-top:12px">Join the list below to hear as soon as they arrive.</p></div>
+  {%- endif -%}
+  {%- endpaginate -%}
+</div>
+{%- if collection.description != blank -%}
+<section class="brx-about">
+  <div class="brx-in">
+    <div><span class="zkick">About the brand</span><h2 class="zh2">{{ collection.title }}</h2>{%- if origin != blank -%}<p class="brx-o">{{ origin }}</p>{%- endif -%}</div>
+    <div class="brx-tx">{{ collection.description }}<a class="zlink" href="/pages/brands">All our brands</a></div>
+  </div>
+</section>
+{%- endif -%}
+<style>
+  .brx-about{margin-top:clamp(56px,6vw,96px);background:#F4F4F2;padding:clamp(48px,6vw,88px) var(--gut)}
+  .brx-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(28px,5vw,80px)}
+  .brx-o{margin-top:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2)}
+  .brx-tx p{margin:0 0 1em;font-size:16px;line-height:1.75;color:var(--ink2)}
+  .brx-tx .zlink{display:inline-block;margin-top:8px}
+  @media (max-width:800px){.brx-in{grid-template-columns:1fr}}
+</style>
 {% schema %}
-{
-  "name": "Brand",
-  "tag": "div",
-  "class": "ah-sec"
-}
+{ "name": "Brand", "tag": "div", "class": "ah-sec" }
 {% endschema %}

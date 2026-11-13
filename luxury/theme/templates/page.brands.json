@@ -1,10 +1,1 @@
-{
-  "sections": {
-    "main": {
-      "type": "page-brands"
-    }
-  },
-  "order": [
-    "main"
-  ]
-}
+{"sections":{"main":{"type":"page-brands","settings":{"menu":"brands"}}},"order":["main"]}

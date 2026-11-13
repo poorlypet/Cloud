@@ -33,3 +33,6 @@
 @media (max-width:1000px){.hb-boxes{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.hb-boxes{grid-template-columns:1fr;gap:12px}.hb-boxes a{min-height:0;padding:24px}.hb-ct .dw-w{margin:0 var(--gut);padding:28px 20px!important}}
 .ico .n:empty{display:none!important}
+/* newsletter: plain text button on the line, not a filled block */
+.bf .f button{background:none!important;border:0!important;color:var(--olive)!important;padding:0 0 0 18px!important;height:auto!important;font-size:11.5px!important;font-weight:600!important;letter-spacing:.16em!important;text-transform:uppercase}
+.bf .f button:hover{color:var(--olive-d)!important;text-decoration:underline;text-underline-offset:4px}

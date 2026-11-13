@@ -36,12 +36,7 @@ grid='''{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- for p
 m=m[:g]+grid+m[me:]
 section('main-collection',m,'Collection',head_styles(p))
 tpl('collection',[('main','main-collection')])
-# brand collections (e.g. Cloud7) use the signed-off brand page
-p='signed-off/brand.html'
-b=conv(main_of(p))
-b=re.sub(r'<h1([^>]*)>.*?</h1>',r'<h1\1>{{ collection.title }}</h1>',b,count=1,flags=re.S)
-b=liveify(b,['__coll__']).replace("collections['__coll__'].products","collection.products")
-section('main-brand',b,'Brand',head_styles(p))
+# brand collections use the hand-written sections/main-brand.liquid
 tpl('collection.brand',[('main','main-brand')])
 tpl('list-collections',[('main','main-list-collections')])
 W('sections/main-list-collections.liquid','''<div class="v9 cbw cq cq3"><header class="cq-head"><h1>Shop</h1></header>
@@ -131,7 +126,7 @@ tpl('search',[('main','main-search')])
 # ---------------- static pages ----------------
 STATIC=[('page.help','signed-off/help.html','Help'),('page.delivery','signed-off/delivery.html','Delivery'),('page.returns','signed-off/returns.html','Returns'),
  ('page.faqs','signed-off/faqs.html','FAQs'),('page.story','signed-off/story.html','Our story'),('page.reviews','signed-off/reviews.html','Reviews'),
- ('page.track-order','pages/track3.html','Track an order'),('page.brands','pages/brands3.html','Brands'),('page.happy-dogs','pages/happy3.html','Happy dogs'),
+ ('page.track-order','pages/track3.html','Track an order'),('page.happy-dogs','pages/happy3.html','Happy dogs'),
  ('page.privacy','pages/privacy.html','Privacy policy'),('page.terms','pages/terms.html','Terms'),('page.cookies','pages/cookies.html','Cookie policy'),('page.accessibility','pages/accessibility.html','Accessibility'),
  ('404','signed-off/404.html','Page not found')]
 for name,src,title in STATIC:
