@@ -23,13 +23,107 @@ main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!im
 main > section.next{margin-top:var(--sec)}
 </style>
 
-<div class="v9 c1"><nav class="crumb v9-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span aria-current="page">Contact us</span></nav><div class="c1-g"><div><h1 class="v9-h1">Contact us</h1><p class="v9-lead">Questions about an order, sizing or anything else. Send us a message and a real person will reply.</p>{%- form "contact", class: "v9-form ah-contact" -%}{%- if form.posted_successfully? -%}<p class="ah-ok">Thank you. A real person will reply within one working day.</p>{%- endif -%}{{ form.errors | default_errors }}<div class="two"><label class="f"><span>Name</span><input class="v9-in" name="contact[name]" autocomplete="name" required></label><label class="f"><span>Email</span><input class="v9-in" type="email" name="contact[email]" autocomplete="email" required></label></div><label class="f"><span>Order number <em>(optional)</em></span><input class="v9-in" name="contact[order]" placeholder="AH-10000"></label><label class="f"><span>Topic</span><select class="v9-in" name="contact[topic]" required><option value=&quot;&quot;>Choose a topic</option><option>An order I&rsquo;ve placed</option><option>Returns and exchanges</option><option>Sizing advice</option><option>Product question</option><option>Something else</option></select></label><label class="f"><span>Message</span><textarea class="v9-in" name="contact[body]" rows="6" required></textarea></label><p class="v9-ferr" role="alert"></p><button type="submit" class="btn-k">Send message</button><p class="v9-small">We reply within one working day, Monday to Friday.</p>{%- endform -%}<div class="v9-sent" hidden><h2 class="zh2">Thank you</h2><p>Your message is on its way. We&rsquo;ll reply to <b data-sent-email></b> within one working day.</p></div></div><aside class="c1-side"><div class="v9-ways"><div><span class="zkick">Email</span><b>hello@axelandhound.co.uk</b><span>Replies within one working day</span></div><div><span class="zkick">Phone</span><b>Monday to Friday, 9am to 5pm</b><span>Call us on the number in your order email</span></div><div><span class="zkick">Returns</span><b>Free within 14 days</b><span>Start a return from your account</span></div></div><div class="c1-faq"><h2 class="v9-h3">Quick answers</h2><ul class="v9-ll"><li><a href="/pages/help">When will my order arrive?</a></li><li><a href="/pages/help">How do I return something?</a></li><li><a href="/pages/help">How do I measure my dog?</a></li><li><a href="/pages/help">Can I swap for a different size?</a></li></ul></div></aside></div></div>
+<div class="cw">
+  <header class="cw-hero">
+    <nav class="cw-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">Contact us</span></nav>
+    <h1>Contact us</h1>
+    <p>Questions about an order, sizing or anything else. A real person reads every message and replies within one working day.</p>
+  </header>
 
+  <section class="cw-ways" aria-label="Ways to reach us">
+    <div><span class="cw-k">Email</span><b>hello@axelandhound.co.uk</b><span>Replies within one working day</span></div>
+    <div><span class="cw-k">Opening hours</span><b>Monday to Friday, 9am to 5pm</b><span>Closed weekends and bank holidays</span></div>
+    <div><span class="cw-k">Returns</span><b>Free within 14 days</b><a href="/pages/returns">How returns work</a></div>
+  </section>
 
+  <section class="cw-form-w" aria-labelledby="cw-h">
+    <h2 id="cw-h">Send us a message</h2>
+    <p class="cw-req">Fields marked * are required.</p>
+    {%- form 'contact', class: 'cw-form', id: 'cw-form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="cw-ok" role="status"><b>Thank you, your message has been sent.</b><span>We&rsquo;ll reply within one working day.</span></div>
+      {%- endif -%}
+      {%- if form.errors -%}<div class="cw-err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <div class="cw-row t">
+        <label class="cw-f"><span>Title</span>
+          <select name="contact[title]" id="cw-title"><option value="">Select</option><option>Mr</option><option>Mrs</option><option>Ms</option><option>Miss</option><option>Mx</option><option>Dr</option></select>
+        </label>
+        <label class="cw-f"><span>First name *</span><input id="cw-first" name="contact[first_name]" autocomplete="given-name" required></label>
+        <label class="cw-f"><span>Last name *</span><input id="cw-last" name="contact[last_name]" autocomplete="family-name" required></label>
+      </div>
+      <div class="cw-row">
+        <label class="cw-f"><span>Email address *</span><input id="cw-email" type="email" name="contact[email]" autocomplete="email" required></label>
+        <label class="cw-f"><span>Phone number</span><input id="cw-phone" type="tel" name="contact[phone]" autocomplete="tel"></label>
+      </div>
+      <div class="cw-row">
+        <label class="cw-f"><span>Order number</span><input id="cw-order" name="contact[order_number]" placeholder="For example AH-10000"></label>
+        <label class="cw-f"><span>Your enquiry is about *</span>
+          <select id="cw-topic" name="contact[enquiry]" required><option value="">Please select</option><option>An order I&rsquo;ve placed</option><option>Delivery</option><option>Returns and exchanges</option><option>Sizing advice</option><option>A product</option><option>Something else</option></select>
+        </label>
+      </div>
+      <label class="cw-f"><span>Message *</span><textarea id="cw-msg" name="contact[body]" rows="7" required></textarea></label>
+      <div class="cw-foot">
+        <button type="submit" class="cw-btn">Send message</button>
+        <p>We use your details only to reply to you. See our <a href="/policies/privacy-policy">privacy policy</a>.</p>
+      </div>
+    {%- endform -%}
+  </section>
+
+  <section class="cw-more" aria-label="Quick answers">
+    <a href="/pages/delivery"><b>Delivery</b><span>Times, costs and tracking</span></a>
+    <a href="/pages/returns"><b>Returns</b><span>Free within 14 days</span></a>
+    <a href="/pages/faqs"><b>FAQs</b><span>Sizing, care and more</span></a>
+    <a href="/pages/track-order"><b>Track an order</b><span>See where your parcel is</span></a>
+  </section>
+</div>
+<style>
+  .cw{padding:0 var(--gut) clamp(56px,7vw,96px)}
+  .cw-hero{background:#F4F4F2;margin:0 calc(var(--gut) * -1);padding:clamp(40px,5vw,72px) var(--gut)}
+  .cw-crumb{display:flex;gap:8px;font-size:12px;color:var(--ink2);margin-bottom:20px}
+  .cw-crumb a{color:inherit}
+  .cw-hero h1{font:500 clamp(40px,4.4vw,64px)/1 var(--display);margin:0}
+  .cw-hero p{max-width:56ch;margin:16px 0 0;font-size:16px;line-height:1.7;color:var(--ink2)}
+  .cw-k{display:block;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--olive,#5E6B3A);margin-bottom:12px}
+  .cw-ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid #E4E4E0}
+  .cw-ways > div{padding:32px 32px 32px 0;display:flex;flex-direction:column;gap:6px}
+  .cw-ways > div + div{padding-left:32px;border-left:1px solid #E4E4E0}
+  .cw-ways b{font:500 22px/1.2 var(--display)}
+  .cw-ways span:not(.cw-k),.cw-ways a{font-size:14px;color:var(--ink2)}
+  .cw-ways a{text-decoration:underline;text-underline-offset:3px}
+  .cw-form-w{max-width:760px;margin:clamp(48px,6vw,80px) auto 0}
+  .cw-form-w h2{font:500 clamp(30px,3vw,42px)/1.1 var(--display);margin:0;text-align:center}
+  .cw-req{text-align:center;font-size:13px;color:var(--ink2);margin:10px 0 32px}
+  .cw-form{display:flex;flex-direction:column;gap:22px}
+  .cw-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .cw-row.t{grid-template-columns:140px 1fr 1fr}
+  .cw-f{display:flex;flex-direction:column;gap:8px;min-width:0}
+  .cw-f span{font-size:13px;font-weight:500;color:var(--ink)}
+  .cw-f input,.cw-f select,.cw-f textarea{width:100%;font:400 15px/1.4 var(--sans);color:var(--ink);background:#fff;border:1px solid #CFCFC9;border-radius:0;padding:13px 14px;min-height:50px;-webkit-appearance:none;appearance:none}
+  .cw-f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23161616' stroke-width='1.3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+  .cw-f textarea{resize:vertical;min-height:160px}
+  .cw-f input:focus,.cw-f select:focus,.cw-f textarea:focus{outline:none;border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+  .cw-f input:user-invalid,.cw-f select:user-invalid,.cw-f textarea:user-invalid{border-color:#A23B2A}
+  .cw-foot{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:6px;text-align:center}
+  .cw-foot p{font-size:13px;color:var(--ink2);margin:0}
+  .cw-foot a{color:inherit;text-decoration:underline}
+  .cw-btn{min-width:260px;height:54px;background:var(--ink);color:#fff;border:0;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .25s}
+  .cw-btn:hover{background:var(--olive,#5E6B3A)}
+  .cw-ok{background:#EEF0E6;padding:18px 20px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+  .cw-err{background:#F8ECE9;padding:14px 18px;font-size:14px;color:#7A2A1E}
+  .cw-err ul{margin:0;padding-left:18px}
+  .cw-more{max-width:1120px;margin:clamp(56px,7vw,96px) auto 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .cw-more a{display:flex;flex-direction:column;gap:6px;padding:24px;background:#F4F4F2;color:inherit;text-decoration:none;transition:background .25s}
+  .cw-more a:hover{background:#ECECE8}
+  .cw-more b{font:500 22px/1.2 var(--display)}
+  .cw-more span{font-size:13.5px;color:var(--ink2)}
+  @media (max-width:800px){
+    .cw-ways{grid-template-columns:1fr}
+    .cw-ways > div,.cw-ways > div + div{padding:22px 0;border-left:0;border-top:1px solid #E4E4E0}
+    .cw-row,.cw-row.t{grid-template-columns:1fr}
+    .cw-more{grid-template-columns:1fr 1fr}
+    .cw-btn{width:100%}
+  }
+</style>
 {% schema %}
-{
-  "name": "Contact",
-  "tag": "div",
-  "class": "ah-sec"
-}
+{ "name": "Contact", "tag": "div", "class": "ah-sec" }
 {% endschema %}

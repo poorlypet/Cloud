@@ -98,6 +98,28 @@ main > section.next{margin-top:var(--sec)}
   <section class="bd2" aria-label="Dachshund and greyhound">
     <div class="bd2-h"><h2>Long backs, deep chests <i>cut to fit</i></h2><p>Dachshunds and greyhounds need a different shape. These coats, harnesses and beds are cut for a long back or a deep chest and slim waist, so they fit properly and stay put.</p></div><div class="two"><a class="pan" href="#">{%- render 'ah-img', f: 'home-dachshund.jpg', sizes: '(max-width: 800px) 100vw, 50vw' -%}<span class="tx"><b>Dachshund</b><small>Coats and harnesses with a longer back.</small><span class="lk">Shop dachshund <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></span></span></a><a class="pan" href="#">{%- render 'ah-img', f: 'home-greyhound-whippet.jpg', sizes: '(max-width: 800px) 100vw, 50vw' -%}<span class="tx"><b>Greyhound &amp; whippet</b><small>Deep-chested coats that stay put on a slim waist.</small><span class="lk">Shop greyhound <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></span></span></a></div>
   </section>
+  <section class="sp cs lbp" aria-label="Shop for long backs">
+    <div class="sp-h"><h2>Made for long backs</h2><a class="all" href="/collections/dachshund">Shop all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
+    <div class="cs-w">
+      <button type="button" class="cs-a prev" aria-label="Previous pieces" hidden><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M7 1L1 7l6 6"/></svg></button>
+      <div class="cs-r" tabindex="0" aria-label="Pieces for long backs, scroll sideways">
+        {%- assign lb_n = 0 -%}
+        {%- for product in collections['dachshund'].products limit: 6 -%}{%- render 'card', product: product -%}{%- assign lb_n = lb_n | plus: 1 -%}{%- endfor -%}
+        {%- for product in collections['whippet-and-greyhound'].products limit: 6 -%}{%- render 'card', product: product -%}{%- assign lb_n = lb_n | plus: 1 -%}{%- endfor -%}
+        {%- if lb_n == 0 -%}{%- for i in (1..6) -%}<div class="pcd lbp-ph" aria-hidden="true"><span class="im"></span><span class="l1"></span><span class="l2"></span></div>{%- endfor -%}{%- endif -%}
+      </div>
+      <button type="button" class="cs-a next" aria-label="More pieces"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+<style>
+  .lbp .cs-r{grid-auto-columns:calc((100vw - 2 * var(--gut,24px) - 40px) / 4.3);gap:16px}
+  .lbp .cs-r > *{scroll-snap-align:start;min-width:0}
+  .lbp .cs-a{top:38%}
+  .lbp-ph .im{display:block;aspect-ratio:1;background:#EDEDEB}
+  .lbp-ph .l1,.lbp-ph .l2{display:block;height:12px;background:#F2F2EF;margin-top:14px;width:70%}
+  .lbp-ph .l2{width:30%;margin-top:8px}
+  @media (max-width:800px){.lbp .cs-r{grid-auto-columns:62vw}}
+</style>
   {%- if false -%}{%- comment -%}Happy dogs: hidden until there are customer films{%- endcomment -%}<section class="hdg v1" aria-label="Happy dogs"><div class="hdg-h"><div><h2>Happy dogs <i>at home with Axel &amp; Hound</i></h2></div><a class="lk" href="#">Share yours on Instagram <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g"><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-juno.mp4', hover: true -%}</div><span class="cap">Juno<small>border collie</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-fig.mp4', hover: true -%}</div><span class="cap">Fig<small>dachshund puppy</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-bonnie.mp4', hover: true -%}</div><span class="cap">Bonnie<small>rough collie</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-ted.mp4', hover: true -%}</div><span class="cap">Ted<small>border collie</small></span></div></div></section>{%- endif -%}
 
 

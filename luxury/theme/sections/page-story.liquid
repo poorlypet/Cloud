@@ -65,7 +65,7 @@ main > section.next{margin-top:var(--sec)}
     </div>
   </section>
 
-  <section class="os-makers os-w">
+  <section class="os-makers os-w" id="makers">
     <div class="os-head" data-os><span class="os-k">Made by Europe&rsquo;s best</span><h2>The makers we work with</h2><p>Independent studios and workshops from Berlin to Barcelona, chosen slowly and lived with at home before we stock them.</p></div>
     <div class="os-mk">
       {%- for link in linklists['brands'].links -%}
@@ -104,13 +104,13 @@ main > section.next{margin-top:var(--sec)}
       <h2>Still small, on purpose.</h2>
       <p>We pack every order by hand, wrap it in tissue and answer every email ourselves. Thank you for being part of it.</p>
       <span class="os-sig">Sam &amp; Alex</span>
-      <div class="os-btns"><a class="os-btn" href="/collections/new-in">Shop new in</a><a class="os-btn ghost" href="/pages/brands">Meet the makers</a></div>
+      <div class="os-btns"><a class="os-btn" href="/collections/new-in">Shop new in</a><a class="os-btn ghost" href="#makers">Meet the makers</a></div>
     </div>
   </section>
 </div>
 <style>
   .os{--os-gap:clamp(72px,9vw,140px)}
-  .os-w{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:var(--gut);padding-right:var(--gut)}
+  .os-w{padding-left:var(--gut);padding-right:var(--gut)}
   .os-k{display:block;font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--olive,#5E6B3A);margin-bottom:16px}
   .os h2{font:500 clamp(30px,3.4vw,48px)/1.05 var(--display);margin:0;text-wrap:balance}
   .os p{font-size:16px;line-height:1.75;color:var(--ink2)}
@@ -124,8 +124,8 @@ main > section.next{margin-top:var(--sec)}
   .os-state{padding-top:var(--os-gap);text-align:center}
   .os-state p{font:500 clamp(30px,4vw,58px)/1.12 var(--display);color:var(--ink);max-width:22ch;margin:0 auto;text-wrap:balance}
   .os-state em{color:var(--olive,#5E6B3A)}
-  .os-start{margin-top:var(--os-gap);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);grid-template-areas:"t a b";gap:clamp(20px,3vw,40px);align-items:end}
-  .os-start-tx{grid-area:t;align-self:center;padding-right:clamp(0px,3vw,48px)}
+  .os-start{margin-top:var(--os-gap);padding-right:0!important;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,5fr) minmax(0,4fr);grid-template-areas:"t a b";gap:clamp(20px,3vw,40px);align-items:end}
+  .os-start-tx{grid-area:t;align-self:center;padding-right:clamp(0px,3vw,48px);max-width:560px}
   .os-start-tx h2{margin-bottom:20px}
   .os-start-tx p{margin:0 0 14px}
   .os-ph{margin:0;position:relative}
@@ -136,8 +136,9 @@ main > section.next{margin-top:var(--sec)}
   .os-collect{margin-top:var(--os-gap)}
   .os-head{margin-bottom:clamp(28px,3vw,44px)}
   .os-head p{max-width:56ch;margin:16px 0 0}
-  .os-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((min(100vw,1240px) - 2 * var(--gut) - 60px) / 4.2);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut);scroll-padding-left:var(--gut)}
-  @media (min-width:1241px){.os-row{padding-left:calc((100vw - 1240px) / 2 + var(--gut));scroll-padding-left:calc((100vw - 1240px) / 2 + var(--gut))}}
+  .os-state p{max-width:24ch}
+  @media (max-width:900px){.os-start{padding-right:var(--gut)!important}}
+  .os-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2 * var(--gut) - 60px) / 4.3);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut);scroll-padding-left:var(--gut)}
   .os-row::-webkit-scrollbar{display:none}
   .os-c{scroll-snap-align:start;color:inherit;text-decoration:none}
   .os-c .im{display:block;aspect-ratio:1;overflow:hidden;background:#EDEDEB}
@@ -149,7 +150,7 @@ main > section.next{margin-top:var(--sec)}
   .os-mk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3vw,48px) clamp(20px,2.4vw,36px)}
   .os-m{color:inherit;text-decoration:none;display:block}
   .os-m:nth-child(4n+2),.os-m:nth-child(4n+3){}
-  .os-m .im{display:block;position:relative;aspect-ratio:16/10;overflow:hidden;background:#EDEDEB}
+  .os-m .im{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;background:#EDEDEB}
   .os-m .im video,.os-m .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
   .os-m:hover .im video,.os-m:hover .im img{transform:scale(1.03)}
   .os-m .tx{display:block;margin-top:18px}
@@ -163,7 +164,7 @@ main > section.next{margin-top:var(--sec)}
   .os-rules li b{display:block;font:500 26px/1.1 var(--display)}
   .os-rules li p{margin:10px 0 0;font-size:15px}
   .os-close{position:relative;margin-top:var(--os-gap);min-height:min(86svh,820px);overflow:hidden;background:#1a1a18;color:#fff;display:flex;align-items:flex-end}
-  .os-close-tx{position:relative;z-index:1;padding:clamp(40px,6vw,96px) var(--gut);max-width:640px}
+  .os-close-tx{position:relative;z-index:1;padding:clamp(40px,6vw,96px) var(--gut);max-width:720px}
   .os-close h2{color:#fff;font-size:clamp(38px,4.6vw,68px)}
   .os-close p{color:rgba(255,255,255,.88);margin:18px 0 0}
   .os-sig{display:block;font:italic 500 26px/1 var(--display);margin-top:20px}

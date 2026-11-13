@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0, '/tmp/claude-0/-home-user-Cloud/62aaa6c4-b051-5a25-88a3-78a45df60f03/scratchpad')
 from gql import gql
 PUB = 'gid://shopify/Publication/550919111046'
-HIDE = lambda it: any(k in (it.get('url') or '').lower() for k in ('/collections/cats', 'for-cats', 'cat-', '/pages/happy-dogs', '/collections/dventotto'))
+HIDE = lambda it: any(k in (it.get('url') or '').lower() for k in ('/collections/cats', 'for-cats', 'cat-', '/pages/happy-dogs', '/collections/dventotto', '/pages/brands'))
 F = 'id title type url resourceId tags'
 menus = gql('{menus(first:30){nodes{id title handle items{%s items{%s items{%s}}}}}}' % (F, F, F))['menus']['nodes']
 def keep(items):
@@ -35,7 +35,7 @@ hide = [h for h in cols if h == 'cats' or h == 'dventotto' or 'cat-' in h or h.e
 for h in hide:
     r = gql('mutation($id:ID!,$p:[PublicationInput!]!){publishableUnpublish(id:$id,input:$p){userErrors{message}}}', {'id': cols[h], 'p': [{'publicationId': PUB}]})
     print('unpublished collection', h, r['publishableUnpublish']['userErrors'])
-pg = [n for n in gql('{pages(first:100){nodes{id handle}}}')['pages']['nodes'] if n['handle'] == 'happy-dogs']
+pg = [n for n in gql('{pages(first:100){nodes{id handle}}}')['pages']['nodes'] if n['handle'] in ('happy-dogs', 'brands')]
 for n in pg:
     r = gql('mutation($id:ID!,$p:PageUpdateInput!){pageUpdate(id:$id,page:$p){userErrors{message}}}', {'id': n['id'], 'p': {'isPublished': False}})
-    print('unpublished page happy-dogs', r['pageUpdate']['userErrors'])
+    print('unpublished page', n['handle'], r['pageUpdate']['userErrors'])

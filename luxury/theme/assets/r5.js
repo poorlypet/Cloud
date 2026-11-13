@@ -13,57 +13,63 @@
   "use strict";
 
   /* menu photos come from Content > Files by name; a grey blank until uploaded */
+  function pick(k) {
+    var m = (window.AH && AH.media) || {}, ks = String(k).split("|");
+    for (var i = 0; i < ks.length; i++) { var u = m[ks[i].replace(/\.(jpg|png)$/, "")]; if (u) return u; }
+    return "";
+  }
   function src(k, w) {
-    var m = (window.AH && AH.media) || {}, u = m[k];
+    var u = pick(k);
     return u ? u + (u.indexOf("?") < 0 ? "?" : "&") + "width=" + w : (window.AH && AH.blank) || "";
   }
 
+
   var MENU = [
-    { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear"] }], f: [],
-      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }] },
-    { key: "beds", label: "Beds", hero: "menu-beds.jpg", line: "Deep, soft beds and the throws that go with them.",
+    { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear", "Shop all new in"] }], f: [],
+      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }, { p: "home-category-coats.jpg|story-collect-coats.jpg", t: "New in" }] },
+    { key: "beds", label: "Beds", hero: "menu-beds.jpg|home-category-beds.jpg", hero2: "home-category-beds.jpg|story-collect-beds.jpg", line: "Deep, soft beds and the throws that go with them.",
       g: [{ t: "Beds", l: ["Bolster beds", "Round beds", "Orthopaedic beds", "Sofa beds", "Crate mats", "Replacement covers"] },
           { t: "Blankets & cushions", l: ["Wool throws", "Bouclé blankets", "Cushions", "Travel blankets"] },
           { t: "Collections", l: ["Bouclé", "Wool", "Velvet", "Linen"] }],
       f: [{ p: "still1", t: "The Bouclé Bed", n: "Bolster Bed, Moss Bouclé", pr: 245 },
           { p: "cavalier", t: "Cushions", n: "Bolster Cushion, Rose", pr: 95 },
           { p: "still2", t: "Throws", n: "Wool Throw, Oat", pr: 89 }] },
-    { key: "walking", label: "Walking", hero: "menu-walking.jpg", line: "Leather, rope and waxed cotton, made for the daily walk.",
+    { key: "walking", label: "Walking", hero: "menu-walking.jpg|home-category-walking.jpg", hero2: "home-category-walking.jpg|story-collect-walking.jpg", line: "Leather, rope and waxed cotton, made for the daily walk.",
       g: [{ t: "Walking", l: ["Collars", "Leads", "Harnesses", "Collar & lead sets", "Poop bag holders", "Treat pouches"] },
           { t: "By material", l: ["Leather", "Waxed cotton", "Rope", "Tweed"] },
           { t: "Collections", l: ["Heritage leather", "Field", "City"] }],
-      f: [{ p: "labCollar", t: "Collars", n: "Leather Collar, Cognac", pr: 65 },
+      f: [{ p: "labCollar", t: "Harnesses", n: "Padded Harness, Olive", pr: 79 },
           { p: "goldenWalk", t: "Leads", n: "Rope Lead, Sand", pr: 55 },
           { p: "toller", t: "Harnesses", n: "Padded Harness, Olive", pr: 79 }] },
-    { key: "coats", label: "Coats", hero: "menu-coats.jpg", line: "Merino knits and quilted coats for the colder months.",
+    { key: "coats", label: "Coats", hero: "menu-coats.jpg|story-collect-coats.jpg", hero2: "home-category-coats.jpg", line: "Merino knits and quilted coats for the colder months.",
       g: [{ t: "Coats", l: ["Winter coats", "Raincoats", "Knitwear", "Bathrobes", "Snoods"] },
           { t: "By fit", l: ["Dachshund", "Whippet & greyhound", "French bulldog", "Standard fit"] },
           { t: "Collections", l: ["Quilted", "Merino", "Waxed cotton"] }],
       f: [{ p: "poodle", t: "Knitwear", n: "Cable Knit Jumper, Cream", pr: 85 },
           { p: "samoyed", t: "Winter coats", n: "Quilted Coat, Forest", pr: 129 },
           { p: "mastiff", t: "Raincoats", n: "Waxed Raincoat, Tobacco", pr: 115 }] },
-    { key: "dining", label: "Dining", hero: "menu-dining.jpg", line: "Stoneware bowls, oak stands and jars for the counter.",
+    { key: "dining", label: "Dining", hero: "menu-dining.jpg|home-category-dining.jpg", hero2: "home-category-dining.jpg|story-collect-dining.jpg", line: "Stoneware bowls, oak stands and jars for the counter.",
       g: [{ t: "Dining", l: ["Bowls", "Bowl stands", "Placemats", "Treat jars", "Food storage"] },
           { t: "Care", l: ["Grooming", "Brushes", "Shampoo"] },
           { t: "By material", l: ["Stoneware", "Ceramic", "Oak", "Steel"] }],
       f: [{ p: "jack", t: "Bowls", n: "Stoneware Bowl, Chalk", pr: 42 },
           { p: "darkDog", t: "Bowl stands", n: "Oak Bowl Stand", pr: 95 },
           { p: "groom", t: "Grooming", n: "Beechwood Brush", pr: 32 }] },
-    { key: "play", label: "Play", hero: "menu-play.jpg", line: "Soft, sturdy toys in wool felt and natural rubber.",
+    { key: "play", label: "Play", hero: "menu-play.jpg|home-category-play.jpg", hero2: "home-category-play.jpg|story-collect-play.jpg", line: "Soft, sturdy toys in wool felt and natural rubber.",
       g: [{ t: "Play", l: ["Plush toys", "Rope toys", "Balls", "Chew toys", "Puzzle toys"] },
           { t: "By age", l: ["Puppy", "Adult", "Senior"] },
           { t: "Collections", l: ["Wool felt", "Natural rubber"] }],
       f: [{ p: "goldenToy", t: "Plush toys", n: "Plush Lamb", pr: 24 },
           { p: "pupDark", t: "Puppy", n: "Puppy Play Set", pr: 60 },
           { p: "corgi", t: "Puzzle toys", n: "Oak Puzzle", pr: 38 }] },
-    { key: "travel", label: "Travel", hero: "menu-travel.jpg", line: "Carriers, car seats and beds for weekends away.",
+    { key: "travel", label: "Travel", hero: "menu-travel.jpg|home-category-travel.jpg", hero2: "home-category-travel.jpg|story-collect-travel.jpg", line: "Carriers, car seats and beds for weekends away.",
       g: [{ t: "Travel", l: ["Carriers", "Car seats", "Travel beds", "Travel bowls", "Travel blankets"] },
           { t: "Occasions", l: ["Weekends away", "Long drives", "City days"] },
           { t: "Collections", l: ["Canvas", "Waxed cotton"] }],
       f: [{ p: "beach", t: "Travel beds", n: "Travel Bed, Canvas", pr: 165 },
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
           { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] },
-    { key: "gifts", label: "Gifts", hero: "menu-gifts.jpg", line: "Wrapped by hand and ready to give.",
+    { key: "gifts", label: "Gifts", hero: "menu-gifts.jpg|home-category-gifts.jpg", hero2: "home-category-gifts.jpg", line: "Wrapped by hand and ready to give.",
       g: [{ t: "Gifts", l: ["Gift sets", "For the new puppy", "Under £50", "Under £100", "Gift cards"] },
           { t: "For", l: ["Dogs", "Their people"] },
           { t: "Occasions", l: ["Birthdays", "Christmas", "Gotcha day"] }],
@@ -86,9 +92,12 @@
   function more(c) { return '<a class="more" href="#">Shop all ' + esc(c.label.toLowerCase()) + ARW + "</a>"; }
   function ph(k, w, ratio, cap) {
     return '<span class="ph"' + (ratio ? ' style="aspect-ratio:' + ratio + '"' : "") + '><img src="' + src(k, w) +
-      '" alt="" loading="lazy" decoding="async" data-ah="' + k + '"' + ((window.AH && AH.media && AH.media[k]) ? "" : ' class="ah-blank"') + '>' + (cap ? '<span class="phcap">' + esc(cap) + "</span>" : "") + "</span>";
+      '" alt="" loading="lazy" decoding="async" data-ah="' + k + '"' + (pick(k) ? "" : ' class="ah-blank"') + '>' + (cap ? '<span class="phcap">' + esc(cap) + "</span>" : "") + "</span>";
   }
 
+  function pic(k, t, sq) {
+    return '<a class="mw-pic" href="#"><span class="ph"><img src="' + src(k, 600) + '" alt="" loading="lazy" decoding="async"' + (pick(k) ? "" : ' class="ah-blank"') + '></span><span class="mw-t">' + esc(t) + '</span><span class="mw-s">Shop now</span></a>';
+  }
   function tile(f, ratio) {
     return '<a class="tile" href="#">' + ph(f.p, 760, ratio) + '<span class="tile-l">' + esc(f.t) + ARW + "</span></a>";
   }
@@ -103,6 +112,15 @@
     return c.g.slice(0, n).map(function (g) { return '<div class="col"><p class="hd">' + esc(g.t) + "</p>" + links(g.l) + "</div>"; }).join("");
   }
   var LAYOUTS = {
+    mw: function (c) {
+      return '<div class="mw"><div class="mw-cols">' + c.g.slice(0, 3).map(function (g) { return '<div class="col"><p class="hd">' + esc(g.t) + "</p>" + links(g.l) + "</div>"; }).join("") +
+        '<div class="col"><p class="hd">Featured</p>' + links(FEAT) + '<a class="ln all" href="#">Shop all ' + esc(c.label.toLowerCase()) + '</a></div></div>' +
+        '<div class="mw-pics">' + pic(c.hero, c.f[0].t) + pic(c.hero2, c.f[1].t) + "</div></div>";
+    },
+    mwnew: function (c) {
+      return '<div class="mw"><div class="mw-cols" style="grid-template-columns:minmax(0,1fr)"><div class="col"><p class="hd">New in</p>' + links(c.g[0].l) + '</div></div>' +
+        '<div class="mw-pics sq">' + c.tiles.map(function (f) { return pic(f.p, f.t, true); }).join("") + "</div></div>";
+    },
     newin: function (c) {
       return '<div class="mp-in L-tiles"><div class="tiles4" style="grid-template-columns:repeat(' + c.tiles.length + ',minmax(0,1fr))">' + c.tiles.map(function (f) { return tile(f, "1/1"); }).join("") + "</div></div>";
     },
@@ -148,7 +166,7 @@
     p.className = "mp"; p.id = "mp-" + c.key; p.setAttribute("data-k", c.key);
     var band = body.hasAttribute("data-band") ? '<div class="band"><a class="bbtn" href="#">Shop all ' + esc(c.label.toLowerCase()) + '</a><a class="bbtn on" href="#">Bestsellers</a>' +
       '<button type="button" class="band-x" data-close-mega aria-label="Close menu"><svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div>' : "";
-    p.innerHTML = band + (c.tiles ? LAYOUTS.newin(c) : layout(c));
+    p.innerHTML = band + (c.tiles ? LAYOUTS.mwnew(c) : LAYOUTS.mw(c));
     mega.appendChild(p);
   });
   nav.innerHTML = navHtml;
