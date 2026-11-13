@@ -1,0 +1,50 @@
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div class="ftr-news">
+        <h4>{{ section.settings.news_title }}</h4>
+        <p>{{ section.settings.news_text }}</p>
+        {%- form 'customer', id: 'ftr-news' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="sr" for="ftr-email">Email address</label>
+          <input id="ftr-email" type="email" name="contact[email]" placeholder="Your email address" autocomplete="email" required>
+          <button type="submit">Sign up</button>
+        {%- endform -%}
+        {%- if form.posted_successfully? -%}<p class="form-ok">Thank you. Your welcome code is on its way.</p>{%- endif -%}
+        <div class="soc">
+          {%- if settings.instagram != blank -%}<a href="{{ settings.instagram }}">Instagram</a>{%- endif -%}
+          {%- if settings.tiktok != blank -%}<a href="{{ settings.tiktok }}">TikTok</a>{%- endif -%}
+          {%- if settings.pinterest != blank -%}<a href="{{ settings.pinterest }}">Pinterest</a>{%- endif -%}
+        </div>
+      </div>
+      {%- for i in (1..3) -%}
+        {%- assign key = 'menu_' | append: i -%}
+        {%- assign m = linklists[section.settings[key]] -%}
+        {%- if m.links.size > 0 -%}
+          <div><h4>{{ m.title | remove: 'Footer: ' }}</h4><ul>{%- for link in m.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="ftr-bot">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.legal_name }}. {{ section.settings.small }}</span>
+      <div class="pay" aria-label="Payment methods">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag }}{%- endfor -%}</div>
+      <nav style="display:flex;gap:16px">{%- for link in linklists[section.settings.legal_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</nav>
+    </div>
+  </div>
+  <span class="ftr-logo" aria-hidden="true">Axel<i>&amp;</i>Hound</span>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "news_title", "label": "Newsletter heading", "default": "Join us" },
+    { "type": "textarea", "id": "news_text", "label": "Newsletter text", "default": "New pieces, care guides and 10% off your first order." },
+    { "type": "link_list", "id": "menu_1", "label": "Menu 1" },
+    { "type": "link_list", "id": "menu_2", "label": "Menu 2" },
+    { "type": "link_list", "id": "menu_3", "label": "Menu 3" },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal menu" },
+    { "type": "text", "id": "legal_name", "label": "Company name", "default": "Axel & Hound" },
+    { "type": "text", "id": "small", "label": "Small print", "default": "Made in the United Kingdom." }
+  ]
+}
+{% endschema %}

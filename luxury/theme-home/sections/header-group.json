@@ -1,0 +1,17 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Complimentary UK delivery on orders over £75", "link": "/pages/delivery" } },
+        "m2": { "type": "message", "settings": { "text": "Free returns within 14 days", "link": "/pages/returns" } },
+        "m3": { "type": "message", "settings": { "text": "Every order packed by hand and sent tracked" } }
+      },
+      "block_order": ["m1", "m2", "m3"]
+    },
+    "header": { "type": "header", "settings": { "menu": "main-menu" } }
+  },
+  "order": ["announcement", "header"]
+}

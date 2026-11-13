@@ -1,0 +1,1 @@
+{ "sections": { "main": { "type": "main-404" }, "best": { "type": "featured-collection", "settings": { "collection": "bestsellers", "kicker": "Popular right now", "heading": "Our bestsellers" } } }, "order": ["main", "best"] }

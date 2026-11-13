@@ -1,0 +1,44 @@
+{%- liquid
+  assign img = section.settings.image
+  assign has = false
+  if img != blank or section.settings.video != blank
+    assign has = true
+  endif
+-%}
+<section class="hero hero-h-{{ section.settings.height }}{% if section.settings.center %} hero--center{% endif %}{% unless has %} no-media{% endunless %}">
+  {%- if section.settings.video != blank -%}
+    <div class="frame">{{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '2000x' }}</div>
+  {%- elsif img != blank -%}
+    {%- assign first = false -%}{%- if section.index == 1 -%}{%- assign first = true -%}{%- endif -%}{% render 'media', image: img, sizes: '100vw', eager: first %}
+  {%- else -%}
+    <div class="frame" style="background:var(--linen)"></div>
+  {%- endif -%}
+  <div class="wrap hero-tx">
+    {%- if section.settings.kicker != blank -%}<span class="eyebrow" style="color:inherit;opacity:.9">{{ section.settings.kicker }}</span>{%- endif -%}
+    <h1 class="h-display" style="color:inherit;max-width:14ch;{% if section.settings.center %}margin:12px auto 0{% else %}margin-top:12px{% endif %}">{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="btns">
+      {%- if section.settings.b1 != blank -%}<a class="btn {% if has %}btn--light{% endif %}" href="{{ section.settings.b1_link }}">{{ section.settings.b1 }}</a>{%- endif -%}
+      {%- if section.settings.b2 != blank -%}<a class="btn {% if has %}btn--ghost-light{% else %}btn--line{% endif %}" href="{{ section.settings.b2_link }}">{{ section.settings.b2 }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "video", "id": "video", "label": "Video", "info": "Plays silently on a loop in place of the image." },
+    { "type": "select", "id": "height", "label": "Height", "default": "full", "options": [ { "value": "full", "label": "Full screen" }, { "value": "tall", "label": "Tall" }, { "value": "mid", "label": "Medium" } ] },
+    { "type": "checkbox", "id": "center", "label": "Centre the text", "default": false },
+    { "type": "text", "id": "kicker", "label": "Small heading", "default": "Autumn and winter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made for the long walk home" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Coats, beds and collars made properly, by makers we know, for dogs who live with us." },
+    { "type": "text", "id": "b1", "label": "First button", "default": "Shop new in" },
+    { "type": "url", "id": "b1_link", "label": "First button link" },
+    { "type": "text", "id": "b2", "label": "Second button", "default": "Shop coats" },
+    { "type": "url", "id": "b2_link", "label": "Second button link" }
+  ],
+  "presets": [ { "name": "Hero" } ]
+}
+{% endschema %}

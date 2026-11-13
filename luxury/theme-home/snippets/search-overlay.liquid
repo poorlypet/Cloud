@@ -1,0 +1,16 @@
+<div class="srch" id="search" role="dialog" aria-label="Search" tabindex="-1">
+  <div class="wrap">
+    <form class="srch-f" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="sr" for="srch-q">Search</label>
+      <input id="srch-q" type="search" name="q" placeholder="What are you looking for?" autocomplete="off" data-suggest>
+      <input type="hidden" name="type" value="product">
+      <button class="x" type="button" data-close>Close</button>
+    </form>
+    <div class="srch-res" data-suggest-out>
+      <span class="eyebrow">Popular searches</span>
+      <div class="srch-pop">
+        {%- assign pops = settings.popular_searches | split: ',' -%}{%- for t in pops -%}<a class="chip" href="{{ routes.search_url }}?type=product&q={{ t | strip | url_encode }}">{{ t | strip }}</a>{%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-search" },
+    "best": { "type": "featured-collection", "settings": { "collection": "bestsellers", "kicker": "You might like", "heading": "Our bestsellers", "count": 4 } }
+  },
+  "order": ["main", "best"]
+}

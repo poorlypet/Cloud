@@ -1,0 +1,9 @@
+<div class="wrap">
+  <header class="phead"><h1 class="h1">Shop</h1><p class="lead">Everything we make and stock, by category.</p></header>
+  <div class="tiles" style="--cols:4;padding-bottom:clamp(56px,6vw,96px)">
+    {%- for link in linklists['main-menu'].links -%}
+      <a class="tile" href="{{ link.url }}">{% render 'media', image: link.object.image, ratio: 'r-4x5', sizes: '25vw', ph: 'collection-1' %}<span class="tile-l">{{ link.title }}<span>Shop</span></span></a>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}{ "name": "All collections" }{% endschema %}

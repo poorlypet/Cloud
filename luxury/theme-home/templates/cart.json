@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-cart" },
+    "best": { "type": "featured-collection", "settings": { "collection": "bestsellers", "kicker": "Before you go", "heading": "Our bestsellers", "count": 4 } }
+  },
+  "order": ["main", "best"]
+}

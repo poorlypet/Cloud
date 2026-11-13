@@ -1,0 +1,8 @@
+<div class="wrap nf">
+  <div class="num" aria-hidden="true">404</div>
+  <h1 class="h1" style="margin-top:-.4em">We can&rsquo;t find that page</h1>
+  <p class="lead" style="margin:14px auto 0;max-width:520px">It may have moved, or the link may be old. Try a search, or start from one of these.</p>
+  <form action="{{ routes.search_url }}" method="get" class="news"><input type="hidden" name="type" value="product"><div style="display:flex;max-width:480px;margin:26px auto 0;border-bottom:1px solid var(--ink)"><label class="sr" for="nfq">Search</label><input id="nfq" type="search" name="q" placeholder="Search" style="flex:1;border:0;outline:0;height:50px;font-size:15px;min-width:0;background:none"><button class="link" type="submit" style="border:0">Search</button></div></form>
+  <div class="srch-pop" style="justify-content:center;margin-top:22px">{%- for link in linklists['main-menu'].links -%}<a class="chip" href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</div>
+</div>
+{% schema %}{ "name": "Page not found" }{% endschema %}

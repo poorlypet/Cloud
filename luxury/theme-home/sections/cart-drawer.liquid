@@ -1,0 +1,38 @@
+<div class="drawer-h"><h2>Your bag{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</h2><button class="x" type="button" data-close>Close</button></div>
+{%- if cart.item_count > 0 -%}
+  <div class="drawer-b">
+    {%- assign free = settings.free_over | times: 100 -%}
+    {%- if free > 0 -%}
+      <div class="free-bar" style="padding-top:16px">
+        {%- if cart.total_price >= free -%}Your order qualifies for complimentary UK delivery.{%- else -%}{{ free | minus: cart.total_price | money_without_trailing_zeros }} away from complimentary UK delivery.{%- endif -%}
+        <i><b style="width:{% if cart.total_price >= free %}100{% else %}{{ cart.total_price | times: 100 | divided_by: free }}{% endif %}%"></b></i>
+      </div>
+    {%- endif -%}
+    {%- for item in cart.items -%}
+      <div class="d-line" data-key="{{ item.key }}">
+        <a href="{{ item.url }}">{% render 'media', image: item.image, ratio: 'r-4x5', sizes: '84px', ph: 'product-1' %}</a>
+        <div>
+          <a class="line-n" href="{{ item.url }}">{{ item.product.title }}</a>
+          {%- unless item.product.has_only_default_variant -%}<div class="line-o">{{ item.variant.title }}</div>{%- endunless -%}
+          <div class="row">
+            <div class="qty"><button type="button" data-q="-1" aria-label="One fewer">&minus;</button><input type="number" value="{{ item.quantity }}" min="0" aria-label="Quantity" data-qi><button type="button" data-q="1" aria-label="One more">+</button></div>
+            <span>{{ item.final_line_price | money_without_trailing_zeros }}</span>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="drawer-f">
+    <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px"><span>Subtotal</span><span>{{ cart.total_price | money_without_trailing_zeros }}</span></div>
+    <p class="muted" style="font-size:13px;margin:0 0 16px">Delivery and any discount codes are added at checkout.</p>
+    <form action="{{ routes.cart_url }}" method="post"><button class="btn btn--full" type="submit" name="checkout">Checkout</button></form>
+    <a class="btn btn--line btn--full" href="{{ routes.cart_url }}" style="margin-top:10px">View bag</a>
+  </div>
+{%- else -%}
+  <div class="drawer-b empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+    <p class="h3">Your bag is empty</p>
+    <p class="muted" style="margin:0">Start with something for the walk, the bed or the bowl.</p>
+    <a class="btn" href="{{ routes.collections_url }}/new-in">Shop new in</a>
+  </div>
+{%- endif -%}
+{% schema %}{ "name": "Cart drawer" }{% endschema %}

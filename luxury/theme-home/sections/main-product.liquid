@@ -1,0 +1,93 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign coll = collection | default: product.collections.first
+  assign details = product.metafields.custom.details.value
+  assign sg = product.metafields.custom.size_guide.value
+  assign mc = product.metafields.custom.materials_care.value
+  assign feats = product.metafields.custom.features.value
+-%}
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span>{%- if coll -%}<a href="{{ coll.url }}">{{ coll.title }}</a><span>/</span>{%- endif -%}<span aria-current="page">{{ product.title }}</span></nav>
+  <div class="pdp">
+    <div class="gal">
+      {%- if product.media.size > 0 -%}
+        {%- for m in product.media -%}
+          <button type="button" class="frame r-4x5" data-lb-open aria-label="View image {{ forloop.index }} of {{ product.media.size }} full screen">{{ m.preview_image | image_url: width: 1800 | image_tag: loading: 'lazy', sizes: '(max-width: 1000px) 90vw, 30vw', widths: '600, 900, 1200, 1800', alt: m.alt | default: product.title | escape }}</button>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..3) -%}{% render 'media', ratio: 'r-4x5', ph: 'product-1' %}{%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <div class="pinfo">
+      {%- if product.vendor != blank and product.vendor != shop.name -%}<a class="card-v" href="{{ product.vendor | url_for_vendor }}">{{ product.vendor }}</a>{%- endif -%}
+      <h1 class="h1">{{ product.title }}</h1>
+      {% render 'price', product: product, variant: v %}
+      <p class="instal">Or 3 interest-free payments of {{ v.price | divided_by: 3 | money }} with Klarna or Shop Pay</p>
+
+      {%- form 'product', product, id: 'pform', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ v.id }}">
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign oi = forloop.index0 -%}
+            {%- assign is_colour = false -%}
+            {%- if option.name == 'Colour' or option.name == 'Color' -%}{%- assign is_colour = true -%}{%- endif -%}
+            <fieldset class="opt" style="border:0;padding:0;margin-left:0;margin-right:0">
+              <legend class="opt-l" style="width:100%;display:flex"><span>{{ option.name }}<b data-opt-name="{{ oi }}">{% if is_colour or option.values.size == 1 %}{{ option.selected_value }}{% endif %}</b></span>{%- if option.name == 'Size' and sg != blank -%}<a href="#size-guide" style="margin-left:auto">Size guide</a>{%- endif -%}</legend>
+              <div class="{% if is_colour %}swatches{% else %}sizes{% endif %}">
+                {%- for value in option.values -%}
+                  <label title="{{ value | escape }}">
+                    <input type="radio" name="opt{{ oi }}" value="{{ value | escape }}" data-opt="{{ oi }}"{% if is_colour or option.values.size == 1 %}{% if value == option.selected_value %} checked{% endif %}{% endif %}>
+                    {%- if is_colour -%}<span style="background:{% render 'swatch', name: value %}"></span><i class="sr">{{ value }}</i>{%- else -%}<span>{{ value }}</span>{%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+        <div class="buy">
+          <div class="qty"><button type="button" data-q="-1" aria-label="One fewer">&minus;</button><input type="number" name="quantity" value="1" min="1" aria-label="Quantity"><button type="button" data-q="1" aria-label="One more">+</button></div>
+          <button class="btn" type="submit" data-add{% unless v.available %} disabled{% endunless %}>{% if v.available %}Add to bag{% else %}Sold out{% endif %}</button>
+        </div>
+        <p class="p-msg" data-msg role="status" aria-live="polite"></p>
+      {%- endform -%}
+      <ul class="perks"><li>Complimentary UK delivery over £{{ settings.free_over }}</li><li>Free returns within 14 days</li><li>Packed by hand and sent tracked</li></ul>
+
+      <div class="acc">
+        <details open><summary>Description</summary><div class="rte">{{ product.description }}{%- if feats != blank -%}<ul>{%- for f in feats -%}<li>{{ f }}</li>{%- endfor -%}</ul>{%- endif -%}</div></details>
+        {%- if sg != blank -%}
+          <details id="size-guide"><summary>Size guide</summary><div class="rte">
+            {%- assign rows = sg | newline_to_br | split: '<br />' -%}
+            <table>{%- for r in rows -%}{%- assign cells = r | strip | split: '|' -%}<tr>{%- for c in cells -%}{%- if forloop.parentloop.first -%}<th>{{ c | strip }}</th>{%- else -%}<td>{{ c | strip }}</td>{%- endif -%}{%- endfor -%}</tr>{%- endfor -%}</table>
+            <p><b>Back length:</b> base of the neck to the base of the tail. Between sizes? Choose the larger.</p>
+          </div></details>
+        {%- endif -%}
+        {%- if mc != blank -%}
+          <details><summary>Materials &amp; care</summary><div class="rte"><ul>{%- assign ls = mc | newline_to_br | split: '<br />' -%}{%- for l in ls -%}<li>{{ l | strip }}</li>{%- endfor -%}</ul></div></details>
+        {%- endif -%}
+        <details><summary>Delivery &amp; returns</summary><div class="rte">{{ settings.delivery_text }}<p><a href="/pages/delivery">Delivery</a> &middot; <a href="/pages/returns">Returns</a></p></div></details>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if details != blank -%}
+<section class="sec sec--linen" style="margin-top:clamp(56px,6vw,96px)">
+  <div class="wrap">
+    <div class="sec-h sec-h--c rv"><span class="eyebrow">The details</span><h2 class="h2" style="margin-top:10px">Why we chose it</h2></div>
+    <div class="details-g rv">
+      {%- for d in details -%}
+        <div class="detail">{% render 'media', image: d.image.value, ratio: 'r-1x1', sizes: '(max-width: 1000px) 50vw, 25vw', ph: 'product-2' %}<h3 class="h3">{{ d.title.value }}</h3><p>{{ d.text.value }}</p></div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{%- if product.media.size > 0 -%}
+<div class="lb" data-lb role="dialog" aria-label="Images"><button class="x" type="button" data-lb-close>Close</button>{%- for m in product.media -%}{{ m.preview_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: m.alt | escape }}{%- endfor -%}</div>
+{%- endif -%}
+<script type="application/json" data-product-json>{{ product | json }}</script>
+{% schema %}
+{ "name": "Product" }
+{% endschema %}

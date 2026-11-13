@@ -1,0 +1,4 @@
+<article><div class="wrap" style="max-width:860px"><nav class="crumbs"><a href="{{ blog.url }}">{{ blog.title }}</a></nav><header class="phead"><time class="eyebrow">{{ article.published_at | date: '%-d %B %Y' }}</time><h1 class="h1" style="margin-top:12px">{{ article.title }}</h1></header></div>
+{%- if article.image -%}<div class="wrap" style="max-width:1200px;margin-bottom:clamp(32px,4vw,56px)">{% render 'media', image: article.image, ratio: 'r-16x9', sizes: '100vw', eager: true %}</div>{%- endif -%}
+<div class="wrap rte" style="max-width:760px;padding-bottom:clamp(56px,6vw,96px)">{{ article.content }}</div></article>
+{% schema %}{ "name": "Article" }{% endschema %}

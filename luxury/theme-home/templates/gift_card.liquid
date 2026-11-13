@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your gift card &middot; {{ shop.name }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@0;1&display=swap" rel="stylesheet">{{ 'base.css' | asset_url | stylesheet_tag }}{{ content_for_header }}</head>
+<body style="background:var(--linen)"><div class="wrap" style="max-width:560px;text-align:center;padding:56px 20px">{% render 'logo' %}
+<div style="background:var(--accent);color:#fff;padding:56px 24px;margin:36px 0 24px"><span class="eyebrow" style="color:rgba(255,255,255,.75)">Gift card</span><div class="h-display" style="color:#fff;margin-top:14px">{{ gift_card.balance | money_without_trailing_zeros }}</div>{%- if gift_card.expired -%}<p>This gift card has expired.</p>{%- endif -%}</div>
+<p class="lead">Use this code at checkout. It never expires.</p><p class="h2" style="letter-spacing:.12em;border:1px dashed var(--ink);padding:18px;margin:16px 0 28px">{{ gift_card.code | format_code }}</p>
+<a class="btn" href="{{ shop.url }}">Start shopping</a></div></body></html>

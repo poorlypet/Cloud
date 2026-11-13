@@ -1,0 +1,51 @@
+{%- assign free = settings.free_over | times: 100 -%}
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span aria-current="page">Your bag</span></nav>
+  <header class="phead" style="text-align:left"><h1 class="h1">Your bag{% if cart.item_count > 0 %} <span class="muted serif-i" style="font-size:.5em">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>{% endif %}</h1></header>
+  {%- if cart.item_count > 0 -%}
+    <div class="cart">
+      <div>
+        {%- for item in cart.items -%}
+          <div class="line" data-key="{{ item.key }}">
+            <a href="{{ item.url }}">{% render 'media', image: item.image, ratio: 'r-4x5', sizes: '110px', ph: 'product-1' %}</a>
+            <div>
+              {%- if item.vendor != blank and item.vendor != shop.name -%}<span class="card-v">{{ item.vendor }}</span>{%- endif -%}
+              <a class="line-n" href="{{ item.url }}" style="display:block;margin-top:4px">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}<div class="line-o">{%- for o in item.options_with_values -%}{{ o.name }}: {{ o.value }}{%- unless forloop.last %} &middot; {% endunless -%}{%- endfor -%}</div>{%- endunless -%}
+              {%- for d in item.line_level_discount_allocations -%}<div class="line-o" style="color:var(--sale)">{{ d.discount_application.title }} (&minus;{{ d.amount | money }})</div>{%- endfor -%}
+              <div class="line-c">
+                <div class="qty"><button type="button" data-q="-1" aria-label="One fewer">&minus;</button><input type="number" value="{{ item.quantity }}" min="0" aria-label="Quantity" readonly><button type="button" data-q="1" aria-label="One more">+</button></div>
+                <a class="line-r" href="{{ item.url_to_remove }}">Remove</a>
+              </div>
+            </div>
+            <div class="line-p">{%- if item.original_line_price > item.final_line_price -%}<s class="muted">{{ item.original_line_price | money_without_trailing_zeros }}</s><br>{%- endif -%}{{ item.final_line_price | money_without_trailing_zeros }}</div>
+          </div>
+        {%- endfor -%}
+        <a class="link" href="{{ routes.collections_url }}/new-in" style="display:inline-block;margin-top:24px">Continue shopping</a>
+      </div>
+      <aside class="summ" aria-label="Order summary">
+        <h2>Summary</h2>
+        {%- if free > 0 -%}
+          <div class="free-bar">{%- if cart.total_price >= free -%}Your order qualifies for complimentary UK delivery.{%- else -%}You&rsquo;re {{ free | minus: cart.total_price | money_without_trailing_zeros }} away from complimentary UK delivery.{%- endif -%}<i><b style="width:{% if cart.total_price >= free %}100{% else %}{{ cart.total_price | times: 100 | divided_by: free }}{% endif %}%"></b></i></div>
+        {%- endif -%}
+        <dl>
+          <div><dt>Subtotal</dt><dd>{{ cart.items_subtotal_price | money_without_trailing_zeros }}</dd></div>
+          {%- for d in cart.cart_level_discount_applications -%}<div style="color:var(--sale)"><dt>{{ d.title }}</dt><dd>&minus;{{ d.total_allocated_amount | money }}</dd></div>{%- endfor -%}
+          <div><dt>Delivery</dt><dd>{% if cart.total_price >= free %}Complimentary{% else %}Calculated at checkout{% endif %}</dd></div>
+          <div class="tot"><dt>Total</dt><dd>{{ cart.total_price | money_without_trailing_zeros }}</dd></div>
+        </dl>
+        <p class="note">Including VAT. Discount codes can be added at checkout.</p>
+        <form action="{{ routes.cart_url }}" method="post">
+          <details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:13px;text-decoration:underline;text-underline-offset:3px">Add a gift note</summary><textarea name="note" rows="3" style="width:100%;margin-top:10px;border:1px solid var(--line-2);padding:12px;font-size:14px" placeholder="We&rsquo;ll handwrite it and tuck it in">{{ cart.note }}</textarea></details>
+          <button class="btn btn--full" type="submit" name="checkout">Checkout securely</button>
+        </form>
+        {%- if additional_checkout_buttons -%}<div style="margin-top:12px">{{ content_for_additional_checkout_buttons }}</div>{%- endif -%}
+        <ul class="perks" style="border-top-color:var(--line-2)"><li>Free returns within 14 days</li><li>Secure checkout</li><li>Packed by hand in the UK</li></ul>
+      </aside>
+    </div>
+  {%- else -%}
+    <div class="empty"><p class="h2">Your bag is empty</p><p>Start with something for the walk, the bed or the bowl.</p><div class="btns" style="justify-content:center;margin-top:20px"><a class="btn" href="{{ routes.collections_url }}/new-in">Shop new in</a><a class="btn btn--line" href="{{ routes.root_url }}">Back to the homepage</a></div></div>
+  {%- endif -%}
+  <div style="height:clamp(40px,5vw,80px)"></div>
+</div>
+{% schema %}{ "name": "Bag" }{% endschema %}

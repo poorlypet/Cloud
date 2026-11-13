@@ -1,0 +1,25 @@
+[
+  { "name": "theme_info", "theme_name": "Axel & Hound Home", "theme_version": "1.0.0", "theme_author": "Axel & Hound", "theme_documentation_url": "https://www.axelandhound.com", "theme_support_url": "https://www.axelandhound.com/pages/contact" },
+  { "name": "Logo", "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Leave empty to use the Axel & Hound wordmark." },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 300, "step": 10, "unit": "px", "default": 180 },
+    { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+  ] },
+  { "name": "Colours", "settings": [
+    { "type": "color", "id": "c_bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "c_linen", "label": "Soft background", "default": "#F6F3EE" },
+    { "type": "color", "id": "c_ink", "label": "Text", "default": "#232220" },
+    { "type": "color", "id": "c_accent", "label": "Buttons and announcement", "default": "#2E3833" },
+    { "type": "color", "id": "c_sale", "label": "Sale", "default": "#9A4A35" }
+  ] },
+  { "name": "Shopping", "settings": [
+    { "type": "number", "id": "free_over", "label": "Free UK delivery over (£)", "default": 75 },
+    { "type": "text", "id": "popular_searches", "label": "Popular searches", "default": "Dachshund coat, Raincoat, Bolster bed, Leather collar, Stoneware bowl" },
+    { "type": "richtext", "id": "delivery_text", "label": "Product page: delivery and returns", "default": "<p>Complimentary UK delivery on orders over £75, otherwise £4.95. Order by 2pm on a working day and it leaves us the same day. Free UK returns within 14 days.</p>" }
+  ] },
+  { "name": "Social", "settings": [
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "url", "id": "pinterest", "label": "Pinterest" }
+  ] }
+]

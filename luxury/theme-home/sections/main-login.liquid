@@ -1,0 +1,9 @@
+<div class="wrap"><div class="auth" id="login">
+<h1 class="h1">Sign in</h1><p class="lead">Welcome back.</p>
+{%- form 'customer_login', class: 'form' -%}{%- if form.errors -%}<div class="form-err">{{ form.errors | default_errors }}</div>{%- endif -%}<label class="field"><span>Email</span><input type="email" name="customer[email]" autocomplete="email" required></label><label class="field"><span>Password</span><input type="password" name="customer[password]" autocomplete="current-password" required></label><a href="#recover" style="font-size:13px;text-decoration:underline;text-underline-offset:3px;color:var(--ink-2)">Forgotten your password?</a><button class="btn btn--full" type="submit">Sign in</button>{%- endform -%}
+<p class="alt">New to Axel &amp; Hound? <a href="{{ routes.account_register_url }}">Create an account</a></p></div>
+<div class="auth" id="recover"><h1 class="h1">Reset your password</h1><p class="lead">We&rsquo;ll email you a link to choose a new one.</p>
+{%- form 'recover_customer_password', class: 'form' -%}{%- if form.errors -%}<div class="form-err">{{ form.errors | default_errors }}</div>{%- endif -%}{%- if form.posted_successfully? -%}<p class="form-ok">Check your inbox for a link to reset your password.</p>{%- endif -%}<label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label><button class="btn btn--full" type="submit">Send link</button>{%- endform -%}
+<p class="alt"><a href="#login">Back to sign in</a></p></div></div>
+<style>#recover{display:none}#recover:target{display:block}#recover:target~#login,.wrap:has(#recover:target) #login{display:none}</style>
+{% schema %}{ "name": "Sign in" }{% endschema %}

@@ -1,0 +1,17 @@
+{%- liquid
+  assign v = variant | default: product.selected_or_first_available_variant
+  if use_product
+    assign p = product.price
+    assign c = product.compare_at_price
+  else
+    assign p = v.price
+    assign c = v.compare_at_price
+  endif
+-%}
+<div class="price" data-price>
+  {%- if c > p -%}
+    <span class="now">{{ p | money_without_trailing_zeros }}</span><s>{{ c | money_without_trailing_zeros }}</s>
+  {%- else -%}
+    <span>{% if use_product and product.price_varies %}From {% endif %}{{ p | money_without_trailing_zeros }}</span>
+  {%- endif -%}
+</div>

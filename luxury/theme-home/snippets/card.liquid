@@ -1,0 +1,24 @@
+{%- liquid
+  assign colour = product.options_by_name['Colour'] | default: product.options_by_name['Color']
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+  assign second = product.media[1].preview_image
+-%}
+<div class="card">
+  <a class="card-m" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if on_sale -%}<span class="badge badge--sale">Sale</span>{%- elsif product.tags contains 'new-in' -%}<span class="badge">New</span>{%- endif -%}
+    {%- if product.available == false -%}<span class="badge">Sold out</span>{%- endif -%}
+    {% render 'media', image: product.featured_media.preview_image, ratio: 'r-4x5', sizes: '(max-width: 1000px) 50vw, 25vw', ph: 'product-1' %}
+    {%- if second -%}<div class="frame r-4x5 alt" style="position:absolute;inset:0">{{ second | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(max-width: 1000px) 50vw, 25vw', alt: '' }}</div>{%- endif -%}
+  </a>
+  <div class="card-t">
+    {%- if product.vendor != blank and product.vendor != shop.name -%}<span class="card-v">{{ product.vendor }}</span>{%- endif -%}
+    <a class="card-n" href="{{ product.url }}">{{ product.title }}</a>
+    {% render 'price', product: product, use_product: true %}
+    {%- if colour and colour.values.size > 1 -%}
+      <div class="card-sw" aria-label="{{ colour.values.size }} colours">{%- for v in colour.values limit: 5 -%}<span class="sw" style="background:{% render 'swatch', name: v %}" title="{{ v | escape }}"></span>{%- endfor -%}{%- if colour.values.size > 5 -%}<em>+{{ colour.values.size | minus: 5 }}</em>{%- endif -%}</div>
+    {%- endif -%}
+  </div>
+</div>

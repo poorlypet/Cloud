@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": { "type": "main-product" },
+    "related": { "type": "related" },
+    "usps": { "type": "usps", "blocks": {
+      "u1": { "type": "usp", "settings": { "title": "Complimentary delivery", "text": "On UK orders over £75" } },
+      "u2": { "type": "usp", "settings": { "title": "Free returns", "text": "Within 14 days" } },
+      "u3": { "type": "usp", "settings": { "title": "Packed by hand", "text": "Wrapped in tissue, sent tracked" } } },
+      "block_order": ["u1","u2","u3"] }
+  },
+  "order": ["main", "related", "usps"]
+}

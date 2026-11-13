@@ -1,0 +1,35 @@
+{%- liquid
+  assign n = name | downcase | strip
+  case n
+    when 'black' or 'charcoal'
+      echo '#22211F'
+    when 'navy'
+      echo '#1F2A3C'
+    when 'dark olive' or 'olive'
+      echo '#4B5139'
+    when 'sage'
+      echo '#A9B8A0'
+    when 'sand' or 'oat' or 'natural'
+      echo '#C9B79E'
+    when 'stone' or 'grey' or 'gray'
+      echo '#A7A29A'
+    when 'camo'
+      echo '#7C7A4E'
+    when 'plum'
+      echo '#5B2D3A'
+    when 'cream' or 'ivory' or 'chalk' or 'white'
+      echo '#EFE9DE'
+    when 'forest' or 'moss' or 'green'
+      echo '#3A4D3E'
+    when 'tobacco' or 'cognac' or 'tan' or 'brown'
+      echo '#7A5232'
+    when 'rust' or 'red'
+      echo '#9A4A35'
+    when 'rose' or 'pink'
+      echo '#D7B3AE'
+    when 'blue'
+      echo '#5D7894'
+    else
+      echo '#D8D2C8'
+  endcase
+-%}

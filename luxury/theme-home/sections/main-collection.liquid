@@ -1,0 +1,97 @@
+{%- liquid
+  assign parent = nil
+  assign is_sub = false
+  for l in linklists['main-menu'].links
+    if l.object.handle == collection.handle
+      assign parent = l
+    else
+      for c in l.links
+        if c.object.handle == collection.handle
+          assign parent = l
+          assign is_sub = true
+        endif
+      endfor
+    endif
+  endfor
+  assign sort = collection.sort_by | default: collection.default_sort_by
+  assign active = 0
+  for f in collection.filters
+    assign active = active | plus: f.active_values.size
+    if f.min_value.value or f.max_value.value
+      assign active = active | plus: 1
+    endif
+  endfor
+-%}
+{%- if collection.image and section.settings.banner -%}
+  <section class="c-banner">{% render 'media', image: collection.image, sizes: '100vw', eager: true %}<div class="wrap"><h1 class="h1" style="color:#fff">{{ collection.title }}</h1></div></section>
+{%- endif -%}
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span>{%- if is_sub -%}<a href="{{ parent.url }}">{{ parent.title }}</a><span>/</span>{%- endif -%}<span aria-current="page">{{ collection.title }}</span></nav>
+  <header class="phead">
+    {%- unless collection.image and section.settings.banner -%}<h1 class="h1">{{ collection.title }}</h1>{%- endunless -%}
+    {%- if collection.description != blank -%}<div class="lead">{{ collection.description }}</div>{%- endif -%}
+  </header>
+  {%- if parent and parent.links.size > 0 -%}
+    <nav class="subnav" aria-label="{{ parent.title | escape }}">
+      <a class="chip" href="{{ parent.url }}"{% unless is_sub %} aria-current="page"{% endunless %}>All {{ parent.title | downcase }}</a>
+      {%- for c in parent.links -%}<a class="chip" href="{{ c.url }}"{% if c.object.handle == collection.handle %} aria-current="page"{% endif %}>{{ c.title }}</a>{%- endfor -%}
+    </nav>
+  {%- endif -%}
+
+  {%- paginate collection.products by 24 -%}
+  <div class="toolbar">
+    <button class="tb-btn" type="button" data-open="facets">Filter{% if active > 0 %} <b>{{ active }}</b>{% endif %}</button>
+    <span class="count">{{ collection.products_count }} {{ collection.products_count | pluralize: 'piece', 'pieces' }}</span>
+    <label class="sel"><span class="sr">Sort by</span>
+      <select data-sort>
+        {%- for o in collection.sort_options -%}<option value="{{ o.value }}"{% if o.value == sort %} selected{% endif %}>{{ o.name }}</option>{%- endfor -%}
+      </select>
+    </label>
+  </div>
+  {%- if active > 0 -%}
+    <div class="active-f">{%- for f in collection.filters -%}{%- for v in f.active_values -%}<a href="{{ v.url_to_remove }}">{{ v.label }}</a>{%- endfor -%}{%- if f.min_value.value or f.max_value.value -%}<a href="{{ f.url_to_remove }}">{{ f.label }}</a>{%- endif -%}{%- endfor -%}<a href="{{ collection.url }}?sort_by={{ sort }}" style="background:none;text-decoration:underline">Clear all</a></div>
+  {%- endif -%}
+  {%- if collection.products.size > 0 -%}
+    <div class="grid">{%- for product in collection.products -%}{% render 'card', product: product %}{%- endfor -%}</div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pager" aria-label="Pages">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">Previous</a>{%- endif -%}
+        {%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="cur">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}{%- endfor -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- else -%}
+    <div class="empty"><p class="h2">{% if active > 0 %}Nothing matches those filters{% else %}New pieces are on their way{% endif %}</p><p>{% if active > 0 %}Try removing a filter.{% else %}We&rsquo;re adding to this collection now. Join the list to hear first.{% endif %}</p>{%- if active > 0 -%}<a class="btn btn--line" href="{{ collection.url }}">Clear filters</a>{%- else -%}<a class="btn btn--line" href="{{ routes.collections_url }}/new-in">Shop new in</a>{%- endif -%}</div>
+  {%- endif -%}
+  {%- endpaginate -%}
+  <div style="height:clamp(56px,6vw,96px)"></div>
+</div>
+
+<aside class="drawer left" id="facets" aria-label="Filter" tabindex="-1">
+  <form action="{{ collection.url }}" method="get" data-facets style="display:contents">
+    <input type="hidden" name="sort_by" value="{{ sort }}">
+    <div class="drawer-h"><h2>Filter</h2><button class="x" type="button" data-close>Close</button></div>
+    <div class="drawer-b facets">
+      {%- for f in collection.filters -%}
+        <details{% if forloop.index < 3 or f.active_values.size > 0 %} open{% endif %}>
+          <summary>{{ f.label }}</summary>
+          {%- if f.type == 'price_range' -%}
+            <div class="opts"><div class="range">
+              <input type="number" name="{{ f.min_value.param_name }}" value="{{ f.min_value.value | money_without_currency | remove: ',' }}" placeholder="£0" aria-label="Minimum price">
+              <span>to</span>
+              <input type="number" name="{{ f.max_value.param_name }}" value="{{ f.max_value.value | money_without_currency | remove: ',' }}" placeholder="{{ f.range_max | money_without_currency | remove: ',' }}" aria-label="Maximum price">
+            </div></div>
+          {%- else -%}
+            <div class="opts">{%- for v in f.values -%}<label><input type="checkbox" name="{{ v.param_name }}" value="{{ v.value }}"{% if v.active %} checked{% endif %}{% if v.count == 0 and v.active == false %} disabled{% endif %}>{%- if f.param_name contains 'colour' or f.param_name contains 'color' -%}<span class="sw" style="background:{% render 'swatch', name: v.label %}"></span>{%- endif -%}{{ v.label }}<span class="n">{{ v.count }}</span></label>{%- endfor -%}</div>
+          {%- endif -%}
+        </details>
+      {%- else -%}
+        <p class="muted" style="padding:20px 0">Filters appear here once products are added.</p>
+      {%- endfor -%}
+    </div>
+    <div class="drawer-f" style="display:flex;gap:10px"><a class="btn btn--line" href="{{ collection.url }}" style="flex:1">Clear</a><button class="btn" type="submit" style="flex:1">Show results</button></div>
+  </form>
+</aside>
+{% schema %}
+{ "name": "Collection", "settings": [ { "type": "checkbox", "id": "banner", "label": "Show the collection image as a banner", "default": true } ] }
+{% endschema %}

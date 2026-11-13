@@ -1,0 +1,9 @@
+{%- comment -%} The Axel & Hound wordmark, or an uploaded logo if one is set in Theme settings {%- endcomment -%}
+<a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}, home">
+  {%- if settings.logo -%}
+    {{ settings.logo | image_url: width: 600 | image_tag: alt: shop.name, width: settings.logo_width, height: null }}
+  {%- else -%}
+    <span class="logo-word">Axel<span class="amp">&amp;</span>Hound</span>
+    <span class="logo-sub">For dogs &amp; their homes</span>
+  {%- endif -%}
+</a>

@@ -1,0 +1,11 @@
+{%- comment -%}
+  An image in a frame, or a blank frame until one is added.
+  image: image object, ratio: r-4x5 etc, sizes: sizes attribute, eager: true for the first image on a page, ph: placeholder name
+{%- endcomment -%}
+<div class="frame {{ ratio }}">
+  {%- if image != blank -%}
+    {%- if eager -%}{%- assign ld = 'eager' -%}{%- else -%}{%- assign ld = 'lazy' -%}{%- endif -%}
+    {{ image | image_url: width: 2400 | image_tag: loading: ld, sizes: sizes, widths: '400, 600, 800, 1000, 1400, 1800, 2400', alt: image.alt | escape }}
+  {%- else -%}
+  {%- endif -%}
+</div>

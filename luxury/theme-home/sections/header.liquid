@@ -1,0 +1,57 @@
+{%- assign menu = linklists[section.settings.menu] -%}
+<header class="hdr" data-hdr>
+  <div class="wrap hdr-top">
+    <div class="hdr-l">
+      <button class="burger" type="button" data-open="menu-drawer" aria-label="Open menu"><i></i><i></i></button>
+      <button type="button" data-open="search" aria-label="Search">Search</button>
+      <a class="hide-m" href="{{ section.settings.help_link | default: '/pages/help' }}">Help</a>
+    </div>
+    {% render 'logo' %}
+    <div class="hdr-r">
+      {%- if shop.customer_accounts_enabled -%}<a class="hide-m" href="{{ routes.account_url }}">{% if customer %}Account{% else %}Sign in{% endif %}</a>{%- endif -%}
+      <a href="{{ routes.cart_url }}" data-open="cart-drawer" aria-label="Bag, {{ cart.item_count }} items">Bag <span class="bag-n" data-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span></a>
+    </div>
+  </div>
+  <nav class="nav-bar" aria-label="Main">
+    <ul class="nav">
+      {%- for link in menu.links -%}
+        {%- liquid
+          assign is_sale = false
+          if link.handle contains 'sale' or link.title contains 'Sale'
+            assign is_sale = true
+          endif
+        -%}
+        <li>
+          <a class="nav-a{% if is_sale %} is-sale{% endif %}" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}{% if link.links.size > 0 %} aria-haspopup="true"{% endif %}>{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            {%- assign per = link.links.size | plus: 2 | divided_by: 3 -%}
+            {%- if per < 1 -%}{%- assign per = 1 -%}{%- endif -%}
+            {%- assign off2 = per | times: 2 -%}
+            <div class="mega">
+              <div class="mega-in">
+                <div class="mega-col"><h4>{{ link.title }}</h4><ul>{%- for child in link.links limit: per -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}</ul></div>
+                <div class="mega-col"><h4>&nbsp;</h4><ul>{%- for child in link.links offset: per limit: per -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}</ul></div>
+                <div class="mega-col"><h4>&nbsp;</h4><ul>{%- for child in link.links offset: off2 -%}<li><a href="{{ child.url }}">{{ child.title }}</a></li>{%- endfor -%}<li><a href="{{ link.url }}"><u>Shop all {{ link.title | downcase }}</u></a></li></ul></div>
+                <div class="mega-feat">
+                  <a class="mega-card" href="{{ link.url }}">{% render 'media', image: link.object.image, ratio: 'r-4x5', sizes: '20vw', ph: 'collection-1' %}<span>Shop {{ link.title | downcase }}</span></a>
+                  <a class="mega-card" href="{{ link.links.first.url }}">{% render 'media', image: link.links.first.object.image, ratio: 'r-4x5', sizes: '20vw', ph: 'collection-2' %}<span>{{ link.links.first.title }}</span></a>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "hdr-sec",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "url", "id": "help_link", "label": "Help link" }
+  ]
+}
+{% endschema %}

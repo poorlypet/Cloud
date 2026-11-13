@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": { "type": "help-hub", "blocks": {
+      "b1": { "type": "topic", "settings": { "title": "Delivery", "text": "Costs, times, worldwide shipping and what happens if something goes wrong.", "link": "/pages/delivery" } },
+      "b2": { "type": "topic", "settings": { "title": "Returns & refunds", "text": "How to send something back, exchanges, refunds and faulty items.", "link": "/pages/returns" } },
+      "b3": { "type": "topic", "settings": { "title": "Track an order", "text": "Follow your order to your door.", "link": "/pages/track-order" } },
+      "b4": { "type": "topic", "settings": { "title": "FAQs", "text": "Orders, sizing, product care and payments.", "link": "/pages/faqs" } },
+      "b5": { "type": "topic", "settings": { "title": "Your account", "text": "Orders, addresses and details in one place.", "link": "/account" } },
+      "b6": { "type": "topic", "settings": { "title": "Contact us", "text": "Talk to a real person, Monday to Friday.", "link": "/pages/contact" } } },
+      "block_order": ["b1","b2","b3","b4","b5","b6"] }
+  },
+  "order": ["main"]
+}

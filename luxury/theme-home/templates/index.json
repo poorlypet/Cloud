@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": { "height": "full", "kicker": "Autumn and winter", "heading": "Made for the long walk home", "text": "Coats, beds and collars made properly, by makers we know, for the dogs we live with.", "b1": "Shop new in", "b1_link": "shopify://collections/new-in", "b2": "Shop coats", "b2_link": "shopify://collections/coats" } },
+    "usps": { "type": "usps", "blocks": {
+      "u1": { "type": "usp", "settings": { "title": "Complimentary delivery", "text": "On UK orders over £75" } },
+      "u2": { "type": "usp", "settings": { "title": "Free returns", "text": "Within 14 days" } },
+      "u3": { "type": "usp", "settings": { "title": "Packed by hand", "text": "Wrapped in tissue, sent tracked" } },
+      "u4": { "type": "usp", "settings": { "title": "Shipped worldwide", "text": "Costs shown at checkout" } } },
+      "block_order": ["u1","u2","u3","u4"] },
+    "tiles": { "type": "category-tiles", "settings": { "kicker": "Shop by", "heading": "Everything for the dog, and the home", "cols": "4", "ratio": "r-4x5" }, "blocks": {
+      "t1": { "type": "tile", "settings": { "collection": "beds", "label": "Beds" } },
+      "t2": { "type": "tile", "settings": { "collection": "coats", "label": "Coats" } },
+      "t3": { "type": "tile", "settings": { "collection": "walking", "label": "Walking" } },
+      "t4": { "type": "tile", "settings": { "collection": "dining", "label": "Dining" } },
+      "t5": { "type": "tile", "settings": { "collection": "play", "label": "Play" } },
+      "t6": { "type": "tile", "settings": { "collection": "travel", "label": "Travel" } },
+      "t7": { "type": "tile", "settings": { "collection": "cats", "label": "Cats" } },
+      "t8": { "type": "tile", "settings": { "collection": "gifts", "label": "Gifts" } } },
+      "block_order": ["t1","t2","t3","t4","t5","t6","t7","t8"] },
+    "new": { "type": "featured-collection", "settings": { "collection": "new-in", "kicker": "Just in", "heading": "New this week", "count": 4 } },
+    "makers": { "type": "image-with-text", "settings": { "kicker": "Our makers", "heading": "Made by people who care about the detail", "button": "Our story", "link": "shopify://pages/our-story", "linen": true } },
+    "best": { "type": "featured-collection", "settings": { "collection": "bestsellers", "kicker": "Loved by our customers", "heading": "Bestsellers", "count": 8 } },
+    "banner": { "type": "banner", "settings": { "kicker": "The winter edit", "heading": "Warm beds for long evenings", "text": "Deep bolsters in bouclé and wool, made to be slept in and washed.", "button": "Shop beds", "link": "shopify://collections/beds" } },
+    "edit": { "type": "rich-text", "settings": { "kicker": "Our approach", "heading": "Fewer things, chosen well", "button": "Read our story", "link": "shopify://pages/our-story" } },
+    "coats": { "type": "image-with-text", "settings": { "kicker": "Cloud7", "heading": "Coats cut for every shape of dog", "text": "<p>Long backs, deep chests and narrow waists all have a coat that actually fits, dachshunds and whippets included.</p>", "button": "Shop coats", "link": "shopify://collections/coats", "flip": true, "linen": false } },
+    "journal": { "type": "journal" },
+    "news": { "type": "newsletter" }
+  },
+  "order": ["hero","usps","tiles","new","makers","best","banner","edit","coats","journal","news"]
+}

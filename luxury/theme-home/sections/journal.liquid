@@ -1,0 +1,27 @@
+{%- assign b = section.settings.blog -%}
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-h rv"><div><span class="eyebrow">{{ section.settings.kicker }}</span><h2 class="h2" style="margin-top:10px">{{ section.settings.heading }}</h2></div>{%- if b != blank -%}<a class="link" href="{{ b.url }}">Read the journal</a>{%- endif -%}</div>
+    <div class="posts rv">
+      {%- if b != blank and b.articles_count > 0 -%}
+        {%- for article in b.articles limit: 3 -%}
+          <a class="post" href="{{ article.url }}">{% render 'media', image: article.image, ratio: 'r-3x2', sizes: '(max-width: 1000px) 100vw, 33vw', ph: 'lifestyle-1' %}<time>{{ article.published_at | date: '%-d %B %Y' }}</time><h3 class="h3">{{ article.title }}</h3></a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign ts = 'How to measure your dog for a coat,Choosing the right bed for an older dog,A morning at the Cloud7 studio' | split: ',' -%}
+        {%- for t in ts -%}<div class="post">{% render 'media', ratio: 'r-3x2', ph: 'lifestyle-2' %}<time>Coming soon</time><h3 class="h3">{{ t }}</h3></div>{%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Journal",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "text", "id": "kicker", "label": "Small heading", "default": "The journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Notes on living well with dogs" }
+  ],
+  "presets": [ { "name": "Journal" } ]
+}
+{% endschema %}

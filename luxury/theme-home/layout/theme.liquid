@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2E3833">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon -%}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64 }}">{%- endif -%}
+  <title>{{ page_title }}{% if current_page != 1 %} &middot; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &middot; {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {% render 'meta-tags' %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@0;1&display=swap" rel="stylesheet">
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <style>
+    :root{
+      --bg:{{ settings.c_bg }};--linen:{{ settings.c_linen }};--ink:{{ settings.c_ink }};--accent:{{ settings.c_accent }};--sale:{{ settings.c_sale }};
+    }
+  </style>
+  {{ content_for_header }}
+</head>
+<body class="t-{{ template.name }}{% if template.suffix %} t-{{ template.name }}-{{ template.suffix }}{% endif %}">
+  <a class="skip" href="#main">Skip to content</a>
+  {% sections 'header-group' %}
+  <main id="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+  {% sections 'footer-group' %}
+  {% render 'menu-drawer' %}
+  {% render 'search-overlay' %}
+  <aside class="drawer right" id="cart-drawer" aria-label="Your bag" tabindex="-1">
+    {% section 'cart-drawer' %}
+  </aside>
+  <div class="scrim" data-scrim></div>
+  <script>
+    window.AH = {
+      routes: { cart: "{{ routes.cart_url }}", add: "{{ routes.cart_add_url }}", change: "{{ routes.cart_change_url }}", search: "{{ routes.search_url }}", suggest: "{{ routes.predictive_search_url }}" },
+      moneyFormat: {{ shop.money_format | json }},
+      freeOver: {{ settings.free_over | times: 100 | json }}
+    };
+  </script>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

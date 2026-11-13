@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": { "height": "tall", "center": true, "kicker": "Our story", "heading": "Beautiful things for dogs, and the homes they share", "text": "A small shop in the UK, built on a long search across Europe for the people who make things properly.", "b1": "", "b2": "" } },
+    "begin": { "type": "rich-text", "settings": { "kicker": "The beginning", "heading": "It started with two dogs", "text": "<p>Biscuit, a miniature dachshund with a very long back, and Juno, a whippet who shivers at the first sign of autumn. Everything we found for them was either beautifully made or practical. Almost never both. So we went looking for the people who could do both.</p>" } },
+    "edit": { "type": "image-with-text", "settings": { "kicker": "What we collect", "heading": "A considered edit", "text": "<p>We don&rsquo;t stock everything. We stock the bed we&rsquo;d choose, the coat that survives a muddy winter and the bowl that looks right on a kitchen floor. Fewer things, chosen slowly, and every one lived with at home before it reaches you.</p>", "button": "Shop new in", "link": "shopify://collections/new-in", "linen": true } },
+    "makers": { "type": "image-with-text", "settings": { "kicker": "Europe&rsquo;s best makers", "heading": "Made by people we know", "text": "<p>We work directly with the makers we admire most, from Cloud7 in Berlin to weavers on the Danish coast, potters outside Milan and leatherworkers in the Scottish borders. We visit every workshop, buy in small runs and stay for years, not seasons.</p>", "button": "Meet the brands", "link": "shopify://pages/brands", "flip": true, "linen": false } },
+    "work": { "type": "rich-text", "settings": { "kicker": "How we work", "heading": "Still small, on purpose", "text": "<p>Biscuit tests the beds. Juno tests the coats. We pack every order by hand, wrap it in tissue and answer every email ourselves. Thank you for being part of it.</p>", "linen": true } },
+    "news": { "type": "newsletter" }
+  },
+  "order": ["hero","begin","edit","makers","work","news"]
+}

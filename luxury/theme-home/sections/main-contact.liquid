@@ -1,0 +1,43 @@
+<div class="phead--band">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">{{ page.title }}</span></nav>
+    <header class="phead"><h1 class="h1">{{ page.title }}</h1><p class="lead">{{ section.settings.intro }}</p></header>
+  </div>
+</div>
+<div class="wrap" style="padding-bottom:clamp(56px,6vw,96px)">
+  <div class="page-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)">
+    <div class="rte">
+      <h2 style="margin-top:0">Talk to us</h2>
+      <p><b style="color:var(--ink)">Email</b><br><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>
+      <p><b style="color:var(--ink)">Hours</b><br>{{ section.settings.hours }}</p>
+      <p>Most questions are answered in our <a href="/pages/faqs">FAQs</a>, or see <a href="/pages/delivery">Delivery</a> and <a href="/pages/returns">Returns</a>.</p>
+      {{ page.content }}
+    </div>
+    <div>
+      {%- form 'contact', class: 'form' -%}
+        {%- if form.posted_successfully? -%}<p class="form-ok">Thank you. A real person will reply within one working day.</p>{%- endif -%}
+        {%- if form.errors -%}<div class="form-err">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <div class="two">
+          <label class="field"><span>Name</span><input name="contact[name]" autocomplete="name" required></label>
+          <label class="field"><span>Email</span><input type="email" name="contact[email]" autocomplete="email" required></label>
+        </div>
+        <div class="two">
+          <label class="field"><span>Order number (optional)</span><input name="contact[order]"></label>
+          <label class="field"><span>Topic</span><select name="contact[topic]"><option>An order</option><option>Sizing and fit</option><option>Delivery</option><option>A return</option><option>Something else</option></select></label>
+        </div>
+        <label class="field"><span>Message</span><textarea name="contact[body]" rows="6" required></textarea></label>
+        <button class="btn" type="submit" style="align-self:flex-start">Send message</button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Questions about a product, a size or an order? We&rsquo;re a small team and we read every message." },
+    { "type": "text", "id": "email", "label": "Email", "default": "hello@axelandhound.com" },
+    { "type": "text", "id": "hours", "label": "Hours", "default": "Monday to Friday, 9am to 5pm" }
+  ]
+}
+{% endschema %}

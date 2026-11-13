@@ -1,0 +1,39 @@
+<section class="sec{% if section.settings.linen %} sec--linen{% endif %}">
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      <div class="sec-h sec-h--c rv"><span class="eyebrow">{{ section.settings.kicker }}</span><h2 class="h2" style="margin-top:10px">{{ section.settings.heading }}</h2></div>
+    {%- endif -%}
+    <div class="tiles rv" style="--cols:{{ section.settings.cols }}">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign c = block.settings.collection
+          assign label = block.settings.label | default: c.title | default: 'Collection'
+          assign img = block.settings.image | default: c.image
+          assign url = c.url | default: '#'
+        -%}
+        <a class="tile" href="{{ url }}" {{ block.shopify_attributes }}>
+          {% render 'media', image: img, ratio: section.settings.ratio, sizes: '(max-width: 1000px) 50vw, 25vw', ph: 'collection-3' %}
+          <span class="tile-l">{{ label }}<span>Shop</span></span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Category tiles",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Small heading", "default": "Shop by" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything for the dog, and the home" },
+    { "type": "select", "id": "cols", "label": "Tiles per row", "default": "4", "options": [ { "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
+    { "type": "select", "id": "ratio", "label": "Shape", "default": "r-4x5", "options": [ { "value": "r-4x5", "label": "Portrait" }, { "value": "r-1x1", "label": "Square" }, { "value": "r-3x2", "label": "Landscape" } ] },
+    { "type": "checkbox", "id": "linen", "label": "Soft background", "default": false }
+  ],
+  "blocks": [ { "type": "tile", "name": "Tile", "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "label", "label": "Label" },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ] } ],
+  "presets": [ { "name": "Category tiles", "blocks": [ { "type": "tile" }, { "type": "tile" }, { "type": "tile" }, { "type": "tile" } ] } ]
+}
+{% endschema %}

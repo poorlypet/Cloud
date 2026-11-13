@@ -1,0 +1,24 @@
+{%- if section.blocks.size > 0 -%}
+<div class="ann" data-ann>
+  <div class="wrap">
+    <div class="ann-msgs">
+      {%- for block in section.blocks -%}
+        <p class="ann-msg{% if forloop.first %} on{% endif %}" {{ block.shopify_attributes }}>{%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>{%- else -%}{{ block.settings.text }}{%- endif -%}</p>
+      {%- endfor -%}
+    </div>
+    <div class="ann-r"><a href="/pages/delivery">Delivery</a><a href="/pages/returns">Returns</a><span>United Kingdom (£)</span></div>
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Announcement",
+  "max_blocks": 4,
+  "blocks": [
+    { "type": "message", "name": "Message", "settings": [
+      { "type": "text", "id": "text", "label": "Text", "default": "Complimentary UK delivery on orders over £75" },
+      { "type": "url", "id": "link", "label": "Link" }
+    ] }
+  ]
+}
+{% endschema %}
