@@ -12,78 +12,65 @@
 (function () {
   "use strict";
 
-  var U = "https://images.unsplash.com/photo-";
-  var IMG = {
-    still1: "../media/still-1.jpg", still2: "../media/still-2.jpg",
-    cavalier: U + "1560807707-8cc77767d783", catSleep: U + "1519052537078-e6302a4968d4",
-    labCollar: U + "1586671267731-da2cf3ceeb80", goldenWalk: U + "1576201836106-db1758fd1c97",
-    toller: U + "1525253086316-d0c936c814f8", samoyed: U + "1529429617124-95b109e86bb8",
-    mastiff: U + "1541599540903-216a46ca1dc0", poodle: U + "1605244863941-3a3ed921c60d",
-    jack: U + "1561037404-61cd46aa615b", darkDog: U + "1534351450181-ea9f78427fe8",
-    goldenFlower: U + "1510771463146-e89e6e86560e", goldenToy: U + "1591946614720-90a587da4a36",
-    pupDark: U + "1611003228941-98852ba62227", groom: U + "1516734212186-a967f81ad0d7",
-    beach: U + "1523480717984-24cba35ae1ef", sea: U + "1530281700549-e82e7bf110d6",
-    aussie: U + "1587300003388-59208cc962cb", catStairs: U + "1495360010541-f48722b34f7d",
-    kitten: U + "1533743983669-94fa5c4338ec", corgi: U + "1597633425046-08f5110420b5"
-  };
+  /* menu photos come from Content > Files by name; a grey blank until uploaded */
   function src(k, w) {
-    var s = IMG[k] || k;
-    return s.indexOf("http") === 0 ? s + "?w=" + w + "&q=80&auto=format&fit=crop" : s;
+    var m = (window.AH && AH.media) || {}, u = m[k];
+    return u ? u + (u.indexOf("?") < 0 ? "?" : "&") + "width=" + w : (window.AH && AH.blank) || "";
   }
 
   var MENU = [
     { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear", "New for cats"] }], f: [],
-      tiles: [{ p: "still1", t: "New beds" }, { p: "labCollar", t: "New collars & leads" }, { p: "poodle", t: "New knitwear" }, { p: "catStairs", t: "New for cats" }] },
-    { key: "beds", label: "Beds", hero: "still1", line: "Deep, soft beds and the throws that go with them.",
+      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }, { p: "menu-new-for-cats.jpg", t: "New for cats" }] },
+    { key: "beds", label: "Beds", hero: "menu-beds.jpg", line: "Deep, soft beds and the throws that go with them.",
       g: [{ t: "Beds", l: ["Bolster beds", "Round beds", "Orthopaedic beds", "Sofa beds", "Crate mats", "Replacement covers"] },
           { t: "Blankets & cushions", l: ["Wool throws", "Bouclé blankets", "Cushions", "Travel blankets"] },
           { t: "Collections", l: ["Bouclé", "Wool", "Velvet", "Linen"] }],
       f: [{ p: "still1", t: "The Bouclé Bed", n: "Bolster Bed, Moss Bouclé", pr: 245 },
           { p: "cavalier", t: "Cushions", n: "Bolster Cushion, Rose", pr: 95 },
           { p: "still2", t: "Throws", n: "Wool Throw, Oat", pr: 89 }] },
-    { key: "walking", label: "Walking", hero: "labCollar", line: "Leather, rope and waxed cotton, made for the daily walk.",
+    { key: "walking", label: "Walking", hero: "menu-walking.jpg", line: "Leather, rope and waxed cotton, made for the daily walk.",
       g: [{ t: "Walking", l: ["Collars", "Leads", "Harnesses", "Collar & lead sets", "Poop bag holders", "Treat pouches"] },
           { t: "By material", l: ["Leather", "Waxed cotton", "Rope", "Tweed"] },
           { t: "Collections", l: ["Heritage leather", "Field", "City"] }],
       f: [{ p: "labCollar", t: "Collars", n: "Leather Collar, Cognac", pr: 65 },
           { p: "goldenWalk", t: "Leads", n: "Rope Lead, Sand", pr: 55 },
           { p: "toller", t: "Harnesses", n: "Padded Harness, Olive", pr: 79 }] },
-    { key: "coats", label: "Coats", hero: "poodle", line: "Merino knits and quilted coats for the colder months.",
+    { key: "coats", label: "Coats", hero: "menu-coats.jpg", line: "Merino knits and quilted coats for the colder months.",
       g: [{ t: "Coats", l: ["Winter coats", "Raincoats", "Knitwear", "Bathrobes", "Snoods"] },
           { t: "By fit", l: ["Dachshund", "Whippet & greyhound", "French bulldog", "Standard fit"] },
           { t: "Collections", l: ["Quilted", "Merino", "Waxed cotton"] }],
       f: [{ p: "poodle", t: "Knitwear", n: "Cable Knit Jumper, Cream", pr: 85 },
           { p: "samoyed", t: "Winter coats", n: "Quilted Coat, Forest", pr: 129 },
           { p: "mastiff", t: "Raincoats", n: "Waxed Raincoat, Tobacco", pr: 115 }] },
-    { key: "dining", label: "Dining", hero: "darkDog", line: "Stoneware bowls, oak stands and jars for the counter.",
+    { key: "dining", label: "Dining", hero: "menu-dining.jpg", line: "Stoneware bowls, oak stands and jars for the counter.",
       g: [{ t: "Dining", l: ["Bowls", "Bowl stands", "Placemats", "Treat jars", "Food storage"] },
           { t: "Care", l: ["Grooming", "Brushes", "Shampoo"] },
           { t: "By material", l: ["Stoneware", "Ceramic", "Oak", "Steel"] }],
       f: [{ p: "jack", t: "Bowls", n: "Stoneware Bowl, Chalk", pr: 42 },
           { p: "darkDog", t: "Bowl stands", n: "Oak Bowl Stand", pr: 95 },
           { p: "groom", t: "Grooming", n: "Beechwood Brush", pr: 32 }] },
-    { key: "play", label: "Play", hero: "goldenToy", line: "Soft, sturdy toys in wool felt and natural rubber.",
+    { key: "play", label: "Play", hero: "menu-play.jpg", line: "Soft, sturdy toys in wool felt and natural rubber.",
       g: [{ t: "Play", l: ["Plush toys", "Rope toys", "Balls", "Chew toys", "Puzzle toys"] },
           { t: "By age", l: ["Puppy", "Adult", "Senior"] },
           { t: "Collections", l: ["Wool felt", "Natural rubber"] }],
       f: [{ p: "goldenToy", t: "Plush toys", n: "Plush Lamb", pr: 24 },
           { p: "pupDark", t: "Puppy", n: "Puppy Play Set", pr: 60 },
           { p: "corgi", t: "Puzzle toys", n: "Oak Puzzle", pr: 38 }] },
-    { key: "travel", label: "Travel", hero: "beach", line: "Carriers, car seats and beds for weekends away.",
+    { key: "travel", label: "Travel", hero: "menu-travel.jpg", line: "Carriers, car seats and beds for weekends away.",
       g: [{ t: "Travel", l: ["Carriers", "Car seats", "Travel beds", "Travel bowls", "Travel blankets"] },
           { t: "Occasions", l: ["Weekends away", "Long drives", "City days"] },
           { t: "Collections", l: ["Canvas", "Waxed cotton"] }],
       f: [{ p: "beach", t: "Travel beds", n: "Travel Bed, Canvas", pr: 165 },
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
           { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] },
-    { key: "cats", label: "Cats", hero: "catSleep", line: "Felt caves, oak scratchers and warm places to sleep.",
+    { key: "cats", label: "Cats", hero: "menu-cats.jpg", line: "Felt caves, oak scratchers and warm places to sleep.",
       g: [{ t: "Cats", l: ["Cat beds", "Scratchers", "Toys", "Bowls", "Collars"] },
           { t: "Living", l: ["Cat trees", "Litter boxes", "Window perches"] },
           { t: "Collections", l: ["Felt", "Oak"] }],
       f: [{ p: "catStairs", t: "Cat beds", n: "Felt Cave Bed", pr: 120 },
           { p: "kitten", t: "Scratchers", n: "Oak Scratcher", pr: 140 },
           { p: "catSleep", t: "Toys", n: "Wool Mouse Set", pr: 22 }] },
-    { key: "gifts", label: "Gifts", hero: "still2", line: "Wrapped by hand and ready to give.",
+    { key: "gifts", label: "Gifts", hero: "menu-gifts.jpg", line: "Wrapped by hand and ready to give.",
       g: [{ t: "Gifts", l: ["Gift sets", "For the new puppy", "Under £50", "Under £100", "Gift cards"] },
           { t: "For", l: ["Dogs", "Cats", "Their people"] },
           { t: "Occasions", l: ["Birthdays", "Christmas", "Gotcha day"] }],
@@ -106,7 +93,7 @@
   function more(c) { return '<a class="more" href="#">Shop all ' + esc(c.label.toLowerCase()) + ARW + "</a>"; }
   function ph(k, w, ratio, cap) {
     return '<span class="ph"' + (ratio ? ' style="aspect-ratio:' + ratio + '"' : "") + '><img src="' + src(k, w) +
-      '" alt="" loading="lazy" decoding="async">' + (cap ? '<span class="phcap">' + esc(cap) + "</span>" : "") + "</span>";
+      '" alt="" loading="lazy" decoding="async" data-ah="' + k + '"' + ((window.AH && AH.media && AH.media[k]) ? "" : ' class="ah-blank"') + '>' + (cap ? '<span class="phcap">' + esc(cap) + "</span>" : "") + "</span>";
   }
 
   function tile(f, ratio) {
