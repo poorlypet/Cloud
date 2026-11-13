@@ -18,7 +18,7 @@ def where(f):
     m=re.match(r'home-category-(.+)',b)
     if m: return ('Homepage','Shop by category: '+{'coats':'Coats & knitwear'}.get(m.group(1),cap(m.group(1))))
     m=re.match(r'home-size-(.+)',b)
-    if m: return ('Homepage','Shop by size: '+cap(m.group(1)))
+    if m: return ('Homepage','Shop by size: '+cap(m.group(1))+{'puppy':' (up to 6 months)','petite':' (up to 5kg)','small':' (5 to 10kg)','medium':' (10 to 25kg)','large':' (25 to 40kg)','giant':' (40kg and over)'}[m.group(1)])
     m=re.match(r'happy-dogs-(.+)',b)
     if m:
         pg='Homepage and Happy dogs' if m.group(1) in ('juno','fig','bonnie','ted') else 'Happy dogs'
@@ -46,12 +46,11 @@ GROUPS=[
       files=[f'brand-{h}.jpg' for n,h in BR]+['track-order-hero.jpg']),
  dict(id='photo-square',kind='Photo',title='Square photo',ratio='1:1',px='1600 × 1600',fmt='JPG, under 1 MB',
       tip='The biggest batch. Same light, same background and same distance across a row, so they sit together as a set.',
-      files=[f'home-size-{x}.jpg' for x in ['puppy','petite','small','medium','large','giant']]+
-            [f'story-collect-{x}.jpg' for x in ['beds','coats','walking','dining','play','travel']]+[f'menu-new-{x}.jpg' for x in ['beds','collars-leads','knitwear','for-cats']]+
+      files=[f'story-collect-{x}.jpg' for x in ['beds','coats','walking','dining','play','travel']]+[f'menu-new-{x}.jpg' for x in ['beds','collars-leads','knitwear','for-cats']]+
             [f'track-order-tile-{x}.jpg' for x in ['delivery','returns','contact-us']]),
- dict(id='photo-portrait',kind='Photo',title='Category tile',ratio='4:5',px='1600 × 2000',fmt='JPG, under 1.5 MB',
-      tip='The sideways-scrolling Shop by category row on the homepage. The name sits bottom left in white, so keep that corner darker and uncluttered.',
-      files=[f'home-category-{x}.jpg' for x in ['beds','walking','coats','dining','play','travel','cats','gifts']]),
+ dict(id='photo-portrait',kind='Photo',title='Homepage tile',ratio='4:5',px='1600 × 2000',fmt='JPG, under 1.5 MB',
+      tip='The two sideways-scrolling rows on the homepage: Shop by category and Shop by size. The name sits bottom left in white, so keep that corner darker and uncluttered. For sizes, show a dog of that size.',
+      files=[f'home-category-{x}.jpg' for x in ['beds','walking','coats','dining','play','travel','cats','gifts']]+[f'home-size-{x}.jpg' for x in ['puppy','petite','small','medium','large','giant']]),
  dict(id='photo-tall',kind='Photo',title='Tall menu photo',ratio='3:4',px='1200 × 1600',fmt='JPG, under 1 MB',
       tip='Shown on the right of each drop-down menu with a caption over the bottom, so keep the lower quarter quiet.',
       files=[f'menu-{x}.jpg' for x in ['beds','walking','coats','dining','play','travel','cats','gifts']]),

@@ -47,7 +47,7 @@ main > section.next{margin-top:var(--sec)}
       <div class="cs-r" tabindex="0" aria-label="Categories, scroll sideways"><a class="cs-t" href="/collections/beds">{%- render 'ah-img', f: 'home-category-beds.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Beds</span></a><a class="cs-t" href="/collections/walking">{%- render 'ah-img', f: 'home-category-walking.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Walking</span></a><a class="cs-t" href="/collections/coats">{%- render 'ah-img', f: 'home-category-coats.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Coats & knitwear</span></a><a class="cs-t" href="/collections/dining">{%- render 'ah-img', f: 'home-category-dining.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Dining</span></a><a class="cs-t" href="/collections/play">{%- render 'ah-img', f: 'home-category-play.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Play</span></a><a class="cs-t" href="/collections/travel">{%- render 'ah-img', f: 'home-category-travel.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Travel</span></a><a class="cs-t" href="/collections/cats">{%- render 'ah-img', f: 'home-category-cats.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Cats</span></a><a class="cs-t" href="/collections/gifts">{%- render 'ah-img', f: 'home-category-gifts.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Gifts</span></a></div>
       <button type="button" class="cs-a next" aria-label="More categories"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
     </div>
-    <div class="mq" aria-label="Why Axel &amp; Hound"><div class="mq-t"><div class="mq-g"><span class="mq-i">Complimentary UK delivery over £100</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Lived with at home before we stock it</span><span class="mq-d" aria-hidden="true">&#9671;</span></div><div class="mq-g" aria-hidden="true"><span class="mq-i">Complimentary UK delivery over £100</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Lived with at home before we stock it</span><span class="mq-d" aria-hidden="true">&#9671;</span></div></div></div>
+    <div class="mq" aria-label="Why Axel &amp; Hound"><div class="mq-t"><div class="mq-g"><span class="mq-i">Complimentary UK delivery over £100</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span></div><div class="mq-g" aria-hidden="true"><span class="mq-i">Complimentary UK delivery over £100</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span></div></div></div>
   </section>
 <style>
   .cs .cs-w{position:relative;margin-top:28px;margin-right:calc(var(--gut,24px) * -1)}
@@ -59,7 +59,8 @@ main > section.next{margin-top:var(--sec)}
   .cs-t:hover img{transform:scale(1.035)}
   .cs-t::after{content:"";position:absolute;inset:auto 0 0;height:38%;background:linear-gradient(transparent,rgba(0,0,0,.32));pointer-events:none}
   .cs-t:has(img.ah-blank)::after{display:none}
-  .cs-l{position:absolute;left:22px;bottom:20px;z-index:1;font:600 12px/1.2 var(--sans);letter-spacing:.2em;text-transform:uppercase}
+  .cs-l{position:absolute;left:22px;bottom:20px;z-index:1;font:600 11.5px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+  .cs-l small{display:block;margin-top:6px;font-weight:400;letter-spacing:.08em;text-transform:none;font-size:12.5px;opacity:.85}
   .cs-t:has(img.ah-blank) .cs-l{color:var(--ink,#161616)}
   .cs-a{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px!important;height:46px!important;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;border-radius:50%;border:0;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,.12);display:grid;place-items:center;cursor:pointer}
   .cs-a{display:flex!important;align-items:center;justify-content:center}
@@ -71,27 +72,24 @@ main > section.next{margin-top:var(--sec)}
   .mq-t{display:flex;width:max-content;animation:mq 46s linear infinite}
   .mq:hover .mq-t{animation-play-state:paused}
   .mq-g{display:flex;align-items:center;flex:none}
-  .mq-i{font:600 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;padding:20px 0;white-space:nowrap;color:var(--ink,#161616)}
+  .mq-i{font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:20px 0;white-space:nowrap;color:var(--ink,#161616)}
   .mq-d{color:var(--olive,#5E6B3A);font-size:11px;padding:0 clamp(36px,4vw,64px)}
   @keyframes mq{to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.mq-t{animation:none}}
-  @media (max-width:800px){.cs-r{grid-auto-columns:78vw}.cs-a{display:none}.cs-l{left:16px;bottom:16px;font-size:11px}.mq-i{font-size:11px;padding:16px 0}}
+  @media (max-width:800px){.cs-r{grid-auto-columns:78vw}.cs-a{display:none}.cs-l{left:16px;bottom:16px}.mq-i{padding:16px 0}}
 </style>
-<script>
-(function(){var w=document.currentScript.previousElementSibling.previousElementSibling.querySelector('.cs-w');if(!w)return;
-var r=w.querySelector('.cs-r'),p=w.querySelector('.prev'),n=w.querySelector('.next');
-function step(){var t=r.querySelector('.cs-t');return t?t.getBoundingClientRect().width+10:300}
-function upd(){p.hidden=r.scrollLeft<8;n.hidden=r.scrollLeft+r.clientWidth>=r.scrollWidth-8}
-p.addEventListener('click',function(){r.scrollBy({left:-step(),behavior:'smooth'})});
-n.addEventListener('click',function(){r.scrollBy({left:step(),behavior:'smooth'})});
-r.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();})();
-</script>
+
   <section class="ws w1" aria-label="Winter Sale">
     <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="#">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['sale'].products limit: 4 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
   </section>
   <section class="bh v2" aria-label="Cloud7"><div class="vid">{%- render 'ah-vid', f: 'home-cloud7.mp4' -%}<div class="ov"><span class="k">The brand edit</span><h2>Cloud7</h2><p>Cloud7 is a Berlin label making coats, beds and accessories for dogs. Every piece is designed to be lived in: warm on cold walks, easy to wash, and good-looking enough for the city.</p><a class="lk" href="#">Discover Cloud7 <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div></div><div class="prods"><div class="prods-h"><h3>Shop Cloud7</h3><a href="#">View all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['new-in'].products limit: 4 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></div></section>
-  <section class="sp sp-size" aria-label="Shop by size">
-    <div class="sp-h"><h2>Shop by size</h2><a class="all" href="#">Size guide <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g sq"><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-puppy.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Puppy</span></a><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-petite.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Petite</span></a><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-small.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Small</span></a><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-medium.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Medium</span></a><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-large.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Large</span></a><a href="#"><span class="ph">{%- render 'ah-img', f: 'home-size-giant.jpg', sizes: '(max-width: 640px) 50vw, 17vw' -%}</span><span class="n-serif">Giant</span></a></div>
+  <section class="sp sp-size cs" aria-label="Shop by size">
+    <div class="sp-h"><h2>Shop by size</h2><a class="all" href="#">Size guide <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
+    <div class="cs-w">
+      <button type="button" class="cs-a prev" aria-label="Previous sizes" hidden><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M7 1L1 7l6 6"/></svg></button>
+      <div class="cs-r" tabindex="0" aria-label="Sizes, scroll sideways"><a class="cs-t" href="/collections/puppy">{%- render 'ah-img', f: 'home-size-puppy.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Puppy<small>Up to 6 months</small></span></a><a class="cs-t" href="/collections/petite-up-to-5kg">{%- render 'ah-img', f: 'home-size-petite.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Petite<small>Up to 5kg</small></span></a><a class="cs-t" href="/collections/small-5-to-10kg">{%- render 'ah-img', f: 'home-size-small.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Small<small>5 to 10kg</small></span></a><a class="cs-t" href="/collections/medium-10-to-25kg">{%- render 'ah-img', f: 'home-size-medium.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Medium<small>10 to 25kg</small></span></a><a class="cs-t" href="/collections/large-25-to-40kg">{%- render 'ah-img', f: 'home-size-large.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Large<small>25 to 40kg</small></span></a><a class="cs-t" href="/collections/giant-40kg-and-over">{%- render 'ah-img', f: 'home-size-giant.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Giant<small>40kg and over</small></span></a></div>
+      <button type="button" class="cs-a next" aria-label="More sizes"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
+    </div>
   </section>
   <section class="pv v3 pv-k" aria-label="New puppy"><div class="pv-h"><h2>New puppy <i>for the first months home</i></h2><a class="lk" href="#">Shop puppy <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="row"><div class="film">{%- render 'ah-vid', f: 'home-new-puppy.mp4' -%}</div>{%- for product in collections['new-in'].products limit: 2 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></section>
   <section class="rv tpw soft" aria-label="Customer reviews">
@@ -103,6 +101,15 @@ r.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize'
   <section class="hdg v1" aria-label="Happy dogs"><div class="hdg-h"><div><h2>Happy dogs <i>at home with Axel &amp; Hound</i></h2></div><a class="lk" href="#">Share yours on Instagram <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g"><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-juno.mp4', hover: true -%}</div><span class="cap">Juno<small>border collie</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-fig.mp4', hover: true -%}</div><span class="cap">Fig<small>dachshund puppy</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-bonnie.mp4', hover: true -%}</div><span class="cap">Bonnie<small>rough collie</small></span></div><div><div class="vt">{%- render 'ah-vid', f: 'happy-dogs-ted.mp4', hover: true -%}</div><span class="cap">Ted<small>border collie</small></span></div></div></section>
 
 
+<script>
+document.querySelectorAll('.cs-w').forEach(function(w){if(w.dataset.on)return;w.dataset.on=1;
+var r=w.querySelector('.cs-r'),p=w.querySelector('.prev'),n=w.querySelector('.next');
+function step(){var t=r.querySelector('.cs-t');return t?t.getBoundingClientRect().width+10:300}
+function upd(){p.hidden=r.scrollLeft<8;n.hidden=r.scrollLeft+r.clientWidth>=r.scrollWidth-8}
+p.addEventListener('click',function(){r.scrollBy({left:-step(),behavior:'smooth'})});
+n.addEventListener('click',function(){r.scrollBy({left:step(),behavior:'smooth'})});
+r.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();});
+</script>
 {% schema %}
 {
   "name": "Homepage",
