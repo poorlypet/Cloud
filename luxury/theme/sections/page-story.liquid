@@ -23,15 +23,180 @@ main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!im
 main > section.next{margin-top:var(--sec)}
 </style>
 
-<div class="sy syv6"><section class="sy6-hero"><div class="sy-ph sy6-bg">{%- render 'ah-vid', f: 'story-hero.mp4' -%}<span>Film or photo, full width</span></div><div class="sy6-t"><span class="sy-k" data-rv>Our story</span><h1 class="sy-split">Axel &amp; Hound</h1><p data-rv>Beautiful things for dogs, and the homes they share.</p></div></section><section class="sy5-slide"><p class="sy5-a">Beautifully made.</p><p class="sy5-b">Or practical.</p><p class="sy5-c" data-rv>We wanted both, so we went looking.</p></section><section class="sy5-origin"><p data-rv>It started with two dogs and a long search.</p><p data-rv>Biscuit, a miniature dachshund with a very long back. Juno, a whippet who shivers at the first sign of autumn.</p><p data-rv>Everything we found for them was either beautifully made or practical. Almost never both.</p><p data-rv>So we went looking for the people who could do both.</p></section><section class="sy5-run"><div class="sy5-rs"><span class="sy-k">What we collect</span><div class="sy5-track"><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-beds.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Beds</b><span>Deep, soft and made to be washed, because they will be.</span></div><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-coats.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Coats</b><span>Cut for real shapes: long backs, deep chests, narrow waists.</span></div><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-walking.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Walking</b><span>Leather, rope and waxed cotton that soften with every walk.</span></div><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-dining.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Dining</b><span>Stoneware and oak that belong on a kitchen floor.</span></div><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-play.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Play</b><span>Wool felt and natural rubber, sturdy enough to last.</span></div><div class="sy5-item"><div class="sy-ph ">{%- render 'ah-img', f: 'story-collect-travel.jpg', cls: 'sy-fill' -%}<span>Photo, 1:1</span></div><b>Travel</b><span>Carriers and beds for weekends away and long drives home.</span></div></div></div></section><section class="sy2-route" style="--n:6"><div class="sy2-stage"><div class="sy2-hd"><span class="sy-k">Made by Europe&rsquo;s best</span><h2>Across Europe</h2></div><div class="sy2-line"><div class="sy2-draw"></div><i style="left:8.0%"><b>Germany</b></i><i style="left:24.8%"><b>Denmark</b></i><i style="left:41.6%"><b>Italy</b></i><i style="left:58.4%"><b>France</b></i><i style="left:75.2%"><b>Netherlands</b></i><i style="left:92.0%"><b>Scotland</b></i></div><div class="sy2-stops"><div class="sy2-stop"><span class="sy2-c">Germany</span><h3>Cloud7</h3><p>Coats and beds from a Berlin studio that has dressed city dogs for twenty years.</p></div><div class="sy2-stop"><span class="sy2-c">Denmark</span><h3>Hollow &amp; Hearth</h3><p>Wool blankets and bedding woven on the coast north of Copenhagen.</p></div><div class="sy2-stop"><span class="sy2-c">Italy</span><h3>Clay &amp; Kiln</h3><p>Stoneware bowls thrown and glazed by hand outside Milan.</p></div><div class="sy2-stop"><span class="sy2-c">France</span><h3>Maison Lune</h3><p>Bouclé and linen beds stitched in a small atelier in Lyon.</p></div><div class="sy2-stop"><span class="sy2-c">Netherlands</span><h3>Fold &amp; Field</h3><p>Waxed cotton coats and leads from a workshop in Utrecht.</p></div><div class="sy2-stop"><span class="sy2-c">Scotland</span><h3>Bridle &amp; Co</h3><p>Bridle leather collars cut and stitched in the Scottish borders.</p></div></div><div class="sy-ph sy2-ph">{%- render 'ah-img', f: 'story-workshops.jpg', cls: 'sy-fill' -%}<span>Photo, 3:2, at each workshop</span></div></div></section><section class="sy-rules"><div data-rv><h3>Made to last</h3><p>If it won&rsquo;t survive a muddy winter, it doesn&rsquo;t make the cut.</p></div><div data-rv><h3>Made well</h3><p>Proper seams, honest materials, nothing that frays by spring.</p></div><div data-rv><h3>Made beautifully</h3><p>Something you&rsquo;re happy to leave out in the living room.</p></div><div data-rv><h3>Lived with first</h3><p>Every piece spends weeks at home with our own dogs before it reaches you.</p></div></section><section class="sy-close"><div class="sy-ph sy-wipe sy-cph">{%- render 'ah-vid', f: 'story-close.mp4' -%}<span>Film, 16:9</span></div><h2 class="sy-split">Still small, on purpose.</h2><p data-rv>We pack every order by hand, wrap it in tissue and answer every email ourselves. Thank you for being part of it.</p><p class="sy-sig">Sam &amp; Alex</p><div class="sy-cta"><a class="sy-btn" href="{{ routes.collections_url }}/new-in">Shop new in</a><a class="sy-btn sy-o" href="/pages/brands">Meet the makers</a></div></section></div>
+{%- assign mm = shop.metafields.custom.ah_media.value -%}
+<div class="os">
+  <section class="os-hero">
+    {%- render 'ah-vid', f: 'home-new-puppy.mp4' -%}
+    <div class="os-hero-tx">
+      <span class="os-k">Our story</span>
+      <h1>Axel &amp; Hound</h1>
+      <p>Beautiful things for dogs, and the homes they share.</p>
+    </div>
+  </section>
 
+  <section class="os-state os-w" data-os>
+    <p>Beautifully made. Or practical.<br><em>We wanted both, so we went looking.</em></p>
+  </section>
 
+  <section class="os-start os-w">
+    <div class="os-start-tx" data-os>
+      <span class="os-k">Where it began</span>
+      <h2>Two dogs and a long search</h2>
+      <p>Biscuit, a miniature dachshund with a very long back. Juno, a whippet who shivers at the first sign of autumn.</p>
+      <p>Everything we found for them was either beautifully made or practical. Almost never both.</p>
+      <p>So we went looking for the people who could do both.</p>
+    </div>
+    <figure class="os-ph a" data-os>{%- render 'ah-img', f: 'home-dachshund.jpg', sizes: '(max-width: 800px) 100vw, 40vw' -%}<figcaption>Biscuit&rsquo;s long back</figcaption></figure>
+    <figure class="os-ph b" data-os>{%- render 'ah-img', f: 'home-greyhound-whippet.jpg', sizes: '(max-width: 800px) 100vw, 30vw' -%}<figcaption>Juno and the first cold morning</figcaption></figure>
+  </section>
+
+  <section class="os-collect">
+    <div class="os-w os-head" data-os><span class="os-k">What we collect</span><h2>Six things, done properly</h2></div>
+    <div class="os-row" tabindex="0" aria-label="What we collect, scroll sideways">
+      {%- liquid
+        assign cl = 'beds|coats|walking|dining|play|travel' | split: '|'
+        assign ct = 'Beds|Coats|Walking|Dining|Play|Travel' | split: '|'
+        assign cd = 'Deep, soft and made to be washed, because they will be.|Cut for real shapes: long backs, deep chests, narrow waists.|Leather, rope and waxed cotton that soften with every walk.|Stoneware and oak that belong on a kitchen floor.|Wool felt and natural rubber, sturdy enough to last.|Carriers and beds for weekends away and long drives home.' | split: '|'
+      -%}
+      {%- for h in cl -%}
+        {%- assign f = 'story-collect-' | append: h | append: '.jpg' -%}
+        <a class="os-c" href="/collections/{{ h }}" data-os><span class="im">{%- render 'ah-img', f: f, sizes: '(max-width: 800px) 70vw, 24vw' -%}</span><b>{{ ct[forloop.index0] }}</b><span>{{ cd[forloop.index0] }}</span></a>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <section class="os-makers os-w">
+    <div class="os-head" data-os><span class="os-k">Made by Europe&rsquo;s best</span><h2>The makers we work with</h2><p>Independent studios and workshops from Berlin to Barcelona, chosen slowly and lived with at home before we stock them.</p></div>
+    <div class="os-mk">
+      {%- for link in linklists['brands'].links -%}
+        {%- liquid
+          assign c = link.object
+          assign bh = 'brand-' | append: c.handle
+          assign film = mm.films[bh]
+          assign still = mm.stills[bh]
+        -%}
+        <a class="os-m" href="{{ link.url }}" data-os>
+          <span class="im">
+            {%- if film != blank -%}<video muted loop playsinline preload="none" poster="{{ film.p }}" data-play><source src="{{ film.u }}" type="video/mp4"></video>
+            {%- elsif still != blank -%}<img src="{{ still }}&width=1400" alt="" loading="lazy">
+            {%- elsif c.image -%}{{ c.image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" class="ah-blank">{%- endif -%}
+          </span>
+          <span class="tx">{%- if c.metafields.custom.origin.value != blank -%}<i>{{ c.metafields.custom.origin.value }}</i>{%- endif -%}<b>{{ link.title }}</b>{%- if c.metafields.custom.tagline.value != blank -%}<span>{{ c.metafields.custom.tagline.value }}</span>{%- endif -%}<em>Shop {{ link.title }}</em></span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <section class="os-rules os-w">
+    <div class="os-head" data-os><span class="os-k">How we choose</span><h2>Four rules, no exceptions</h2></div>
+    <ol>
+      <li data-os><b>Made to last</b><p>If it won&rsquo;t survive a muddy winter, it doesn&rsquo;t make the cut.</p></li>
+      <li data-os><b>Made well</b><p>Proper seams, honest materials, nothing that frays by spring.</p></li>
+      <li data-os><b>Made beautifully</b><p>Something you&rsquo;re happy to leave out in the living room.</p></li>
+      <li data-os><b>Lived with first</b><p>Every piece spends weeks at home with our own dogs before it reaches you.</p></li>
+    </ol>
+  </section>
+
+  <section class="os-close">
+    {%- render 'ah-vid', f: 'story-close.mp4' -%}
+    <div class="os-close-tx" data-os>
+      <h2>Still small, on purpose.</h2>
+      <p>We pack every order by hand, wrap it in tissue and answer every email ourselves. Thank you for being part of it.</p>
+      <span class="os-sig">Sam &amp; Alex</span>
+      <div class="os-btns"><a class="os-btn" href="/collections/new-in">Shop new in</a><a class="os-btn ghost" href="/pages/brands">Meet the makers</a></div>
+    </div>
+  </section>
+</div>
+<style>
+  .os{--os-gap:clamp(72px,9vw,140px)}
+  .os-w{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:var(--gut);padding-right:var(--gut)}
+  .os-k{display:block;font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--olive,#5E6B3A);margin-bottom:16px}
+  .os h2{font:500 clamp(30px,3.4vw,48px)/1.05 var(--display);margin:0;text-wrap:balance}
+  .os p{font-size:16px;line-height:1.75;color:var(--ink2)}
+  .os-hero{position:relative;height:min(78svh,760px);overflow:hidden;background:#1a1a18;color:#fff}
+  .os-hero video,.os-close video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .os-hero::after,.os-close::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,0) 60%);pointer-events:none}
+  .os-hero-tx{position:absolute;left:var(--gut);bottom:clamp(32px,5vw,72px);z-index:1;max-width:620px}
+  .os-hero-tx .os-k{color:rgba(255,255,255,.8)}
+  .os-hero h1{font:500 clamp(48px,7vw,104px)/.95 var(--display);margin:0;color:#fff}
+  .os-hero-tx p{color:rgba(255,255,255,.88);font-size:17px;margin:16px 0 0}
+  .os-state{padding-top:var(--os-gap);text-align:center}
+  .os-state p{font:500 clamp(30px,4vw,58px)/1.12 var(--display);color:var(--ink);max-width:22ch;margin:0 auto;text-wrap:balance}
+  .os-state em{color:var(--olive,#5E6B3A)}
+  .os-start{margin-top:var(--os-gap);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);grid-template-areas:"t a b";gap:clamp(20px,3vw,40px);align-items:end}
+  .os-start-tx{grid-area:t;align-self:center;padding-right:clamp(0px,3vw,48px)}
+  .os-start-tx h2{margin-bottom:20px}
+  .os-start-tx p{margin:0 0 14px}
+  .os-ph{margin:0;position:relative}
+  .os-ph img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#EDEDEB}
+  .os-ph.a{grid-area:a}
+  .os-ph.b{grid-area:b;margin-bottom:clamp(40px,8vw,120px)}
+  .os-ph figcaption{font-size:12.5px;color:var(--ink2);margin-top:10px}
+  .os-collect{margin-top:var(--os-gap)}
+  .os-head{margin-bottom:clamp(28px,3vw,44px)}
+  .os-head p{max-width:56ch;margin:16px 0 0}
+  .os-row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((min(100vw,1240px) - 2 * var(--gut) - 60px) / 4.2);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 var(--gut);scroll-padding-left:var(--gut)}
+  @media (min-width:1241px){.os-row{padding-left:calc((100vw - 1240px) / 2 + var(--gut));scroll-padding-left:calc((100vw - 1240px) / 2 + var(--gut))}}
+  .os-row::-webkit-scrollbar{display:none}
+  .os-c{scroll-snap-align:start;color:inherit;text-decoration:none}
+  .os-c .im{display:block;aspect-ratio:1;overflow:hidden;background:#EDEDEB}
+  .os-c img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .os-c:hover img{transform:scale(1.04)}
+  .os-c b{display:block;font:500 24px/1.1 var(--display);margin:16px 0 6px}
+  .os-c span:last-child{font-size:14px;line-height:1.6;color:var(--ink2)}
+  .os-makers{margin-top:var(--os-gap)}
+  .os-mk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3vw,48px) clamp(20px,2.4vw,36px)}
+  .os-m{color:inherit;text-decoration:none;display:block}
+  .os-m:nth-child(4n+2),.os-m:nth-child(4n+3){}
+  .os-m .im{display:block;position:relative;aspect-ratio:16/10;overflow:hidden;background:#EDEDEB}
+  .os-m .im video,.os-m .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+  .os-m:hover .im video,.os-m:hover .im img{transform:scale(1.03)}
+  .os-m .tx{display:block;margin-top:18px}
+  .os-m i{display:block;font:600 11px/1 var(--sans);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+  .os-m b{display:block;font:500 30px/1.1 var(--display);margin:10px 0 8px}
+  .os-m .tx > span{display:block;font-size:15px;line-height:1.65;color:var(--ink2);max-width:52ch}
+  .os-m em{display:inline-block;margin-top:12px;font:600 11.5px/1 var(--sans);font-style:normal;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:4px}
+  .os-rules{margin-top:var(--os-gap)}
+  .os-rules ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,40px);border-top:1px solid var(--ink)}
+  .os-rules li{padding-top:24px}
+  .os-rules li b{display:block;font:500 26px/1.1 var(--display)}
+  .os-rules li p{margin:10px 0 0;font-size:15px}
+  .os-close{position:relative;margin-top:var(--os-gap);min-height:min(86svh,820px);overflow:hidden;background:#1a1a18;color:#fff;display:flex;align-items:flex-end}
+  .os-close-tx{position:relative;z-index:1;padding:clamp(40px,6vw,96px) var(--gut);max-width:640px}
+  .os-close h2{color:#fff;font-size:clamp(38px,4.6vw,68px)}
+  .os-close p{color:rgba(255,255,255,.88);margin:18px 0 0}
+  .os-sig{display:block;font:italic 500 26px/1 var(--display);margin-top:20px}
+  .os-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .os-btn{display:inline-flex;align-items:center;height:48px;padding:0 26px;background:#fff;color:#161616;font:600 11.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+  .os-btn.ghost{background:none;color:#fff;border:1px solid rgba(255,255,255,.7)}
+  /* scroll reveal: visible by default, only animated once the script has run */
+  .os-js [data-os]{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+  .os-js [data-os].in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.os-js [data-os]{opacity:1;transform:none;transition:none}}
+  @media (max-width:900px){
+    .os-start{grid-template-columns:1fr 1fr;grid-template-areas:"t t" "a b"}
+    .os-ph.b{margin-bottom:0}
+    .os-rules ol{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    .os-mk{grid-template-columns:1fr}
+    .os-row{grid-auto-columns:72vw}
+    .os-rules ol{grid-template-columns:1fr}
+    .os-start{grid-template-columns:1fr 1fr;gap:12px}
+  }
+</style>
+<script>
+(function(){var root=document.querySelector('.os');if(!root)return;
+var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+if('IntersectionObserver' in window&&!rm){root.classList.add('os-js');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  root.querySelectorAll('[data-os]').forEach(function(el,i){el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});}
+/* brand films play only while on screen */
+if('IntersectionObserver' in window){var vo=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{threshold:.25});
+  root.querySelectorAll('video[data-play]').forEach(function(v){vo.observe(v)});}
+})();
+</script>
 {% schema %}
-{
-  "name": "Our story",
-  "tag": "div",
-  "class": "ah-sec"
-}
+{ "name": "Our story", "tag": "div", "class": "ah-sec" }
 {% endschema %}
-
-<style>.sy-ph > video,.sy-ph > img[data-ah]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.sy-ph > img[data-ah]:not(.ah-blank) ~ span,.sy-ph > img.ah-blank{display:none}</style>

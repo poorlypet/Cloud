@@ -39,7 +39,9 @@ main > section.next{margin-top:var(--sec)}
       assign still = shop.metafields.custom.ah_media.value.stills[bh]
     endif
   -%}
-  {%- render 'ah-vid', f: bv, poster: still -%}
+  {%- assign bfilm = shop.metafields.custom.ah_media.value.films[bh] -%}
+  {%- if bfilm == blank and still != blank -%}<img src="{{ still }}{% if still contains '?' %}&{% else %}?{% endif %}width=2400" alt="{{ collection.title | escape }}" fetchpriority="high" data-ah="{{ bj }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  {%- else -%}{%- render 'ah-vid', f: bv, poster: still -%}{%- endif -%}
   <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" hidden data-ah="{{ bj }}">
   <div class="tx">
     <span class="zkick">The brand{% if origin != blank %} &middot; {{ origin }}{% endif %}</span>

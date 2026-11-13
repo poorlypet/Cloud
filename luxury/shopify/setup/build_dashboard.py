@@ -36,7 +36,7 @@ def where(f):
     m=re.match(r'track-order-tile-(.+)',b)
     if m: return ('Track your order','Help tile: '+cap(m.group(1).replace('-',' ')))
     m=re.match(r'brand-(.+)',b)
-    if m: return ('Brand page',dict((h,n) for n,h in BR)[m.group(1)]+(' banner film' if f.endswith('.mp4') else ' still, shown until the film plays'))
+    if m: return ('Brand page',dict((h,n) for n,h in BR)[m.group(1)]+(' banner film' if f.endswith('.mp4') else ' banner photo'))
     m=re.match(r'collection-(.+)-([12])$',b)
     if m:
         k,n=m.group(1),m.group(2)
@@ -55,7 +55,7 @@ GROUPS=[
       tip='Collection films sit in among the products, the size of four product cards: two per category, the first after the 4th product and the second after the 14th, shared by all its sub-collections. Customer films are one dog each; Juno, Fig, Bonnie and Ted also play on the homepage.',
       files=[f'collection-{h}-{k}.mp4' for h in CTOP for k in (1,2)]+['happy-dogs-juno.mp4','happy-dogs-fig.mp4','happy-dogs-bonnie.mp4','happy-dogs-ted.mp4','happy-dogs-bramble.mp4','happy-dogs-rosie.mp4','happy-dogs-scout.mp4','happy-dogs-bear.mp4','happy-dogs-honey.mp4','happy-dogs-willow.mp4','happy-dogs-mochi.mp4']),
  dict(id='photo-banner',kind='Photo',title='Wide banner',ratio='about 3:1',px='2880 × 1000',fmt='JPG, under 2 MB',
-      tip='Brand stills show until the brand film loads, so take them from the same shoot. Leave calm space on the left for the heading. Phones show a tall slice from the centre.',
+      tip='Molly and Stitch and BDEBRUNO use a photo banner instead of a film. Leave calm space on the left for the heading. Phones show a tall slice from the centre.',
       files=[f'brand-{h}.jpg' for n,h in BR]+['track-order-hero.jpg']),
  dict(id='photo-square',kind='Photo',title='Square photo',ratio='1:1',px='1600 × 1600',fmt='JPG, under 1 MB',
       tip='The biggest batch. Same light, same background and same distance across a row, so they sit together as a set.',
@@ -74,8 +74,13 @@ GROUPS=[
       tip='Hands, tools and leather at a maker’s bench. Shown on Our story beside the list of workshops.',
       files=['story-workshops.jpg']),
 ]
-HIDDEN = lambda f: (f.startswith('happy-dogs-') or 'cats' in f or f.startswith('brand-dventotto')
-                    or (f.startswith('brand-') and f.endswith('.jpg')) or f.startswith('collection-'))
+PHOTO_BRANDS = ('brand-molly-and-stitch','brand-bdebruno')
+GONE = {'home-cloud7.mp4', 'story-hero.mp4', 'story-workshops.jpg', 'menu-coats.jpg'}
+def HIDDEN(f):
+    b = f.rsplit('.', 1)[0]
+    if b in PHOTO_BRANDS: return f.endswith('.mp4')
+    return (f in GONE or f.startswith('happy-dogs-') or 'cats' in f or f.startswith('brand-dventotto')
+            or (f.startswith('brand-') and f.endswith('.jpg')) or f.startswith('collection-'))
 for g in GROUPS: g['files'] = [f for f in g['files'] if not HIDDEN(f)]
 GROUPS = [g for g in GROUPS if g['files'] or g['id'] == 'film-portrait']
 # collection films are a shared pool: any film whose name starts with "collection"
