@@ -30,7 +30,7 @@
         c.hidden = !ok; if (ok) n++;
       });
       var anyF = Object.keys(f).length > 0;
-      Array.prototype.forEach.call(grid.querySelectorAll(".vt2, .story"), function (v) { v.hidden = anyF; });
+      Array.prototype.forEach.call(grid.querySelectorAll(".vt2, .story, .cq-ft"), function (v) { v.hidden = anyF; });
       count.forEach(function (el) { el.textContent = n + (n === 1 ? " product" : " products"); });
       var empty = $(".cx-empty", grid);
       if (!n && !empty) { empty = document.createElement("p"); empty.className = "cx-empty"; empty.textContent = "Nothing matches those filters. Try removing one."; grid.appendChild(empty); }
@@ -62,6 +62,11 @@
         var story = $(".story", grid);
         list.forEach(function (c) { grid.appendChild(c); });
         if (story) grid.insertBefore(story, grid.children[2] || null);
+        /* film tiles stay after the 4th and 14th pieces whatever the order */
+        Array.prototype.forEach.call(grid.querySelectorAll(".cq-ft"), function (t, i) {
+          var pcs = Array.prototype.filter.call(grid.children, function (c) { return c.matches(".pcd[data-price]"); });
+          grid.insertBefore(t, pcs[Math.min([4, 14][i], pcs.length)] || null);
+        });
         $$(".cx-sort").forEach(function (o) { o.value = v; });
       });
     });
