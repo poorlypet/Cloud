@@ -6,6 +6,9 @@ for k,v in json.load(open(SP+'story_m.json')).items():
     M[k]={'d':v.get('1440'),'m':v.get('390') if v.get('390',[0])[0] else None}
 BR=[('Cloud7','cloud7'),('Nordog','nordog'),('Tadazhi','tadazhi'),('DVENTOTTO','dventotto'),('Molly and Stitch','molly-and-stitch'),('Pintu','pintu'),('BDEBRUNO','bdebruno'),('Brott Barcelona','brott-barcelona'),('PAIKKA','paikka')]
 for n,h in BR: M.setdefault(f'brand-{h}.jpg',{'d':[1440,504],'m':[390,504]})
+CTOP=['new-in','beds','walking','coats','dining','play','travel','cats','gifts','sale','sizes','all']
+for h in CTOP: M.setdefault(f'collection-{h}.mp4',{'d':[1348,513],'m':[358,269]})
+for n,h in BR: M.setdefault(f'brand-{h}.mp4',{'d':[1440,504],'m':[390,504]})
 M['product-film.mp4']={'d':[720,560],'m':[390,420]}
 def cap(s): return s[:1].upper()+s[1:]
 def where(f):
@@ -32,17 +35,25 @@ def where(f):
     m=re.match(r'track-order-tile-(.+)',b)
     if m: return ('Track your order','Help tile: '+cap(m.group(1).replace('-',' ')))
     m=re.match(r'brand-(.+)',b)
-    if m: return ('Brand page',dict((h,n) for n,h in BR)[m.group(1)]+' banner')
+    if m: return ('Brand page',dict((h,n) for n,h in BR)[m.group(1)]+(' banner film' if f.endswith('.mp4') else ' still, shown until the film plays'))
+    m=re.match(r'collection-(.+)',b)
+    if m:
+        k=m.group(1)
+        lab={'new-in':'New In','sale':'Sale','sizes':'Shop by size','all':'Any other collection'}.get(k,cap(k))
+        return ('Collection pages',lab+(' and all its sub-collections' if k not in ('sale','sizes','all') else '')+': banner film')
     return ('','')
 GROUPS=[
  dict(id='film-wide',kind='Film',title='Wide film',ratio='16:9',px='1920 × 1080',fmt='MP4 (H.264), 10 to 20 seconds, no sound, under 20 MB',
       tip='Keep the dog in the middle third. These play edge to edge and phones crop the sides, so the centre is what everyone sees.',
-      files=['home-hero.mp4','home-cloud7.mp4','home-new-puppy.mp4','story-hero.mp4','story-close.mp4','product-film.mp4']),
+      files=['home-hero.mp4','home-new-puppy.mp4','story-close.mp4','product-film.mp4']),
+ dict(id='film-banner',kind='Film',title='Banner film',ratio='21:9',px='2560 × 1080',fmt='MP4 (H.264), 10 to 20 seconds, no sound, under 25 MB',
+      tip='Collection and brand pages open with these. Shoot wide and keep the action in the centre: phones show a squarer slice from the middle (4:3 on collections, tall on brand pages). One film covers a category and all its sub-collections.',
+      files=[f'collection-{h}.mp4' for h in CTOP]+[f'brand-{h}.mp4' for n,h in BR]+['home-cloud7.mp4','story-hero.mp4']),
  dict(id='film-portrait',kind='Film',title='Portrait film',ratio='4:5',px='1080 × 1350',fmt='MP4 (H.264), 6 to 15 seconds, no sound, under 10 MB',
       tip='Shoot on a phone held upright, then crop to 4:5. One dog per film. Juno, Fig, Bonnie and Ted also play on the homepage.',
       files=['happy-dogs-juno.mp4','happy-dogs-fig.mp4','happy-dogs-bonnie.mp4','happy-dogs-ted.mp4','happy-dogs-bramble.mp4','happy-dogs-rosie.mp4','happy-dogs-scout.mp4','happy-dogs-bear.mp4','happy-dogs-honey.mp4','happy-dogs-willow.mp4','happy-dogs-mochi.mp4']),
  dict(id='photo-banner',kind='Photo',title='Wide banner',ratio='about 3:1',px='2880 × 1000',fmt='JPG, under 2 MB',
-      tip='Leave calm space on the left for the heading. Phones show a tall slice from the centre, so keep the subject there.',
+      tip='Brand stills show until the brand film loads, so take them from the same shoot. Leave calm space on the left for the heading. Phones show a tall slice from the centre.',
       files=[f'brand-{h}.jpg' for n,h in BR]+['track-order-hero.jpg']),
  dict(id='photo-square',kind='Photo',title='Square photo',ratio='1:1',px='1600 × 1600',fmt='JPG, under 1 MB',
       tip='The biggest batch. Same light, same background and same distance across a row, so they sit together as a set.',
