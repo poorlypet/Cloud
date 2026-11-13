@@ -1,0 +1,35 @@
+/* Olive accent alongside black: announcement, buttons, footer, badges and progress */
+:root{--olive:#4A5236;--olive-d:#3A4129;--olive-dd:#2E3422;--olive-tint:#EEF0E7}
+.announce{background:var(--olive)!important}
+.btn-k,.dw-btn:not(.dw-o),.dz-btn,.dy-btn,.nr-btn,.nr-f button,.dy-form button,.dz .dy-form button,.promo button,.bf .f button,
+.rz-btn:not(.rz-o):not(.rz-g),.sy-btn:not(.sy-o),.sx-last .sx-btn:not(.sx-o),.sx-slast .sx-btn:not(.sx-o),.v9-co,.fm7-go,.ac-form .btn-k,.tk-f .btn-k{
+  background:var(--olive)!important;border-color:var(--olive)!important;color:#fff!important}
+.btn-k:hover,.dw-btn:not(.dw-o):hover,.dz-btn:hover,.dy-btn:hover,.nr-btn:hover,.nr-f button:hover,.dy-form button:hover,.rz-btn:not(.rz-o):not(.rz-g):hover,.sy-btn:not(.sy-o):hover,.v9-co:hover{
+  background:var(--olive-d)!important;border-color:var(--olive-d)!important}
+.btn-o:hover,.wbtn.line:hover{background:var(--olive)!important;border-color:var(--olive)!important;color:#fff!important}
+/* footer in deep olive */
+.bf .bk{background:var(--olive-dd)!important}
+.bf .base{border-top-color:rgba(255,255,255,.18)!important}
+.bf .wm{color:rgba(255,255,255,.92)}
+/* small marks */
+.tag,.px .price .ptag{background:var(--olive)!important}
+.cx-more .prog i,.v9-free .bar i,.track i,.tpw.soft .rvdots i.on,.rq4-dots button.on,.sy2-draw,.sy2-line i.on{background:var(--olive)!important;border-color:var(--olive)!important}
+.hdr:not(.clear) .ico .n{background:var(--olive)!important}
+.hdr:not(.clear) .ico .n b{color:#fff!important}
+.ct2 a[aria-current]{color:var(--olive)!important}
+.dw-keys b,.cq-head h1{color:inherit}
+.toast{background:var(--olive)!important}
+.qa:hover,.az-nav a:hover,.az-w:hover,.b3-add:hover{background:var(--olive)!important;color:#fff!important}
+/* checkboxes and ticks in the filter drawer */
+.fd input[type=checkbox]:checked{accent-color:var(--olive)}
+/* help: topics as boxes */
+.hb-boxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px}
+.hb-boxes a{display:flex;flex-direction:column;gap:10px;min-height:200px;padding:30px 30px 28px;background:#F4F4F2;transition:background .25s}
+.hb-boxes a:hover{background:var(--olive-tint)}
+.hb-boxes b{font-family:var(--display);font-weight:500;font-size:clamp(24px,2vw,30px);line-height:1.15;color:var(--ink)}
+.hb-boxes span{font-size:15px;line-height:1.65;color:var(--ink2)}
+.hb-boxes em{margin-top:auto;padding-top:14px;font-style:normal;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);align-self:flex-start;border-bottom:1px solid currentColor;padding-bottom:2px}
+.hb-ct .dw-w{border-top:0!important;background:#F4F4F2;padding:clamp(32px,4vw,52px)!important}
+@media (max-width:1000px){.hb-boxes{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.hb-boxes{grid-template-columns:1fr;gap:12px}.hb-boxes a{min-height:0;padding:24px}.hb-ct .dw-w{margin:0 var(--gut);padding:28px 20px!important}}
+.ico .n:empty{display:none!important}
