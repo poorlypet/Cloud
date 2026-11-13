@@ -1,0 +1,101 @@
+/* ==================================================================
+   Axel & Hound · full-screen film with the reassurance row beneath it
+   on white. The film is the screen height minus the row, so the row
+   shows on the first screen. Five row treatments, chosen by class.
+   ================================================================== */
+:root{--row-h:76px;--tp:#00B67A}
+.hero{height:calc(100svh - var(--row-h));min-height:600px}
+.hero-shade{background:linear-gradient(15deg,rgba(12,10,8,.56) 0%,rgba(12,10,8,.15) 36%,rgba(12,10,8,0) 56%)}
+
+.usp{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+.usp-in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;min-height:var(--row-h);padding:0 var(--gut)}
+.u{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0;text-align:center;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.u svg{flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.1}
+.u small{display:block;font-size:12px;letter-spacing:.02em;text-transform:none;font-weight:400;color:var(--mute);margin-top:4px}
+
+/* Trustpilot (placeholder until the TrustBox widget is added) */
+.tp-stars{display:inline-flex;gap:2px}
+.tp-stars i{position:relative;width:18px;height:18px;background:var(--tp)}
+.tp-stars i::before{content:"";position:absolute;inset:3px;background:#fff;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tp-stars i.half{background:linear-gradient(90deg,var(--tp) 60%,#DCDCE6 60%)}
+.tp-logo{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:600;letter-spacing:0;text-transform:none}
+.tp-logo::before{content:"";width:15px;height:15px;background:var(--tp);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tp-n{font-size:12.5px;letter-spacing:.02em;text-transform:none;font-weight:400;color:var(--ink2)}
+
+/* B1 · one line, hairline dividers */
+.b1 .u + .u{border-left:1px solid var(--line)}
+.b1 .u{height:30px}
+
+/* B2 · icons above, two lines of text */
+.b2{--row-h:128px}
+.b2 .u{flex-direction:column;gap:10px}
+.b2 .u svg{width:26px;height:26px}
+.b2 .tp-stars i{width:22px;height:22px}
+
+/* B3 · serif, sentence case, no icons, light grey */
+.b3{background:#F6F6F6;border:0}
+.b3 .u{font:400 19px/1.2 var(--display);letter-spacing:0;text-transform:none;gap:10px}
+.b3 .u svg{display:none}
+.b3 .u + .u{border-left:1px solid #E2E2E2}
+.b3 .u{height:34px}
+
+/* B4 · Trustpilot centred above, three points below */
+.b4{--row-h:132px}
+.b4 .usp-in{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px;padding:22px var(--gut)}
+.b4 .tp{grid-column:1/-1;gap:14px}
+.b4 .u:not(.tp){font-size:11px;color:var(--ink2)}
+.b4 .u svg{width:18px;height:18px}
+
+/* B5 · four outlined cells */
+.b5{border:0}
+.b5 .usp-in{gap:12px;padding:12px var(--gut);min-height:auto}
+.b5 .u{height:64px;border:1px solid var(--line);transition:border-color .25s}
+.b5 .u:hover{border-color:var(--ink)}
+.b5{--row-h:88px}
+
+@media (max-width:1080px){
+  .usp-in,.b4 .usp-in{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;padding:18px var(--gut)}
+  .u{font-size:10.5px;letter-spacing:.08em;justify-content:flex-start;text-align:left;border:0!important;height:auto!important}
+  .b2 .u,.b4 .u{align-items:flex-start}
+  .b3 .u{font-size:16px}
+  .b4 .tp{grid-column:1/-1;justify-content:center}
+  .b5 .u{border:1px solid var(--line)!important;padding:12px;height:auto!important;min-height:56px}
+  .tp-logo,.tp-n{display:none}
+  .hero{height:calc(100svh - 150px)}
+}
+@media (min-width:1081px){
+  .b1 .usp-in,.b5 .usp-in{grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr))}
+}
+.tp-n,.tp-logo{white-space:nowrap}
+@media (max-width:1080px){.b5 .tp > span:first-child{display:none}.b5 .tp{justify-content:center}}
+
+/* phones: reviews only, centred */
+@media (max-width:1080px){
+  .usp .usp-in,.b4 .usp-in,.b5 .usp-in{display:flex;justify-content:center;align-items:center;min-height:0;padding:16px var(--gut)}
+  .usp .u:not(.tp){display:none}
+  .usp .tp{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;flex-wrap:nowrap;gap:10px;width:100%;height:auto!important;padding:4px 0!important;border:0!important;font-size:11px;letter-spacing:.1em}
+  .usp .tp > span:first-child:not(.tp-stars){display:inline!important}
+  .usp .tp .tp-stars{display:inline-flex!important}
+  .usp .tp .tp-n,.usp .tp .tp-logo{display:inline-flex}
+  .usp .tp small{display:none}
+  .usp .tp-stars i{width:17px;height:17px}
+  .b3 .tp{font-size:15px;letter-spacing:0}
+  .hero{height:calc(100svh - 58px)}
+}
+@media (max-width:360px){.usp .tp .tp-logo{display:none}}
+
+/* Row 3 on the film, transparent (chosen) */
+.hero:has(.usp-over){height:100svh}
+.usp-over{position:absolute;left:0;right:0;bottom:0;z-index:3;background:transparent;border:0;color:#fff}
+.usp-over .usp-in{min-height:76px}
+.usp-over .u{font:400 19px/1.2 var(--display);letter-spacing:0;text-transform:none;gap:10px;height:34px}
+.usp-over .u + .u{border-left:1px solid rgba(255,255,255,.28)}
+.usp-over .u svg{display:none}
+.has-over .hero-copy{bottom:calc(76px + clamp(32px,5vh,56px))}
+.has-over .hero-shade{background:linear-gradient(15deg,rgba(12,10,8,.56) 0%,rgba(12,10,8,.15) 36%,rgba(12,10,8,0) 56%),linear-gradient(to top,rgba(12,10,8,.42),rgba(12,10,8,0) 18%)}
+@media (max-width:1080px){
+  .hero:has(.usp-over){height:100svh}
+  .usp-over .usp-in{padding:18px var(--gut) 22px}
+  .usp-over .tp{font-size:16px!important;letter-spacing:0!important}
+  .has-over .hero-copy{bottom:84px}
+}

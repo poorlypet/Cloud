@@ -1,0 +1,124 @@
+/* Axel & Hound · product pages round 7
+   Gallery runs edge to edge on the left and the photos are large and square.
+   Description, size guide, delivery and care sit in tabs under the product. */
+
+/* ---------- top ---------- */
+.gtop{display:grid;grid-template-columns:minmax(0,60fr) minmax(400px,40fr);column-gap:clamp(40px,4.5vw,88px);align-items:start;padding:0 var(--gut) 0 0}
+.gw{min-width:0}
+.gi{position:sticky;top:calc(var(--hh) + 24px);padding-top:28px;max-width:600px}
+.gi .crumb{padding:0 0 18px!important}
+.gv .zm{height:auto;aspect-ratio:1;width:100%;background:#EAEAEB;cursor:zoom-in}
+.gv .zm img{object-fit:cover}
+.gv .zm .zc{left:24px;top:22px}
+.gv .zm .zv{right:24px;top:20px}
+.gv .zm .za{width:52px;height:52px}
+.gv .zm .za.l{left:24px}.gv .zm .za.r{right:24px}
+
+/* a: thumbnails sit inside the photo, down the left */
+.gva .zth{position:absolute;left:24px;top:64px;display:flex;flex-direction:column;gap:8px;z-index:2}
+.gva .zth button{width:64px;height:64px;padding:0;border:1px solid transparent;background:#EAEAEB;overflow:hidden}
+.gva .zth button[aria-current="true"]{border-color:var(--ink)}
+.gva .zth img{width:100%;height:100%;object-fit:cover}
+.gva .zm .za.l{left:112px}
+/* b: thumbnails in a row underneath */
+.gvb .zth{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:6px}
+.gvb .zth button{aspect-ratio:1;padding:0;border:1px solid transparent;background:#EAEAEB;overflow:hidden;opacity:.7;transition:opacity .2s}
+.gvb .zth button[aria-current="true"]{border-color:var(--ink);opacity:1}
+.gvb .zth img{width:100%;height:100%;object-fit:cover}
+/* c: every photo, large first then two across */
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.gg .gt:first-child{grid-column:1 / -1}
+.gt{display:block;aspect-ratio:1;padding:0;background:#EAEAEB;overflow:hidden;cursor:zoom-in}
+.gt img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.gt:hover img{transform:scale(1.02)}
+/* d: one under another, with a small index beside */
+.gvd{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:16px;align-items:start}
+.gs{display:grid;gap:4px}
+.gsr{position:sticky;top:calc(var(--hh) + 24px);display:flex;flex-direction:column;gap:8px;padding-top:24px}
+.gsr button{width:64px;height:64px;padding:0;border:1px solid transparent;background:#EAEAEB;overflow:hidden;opacity:.6;transition:opacity .2s}
+.gsr button[aria-current="true"]{border-color:var(--ink);opacity:1}
+.gsr img{width:100%;height:100%;object-fit:cover}
+/* e: one large photo with a progress line */
+.gve .zm .za{opacity:1}
+.gpr{height:2px;background:var(--line);margin-top:14px}
+.gpr i{display:block;height:100%;background:var(--ink);transition:transform .35s}
+
+/* ---------- information ---------- */
+.g7fit{display:flex;align-items:center;justify-content:space-between;width:100%;height:52px;margin-top:12px;padding:0 18px;border:1px solid var(--ink);background:#fff;transition:background .2s,color .2s}
+.g7fit span{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.g7fit em{font-style:normal;font-size:13px;color:var(--mute)}
+.g7fit:hover{background:var(--ink);color:#fff}.g7fit:hover em{color:rgba(255,255,255,.7)}
+.gi .stock:empty,.gi .msg:empty{display:none}
+.gi .stock{margin-top:10px}
+.t7{margin-top:28px}
+.zt-under.t7 .ztabs{gap:22px;overflow-x:auto;scrollbar-width:none}
+.zt-under.t7 .ztabs button{white-space:nowrap;font-size:11.5px}
+.zt-seg.t7 .ztabs{grid-template-columns:repeat(4,1fr)}
+.zt-seg.t7 .ztabs button{font-size:10.5px;letter-spacing:.1em;padding:0 6px}
+.t7-big summary{font:500 22px/1.2 var(--display);letter-spacing:0;text-transform:none;padding:20px 0}
+.t7-big summary::after{font-size:22px}
+.t7 .ztp p+p{margin-top:10px}
+.t7-sz .t7-szh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.t7-sz .t7-szh span{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.t7-sz .zsz{margin-bottom:14px}
+.t7-sz .zsz th,.t7-sz .zsz td{padding:9px 8px;font-size:13.5px}
+.t7-sz b{color:var(--ink);font-weight:600}
+.t7-fit{text-decoration:underline;text-underline-offset:3px;color:var(--ink);font-weight:500}
+
+/* ---------- find my fit ---------- */
+.fm7{border:0;padding:0;width:min(460px,calc(100vw - 24px))}
+.fm7::backdrop{background:rgba(17,17,17,.45)}
+.fm7-f,.fm7-r{position:relative;padding:36px 32px 32px}
+.fm7 .zclose{position:absolute;top:22px;right:24px}
+.fm7-s{font-size:14.5px;color:var(--ink2);margin:8px 0 24px}
+.fm7-g{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fm7-g label>span:first-child{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.fm7-g .f{display:flex;align-items:center;border:1px solid var(--line);height:52px;padding:0 14px}
+.fm7-g .f:focus-within{border-color:var(--ink)}
+.fm7-g input{flex:1;min-width:0;border:0;outline:0;font-size:18px;background:none;-moz-appearance:textfield}
+.fm7-g input::-webkit-outer-spin-button,.fm7-g input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fm7-g em{font-style:normal;color:var(--mute);font-size:14px}
+.fm7-g small{display:block;font-size:12.5px;color:var(--mute);margin-top:6px}
+.fm7-e{color:#8A2B22;font-size:13.5px;min-height:1em;margin:14px 0 6px}
+.fm7-go{width:100%;height:52px}
+.fm7-r{text-align:center}
+.fm7-r .big{display:block;font:500 96px/1 var(--display);margin:6px 0 10px}
+.fm7-r p{font-size:15px;line-height:1.6;color:var(--ink2);margin:0 auto 24px;max-width:340px}
+.fm7-r .btn-k{width:100%;height:52px}
+.fm7-again{margin-top:14px;font-size:13px;text-decoration:underline;text-underline-offset:3px;color:var(--ink2)}
+
+/* ---------- brand strip: square film, text on grey ---------- */
+.b7{display:grid;grid-template-columns:1fr 1fr;background:#F4F4F4}
+.b7-m{aspect-ratio:1;overflow:hidden;background:#ddd}
+.b7-m video{width:100%;height:100%;object-fit:cover;display:block}
+.b7-t{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,5vw,96px)}
+.b7-wm{display:block;font:500 clamp(56px,6vw,96px)/.95 var(--display);margin-bottom:22px}
+.b7-lead{font:500 clamp(20px,1.6vw,26px)/1.35 var(--display);margin:0 0 12px;max-width:460px}
+.b7-p{font-size:15px;line-height:1.7;color:var(--ink2);margin:0;max-width:460px}
+.b7-g{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0 28px;max-width:460px}
+.b7-g .ybm .i{background:#EAEAEB}
+.b7 .zlink{align-self:flex-start}
+
+/* ---------- related: swatch count ---------- */
+.px .pcd .sw .more{padding:0;border:0;height:auto;border-radius:0;font-size:12px;color:var(--mute)}
+
+@media (max-width:1080px){
+  .gtop{grid-template-columns:1fr;padding:0}
+  .gi{position:static;padding:24px var(--gut) 0;max-width:none}
+  .gvd{grid-template-columns:1fr}.gsr{display:none}
+  .gva .zth{position:static;flex-direction:row;overflow-x:auto;padding:8px var(--gut) 0}
+  .gva .zm .za.l{left:16px}
+  .b7{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .gvb .zth{grid-template-columns:repeat(8,64px);overflow-x:auto}
+  .gg{grid-template-columns:1fr 1fr}
+  .fm7-g{grid-template-columns:1fr}
+  .gv .zm .za{opacity:1;width:40px;height:40px}
+}
+@media (max-width:1080px){.gva .zth{display:none}}
+.gi{min-width:0}
+.gtop>*{min-width:0}
+.fm7-g>label{min-width:0;display:block}
+.fm7-g input{width:0}
+.t7-sz .zsz th{font-size:10.5px;letter-spacing:.14em}

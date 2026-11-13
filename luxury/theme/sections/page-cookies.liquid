@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="dw lg"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">Cookie policy</span></nav><h1>Cookie policy</h1><p>What cookies we use, why we use them, and how to change your choices at any time.</p><p class="lg-upd">Last updated 12 November 2026</p></div></header><div class="dw-body dw-w"><aside class="dw-side"><div class="dw-on"><span>On this page</span><a href="#what">What cookies are</a><a href="#use">The cookies we use</a><a href="#third">Cookies from other companies</a><a href="#choices">Changing your choices</a><a href="#more">More information</a></div></aside><div class="dw-main"><section id="what"><h2>What cookies are</h2><p>Cookies are small text files saved on your device when you visit a website. Some are needed for the site to work, and others help us understand how it&rsquo;s used or show you relevant offers.</p></section><section id="use"><h2>The cookies we use</h2><div class="dw-tw"><div class="dw-tw"><table class="dw-tb "><thead><tr><th scope="col">Type</th><th scope="col">What they do</th><th scope="col">Can you turn them off?</th></tr></thead><tbody><tr><th scope="row" data-l="Type">Strictly necessary</th><td data-l="What they do"><span>Keep your basket, let you sign in and check out securely</span></td><td data-l="Can you turn them off?"><span>No, the site won&rsquo;t work without them</span></td></tr><tr><th scope="row" data-l="Type">Preferences</th><td data-l="What they do"><span>Remember your choices, such as your currency</span></td><td data-l="Can you turn them off?"><span>Yes</span></td></tr><tr><th scope="row" data-l="Type">Analytics</th><td data-l="What they do"><span>Show us which pages are visited, so we can improve the site</span></td><td data-l="Can you turn them off?"><span>Yes</span></td></tr><tr><th scope="row" data-l="Type">Marketing</th><td data-l="What they do"><span>Show you relevant adverts on other websites and measure them</span></td><td data-l="Can you turn them off?"><span>Yes</span></td></tr></tbody></table></div></div><p>We only use preference, analytics and marketing cookies if you agree to them when you first visit.</p></section><section id="third"><h2>Cookies from other companies</h2><p>Some cookies are set by the services we use, including Shopify, Google Analytics, Klarna, Meta and Trustpilot. Each has its own privacy policy explaining how it uses information.</p></section><section id="choices"><h2>Changing your choices</h2><p>You can change your cookie choices at any time from the Cookie settings link at the bottom of every page. You can also delete or block cookies in your browser settings, although parts of the site may not work properly if you block necessary cookies.</p></section><section id="more"><h2>More information</h2><p>For more about how we use your personal data, see our <a href="/pages/privacy-policy">Privacy policy</a>. Questions? Email us at [hello@axelandhound.co.uk].</p></section><section class="dw-help"><h2>Still need help?</h2><p>Our team is here Monday to Friday, 9am to 5pm, and replies to every message within one working day.</p><a class="dw-btn" href="/pages/contact">Contact us</a></section></div></div></div>
+
+
+{% schema %}
+{
+  "name": "Cookie policy",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

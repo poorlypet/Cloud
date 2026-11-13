@@ -1,0 +1,21 @@
+<header class="hdr{% if template.name == 'index' or template.suffix == 'brand' %} clear{% endif %}">
+  <div class="announce">{{ section.settings.announce }}<a href="{{ section.settings.announce_link }}">{{ section.settings.announce_link_text }}</a><span class="r">GB / £</span></div>
+  <div class="hdr-bar">
+    <a class="logo" href="{{ routes.root_url }}" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
+    <ul class="nav" data-nav aria-label="Shop"></ul>
+    <div class="tools">
+      <a class="help" href="/pages/help">Help</a>
+      <button class="ico" type="button" data-open="search" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button>
+      <button class="ico hide-m" type="button" data-open="account" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4-5.3 7.5-5.3s6.3 1.7 7.5 5.3"/></svg></button>
+      
+      <button class="ico" type="button" data-open="basket" aria-label="Basket"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="n" data-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span></button>
+      <button class="ico burger" type="button" data-burger aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg></button>
+    </div>
+  </div>
+</header>
+{% schema %}
+{"name":"Header","settings":[
+ {"type":"text","id":"announce","label":"Announcement","default":"Complimentary UK delivery over £100"},
+ {"type":"text","id":"announce_link_text","label":"Announcement link text","default":"Winter Sale: up to 30% off"},
+ {"type":"url","id":"announce_link","label":"Announcement link"}]}
+{% endschema %}

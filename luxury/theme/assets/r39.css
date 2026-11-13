@@ -1,0 +1,102 @@
+/* Axel & Hound · sitewide mobile polish: payment line, reviews, newsletter */
+
+/* payment line: one line at every width */
+.p3{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap}
+.p3 img{flex:none}
+.p3 .p3m{display:none}
+@media (max-width:640px){
+  .p3{font-size:13px}
+  .p3 .p3l{display:none}.p3 .p3m{display:inline}
+  .p3 img{height:18px!important;width:auto}
+}
+
+/* ---------- reviews on phones ---------- */
+@media (max-width:640px){
+  .tpw.soft .in{display:block}
+  .tpw.soft .tsum{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"t s" "b l";align-items:center;column-gap:14px;row-gap:8px;text-align:left;padding-bottom:22px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+  .tpw.soft .tsum b{grid-area:t;font-size:26px}
+  .tpw.soft .tsum .tps.big{grid-area:s;justify-self:end;margin:0}
+  .tpw.soft .tps.big i{width:24px;height:24px}
+  .tpw.soft .tsum .tbased{grid-area:b;margin:0}
+  .tpw.soft .tsum .tlogo-img{grid-area:l;justify-self:end;margin:0;height:20px;width:auto}
+  .tpw.soft .trvs{grid-auto-columns:84%;gap:12px;scroll-padding-left:0;align-items:stretch}
+  .tpw.soft .tr{background:#F6F6F5;border-radius:4px;padding:20px 18px 22px}
+  .tpw.soft .tr h4{font-size:16px;margin-top:10px}
+  .tpw.soft .tr p{font-size:14.5px;color:var(--ink2)}
+  .tpw.soft .rvdots{display:flex;justify-content:center;gap:6px;margin-top:16px}
+  .tpw.soft .rvdots i{width:6px;height:6px;border-radius:50%;background:#D0D0CE;transition:width .2s,background .2s}
+  .tpw.soft .rvdots i.on{width:16px;border-radius:3px;background:var(--ink)}
+  .tpw.soft .tarr,.tpw.soft .arr{display:none}
+}
+.rvdots{display:none}
+
+/* ---------- newsletter on phones: thin, white, one line ---------- */
+@media (max-width:640px){
+  .bf.s5 .su{display:block;padding:26px var(--gut) 28px;background:#fff;border-top:1px solid var(--line)}
+  .bf.s5 .su h2{font-size:21px;line-height:1.2}
+  .bf.s5 .su h2 i{font-size:17px}
+  .bf.s5 .su>div{width:100%;margin-top:14px}
+  .bf.s5 .f.line{display:flex;width:100%;max-width:none;height:44px;border:0;border-bottom:1px solid var(--ink)}
+  .bf.s5 .f.line input{flex:1;min-width:0;padding:0;font-size:16px;background:none;border:0}
+  .bf.s5 .f.line button{background:none;color:var(--ink);padding:0 0 0 14px;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+}
+
+/* ---------- footer on phones: stacked, columns open and close ---------- */
+@media (max-width:640px){
+  .bf .cols{display:block}
+  .bf .cols>div:first-child{padding-bottom:24px}
+  .bf .cols>div+div{border-top:1px solid rgba(255,255,255,.15)}
+  .bf .cols>div+div:last-child{border-bottom:1px solid rgba(255,255,255,.15)}
+  .bf .cols>div+div h5{display:flex;justify-content:space-between;align-items:center;margin:0;padding:18px 0;cursor:pointer}
+  .bf .cols>div+div h5::after{content:"+";font-size:18px;font-weight:300;letter-spacing:0}
+  .bf .cols>div+div.open h5::after{content:"\2013"}
+  .bf .cols>div+div ul{display:none;padding:0 0 18px}
+  .bf .cols>div+div.open ul{display:block}
+  .bf.s5 .base{margin-top:28px}
+  .bf.s5 .wm{font-size:17.9vw;margin-left:calc(-1 * var(--gut) + 2px);margin-right:calc(-1 * var(--gut));white-space:nowrap}
+}
+
+/* ---------- price, with a quiet pay-in-3 note underneath ---------- */
+.prow{display:block;margin-top:14px}
+.prow .price{margin:0!important}
+.prow .p3{margin:7px 0 0!important;padding:0;border:0;font-size:12.5px;color:var(--mute);gap:6px}
+.prow .p3 .p3l{display:none}.prow .p3 .p3m{display:inline}
+.prow .p3 img{height:13px!important;width:auto;opacity:.85}.prow .p3 img.k{height:16px!important}
+
+/* ---------- product rating: smaller and softer than the price ---------- */
+.zi .rate{gap:8px;font-size:12.5px;color:var(--mute);margin-top:8px}
+.zi .rate .tps i{width:14px!important;height:14px!important}
+.zi .rate .tps i::before{inset:2.5px!important}
+.zi .rate a{color:var(--mute);font-weight:400}
+
+/* ---------- product cards: every card lines up, one line each ---------- */
+.pcd{min-width:0}
+.pcd .br{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcd .pn{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.pcd .pr{display:flex;align-items:baseline;gap:8px;white-space:nowrap;overflow:hidden}
+.pcd .sw{display:flex;align-items:center;flex-wrap:nowrap;min-width:0;overflow:hidden;height:26px}
+.pcd .sw button{flex:none}
+.pcd .sw .more{flex:none;white-space:nowrap}
+.pcd .sw .cn{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:640px){
+  .pcd .pn{font-size:14px}
+  .pcd .pr{font-size:14px}
+  .pcd .sw{gap:6px;margin-top:8px;height:22px}
+  .pcd .sw button{width:16px;height:16px}
+  .pcd .sw .cn{display:none}
+}
+.pcd .sw{padding:0 4px;margin-left:-4px}
+.pcd .sw .more{border:0;padding:0 0 0 2px;height:auto;border-radius:0;font-size:12px;color:var(--mute)}
+
+/* ---------- collection bar on phones: filter, count and sort on one row ---------- */
+@media (max-width:640px){
+  .cx-bar{flex-wrap:nowrap;gap:10px}
+  .cx-bar .l{flex-wrap:nowrap;gap:10px;min-width:0}
+  .cx-bar .l .cx-chips{display:none}
+  .cx-bar .cx-count{font-size:12.5px;white-space:nowrap}
+  .cx-bar .cx-btn{flex:none;height:40px;padding:0 12px}
+  .cx-bar .cx-sel{flex:none;gap:0}
+  .cx-bar .cx-sel .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .cx-bar .cx-sel select{min-width:0;width:150px;font-size:13px;padding:0 32px 0 12px}
+}
+.cx-chips:empty{display:none}

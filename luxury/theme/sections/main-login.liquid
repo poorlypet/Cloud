@@ -1,0 +1,12 @@
+
+
+<div class="ss tight"><section class="ss-auth" id="login"><div class="card"><span class="ss-kick">Your account</span><h1 class="ss-h2">Sign in</h1><p class="ss-lead" style="margin-top:12px">Welcome back.</p>{%- form 'customer_login', class: 'v9-form ac-form', novalidate: 'novalidate' -%}{{ form.errors | default_errors }}<label class="f"><span>Email</span><input class="v9-in" type="email" name="customer[email]" autocomplete="email" required></label><label class="f"><span>Password</span><input class="v9-in" type="password" name="customer[password]" autocomplete="current-password" required></label><a class="ac-forgot" href="#recover">Forgotten your password?</a><p class="v9-ferr" role="alert"></p><button type="submit" class="btn-k">Sign in</button>{%- endform -%}<div class="v9-sent" hidden></div><p class="alt">New to Axel &amp; Hound? <a href="{{ routes.account_url }}">Create an account</a></p></div></section><section class="ss-auth" id="recover"><div class="card"><span class="ss-kick">Your account</span><h1 class="ss-h2">Forgotten your password?</h1><p class="ss-lead" style="margin-top:12px">Enter your email and we&rsquo;ll send you a link to reset it.</p>{%- form 'recover_customer_password', class: 'v9-form ac-form' -%}{{ form.errors | default_errors }}{%- if form.posted_successfully? -%}<p class="ah-ok">We&rsquo;ve emailed you a link to reset your password.</p>{%- endif -%}<label class="f"><span>Email</span><input class="v9-in" type="email" name="email" autocomplete="email" required></label><p class="v9-ferr" role="alert"></p><button type="submit" class="btn-k">Send reset link</button><p class="v9-small"><a href="#login">Back to sign in</a></p>{%- endform -%}<div class="v9-sent" hidden></div><p class="alt"><a href="#login">Back to sign in</a></p></div></section></div>
+<style>#recover{display:none}#recover:target{display:block}#recover:target ~ #login,#login:has(~ #recover:target){display:none}</style>
+
+{% schema %}
+{
+  "name": "Sign in",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

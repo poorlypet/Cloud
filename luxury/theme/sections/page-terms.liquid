@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="dw lg"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">Terms &amp; conditions</span></nav><h1>Terms &amp; conditions</h1><p>The terms that apply when you buy from us. Please read them before you order. Your legal rights as a consumer are not affected.</p><p class="lg-upd">Last updated 12 November 2026</p></div></header><div class="dw-body dw-w"><aside class="dw-side"><div class="dw-on"><span>On this page</span><a href="#about">About us</a><a href="#order">Placing an order</a><a href="#prices">Prices and payment</a><a href="#delivery">Delivery</a><a href="#cancel">Your right to cancel</a><a href="#faulty">Faulty goods</a><a href="#use">Using our products</a><a href="#liability">Our responsibility to you</a><a href="#law">Disputes and the law</a></div></aside><div class="dw-main"><section id="about"><h2>About us</h2><p>These terms apply to orders placed on axelandhound.co.uk, which is run by Axel &amp; Hound Ltd, a company registered in England and Wales (company number [00000000]), with its registered office at [address]. Our VAT number is [GB000000000]. You can contact us at [hello@axelandhound.co.uk].</p></section><section id="order"><h2>Placing an order</h2><p>When you place an order, we&rsquo;ll email you to confirm we&rsquo;ve received it. The contract between us is formed when we email to confirm your order has been dispatched. If we can&rsquo;t accept your order, for example because an item is out of stock or there is an error in the price, we&rsquo;ll tell you and won&rsquo;t charge you.</p></section><section id="prices"><h2>Prices and payment</h2><p>All prices are in pounds sterling and include VAT. Delivery costs are shown at checkout before you pay. We take payment when you place your order. If we find a pricing error, we&rsquo;ll contact you before dispatching your order and you can choose whether to continue.</p></section><section id="delivery"><h2>Delivery</h2><p>Delivery times and costs are set out on our <a href="/pages/delivery">Delivery</a> page. We will always deliver within 30 days of your order unless we agree another date with you. The goods are your responsibility once they have been delivered to you or to someone you&rsquo;ve nominated.</p></section><section id="cancel"><h2>Your right to cancel</h2><p>Under the Consumer Contracts Regulations 2013, you can cancel your order for any reason within 14 days of the day after you receive it. You then have a further 14 days to return the goods. We&rsquo;ll refund you within 14 days of receiving the goods back, or of you showing us proof you&rsquo;ve sent them, including the standard delivery cost of your original order.</p><p>This right doesn&rsquo;t apply to personalised items, or to grooming products and treats once their seal is broken. Full details are on our <a href="/pages/returns">Returns &amp; refunds</a> page.</p></section><section id="faulty"><h2>Faulty goods</h2><p>Under the Consumer Rights Act 2015, goods must be as described, fit for purpose and of satisfactory quality. If they&rsquo;re faulty, you can reject them for a full refund within 30 days of delivery. After that, we&rsquo;ll repair or replace them, and if that doesn&rsquo;t work, you&rsquo;re entitled to a refund. Nothing in these terms affects these rights.</p></section><section id="use"><h2>Using our products</h2><p>Please follow the care and sizing guidance on each product page. Always supervise your dog with toys and chews, and check them regularly for wear. We&rsquo;re not responsible for damage caused by misuse, normal wear and tear, or not following the care instructions.</p></section><section id="liability"><h2>Our responsibility to you</h2><p>If we break these terms, we are responsible for loss or damage you suffer that is a foreseeable result of our breach. We do not exclude or limit our liability where it would be unlawful to do so, including for death or personal injury caused by our negligence, or for fraud.</p></section><section id="law"><h2>Disputes and the law</h2><p>These terms are governed by the law of England and Wales. If you live in Scotland or Northern Ireland, you can also bring proceedings in your local courts. If you have a complaint, please contact us first and we&rsquo;ll do our best to resolve it.</p></section><section class="dw-help"><h2>Still need help?</h2><p>Our team is here Monday to Friday, 9am to 5pm, and replies to every message within one working day.</p><a class="dw-btn" href="/pages/contact">Contact us</a></section></div></div></div>
+
+
+{% schema %}
+{
+  "name": "Terms",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

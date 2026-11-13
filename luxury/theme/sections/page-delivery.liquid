@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="dw"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">Delivery</span></nav><h1>Delivery</h1><p>Every order is packed by hand and sent tracked. Here&rsquo;s how long it takes, what it costs and what happens if anything goes wrong.</p></div></header><section class="dw-keys"><div class="dw-w"><div><b>Free UK delivery</b><span>On orders over £75</span></div><div><b>Next working day</b><span>Order by 2pm, Monday to Friday</span></div><div><b>Worldwide shipping</b><span>To most countries, tracked</span></div></div></section><div class="dw-body dw-w"><aside class="dw-side"><div class="dw-on"><span>On this page</span><a href="#uk">UK delivery</a><a href="#large">Beds &amp; larger pieces</a><a href="#intl">International delivery</a><a href="#track">Tracking your order</a><a href="#faqs">Delivery FAQs</a></div></aside><div class="dw-main"><section id="uk"><h2>UK delivery</h2><p class="dw-lead">Orders placed before 2pm on a working day leave us the same day. Working days are Monday to Friday, not including bank holidays.</p><div class="dw-tw"><table class="dw-tb "><thead><tr><th scope="col">Service</th><th scope="col">Delivery time</th><th scope="col">Order by</th><th scope="col">Cost</th></tr></thead><tbody><tr><th scope="row" data-l="Service">Standard delivery</th><td data-l="Delivery time"><span>2&ndash;4 working days</span></td><td data-l="Order by"><span>&mdash;</span></td><td data-l="Cost"><span>£4.95<small>Free over £75</small></span></td></tr><tr><th scope="row" data-l="Service">Express delivery</th><td data-l="Delivery time"><span>Next working day</span></td><td data-l="Order by"><span>2pm, Monday to Friday</span></td><td data-l="Cost"><span>£7.95</span></td></tr><tr><th scope="row" data-l="Service">Nominated day</th><td data-l="Delivery time"><span>A working day you choose, up to 14 days ahead</span></td><td data-l="Order by"><span>Choose at checkout</span></td><td data-l="Cost"><span>£9.95</span></td></tr></tbody></table></div><ul class="dw-notes"><li>Every UK order is tracked, and the courier will text you a delivery window on the day.</li><li>The Scottish Highlands and Islands, Northern Ireland, the Isles of Scilly and the Channel Islands can take 1 to 2 extra working days. Express and nominated day aren&rsquo;t available there.</li><li>We will always deliver within 30 days of your order unless we agree another date with you.</li></ul></section><section id="large"><h2>Beds &amp; larger pieces</h2><p>Beds and other large pieces travel by our specialist courier and may need a signature. You&rsquo;ll get a one-hour delivery window by text on the morning of delivery, and you can rearrange it from the text if the time doesn&rsquo;t suit. Delivery costs are the same as above.</p></section><section id="intl"><h2>International delivery</h2><p class="dw-lead">We ship to most countries worldwide, and every international order is tracked. Delivery options, costs and times for your address are shown at checkout before you pay.</p><ul class="dw-notes"><li>Orders sent outside the UK may be charged import duties and taxes by the destination country. These are paid by the recipient on delivery and aren&rsquo;t included in our prices.</li><li>Delivery times are from dispatch and can be longer during customs checks or local holidays.</li></ul></section><section id="track"><h2>Tracking your order</h2><p>Your dispatch email has a tracking link that follows your order to your door. You can also track it with your order number and email address, or see every order in your account.</p><div class="dw-btns"><a class="dw-btn" href="/pages/track-order">Track an order</a><a class="dw-btn dw-o" href="{{ routes.account_url }}">Sign in</a></div></section><section id="faqs"><h2>Delivery FAQs</h2><div class="dw-faq"><details><summary>When will my order leave you?</summary><p>Orders placed before 2pm on a working day are packed and sent the same day. Anything after 2pm, or at the weekend, goes the next working day.</p></details><details><summary>Do you ship worldwide?</summary><p>Yes, we ship to most countries. International delivery costs and times are shown at checkout once you enter your address. Orders outside the UK may be charged import duties or taxes by the destination country, which are paid by the recipient.</p></details><details><summary>Can I change my delivery address?</summary><p>Yes, as long as your order hasn&rsquo;t been dispatched yet. Reply to your order confirmation email, or contact us, and we&rsquo;ll update it for you.</p></details><details><summary>What if my order hasn&rsquo;t arrived?</summary><p>Check the tracking link in your dispatch email first. If your order still hasn&rsquo;t arrived, or looks lost, contact us and we&rsquo;ll investigate with the courier straight away. If it can&rsquo;t be found, we&rsquo;ll send a replacement or refund you in full.</p></details><details><summary>What if my order arrives damaged?</summary><p>Contact us within 14 days with a photo of the damage and the packaging. We&rsquo;ll arrange a replacement or a full refund, and collect the damaged item at no cost to you.</p></details><details><summary>What if I&rsquo;m out when it arrives?</summary><p>The courier will leave it in your safe place or with a neighbour. If neither is possible, they&rsquo;ll leave a card and try again, or you can collect from a local drop-off point.</p></details></div></section><section class="dw-help"><h2>Still need help?</h2><p>Our team is here Monday to Friday, 9am to 5pm, and replies to every message within one working day.</p><a class="dw-btn" href="/pages/contact">Contact us</a></section></div></div></div>
+
+
+{% schema %}
+{
+  "name": "Delivery",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

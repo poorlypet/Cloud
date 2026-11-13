@@ -1,0 +1,12 @@
+
+
+<div class="ss tight"><section class="ss-auth"><div class="card"><span class="ss-kick">Your account</span><h1 class="ss-h2">Create an account</h1><p class="ss-lead" style="margin-top:12px">Track orders, save your dog&rsquo;s sizes and check out faster.</p>{%- form 'create_customer', class: 'v9-form ac-form' -%}{{ form.errors | default_errors }}<div class="two"><label class="f"><span>First name</span><input class="v9-in" type="text" name="customer[first_name]" autocomplete="given-name" required></label><label class="f"><span>Last name</span><input class="v9-in" type="text" name="customer[last_name]" autocomplete="family-name" required></label></div><label class="f"><span>Email</span><input class="v9-in" type="email" name="customer[email]" autocomplete="email" required></label><label class="f"><span>Password</span><input class="v9-in" type="password" name="customer[password]" autocomplete="new-password" placeholder="At least 8 characters" required></label><label class="ac-check"><input type="checkbox" name="customer[accepts_marketing]"><span>Email me new arrivals and 10% off my first order</span></label><p class="v9-ferr" role="alert"></p><button type="submit" class="btn-k">Create account</button><p class="v9-small">By creating an account you agree to our <a href="#">terms</a> and <a href="#">privacy policy</a>.</p>{%- endform -%}<div class="v9-sent" hidden></div><p class="alt">Already have an account? <a href="{{ routes.account_url }}">Sign in</a></p></div></section></div>
+
+
+{% schema %}
+{
+  "name": "Create account",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

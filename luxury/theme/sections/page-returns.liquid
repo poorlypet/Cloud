@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="dw"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">Returns &amp; refunds</span></nav><h1>Returns &amp; refunds</h1><p>If something isn&rsquo;t quite right, sending it back should be easy. UK returns are free, and you have 14 days to change your mind.</p></div></header><section class="dw-keys"><div class="dw-w"><div><b>14 days to change your mind</b><span>From the day after delivery</span></div><div><b>Free UK returns</b><span>With a prepaid label</span></div><div><b>30 days for faulty items</b><span>For a full refund</span></div></div></section><div class="dw-body dw-w"><aside class="dw-side"><div class="dw-on"><span>On this page</span><a href="#how">How to return something</a><a href="#exchanges">Exchanges</a><a href="#refunds">Your refund</a><a href="#condition">Condition of returns</a><a href="#exceptions">What we can&rsquo;t take back</a><a href="#faulty">Faulty or not as described</a><a href="#intl">Returns from outside the UK</a><a href="#faqs">Returns FAQs</a></div></aside><div class="dw-main"><section id="how"><h2>How to return something</h2><p class="dw-lead">You can return anything unworn, with its tags, for a full refund or an exchange.</p><div class="dw-tw"><table class="dw-tb dw-steps"><thead><tr><th scope="col">Step</th><th scope="col">When</th><th scope="col">What happens</th></tr></thead><tbody><tr><th scope="row" data-l="Step">Tell us</th><td data-l="When"><span>Within 14 days of delivery</span></td><td data-l="What happens"><span>Start a return from your account, or email us with your order number.</span></td></tr><tr><th scope="row" data-l="Step">Get your label</th><td data-l="When"><span>The same day</span></td><td data-l="What happens"><span>We email you a free UK returns label and a returns note.</span></td></tr><tr><th scope="row" data-l="Step">Send it back</th><td data-l="When"><span>Within 14 more days</span></td><td data-l="What happens"><span>Pack it up and drop it at any post office or parcel shop.</span></td></tr><tr><th scope="row" data-l="Step">Refunded</th><td data-l="When"><span>Within 14 days of it reaching us</span></td><td data-l="What happens"><span>To your original payment method, usually much sooner.</span></td></tr></tbody></table></div><div class="dw-btns"><a class="dw-btn" href="{{ routes.account_url }}">Start a return</a></div></section><section id="exchanges"><h2>Exchanges</h2><p>Need a different size or colour? Choose exchange when you start your return and we&rsquo;ll send the new one as soon as yours is on its way back, at no extra cost.</p></section><section id="refunds"><h2>Your refund</h2><p>We refund you within 14 days of receiving your return, or of you showing us proof you&rsquo;ve sent it, whichever is sooner. Your refund includes the standard delivery cost of the original order. If you paid for a faster option, we refund the standard cost only.</p></section><section id="condition"><h2>Condition of returns</h2><p>You can handle and try things on as you would in a shop. If an item has been worn on a walk, washed, or had its tags removed, we may reduce your refund to reflect the loss in its value.</p></section><section id="exceptions"><h2>What we can&rsquo;t take back</h2><p>Unless they&rsquo;re faulty, we can&rsquo;t accept returns of:</p><ul class="dw-notes"><li>Personalised or engraved items</li><li>Grooming products such as shampoos and balms, once the seal is broken</li><li>Treats and food, once opened</li></ul></section><section id="faulty"><h2>Faulty or not as described</h2><p>Your rights under the Consumer Rights Act 2015 come first. You can reject a faulty item for a full refund within 30 days of delivery. After that, we&rsquo;ll repair or replace it, and if that isn&rsquo;t possible or the fault comes back, you can have a refund. For six months after delivery we&rsquo;ll assume the fault was there when it arrived.</p></section><section id="intl"><h2>Returns from outside the UK</h2><p>You have the same 14 days to change your mind. Please send your return with a tracked service, as we can&rsquo;t be responsible for parcels lost on the way back. Return postage isn&rsquo;t covered unless the item is faulty, and we can&rsquo;t refund import duties or taxes.</p></section><section id="faqs"><h2>Returns FAQs</h2><div class="dw-faq"><details><summary>How long does a refund take?</summary><p>We refund you within 14 days of your return reaching us, and usually within 5 working days. Your bank may take a few more days to show it.</p></details><details><summary>Can I return a sale item?</summary><p>Yes. Sale items can be returned in the same way as anything else, within 14 days of delivery.</p></details><details><summary>Can I return a gift?</summary><p>Yes. We&rsquo;ll refund the gift to the person who bought it, or send you an exchange or a gift card instead.</p></details><details><summary>I&rsquo;ve lost my returns label</summary><p>Contact us with your order number and we&rsquo;ll email you a new one.</p></details></div></section><section class="dw-help"><h2>Still need help?</h2><p>Our team is here Monday to Friday, 9am to 5pm, and replies to every message within one working day.</p><a class="dw-btn" href="/pages/contact">Contact us</a></section></div></div></div>
+
+
+{% schema %}
+{
+  "name": "Returns",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

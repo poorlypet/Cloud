@@ -1,0 +1,54 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="v9 cbw cq cq3">{%- liquid
+  assign parent = nil
+  assign is_sub = false
+  for l in linklists['main-menu'].links
+    if l.object.handle == collection.handle
+      assign parent = l
+    else
+      for c in l.links
+        if c.object.handle == collection.handle
+          assign parent = l
+          assign is_sub = true
+        endif
+      endfor
+    endif
+  endfor
+-%}
+<header class="cq-head">{%- if is_sub -%}<a class="cq-back" href="{{ parent.url }}">{{ parent.title }}</a>{%- endif -%}<h1>{{ collection.title }}</h1>{%- if collection.description != blank -%}<div class="cq-txt">{{ collection.description }}</div>{%- endif -%}</header>
+{%- if parent and is_sub == false and parent.links.size > 0 -%}<nav class="ct2 cq-c" aria-label="{{ collection.title | escape }}"><a href="{{ collection.url }}" aria-current="page">All {{ collection.title | downcase }}</a>{%- for c in parent.links -%}<span>·</span><a href="{{ c.url }}">{{ c.title }}</a>{%- endfor -%}</nav>{%- endif -%}
+<div class="cx-bar"><div class="l"><button type="button" class="cx-btn" data-filters><svg viewBox="0 0 14 14"><path d="M1 3h12M3 7h8M5 11h4"/></svg> Filter</button><span class="cx-count"></span><div class="cx-chips l"></div></div><label class="cx-sel"><span class="sr">Sort by</span><select class="cx-sort" id="sort6" aria-label="Sort by"><option value="feat">Most relevant</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select></label></div>{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- for product in collection.products -%}{%- render 'card', product: product -%}{%- else -%}<p class="cx-empty">Nothing here yet. New pieces are on their way.</p>{%- endfor -%}</div>
+<div class="cx-more"><p>Showing {{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} products</p><div class="prog"><i style="width:{{ paginate.current_offset | plus: collection.products.size | times: 100 | divided_by: collection.products_count | default: 100 }}%"></i></div>{%- if paginate.next -%}<a class="btn-o" href="{{ paginate.next.url }}" style="margin-top:16px">Load more</a>{%- endif -%}</div>{%- endpaginate -%}</div><div class="fscrim"></div><aside class="fd" tabindex="-1" aria-label="Filters"><div class="fd-h"><h2>Filter</h2><button type="button" class="fd-x" data-fd-close>Close <svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div><div class="fd-b"><details class="fg" open><summary>Size</summary><div class="opts sz"><label class="fs"><input type="checkbox" data-f="size" value="xs" data-label="Size XS" id="dszxs"><span>XS</span></label><label class="fs"><input type="checkbox" data-f="size" value="s" data-label="Size S" id="dszs"><span>S</span></label><label class="fs"><input type="checkbox" data-f="size" value="m" data-label="Size M" id="dszm"><span>M</span></label><label class="fs"><input type="checkbox" data-f="size" value="l" data-label="Size L" id="dszl"><span>L</span></label><label class="fs"><input type="checkbox" data-f="size" value="xl" data-label="Size XL" id="dszxl"><span>XL</span></label></div></details><details class="fg" open><summary>Fit</summary><div class="opts"><label class="fo"><input type="checkbox" data-f="fit" value="dachshund" data-label="Dachshund" id="dfdachshund">Dachshund</label><label class="fo"><input type="checkbox" data-f="fit" value="whippet" data-label="Whippet &amp; greyhound" id="dfwhippet">Whippet &amp; greyhound</label><label class="fo"><input type="checkbox" data-f="fit" value="standard" data-label="Standard fit" id="dfstandard">Standard fit</label></div></details><details class="fg"><summary>Colour</summary><div class="opts"><label class="fo"><input type="checkbox" data-f="colour" value="Black" data-label="Black" id="dc0"><span class="dot" style="background:#1C1C1C"></span>Black</label><label class="fo"><input type="checkbox" data-f="colour" value="Dark-Olive" data-label="Dark Olive" id="dc1"><span class="dot" style="background:#4B5139"></span>Dark Olive</label><label class="fo"><input type="checkbox" data-f="colour" value="Camo" data-label="Camo" id="dc2"><span class="dot" style="background:#7C7A4E"></span>Camo</label><label class="fo"><input type="checkbox" data-f="colour" value="Plum" data-label="Plum" id="dc3"><span class="dot" style="background:#5B2D3A"></span>Plum</label><label class="fo"><input type="checkbox" data-f="colour" value="Navy" data-label="Navy" id="dc4"><span class="dot" style="background:#1F2A3C"></span>Navy</label><label class="fo"><input type="checkbox" data-f="colour" value="Cream" data-label="Cream" id="dc5"><span class="dot" style="background:#EDE6DA"></span>Cream</label><label class="fo"><input type="checkbox" data-f="colour" value="Forest" data-label="Forest" id="dc6"><span class="dot" style="background:#2F4A3A"></span>Forest</label><label class="fo"><input type="checkbox" data-f="colour" value="Tobacco" data-label="Tobacco" id="dc7"><span class="dot" style="background:#7A5232"></span>Tobacco</label></div></details><details class="fg"><summary>Price</summary><div class="opts"><label class="fo"><input type="checkbox" data-f="price" value="0-50" data-label="Under £50" id="dp0">Under £50</label><label class="fo"><input type="checkbox" data-f="price" value="50-100" data-label="£50 to £100" id="dp1">£50 to £100</label><label class="fo"><input type="checkbox" data-f="price" value="100-999" data-label="Over £100" id="dp2">Over £100</label><label class="fo"><input type="checkbox" data-f="sale" value="1" data-label="On sale" id="dsale">On sale</label></div></details></div><div class="fd-f"><button type="button" class="btn-o" data-clear>Clear all</button><button type="button" class="btn-k" data-fd-close>Show <span class="cx-count"></span></button></div></aside>
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="v9 c1"><nav class="crumb v9-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span aria-current="page">Contact us</span></nav><div class="c1-g"><div><h1 class="v9-h1">Contact us</h1><p class="v9-lead">Questions about an order, sizing or anything else. Send us a message and a real person will reply.</p>{%- form "contact", class: "v9-form ah-contact" -%}{%- if form.posted_successfully? -%}<p class="ah-ok">Thank you. A real person will reply within one working day.</p>{%- endif -%}{{ form.errors | default_errors }}<div class="two"><label class="f"><span>Name</span><input class="v9-in" name="contact[name]" autocomplete="name" required></label><label class="f"><span>Email</span><input class="v9-in" type="email" name="contact[email]" autocomplete="email" required></label></div><label class="f"><span>Order number <em>(optional)</em></span><input class="v9-in" name="contact[order]" placeholder="AH-10000"></label><label class="f"><span>Topic</span><select class="v9-in" name="contact[topic]" required><option value=&quot;&quot;>Choose a topic</option><option>An order I&rsquo;ve placed</option><option>Returns and exchanges</option><option>Sizing advice</option><option>Product question</option><option>Something else</option></select></label><label class="f"><span>Message</span><textarea class="v9-in" name="contact[body]" rows="6" required></textarea></label><p class="v9-ferr" role="alert"></p><button type="submit" class="btn-k">Send message</button><p class="v9-small">We reply within one working day, Monday to Friday.</p>{%- endform -%}<div class="v9-sent" hidden><h2 class="zh2">Thank you</h2><p>Your message is on its way. We&rsquo;ll reply to <b data-sent-email></b> within one working day.</p></div></div><aside class="c1-side"><div class="v9-ways"><div><span class="zkick">Email</span><b>hello@axelandhound.co.uk</b><span>Replies within one working day</span></div><div><span class="zkick">Phone</span><b>Monday to Friday, 9am to 5pm</b><span>Call us on the number in your order email</span></div><div><span class="zkick">Returns</span><b>Free within 14 days</b><span>Start a return from your account</span></div></div><div class="c1-faq"><h2 class="v9-h3">Quick answers</h2><ul class="v9-ll"><li><a href="/pages/help">When will my order arrive?</a></li><li><a href="/pages/help">How do I return something?</a></li><li><a href="/pages/help">How do I measure my dog?</a></li><li><a href="/pages/help">Can I swap for a different size?</a></li></ul></div></aside></div></div>
+
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

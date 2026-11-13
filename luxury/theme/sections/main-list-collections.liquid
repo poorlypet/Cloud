@@ -1,0 +1,4 @@
+<div class="v9 cbw cq cq3"><header class="cq-head"><h1>Shop</h1></header>
+<nav class="ct2 cq-c" aria-label="Collections">{%- for link in linklists['main-menu'].links -%}{%- unless forloop.first -%}<span>·</span>{%- endunless -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}</nav>
+<div class="cx-grid" style="margin-top:28px">{%- for product in collections['bestsellers'].products limit: 12 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></div>
+{% schema %}{"name":"Collections list"}{% endschema %}

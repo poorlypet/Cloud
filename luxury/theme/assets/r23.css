@@ -1,0 +1,75 @@
+/* Axel & Hound · reviews, five versions (version K) */
+.rv{padding:clamp(56px,5vw,80px) var(--gut)}
+.rv-h{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:28px}
+.rv h2{font:500 clamp(28px,2.4vw,36px)/1.1 var(--display)}
+.rv h2 i{font-style:italic;font-weight:400;color:var(--mute)}
+.rv .lk{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.rv svg.a{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.3}
+.st{display:inline-flex;gap:2px}
+.st i{position:relative;width:16px;height:16px;background:#00B67A}
+.st i::before{content:"";position:absolute;inset:3px;background:#fff;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.st.k i{background:#111}
+.st.big i{width:24px;height:24px}
+.rq{font:400 clamp(19px,1.5vw,22px)/1.4 var(--display)}
+.rn{display:block;margin-top:14px;font-size:13px;font-weight:500}
+.rn small{display:block;font-weight:400;color:var(--mute);margin-top:2px}
+.vf{font-size:11.5px;color:var(--mute)}
+.score{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px}
+.score b{font:500 32px/1 var(--display)}
+.tp{display:inline-flex;align-items:center;gap:5px;font-weight:600;font-size:14px}
+.tp::before{content:"";width:16px;height:16px;background:#00B67A;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+
+/* R1 score left, three reviews right */
+.r1 .wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,3fr);gap:clamp(24px,4vw,64px)}
+.r1 .sc b.n{display:block;font:500 clamp(56px,5vw,80px)/1 var(--display);margin:4px 0 12px}
+.r1 .sc p{font-size:14px;color:var(--ink2);margin:10px 0 18px}
+.r1 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.r1 .cd{border-top:1px solid var(--ink);padding-top:20px}
+.r1 .cd .rq{margin-top:14px}
+
+/* R2 one large centred quote with dots */
+.r2{text-align:center}
+.r2 .slide{max-width:860px;margin:0 auto}
+.r2 .slide[hidden]{display:none}
+.r2 .rq{font-size:clamp(26px,2.6vw,38px);font-style:italic;margin:18px 0 6px}
+.r2 .dots{display:flex;justify-content:center;gap:10px;margin-top:28px}
+.r2 .dots button{width:9px;height:9px;border-radius:50%;background:#D5D5D5}
+.r2 .dots button[aria-pressed="true"]{background:#111}
+.r2 .score{justify-content:center;margin-top:30px;color:var(--mute)}
+
+/* R3 review cards with product photo */
+.r3 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.r3 .cd{display:flex;flex-direction:column;background:#F3F3F3;padding:22px}
+.r3 .cd .rq{font-size:18px;margin-top:12px;flex:1}
+.r3 .pr{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #E0E0E0;font-size:12.5px}
+.r3 .pr img{width:46px;height:46px;object-fit:cover;background:#E9E9EA}
+.r3 .pr small{display:block;color:var(--mute)}
+
+/* R4 black band */
+.r4 .bk{background:#111;color:#fff;padding:clamp(32px,4vw,56px)}
+.r4 .rv-h h2 i{color:rgba(255,255,255,.55)}
+.r4 .lk{color:#fff}
+.r4 .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px)}
+.r4 .cols > div + div{border-left:1px solid rgba(255,255,255,.18);padding-left:clamp(24px,3vw,48px)}
+.r4 .rq{margin-top:14px;color:#fff}
+.r4 .rn small{color:rgba(255,255,255,.55)}
+.r4 .st i::before{background:#111}
+.r4 .st i{background:#fff}
+
+/* R5 photo reviews: customer dog photos with short quotes */
+.r5 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.r5 .ph{display:block;aspect-ratio:1/1;overflow:hidden;background:#E9E9EA}
+.r5 .ph img{width:100%;height:100%;object-fit:cover}
+.r5 .cd .st{margin-top:14px}
+.r5 .cd .rq{font-size:17px;margin-top:8px}
+.r5 .rn{margin-top:8px}
+
+@media (max-width:900px){
+  .r1 .wrap{grid-template-columns:1fr}
+  .r1 .cards,.r4 .cols{grid-template-columns:1fr}
+  .r4 .cols > div + div{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.18);padding-top:24px}
+  .r3 .cards,.r5 .cards{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:78%;overflow-x:auto;scrollbar-width:none;margin-right:calc(-1*var(--gut));padding-right:var(--gut)}
+  .r5 .cards{grid-auto-columns:60%}
+  .r3 .cards::-webkit-scrollbar,.r5 .cards::-webkit-scrollbar{display:none}
+  .rv-h{flex-direction:column;gap:8px}
+}

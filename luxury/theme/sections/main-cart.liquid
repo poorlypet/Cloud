@@ -1,0 +1,36 @@
+{{ 'r48.css' | asset_url | stylesheet_tag }}
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="v9 v9-bk b1"><nav class="crumb v9-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><span aria-current="page">Basket</span></nav><div class="v9-top"><h1 class="v9-h1">Your basket <span data-count>({{ cart.item_count }})</span></h1><a class="zlink" href="{{ routes.collections_url }}/coats">Continue shopping</a></div>{%- if cart.item_count == 0 -%}<style>.v9-th,.v9-sum{display:none}</style>{%- endif -%}<div class="v9-bkg"><div><div class="v9-th"><span>Item</span><span>Quantity</span><span>Total</span></div><div class="v9-lines">{%- for item in cart.items -%}<div class="v9-line" data-key="{{ item.key }}" data-price="{{ item.final_price | divided_by: 100 }}"><a class="im" href="{{ item.url }}">{%- if item.image -%}{{ item.image | image_url: width: 300 | image_tag: alt: item.product.title }}{%- else -%}<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="{{ item.product.title | escape }}" class="ah-blank">{%- endif -%}</a><div class="tx"><span class="br">{{ item.vendor }}</span><a class="n" href="{{ item.url }}">{{ item.product.title }}</a>{%- unless item.product.has_only_default_variant -%}<span class="v">{%- for o in item.options_with_values -%}{%- if o.name == 'Size' -%}Size {% endif -%}{{ o.value }}{%- unless forloop.last %} · {% endunless -%}{%- endfor -%}</span>{%- endunless -%}{%- if item.variant.inventory_management and item.variant.inventory_quantity < 3 and item.variant.inventory_quantity > 0 -%}<span class="note">Only {{ item.variant.inventory_quantity }} left</span>{%- endif -%}<div class="ctl"><div class="v9-q"><button type="button" data-qd="-1" aria-label="One fewer">−</button><span>{{ item.quantity }}</span><button type="button" data-qd="1" aria-label="One more">+</button></div><button type="button" class="rm" data-rm>Remove</button></div></div><span class="lp" data-lp>{{ item.final_line_price | money_without_trailing_zeros }}</span></div>{%- endfor -%}</div><div class="v9-empty"{% if cart.item_count > 0 %} hidden{% endif %}><h2 class="zh2">Your basket is empty</h2><p>Have a look at what&rsquo;s new, or pick up where you left off.</p><div class="v9-btns"><a class="btn-k" href="{{ routes.collections_url }}/coats">Shop coats</a><a class="btn-o" href="{{ routes.root_url }}">Back to the homepage</a></div></div></div><aside class="v9-sum" aria-label="Order summary"><h2 class="v9-h3">Order summary</h2><dl><div><dt>Subtotal</dt><dd data-sub>{{ cart.items_subtotal_price | money_without_trailing_zeros }}</dd></div><div><dt>Delivery</dt><dd data-ship>{% if cart.total_price >= 7500 %}Free{% else %}Calculated at checkout{% endif %}</dd></div></dl><details class="v9-promo"><summary>Add a discount code</summary><form class="v9-row" data-promo novalidate><input class="v9-in" type="text" placeholder="Code" aria-label="Discount code"><button type="submit" class="btn-o">Apply</button></form><p class="v9-pmsg" aria-live="polite"></p></details><div class="tot"><span>Total</span><b data-total>{{ cart.total_price | money_without_trailing_zeros }}</b></div><p class="vat">Including VAT</p><form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="btn-k v9-co" style="width:100%">Checkout securely</button></form><p class="v9-spread">Spread the cost: 3 × <span data-third>{{ cart.total_price | divided_by: 3 | money }}</span> with <span class="v9-pay"><img src="{{ 'shop-pay.png' | asset_url }}" alt="Shop Pay"><img class="k" src="{{ 'klarna.png' | asset_url }}" alt="Klarna"></span></p><ul class="v9-trust"><li>Free returns within 14 days</li><li>Secure checkout</li><li>Based in the UK</li></ul></aside></div></div><section class="zsec v9-in-w bk-ml"><div class="v9-hd"><h2 class="zh2">You might also like</h2></div><div class="g4">{%- for product in collections['bestsellers'].products limit: 4 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></section>
+
+
+{% schema %}
+{
+  "name": "Basket",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

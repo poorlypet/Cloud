@@ -1,0 +1,35 @@
+<style>
+/* K · Cormorant Garamond with Jost. Announcement bar, one-row header. Menus: capital text columns with a photograph flush right. Two buttons under the intro. */
+:root{--display:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif}
+.logo{font-size:32px;font-weight:600}
+.nav{margin-left:clamp(36px,4vw,64px);gap:clamp(18px,2vw,30px)}
+.hero-copy h1{font:600 clamp(38px,3.8vw,60px)/1.02 var(--display)}
+.hide-d{display:none}
+@media (max-width:1080px){.hide-d{display:inline-flex}}
+.sp + .ws{padding-top:0}
+.sp:has(+ .ws){padding-bottom:clamp(40px,4vw,56px)}
+.bh + .sp-size{padding-top:0}
+.sp-size + .pv-k{padding-top:0}
+.sp-size:has(+ .pv-k){padding-bottom:clamp(40px,4vw,56px)}
+.pv-k + .rv{padding-top:clamp(40px,4vw,56px)}
+.pv-k + .bd2{padding-top:0}
+.bd2 + .rv{padding-top:0}
+.rv.r1 .cards{align-items:stretch}
+.rv.r1 .cd{border-top:0;padding-top:0;display:flex;flex-direction:column;height:100%}
+.rv.r1 .cd .rq{flex:1}
+/* one rhythm: every section below the hero sits the same distance apart */
+:root{--sec:clamp(56px,6vw,88px)}
+main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
+main > section.next{margin-top:var(--sec)}
+</style>
+
+<div class="dw"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a><span>/</span><a href="/pages/help">Help</a><span>/</span><span aria-current="page">FAQs</span></nav><h1>FAQs</h1><p>Quick answers to the questions we&rsquo;re asked most. Can&rsquo;t see yours? A real person will reply within one working day.</p></div></header><section class="dw-keys"><div class="dw-w"><div><b>Orders &amp; delivery</b><span>Times, costs and tracking</span></div><div><b>Returns</b><span>14 days, free in the UK</span></div><div><b>Sizing &amp; care</b><span>Fit, measuring and washing</span></div></div></section><div class="dw-body dw-w"><aside class="dw-side"><div class="dw-on"><span>On this page</span><a href="#orders">Orders</a><a href="#delivery">Delivery</a><a href="#returns">Returns &amp; exchanges</a><a href="#sizing">Sizing &amp; fit</a><a href="#care">Product care</a><a href="#payments">Payments</a></div></aside><div class="dw-main"><section id="orders"><h2>Orders</h2><div class="dw-faq"><details><summary>Can I change or cancel my order?</summary><p>We can change or cancel an order within an hour of it being placed. Contact us as soon as you can with your order number.</p></details><details><summary>I haven&rsquo;t had a confirmation email</summary><p>Check your junk folder first. If it isn&rsquo;t there, contact us and we&rsquo;ll resend it and check your order went through.</p></details><details><summary>Do I need an account to order?</summary><p>No. You can check out as a guest, and create an account afterwards to track orders and start returns.</p></details></div></section><section id="delivery"><h2>Delivery</h2><div class="dw-faq"><details><summary>When will my order arrive?</summary><p>UK standard delivery takes 2 to 4 working days and is free on orders over £75. Express delivery arrives the next working day when you order by 2pm.</p></details><details><summary>Do you ship worldwide?</summary><p>Yes, to most countries. Costs and times for your address are shown at checkout, and any import duties are paid by the recipient.</p></details><details><summary>What if my order hasn&rsquo;t arrived?</summary><p>Contact us and we&rsquo;ll investigate with the courier straight away. If it can&rsquo;t be found, we&rsquo;ll send a replacement or refund you in full.</p></details></div></section><section id="returns"><h2>Returns &amp; exchanges</h2><div class="dw-faq"><details><summary>How do I return something?</summary><p>You have 14 days from delivery to tell us, and another 14 to send it back unworn with its tags. UK returns are free.</p></details><details><summary>When will I get my refund?</summary><p>Within 14 days of your return reaching us, and usually within 5 working days.</p></details><details><summary>Can I swap for a different size?</summary><p>Yes. Choose exchange when you start your return and we&rsquo;ll send the new size as soon as yours is on its way back.</p></details></div></section><section id="sizing"><h2>Sizing &amp; fit</h2><div class="dw-faq"><details><summary>How do I measure my dog?</summary><p>Measure the back from the base of the neck to the base of the tail, the chest around the widest part behind the front legs, and the neck where a collar sits. Every product page has its own size guide.</p></details><details><summary>My dog is between sizes</summary><p>Choose the larger size, especially if your dog will wear a jumper underneath.</p></details></div></section><section id="care"><h2>Product care</h2><div class="dw-faq"><details><summary>How do I wash a coat?</summary><p>Most coats can be machine washed at 30°C. Close all fastenings first and leave to dry flat. Don&rsquo;t tumble dry.</p></details><details><summary>How do I clean a bed?</summary><p>Bed covers unzip and can be washed at 30°C. Air the inner cushion regularly.</p></details></div></section><section id="payments"><h2>Payments</h2><div class="dw-faq"><details><summary>Which payment methods do you accept?</summary><p>Visa, Mastercard, American Express, Apple Pay, Shop Pay and Klarna.</p></details><details><summary>Can I spread the cost?</summary><p>Yes. Shop Pay and Klarna let you pay in 3 interest-free instalments.</p></details></div></section><section class="dw-help"><h2>Still need help?</h2><p>Our team is here Monday to Friday, 9am to 5pm, and replies to every message within one working day.</p><a class="dw-btn" href="/pages/contact">Contact us</a></section></div></div></div>
+
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}

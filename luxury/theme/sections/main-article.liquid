@@ -1,0 +1,2 @@
+<article class="dw"><header class="dw-hero"><div class="dw-w"><nav class="dz-crumb"><a href="{{ blog.url }}">{{ blog.title }}</a></nav><h1>{{ article.title }}</h1><p>{{ article.published_at | date: '%-d %B %Y' }}</p></div></header><div class="dw-body dw-w" style="grid-template-columns:minmax(0,1fr)"><div class="dw-main rte">{{ article.content }}</div></div></article>
+{% schema %}{"name":"Article"}{% endschema %}
