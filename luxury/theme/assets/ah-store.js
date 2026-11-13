@@ -17,6 +17,40 @@
       }
     });
   }
+  /* ---------- basket drawer, filled from the real Shopify basket ---------- */
+  var ROOT = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
+  var FREE = 10000; /* free UK delivery from £100, in pence */
+  function escH(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function drawCart(c) {
+    var el = document.getElementById("side-basket"); if (!el) return false;
+    var n = c.item_count;
+    var head = '<div class="side-h"><h2>Your basket<small>(' + n + ')</small></h2><button type="button" class="x" data-ahc-x>Close<svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div>';
+    if (!n) {
+      el.innerHTML = head + '<div class="side-b ahc-empty"><p>Your basket is empty.</p><a class="ahc-btn" href="/collections/new-in">Shop new in</a></div>';
+      return true;
+    }
+    var left = Math.max(0, FREE - c.total_price), pct = Math.min(100, Math.round(c.total_price * 100 / FREE));
+    var items = c.items.map(function (it) {
+      var img = it.image ? '<img src="' + it.image + (it.image.indexOf("?") < 0 ? "?" : "&") + 'width=240" alt="">' : "";
+      return '<div class="ahc-it" data-key="' + escH(it.key) + '"><a class="ahc-im" href="' + escH(it.url) + '">' + img + '</a><div class="ahc-tx">' +
+        '<div class="ahc-top"><a href="' + escH(it.url) + '">' + escH(it.product_title) + '</a><span>' + money(it.final_line_price) + '</span></div>' +
+        (it.variant_title ? '<p>' + escH(it.variant_title) + '</p>' : '') +
+        '<div class="ahc-row"><div class="ahc-q"><button type="button" data-ahq="-1" aria-label="One fewer">&minus;</button><span>' + it.quantity + '</span><button type="button" data-ahq="1" aria-label="One more">+</button></div>' +
+        '<button type="button" class="ahc-rm" data-ahrm>Remove</button></div></div></div>';
+    }).join("");
+    el.innerHTML = head +
+      '<div class="ahc-prog"><p>' + (left ? 'You&rsquo;re ' + money(left) + ' away from free UK delivery' : 'You&rsquo;ve got free UK delivery') + '</p><i><b style="width:' + pct + '%"></b></i></div>' +
+      '<div class="side-b">' + items + '</div>' +
+      '<div class="side-f"><div class="ahc-sub"><span>Subtotal</span><b>' + money(c.total_price) + '</b></div><p class="ahc-note">Delivery and any discount codes are added at checkout.</p>' +
+      '<a class="ahc-btn" href="' + ROOT + 'checkout">Checkout</a><a class="ahc-link" href="' + R.cart + '">View basket</a></div>';
+    return true;
+  }
+  function openCart() {
+    fetch(R.cart + ".js", { headers: { Accept: "application/json" } }).then(function (r) { return r.json(); })
+      .then(function (c) { setCount(c.item_count); if (drawCart(c) && window.AHSide) window.AHSide("basket"); else location.href = R.cart; })
+      .catch(function () { location.href = R.cart; });
+  }
+  window.AHCart = { open: openCart, draw: drawCart };
   /* real links for the menu, drawers and footer items that were "#" in the prototype */
   function norm(t) { return (t || "").replace(/\s+/g, " ").replace(/[^\w &]/g, "").trim().toLowerCase(); }
   function fixLinks(root) {
@@ -36,13 +70,26 @@
     var hdr = $(".hdr");
     blankImages(document.body); fixLinks(document.body);
     setCount(AH.count || 0);
-    /* account and basket open the real pages */
+    /* account opens the account page; the basket opens the real basket drawer */
     document.addEventListener("click", function (e) {
       var b = e.target.closest('[data-open="account"],[data-open-m="account"],[data-open="basket"],[data-open-m="basket"]');
       if (!b) return;
       e.preventDefault(); e.stopImmediatePropagation();
       var w = b.getAttribute("data-open") || b.getAttribute("data-open-m");
-      location.href = w === "basket" ? R.cart : R.account;
+      if (w === "basket") openCart(); else location.href = R.account;
+    }, true);
+    /* basket drawer: quantity, remove and close */
+    document.addEventListener("click", function (e) {
+      var x = e.target.closest("[data-ahc-x]"); if (x) { e.preventDefault(); if (window.AHSide) window.AHSide(null); return; }
+      var b = e.target.closest("#side-basket [data-ahq], #side-basket [data-ahrm]"); if (!b) return;
+      e.preventDefault(); e.stopImmediatePropagation();
+      var it = b.closest(".ahc-it"), q = +$(".ahc-q span", it).textContent;
+      var nq = b.hasAttribute("data-ahrm") ? 0 : Math.max(0, q + (+b.getAttribute("data-ahq")));
+      it.style.opacity = ".5";
+      fetch(ROOT + "cart/change.js", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ id: it.getAttribute("data-key"), quantity: nq }) })
+        .then(function (r) { return r.json(); })
+        .then(function (c) { setCount(c.item_count); drawCart(c); })
+        .catch(function () { it.style.opacity = ""; });
     }, true);
     /* top-level menu items go to their category when clicked */
     document.addEventListener("click", function (e) {
@@ -108,7 +155,7 @@
         fetch(R.add, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ items: [{ id: v.id, quantity: qty }] }) })
           .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw d; return d; }); })
           .then(function () { return fetch(R.cart + ".js").then(function (r) { return r.json(); }); })
-          .then(function (cart) { setCount(cart.item_count); if (msg) msg.innerHTML = 'Added to your basket. <a href="' + R.cart + '">View basket</a>'; })
+          .then(function (cart) { setCount(cart.item_count); if (msg) msg.textContent = "Added to your basket."; if (drawCart(cart) && window.AHSide) window.AHSide("basket"); })
           .catch(function (err) { if (msg) msg.textContent = (err && err.description) || "Sorry, we couldn’t add that. Please try again."; })
           .then(function () { b.disabled = false; });
       }, true);

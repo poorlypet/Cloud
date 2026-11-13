@@ -482,6 +482,7 @@
     if (id) setTimeout(function () { sides[id].focus({ preventScroll: true }); }, 60);
     else if (lastFocus) { lastFocus.focus(); lastFocus = null; }
   }
+  window.AHSide = sideSet;
   document.querySelectorAll("[data-open]").forEach(function (b) {
     b.addEventListener("click", function (e) {
       e.preventDefault();
