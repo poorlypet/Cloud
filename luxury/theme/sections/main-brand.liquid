@@ -35,8 +35,8 @@ main > section.next{margin-top:var(--sec)}
     assign still = blank
     if collection.image
       assign still = collection.image | image_url: width: 2400
-    elsif images[bj] != blank
-      assign still = images[bj] | image_url: width: 2400
+    elsif shop.metafields.custom.ah_media.value.stills[bh] != blank
+      assign still = shop.metafields.custom.ah_media.value.stills[bh]
     endif
   -%}
   {%- render 'ah-vid', f: bv, poster: still -%}

@@ -6,15 +6,15 @@
 /* Layout: a shoot sheet. Summary strip, then one block per export size, each a list of files to shoot together. */
 :root{
   --bg:#FFFFFF; --panel:#F6F6F3; --ink:#161616; --ink2:#5E5F58; --line:#E2E2DC;
-  --olive:#5E6B3A; --olive-soft:#EEF0E6; --ok:#2F6B3F; --ok-soft:#E5F0E7; --frame:#D9D9D2;
+  --olive:#5E6B3A; --olive-soft:#EEF0E6; --warn:#8A4B12; --warn-soft:#F6ECE0; --ok:#2F6B3F; --ok-soft:#E5F0E7; --frame:#D9D9D2;
   --display:"Cormorant Garamond",Georgia,serif; --sans:"Jost",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#121311; --panel:#1B1C19; --ink:#EDEDE7; --ink2:#A3A49A; --line:#2E302A;
-  --olive:#AEBB82; --olive-soft:#262A1D; --ok:#8FCB9C; --ok-soft:#1C2A1F; --frame:#3A3C35; color-scheme:dark}}
+  --olive:#AEBB82; --olive-soft:#262A1D; --ok:#8FCB9C; --ok-soft:#1C2A1F; --frame:#3A3C35; --warn:#E3A86B; --warn-soft:#33251A; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#121311; --panel:#1B1C19; --ink:#EDEDE7; --ink2:#A3A49A; --line:#2E302A;
-  --olive:#AEBB82; --olive-soft:#262A1D; --ok:#8FCB9C; --ok-soft:#1C2A1F; --frame:#3A3C35; color-scheme:dark}
+  --olive:#AEBB82; --olive-soft:#262A1D; --ok:#8FCB9C; --ok-soft:#1C2A1F; --frame:#3A3C35; --warn:#E3A86B; --warn-soft:#33251A; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
 .wrap{max-width:1120px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -64,6 +64,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pill{justify-self:end;font-size:11.5px;font-weight:600;padding:4px 10px;white-space:nowrap}
 .pill.up{background:var(--ok-soft);color:var(--ok)}
 .pill.need{background:var(--olive-soft);color:var(--olive)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.wh .nt{display:block;font-size:12px;margin-top:3px;color:var(--ink2)}
+.wh .nt.w{color:var(--warn)}
 .row.shot code{text-decoration:line-through;text-decoration-color:var(--ink2);color:var(--ink2)}
 .cols{display:grid;grid-template-columns:28px minmax(0,1.3fr) minmax(0,1.4fr) 150px 98px;gap:16px;padding:12px 0 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
 .cols span:last-child{text-align:right}
@@ -102,7 +105,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <section class="how" aria-label="How to upload">
     <div><b>1. Name it exactly</b><p>Lower case, hyphens, and the same ending (.jpg or .mp4). Shopify adds _1 to a name it has already seen, so delete an old version before uploading its replacement.</p></div>
     <div><b>2. Upload to Files</b><p>Shopify admin &rsaquo; Content &rsaquo; Files &rsaquo; Upload files. Several at once is fine.</p></div>
-    <div><b>3. Ask for a refresh</b><p>Tell Claude to update the shot list. It checks Shopify and marks what has arrived. Your own ticks stay in this browser.</p></div>
+    <div><b>3. Ask for a refresh</b><p>Tell Claude to update the shot list. It checks Shopify, marks what has arrived and puts it on the site. Shopify may rename files (adding .mp4.mp4 or _jpg.png); that is fine. Your own ticks stay in this browser.</p></div>
   </section>
 
   <div class="tools" role="toolbar" aria-label="Filter">
@@ -176,9 +179,9 @@ function render() {
       html += '<li class="row' + (shot[it.f] || it.up ? " shot" : "") + '">' +
         '<input type="checkbox" id="' + id + '" data-f="' + esc(it.f) + '"' + (shot[it.f] || it.up ? " checked" : "") + (it.up ? " disabled" : "") + ' aria-label="Shot ' + esc(it.f) + '">' +
         '<div class="fn"><code>' + esc(it.f) + '</code><button class="cp" type="button" data-copy="' + esc(it.f) + '">Copy</button></div>' +
-        '<div class="wh">' + esc(it.spot) + '<small>' + esc(it.page) + '</small></div>' +
+        '<div class="wh">' + esc(it.spot) + '<small>' + esc(it.page) + '</small>' + (it.warn ? '<span class="nt w">' + esc(it.warn) + '</span>' : it.note ? '<span class="nt">' + esc(it.note) + '</span>' : '') + '</div>' +
         '<div class="dims">' + dims(it) + '</div>' +
-        (it.up ? '<span class="pill up">Uploaded</span>' : '<span class="pill need">Needed</span>') + '</li>';
+        (it.up ? '<span class="pill up">Uploaded</span>' : it.warn ? '<span class="pill warn">Needs a film</span>' : '<span class="pill need">Needed</span>') + '</li>';
     });
     html += "</ul></section>";
   });

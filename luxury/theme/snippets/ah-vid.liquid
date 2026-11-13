@@ -1,2 +1,16 @@
-{%- comment -%} A named film slot. Upload an .mp4 with this exact name to Content › Files and it plays here; until then the still (or a grey blank) shows. {%- endcomment -%}
-<video{% unless hover %} autoplay{% endunless %} muted loop playsinline preload="{% if hover %}none{% else %}metadata{% endif %}" poster="{{ poster | default: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" }}" class="ah-blank {{ cls }}" data-ah="{{ f }}"><source src="{{ f | file_url }}" type="video/mp4"></video>
+{%- comment -%} A named film slot, filled from Content › Files through the shop's media map (custom.ah_media). Pass u (and p) to play a given film instead. Until there is a film the still, or a grey blank, shows. {%- endcomment -%}
+{%- liquid
+  assign base = f | remove: '.mp4'
+  assign src = u
+  assign still = p | default: poster
+  if src == blank
+    assign v = shop.metafields.custom.ah_media.value.films[base]
+    if v != blank
+      assign src = v.u
+      if still == blank
+        assign still = v.p
+      endif
+    endif
+  endif
+-%}
+<video{% unless hover %} autoplay{% endunless %} muted loop playsinline preload="{% if hover %}none{% else %}metadata{% endif %}" poster="{{ still | default: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" }}" class="{% if src == blank %}ah-blank {% endif %}{{ cls }}" data-ah="{{ f }}">{%- if src != blank -%}<source src="{{ src }}" type="video/mp4">{%- endif -%}</video>

@@ -19,8 +19,8 @@
   }
 
   var MENU = [
-    { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear", "New for cats"] }], f: [],
-      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }, { p: "menu-new-for-cats.jpg", t: "New for cats" }] },
+    { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear"] }], f: [],
+      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }] },
     { key: "beds", label: "Beds", hero: "menu-beds.jpg", line: "Deep, soft beds and the throws that go with them.",
       g: [{ t: "Beds", l: ["Bolster beds", "Round beds", "Orthopaedic beds", "Sofa beds", "Crate mats", "Replacement covers"] },
           { t: "Blankets & cushions", l: ["Wool throws", "Bouclé blankets", "Cushions", "Travel blankets"] },
@@ -63,16 +63,9 @@
       f: [{ p: "beach", t: "Travel beds", n: "Travel Bed, Canvas", pr: 165 },
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
           { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] },
-    { key: "cats", label: "Cats", hero: "menu-cats.jpg", line: "Felt caves, oak scratchers and warm places to sleep.",
-      g: [{ t: "Cats", l: ["Cat beds", "Scratchers", "Toys", "Bowls", "Collars"] },
-          { t: "Living", l: ["Cat trees", "Litter boxes", "Window perches"] },
-          { t: "Collections", l: ["Felt", "Oak"] }],
-      f: [{ p: "catStairs", t: "Cat beds", n: "Felt Cave Bed", pr: 120 },
-          { p: "kitten", t: "Scratchers", n: "Oak Scratcher", pr: 140 },
-          { p: "catSleep", t: "Toys", n: "Wool Mouse Set", pr: 22 }] },
     { key: "gifts", label: "Gifts", hero: "menu-gifts.jpg", line: "Wrapped by hand and ready to give.",
       g: [{ t: "Gifts", l: ["Gift sets", "For the new puppy", "Under £50", "Under £100", "Gift cards"] },
-          { t: "For", l: ["Dogs", "Cats", "Their people"] },
+          { t: "For", l: ["Dogs", "Their people"] },
           { t: "Occasions", l: ["Birthdays", "Christmas", "Gotcha day"] }],
       f: [{ p: "goldenFlower", t: "Gift sets", n: "Winter Gift Set", pr: 120 },
           { p: "cavalier", t: "Gift cards", n: "Gift Card", pr: 50 },
@@ -111,7 +104,7 @@
   }
   var LAYOUTS = {
     newin: function (c) {
-      return '<div class="mp-in L-tiles"><div class="tiles4">' + c.tiles.map(function (f) { return tile(f, "1/1"); }).join("") + "</div></div>";
+      return '<div class="mp-in L-tiles"><div class="tiles4" style="grid-template-columns:repeat(' + c.tiles.length + ',minmax(0,1fr))">' + c.tiles.map(function (f) { return tile(f, "1/1"); }).join("") + "</div></div>";
     },
     /* Liberty-style: capital text columns, a photograph flush to the right edge */
     lib: function (c) {

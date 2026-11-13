@@ -74,27 +74,38 @@ GROUPS=[
       tip='Hands, tools and leather at a maker’s bench. Shown on Our story beside the list of workshops.',
       files=['story-workshops.jpg']),
 ]
+HIDDEN = lambda f: (f.startswith('happy-dogs-') or 'cats' in f or f.startswith('brand-dventotto')
+                    or (f.startswith('brand-') and f.endswith('.jpg')) or f.startswith('collection-'))
+for g in GROUPS: g['files'] = [f for f in g['files'] if not HIDDEN(f)]
+GROUPS = [g for g in GROUPS if g['files'] or g['id'] == 'film-portrait']
+# collection films are a shared pool: any film whose name starts with "collection"
+for g in GROUPS:
+    if g['id'] == 'film-portrait':
+        g['tip'] = 'Collection films sit in among the products, the size of four product cards: one after the 4th product and one after the 14th. Any film whose name starts with "collection" joins the pool, and each collection picks two from it, so they mix across the shop. Add more whenever you like.'
+        g['files'] = ['collection-*.mp4']
 # every named slot in the theme must be in a group
 named=set(k for k in M if '.' in k)
 grouped=set(f for g in GROUPS for f in g['files'])
-missing=named-grouped
+missing=set(f for f in named-grouped if not HIDDEN(f))
 assert not missing, missing
-# what is already in Content > Files
-have={}
-cur=None
-while True:
-    d=gql('query($c:String){files(first:250,after:$c){nodes{createdAt ... on MediaImage{image{url}} ... on Video{filename} ... on GenericFile{url}} pageInfo{hasNextPage endCursor}}}',{'c':cur})['files']
-    for n in d['nodes']:
-        u=(n.get('image') or {}).get('url') or n.get('url') or ''
-        fn=n.get('filename') or u.split('?')[0].rsplit('/',1)[-1]
-        if fn: have[fn.lower()]=n['createdAt'][:10]
-    if not d['pageInfo']['hasNextPage']: break
-    cur=d['pageInfo']['endCursor']
+# what is already in Content > Files, read through the same name map the theme uses
+import media_map
+MM, _ = media_map.build()
+def status(f):
+    base = f.rsplit('.', 1)[0]
+    if f == 'collection-*.mp4': return ('up', f"{len(MM['pool'])} films in the pool") if MM['pool'] else (None, '')
+    if f.endswith('.mp4'):
+        if base in MM['films']: return ('up', '')
+        if base in MM['stills']: return ('photo', 'Arrived as a photo, not a film. It shows as a still for now.')
+        return (None, '')
+    return ('up', '') if base in MM['stills'] else (None, '')
 for g in GROUPS:
     g['items']=[]
     for f in g['files']:
         pg,spot=where(f); m=M.get(f,{})
-        g['items'].append(dict(f=f,page=pg,spot=spot,d=m.get('d'),m=m.get('m'),up=have.get(f.lower())))
+        st, note = status(f)
+        if f == 'collection-*.mp4': pg, spot, m = 'Collection pages', 'Pool of films shared by every collection', {'d':[660,825],'m':[358,448]}
+        g['items'].append(dict(f=f,page=pg,spot=spot,d=m.get('d'),m=m.get('m'),up=st=='up',warn=note if st=='photo' else '',note=note if st=='up' else ''))
     del g['files']
 now=datetime.datetime.now(datetime.timezone.utc).astimezone(datetime.timezone(datetime.timedelta(hours=0)))
 data=dict(checked=now.strftime('%-d %b %Y, %H:%M UTC'),groups=GROUPS)
