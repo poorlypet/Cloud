@@ -16,7 +16,7 @@ def where(f):
        'track-order-hero':('Track your order','Banner at the top'),'product-film':('Every product page','Film beside the brand story')}
     if b in W: return W[b]
     m=re.match(r'home-category-(.+)',b)
-    if m: return ('Homepage','Shop by category: '+cap(m.group(1)))
+    if m: return ('Homepage','Shop by category: '+{'coats':'Coats & knitwear'}.get(m.group(1),cap(m.group(1))))
     m=re.match(r'home-size-(.+)',b)
     if m: return ('Homepage','Shop by size: '+cap(m.group(1)))
     m=re.match(r'happy-dogs-(.+)',b)
@@ -46,9 +46,12 @@ GROUPS=[
       files=[f'brand-{h}.jpg' for n,h in BR]+['track-order-hero.jpg']),
  dict(id='photo-square',kind='Photo',title='Square photo',ratio='1:1',px='1600 × 1600',fmt='JPG, under 1 MB',
       tip='The biggest batch. Same light, same background and same distance across a row, so they sit together as a set.',
-      files=[f'home-category-{x}.jpg' for x in ['sleeping','walking','clothing','dining','playing','travelling']]+[f'home-size-{x}.jpg' for x in ['puppy','petite','small','medium','large','giant']]+
+      files=[f'home-size-{x}.jpg' for x in ['puppy','petite','small','medium','large','giant']]+
             [f'story-collect-{x}.jpg' for x in ['beds','coats','walking','dining','play','travel']]+[f'menu-new-{x}.jpg' for x in ['beds','collars-leads','knitwear','for-cats']]+
             [f'track-order-tile-{x}.jpg' for x in ['delivery','returns','contact-us']]),
+ dict(id='photo-portrait',kind='Photo',title='Category tile',ratio='4:5',px='1600 × 2000',fmt='JPG, under 1.5 MB',
+      tip='The sideways-scrolling Shop by category row on the homepage. The name sits bottom left in white, so keep that corner darker and uncluttered.',
+      files=[f'home-category-{x}.jpg' for x in ['beds','walking','coats','dining','play','travel','cats','gifts']]),
  dict(id='photo-tall',kind='Photo',title='Tall menu photo',ratio='3:4',px='1200 × 1600',fmt='JPG, under 1 MB',
       tip='Shown on the right of each drop-down menu with a caption over the bottom, so keep the lower quarter quiet.',
       files=[f'menu-{x}.jpg' for x in ['beds','walking','coats','dining','play','travel','cats','gifts']]),
