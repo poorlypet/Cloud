@@ -75,41 +75,7 @@ main > section.next{margin-top:var(--sec)}
     {%- if collection.description != blank -%}<p>{{ collection.description | strip_html | truncatewords: 40 }}</p>{%- endif -%}
   </div>
 </section>
-{%- if parent and parent.links.size > 0 -%}
-<section class="cq-subs cs" aria-label="{{ parent.title | escape }} categories">
-  <div class="cs-w">
-    <button type="button" class="cs-a prev" aria-label="Previous categories" hidden><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M7 1L1 7l6 6"/></svg></button>
-    <div class="cs-r" tabindex="0" aria-label="Categories, scroll sideways">
-      {%- liquid
-        assign k0 = 'home-category-' | append: ph
-        assign u0 = stills[k0]
-      -%}
-      <a class="cs-t" href="{{ parent.url }}"{% unless is_sub %} aria-current="page"{% endunless %}>
-        {%- if u0 != blank -%}<img src="{{ u0 }}&width=700" alt="" loading="lazy">{%- else -%}<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" class="ah-blank">{%- endif -%}
-        <span class="cs-l">All {{ parent.title | downcase }}</span></a>
-      {%- for c in parent.links -%}
-        {%- liquid
-          assign sc = c.object
-          assign tk = 'collection-tile-' | append: sc.handle
-          assign tu = stills[tk]
-          if tu == blank and sc.image
-            assign tu = sc.image | image_url: width: 700
-          endif
-          if tu == blank
-            assign pi = forloop.index | modulo: 3
-            assign fk = cat_pics[pi] | append: ph
-            assign tu = stills[fk]
-          endif
-        -%}
-        <a class="cs-t" href="{{ c.url }}"{% if sc.handle == collection.handle %} aria-current="page"{% endif %} data-ah="{{ tk }}.jpg">
-          {%- if tu != blank -%}<img src="{{ tu }}{% unless tu contains 'width=' %}&width=700{% endunless %}" alt="" loading="lazy">{%- else -%}<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDEDEB'/%3E%3C/svg%3E" alt="" class="ah-blank">{%- endif -%}
-          <span class="cs-l">{{ c.title }}</span></a>
-      {%- endfor -%}
-    </div>
-    <button type="button" class="cs-a next" aria-label="More categories"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
-  </div>
-</section>
-{%- endif -%}
+{%- if parent and parent.links.size > 0 -%}<nav class="ct2 cq-c cq-subs-t" aria-label="{{ parent.title | escape }}"><a href="{{ parent.url }}"{% unless is_sub %} aria-current="page"{% endunless %}>All {{ parent.title | downcase }}</a>{%- for c in parent.links -%}<span>·</span><a href="{{ c.url }}"{% if c.object.handle == collection.handle %} aria-current="page"{% endif %}>{{ c.title }}</a>{%- endfor -%}</nav>{%- endif -%}
 <style>
   .v9.cq3:has(> .cq-hero){margin-top:0!important}
   .cq-hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:min(62svh,600px);overflow:hidden;background:#1a1a18;color:#fff}
@@ -120,7 +86,8 @@ main > section.next{margin-top:var(--sec)}
   a.cq-hk:hover{color:#fff}
   .cq-hero h1{font:500 clamp(44px,5.4vw,80px)/1 var(--display);margin:0;color:#fff}
   .cq-hero-tx p{margin:14px 0 0;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.9)}
-  .cq-subs{margin-top:clamp(28px,3vw,44px)}
+  .cq-subs-t{margin-top:clamp(24px,2.6vw,36px)!important}
+  .cq-subs-t + .cx-bar{margin-top:clamp(18px,2vw,28px)}
   .cq-subs .cs-w{margin-top:0}
   .cq-subs .cs-r{grid-auto-columns:calc((100vw - 2 * var(--gut,24px) - 60px) / 6.3)}
   .cq-subs .cs-t[aria-current] .cs-l{text-decoration:underline;text-underline-offset:5px}
@@ -128,16 +95,7 @@ main > section.next{margin-top:var(--sec)}
   .cq-subs + .cx-bar,.cq-hero + .cx-bar{margin-top:clamp(24px,3vw,40px)}
   @media (max-width:800px){.cq-hero{height:min(70svh,520px)}.cq-subs .cs-r{grid-auto-columns:42vw}}
 </style>
-<script>
-document.querySelectorAll('.cq-subs .cs-w').forEach(function(w){if(w.dataset.on)return;w.dataset.on=1;
-var r=w.querySelector('.cs-r'),p=w.querySelector('.prev'),n=w.querySelector('.next');
-function step(){var t=r.querySelector('.cs-t');return t?(t.getBoundingClientRect().width+10)*2:300}
-function upd(){p.hidden=r.scrollLeft<8;n.hidden=r.scrollLeft+r.clientWidth>=r.scrollWidth-8}
-p.addEventListener('click',function(){r.scrollBy({left:-step(),behavior:'smooth'})});
-n.addEventListener('click',function(){r.scrollBy({left:step(),behavior:'smooth'})});
-r.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
-var cur=r.querySelector('[aria-current]');if(cur&&cur.offsetLeft>r.clientWidth*.6)r.scrollLeft=cur.offsetLeft-20;});
-</script>
+
 <div class="cx-bar"><div class="l"><button type="button" class="cx-btn" data-filters><svg viewBox="0 0 14 14"><path d="M1 3h12M3 7h8M5 11h4"/></svg> Filter</button><span class="cx-count"></span><div class="cx-chips l"></div></div><label class="cx-sel"><span class="sr">Sort by</span><select class="cx-sort" id="sort6" aria-label="Sort by"><option value="feat">Most relevant</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select></label></div>{%- paginate collection.products by 48 -%}<div class="cx-grid">{%- liquid
   assign f1 = cf | append: '-1.mp4'
   assign f2 = cf | append: '-2.mp4'
