@@ -26,7 +26,7 @@
 
   var MENU = [
     { key: "new", label: "New In", g: [{ t: "New in", l: ["New beds", "New collars & leads", "New knitwear", "Shop all new in"] }], f: [],
-      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }, { p: "home-category-coats.jpg|story-collect-coats.jpg", t: "New in" }] },
+      tiles: [{ p: "menu-new-beds.jpg", t: "New beds" }, { p: "menu-new-collars-leads.jpg", t: "New collars & leads" }, { p: "menu-new-knitwear.jpg", t: "New knitwear" }, { p: "home-category-coats.jpg|story-collect-coats.jpg", t: "Shop all new in" }] },
     { key: "beds", label: "Beds", hero: "menu-beds.jpg|home-category-beds.jpg", hero2: "home-category-beds.jpg|story-collect-beds.jpg", line: "Deep, soft beds and the throws that go with them.",
       g: [{ t: "Beds", l: ["Bolster beds", "Round beds", "Orthopaedic beds", "Sofa beds", "Crate mats", "Replacement covers"] },
           { t: "Blankets & cushions", l: ["Wool throws", "Bouclé blankets", "Cushions", "Travel blankets"] },
@@ -166,7 +166,7 @@
     p.className = "mp"; p.id = "mp-" + c.key; p.setAttribute("data-k", c.key);
     var band = body.hasAttribute("data-band") ? '<div class="band"><a class="bbtn" href="#">Shop all ' + esc(c.label.toLowerCase()) + '</a><a class="bbtn on" href="#">Bestsellers</a>' +
       '<button type="button" class="band-x" data-close-mega aria-label="Close menu"><svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div>' : "";
-    p.innerHTML = band + (c.tiles ? LAYOUTS.mwnew(c) : LAYOUTS.mw(c));
+    p.innerHTML = band + (c.tiles ? LAYOUTS.newin(c) : LAYOUTS.lib(c));
     mega.appendChild(p);
   });
   nav.innerHTML = navHtml;
