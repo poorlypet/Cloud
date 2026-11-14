@@ -1,0 +1,53 @@
+/* trial layouts ?pv=1 and ?pv=2 (desktop) */
+@media (min-width:1081px){
+.pv-crumb{padding:18px var(--gut) 0;margin:0}
+.p8.pv1 .gtop.gt-c,.p8.pv2 .gtop.gt-c{grid-template-columns:minmax(0,1.62fr) minmax(380px,1fr);column-gap:clamp(40px,4vw,72px);padding:0 var(--gut);justify-content:stretch;margin-top:16px}
+.p8.pv1 .zi,.p8.pv2 .zi{padding-top:0!important;max-width:none}
+.p8.pv1 .zi h1,.p8.pv2 .zi h1{font-size:clamp(38px,3.3vw,60px);line-height:1.04;margin:0 0 6px}
+.p8.pv1 .price b,.p8.pv2 .price b{font-size:28px;font-weight:600!important}
+.p8 .szw-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.p8 .szw-h .lrow{margin:0;display:flex;gap:22px}
+.p8.pv1 .szs.szb,.p8.pv2 .szs.szb{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:10px}
+.p8.pv1 .szs.szb button,.p8.pv2 .szs.szb button{width:100%;height:50px}
+/* gallery */
+.pvg{display:grid;gap:10px}
+.pv1 .pvg{grid-template-columns:61fr 39fr;grid-template-rows:repeat(2,minmax(0,1fr));aspect-ratio:1.6}
+.pv1 .pv-c0{grid-row:1 / 3}
+.pv2 .pvg{grid-template-columns:1fr 1fr}
+.pv2 .pv-c{aspect-ratio:.87}
+.pv-c{position:relative;overflow:hidden;background:#EAEAEB;cursor:zoom-in;min-height:0}
+.pv-c img{width:100%;height:100%;object-fit:cover;display:block}
+.pv-exp{position:absolute;top:14px;right:14px;width:42px!important;height:42px!important;padding:0!important;display:grid;place-items:center;background:#fff;border:1px solid #EDEDE8;cursor:pointer}
+.pv-exp svg{width:15px;height:15px;fill:none;stroke:var(--ink);stroke-width:1.4}
+.pv-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;padding-bottom:12px}
+.pv1 .pv-bar{border-bottom:1px solid var(--line,#E6E6E1)}
+.pv-cnt{font-size:13px;letter-spacing:.04em;color:#5E5F58}
+.pv-nav{display:flex;align-items:center;gap:8px}
+.pv2 .pv-nav .pv-cnt{margin-right:14px}
+.pv-a{width:46px!important;height:46px!important;padding:0!important;display:grid;place-items:center;background:#fff;border:1px solid #E1E1DB;cursor:pointer}
+.pv-a:hover{border-color:var(--ink)}
+.pv-a svg{width:8px;height:14px;fill:none;stroke:var(--ink);stroke-width:1.4}
+.pv-th{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;max-width:56%}
+.pv-th::-webkit-scrollbar{display:none}
+.pv-th button{flex:0 0 82px;height:82px;padding:0;border:1px solid transparent;background:#EAEAEB;cursor:pointer}
+.pv-th button.on{border-color:var(--ink);padding:3px;background:#fff}
+.pv-th img{width:100%;height:100%;object-fit:cover;display:block}
+/* version 1: underline tabs */
+.p8.pv1 .zt-seg.t7 .ztabs{display:flex!important;background:none!important;border:0!important;border-bottom:1px solid var(--line,#E6E6E1)!important;padding:0!important;border-radius:0!important;gap:0;justify-content:space-between}
+.p8.pv1 .zt-seg.t7 .ztabs button{background:none!important;box-shadow:none!important;border:0!important;border-bottom:3px solid transparent!important;border-radius:0!important;padding:14px 6px!important;margin-bottom:-1px;font-size:13.5px;white-space:nowrap;flex:1 1 auto;letter-spacing:.01em;text-transform:none;color:#4B4C46}
+.p8.pv1 .zt-seg.t7 .ztabs button[aria-selected="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--olive,#4F5A31)!important}
+/* version 2: price + rating row, inline swatches, accordions */
+.pv-pr{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.pv-pr .rate{margin:0}
+.p8.pv2 .crow{display:flex!important;justify-content:flex-start;align-items:center;gap:14px}
+.p8.pv2 .crow .zlbl{margin:0}
+.pv-acc{border-top:1px solid var(--line,#E6E6E1);margin-top:20px}
+.pv-acc details{border-bottom:1px solid var(--line,#E6E6E1)}
+.pv-acc summary{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer;font-size:16px;color:var(--ink)}
+.pv-acc summary::-webkit-details-marker{display:none}
+.pv-acc summary i{position:relative;width:12px;height:12px}
+.pv-acc summary i:before,.pv-acc summary i:after{content:"";position:absolute;left:0;top:5.5px;width:12px;height:1px;background:var(--ink)}
+.pv-acc summary i:after{transform:rotate(90deg);transition:transform .2s}
+.pv-acc details[open] summary i:after{transform:rotate(0)}
+.pv-acc .ztp{padding:0 0 18px}
+}
