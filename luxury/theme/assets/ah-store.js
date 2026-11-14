@@ -121,15 +121,16 @@
     /* product page: real variants, prices, stock and add to bag */
     var pj = document.getElementById("ah-product");
     if (pj) {
-      var P = JSON.parse(pj.textContent), ci = P.options.indexOf("Colour"), si = P.options.indexOf("Size");
+      var P = JSON.parse(pj.textContent), ci = P.options.indexOf("Colour"), si = P.options.indexOf("Size"), hi = P.options.indexOf("Hardware");
       var msg = $(".msg"), stock = $(".stock"), price = $("[data-ah-price]");
       function sel() {
-        var c = $('.sws button[aria-pressed="true"]'), s = $('.szs button[aria-pressed="true"]');
-        return { c: c ? c.getAttribute("data-c") : null, s: s ? s.getAttribute("data-s") : null };
+        var c = $('.sws button[aria-pressed="true"]'), s = $('.szs button[aria-pressed="true"]'), h = $('.hws button[aria-pressed="true"]');
+        return { c: c ? c.getAttribute("data-c") : null, s: s ? s.getAttribute("data-s") : null, h: h ? h.getAttribute("data-h") : null };
       }
-      function find(c, s) {
+      function find(c, s, h) {
+        if (h === undefined) h = sel().h;
         return P.variants.filter(function (v) {
-          return (ci < 0 || !c || v.options[ci] === c) && (si < 0 || !s || v.options[si] === s);
+          return (ci < 0 || !c || v.options[ci] === c) && (si < 0 || !s || v.options[si] === s) && (hi < 0 || !h || v.options[hi] === h);
         });
       }
       function refresh() {
@@ -142,7 +143,11 @@
         if (v) $$(".p3l, .p3m").forEach(function (el) { el.innerHTML = el.innerHTML.replace(/£[0-9][0-9,]*(?:\.[0-9]{2})?/, money(Math.round(v.price / 3))); });
         if (v && price) price.innerHTML = '<b style="font-weight:500">' + money(v.price) + "</b>" + (v.compare_at_price > v.price ? "<s>" + money(v.compare_at_price) + '</s><span class="ptag">−' + Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price) + "%</span>" : "");
       }
-      document.addEventListener("click", function (e) { if (e.target.closest(".sws button,.szs button")) setTimeout(refresh, 0); });
+      document.addEventListener("click", function (e) {
+        var hb = e.target.closest(".hws button");
+        if (hb) { $$(".hws button").forEach(function (b) { b.setAttribute("aria-pressed", b === hb ? "true" : "false"); }); var hn = $("[data-hwname]"); if (hn) hn.textContent = hb.getAttribute("data-h"); }
+        if (e.target.closest(".sws button,.szs button,.hws button")) setTimeout(refresh, 0);
+      });
       refresh();
       document.addEventListener("click", function (e) {
         var b = e.target.closest(".atc"); if (!b) return;
