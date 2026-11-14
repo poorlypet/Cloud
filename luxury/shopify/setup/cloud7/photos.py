@@ -176,3 +176,19 @@ def crop_square(im):
         off = min(max(0, (lo + hi) // 2 - side // 2), long_ - side)
     box = (off, 0, off + side, side) if w > h else (0, off, side, off + side)
     return s.crop(box).resize((CANVAS, CANVAS), Image.LANCZOS)
+
+def tone_crop(im):
+    """white or pale studio background shifted to the site grey, then cropped square (no padding)"""
+    import statistics
+    s = im.convert('RGB'); w, h = s.size; b = max(4, int(min(w, h) * .03))
+    px = []
+    for box in ((0, 0, w, b), (0, h - b, w, h), (0, 0, b, h), (w - b, 0, w, h)):
+        px += list(s.crop(box).resize((60, 6)).getdata())
+    bg = [statistics.median(p[c] for p in px) for c in range(3)]
+    spread = statistics.pstdev([sum(p) / 3 for p in px])
+    if min(bg) > 175 and max(bg) - min(bg) < 16 and spread < 14:
+        f = [min(1.12, max(.88, GREY[c] / max(bg[c], 1))) for c in range(3)]
+        lut = []
+        for c in range(3): lut += [min(255, int(round(v * f[c]))) for v in range(256)]
+        s = s.point(lut)
+    return crop_square(s)
