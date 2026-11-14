@@ -57,6 +57,9 @@ def swatch(pid):
     hsv = np.asarray(im.convert('HSV')).astype(float) / 255
     col = m & (hsv[..., 1] > 0.2) & (hsv[..., 2] > 0.18)   # the coloured part, so black buckles and leather trim don't win
     if col.mean() > 0.012: m = col
+    h_, s_, v_ = hsv[..., 0], hsv[..., 1], hsv[..., 2]
+    nobrown = col & ~(((h_ > 0.86) | (h_ < 0.12)) & (v_ < 0.52) & (s_ > 0.2))   # Brott's brown nylon webbing behind every print
+    if os.environ.get('NOBROWN') and nobrown.mean() > 0.012: m = nobrown
     m = m.astype(float)
     h, w = m.shape; s = max(24, min(h, w) // 7)
     ii = m.cumsum(0).cumsum(1)

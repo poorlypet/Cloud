@@ -9,7 +9,7 @@ Q = '''query($a:String){products(first:100,after:$a,query:"vendor:'Brott Barcelo
 todo, a = [], None
 while True:
     r = gql(Q, {'a': a})['products']
-    todo += [p for p in r['nodes'] if p['sib']]
+    todo += [p for p in r['nodes'] if p['sib'] and 'textura' in p['title'].lower()]
     if not r['pageInfo']['hasNextPage']: break
     a = r['pageInfo']['endCursor']
 print('to do', len(todo), flush=True)
