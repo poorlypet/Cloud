@@ -66,3 +66,7 @@
 /* big colour families: two rows, then "Show all" */
 .ah-sibs.clip{max-height:74px;overflow:hidden}
 .sib-more{display:block;margin:-6px 0 14px auto;font:500 12.5px/1 var(--sans);text-decoration:underline;text-underline-offset:3px;background:none;border:0;padding:0;cursor:pointer;color:var(--ink)}
+
+/* few photos: one per row so the photo column is as tall as the details beside it (no empty block under the photos) */
+.pv3 .pvg3.one{grid-template-columns:1fr}
+.pv3 .pvg3.one .pv-c{grid-column:auto!important;aspect-ratio:1!important}

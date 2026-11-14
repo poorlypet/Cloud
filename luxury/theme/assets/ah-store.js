@@ -202,3 +202,10 @@ w.classList.add('clip');var b=document.createElement('button');b.type='button';b
 b.addEventListener('click',function(){var o=w.classList.toggle('clip');b.textContent=o?'Show all '+a.length:'Show fewer'});
 var cr=w.closest('.crow')||w.parentNode;cr.parentNode.insertBefore(b,cr.nextSibling)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();
+
+(function(){if(window.__pvfill)return;window.__pvfill=1;
+function fit(){var g=document.querySelector('.pv3 .pvg3'),gi=document.querySelector('.gi');if(!g||!gi)return;
+ if(!matchMedia('(min-width: 901px)').matches){g.classList.remove('one');return}
+ g.classList.remove('one');if(g.getBoundingClientRect().height<gi.offsetHeight-120)g.classList.add('one')}
+function go(){fit();addEventListener('resize',fit);var gi=document.querySelector('.gi');if(gi&&'ResizeObserver' in window)new ResizeObserver(fit).observe(gi);setTimeout(fit,1200)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
