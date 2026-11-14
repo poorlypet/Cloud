@@ -98,3 +98,22 @@ def run(handles):
 if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
     run(json.load(open(sys.argv[1])) if len(sys.argv) > 1 and sys.argv[1].endswith('.json') else sys.argv[1:])
+
+def tone(im):
+    """No cutting out: shift the colours so the studio background becomes the site grey, then square it up."""
+    import statistics
+    s = im.convert('RGB')
+    w, h = s.size; b = max(4, int(min(w, h) * .03))
+    px = []
+    for box in ((0, 0, w, b), (0, h - b, w, h), (0, 0, b, h), (w - b, 0, w, h)):
+        px += list(s.crop(box).resize((60, 6)).getdata())
+    bg = [statistics.median(p[c] for p in px) for c in range(3)]
+    f = [GREY[c] / max(bg[c], 1) for c in range(3)]
+    lut = []
+    for c in range(3): lut += [min(255, int(round(v * f[c]))) for v in range(256)]
+    s = s.point(lut)
+    side = max(s.size)
+    sq = Image.new('RGB', (side, side), GREY)
+    sq.paste(s, ((side - s.width) // 2, (side - s.height) // 2))
+    if side != CANVAS: sq = sq.resize((CANVAS, CANVAS), Image.LANCZOS)
+    return sq
