@@ -72,6 +72,8 @@ main > section.next{margin-top:var(--sec)}
   .p8 .gg .gt.on{display:block}
   .p8 .gg{display:block!important}
   .p8 .gg .gt.on img{width:100%;aspect-ratio:1;object-fit:cover}
+  /* photo + thumbnails fit on one screen: width W gives height W + W/6 + gap */
+  .p8 .gg-w,.p8 .ga-th{width:min(100%,calc((100vh - var(--ah-top,150px) - 40px) * .857));margin-left:auto;margin-right:auto}
 }
 .ga-th{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:8px}
 .ga-t{padding:0;border:0;background:#EAEAEB;aspect-ratio:1;overflow:hidden;cursor:pointer;outline:1px solid transparent;outline-offset:-1px}
@@ -140,7 +142,10 @@ document.addEventListener("click", function (e) {
     root.querySelectorAll("table").forEach(function(t){
       var hs=[].slice.call(t.querySelectorAll("thead th")), cols=[];
       hs.forEach(function(th,k){ if(!th.dataset.cm) th.dataset.cm=th.textContent; var cm=/\(cm\)|cm\b|length|chest|neck|girth|surface|dimension|mattress|width|height|belly|outer|inside/i.test(th.dataset.cm) && !/kg|weight/i.test(th.dataset.cm); if(cm) cols.push(k); th.textContent = cm && unit==="in" ? th.dataset.cm.replace(/\(cm\)/i,"(in)").replace(/\bcm\b/i,"in") : th.dataset.cm; });
-      t.querySelectorAll("tbody tr").forEach(function(tr){ var c=tr.querySelectorAll("td"); cols.forEach(function(k){ var td=c[k]; if(!td) return; if(!td.dataset.cm) td.dataset.cm=td.textContent; td.textContent = unit==="in" ? td.dataset.cm.replace(/\d+(?:[.,]\d+)?/g,function(n){return (parseFloat(n.replace(",","."))/2.54).toFixed(1).replace(/\.0$/,"")}) : td.dataset.cm; }); });
+      var toIn=function(x){return x.replace(/\d+(?:[.,]\d+)?/g,function(n){return (parseFloat(n.replace(",","."))/2.54).toFixed(1).replace(/\.0$/,"")})};
+      t.querySelectorAll("tbody tr").forEach(function(tr){ [].slice.call(tr.querySelectorAll("td")).forEach(function(td,k){ if(!td.dataset.cm) td.dataset.cm=td.textContent; var v=td.dataset.cm; if(unit!=="in"){td.textContent=v;return;}
+        if(/\bcm\b/.test(v)) td.textContent=v.replace(/\d+(?:[.,]\d+)?(?:\s*[–×x-]\s*\d+(?:[.,]\d+)?)*\s*cm\b/g,function(m){return toIn(m.replace(/cm$/,"")).trim()+" in"});
+        else if(cols.indexOf(k)>-1) td.textContent=toIn(v); }); });
     });
     root.querySelectorAll("[data-unit]").forEach(function(b){b.setAttribute("aria-pressed", b.dataset.unit===unit?"true":"false")});
   }

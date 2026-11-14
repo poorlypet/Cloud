@@ -132,11 +132,26 @@ def tone(im, kind=None):
         on = [i for i, v in enumerate(prof) if v > 1]
         if on:
             lo, hi = on[0] * 8, (on[-1] + 1) * 8
-            if hi - lo <= side * .96:
+            if hi - lo <= side * .985:
                 off = min(max(0, (lo + hi) // 2 - side // 2), long_ - side)
                 return crop_at(off).resize((CANVAS, CANVAS), Image.LANCZOS)
-    side = max(s.size)
-    sq = Image.new('RGB', (side, side), GREY)
-    sq.paste(s, ((side - s.width) // 2, (side - s.height) // 2))
+    side = max(s.size); w, h = s.size
+    if neutral and kind != 'life' and abs(statistics.median([sum(p) / 3 for p in px]) * 1 - sum(GREY) / 3) <= 3:
+        sq = Image.new('RGB', (side, side), GREY)
+        sq.paste(s, ((side - w) // 2, (side - h) // 2))
+    else:
+        # stretch the photo's own edge outwards so the extension matches its background exactly
+        from PIL import ImageFilter
+        s = s.crop((6, 6, w - 6, h - 6)); w, h = s.size; side = max(w, h)
+        sq = s.resize((side, side))
+        x0, y0 = (side - w) // 2, (side - h) // 2
+        if w < h:
+            sq.paste(s.crop((2, 0, 6, h)).resize((x0 + 2, h)), (0, 0))
+            sq.paste(s.crop((w - 6, 0, w - 2, h)).resize((side - x0 - w + 2, h)), (x0 + w - 2, 0))
+        else:
+            sq.paste(s.crop((0, 2, w, 6)).resize((w, y0 + 2)), (0, 0))
+            sq.paste(s.crop((0, h - 6, w, h - 2)).resize((w, side - y0 - h + 2)), (0, y0 + h - 2))
+        sq = sq.filter(ImageFilter.GaussianBlur(6))
+        sq.paste(s, (x0, y0))
     if side != CANVAS: sq = sq.resize((CANVAS, CANVAS), Image.LANCZOS)
     return sq
