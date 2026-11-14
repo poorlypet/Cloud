@@ -58,12 +58,13 @@ def parse(handle):
     for m in re.finditer(r'<summary[^>]*>(.*?)</summary>(.*?)</details>', main, re.S):
         if 'material' in txt(m.group(1)).lower():
             mc_html = m.group(2); break
-    lines = [txt(x) for x in re.split(r'<br\s*/?>|</p>|</li>|\n', mc_html)]
+    lines = [txt(x) for x in re.split(r'<br\s*/?>|</p>|</li>|</div>|\n', mc_html)]
     lines = [l for l in lines if l]
     LBL = r'(?:Materials?|Outer (?:fabric|material)|Lining|Filling|Padding|Leather|Hardware|Webbing|Cover|Inner (?:fabric|cushion)|Fabric|Insole|Coating|Membrane|Care(?: instructions?)?|Washing|Drying|Cleaning|Ironing|Storage|Note|Tip)'
-    lines = [x.strip() for l in lines for x in re.split(r'(?<!outer)(?<!inner)(?<!care)\s+(?=' + LBL + r'\s*:)', l, flags=re.I) if x.strip()]
+    lines = [x.strip() for l in lines for x in re.split(r'(?<!outer)(?<!inner)(?<!care)(?<!matress)(?<!mattress)\s+(?=' + LBL + r'\s*:)', l, flags=re.I) if x.strip()]
     mat, care, mode = [], [], 'mat'
     for l in lines:
+        l = re.sub(r'(?i)\bmatress', 'Mattress', l)
         head = re.match(r'(?i)^(materials?|care( instructions?)?)\s*:\s*(.*)$', l)
         if re.match(r'(?i)^(washing|drying|cleaning|ironing|storage)\s*:', l): mode = 'care'
         if head:

@@ -139,6 +139,7 @@
           if (ok) b.removeAttribute("data-oos"); else b.setAttribute("data-oos", "");
         });
         var v = find(x.c, x.s)[0];
+        if (v) $$(".p3l, .p3m").forEach(function (el) { el.innerHTML = el.innerHTML.replace(/£[0-9][0-9,]*(?:\.[0-9]{2})?/, money(Math.round(v.price / 3))); });
         if (v && price) price.innerHTML = '<b style="font-weight:500">' + money(v.price) + "</b>" + (v.compare_at_price > v.price ? "<s>" + money(v.compare_at_price) + '</s><span class="ptag">−' + Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price) + "%</span>" : "");
       }
       document.addEventListener("click", function (e) { if (e.target.closest(".sws button,.szs button")) setTimeout(refresh, 0); });
