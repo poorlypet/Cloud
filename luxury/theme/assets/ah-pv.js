@@ -4,7 +4,10 @@
   try { if (q) sessionStorage.setItem("ahpv", q); else q = sessionStorage.getItem("ahpv"); } catch (e) {}
   if (q === "0") { try { sessionStorage.removeItem("ahpv"); } catch (e) {} return; }
   if (q !== "1" && q !== "2" && q !== "3") q = "3";
-  if (!matchMedia("(min-width:1081px)").matches) return;
+  /* the stacked desktop layout is built once at load; if the window crosses the desktop/mobile width, rebuild the page so phones always get the swipe gallery */
+  var mq = matchMedia("(min-width:1081px)"), was = mq.matches;
+  if (mq.addEventListener) mq.addEventListener("change", function (e) { if (e.matches !== was) location.reload(); });
+  if (!mq.matches) return;
   var P = document.querySelector(".p8"); if (!P) return;
   var top = P.querySelector(".gtop"), gv = P.querySelector(".gv"), zi = P.querySelector(".zi");
   P.classList.add("pv" + q); if (q === "3") P.classList.add("pv1");
