@@ -1,0 +1,156 @@
+{%- comment -%}
+  Weekend 15% pop-up (Saturday 14 and Sunday 15 November 2026). Code WEEKEND15, 15% off items that are not on sale.
+  Collects the email in Klaviyo (list: Black Friday pop-up sign-ups, id VeTFNL) and then shows the code.
+  Shows 20 seconds after the page loads, once per visitor (a dismissed pop-up stays away for 1 day). Add ?wk=test to the address to see it at once.
+  Not shown on the cart page. Stops showing by itself after Sunday midnight (UK time).
+{%- endcomment -%}
+{%- unless request.page_type == 'cart' -%}
+{%- assign mk = localization.country.iso_code -%}
+{%- if mk == 'DE' -%}
+  {%- assign t_kick = "Nur dieses Wochenende" -%}
+  {%- assign t_h = "15 % Rabatt auf Ihre Bestellung" -%}
+  {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir zeigen Ihnen sofort Ihren Code." -%}
+  {%- assign t_label = "Ihre E-Mail-Adresse" -%}
+  {%- assign t_go = "Code anzeigen" -%}
+  {%- assign t_fine = "Gültig bis Sonntag, Mitternacht. Einmal pro Kunde. Nicht gültig für reduzierte Black-Friday-Artikel." -%}
+  {%- assign t_no = "Nein danke" -%}
+  {%- assign t_ok = "Hier ist Ihr Code für <b>15 % Rabatt</b>. Er gilt bis Sonntag, Mitternacht." -%}
+  {%- assign t_copy = "Kopieren" -%}
+  {%- assign t_copied = "Kopiert" -%}
+  {%- assign t_shop = "Jetzt einkaufen, Code angewendet" -%}
+  {%- assign t_close = "Schließen" -%}
+{%- else -%}
+  {%- assign t_kick = "This weekend only" -%}
+  {%- assign t_h = "15% off your order" -%}
+  {%- assign t_sub = "Pop your email in and we will show your code straight away." -%}
+  {%- assign t_label = "Your email address" -%}
+  {%- assign t_go = "Show my code" -%}
+  {%- assign t_fine = "Ends Sunday at midnight. One use per customer. Not valid on Black Friday sale items." -%}
+  {%- assign t_no = "No thanks" -%}
+  {%- assign t_ok = "Here is your code for <b>15% off</b>. It works until Sunday at midnight." -%}
+  {%- assign t_copy = "Copy" -%}
+  {%- assign t_copied = "Copied" -%}
+  {%- assign t_shop = "Shop now, code applied" -%}
+  {%- assign t_close = "Close" -%}
+{%- endif -%}
+<style>
+.wkp{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#0E2A28}
+.wkp.on{display:flex}
+.wkp *{box-sizing:border-box}
+.wkp-scrim{position:absolute;inset:0;background:rgba(10,58,55,.58);opacity:0;transition:opacity .4s}
+.wkp.in .wkp-scrim{opacity:1}
+.wkp-card{position:relative;display:grid;grid-template-columns:300px 1fr;width:min(760px,100%);background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(10,58,55,.35);opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
+.wkp.in .wkp-card{opacity:1;transform:none}
+.wkp-card:focus{outline:none}
+.wkp-ph{background-size:cover;background-position:center;min-height:380px}
+.wkp-bd{padding:34px 34px 26px;min-width:0}
+.wkp-x{position:absolute;top:10px;right:12px;z-index:3;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#0F4C48;font:400 24px/1 Figtree,Arial,sans-serif;display:grid;place-items:center;cursor:pointer}
+.wkp-kick{display:inline-block;background:#DFE43A;color:#0F4C48;font:600 12px/1 Figtree,Arial,sans-serif;padding:6px 9px;border-radius:7px}
+.wkp h2{margin:12px 0 10px;font:700 34px/1.1 Domine,Georgia,"Times New Roman",serif;color:#0F4C48}
+.wkp p{margin:0 0 16px;font:400 16px/1.45 Figtree,Arial,sans-serif;color:#5B6B69}
+.wkp p b{color:#0F4C48}
+.wkp-fm{display:grid;gap:10px}
+.wkp-fm input{height:50px;border:1px solid #C6D0CE;border-radius:8px;padding:0 14px;font:400 16px Figtree,Arial,sans-serif;width:100%;background:#fff;color:#0E2A28}
+.wkp-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;padding:0 20px;border:0;border-radius:8px;background:#DFE43A;color:#0F4C48;font:600 16px/1.2 Figtree,Arial,sans-serif;text-decoration:none;cursor:pointer}
+.wkp-btn:hover{background:#D2D82C}
+.wkp-btn[disabled]{opacity:.7;cursor:default}
+.wkp small{display:block;margin-top:12px;font:400 13px/1.4 Figtree,Arial,sans-serif;color:#5B6B69}
+.wkp-later{background:none;border:0;padding:10px 0 0;color:#5B6B69;font:400 14px Figtree,Arial,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.wkp-ok{display:none}
+.wkp-bd.sent .wkp-form{display:none}
+.wkp-bd.sent .wkp-ok{display:block}
+.wkp-code{display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px dashed #0F4C48;border-radius:12px;padding:10px 10px 10px 18px;margin:0 0 14px;background:#F5F8E4}
+.wkp-code b{font:700 26px/1 Domine,Georgia,serif;color:#0F4C48;letter-spacing:.04em}
+.wkp-copy{width:auto;min-height:40px;padding:0 16px;font-size:14px}
+@media (max-width:620px){
+  .wkp-card{grid-template-columns:1fr}
+  .wkp-ph{min-height:0;height:150px}
+  .wkp-bd{padding:22px 20px 20px}
+  .wkp h2{font-size:28px}
+  .wkp-code b{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){.wkp *{transition-duration:.01ms!important}}
+</style>
+<div class="wkp" id="wkp" role="dialog" aria-modal="true" aria-labelledby="wkp-h" hidden>
+  <div class="wkp-scrim" data-wkp-close></div>
+  <div class="wkp-card" tabindex="-1">
+    <button class="wkp-x" type="button" aria-label="{{ t_close }}" data-wkp-close>&times;</button>
+    <div class="wkp-ph" style="background-image:url({{ 'bf-weekend-dog.jpg' | asset_url }})" role="img" aria-label=""></div>
+    <div class="wkp-bd" id="wkp-bd">
+      <span class="wkp-kick">{{ t_kick }}</span>
+      <h2 id="wkp-h">{{ t_h }}</h2>
+      <div class="wkp-form">
+        <p>{{ t_sub }}</p>
+        <form id="wkp-form" class="wkp-fm" onsubmit="return false">
+          <label for="wkp-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
+          <input type="email" id="wkp-email" placeholder="{{ t_label | escape }}" autocomplete="email" required>
+          <button class="wkp-btn" type="submit" id="wkp-go">{{ t_go }}</button>
+        </form>
+        <small>{{ t_fine }}</small>
+        <button class="wkp-later" type="button" data-wkp-close>{{ t_no }}</button>
+      </div>
+      <div class="wkp-ok">
+        <p>{{ t_ok }}</p>
+        <div class="wkp-code"><b id="wkp-code">WEEKEND15</b><button class="wkp-btn wkp-copy" type="button" id="wkp-copy">{{ t_copy }}</button></div>
+        <a class="wkp-btn" href="{{ routes.root_url }}discount/WEEKEND15?redirect={{ routes.all_products_collection_url | url_encode }}">{{ t_shop }}</a>
+        <small>{{ t_fine }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  if (window.top !== window.self) return;
+  var KEY = 'pp_wk15', START = Date.UTC(2026, 10, 14), END = Date.UTC(2026, 10, 15, 23, 59, 59);
+  var el = document.getElementById('wkp'); if (!el) return;
+  var q = new URLSearchParams(location.search), tst = q.get('wk') === 'test', now = Date.now();
+  if (!tst && (now < START || now > END)) return;
+  if (tst) { try { localStorage.removeItem(KEY); } catch (e) {} }
+  try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && (v.done || now - v.t < 864e5)) return; } catch (e) {}
+  var shown = false, last = null, card = el.querySelector('.wkp-card');
+  function store(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function open() {
+    if (shown) return; shown = true; last = document.activeElement;
+    el.hidden = false; el.classList.add('on');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('in'); card.focus({ preventScroll: true }); }); });
+  }
+  function close() {
+    el.classList.remove('in'); setTimeout(function () { el.classList.remove('on'); el.hidden = true; }, 350);
+    if (!document.getElementById('wkp-bd').classList.contains('sent')) store({ t: Date.now() });
+    if (last && last.focus) try { last.focus(); } catch (e) {}
+  }
+  [].forEach.call(el.querySelectorAll('[data-wkp-close]'), function (b) { b.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) {
+    if (!shown || !el.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = [].filter.call(el.querySelectorAll('button,a[href],input'), function (n) { return n.offsetParent !== null && !n.closest('[hidden]'); });
+      if (!f.length) return; var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === a || document.activeElement === card)) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  setTimeout(open, tst ? 600 : 20000);
+  document.getElementById('wkp-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('wkp-go').disabled = true;
+    var email = document.getElementById('wkp-email').value.trim();
+    try {
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UU3NF7', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/vnd.api+json', 'revision': '2024-10-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Weekend 15% pop-up',
+          profile: { data: { type: 'profile', attributes: { email: email, properties: { source: 'wk15-popup', market: {{ mk | default: 'GB' | json }}, voucher: 'WEEKEND15' } } } } },
+          relationships: { list: { data: { type: 'list', id: 'VeTFNL' } } } } })
+      }).catch(function () {});
+    } catch (x) {}
+    setTimeout(function () { store({ done: 1, t: Date.now() }); document.getElementById('wkp-bd').classList.add('sent'); }, 350);
+  });
+  document.getElementById('wkp-copy').addEventListener('click', function () {
+    var b = this, c = document.getElementById('wkp-code').textContent;
+    function done() { b.textContent = {{ t_copied | json }}; setTimeout(function () { b.textContent = {{ t_copy | json }}; }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText(c).then(done, done); else done();
+  });
+})();
+</script>
+{%- endunless -%}
