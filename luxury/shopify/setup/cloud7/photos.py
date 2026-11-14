@@ -49,13 +49,12 @@ def studio(im):
     if not box: return None
     cut = cut.crop(box); a = a.crop(box)
     cw, ch = cut.size
-    scale = min(CANVAS * .80 / cw, CANVAS * .78 / ch)
+    scale = min(CANVAS * .84 / cw, CANVAS * .74 / ch)
     cut = cut.resize((max(1, int(cw * scale)), max(1, int(ch * scale))), Image.LANCZOS)
     a = cut.split()[3]
     cw, ch = cut.size
     x = (CANVAS - cw) // 2
-    y = int(CANVAS * .90) - ch                                   # sits on an imaginary floor
-    y = max(int(CANVAS * .06), y)
+    y = (CANVAS - ch) // 2 + int(CANVAS * .02)                     # centred, a touch low so the shadow has room
     bg = Image.new('RGB', (CANVAS, CANVAS), GREY)
     # soft shadow: a wide blurred ellipse at the base, plus a tighter contact shadow
     sh = Image.new('L', (CANVAS, CANVAS), 0)
