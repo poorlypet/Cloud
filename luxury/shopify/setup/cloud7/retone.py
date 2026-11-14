@@ -5,7 +5,7 @@ os.environ['STATE'] = f'{D}/state_all.json'
 sys.path.insert(0, D)
 import photos, upload
 P = upload.P
-done_f = f'{D}/tone_{sys.argv[1]}.done'
+done_f = f'{D}/tone2_{sys.argv[1]}.done'
 done = set(open(done_f).read().split()) if os.path.exists(done_f) else set()
 for h in json.load(open(sys.argv[2])):
     if h in done: continue

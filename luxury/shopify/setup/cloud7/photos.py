@@ -108,7 +108,10 @@ def tone(im):
     for box in ((0, 0, w, b), (0, h - b, w, h), (0, 0, b, h), (w - b, 0, w, h)):
         px += list(s.crop(box).resize((60, 6)).getdata())
     bg = [statistics.median(p[c] for p in px) for c in range(3)]
-    f = [GREY[c] / max(bg[c], 1) for c in range(3)]
+    # only a pale, neutral, even studio background gets moved to the site grey; anything else is left alone
+    spread = statistics.pstdev([sum(p) / 3 for p in px])
+    neutral = min(bg) > 175 and max(bg) - min(bg) < 16 and spread < 14
+    f = [min(1.12, max(.88, GREY[c] / max(bg[c], 1))) for c in range(3)] if neutral else [1, 1, 1]
     lut = []
     for c in range(3): lut += [min(255, int(round(v * f[c]))) for v in range(256)]
     s = s.point(lut)
