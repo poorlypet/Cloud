@@ -7,7 +7,11 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
   /* gallery */
-  var IM = JSON.parse(zp.dataset.images), i = 0, img = $(".zm img"), ctr = $(".zm .zc");
+  var IM = [];
+  try { IM = JSON.parse(zp.dataset.images || "[]"); } catch (e) { IM = []; }
+  if (!IM.length) IM = $$(".gt img").map(function (im) { return (im.currentSrc || im.src || "").replace(/([?&])width=\d+/, "$1width=2000"); }).filter(Boolean);
+  if (!IM.length) IM = [""];
+  var i = 0, img = $(".zm img"), ctr = $(".zm .zc");
   function show(n) {
     i = (n + IM.length) % IM.length;
     img.classList.add("fade");

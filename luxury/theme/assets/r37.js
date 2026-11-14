@@ -4,6 +4,19 @@
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   var S = [["XS", 30, 40, 46], ["S", 35, 46, 52], ["M", 40, 52, 58], ["L", 45, 58, 64], ["XL", 50, 64, 70]];
+  /* the product's own size chart, when it has one: [size, back max, -, chest max] */
+  (function () {
+    var t = document.querySelector(".zsz table"); if (!t) return;
+    var hs = [].map.call(t.querySelectorAll("thead th"), function (th) { return th.textContent.toLowerCase(); });
+    var bi = hs.findIndex(function (h) { return /back/.test(h); }), ci = hs.findIndex(function (h) { return /chest|brust/.test(h); });
+    if (bi < 0 && ci < 0) return;
+    function top(txt) { var n = (txt || "").match(/[0-9]+(?:[.,][0-9]+)?/g); return n ? parseFloat(n[n.length - 1].replace(",", ".")) : NaN; }
+    var rows = [].map.call(t.querySelectorAll("tbody tr"), function (tr) {
+      var c = tr.querySelectorAll("td");
+      return [tr.getAttribute("data-s"), bi >= 0 ? top(c[bi] && c[bi].textContent) : 999, 0, ci >= 0 ? top(c[ci] && c[ci].textContent) : 999];
+    }).filter(function (r) { return r[0]; });
+    if (rows.length) { S = rows; window.AH_SIZES = rows; }
+  })();
 
   /* information column: sticks, but when it is taller than the screen it scrolls first and sticks at its bottom */
   var gi = $(".gi");
@@ -91,14 +104,14 @@
   if (d) {
     var f = $(".fm7-f", d), r = $(".fm7-r", d), e = $(".fm7-e", d), pick = null;
     function reset() { f.hidden = false; r.hidden = true; e.textContent = ""; }
-    $$("[data-fm]").forEach(function (b) { b.addEventListener("click", function () { reset(); d.showModal(); var i = $("input", f); if (i) i.focus(); }); });
+    $$("[data-fm]").forEach(function (b) { b.addEventListener("click", function () { reset(); var ch = $("[data-fm-chart]", d), src = document.querySelector(".t7-sz"); if (ch && src && !ch.firstChild) ch.innerHTML = src.innerHTML; d.showModal(); var i = $("input", f); if (i) i.focus(); }); });
     $$("[data-fm-close]", d).forEach(function (b) { b.addEventListener("click", function () { d.close(); }); });
     d.addEventListener("click", function (ev) { if (ev.target === d) d.close(); });
     f.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var v = $$("input", f).map(function (x) { return parseFloat(x.value); }), b = v[0], c = v[1];
       if (!(b > 0) || !(c > 0)) { e.textContent = "Enter both measurements in centimetres."; return; }
-      if (b > 55 || c > 75) { e.textContent = "That is bigger than this coat’s largest size. Have a look at our Large and Giant collections."; return; }
+      var L = S[S.length - 1]; if (b > L[1] + 2 || c > L[3] + 2) { e.textContent = "That is bigger than the largest size of this piece. Have a look at our Large and Giant collections."; return; }
       var a = S.findIndex(function (s) { return b <= s[1]; }), ci = S.findIndex(function (s) { return c <= s[3]; });
       if (a < 0) a = S.length - 1; if (ci < 0) ci = S.length - 1;
       var k = Math.max(a, ci), s = S[k], near = ((b > s[1] - 1.5) || (c > s[3] - 1.5)) && k < S.length - 1;
@@ -107,7 +120,7 @@
       $("p", r).textContent = near ? "A close fit. Choose " + S[k + 1][0] + " if you want room for a jumper underneath." : "A comfortable fit, with room to move.";
       $("[data-fm-use]", r).textContent = "Choose size " + s[0];
       f.hidden = true; r.hidden = false;
-      $$(".zsz tr[data-s]").forEach(function (tr) { tr.classList.toggle("hit", tr.dataset.s === pick); });
+      $$(".zsz tr[data-s], .fm7-chart tr[data-s]").forEach(function (tr) { tr.classList.toggle("hit", tr.dataset.s === pick); });
     });
     $("[data-fm-again]", r).addEventListener("click", reset);
     $("[data-fm-use]", r).addEventListener("click", function () {
