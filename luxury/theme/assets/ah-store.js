@@ -193,3 +193,12 @@
 
 /* collection card colour dots: preview the colour on hover */
 if(!window.__csw){window.__csw=1;document.addEventListener('mouseover',function(e){var a=e.target.closest&&e.target.closest('.csw a[data-img]');if(!a)return;var c=a.closest('.pcd'),im=c&&c.querySelector('.im img');if(!im)return;if(!im.dataset.orig)im.dataset.orig=im.currentSrc||im.src;im.removeAttribute('srcset');im.src=a.dataset.img;});document.addEventListener('mouseout',function(e){var c=e.target.closest&&e.target.closest('.csw');if(!c||c.contains(e.relatedTarget))return;var im=c.closest('.pcd').querySelector('.im img');if(im&&im.dataset.orig)im.src=im.dataset.orig;});}
+
+/* big colour families on the product page: show two rows, current colour kept visible, "Show all N" opens the rest */
+(function(){if(window.__sibclip)return;window.__sibclip=1;
+function run(){var w=document.querySelector('.ah-sibs');if(!w)return;var a=w.querySelectorAll('a');if(a.length<=20)return;
+var cur=w.querySelector('[aria-current]');if(cur)w.insertBefore(cur,w.firstChild);
+w.classList.add('clip');var b=document.createElement('button');b.type='button';b.className='sib-more';b.textContent='Show all '+a.length;
+b.addEventListener('click',function(){var o=w.classList.toggle('clip');b.textContent=o?'Show all '+a.length:'Show fewer'});
+var cr=w.closest('.crow')||w.parentNode;cr.parentNode.insertBefore(b,cr.nextSibling)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();

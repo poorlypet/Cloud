@@ -57,3 +57,12 @@
 .pv-acc details[open] summary i:after{transform:rotate(0)}
 .pv-acc .ztp{padding:0 0 18px}
 }
+
+/* long size names (Martingale Piccolo, 50 x 70 cm): wider buttons that wrap their label */
+.szs.szb.szl,.p8.pv2 .szs.szb.szl{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important}
+.szs.szb.szl button{height:auto!important;min-height:50px;padding:8px 10px;line-height:1.25;white-space:normal}
+/* an odd last photo spans the full width, so the grid never leaves a hole */
+.pv3 .pvg3 .pv-c:nth-last-child(1 of .pv-c):nth-child(odd of .pv-c){grid-column:span 2;aspect-ratio:2/1}
+/* big colour families: two rows, then "Show all" */
+.ah-sibs.clip{max-height:74px;overflow:hidden}
+.sib-more{display:block;margin:-6px 0 14px auto;font:500 12.5px/1 var(--sans);text-decoration:underline;text-underline-offset:3px;background:none;border:0;padding:0;cursor:pointer;color:var(--ink)}

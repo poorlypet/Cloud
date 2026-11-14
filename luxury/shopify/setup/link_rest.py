@@ -45,7 +45,7 @@ import upload
 from PIL import Image
 import numpy as np
 def swatch(pid):
-    r = gql('query($i:ID!){product(id:$i){media(first:5){nodes{preview{image{url}}}}}}', {'i': pid})
+    r = gql('query($i:ID!){product(id:$i){media(first:3){nodes{preview{image{url}}}}}}', {'i': pid})
     urls = [n['preview']['image']['url'] for n in r['product']['media']['nodes'] if (n.get('preview') or {}).get('image')]
     if not urls: return None
     bg = np.array([234, 234, 235]); cand = []
