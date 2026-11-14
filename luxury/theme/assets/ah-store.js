@@ -190,3 +190,6 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
+
+/* collection card colour dots: preview the colour on hover */
+if(!window.__csw){window.__csw=1;document.addEventListener('mouseover',function(e){var a=e.target.closest&&e.target.closest('.csw a[data-img]');if(!a)return;var c=a.closest('.pcd'),im=c&&c.querySelector('.im img');if(!im)return;if(!im.dataset.orig)im.dataset.orig=im.currentSrc||im.src;im.removeAttribute('srcset');im.src=a.dataset.img;});document.addEventListener('mouseout',function(e){var c=e.target.closest&&e.target.closest('.csw');if(!c||c.contains(e.relatedTarget))return;var im=c.closest('.pcd').querySelector('.im img');if(im&&im.dataset.orig)im.src=im.dataset.orig;});}
