@@ -19,7 +19,7 @@
   }
   /* ---------- basket drawer, filled from the real Shopify basket ---------- */
   var ROOT = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
-  var FREE = 10000; /* free UK delivery from £100, in pence */
+  var FREE = 7500; /* free UK delivery from £75, in pence */
   function escH(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function drawCart(c) {
     var el = document.getElementById("side-basket"); if (!el) return false;
