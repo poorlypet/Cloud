@@ -6,7 +6,7 @@ from gql import gql
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-BRANDS = [('Cloud7', f'{S}/c7/state_all.json'), ('Nordog', f'{S}/nd/state.json'), ('Tadazhi', f'{S}/tz/state.json')]
+BRANDS = [('Cloud7', f'{S}/c7/state_all.json'), ('Nordog', f'{S}/nd/state.json'), ('Tadazhi', f'{S}/tz/state.json'), ('Molly and Stitch', f'{S}/ms/state.json')]
 INK, OLIVE, SOFT, FILL, LINE = '2E3322', '4F5A31', 'EEF0E6', 'F6F6F3', 'DADAD3'
 Q = '''query($id:ID!){product(id:$id){title src:metafield(namespace:"custom",key:"product_upload_source_url"){value}
   variants(first:100){nodes{title price sku}}}}'''
@@ -18,12 +18,12 @@ for brand, sf in BRANDS:
         p = gql(Q, {'id': pid})['product']
         if p: prods.append(p)
     prods.sort(key=lambda p: p['title'])
-    ws = wb.create_sheet(brand)
+    ws = wb.create_sheet(brand[:31])
     ws['A1'] = f'{brand} pricing'; ws['A1'].font = Font(bold=True, size=14, color=INK)
     ws['A2'] = 'RRP is the supplier\'s price today' + {'Nordog': ' (converted from euros at 0.8356, rounded to whole pounds)', 'Tadazhi': ' (converted from Danish kroner at 0.112, rounded to whole pounds)'}.get(brand, '') + '. Fill in the green columns.'
     ws['A2'].font = Font(italic=True, color='5E5F58')
     ws['A3'] = 'Euro to pound rate'; ws['B3'] = 0.8356; ws['B3'].number_format = '0.0000'
-    ship = {'Cloud7': (40, 4), 'Nordog': (30, 3), 'Tadazhi': (30, 3)}[brand]
+    ship = {'Cloud7': (40, 4), 'Nordog': (30, 3), 'Tadazhi': (30, 3)}.get(brand, (30, 3))
     ws['A4'] = 'Shipping per item (€)'; ws['B4'] = ship[1]; ws['B4'].number_format = '€#,##0.00'
     ws['C4'] = f'An order costs €{ship[0]} to ship; this is each item\'s share, assuming about {ship[0] // ship[1]} items per order.'; ws['C4'].font = Font(italic=True, color='8A8A84')
     for k in ('B3', 'B4'): ws[k].fill = PatternFill('solid', fgColor=SOFT); ws[k].font = Font(bold=True, color=OLIVE)

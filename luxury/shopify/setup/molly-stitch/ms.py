@@ -254,7 +254,7 @@ CHARTS = [
     (r'touch of leather.*leash', 'Size | Length | Width\nS | 140 cm | 6 mm\nM | 140 cm | 12 mm\nL | 140 cm | 16 mm'),
     (r'maritime', 'Size | Length | Width\nS | 200 cm | 6 mm\nM | 200 cm | 12 mm\nL | 200 cm | 16 mm'),
     (r'tuscan.*leash', 'Size | Length | Width\nS | 140 cm | 12 mm\nM | 140 cm | 12 mm\nL | 140 cm | 16 mm'),
-    (r'soft rock city', 'Size | Length | Width\nS | 140 cm | 1.5 cm\nM | 140 cm | 1.5 cm\nL | 140 cm | 2 cm'),
+    (r'soft rock city', 'Size | Length | Width\nS/M | 140 cm | 1.5 cm\nL | 140 cm | 2 cm'),
     (r'soft rock.*adjustable', 'Size | Length | Width\nS | 220 cm | 1.5 cm\nM | 220 cm | 1.5 cm\nL | 220 cm | 2 cm'),
     (r'soft rock.*harness', 'Size | Chest\nXS–S | 34–45 cm\nS–M | 41–52 cm\nM–L | 48–65 cm\nXL–XXL | 60–82 cm'),
     (r'butter.*harness', 'Size | Chest\nXXXS | 26–30 cm\nXXS | 30–34 cm\nXS | 34–38 cm\nS | 38–46 cm\nM | 46–54 cm\nL | 54–64 cm\nXL | 64–76 cm\nXXL | 74–86 cm'),
@@ -298,14 +298,14 @@ def create(it):
     life_ids = [x for x in (upload.file_from(m['file'], 'IMAGE', title) for m in life) if x]
     sec = sections(ls)
     desc = summary(ls) or summary(sec.get('intro', []))
-    T = p['title'].lower()
+    T = p['title'].lower(); ovm = ovc = None
     if 'the cloud' in T:
         desc = 'A pouf-style dog bed that sits in your living room like a piece of furniture. Made in Portugal from recycled fabrics, with a supportive filling and a hidden-zip cover.'
-        mat, care = ['Cover: recycled polyester', 'Filling: recycled PET fibres and chopped foam', 'Made in Portugal'], ['Removable cover, machine washable at 30 °C']
+        ovm, ovc = ['Cover: recycled polyester', 'Filling: recycled PET fibres and chopped foam', 'Made in Portugal'], ['Removable cover, machine washable at 30 °C']
     if 'the nest' in T:
         desc = 'A bed with high, cushioned sides for dogs who love to curl up and feel safe. Made in Portugal from recycled materials, with memory foam cushions for proper support.'
-        mat, care = ['Cover: recycled polyester', 'Filling: recycled PET fibres and memory foam', 'Made in Portugal'], ['Covers and fillings are removable and machine washable at 30 °C']
-    if 'tuscan' in T and not mat: mat = ['Italian leather', 'Handmade in Tuscany, Italy']
+        ovm, ovc = ['Cover: recycled polyester', 'Filling: recycled PET fibres and memory foam', 'Made in Portugal'], ['Covers and fillings are removable and machine washable at 30 °C']
+    if 'tuscan' in T: ovm = ['Italian leather', 'Handmade in Tuscany, Italy']
     if not desc and 'retriever' in p['title'].lower() and 'leash' in p['title'].lower():
         desc = 'Collar and lead in one, handmade in Austria from soft leather. The integrated stopper adjusts the loop for a snug fit around the neck, and the soft leather handle makes every walk comfortable.'
     mat, care = mat_care(ls, sec)
@@ -326,6 +326,8 @@ def create(it):
         elif re.search(r'(?i)organic cotton canvas', j): mat = ['Organic cotton canvas']
         elif re.search(r'(?i)organic cotton', j): mat = ['Organic cotton']
         elif re.search(r'(?i)\bcotton\b', j): mat = ['Cotton']
+    if ovm: mat = ovm
+    if ovc: care = ovc
     mf = [{'namespace': 'custom', 'key': 'source_handle', 'type': 'single_line_text_field', 'value': p['handle']},
           {'namespace': 'custom', 'key': 'product_upload_source_url', 'type': 'url', 'value': f"https://mollyandstitch.com/products/{p['handle']}"}]
     MCI = len(mf)
