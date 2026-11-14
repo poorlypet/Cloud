@@ -155,3 +155,24 @@ def tone(im, kind=None):
         sq.paste(s, (x0, y0))
     if side != CANVAS: sq = sq.resize((CANVAS, CANVAS), Image.LANCZOS)
     return sq
+
+def crop_square(im):
+    """Square by cropping only, never padding; the crop is centred on the product."""
+    s = im.convert('RGB'); w, h = s.size
+    if w == h: return s.resize((CANVAS, CANVAS), Image.LANCZOS)
+    side = min(w, h); long_ = max(w, h)
+    g = s.convert('L').resize((max(1, w // 8), max(1, h // 8)))
+    import statistics
+    edge = [g.getpixel((x, y)) for x in range(g.width) for y in (0, g.height - 1)] + [g.getpixel((x, y)) for y in range(g.height) for x in (0, g.width - 1)]
+    bgl = statistics.median(edge)
+    prof = [0] * (g.width if w > h else g.height)
+    for y in range(g.height):
+        for x in range(g.width):
+            if abs(g.getpixel((x, y)) - bgl) > 22: prof[x if w > h else y] += 1
+    on = [i for i, v in enumerate(prof) if v > 1]
+    off = (long_ - side) // 2
+    if on:
+        lo, hi = on[0] * 8, (on[-1] + 1) * 8
+        off = min(max(0, (lo + hi) // 2 - side // 2), long_ - side)
+    box = (off, 0, off + side, side) if w > h else (0, off, side, off + side)
+    return s.crop(box).resize((CANVAS, CANVAS), Image.LANCZOS)

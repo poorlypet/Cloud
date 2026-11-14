@@ -3,11 +3,11 @@
   var q = new URLSearchParams(location.search).get("pv");
   try { if (q) sessionStorage.setItem("ahpv", q); else q = sessionStorage.getItem("ahpv"); } catch (e) {}
   if (q === "0") { try { sessionStorage.removeItem("ahpv"); } catch (e) {} return; }
-  if (q !== "1" && q !== "2") return;
+  if (q !== "1" && q !== "2" && q !== "3") q = "3";
   if (!matchMedia("(min-width:1081px)").matches) return;
   var P = document.querySelector(".p8"); if (!P) return;
   var top = P.querySelector(".gtop"), gv = P.querySelector(".gv"), zi = P.querySelector(".zi");
-  P.classList.add("pv" + q);
+  P.classList.add("pv" + q); if (q === "3") P.classList.add("pv1");
   var $ = function (s, r) { return (r || P).querySelector(s); };
   var el = function (t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
   var IM = [].map.call(P.querySelectorAll(".gg .gt img"), function (i) { return i.getAttribute("src"); }).filter(Boolean);
@@ -22,6 +22,23 @@
   function zoom(k) { var lb = document.querySelector(".zlb"); if (!lb) return; lb.showModal(); var b = lb.querySelector('.lt button[data-i="' + k + '"]'); if (b) b.click(); }
   var CH = '<svg viewBox="0 0 10 18" aria-hidden="true"><path d="M9 1L1 9l8 8"/></svg>', CHR = '<svg viewBox="0 0 10 18" aria-hidden="true"><path d="M1 1l8 8-8 8"/></svg>';
   var EXP = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5"/></svg>';
+  if (q === "3") {
+    var G3 = el("div", "pvg pvg3");
+    IM.forEach(function (s, k) { var c = el("div", "pv-c", '<img alt="" loading="' + (k < 4 ? "eager" : "lazy") + '" src="' + s + '">'); c.onclick = function () { zoom(k); }; G3.appendChild(c); });
+    [].forEach.call(gv.children, function (c) { c.style.display = "none"; }); gv.appendChild(G3);
+    /* stick under the header; if the details are taller than the screen, stick so their bottom stays in view */
+    var fit = function () {
+      var hd = document.querySelector("header, .hdr, [class*=header]"), hh = hd ? Math.max(0, hd.getBoundingClientRect().bottom) : 110, top = hh + 20;
+      zi.style.setProperty("--pv-top", top + "px");
+      var tp = [].filter.call(zi.querySelectorAll(".ztp"), function (x) { return !x.hidden; })[0];
+      [].forEach.call(zi.querySelectorAll(".ztp"), function (x) { x.style.maxHeight = ""; x.style.overflowY = ""; });
+      if (!tp) return;
+      var room = innerHeight - top - 24 - (zi.offsetHeight - tp.offsetHeight);
+      if (zi.offsetHeight > innerHeight - top - 24) { tp.style.maxHeight = Math.max(140, room) + "px"; tp.style.overflowY = "auto"; }
+    };
+    fit(); addEventListener("resize", fit); zi.addEventListener("click", function () { setTimeout(fit, 30); });
+    return;
+  }
   var G = el("div", "pvg"), bar = el("div", "pv-bar"), cnt = el("span", "pv-cnt");
   var nav = el("div", "pv-nav", '<button type="button" class="pv-a" data-d="-1" aria-label="Previous photos">' + CH + '</button><button type="button" class="pv-a" data-d="1" aria-label="Next photos">' + CHR + '</button>');
   var i = 0, per = q === "1" ? 3 : 2, cells = [];

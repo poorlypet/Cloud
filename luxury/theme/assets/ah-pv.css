@@ -32,6 +32,12 @@
 .pv-th button{flex:0 0 82px;height:82px;padding:0;border:1px solid transparent;background:#EAEAEB;cursor:pointer}
 .pv-th button.on{border-color:var(--ink);padding:3px;background:#fff}
 .pv-th img{width:100%;height:100%;object-fit:cover;display:block}
+/* version 3 (default): every photo square, two across; details stay in view until the photos end */
+.pv3 .pvg3{grid-template-columns:1fr 1fr;grid-template-rows:none;aspect-ratio:auto;gap:10px}
+.pv3 .pvg3 .pv-c{aspect-ratio:1;grid-row:auto}
+.p8.pv3 .gtop.gt-c{align-items:start}
+.p8.pv3 .zi.gi{position:sticky!important;top:var(--pv-top,130px)!important;align-self:start}
+.p8.pv3 .gw,.p8.pv3 .gv{position:static;overflow:visible}
 /* version 1: underline tabs */
 .p8.pv1 .zt-seg.t7 .ztabs{display:flex!important;background:none!important;border:0!important;border-bottom:1px solid var(--line,#E6E6E1)!important;padding:0!important;border-radius:0!important;gap:0;justify-content:space-between}
 .p8.pv1 .zt-seg.t7 .ztabs button{background:none!important;box-shadow:none!important;border:0!important;border-bottom:3px solid transparent!important;border-radius:0!important;padding:14px 6px!important;margin-bottom:-1px;font-size:13.5px;white-space:nowrap;flex:1 1 auto;letter-spacing:.01em;text-transform:none;color:#4B4C46}
