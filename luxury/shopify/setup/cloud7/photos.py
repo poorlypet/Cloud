@@ -99,8 +99,9 @@ if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
     run(json.load(open(sys.argv[1])) if len(sys.argv) > 1 and sys.argv[1].endswith('.json') else sys.argv[1:])
 
-def tone(im):
-    """No cutting out: shift the colours so the studio background becomes the site grey, then square it up."""
+def tone(im, kind=None):
+    """No cutting out: shift the colours so a studio background becomes the site grey, then make it square.
+    Square by cropping wherever that keeps the product whole; grey padding only when a crop would clip it."""
     import statistics
     s = im.convert('RGB')
     w, h = s.size; b = max(4, int(min(w, h) * .03))
@@ -108,13 +109,32 @@ def tone(im):
     for box in ((0, 0, w, b), (0, h - b, w, h), (0, 0, b, h), (w - b, 0, w, h)):
         px += list(s.crop(box).resize((60, 6)).getdata())
     bg = [statistics.median(p[c] for p in px) for c in range(3)]
-    # only a pale, neutral, even studio background gets moved to the site grey; anything else is left alone
     spread = statistics.pstdev([sum(p) / 3 for p in px])
     neutral = min(bg) > 175 and max(bg) - min(bg) < 16 and spread < 14
     f = [min(1.12, max(.88, GREY[c] / max(bg[c], 1))) for c in range(3)] if neutral else [1, 1, 1]
     lut = []
     for c in range(3): lut += [min(255, int(round(v * f[c]))) for v in range(256)]
     s = s.point(lut)
+    w, h = s.size; side = min(w, h)
+    def crop_at(off):
+        return s.crop((off, 0, off + side, side)) if w > h else s.crop((0, off, side, off + side))
+    if w != h:
+        long_ = max(w, h); centre = (long_ - side) // 2
+        if not neutral or kind == 'detail':
+            return crop_at(centre).resize((CANVAS, CANVAS), Image.LANCZOS)
+        # where is the product along the long side? (anything clearly different from the background)
+        g = s.convert('L').resize((w // 8 or 1, h // 8 or 1))
+        bgl = sum(GREY) / 3
+        prof = [0] * (g.width if w > h else g.height)
+        for y in range(g.height):
+            for x in range(g.width):
+                if abs(g.getpixel((x, y)) - bgl) > 22: prof[x if w > h else y] += 1
+        on = [i for i, v in enumerate(prof) if v > 1]
+        if on:
+            lo, hi = on[0] * 8, (on[-1] + 1) * 8
+            if hi - lo <= side * .96:
+                off = min(max(0, (lo + hi) // 2 - side // 2), long_ - side)
+                return crop_at(off).resize((CANVAS, CANVAS), Image.LANCZOS)
     side = max(s.size)
     sq = Image.new('RGB', (side, side), GREY)
     sq.paste(s, ((side - s.width) // 2, (side - s.height) // 2))
