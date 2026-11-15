@@ -34,13 +34,7 @@ main > section.next{margin-top:var(--sec)}
 </tbody></table>
 {%- if big -%}<p class="dl7-n"><b>Beds travel by specialist courier.</b> You get a one-hour delivery window by text on the morning of delivery, and can rearrange it from the text.</p>{%- endif -%}
 <p class="dl7-n">Highlands and Islands, Northern Ireland, Scilly and the Channel Islands: allow 1–2 extra working days. We ship worldwide, and international costs and times are shown at checkout.</p>
-<h4 class="dl7-h">Returns &amp; exchanges</h4>
-<ul class="dl7-r">
-<li><b>14 days</b><span>to change your mind, from the day after delivery</span></li>
-<li><b>Free</b><span>UK returns with a prepaid label</span></li>
-<li><b>Exchanges</b><span>for another size or colour, sent as soon as yours is on its way back</span></li>
-<li><b>30 days</b><span>to reject a faulty item for a full refund</span></li>
-</ul>
+
 <p class="dl7-n">Return anything unworn, with its tags. Refunds go back to your original payment method within 14 days of your return reaching us.{%- if tl contains 'shampoo' or tl contains 'balm' or tl contains 'treat' or tl contains 'chew' or tl contains 'spray' -%} Grooming products and treats can only be returned unopened.{%- endif -%}</p>
 <p class="dl7-l"><a href="/pages/delivery">Delivery information</a><a href="/pages/returns">Returns &amp; refunds</a><a href="/pages/contact">Ask us a question</a></p>
 </div></div><div class="ztp" role="tabpanel" hidden>{%- assign mc = product.metafields.custom.materials_care.value -%}{%- if mc != blank -%}<ul>{%- assign lines = mc | newline_to_br | split: '<br />' -%}{%- for l in lines -%}{%- assign t = l | strip -%}{%- if t == 'Materials' or t == 'Care' -%}</ul><h4 class="mch">{{ t }}</h4><ul>{%- elsif t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}</ul>{%- else -%}<p>Care details for this piece are on the label. Questions? <a href="/pages/contact">Ask us</a>.</p>{%- endif -%}</div></div></div></div>{%- liquid
