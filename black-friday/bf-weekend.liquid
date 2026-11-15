@@ -1,33 +1,33 @@
 {%- comment -%}
-  Weekend 15% pop-up (Saturday 14 and Sunday 15 November 2026). Code WEEKEND15, 15% off items that are not on sale.
+  15% pop-up (Sunday 15 to Wednesday 18 November 2026). Code WEEKEND15, 15% off items that are not on sale.
   Collects the email in Klaviyo (list: Black Friday pop-up sign-ups, id VeTFNL) and then shows the code.
   Shows 20 seconds after the page loads, once per visitor (a dismissed pop-up stays away for 1 day). Add ?wk=test to the address to see it at once.
-  Not shown on the cart page. Stops showing by itself after Sunday midnight (UK time).
+  Not shown on the cart page. Stops showing by itself after Wednesday midnight (UK time).
 {%- endcomment -%}
 {%- unless request.page_type == 'cart' -%}
 {%- assign mk = localization.country.iso_code -%}
 {%- if mk == 'DE' -%}
-  {%- assign t_kick = "Nur dieses Wochenende" -%}
+  {%- assign t_kick = "Nur bis Mittwoch" -%}
   {%- assign t_h = "15 % Rabatt auf Ihre Bestellung" -%}
   {%- assign t_sub = "Tragen Sie Ihre E-Mail-Adresse ein und wir zeigen Ihnen sofort Ihren Code." -%}
   {%- assign t_label = "Ihre E-Mail-Adresse" -%}
   {%- assign t_go = "Code anzeigen" -%}
-  {%- assign t_fine = "Gültig bis Sonntag, Mitternacht. Einmal pro Kunde. Nicht gültig für reduzierte Black-Friday-Artikel." -%}
+  {%- assign t_fine = "Gültig bis Mittwoch, Mitternacht. Einmal pro Kunde. Nicht gültig für reduzierte Black-Friday-Artikel." -%}
   {%- assign t_no = "Nein danke" -%}
-  {%- assign t_ok = "Hier ist Ihr Code für <b>15 % Rabatt</b>. Er gilt bis Sonntag, Mitternacht." -%}
+  {%- assign t_ok = "Hier ist Ihr Code für <b>15 % Rabatt</b>. Er gilt bis Mittwoch, Mitternacht." -%}
   {%- assign t_copy = "Kopieren" -%}
   {%- assign t_copied = "Kopiert" -%}
   {%- assign t_shop = "Jetzt einkaufen, Code angewendet" -%}
   {%- assign t_close = "Schließen" -%}
 {%- else -%}
-  {%- assign t_kick = "This weekend only" -%}
+  {%- assign t_kick = "Ends Wednesday" -%}
   {%- assign t_h = "15% off your order" -%}
   {%- assign t_sub = "Pop your email in and we will show your code straight away." -%}
   {%- assign t_label = "Your email address" -%}
   {%- assign t_go = "Show my code" -%}
-  {%- assign t_fine = "Ends Sunday at midnight. One use per customer. Not valid on Black Friday sale items." -%}
+  {%- assign t_fine = "Ends Wednesday at midnight. One use per customer. Not valid on Black Friday sale items." -%}
   {%- assign t_no = "No thanks" -%}
-  {%- assign t_ok = "Here is your code for <b>15% off</b>. It works until Sunday at midnight." -%}
+  {%- assign t_ok = "Here is your code for <b>15% off</b>. It works until Wednesday at midnight." -%}
   {%- assign t_copy = "Copy" -%}
   {%- assign t_copied = "Copied" -%}
   {%- assign t_shop = "Shop now, code applied" -%}
@@ -101,7 +101,7 @@
 <script>
 (function () {
   if (window.top !== window.self) return;
-  var KEY = 'pp_wk15', START = Date.UTC(2026, 10, 14), END = Date.UTC(2026, 10, 15, 23, 59, 59);
+  var KEY = 'pp_wk15', START = Date.UTC(2026, 10, 15), END = Date.UTC(2026, 10, 18, 23, 59, 59);
   var el = document.getElementById('wkp'); if (!el) return;
   var q = new URLSearchParams(location.search), tst = q.get('wk') === 'test', now = Date.now();
   if (!tst && (now < START || now > END)) return;
