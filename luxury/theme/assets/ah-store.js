@@ -209,3 +209,30 @@ function fit(){var g=document.querySelector('.pv3 .pvg3'),gi=document.querySelec
  g.classList.remove('one');if(g.getBoundingClientRect().height<gi.offsetHeight-120)g.classList.add('one')}
 function go(){fit();addEventListener('resize',fit);var gi=document.querySelector('.gi');if(gi&&'ResizeObserver' in window)new ResizeObserver(fit).observe(gi);setTimeout(fit,1200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
+
+/* collection pages: spread colourways apart so one collar in ten colours doesn't block the grid; "Load more" adds products on the same page */
+(function(){if(window.__cxmix)return;window.__cxmix=1;
+function mix(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
+ var g={},order=[];kids.forEach(function(k){var f=k.getAttribute('data-fam')||k.getAttribute('data-id')||String(Math.random());if(!g[f]){g[f]=[];order.push(f)}g[f].push(k)});
+ var out=[];var fams=order.slice().sort(function(x,y){return g[y].length-g[x].length});
+ while(out.length<kids.length){fams.forEach(function(f){if(g[f].length)out.push(g[f].shift())})}
+ out.forEach(function(k){grid.appendChild(k)})}
+function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;mix(grid);
+ var more=document.querySelector('.cx-more');if(!more)return;var btn=more.querySelector('a.btn-o');if(!btn)return;
+ var total=parseInt((more.querySelector('p')||{textContent:''}).textContent.replace(/[^0-9]/g,'').slice(-6))||0;
+ var m=(more.querySelector('p')||{textContent:''}).textContent.match(/of\s+([0-9,]+)/);total=m?parseInt(m[1].replace(/,/g,''),10):0;
+ btn.addEventListener('click',function(e){e.preventDefault();btn.disabled=true;btn.textContent='Loading...';
+  fetch(btn.href,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(h){
+   var d=new DOMParser().parseFromString(h,'text/html');var ng=d.querySelector('.cx-grid');
+   if(ng){[].slice.call(ng.querySelectorAll(':scope > .pcd')).forEach(function(k){grid.appendChild(document.importNode(k,true))})}
+   var nm=d.querySelector('.cx-more a.btn-o');
+   mix(grid);
+   var n=grid.querySelectorAll(':scope > .pcd').length;
+   var p=more.querySelector('p');if(p&&total)p.textContent='Showing '+n+' of '+total+' products';
+   var bar=more.querySelector('.prog i');if(bar&&total)bar.style.width=Math.min(100,Math.round(n*100/total))+'%';
+   if(nm){btn.href=nm.getAttribute('href');btn.disabled=false;btn.textContent='Load more'}else{btn.remove()}
+  }).catch(function(){btn.disabled=false;btn.textContent='Load more';location.href=btn.href});
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+})();
