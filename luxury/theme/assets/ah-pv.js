@@ -32,14 +32,11 @@
     /* stick under the header; if the details are taller than the screen, stick so their bottom stays in view */
     var fit = function () {
       var hd = document.querySelector("header, .hdr, [class*=header]"), hh = hd ? Math.max(0, hd.getBoundingClientRect().bottom) : 110, top = hh + 20;
-      zi.style.setProperty("--pv-top", top + "px");
-      var tp = [].filter.call(zi.querySelectorAll(".ztp"), function (x) { return !x.hidden; })[0];
+      /* never cap the tabs: when the details are taller than the screen they scroll up first, then stick at their bottom */
       [].forEach.call(zi.querySelectorAll(".ztp"), function (x) { x.style.maxHeight = ""; x.style.overflowY = ""; });
-      if (!tp) return;
-      var room = innerHeight - top - 24 - (zi.offsetHeight - tp.offsetHeight);
-      if (zi.offsetHeight > innerHeight - top - 24) { tp.style.maxHeight = Math.max(140, room) + "px"; tp.style.overflowY = "auto"; }
+      zi.style.setProperty("--pv-top", Math.min(top, innerHeight - zi.offsetHeight - 24) + "px");
     };
-    fit(); addEventListener("resize", fit); zi.addEventListener("click", function () { setTimeout(fit, 30); });
+    fit(); addEventListener("resize", fit); zi.addEventListener("click", function () { setTimeout(fit, 30); }); if ("ResizeObserver" in window) new ResizeObserver(fit).observe(zi);
     return;
   }
   var G = el("div", "pvg"), bar = el("div", "pv-bar"), cnt = el("span", "pv-cnt");
