@@ -29,9 +29,11 @@ main > section.next{margin-top:var(--sec)}
     <div class="hero-copy">
       <p class="eyebrow">Axel &amp; Hound</p>
       <h1>Beautiful things for dogs, and the homes they share.</h1>
-      <div class="btns"><a class="sqbtn" href="#">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
+      <div class="btns"><a class="sqbtn" href="#">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="#">Winter Sale</a></div>
     </div>
-    <div class="usp usp-over" aria-label="Why shop with us">
+    <section class="ws w1" aria-label="Winter Sale">
+    <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="#">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['sale'].products limit: 4 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
+  </section><div class="usp usp-over" aria-label="Why shop with us">
       <div class="usp-in">
         <a class="u tp" href="#" aria-label="Rated excellent on Trustpilot"><span class="tp-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="half"></i></span><span>Rated excellent</span></a>
         <div class="u"><span>Free delivery over £75</span></div>

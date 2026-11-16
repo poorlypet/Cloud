@@ -70,7 +70,7 @@
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
           { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] }
   ];
-  var FEAT = ["New in", "Bestsellers"];
+  var FEAT = ["New in", "Bestsellers", "Sale"];
   var DOGS = ["still2", "goldenWalk", "toller", "samoyed", "mastiff", "poodle", "labCollar", "goldenToy", "beach", "cavalier", "pupDark", "groom"];
 
   /* ---------------- helpers ---------------- */

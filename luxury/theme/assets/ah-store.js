@@ -217,10 +217,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  function famOf(k){var t=(k.getAttribute('data-t')||'').toLowerCase().split(',')[0].replace(COL,' ').replace(/\s+/g,' ').trim();return t||k.getAttribute('data-fam')||String(Math.random())}
 function mix(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
  var g={},order=[];kids.forEach(function(k){var f=famOf(k);if(!g[f]){g[f]=[];order.push(f)}g[f].push(k)});
- var out=[];var fams=order.slice().sort(function(x,y){return g[y].length-g[x].length});
- while(out.length<kids.length){fams.forEach(function(f){if(g[f].length)out.push(g[f].shift())})}
+ var pos=[];
+ kids.forEach(function(k){var f=famOf(k),c=g[f].length,j=g[f].indexOf(k);var h=0;for(var q=0;q<f.length;q++)h=(h*31+f.charCodeAt(q))%997;pos.push({k:k,s:(j+0.5)/c+h/1e6})});
+ pos.sort(function(x,y){return x.s-y.s});var out=pos.map(function(x){return x.k});
  out.forEach(function(k){grid.appendChild(k)})}
-function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;mix(grid);
+window.__cxmix=function(g2){if(g2)mix(g2)};
+function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;if(!grid.dataset.sort||grid.dataset.sort==='feat')mix(grid);
  var more=document.querySelector('.cx-more');if(!more)return;var btn=more.querySelector('a.btn-o');if(!btn)return;
  var total=parseInt((more.querySelector('p')||{textContent:''}).textContent.replace(/[^0-9]/g,'').slice(-6))||0;
  var m=(more.querySelector('p')||{textContent:''}).textContent.match(/of\s+([0-9,]+)/);total=m?parseInt(m[1].replace(/,/g,''),10):0;
@@ -229,7 +231,7 @@ function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;mix(gr
    var d=new DOMParser().parseFromString(h,'text/html');var ng=d.querySelector('.cx-grid');
    if(ng){[].slice.call(ng.querySelectorAll(':scope > .pcd')).forEach(function(k){grid.appendChild(document.importNode(k,true))})}
    var nm=d.querySelector('.cx-more a.btn-o');
-   mix(grid);
+   var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat'){sel.dispatchEvent(new Event('change'))}else{mix(grid)}
    var n=grid.querySelectorAll(':scope > .pcd').length;
    var p=more.querySelector('p');if(p&&total)p.textContent='Showing '+n+' of '+total+' products';
    var bar=more.querySelector('.prog i');if(bar&&total)bar.style.width=Math.min(100,Math.round(n*100/total))+'%';

@@ -1,5 +1,5 @@
 <header class="hdr{% if template.name == 'index' or template.suffix == 'brand' %} clear{% endif %}">
-  <div class="announce">{{ section.settings.announce }}<a href="{{ section.settings.announce_link | default: '/collections/new-in' }}">{{ section.settings.announce_link_text }}</a><span class="r">GB / £</span></div>
+  <div class="announce">{{ section.settings.announce }}<a href="{{ section.settings.announce_link | default: '/collections/sale' }}">{{ section.settings.announce_link_text }}</a><span class="r">GB / £</span></div>
   <div class="hdr-bar">
     <a class="logo" href="{{ routes.root_url }}" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
     <ul class="nav" data-nav aria-label="Shop"></ul>
@@ -16,6 +16,6 @@
 {% schema %}
 {"name":"Header","settings":[
  {"type":"text","id":"announce","label":"Announcement","default":"Complimentary UK delivery over £75"},
- {"type":"text","id":"announce_link_text","label":"Announcement link text","default":"Shop new in"},
+ {"type":"text","id":"announce_link_text","label":"Announcement link text","default":"Winter Sale: up to 30% off"},
  {"type":"url","id":"announce_link","label":"Announcement link"}]}
 {% endschema %}

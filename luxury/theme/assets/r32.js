@@ -55,10 +55,11 @@
     });
     $$(".cx-sort").forEach(function (s) {
       s.addEventListener("change", function () {
-        var v = s.value, list = cards.slice();
+        var v = s.value, list = $$(".pcd[data-price]", grid);
+        grid.dataset.sort = v;
+        if (v === "feat") { if (window.__cxmix) window.__cxmix(grid); $$(".cx-sort").forEach(function (o) { o.value = v; }); return; }
         if (v === "low") list.sort(function (a, b) { return a.dataset.price - b.dataset.price; });
-        else if (v === "high") list.sort(function (a, b) { return b.dataset.price - a.dataset.price; });
-        else list.sort(function (a, b) { return a.dataset.i - b.dataset.i; });
+        else list.sort(function (a, b) { return b.dataset.price - a.dataset.price; });
         var story = $(".story", grid);
         list.forEach(function (c) { grid.appendChild(c); });
         if (story) grid.insertBefore(story, grid.children[2] || null);
