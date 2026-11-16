@@ -210,35 +210,24 @@ function fit(){var g=document.querySelector('.pv3 .pvg3'),gi=document.querySelec
 function go(){fit();addEventListener('resize',fit);var gi=document.querySelector('.gi');if(gi&&'ResizeObserver' in window)new ResizeObserver(fit).observe(gi);setTimeout(fit,1200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
 
-/* collection pages: keep Shopify's order, but move the brands so Brott Barcelona comes last; "Load more" adds products on the same page */
-(function(){if(window.__cxorder)return;window.__cxorder=1;
-var RANK={'Cloud7':0,'Nordog':1,'Tadazhi':2,'Molly and Stitch':3,'Pintu':4,'BDEBRUNO':5,'PAIKKA':6,'Brott Barcelona':9};
-function brandOrder(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
- kids.forEach(function(k){k.style.display='';k.classList.remove('fam-hidden')});
- var rows=kids.map(function(k,i){var v=k.getAttribute('data-v')||'';var r=RANK.hasOwnProperty(v)?RANK[v]:7;return {k:k,i:i,r:r}});
- rows.sort(function(a,b){return a.r-b.r||a.i-b.i});
- rows.forEach(function(x){grid.appendChild(x.k)})}
-window.__cxmix=function(g){if(g)brandOrder(g)};
+/* collection pages: the order comes from the store and is never changed here. "Load more" adds the next products to the end of the same grid. */
+(function(){if(window.__cxmore)return;window.__cxmore=1;
 function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;
- var sel=document.querySelector('.cx-sort');if(!sel||!sel.value||sel.value==='feat')brandOrder(grid);
+ var oi=0;[].forEach.call(grid.querySelectorAll(':scope > .pcd'),function(k){k.dataset.oi=++oi});
  var more=document.querySelector('.cx-more');if(!more)return;var btn=more.querySelector('a.btn-o');if(!btn)return;
  var m=(more.querySelector('p')||{textContent:''}).textContent.match(/of\s+([0-9,]+)/);var total=m?parseInt(m[1].replace(/,/g,''),10):0;
  btn.addEventListener('click',function(e){e.preventDefault();btn.disabled=true;btn.textContent='Loading...';
   fetch(btn.href,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(h){
    var d=new DOMParser().parseFromString(h,'text/html');var ng=d.querySelector('.cx-grid');
-   if(ng){[].slice.call(ng.querySelectorAll(':scope > .pcd')).forEach(function(k){grid.appendChild(document.importNode(k,true))})}
+   if(ng){[].slice.call(ng.querySelectorAll(':scope > .pcd')).forEach(function(k){var n=document.importNode(k,true);n.dataset.oi=++oi;grid.appendChild(n)})}
    var nm=d.querySelector('.cx-more a.btn-o');
-   var sel2=document.querySelector('.cx-sort');if(sel2&&sel2.value&&sel2.value!=='feat'){sel2.dispatchEvent(new Event('change'))}else{brandOrder(grid)}
-   var n=grid.querySelectorAll(':scope > .pcd').length;
-   var p=more.querySelector('p');if(p&&total)p.textContent='Showing '+n+' of '+total+' products';
-   var bar=more.querySelector('.prog i');if(bar&&total)bar.style.width=Math.min(100,Math.round(n*100/total))+'%';
+   var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat'){sel.dispatchEvent(new Event('change'))}
+   var n2=grid.querySelectorAll(':scope > .pcd').length;
+   var p=more.querySelector('p');if(p&&total)p.textContent='Showing '+n2+' of '+total+' products';
+   var bar=more.querySelector('.prog i');if(bar&&total)bar.style.width=Math.min(100,Math.round(n2*100/total))+'%';
    if(nm){btn.href=nm.getAttribute('href');btn.disabled=false;btn.textContent='Load more'}else{btn.remove()}
   }).catch(function(){btn.disabled=false;btn.textContent='Load more';location.href=btn.href});
  });
 }
-/* load the next pages automatically (up to 8), then order by brand again, so the brands are all in the list before Brott is put last */
-function autoLoad(){var grid=document.querySelector('.cx-grid');if(!grid)return;var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat')return;var n=0;
- function step(){var btn=document.querySelector('.cx-more a.btn-o');if(!btn||!btn.parentNode||n>=8)return;n++;btn.click();setTimeout(function(){if(window.__cxmix)window.__cxmix(grid);step()},2200)}
- setTimeout(step,600)}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){go();autoLoad()});else{go();autoLoad()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();

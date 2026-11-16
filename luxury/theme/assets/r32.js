@@ -57,7 +57,7 @@
       s.addEventListener("change", function () {
         var v = s.value, list = $$(".pcd[data-price]", grid);
         grid.dataset.sort = v;
-        if (v === "feat") { if (window.__cxmix) window.__cxmix(grid); $$(".cx-sort").forEach(function (o) { o.value = v; }); return; }
+        if (v === "feat") { list.sort(function (a, b) { return (a.dataset.oi || 0) - (b.dataset.oi || 0); }); list.forEach(function (c) { grid.appendChild(c); }); $$(".cx-sort").forEach(function (o) { o.value = v; }); return; }
         if (v === "low") list.sort(function (a, b) { return a.dataset.price - b.dataset.price; });
         else list.sort(function (a, b) { return b.dataset.price - a.dataset.price; });
         var story = $(".story", grid);
