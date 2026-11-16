@@ -21,6 +21,13 @@
 :root{--sec:clamp(56px,6vw,88px)}
 main > section:not(.hero):not(.next){padding-top:0!important;padding-bottom:0!important;margin-top:var(--sec)!important;margin-bottom:0!important}
 main > section.next{margin-top:var(--sec)}
+
+.ws .g4>.pcd:nth-child(n+5),.bh .prods .g4>.pcd:nth-child(n+5){display:none}
+@media (max-width:900px){
+ .ws .g4,.bh .prods .g4{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2 * var(--gut,16px) - 12px) / 2.2);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;margin-right:calc(-1 * var(--gut,16px));padding:4px var(--gut,16px) 8px 4px;margin-left:-4px}
+ .ws .g4::-webkit-scrollbar,.bh .prods .g4::-webkit-scrollbar{display:none}
+ .ws .g4>.pcd,.bh .prods .g4>.pcd,.ws .g4>.pcd:nth-child(n+5),.bh .prods .g4>.pcd:nth-child(n+5){display:block;scroll-snap-align:start;min-width:0}
+}
 </style>
 
   <section class="hero" aria-label="Welcome to Axel &amp; Hound">
@@ -31,9 +38,7 @@ main > section.next{margin-top:var(--sec)}
       <h1>Beautiful things for dogs, and the homes they share.</h1>
       <div class="btns"><a class="sqbtn" href="/collections/new-in">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="#">Winter Sale</a></div>
     </div>
-    <section class="ws w1" aria-label="Winter Sale">
-    <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="/collections/sale">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['sale'].products limit: 4 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
-  </section><div class="usp usp-over" aria-label="Why shop with us">
+    <div class="usp usp-over" aria-label="Why shop with us">
       <div class="usp-in">
         <a class="u tp" href="#" aria-label="Rated excellent on Trustpilot"><span class="tp-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="half"></i></span><span>Rated excellent</span></a>
         <div class="u"><span>Free delivery over £75</span></div>
@@ -41,6 +46,9 @@ main > section.next{margin-top:var(--sec)}
         <div class="u"><span>Based in the UK</span></div>
       </div>
     </div>
+  </section>
+  <section class="ws w1" aria-label="Winter Sale">
+    <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="/collections/sale">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['home-sale'].products limit: 8 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
   </section>
   <section class="sp cs" aria-label="Shop by category">
     <div class="sp-h"><h2>Shop by category</h2><a class="all" href="/collections/all">Shop all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
@@ -82,7 +90,7 @@ main > section.next{margin-top:var(--sec)}
 </style>
 
   
-  <section class="bh v2" aria-label="Cloud7"><div class="vid">{%- render 'ah-vid', f: 'brand-cloud7.mp4' -%}<div class="ov"><span class="k">The brand edit</span><h2>Cloud7</h2><p>Cloud7 is a Berlin label making coats, beds and accessories for dogs. Every piece is designed to be lived in: warm on cold walks, easy to wash, and good-looking enough for the city.</p><a class="lk" href="/collections/cloud7">Discover Cloud7 <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div></div><div class="prods"><div class="prods-h"><h3>Shop Cloud7</h3><a href="#">View all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['new-in'].products limit: 24 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></div></section>
+  <section class="bh v2" aria-label="Cloud7"><div class="vid">{%- render 'ah-vid', f: 'brand-cloud7.mp4' -%}<div class="ov"><span class="k">The brand edit</span><h2>Cloud7</h2><p>Cloud7 is a Berlin label making coats, beds and accessories for dogs. Every piece is designed to be lived in: warm on cold walks, easy to wash, and good-looking enough for the city.</p><a class="lk" href="/collections/cloud7">Discover Cloud7 <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div></div><div class="prods"><div class="prods-h"><h3>Shop Cloud7</h3><a href="#">View all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['home-cloud7'].products limit: 8 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></div></section>
   <section class="sp sp-size cs" aria-label="Shop by size">
     <div class="sp-h"><h2>Shop by size</h2><a class="all" href="#">Size guide <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
     <div class="cs-w">
@@ -91,7 +99,7 @@ main > section.next{margin-top:var(--sec)}
       <button type="button" class="cs-a next" aria-label="More sizes"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
     </div>
   </section>
-  <section class="pv v3 pv-k" aria-label="New puppy"><div class="pv-h"><h2>New puppy <i>for the first months home</i></h2><a class="lk" href="#">Shop puppy <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="row"><div class="film">{%- render 'ah-vid', f: 'home-new-puppy.mp4' -%}</div>{%- for product in collections['new-in'].products limit: 2 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></section>
+  <section class="pv v3 pv-k" aria-label="New puppy"><div class="pv-h"><h2>New puppy <i>for the first months home</i></h2><a class="lk" href="#">Shop puppy <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="row"><div class="film">{%- render 'ah-vid', f: 'home-new-puppy.mp4' -%}</div>{%- for product in collections['for-the-new-puppy'].products limit: 2 -%}{%- render 'card', product: product -%}{%- endfor -%}</div></section>
   <section class="rv tpw soft" aria-label="Customer reviews">
     <div class="in"><div class="tsum"><b>Excellent</b><span class="tps big" aria-label="Rated 4.8 out of 5"><i></i><i></i><i></i><i></i><i class="half"></i></span><div class="tbased">Based on <a href="#">1,240 reviews</a></div><img class="tlogo-img" src="{{ 'trustpilot.png' | asset_url }}" alt="Trustpilot" width="100" height="25"></div><div class="tcar"><div class="trvs"><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Christopher S.,</b> 3 days ago</span><h4>Beautiful quality</h4><p>The bouclé bed is even nicer in person, and Biscuit has barely left it.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Arthur C.,</b> 3 days ago</span><h4>Perfect fit for our dachshund</h4><p>Long enough in the back and easy to wash.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Morley S.,</b> 4 days ago</span><h4>Delivered the next day</h4><p>Lovely packaging and the coat is beautifully made.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Rob,</b> 5 days ago</span><h4>Quality of materials</h4><p>Quality of materials, design and solid stitching.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Hannah W.,</b> 1 week ago</span><h4>Lovely to deal with</h4><p>Helpful with sizing and quick to reply.</p></div><div class="tr"><div class="ttop"><span class="tps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><a class="vf" href="#">Verified</a></div><span class="tby"><b>Emma L.,</b> 1 week ago</span><h4>Gift for my sister</h4><p>Wrapped beautifully with a handwritten card.</p></div></div><div class="tctl"><div class="tarr"><button type="button" class="tprev" aria-label="Previous reviews"><svg viewBox="0 0 8 12"><path d="M7 1L2 6l5 5"/></svg></button><button type="button" class="tnext" aria-label="More reviews"><svg viewBox="0 0 8 12"><path d="M1 1l5 5-5 5"/></svg></button></div></div></div></div>
   </section>
