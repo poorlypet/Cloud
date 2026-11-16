@@ -69,6 +69,8 @@ main > section.next{margin-top:var(--sec)}
       assign tagline = 'Made by people who care how things are made, and chosen because we would use it ourselves.'
   endcase
 -%}
+{%- assign sts = mf.the_set.value -%}
+{%- if sts != blank -%}<section class="zsec zin zrl pd-set"><div class="zhd"><div><h2 class="zh2">Shop the set</h2><p class="zsub">Matching pieces in the same colour, from {{ product.vendor }}</p></div></div><div class="g4">{%- for item in sts limit: 3 -%}{%- if item.available -%}{%- render 'card', product: item -%}{%- endif -%}{%- endfor -%}</div></section>{%- endif -%}
 {%- if life != blank or pf -%}
 <section class="pd-lg zin" aria-label="Gallery">
   <div class="zhd"><div><span class="zkick">Gallery</span><h2 class="zh2">{{ base }}</h2></div></div>
@@ -77,9 +79,6 @@ main > section.next{margin-top:var(--sec)}
     {%- for im in life limit: nim -%}<figure>{{ im | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, sizes: '(max-width: 800px) 50vw, 25vw' }}</figure>{%- endfor -%}
   </div>
 </section>
-{%- endif -%}
-{%- if vcol and vcol.products_count > 1 -%}
-<section class="zsec zin zrl zmore"><div class="zhd"><h2 class="zh2">More from {{ product.vendor }}</h2><a class="zlink" href="{{ vcol.url }}">Shop all {{ product.vendor }}</a></div><div class="g4">{%- assign shown = 0 -%}{%- for item in vcol.products -%}{%- assign ib = item.title | split: ',' | first | strip -%}{%- if item.id != product.id and ib != base -%}{%- render 'card', product: item -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}{%- if shown >= 4 -%}{%- break -%}{%- endif -%}{%- endfor -%}</div></section>
 {%- endif -%}
 <section class="pd-bb zin" aria-label="{{ product.vendor }}">
   <div class="pd-bb-in">
@@ -90,8 +89,9 @@ main > section.next{margin-top:var(--sec)}
     <div class="pd-bb-t"><span class="zkick">The brand</span><h2>{{ product.vendor }}</h2><p>{{ tagline }}</p>{%- if vcol -%}<a href="{{ vcol.url }}" class="pd-bb-a">Shop {{ product.vendor }}</a>{%- endif -%}</div>
   </div>
 </section>
-{%- assign sts = mf.the_set.value -%}
-{%- if sts != blank -%}<section class="zsec zin zrl pd-set"><div class="zhd"><div><h2 class="zh2">Shop the set</h2><p class="zsub">Matching pieces in the same colour, from {{ product.vendor }}</p></div></div><div class="g4">{%- for item in sts limit: 3 -%}{%- if item.available -%}{%- render 'card', product: item -%}{%- endif -%}{%- endfor -%}</div></section>{%- endif -%}
+{%- if vcol and vcol.products_count > 1 -%}
+<section class="zsec zin zrl zmore"><div class="zhd"><h2 class="zh2">More from {{ product.vendor }}</h2><a class="zlink" href="{{ vcol.url }}">Shop all {{ product.vendor }}</a></div><div class="g4">{%- assign shown = 0 -%}{%- for item in vcol.products -%}{%- assign ib = item.title | split: ',' | first | strip -%}{%- if item.id != product.id and ib != base -%}{%- render 'card', product: item -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}{%- if shown >= 4 -%}{%- break -%}{%- endif -%}{%- endfor -%}</div></section>
+{%- endif -%}
 {%- assign gws = mf.goes_with.value -%}
 {%- if gws != blank -%}<section class="zsec zin zrl pd-gw"><div class="zhd"><h2 class="zh2">Goes well with</h2></div><div class="g4">{%- for item in gws limit: 4 -%}{%- if item.available -%}{%- render 'card', product: item -%}{%- endif -%}{%- endfor -%}</div></section>{%- endif -%}
 <div class="zsec"><section class="rv tpw soft" aria-label="Customer reviews">

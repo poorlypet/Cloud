@@ -212,8 +212,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 /* collection pages: spread colourways apart so one collar in ten colours doesn't block the grid; "Load more" adds products on the same page */
 (function(){if(window.__cxmix)return;window.__cxmix=1;
+
+ var COL=/\b(yellow|red|pink|purple|green|orange|grey|gray|brown|turquoise|blue|black|white|strawberry|mandarin|electric|olive|beige|taupe|cream|sand|cognac|camel|mint|biscuit|amber|silver|gold|navy|khaki|rose|mocca|mocha|natural|ocean|charcoal|deep|soft|light|dark|pastel|teal|lime|neon|bright|faded|cabbage|grass|leo|dusty|nude|tan|stone|sage|bordeaux|cherry|coral|chocolate|plaid|tartan|peach|aubergine|lavender|wine|forest|sunset|tweed)\b/g;
+ function famOf(k){var t=(k.getAttribute('data-t')||'').toLowerCase().split(',')[0].replace(COL,' ').replace(/\s+/g,' ').trim();return t||k.getAttribute('data-fam')||String(Math.random())}
 function mix(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
- var g={},order=[];kids.forEach(function(k){var f=k.getAttribute('data-fam')||k.getAttribute('data-id')||String(Math.random());if(!g[f]){g[f]=[];order.push(f)}g[f].push(k)});
+ var g={},order=[];kids.forEach(function(k){var f=famOf(k);if(!g[f]){g[f]=[];order.push(f)}g[f].push(k)});
  var out=[];var fams=order.slice().sort(function(x,y){return g[y].length-g[x].length});
  while(out.length<kids.length){fams.forEach(function(f){if(g[f].length)out.push(g[f].shift())})}
  out.forEach(function(k){grid.appendChild(k)})}

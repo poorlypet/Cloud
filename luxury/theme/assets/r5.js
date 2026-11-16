@@ -68,16 +68,9 @@
           { t: "Collections", l: ["Canvas", "Waxed cotton"] }],
       f: [{ p: "beach", t: "Travel beds", n: "Travel Bed, Canvas", pr: 165 },
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
-          { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] },
-    { key: "gifts", label: "Gifts", hero: "menu-gifts.jpg|home-category-gifts.jpg", hero2: "home-category-gifts.jpg", line: "Wrapped by hand and ready to give.",
-      g: [{ t: "Gifts", l: ["Gift sets", "For the new puppy", "Under £50", "Under £100", "Gift cards"] },
-          { t: "For", l: ["Dogs", "Their people"] },
-          { t: "Occasions", l: ["Birthdays", "Christmas", "Gotcha day"] }],
-      f: [{ p: "goldenFlower", t: "Gift sets", n: "Winter Gift Set", pr: 120 },
-          { p: "cavalier", t: "Gift cards", n: "Gift Card", pr: 50 },
-          { p: "pupDark", t: "For the new puppy", n: "New Puppy Box", pr: 150 }] }
+          { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] }
   ];
-  var FEAT = ["New in", "Bestsellers", "Sale"];
+  var FEAT = ["New in", "Bestsellers"];
   var DOGS = ["still2", "goldenWalk", "toller", "samoyed", "mastiff", "poodle", "labCollar", "goldenToy", "beach", "cavalier", "pupDark", "groom"];
 
   /* ---------------- helpers ---------------- */
@@ -242,7 +235,7 @@
     '<input id="q" type="search" placeholder="Search beds, collars, coats" autocomplete="off" aria-label="Search the shop">' +
     '<button type="button" class="srch-x" data-close-search>Close</button></div>' +
     '<div class="srch-body"><div><p class="cap">Popular</p><ul>' +
-    ["Bouclé bed", "Leather collar", "Dachshund coat", "Wool throw", "Gift sets"].map(function (x) { return '<li><a class="ln" href="#" data-q="' + x + '">' + x + "</a></li>"; }).join("") +
+    ["Bouclé bed", "Leather collar", "Dachshund coat", "Wool throw", "Waxed cotton"].map(function (x) { return '<li><a class="ln" href="#" data-q="' + x + '">' + x + "</a></li>"; }).join("") +
     '</ul><p class="cap" style="margin-top:28px">Help</p><ul><li><a class="ln" href="#">Delivery</a></li><li><a class="ln" href="#">Returns</a></li><li><a class="ln" href="#">Size guide</a></li></ul></div>' +
     '<div><div class="srch-res-h"><p class="cap" data-res-h>Most searched this week</p></div><div class="srch-grid" data-res></div></div></div></div>';
   hdr.appendChild(srch);
