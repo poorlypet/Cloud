@@ -24,10 +24,15 @@ main > section.next{margin-top:var(--sec)}
 
 .ws .g4>.pcd:nth-child(n+5),.bh .prods .g4>.pcd:nth-child(n+5){display:none}
 @media (max-width:900px){
- .ws .g4,.bh .prods .g4{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2 * var(--gut,16px) - 12px) / 2.2);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;margin-right:calc(-1 * var(--gut,16px));padding:4px var(--gut,16px) 8px 4px;margin-left:-4px}
+ .ws .g4,.bh .prods .g4{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100vw - 2 * var(--gut,16px) - 32px) / 3.2);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;margin-right:calc(-1 * var(--gut,16px));padding:4px var(--gut,16px) 8px 4px;margin-left:-4px}
  .ws .g4::-webkit-scrollbar,.bh .prods .g4::-webkit-scrollbar{display:none}
  .ws .g4>.pcd,.bh .prods .g4>.pcd,.ws .g4>.pcd:nth-child(n+5),.bh .prods .g4>.pcd:nth-child(n+5){display:block;scroll-snap-align:start;min-width:0}
 }
+
+@media (max-width:800px){.ws .g4,.bh .prods .g4{grid-auto-columns:62vw}}
+
+section.bh.v2{padding-top:clamp(8px,1vw,16px)}
+.cs:has(+ .bh){padding-bottom:clamp(24px,3vw,40px)}
 </style>
 
   <section class="hero" aria-label="Welcome to Axel &amp; Hound">
