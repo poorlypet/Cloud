@@ -210,31 +210,25 @@ function fit(){var g=document.querySelector('.pv3 .pvg3'),gi=document.querySelec
 function go(){fit();addEventListener('resize',fit);var gi=document.querySelector('.gi');if(gi&&'ResizeObserver' in window)new ResizeObserver(fit).observe(gi);setTimeout(fit,1200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})();
 
-/* collection pages: spread colourways apart so one collar in ten colours doesn't block the grid; "Load more" adds products on the same page */
-(function(){if(window.__cxmix)return;window.__cxmix=1;
-
- var COL=/\b(yellow|red|pink|purple|green|orange|grey|gray|brown|turquoise|blue|black|white|strawberry|mandarin|electric|olive|beige|taupe|cream|sand|cognac|camel|mint|biscuit|amber|silver|gold|navy|khaki|rose|mocca|mocha|natural|ocean|charcoal|deep|soft|light|dark|pastel|teal|lime|neon|bright|faded|cabbage|grass|leo|dusty|nude|tan|stone|sage|bordeaux|cherry|coral|chocolate|plaid|tartan|peach|aubergine|lavender|wine|forest|sunset|tweed)\b/g;
- function famOf(k){var t=(k.getAttribute('data-t')||'').toLowerCase().split(',')[0].replace(COL,' ').replace(/\s+/g,' ').trim();return t||k.getAttribute('data-fam')||String(Math.random())}
-function mix(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
- var byv={},vord=[];kids.forEach(function(k){var v=k.getAttribute('data-v')||'';if(!byv[v]){byv[v]=[];vord.push(v)}byv[v].push(k)});
- var lists=vord.map(function(v){var ks=byv[v],g={},order=[];ks.forEach(function(k){var f=famOf(k);if(!g[f]){g[f]=[];order.push(f)}g[f].push(k)});
-  var pos=[];ks.forEach(function(k){var f=famOf(k),c=g[f].length,j=g[f].indexOf(k);var h=0;for(var q=0;q<f.length;q++)h=(h*31+f.charCodeAt(q))%997;pos.push({k:k,s:(j+0.5)/c+h/1e6})});
-  pos.sort(function(x,y){return x.s-y.s});return pos.map(function(x){return x.k})});
- lists.sort(function(x,y){return y.length-x.length});
- var out=[],i=0;while(out.length<kids.length){lists.forEach(function(l){if(i<l.length)out.push(l[i])});i++}
- out.forEach(function(k){grid.appendChild(k)})}
-
-window.__cxmix=function(g2){if(g2)mix(g2)};
-function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;if(!grid.dataset.sort||grid.dataset.sort==='feat')mix(grid);
+/* collection pages: keep Shopify's order, but move the brands so Brott Barcelona comes last; "Load more" adds products on the same page */
+(function(){if(window.__cxorder)return;window.__cxorder=1;
+var RANK={'Cloud7':0,'Nordog':1,'Tadazhi':2,'Molly and Stitch':3,'Pintu':4,'BDEBRUNO':5,'PAIKKA':6,'Brott Barcelona':9};
+function brandOrder(grid){var kids=[].slice.call(grid.querySelectorAll(':scope > .pcd'));if(kids.length<2)return;
+ kids.forEach(function(k){k.style.display='';k.classList.remove('fam-hidden')});
+ var rows=kids.map(function(k,i){var v=k.getAttribute('data-v')||'';var r=RANK.hasOwnProperty(v)?RANK[v]:7;return {k:k,i:i,r:r}});
+ rows.sort(function(a,b){return a.r-b.r||a.i-b.i});
+ rows.forEach(function(x){grid.appendChild(x.k)})}
+window.__cxmix=function(g){if(g)brandOrder(g)};
+function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;
+ var sel=document.querySelector('.cx-sort');if(!sel||!sel.value||sel.value==='feat')brandOrder(grid);
  var more=document.querySelector('.cx-more');if(!more)return;var btn=more.querySelector('a.btn-o');if(!btn)return;
- var total=parseInt((more.querySelector('p')||{textContent:''}).textContent.replace(/[^0-9]/g,'').slice(-6))||0;
- var m=(more.querySelector('p')||{textContent:''}).textContent.match(/of\s+([0-9,]+)/);total=m?parseInt(m[1].replace(/,/g,''),10):0;
+ var m=(more.querySelector('p')||{textContent:''}).textContent.match(/of\s+([0-9,]+)/);var total=m?parseInt(m[1].replace(/,/g,''),10):0;
  btn.addEventListener('click',function(e){e.preventDefault();btn.disabled=true;btn.textContent='Loading...';
   fetch(btn.href,{credentials:'same-origin'}).then(function(r){return r.text()}).then(function(h){
    var d=new DOMParser().parseFromString(h,'text/html');var ng=d.querySelector('.cx-grid');
    if(ng){[].slice.call(ng.querySelectorAll(':scope > .pcd')).forEach(function(k){grid.appendChild(document.importNode(k,true))})}
    var nm=d.querySelector('.cx-more a.btn-o');
-   var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat'){sel.dispatchEvent(new Event('change'))}else{mix(grid)}
+   var sel2=document.querySelector('.cx-sort');if(sel2&&sel2.value&&sel2.value!=='feat'){sel2.dispatchEvent(new Event('change'))}else{brandOrder(grid)}
    var n=grid.querySelectorAll(':scope > .pcd').length;
    var p=more.querySelector('p');if(p&&total)p.textContent='Showing '+n+' of '+total+' products';
    var bar=more.querySelector('.prog i');if(bar&&total)bar.style.width=Math.min(100,Math.round(n*100/total))+'%';
@@ -242,6 +236,9 @@ function go(){var grid=document.querySelector('.cx-grid');if(!grid)return;if(!gr
   }).catch(function(){btn.disabled=false;btn.textContent='Load more';location.href=btn.href});
  });
 }
-function autoLoad(){var grid=document.querySelector('.cx-grid');if(!grid)return;var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat')return;var n=0;function step(){var btn=document.querySelector('.cx-more a.btn-o');if(!btn||!btn.parentNode||n>=4)return;n++;btn.click();setTimeout(step,1800)}setTimeout(step,400)}
+/* load the next pages automatically (up to 8), then order by brand again, so the brands are all in the list before Brott is put last */
+function autoLoad(){var grid=document.querySelector('.cx-grid');if(!grid)return;var sel=document.querySelector('.cx-sort');if(sel&&sel.value&&sel.value!=='feat')return;var n=0;
+ function step(){var btn=document.querySelector('.cx-more a.btn-o');if(!btn||!btn.parentNode||n>=8)return;n++;btn.click();setTimeout(function(){if(window.__cxmix)window.__cxmix(grid);step()},2200)}
+ setTimeout(step,600)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){go();autoLoad()});else{go();autoLoad()}
 })();

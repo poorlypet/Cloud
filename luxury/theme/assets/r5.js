@@ -70,7 +70,19 @@
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
           { p: "aussie", t: "Travel bowls", n: "Folding Bowl", pr: 28 }] }
   ];
-  var FEAT = ["New in", "Bestsellers", "Sale"];
+  /* drop links to collections that are gone or empty, and anything gifting or cats; "Crate mats" is now "Mats" */
+  var DEAD = /^(heritage leather|snoods|merino|bowl stands|treat jars|stoneware|shampoo|balls|puzzle toys|wool felt|natural rubber|weekends away|long drives|city days|felt|oak|bestsellers|orthopaedic beds|sofa beds|adult|senior|dventotto|gift|gifts|gift sets|gift cards|gifts for [a-z ]+|birthdays|christmas|gotcha day|for cats|new for cats|cats?|cat [a-z ]+|[a-z ]*\bcats?\b[a-z ]*)$/i;
+  function alive(t) { return !DEAD.test(String(t || "").trim()) && !/gift|\bcats?\b/i.test(String(t || "")); }
+  MENU.forEach(function (c) {
+    if (c.key === "cats" || c.key === "gifts") { c.g = []; c.f = []; c.dead = true; return; }
+    c.g = (c.g || []).filter(function (g) { return alive(g.t); }).map(function (g) {
+      g.l = (g.l || []).map(function (x) { return x === "Crate mats" ? "Mats" : x; }).filter(alive);
+      return g;
+    });
+    c.f = (c.f || []).filter(function (f) { return alive(f.t); });
+  });
+  MENU = MENU.filter(function (c) { return !c.dead; });
+  var FEAT = ["New in", "Sale"];
   var DOGS = ["still2", "goldenWalk", "toller", "samoyed", "mastiff", "poodle", "labCollar", "goldenToy", "beach", "cavalier", "pupDark", "groom"];
 
   /* ---------------- helpers ---------------- */
