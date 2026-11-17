@@ -123,6 +123,25 @@
     });
   }
 
+  /* ---------- mouse orb: a dot that follows the pointer and grows over things you can use ---------- */
+  var cur = $("#cursor");
+  if (cur && window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    var mx = -100, my = -100, cx = -100, cy = -100;
+    window.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
+    (function tick() {
+      cx += (mx - cx) * 0.22; cy += (my - cy) * 0.22;
+      cur.style.transform = "translate(" + cx + "px," + cy + "px)";
+      requestAnimationFrame(tick);
+    })();
+    document.addEventListener("mouseover", function (e) {
+      var t = e.target.closest ? e.target : null; if (!t) return;
+      var drag = t.closest(".track"), view = t.closest(".tiles a, a.gcard, .pay a"), link = t.closest("a, button, summary, input, select, textarea");
+      cur.classList.toggle("big", !!(drag || view));
+      cur.classList.toggle("ring", !drag && !view && !!link);
+      if (drag) cur.dataset.label = "Scroll"; else if (view) cur.dataset.label = "View";
+    });
+  }
+
   /* ---------- loader ---------- */
   var loader = $("#loader");
   function endLoader(then) {
@@ -160,6 +179,15 @@
     gsap.to(col, { yPercent: i % 2 ? 9 : -9, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
   });
   if ($(".hero-in")) gsap.to(".hero-in", { yPercent: -14, autoAlpha: 0.3, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  // inner-page heroes: the film opens out from a framed window as the loader lifts, then drifts on scroll
+  $$("[data-film]").forEach(function (m) {
+    var inner = m.querySelector("video,img");
+    gsap.fromTo(m, { clipPath: "inset(14% 9% 14% 9% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.6, ease: "power4.inOut", delay: 0.9 });
+    gsap.fromTo(inner, { scale: 1.35 }, { scale: 1.08, duration: 2.6, ease: "power3.out", delay: 0.9 });
+    gsap.to(inner, { yPercent: 12, ease: "none", scrollTrigger: { trigger: m.parentNode, start: "top top", end: "bottom top", scrub: true } });
+    gsap.to($$(":scope > div:not(.media)", m.parentNode), { yPercent: -16, autoAlpha: 0.2, ease: "none", scrollTrigger: { trigger: m.parentNode, start: "top top", end: "bottom top", scrub: true } });
+  });
 
   // nav hides on the way down, returns on the way up
   var nav = $("#nav");

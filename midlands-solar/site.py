@@ -72,10 +72,10 @@ def hero(h1, lede, label="Show my roof"):
   <div class="hero-foot" data-hin><span>MCS certified</span><span>Rated 4.9 out of 5</span><span>25-year panel warranty</span></div>
 </section>'''
 
-def phero(label, h1, lede, media):
+def phero(label, h1, lede, media, extra=""):
     """Inner page hero: full-screen photo or clip with the page title over it."""
-    return (f'<section class="scr phero" data-hero><div class="media">{media}</div>'
-            f'<div>{lab(label)}<h1>{h1}</h1><p class="sub" data-hin>{lede}</p></div></section>')
+    return (f'<section class="scr phero" data-hero><div class="media" data-film>{media}</div>'
+            f'<div>{lab(label)}<h1>{h1}</h1><p class="sub" data-hin>{lede}</p>{extra}</div></section>')
 
 def say():
     nums = ('<div class="nums"><div><b data-count="4.9" data-d="1">4.9</b><span>out of 5 from our customers</span></div>'
@@ -220,6 +220,7 @@ def page(file, title, desc, body, active="", landing=False):
 <link rel="stylesheet" href="assets/css/ms.css">
 </head>
 <body>
+<div class="cursor" id="cursor"></div>
 <div class="loader" id="loader"><div><img src="assets/img/sun-mark.png" alt=""><span id="loadN">000</span></div></div>
 {nav}
 <main id="top">
@@ -268,7 +269,7 @@ def about():
     nums = ('<div class="nums"><div><b data-count="10" data-s="+">10+</b><span>years fitting solar</span></div>'
             '<div><b data-count="4.9" data-d="1">4.9</b><span>out of 5 from our customers</span></div><div><b>MCS</b><span>certified installer</span></div></div>')
     body = "\n".join([
-        phero("About us", h1("Renewable energy,", "<em>done properly.</em>"), "Midlands Solar was set up to make switching to solar simpler, clearer and more dependable for homes and businesses across the region.", img("home-drone-2.jpg")),
+        phero("About us", h1("Renewable energy,", "<em>done properly.</em>"), "Midlands Solar was set up to make switching to solar simpler, clearer and more dependable for homes and businesses across the region.", vid("wide-snowdon-1", True)),
         split("bone", "Our story", "A local team,<br>built on trust.",
               sub("We started Midlands Solar because buying solar was harder than it should be: pushy sales visits, vague numbers and installers you never heard from again.")
               + sub("We do it differently. Straight advice about what your roof can do, a system designed around how you use electricity, and the same Midlands team for the install and everything after it.")
@@ -368,7 +369,7 @@ def gcard(g, link=True):
 
 def funding():
     body = "\n".join([
-        phero("Government funding", h1("Help with the", "<em>cost of solar.</em>"), "There's no single solar grant for everyone, but every home gets some help and some homes get a lot. Tap any scheme to see how it works.", vid("orbit-2", True)),
+        phero("Government funding", h1("Help with the", "<em>cost of solar.</em>"), "There's no single solar grant for everyone, but every home gets some help and some homes get a lot. Tap any scheme to see how it works.", vid("wide-glades-1", True)),
         f'<section class="scr bone">{head("For most homes", "Help you can get now.", sub("These apply to almost everyone. No means test."))}<div class="gcards" style="--n:3">{"".join(gcard(g) for g in GRANTS[:3])}</div></section>',
         f'<section class="scr blk">{head("If you qualify", "Grants for some households.", sub("Aimed at lower-income homes and homes that are expensive to heat."))}<div class="gcards" style="--n:2">{"".join(gcard(g) for g in GRANTS[3:])}</div>'
         '<p class="note">This is a guide, not financial advice. Schemes change and some depend on your council. We confirm exactly what you can claim when we quote.</p></section>',
@@ -421,10 +422,8 @@ def finance():
             ("Option 2", "Spread the cost", "Pay monthly instead of all at once. We show the monthly payment next to your expected monthly saving.", '<a class="tl" href="#lender">About the lender <i>→</i></a>'),
             ("Option 3", "Grants and funding", "Some households qualify for help with the cost. We check what's open for your address.", tl("funding.html", "Government funding"))]
     cards = "".join(f'<div class="gcard" data-up><span class="tag">{k}</span><h3>{h}</h3><p>{p}</p>{l}</div>' for k, h, p, l in ways)
-    hero_ = (f'<section class="scr split blk" data-hero><div class="split-txt">{lab("Finance options")}<h1 class="fh1">{h1("Spread the cost", "<em>of solar.</em>")}</h1>'
-             + '<p class="sub" data-hin>Pay in one go or pay monthly. We show you the figures for both, side by side with what the system should save you.</p>'
-             + f'<div class="btns" data-hin>{btn("quote/index.html", "See my numbers")}<a class="tl" href="#lender">About the lender <i>→</i></a></div></div>'
-             + f'<div class="stage" data-tilt><div class="shot">{vid("fly-glades-3", True)}</div></div></section>')
+    hero_ = phero("Finance options", h1("Spread the cost", "<em>of solar.</em>"), "Pay in one go or pay monthly. We show you the figures for both, side by side with what the system should save you.",
+                  vid("wide-glades-3", True), f'<div class="btns" data-hin>{btn("quote/index.html", "See my numbers")}<a class="tl" href="#lender">About the lender <i>→</i></a></div>')
     body = "\n".join([
         hero_,
         f'<section class="scr bone">{head("Ways to pay", "Three ways to do it.")}<div class="gcards" style="--n:3">{cards}</div>'
@@ -467,13 +466,13 @@ def products():
         ("inverter", "Inverter", "Turns your panels' output into power your home can use.", "inv-fox.jpg", "Inverter on a wall"),
         ("monitoring", "Monitoring app", "See what you make, use, store and export, live.", "bat-growatt.jpg", "Inverter and batteries"),
         ("ev-charger", "EV charger", "Charge the car on your spare solar power.", "bat-outdoor.jpg", "Outdoor unit")]]
-    panels = (f'<section class="scr split bone" id="panels"><div class="stage" data-tilt>{shot("panel", "home-1.jpg", "All-black solar panels")}</div>'
+    panels = (f'<section class="scr split bone" id="panels"><div class="pstage" data-tilt>{shot("panel", "home-1.jpg", "All-black solar panels")}</div>'
               f'<div class="split-txt">{lab("Solar panels")}<h2 data-rise>All-black panels that look right on a house.</h2>'
               + sub("High-efficiency panels with black frames and black backing, so the array reads as one clean block on your roof.")
               + ticks(["Laid out around your roof's shape, vents and windows", "Fixed to the rafters, with the roof made good around every bracket", "Product warranties of 25 years"])
               + f'<div class="btns">{btn("quote/index.html", "See them on my roof")}</div></div></section>')
     body = "\n".join([
-        phero("Products we fit", h1("Good kit,", "<em>fitted properly.</em>"), "We choose equipment we'd put on our own homes, and match it to your roof and how you use power.", vid("hero-orbit", True)),
+        phero("Products we fit", h1("Good kit,", "<em>fitted properly.</em>"), "We choose equipment we'd put on our own homes, and match it to your roof and how you use power.", vid("wide-snowdon-2", True)),
         panels,
         f'<section class="scr flush work bone" id="batteries" data-xpin>{head("Battery storage", "Use your own power after dark.", sub("A battery stores what your panels make in the day. These are makes we fit."))}'
         f'<div class="track" data-track>{"".join(bats)}</div></section>',
@@ -513,7 +512,7 @@ if __name__ == "__main__":
          ("Schools and public buildings", "Lower bills and a visible commitment to cutting carbon.")],
         ("agricultural.html", "Looking for agricultural solar?"), img("com-3.jpg", "Rows of solar panels on a large flat roof"))
     biz("agricultural.html", "Agricultural solar", h1("Power the farm", "<em>from the barn roof.</em>"), "Solar for farms, rural buildings and high-usage agricultural sites across the Midlands.",
-        img("com-2.jpg"), "Put your biggest roofs to work.",
+        vid("orbit-2", True), "Put your biggest roofs to work.",
         "Barns, grain stores and livestock buildings offer large roofs with little shading. Solar cuts the cost of refrigeration, ventilation, drying and pumping.",
         ["Systems sized to seasonal and daily demand", "Suitable for steel, fibre-cement and tiled roofs", "Three-phase supplies and larger grid connections", "Battery storage to cover early mornings and evenings"],
         [("Dairy and livestock", "Milking, cooling and ventilation run every day, so generated power is used on site."),
