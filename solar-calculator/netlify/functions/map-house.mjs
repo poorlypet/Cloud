@@ -1,35 +1,26 @@
-/* Netlify function: ask Claude to outline the customer's home on the aerial photo.
-   The page sends a cropped roof photo (JPEG, base64) with a red dot on the home,
-   a labelled pixel grid, the scale and the type of home. Claude returns two
-   outlines in the photo's pixels: the home's roof and the property boundary.
+/* Netlify function: ask Claude where the customer's home starts and ends.
+   The page sends Google's roof photo, turned so the row of homes runs left to
+   right, with numbered lines every metre and a red dot on the home. Claude picks
+   the line at each end of this home's roof (its party walls). Google's own roof
+   outline then gives the exact edges.
    Needs ANTHROPIC_API_KEY set in Netlify (Site configuration > Environment variables). */
 import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic();
 
-const POINT = {
-  type: "object",
-  properties: { x: { type: "number" }, y: { type: "number" } },
-  required: ["x", "y"],
-  additionalProperties: false
-};
 const SCHEMA = {
   type: "object",
   properties: {
-    house: { type: "array", items: POINT, description: "Outline of the roof of the one home the red dot is on, clockwise" },
-    plot: { type: "array", items: POINT, description: "Property boundary of that home: the home plus its own front and back garden or driveway, clockwise" },
+    joined: { type: "string", enum: ["none", "left", "right", "both"], description: "Which sides the customer's home shares a wall and roof with a neighbour" },
+    leftLine: { type: "integer", description: "Numbered line nearest the left end of the customer's home roof" },
+    rightLine: { type: "integer", description: "Numbered line nearest the right end of the customer's home roof" },
     confidence: { type: "string", enum: ["high", "medium", "low"] }
   },
-  required: ["house", "plot", "confidence"],
+  required: ["joined", "leftLine", "rightLine", "confidence"],
   additionalProperties: false
 };
 
-const TYPES = {
-  detached: "a detached house (no shared walls)",
-  semi: "a semi-detached house (one shared wall with the house next door)",
-  end: "an end-of-terrace house (one shared wall, at the end of a row)",
-  terrace: "a mid-terrace house (shared walls on both sides)"
-};
+const TYPES = { semi: "semi-detached", end: "end of terrace", terrace: "mid-terrace", detached: "detached" };
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -41,23 +32,16 @@ export default async (req) => {
 
   let b;
   try { b = await req.json(); } catch { return json({ error: "Bad request" }, 400); }
-  const { image, width, height, pin, metresPerPixel, homeType, grid } = b || {};
-  if (typeof image !== "string" || image.length > 4_000_000 || !/^[A-Za-z0-9+/=]+$/.test(image) ||
-      !(width > 0 && height > 0 && pin && pin.x >= 0 && pin.y >= 0 && metresPerPixel > 0)) {
+  const { image, metres, lines, homeType } = b || {};
+  if (typeof image !== "string" || image.length > 4_000_000 || !/^[A-Za-z0-9+/=]+$/.test(image) || !(metres > 0) || !(lines > 1)) {
     return json({ error: "Bad request" }, 400);
   }
-
-  const houseWidthPx = Math.round(5.5 / metresPerPixel);
   const prompt = [
-    `This is a straight-down aerial photo of homes in the UK, north at the top. It is ${width} x ${height} pixels and 1 pixel is ${metresPerPixel.toFixed(3)} metres.`,
-    `Thin grid lines are drawn every ${grid} pixels, labelled with their pixel position along the top and left edges. Use them to read coordinates accurately.`,
-    `The red dot at x=${Math.round(pin.x)}, y=${Math.round(pin.y)} marks the customer's home. It is ${TYPES[homeType] || "a house"}.`,
+    `Aerial photo looking straight down at UK homes, turned so the row of homes runs left to right. It covers ${metres} metres across. The ${lines} numbered cyan lines are 1 metre apart. The red dot is on the roof of the customer's home. The customer says it is ${TYPES[homeType] || "a house"}, but check the photo.`,
     "",
-    "Return two outlines, in this image's pixel coordinates, each going clockwise:",
-    "1. house: the edge of the roof of the one home the red dot is on. Follow the roof's eaves. Where the roof joins a neighbour's roof, stop at the party wall: the line where the roof colour, texture, ridge or chimney changes between the two homes." +
-      ` A typical UK terraced or semi-detached home is about ${houseWidthPx} pixels wide. Include the home's own rear extension or porch if it clearly belongs to it. Use 4 to 16 points.`,
-    "2. plot: the property boundary of that home: the home plus its own front garden or driveway and its own back garden, following fences, hedges, walls and the edge of the pavement. Do not include the road, the pavement or a neighbour's garden. Use 4 to 20 points.",
-    "Set confidence to low if you cannot tell where this home ends."
+    "Find where the customer's home starts and ends along the row. Clues for where one home ends and the next begins: a gap between buildings, a step or change in the roof, a chimney, a change in roof colour or tiles, and the fences, walls and hedges dividing front gardens and driveways (each home usually has its own). UK terraced homes are usually 4.5 to 6 metres wide, semi-detached homes 6 to 9 metres.",
+    "",
+    "Give the numbered line nearest each end of the customer's home roof."
   ].join("\n");
 
   try {
@@ -66,7 +50,7 @@ export default async (req) => {
       max_tokens: 16000,
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
-      output_config: { effort: "medium", format: { type: "json_schema", schema: SCHEMA } },
+      output_config: { effort: "high", format: { type: "json_schema", schema: SCHEMA } },
       messages: [{
         role: "user",
         content: [

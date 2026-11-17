@@ -23,12 +23,12 @@ window.SOLAR_CONFIG = {
   idealPostcodesKey: "ak_PISdKps5nmqC1stNUiZ0jK6gtAmio",
   leadEndpoint: "",
 
-  /* AI mapping: Claude outlines the home and its property on the roof photo.
+  /* AI mapping: Claude finds where the home starts and ends along its row
+     (its party walls) so only this home's roof gets panels.
      Works when the site runs on Netlify with ANTHROPIC_API_KEY set; otherwise
      the page falls back to Google's own roof outline. Set to "" to turn off. */
-  aiEndpoint: "",          // "/.netlify/functions/map-house" to switch on (tested: not accurate enough yet)
-  aiCropMeters: 40,       // area of photo sent to the AI, around the pin
-  aiCropPixels: 900,      // size of that picture
+  aiEndpoint: "/.netlify/functions/map-house",
+  aiRowMeters: 30,        // length of the row of homes shown to the AI
   aiTimeoutMs: 45000,
 
   /* --- Panel types (TEST PRICES) -------------------------------- */

@@ -197,7 +197,7 @@
      ============================================================ */
   function startPin() {
     $("pinErr").textContent = "";
-    S.showUnused = true; S.showFlux = false; S.img = null; S.flux = null; S.born = {}; showCanvas(false);
+    S.showUnused = true; S.showFlux = false; S.alongRange = null; S.aiMapped = false; S.img = null; S.flux = null; S.born = {}; showCanvas(false);
     if (!LIVE) { drawDemo(); paint("none"); return; }
     google().then(function (g) {
       if (!gmap) {
@@ -235,8 +235,8 @@
     }).then(function () {
       return LIVE && C.aiEndpoint && S.img ? aiMap().catch(function (e) { console.warn("AI mapping unavailable, using Google's roof outline", e); return null; }) : null;
     }).then(function (ai) {
-      if (ai && applyAI(ai)) { /* panels now come from the AI's outline of this home */ }
-      else { if (LIVE && regridFlat()) drawRoof(); mapHouse(); }
+      if (!applyAI(ai) && LIVE && regridFlat()) drawRoof();
+      mapHouse();
       S.traceStart = performance.now();
       showCanvas(true); paint("outline");
       return wait(S.house ? 2300 : 500);
@@ -683,34 +683,35 @@
      grid, and get back the outline of this home's roof and its property
      boundary. Panels are then kept only inside the home's own roof. */
   function aiMap() {
-    var I = S.img, pc = I.px(S.centre), half = Math.round(C.aiCropMeters / 2 / I.res);
-    var x0 = Math.max(0, Math.round(pc.x - half)), y0 = Math.max(0, Math.round(pc.y - half));
-    var x1 = Math.min(I.w, Math.round(pc.x + half)), y1 = Math.min(I.h, Math.round(pc.y + half));
-    var k = C.aiCropPixels / Math.max(x1 - x0, y1 - y0), W = Math.round((x1 - x0) * k), H = Math.round((y1 - y0) * k);
+    if (S.htype === "detached") return Promise.resolve(null);
+    var I = S.img, F = S.frame, pc = I.px(S.centre);
+    var K = 0.025 / I.res, M = C.aiRowMeters, W = Math.round(M / 0.025), H = Math.round(W * 2 / 3);
+    var theta = Math.atan2(-F.fx, -F.fy);   // direction along the row, in photo pixels
     var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
     var ctx = cv.getContext("2d");
-    ctx.imageSmoothingQuality = "high";
-    ctx.drawImage(I.canvas, x0, y0, x1 - x0, y1 - y0, 0, 0, W, H);
-    var grid = 100;
-    ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1;
-    ctx.font = "bold 13px Arial"; ctx.fillStyle = "#fff"; ctx.shadowColor = "#000"; ctx.shadowBlur = 3;
-    for (var g = grid; g < Math.max(W, H); g += grid) {
-      if (g < W) { ctx.beginPath(); ctx.moveTo(g + .5, 0); ctx.lineTo(g + .5, H); ctx.stroke(); ctx.fillText(String(g), g + 3, 14); }
-      if (g < H) { ctx.beginPath(); ctx.moveTo(0, g + .5); ctx.lineTo(W, g + .5); ctx.stroke(); ctx.fillText(String(g), 3, g - 3); }
+    ctx.fillStyle = "#333"; ctx.fillRect(0, 0, W, H);
+    ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(1 / K, 1 / K); ctx.rotate(-theta); ctx.translate(-pc.x, -pc.y);
+    ctx.imageSmoothingQuality = "high"; ctx.drawImage(I.canvas, 0, 0); ctx.restore();
+    var step = 1 / 0.025, n = 0;
+    ctx.strokeStyle = "#00E5FF"; ctx.lineWidth = 2; ctx.font = "bold 18px Arial"; ctx.textAlign = "center";
+    for (var x = 0; x < W; x += step) {
+      n++;
+      ctx.beginPath(); ctx.moveTo(x + 1, 30); ctx.lineTo(x + 1, H - 30); ctx.stroke();
+      ctx.lineWidth = 4; ctx.strokeStyle = "#000"; ctx.strokeText(String(n), x + 1, 20); ctx.strokeText(String(n), x + 1, H - 8);
+      ctx.fillStyle = "#FFEB3B"; ctx.fillText(String(n), x + 1, 20); ctx.fillText(String(n), x + 1, H - 8);
+      ctx.lineWidth = 2; ctx.strokeStyle = "#00E5FF";
     }
-    ctx.shadowBlur = 0;
-    var px = (pc.x - x0) * k, py = (pc.y - y0) * k;
-    ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI * 2); ctx.fillStyle = "#FF2A2A"; ctx.fill();
-    ctx.lineWidth = 2; ctx.strokeStyle = "#fff"; ctx.stroke();
-    var image = cv.toDataURL("image/jpeg", 0.88).split(",")[1];
+    ctx.beginPath(); ctx.arc(W / 2, H / 2, 9, 0, Math.PI * 2); ctx.fillStyle = "#FF2828"; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = "#fff"; ctx.stroke();
+    var image = cv.toDataURL("image/jpeg", 0.9).split(",")[1];
     var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, C.aiTimeoutMs);
     return fetch(C.aiEndpoint, {
       method: "POST", signal: ctrl.signal, headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: image, width: W, height: H, pin: { x: px, y: py }, metresPerPixel: I.res / k, homeType: S.htype, grid: grid })
+      body: JSON.stringify({ image: image, metres: M, lines: n, homeType: S.htype })
     }).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error("AI " + r.status); return r.json(); })
       .then(function (out) {
-        var back = function (P) { return (P || []).map(function (p) { return [x0 + p.x / k, y0 + p.y / k]; }); };
-        return { house: back(out.house), plot: back(out.plot), confidence: out.confidence };
+        // line k sits (k - 1) metres from the left edge; the pin is in the middle
+        var a0 = Math.min(out.leftLine, out.rightLine) - 1 - M / 2, a1 = Math.max(out.leftLine, out.rightLine) - 1 - M / 2;
+        return { joined: out.joined, along: [a0, a1], confidence: out.confidence };
       });
   }
   function inPoly(x, y, P) {
@@ -721,33 +722,25 @@
     return inside;
   }
   function applyAI(ai) {
-    if (!ai.house || ai.house.length < 3 || ai.confidence === "low") return false;
-    var I = S.img, sp = S.insights.solarPotential;
-    var poly = ai.house, kLat = 111320;
-    // keep Google's panels whose four corners all sit on this home's roof
+    if (!ai) return false;
+    if (ai.joined === "none") { S.alongRange = null; return false; }   // it's really a detached building
+    var w = ai.along[1] - ai.along[0];
+    if (!(w >= 3.5 && w <= 12) || ai.along[0] > 0.5 || ai.along[1] < -0.5) return false;   // not believable: keep the house-width rule
+    S.alongRange = ai.along;
+    var sp = S.insights.solarPotential, F = S.frame, kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
     var dims = latticeDims(S.rawPanels, sp);
     var keep = S.rawPanels.filter(function (p) {
-      var d = dims[p.segmentIndex], kLng = 111320 * Math.cos(p.center.latitude * Math.PI / 180);
-      return [[1, 1], [1, -1], [-1, -1], [-1, 1]].every(function (q) {
-        var a = q[0] * d.along * 0.45, v = q[1] * d.down * 0.45;
-        var x = -d.fy * a + d.fx * v, y = d.fx * a + d.fy * v;
-        var pt = I.px({ lat: p.center.latitude + y / kLat, lng: p.center.longitude + x / kLng });
-        return inPoly(pt.x, pt.y, poly);
-      });
+      var e = (p.center.longitude - S.centre.lng) * kLng, n = (p.center.latitude - S.centre.lat) * kLat;
+      var a = -e * F.fy + n * F.fx, c = e * F.fx + n * F.fy, d = dims[p.segmentIndex];
+      var half = Math.abs(d.fx * F.fx + d.fy * F.fy) > 0.7 ? d.along / 2 : d.down / 2;   // panel's size along the row
+      return a - half >= ai.along[0] - 0.15 && a + half <= ai.along[1] + 0.15 && Math.abs(c) <= C.houseDepthMeters / 2;
     });
-    if (keep.length < 2) return false;
+    if (keep.length < 2) { S.alongRange = null; return false; }
     S.panels = tidyGrid(keep);
     S.dims = latticeDims(S.panels, sp);
     buildSegs(sp);
-    if (regridFlat()) {
-      S.panels = S.panels.filter(function (p) {
-        return !p.path || p.path.every(function (q) { var pt = I.px(q); return inPoly(pt.x, pt.y, poly); });
-      });
-      buildSegs(sp);
-    }
+    if (regridFlat()) buildSegs(sp);
     drawRoof();
-    S.house = poly;
-    S.box = ai.plot && ai.plot.length >= 3 ? ai.plot : null;
     S.aiMapped = true;
     return true;
   }
@@ -768,6 +761,7 @@
     var ok = function (x, y) {
       if (x < 0 || y < 0 || x >= W || y >= H || !(md[y * W + x] > 0)) return false;
       var f = toFrame(x, y);
+      if (S.alongRange) return f.a >= S.alongRange[0] && f.a <= S.alongRange[1] && Math.abs(f.c) <= C.houseDepthMeters / 2;
       if (!width) return Math.abs(f.a) <= C.detachedReachMeters && Math.abs(f.c) <= C.detachedReachMeters;
       return Math.abs(f.a) <= width / 2 && Math.abs(f.c) <= C.houseDepthMeters / 2;
     };
@@ -820,7 +814,8 @@
     // property box: the house's extent, out past the front and back gardens
     var a0 = Infinity, a1 = -Infinity, c0 = Infinity, c1 = -Infinity;
     S.house.forEach(function (p) { var f = toFrame(p[0], p[1]); a0 = Math.min(a0, f.a); a1 = Math.max(a1, f.a); c0 = Math.min(c0, f.c); c1 = Math.max(c1, f.c); });
-    if (width) { a0 = Math.max(a0, -width / 2) - 0.3; a1 = Math.min(a1, width / 2) + 0.3; } else { a0 -= 2.5; a1 += 2.5; }
+    if (S.alongRange) { a0 = S.alongRange[0] - 0.3; a1 = S.alongRange[1] + 0.3; }
+    else if (width) { a0 = Math.max(a0, -width / 2) - 0.3; a1 = Math.min(a1, width / 2) + 0.3; } else { a0 -= 2.5; a1 += 2.5; }
     c0 -= C.gardenMeters; c1 += C.gardenMeters;
     var back = function (a, c) { var e = -F.fy * a + F.fx * c, nn = F.fx * a + F.fy * c; return [pc.x + e / res, pc.y - nn / res]; };
     S.box = [back(a0, c0), back(a1, c0), back(a1, c1), back(a0, c1)];
