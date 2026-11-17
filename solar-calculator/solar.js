@@ -536,15 +536,17 @@
       path.forEach(function (q, k) { var p = I.px(q); var x = ox + p.x * sc, y = oy + p.y * sc; if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
       ctx.closePath();
     };
+    // every panel space Google found on this house, in yellow; chosen ones filled
+    var anyUsed = Object.keys(on).length > 0;
+    ctx.setLineDash([]);
     S.paths.forEach(function (path, i) {
       var used = !!on[i];
       if (!used && !unused) return;
       trace(path);
-      ctx.setLineDash(used ? [] : [4, 3]);
-      if (used) { ctx.fillStyle = "rgba(22,24,29,.96)"; ctx.fill(); }
-      ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = used ? 1 : 1.2; ctx.stroke();
+      if (used) { ctx.fillStyle = "rgba(22,24,29,.95)"; ctx.fill(); }
+      ctx.strokeStyle = "#FFD21F"; ctx.lineWidth = used ? 1.4 : 1.2; ctx.stroke();
     });
-    if (showOutline) {
+    if (showOutline && !anyUsed) {
       trace(S.hull);
       ctx.setLineDash([8, 6]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
     }
