@@ -37,6 +37,8 @@ window.SOLAR_CONFIG = {
   houseWidths: { detached: 0, semi: 7, end: 5.5, terrace: 5 },
   houseDepthMeters: 24,
   roofPhotoRadiusMeters: 25,  // size of Google's roof photo shown after the pin step
+  gardenMeters: 6,
+  detachedReachMeters: 9,     // detached homes: only trace roof within this distance of the pin            // how far the dashed property box reaches past the house, front and back
   flatRoofPitch: 10,          // roofs flatter than this (degrees) get panels lined up with the walls
   maxPanels: 30,
   defaultUsageKwh: 2700,    // typical UK home, customer can change it

@@ -234,8 +234,10 @@
       return Promise.all([LIVE ? loadRoofImage().catch(function (e) { console.warn("Roof photo unavailable, using the map", e); S.img = null; }) : null, wait(800)]);
     }).then(function () {
       if (LIVE && regridFlat()) drawRoof();
+      mapHouse();
+      S.traceStart = performance.now();
       showCanvas(true); paint("outline");
-      return wait(500);
+      return wait(S.house ? 2300 : 500);
     }).then(function () {
       li[1].className = "done"; li[2].className = "run";
       recommend(); paint();
@@ -673,6 +675,79 @@
     ctx.putImageData(id, 0, 0);
     return cv;
   }
+  /* Map the house: take Google's roof outline map (its own image recognition of
+     roofs), keep the part that belongs to this house, trace its edge, and draw a
+     dashed box round the property from front garden to back garden. */
+  function mapHouse() {
+    S.house = null; S.box = null;
+    var I = S.img, M = S.mask, F = S.frame;
+    if (!I || !M || !F || M.w !== I.w || M.h !== I.h) return;
+    var W = M.w, H = M.h, md = M.d, res = I.res, width = F.width || 0;
+    var pc = I.px(S.centre);
+    var toFrame = function (x, y) {   // pixel -> metres along the ridge / across the roof, from the pin
+      var e = (x - pc.x) * res, n = -(y - pc.y) * res;
+      return { a: -e * F.fy + n * F.fx, c: e * F.fx + n * F.fy };
+    };
+    var ok = function (x, y) {
+      if (x < 0 || y < 0 || x >= W || y >= H || !(md[y * W + x] > 0)) return false;
+      var f = toFrame(x, y);
+      if (!width) return Math.abs(f.a) <= C.detachedReachMeters && Math.abs(f.c) <= C.detachedReachMeters;
+      return Math.abs(f.a) <= width / 2 && Math.abs(f.c) <= C.houseDepthMeters / 2;
+    };
+    // start from the roof pixel nearest the middle of this house's panels
+    var la = 0, ln = 0;
+    S.panels.forEach(function (p) { la += p.center.latitude; ln += p.center.longitude; });
+    var seed = I.px({ lat: la / S.panels.length, lng: ln / S.panels.length });
+    var sx = Math.round(seed.x), sy = Math.round(seed.y), found = false;
+    for (var r = 0; r < 40 && !found; r++)
+      for (var dy = -r; dy <= r && !found; dy++) for (var dx = -r; dx <= r && !found; dx++)
+        if (ok(sx + dx, sy + dy)) { sx += dx; sy += dy; found = true; }
+    if (!found) return;
+    // flood fill this house's roof
+    var comp = new Uint8Array(W * H), q = [sy * W + sx], n = 0;
+    comp[q[0]] = 1;
+    while (q.length && n < 400000) {
+      var i = q.pop(), x = i % W, y = (i - x) / W; n++;
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
+        var X = x + d[0], Y = y + d[1], j = Y * W + X;
+        if (ok(X, Y) && !comp[j]) { comp[j] = 1; q.push(j); }
+      });
+    }
+    if (n < 200) return;
+    // trace the edge (Moore neighbour tracing), then smooth it
+    var start = 0; while (!comp[start]) start++;
+    var D = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
+    var at = function (x, y) { return x >= 0 && y >= 0 && x < W && y < H && comp[y * W + x]; };
+    var cx = start % W, cy = (start - cx) / W, dir = 0, pts = [[cx, cy]];
+    for (var step = 0; step < 200000; step++) {
+      var moved = false;
+      for (var k = 0; k < 8; k++) {
+        var d = (dir + 6 + k) % 8, nx = cx + D[d][0], ny = cy + D[d][1];
+        if (at(nx, ny)) { cx = nx; cy = ny; dir = d; moved = true; break; }
+      }
+      if (!moved || (cx === pts[0][0] && cy === pts[0][1])) break;
+      pts.push([cx, cy]);
+    }
+    var simp = function (P, eps) {   // Douglas-Peucker
+      if (P.length < 3) return P;
+      var a = P[0], b = P[P.length - 1], best = 0, bi = 0, L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+      for (var i = 1; i < P.length - 1; i++) {
+        var dd = Math.abs((b[0] - a[0]) * (a[1] - P[i][1]) - (a[0] - P[i][0]) * (b[1] - a[1])) / L;
+        if (dd > best) { best = dd; bi = i; }
+      }
+      if (best <= eps) return [a, b];
+      return simp(P.slice(0, bi + 1), eps).slice(0, -1).concat(simp(P.slice(bi), eps));
+    };
+    var half = Math.floor(pts.length / 2);
+    S.house = simp(pts.slice(0, half + 1), 1.2).slice(0, -1).concat(simp(pts.slice(half).concat([pts[0]]), 1.2));
+    // property box: the house's extent, out past the front and back gardens
+    var a0 = Infinity, a1 = -Infinity, c0 = Infinity, c1 = -Infinity;
+    S.house.forEach(function (p) { var f = toFrame(p[0], p[1]); a0 = Math.min(a0, f.a); a1 = Math.max(a1, f.a); c0 = Math.min(c0, f.c); c1 = Math.max(c1, f.c); });
+    if (width) { a0 = Math.max(a0, -width / 2) - 0.3; a1 = Math.min(a1, width / 2) + 0.3; } else { a0 -= 2.5; a1 += 2.5; }
+    c0 -= C.gardenMeters; c1 += C.gardenMeters;
+    var back = function (a, c) { var e = -F.fy * a + F.fx * c, nn = F.fx * a + F.fy * c; return [pc.x + e / res, pc.y - nn / res]; };
+    S.box = [back(a0, c0), back(a1, c0), back(a1, c1), back(a0, c1)];
+  }
   function showCanvas(on) {
     var cv = $("roofCanvas");
     cv.hidden = !(on && S.img);
@@ -686,10 +761,10 @@
     var ctx = cv.getContext("2d");
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // frame the roof outline with room around it, never showing past the photo's edge
-    var hp = S.hull.map(I.px);
+    var hp = S.box ? S.box.map(function (p) { return { x: p[0], y: p[1] }; }) : S.hull.map(I.px);
     var x0 = Math.min.apply(null, hp.map(function (p) { return p.x; })), x1 = Math.max.apply(null, hp.map(function (p) { return p.x; }));
     var y0 = Math.min.apply(null, hp.map(function (p) { return p.y; })), y1 = Math.max.apply(null, hp.map(function (p) { return p.y; }));
-    var sc = Math.min(W / ((x1 - x0) * 3.4), H / ((y1 - y0) * 3.4));
+    var sc = Math.min(W / ((x1 - x0) * (S.box ? 1.5 : 3.4)), H / ((y1 - y0) * (S.box ? 1.5 : 3.4)));
     sc = Math.max(sc, W / I.w, H / I.h);
     var ox = W / 2 - (x0 + x1) / 2 * sc, oy = H / 2 - (y0 + y1) / 2 * sc;
     ox = Math.min(0, Math.max(W - I.w * sc, ox)); oy = Math.min(0, Math.max(H - I.h * sc, oy));
@@ -715,9 +790,25 @@
       }
       ctx.strokeStyle = "#FFC21A"; ctx.lineWidth = used ? 1.5 : 1.1; ctx.globalAlpha = used ? 1 : 0.85; ctx.stroke(); ctx.globalAlpha = 1;
     });
-    cancelAnimationFrame(S.raf);
-    if (pending) S.raf = requestAnimationFrame(function () { drawCanvas(on, unused, showOutline); });
-    if (showOutline && !anyUsed) {
+    var pxPath = function (P) {
+      ctx.beginPath();
+      P.forEach(function (p, k) { var x = ox + p[0] * sc, y = oy + p[1] * sc; if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
+    };
+    if (showOutline && S.box) {   // dashed property box, always on once measured
+      pxPath(S.box); ctx.closePath();
+      ctx.setLineDash([9, 7]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2.2; ctx.stroke(); ctx.setLineDash([]);
+    }
+    if (showOutline && S.house && !anyUsed) {   // the house outline, traced as if scanned
+      var prog = REDUCE ? 1 : Math.min(1, (now - (S.traceStart || 0)) / 1800);
+      var m = Math.max(2, Math.round(S.house.length * prog));
+      pxPath(S.house.slice(0, m).concat(prog >= 1 ? [S.house[0]] : []));
+      ctx.shadowColor = "rgba(61,235,140,.8)"; ctx.shadowBlur = 10;
+      ctx.strokeStyle = "#3DEB8C"; ctx.lineWidth = 2.5; ctx.lineJoin = "round"; ctx.stroke();
+      ctx.shadowBlur = 0;
+      if (prog < 1) pending = true;
+    }
+    if (pending) { cancelAnimationFrame(S.raf); S.raf = requestAnimationFrame(function () { drawCanvas(on, unused, showOutline); }); }
+    if (showOutline && !anyUsed && !S.box) {
       trace(S.hull);
       ctx.setLineDash([8, 6]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
     }
@@ -821,7 +912,23 @@
     if (n === S.n) { toast(+b.dataset.step > 0 ? "That's the most panels your selected roof can take." : "That's the smallest system we install."); return; }
     S.n = n; paint(); renderSuggest(); renderResults();
   });
-  $("toQuote").addEventListener("click", function () { go("results"); renderResults(); renderCal(); });
+  $("toQuote").addEventListener("click", function () {
+    go("results"); renderResults(); renderCal();
+    var items = [
+      "We're quoting for a <b>" + S.n + " panel solar system</b>, based on your electricity use",
+      "Working out how solar will <b>change your bills</b>",
+      "Calculating your prices with <b>0% VAT</b> and monthly payment options"
+    ];
+    $("ovList").innerHTML = items.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    var ov = $("overlay"), li = $$("#ovList li");
+    ov.hidden = false;
+    li.forEach(function (x, i) {
+      setTimeout(function () { x.classList.add("show"); }, REDUCE ? 0 : 150 + i * 650);
+      setTimeout(function () { x.classList.add("done"); }, REDUCE ? 0 : 650 + i * 650);
+    });
+    setTimeout(function () { ov.classList.add("out"); }, REDUCE ? 600 : 2700);
+    setTimeout(function () { ov.hidden = true; ov.classList.remove("out"); }, REDUCE ? 700 : 3050);
+  });
   $("backToRoof").addEventListener("click", function () { go("suggest"); renderSuggest(); });
 
   /* ============================================================

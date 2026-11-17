@@ -274,6 +274,20 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .lines tr:last-child td{border-bottom:0;font-weight:700}
 .summary .fine{margin-top:14px}
 
+.analysing{font-size:clamp(24px,2.2vw,30px);font-weight:700}
+.analysing span{color:var(--faint)}
+.spinner{width:34px;height:34px;margin:26px auto 0;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--ink);animation:spin .8s linear infinite}
+.overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:20px;background:rgba(18,20,25,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:fade .3s both}
+.overlay.out{animation:fadeout .35s both}
+@keyframes fade{from{opacity:0}}
+@keyframes fadeout{to{opacity:0}}
+.ov-card{width:100%;max-width:520px;background:var(--card);border-radius:26px;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+#ovList{display:grid;gap:12px}
+#ovList li{display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:18px;background:var(--soft);font-size:17px;font-weight:500;line-height:1.45;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+#ovList li.show{opacity:1;transform:none}
+#ovList li b{font-weight:600;color:var(--ok)}
+#ovList li:before{content:"";width:28px;height:28px;flex:none;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--ok);animation:spin .8s linear infinite}
+#ovList li.done:before{animation:none;border-color:var(--ok);background:var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);padding:12px 20px;border-radius:99px;font-weight:500;z-index:20;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

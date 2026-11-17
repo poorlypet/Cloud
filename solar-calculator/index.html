@@ -64,12 +64,9 @@
 
       <!-- 3. Analysing -->
       <div class="view" id="vAnalyse" hidden>
-        <h1>Measuring your roof</h1>
-        <ul class="checks" id="checks">
-          <li>Finding your roof from above</li>
-          <li>Measuring each side and its sunlight</li>
-          <li>Placing panels in the sunniest spots</li>
-        </ul>
+        <h1 class="analysing"><span>Analysing</span> roof spaces</h1>
+        <div class="spinner" aria-hidden="true"></div>
+        <ul id="checks" hidden><li></li><li></li><li></li></ul>
       </div>
 
       <!-- 4. Suggestion -->
@@ -206,6 +203,7 @@
   </main>
 </div>
 
+<div class="overlay" id="overlay" hidden><div class="ov-card"><ul id="ovList"></ul></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script src="config.js"></script>
