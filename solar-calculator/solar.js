@@ -173,7 +173,7 @@
      ============================================================ */
   function startPin() {
     $("pinErr").textContent = "";
-    S.showUnused = false; S.img = null; showCanvas(false);
+    S.showUnused = true; S.img = null; showCanvas(false);
     if (!LIVE) { drawDemo(); paint("none"); return; }
     google().then(function (g) {
       if (!gmap) {
