@@ -1,0 +1,19 @@
+/* Midlands Solar branding for the solar quote: black, white and the logo's orange. */
+:root{
+  --ink:#0D0D0D;--ink2:#2A2A2A;
+  --sun:#F26727;--sun-soft:#FFEDE3;--sun-ink:#9C3A0C;
+  --display:"Archivo","Arial Black",Arial,sans-serif;
+}
+h1,h2,h3,.logo{font-stretch:112%}
+.logo img{height:42px;width:auto;display:block}
+.logo{text-decoration:none}
+.btn,.go{background:var(--sun);color:#fff}
+.btn:hover,.go:hover{background:#FF7A33;box-shadow:0 10px 24px rgba(242,103,39,.32)}
+.pill{background:var(--ink)}
+.chip.dark{background:var(--ink)}
+.photo.has-img:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,13,13,.45),rgba(13,13,13,0) 45%)}
+#ovList li b{color:var(--sun-ink)}
+#ovList li:before{border-top-color:var(--sun)}
+#ovList li.done:before{border-color:var(--sun);background-color:var(--sun)}
+.checks li.done:before{border-color:var(--ink);background-color:var(--ink)}
+@media (max-width:520px){.logo img{height:36px}}
