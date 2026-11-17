@@ -1,21 +1,42 @@
-# Midlands Solar Installations website
+# Midlands Solar website
 
-Static site: black, white and the logo's orange. Built from `build.py` (shared header, footer and call-to-action live there once).
+A static site: ten pages plus the online quote tool.
 
-    python3 build.py
+## Pages
 
-| Page | File |
+| File | Page |
 |---|---|
-| Home | `index.html` |
-| Ads landing page (not in the menu, noindex) | `get-quote.html` |
-| AI solar quote | `quote/index.html` (settings in `quote/config.js`) |
-| Recent work and reviews | `work.html` |
-| Products we fit | `products.html` |
-| Government funding | `funding.html` |
-| Finance options | `finance.html` |
-| Commercial / Agricultural solar | `commercial.html`, `agricultural.html` |
-| About / Contact | `about.html`, `contact.html` |
+| `index.html` | Home |
+| `get-quote.html` | Ads landing page (not in the menu, hidden from search engines) |
+| `about.html` | About us |
+| `work.html` | Recent work and reviews |
+| `funding.html` | Government funding |
+| `finance.html` | Finance options |
+| `products.html` | Products |
+| `commercial.html`, `agricultural.html` | Business pages |
+| `contact.html` | Contact |
+| `quote/` | The online solar quote tool |
 
-Design system: `assets/css/site.css`. Behaviour (scroll reveals, parallax, sticky steps, gallery): `assets/js/site.js`.
-The AI party-wall step for the quote runs as a Netlify function (`netlify/functions/map-house.mjs`, needs `ANTHROPIC_API_KEY`).
-Enquiry forms are not connected yet: set `FORM_ENDPOINT` in `build.py`.
+## Changing the site
+
+The pages are generated. Edit `site.py`, then run:
+
+```bash
+python3 site.py
+```
+
+- Wording, page order and sections: `site.py`
+- Look and feel: `assets/css/ms.css`
+- Scroll motion, forms, postcode bars: `assets/js/ms.js`
+- Phone numbers and email: top of `site.py`
+- Contact forms: set `FORM_ENDPOINT` at the top of `site.py` (for example a Formspree link). Until then the forms tell visitors to call.
+
+Every section is built to fit one screen. After changing content, check nothing has grown taller than the screen on desktop and phone.
+
+## Quote tool
+
+Settings and prices are in `quote/config.js`. The AI roof mapping runs as a Netlify function (`netlify/functions/map-house.mjs`) and needs `ANTHROPIC_API_KEY` set in Netlify. Never put that key in a file here.
+
+## Earlier design explorations
+
+`home2.html`, `design-1…5.html` and `mosaic-1…5.html` (built by `designs.py` and `mosaic.py`) are earlier options kept for reference. They are not linked from the site and can be deleted.
