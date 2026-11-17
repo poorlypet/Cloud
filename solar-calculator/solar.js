@@ -259,7 +259,7 @@
         return along + half <= width / 2 && Math.abs(across) <= C.houseDepthMeters / 2;
       });
     }
-    if (LIVE && S.centre && S.panels.length) S.panels = tidyGrid(S.panels);
+    if (LIVE && S.centre && S.panels.length) { S.panels = tidyGrid(S.panels); S.dims = latticeDims(S.panels, sp); }
     if (!S.panels.length) { var e = new Error("no panels"); e.status = 404; throw e; }
     // roof spaces that can hold panels, best first
     var by = {};
@@ -298,6 +298,34 @@
     });
     faces.sort(function (x, y) { return y.avg - x.avg; });
     return faces.reduce(function (all, f) { return all.concat(f.panels); }, []);
+  }
+
+  /* Panel size as drawn from above, per roof face, measured from Google's own
+     spacing between neighbouring panels. A sloping panel looks shorter from
+     above, so this keeps rows edge to edge with no overlap. */
+  function latticeDims(panels, sp) {
+    var dims = {}, bySeg = {};
+    panels.forEach(function (p) { (bySeg[p.segmentIndex] = bySeg[p.segmentIndex] || []).push(p); });
+    Object.keys(bySeg).forEach(function (k) {
+      var st = (sp.roofSegmentStats || [])[k] || {}, list = bySeg[k];
+      var az = (st.azimuthDegrees || 0) * Math.PI / 180, cp = Math.cos((st.pitchDegrees || 0) * Math.PI / 180);
+      var fx = Math.sin(az), fy = Math.cos(az);
+      var kx = 111320 * Math.cos(list[0].center.latitude * Math.PI / 180), ky = 111320;
+      var A = Infinity, D = Infinity, n = Math.min(list.length, 80);
+      for (var i = 0; i < n; i++) for (var j = i + 1; j < n; j++) {
+        var dx = (list[j].center.longitude - list[i].center.longitude) * kx, dy = (list[j].center.latitude - list[i].center.latitude) * ky;
+        var u = Math.abs(-dx * fy + dy * fx), v = Math.abs(dx * fx + dy * fy);
+        if (v < 0.25 && u > 0.3) A = Math.min(A, u);
+        if (u < 0.25 && v > 0.3) D = Math.min(D, v);
+      }
+      var W = sp.panelWidthMeters, H = sp.panelHeightMeters;
+      var land = list.filter(function (p) { return p.orientation !== "PORTRAIT"; }).length * 2 >= list.length;
+      if (A > 3 && D > 3) { A = land ? H : W; D = (land ? W : H) * cp; }
+      else if (A > 3) A = Math.abs(D - W * cp) < Math.abs(D - H * cp) ? H : W;
+      else if (D > 3) D = (Math.abs(A - W) < Math.abs(A - H) ? H : W) * cp;
+      dims[k] = { along: A, down: D, fx: fx, fy: fy };
+    });
+    return dims;
   }
 
   /* ---------- which panels are used ---------- */
@@ -341,22 +369,16 @@
   function drawLive() {
     var g = window.google, sp = S.insights.solarPotential;
     clearLive();
-    // each panel: a rectangle round its centre, turned to its roof face
-    var w = sp.panelWidthMeters / 2, h = sp.panelHeightMeters / 2;
-    var corners = [[w, h], [w, -h], [-w, -h], [-w, h]];
+    // each panel: a rectangle round its centre, lined up with its roof face
+    var kLat0 = 111320, kLng0 = 111320 * Math.cos(S.centre.lat * Math.PI / 180), gap = 0.96;
     var pts = [];
     polys = S.panels.map(function (p) {
-      if (p.corners) {
-        p.corners.forEach(function (q) { pts.push(q); });
-        return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: p.corners });
-      }
-      var c = new g.maps.LatLng(p.center.latitude, p.center.longitude);
-      var az = ((sp.roofSegmentStats || [])[p.segmentIndex] || {}).azimuthDegrees || 0;
-      var turn = p.orientation === "PORTRAIT" ? 90 : 0;
-      var path = corners.map(function (xy) {
-        var q = g.maps.geometry.spherical.computeOffset(c, Math.hypot(xy[0], xy[1]), Math.atan2(xy[1], xy[0]) * 180 / Math.PI + turn + az);
-        pts.push({ lat: q.lat(), lng: q.lng() });
-        return q;
+      var d = S.dims[p.segmentIndex], a = d.along * gap / 2, v = d.down * gap / 2;
+      var path = [[a, v], [a, -v], [-a, -v], [-a, v]].map(function (q) {
+        var x = -d.fy * q[0] + d.fx * q[1], y = d.fx * q[0] + d.fy * q[1];
+        var pt = { lat: p.center.latitude + y / kLat0, lng: p.center.longitude + x / kLng0 };
+        pts.push(pt);
+        return pt;
       });
       return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: path });
     });
