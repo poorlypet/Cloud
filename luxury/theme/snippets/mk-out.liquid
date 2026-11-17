@@ -21,7 +21,7 @@
   assign free = fc | money_without_trailing_zeros
   assign ship = sc | money_without_trailing_zeros
   assign uk_answer = 'Orders are dispatched the next working day. UK standard delivery then takes 2 to 4 working days, costs £4.99 and is free on orders over £75.'
-  assign intl_answer = 'Orders are dispatched the next working day and sent tracked. Delivery costs ' | append: ship | append: ' and is free on orders over ' | append: free | append: '. Delivery times for your address are shown at checkout.'
+  assign intl_answer = 'Orders are dispatched the next working day and sent tracked. Delivery costs ' | append: ship | append: ' and is free on orders over ' | append: free | append: '. Delivery takes 3 to 6 working days after dispatch.'
   assign out = html
   assign out = out | replace: uk_answer, intl_answer
   assign out = out | replace: 'Complimentary UK delivery on orders over £75', 'Complimentary delivery on orders over FREE_AMT'
@@ -35,7 +35,7 @@
   assign out = out | replace: 'Free over £75', 'Free over FREE_AMT'
   assign out = out | replace: 'over £75', 'over FREE_AMT'
   assign out = out | replace: '£4.99', 'SHIP_AMT'
-  assign out = out | replace: '2–4 working days after dispatch', 'Shown at checkout'
+  assign out = out | replace: '2–4 working days after dispatch', '3–6 working days after dispatch'
   assign out = out | replace: 'We email you a free UK returns label and a returns note.', 'We email you the return address and a returns note.'
   assign out = out | replace: 'Free 14-day returns', '14-day returns'
   assign out = out | replace: '<b>Free UK returns</b><span>With a prepaid label</span>', '<b>Easy returns</b><span>Send it back tracked</span>'
