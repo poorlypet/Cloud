@@ -5,7 +5,7 @@
   var AH = window.AH || {}, R = AH.routes || {};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  function money(c) { return "£" + (c % 100 ? (c / 100).toFixed(2) : String(c / 100)); }
+  function money(c) { var m = (window.AH && AH.market) || {}, v = c / 100; try { return new Intl.NumberFormat(m.cur === "GBP" || !m.cur ? "en-GB" : "en-" + (m.c || "US"), { style: "currency", currency: m.cur || "GBP", minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(v); } catch (e) { return "£" + (v % 1 ? v.toFixed(2) : String(v)); } }
   function setCount(n) { $$("[data-count]").forEach(function (e) { if (e.closest(".v9-top")) e.textContent = "(" + n + ")"; else e.textContent = n > 0 ? n : ""; }); }
 
   /* blank frames for any prototype photography the menus or drawers still reference */
@@ -19,7 +19,7 @@
   }
   /* ---------- basket drawer, filled from the real Shopify basket ---------- */
   var ROOT = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
-  var FREE = 7500; /* free UK delivery from £75, in pence */
+  var MK = (window.AH && AH.market) || { free: 7500, uk: true }, FREE = MK.free, FREE_TXT = MK.uk ? "free UK delivery" : "free delivery";
   function escH(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function drawCart(c) {
     var el = document.getElementById("side-basket"); if (!el) return false;
@@ -39,7 +39,7 @@
         '<button type="button" class="ahc-rm" data-ahrm>Remove</button></div></div></div>';
     }).join("");
     el.innerHTML = head +
-      '<div class="ahc-prog"><p>' + (left ? 'You&rsquo;re ' + money(left) + ' away from free UK delivery' : 'You&rsquo;ve got free UK delivery') + '</p><i><b style="width:' + pct + '%"></b></i></div>' +
+      '<div class="ahc-prog"><p>' + (left ? 'You&rsquo;re ' + money(left) + ' away from ' + FREE_TXT : 'You&rsquo;ve got ' + FREE_TXT) + '</p><i><b style="width:' + pct + '%"></b></i></div>' +
       '<div class="side-b">' + items + '</div>' +
       '<div class="side-f"><div class="ahc-sub"><span>Subtotal</span><b>' + money(c.total_price) + '</b></div><p class="ahc-note">Delivery and any discount codes are added at checkout.</p>' +
       '<a class="ahc-btn" href="' + ROOT + 'checkout">Checkout</a><a class="ahc-link" href="' + R.cart + '">View basket</a></div>';
@@ -61,7 +61,10 @@
       if (!u && t.indexOf("shop all ") === 0) u = L[t.slice(9)];
       if (!u && t.indexOf("shop ") === 0) u = L[t.slice(5)];
       if (!u) for (var k in L) { if (t && (k.indexOf(t) === 0 || t.indexOf(k) === 0)) { u = L[k]; break; } }
-      if (u) a.setAttribute("href", u);
+      if (u) { a.setAttribute("href", u); return; }
+      if (a.getAttribute("role") || a.getAttribute("aria-controls") || a.closest("[data-keep-links]")) return;
+      var li = a.parentNode && a.parentNode.tagName === "LI" && a.parentNode.children.length === 1 ? a.parentNode : a;
+      li.style.display = "none";
     });
     $$("a.nl[data-k]").forEach(function (a) { var u = L[norm(a.textContent)]; if (u) a.setAttribute("data-href", u); });
   }
@@ -140,7 +143,7 @@
           if (ok) b.removeAttribute("data-oos"); else b.setAttribute("data-oos", "");
         });
         var v = find(x.c, x.s)[0];
-        if (v) $$(".p3l, .p3m").forEach(function (el) { el.innerHTML = el.innerHTML.replace(/£[0-9][0-9,]*(?:\.[0-9]{2})?/, money(Math.round(v.price / 3))); });
+        if (v) $$(".p3l, .p3m").forEach(function (el) { el.innerHTML = el.innerHTML.replace(/(?:£|\$|CA\$|US\$|AED|Dhs?\.?|د\.إ\.?)\s?[0-9][0-9,]*(?:\.[0-9]{2})?/, money(Math.round(v.price / 3))); });
         if (v && price) price.innerHTML = '<b style="font-weight:500">' + money(v.price) + "</b>" + (v.compare_at_price > v.price ? "<s>" + money(v.compare_at_price) + '</s><span class="ptag">−' + Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price) + "%</span>" : "");
       }
       document.addEventListener("click", function (e) {

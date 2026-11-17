@@ -3,8 +3,8 @@
   "use strict";
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
-  function money(n) { return "£" + (Math.round(n * 100) / 100).toFixed(n % 1 ? 2 : 0); }
-  var FREE = 100;
+  function money(n) { var m = (window.AH && AH.market) || {}; try { return new Intl.NumberFormat(m.cur === "GBP" || !m.cur ? "en-GB" : "en-" + (m.c || "US"), { style: "currency", currency: m.cur || "GBP", minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n); } catch (e) { return "£" + (Math.round(n * 100) / 100).toFixed(n % 1 ? 2 : 0); } }
+  var MK = (window.AH && AH.market) || { free: 7500, ship: 499 }, FREE = MK.free / 100;
 
   /* ---------- basket ---------- */
   var bk = $(".v9-bk");
@@ -15,7 +15,7 @@
     function paint() {
       var sub = 0, count = 0;
       lines().forEach(function (l) { var q = +$(".v9-q span", l).textContent, p = +l.dataset.price; sub += p * q; count += q; $("[data-lp]", l).textContent = money(p * q); });
-      var s = ship(), std = sub >= FREE ? 0 : 4.95, delivery = s ? s : std, total = Math.max(0, sub - disc) + (count ? delivery : 0);
+      var s = ship(), std = sub >= FREE ? 0 : MK.ship / 100, delivery = s ? s : std, total = Math.max(0, sub - disc) + (count ? delivery : 0);
       $$("[data-sub]", bk).forEach(function (e) { e.textContent = money(sub); });
       $$("[data-ship]", bk).forEach(function (e) { e.textContent = !count ? "–" : delivery ? money(delivery) : "Free"; });
       $$("[data-total]", bk).forEach(function (e) { e.textContent = money(total); });

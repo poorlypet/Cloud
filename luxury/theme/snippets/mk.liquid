@@ -1,0 +1,47 @@
+{%- comment -%}
+  Market values. UK (default): free delivery over £75, otherwise £4.99.
+  US and Canada: free over $100, otherwise $5.99. UAE: free over AED 500, otherwise AED 25.
+  Amounts are in the shopper's own currency (minor units), so the money filters print them correctly.
+  Usage: {% render 'mk', k: 'free' %}
+{%- endcomment -%}
+{%- liquid
+  assign c = localization.country.iso_code
+  case c
+    when 'US', 'CA'
+      assign fc = 10000
+      assign sc = 599
+      assign b1 = 50
+      assign b2 = 100
+      assign uk = false
+    when 'AE'
+      assign fc = 50000
+      assign sc = 2500
+      assign b1 = 200
+      assign b2 = 400
+      assign uk = false
+    else
+      assign fc = 7500
+      assign sc = 499
+      assign b1 = 50
+      assign b2 = 100
+      assign uk = true
+  endcase
+  case k
+    when 'free_cents'
+      echo fc
+    when 'ship_cents'
+      echo sc
+    when 'free'
+      echo fc | money_without_trailing_zeros
+    when 'ship'
+      echo sc | money
+    when 'uk'
+      echo uk
+    when 'country'
+      echo c
+    when 'b1'
+      echo b1
+    when 'b2'
+      echo b2
+  endcase
+-%}

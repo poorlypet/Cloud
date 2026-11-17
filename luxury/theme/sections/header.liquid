@@ -1,5 +1,5 @@
 <header class="hdr{% if template.name == 'index' or template.suffix == 'brand' %} clear{% endif %}">
-  <div class="announce">{{ section.settings.announce }}<a href="{{ section.settings.announce_link | default: '/collections/sale' }}">{{ section.settings.announce_link_text }}</a><span class="r">GB / £</span></div>
+  <div class="announce">{%- render 'mk-out', html: section.settings.announce -%}<a href="{{ section.settings.announce_link | default: '/collections/sale' }}">{{ section.settings.announce_link_text }}</a><span class="r">{%- form 'localization', id: 'mk-loc', class: 'mk-loc' -%}<label class="vh" for="mk-c">Country</label><select id="mk-c" name="country_code" onchange="this.form.submit()">{%- for c in localization.available_countries -%}<option value="{{ c.iso_code }}"{% if c.iso_code == localization.country.iso_code %} selected{% endif %}>{{ c.iso_code }} / {{ c.currency.symbol }}</option>{%- endfor -%}</select>{%- endform -%}</span></div>
   <div class="hdr-bar">
     <a class="logo" href="{{ routes.root_url }}" aria-label="Axel &amp; Hound, home">Axel <span class="amp">&amp;</span> Hound</a>
     <ul class="nav" data-nav aria-label="Shop"></ul>

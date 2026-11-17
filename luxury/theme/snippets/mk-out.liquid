@@ -1,0 +1,60 @@
+{%- comment -%}
+  Prints a section's HTML. UK shoppers see it unchanged; US, Canada and UAE shoppers see it with every
+  UK and £ mention rewritten for their market (delivery threshold and cost in their currency).
+  Usage: {% capture mkbody %}...{% endcapture %}{% render 'mk-out', html: mkbody %}
+{%- endcomment -%}
+{%- liquid
+  assign c = localization.country.iso_code
+  if c != 'US' and c != 'CA' and c != 'AE'
+    echo html
+  else
+  if c == 'AE'
+    assign fc = 50000
+    assign sc = 2500
+  else
+    assign fc = 10000
+    assign sc = 599
+  endif
+  assign free = fc | money_without_trailing_zeros
+  assign ship = sc | money
+  assign uk_answer = 'Orders are dispatched the next working day. UK standard delivery then takes 2 to 4 working days, costs £4.99 and is free on orders over £75.'
+  assign intl_answer = 'Orders are dispatched the next working day and sent tracked. Delivery costs ' | append: ship | append: ' and is free on orders over ' | append: free | append: '. Delivery times for your address are shown at checkout.'
+  assign out = html
+  assign out = out | replace: uk_answer, intl_answer
+  assign out = out | replace: 'Complimentary UK delivery on orders over £75', 'Complimentary delivery on orders over FREE_AMT'
+  assign out = out | replace: 'Complimentary UK delivery over £75', 'Complimentary delivery over FREE_AMT'
+  assign out = out | replace: 'Free UK delivery over £75', 'Free delivery over FREE_AMT'
+  assign out = out | replace: 'qualifies for free UK delivery', 'qualifies for free delivery'
+  assign out = out | replace: 'more for free UK delivery', 'more for free delivery'
+  assign out = out | replace: 'Free UK delivery', 'Free delivery'
+  assign out = out | replace: 'free UK delivery', 'free delivery'
+  assign out = out | replace: 'On orders over £75', 'On orders over FREE_AMT'
+  assign out = out | replace: 'Free over £75', 'Free over FREE_AMT'
+  assign out = out | replace: 'over £75', 'over FREE_AMT'
+  assign out = out | replace: '£4.99', 'SHIP_AMT'
+  assign out = out | replace: '2–4 working days after dispatch', 'Shown at checkout'
+  assign out = out | replace: 'We email you a free UK returns label and a returns note.', 'We email you the return address and a returns note.'
+  assign out = out | replace: 'Free 14-day returns', '14-day returns'
+  assign out = out | replace: '<b>Free UK returns</b><span>With a prepaid label</span>', '<b>Easy returns</b><span>Send it back tracked</span>'
+  assign out = out | replace: '<b>Free UK returns</b><span>Within 14 days</span>', '<b>Easy returns</b><span>Within 14 days</span>'
+  assign out = out | replace: '<details><summary>I&rsquo;ve lost my returns label</summary><p>Contact us with your order number and we&rsquo;ll email you a new one.</p></details>', ''
+  assign out = out | replace: 'Get your label', 'Get the return address'
+  assign out = out | replace: 'Free UK returns', '14-day returns'
+  assign out = out | replace: '14 days, free in the UK', '14 days to return'
+  assign out = out | replace: ' UK returns are free.', ''
+  assign out = out | replace: 'UK returns are free, and you have 14 days', 'You have 14 days'
+  assign out = out | replace: 'UK returns are free', 'Returns are accepted within 14 days'
+  assign out = out | replace: ' Based in the UK.', ''
+  assign out = out | replace: 'Based in the UK', 'Tracked delivery'
+  assign out = out | replace: 'UK standard delivery', 'Standard delivery'
+  assign out = out | replace: 'Every UK order', 'Every order'
+  assign out = out | replace: 'Returns from outside the UK', 'International returns'
+  assign out = out | replace: 'Orders sent outside the UK', 'Orders'
+  assign out = out | replace: 'Orders outside the UK', 'Orders'
+  assign out = out | replace: 'outside the UK', 'internationally'
+  assign out = out | replace: 'UK delivery', 'Delivery'
+  assign out = out | replace: 'FREE_AMT', free
+  assign out = out | replace: 'SHIP_AMT', ship
+  echo out
+  endif
+-%}

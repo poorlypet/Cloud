@@ -8,10 +8,10 @@
       var v = f.postcode.value.trim().toUpperCase().replace(/\s+/g, " ");
       if (!OK.test(v)) { out.textContent = "Please enter a full UK postcode, for example SW1A 1AA."; return; }
       var dy = f.classList.contains("dy-form"), far = FAR.test(v.replace(" ", ""));
-      if (dy) { out.textContent = far ? "We deliver to " + v + ". Standard delivery takes 3\u20136 working days there, and express isn\u2019t available." : "We deliver to " + v + ". Standard delivery takes 2\u20134 working days, or 1\u20132 with express."; return; }
+      if (dy) { out.textContent = far ? "We deliver to " + v + ". Orders are dispatched the next working day, then take 3\u20136 working days to arrive there." : "We deliver to " + v + ". Standard delivery takes 2\u20134 working days, or 1\u20132 with express."; return; }
       out.textContent = FAR.test(v.replace(" ", ""))
-        ? "We deliver to " + v + ". Standard delivery takes 3 to 6 working days there, and next day delivery isn’t available."
-        : "We deliver to " + v + ". Standard delivery takes 2 to 4 working days, or order by 2pm for next day delivery.";
+        ? "We deliver to " + v + ". Orders are dispatched the next working day, then take 3 to 6 working days to arrive there."
+        : "We deliver to " + v + ". Orders are dispatched the next working day, then take 2 to 4 working days to arrive.";
     });
   });
 })();

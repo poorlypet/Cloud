@@ -87,7 +87,7 @@
 
   /* ---------------- helpers ---------------- */
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
-  function gbp(n) { return "£" + n.toFixed(n % 1 ? 2 : 0); }
+  function gbp(n) { return money(n); }
   var ARW = '<svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg>';
   function links(items, cls) {
     return "<ul" + (cls ? ' class="' + cls + '"' : "") + ">" + items.map(function (x) {
@@ -169,7 +169,7 @@
     navHtml += '<li><a class="nl" href="#" data-k="' + c.key + '" aria-expanded="false" aria-controls="mp-' + c.key + '">' + esc(c.label) + "</a></li>";
     var p = document.createElement("div");
     p.className = "mp"; p.id = "mp-" + c.key; p.setAttribute("data-k", c.key);
-    var band = body.hasAttribute("data-band") ? '<div class="band"><a class="bbtn" href="#">Shop all ' + esc(c.label.toLowerCase()) + '</a><a class="bbtn on" href="#">Bestsellers</a>' +
+    var band = body.hasAttribute("data-band") ? '<div class="band"><a class="bbtn" href="#">Shop all ' + esc(c.label.toLowerCase()) + '</a><a class="bbtn on" href="/collections/new-in">New in</a>' +
       '<button type="button" class="band-x" data-close-mega aria-label="Close menu"><svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div>' : "";
     p.innerHTML = band + (c.tiles ? LAYOUTS.newin(c) : LAYOUTS.lib(c));
     mega.appendChild(p);
@@ -285,7 +285,7 @@
     { p: "still1", n: "Bolster Bed, Moss Bouclé", v: "Medium", pr: 245 },
     { p: "poodle", n: "Cable Knit Jumper, Cream", v: "Dachshund fit", pr: 85 }
   ];
-  var FREE = 100;
+  var MK = (window.AH && AH.market) || { free: 7500, uk: true }, FREE = MK.free / 100;
   var X = '<button type="button" class="x" data-close-side>Close<svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button>';
   var sides = {};
   function makeSide(id, label) {
@@ -300,7 +300,7 @@
 
   /* ---------------- five basket designs: <body data-basket="1".."5"> ---------------- */
   var BV = body.getAttribute("data-basket") || "1";
-  var DELIV = [{ id: "std", t: "Standard", d: "2 to 4 working days", pr: 6.95 }, { id: "nd", t: "Next day", d: "Order by 2pm", pr: 12 }, { id: "nom", t: "Nominated day", d: "Choose a date at checkout", pr: 15 }];
+  var DELIV = [{ id: "std", t: "Standard", d: "Dispatched the next working day", pr: 4.99 }];
   var bstate = { deliv: "std", gift: false, tab: "basket", promo: false };
   if (BV === "2") sides.basket.classList.add("wide");
   if (BV === "4") sides.basket.classList.add("pop");
@@ -310,7 +310,7 @@
     basket.forEach(function (i) { count += i.q; sub += i.q * i.pr; });
     return { count: count, sub: sub, left: Math.max(0, FREE - sub) };
   }
-  function money(n) { return "£" + (Math.round(n * 100) / 100).toFixed(n % 1 ? 2 : 0); }
+  function money(n) { var m = (window.AH && AH.market) || {}; try { return new Intl.NumberFormat(m.cur === "GBP" || !m.cur ? "en-GB" : "en-" + (m.c || "US"), { style: "currency", currency: m.cur || "GBP", minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n); } catch (e) { return "£" + (Math.round(n * 100) / 100).toFixed(n % 1 ? 2 : 0); } }
   function qtyCtl(n, q, cls) {
     return '<span class="' + (cls || "qty") + '"><button type="button" data-dec="' + n + '" aria-label="One fewer">−</button><span>' + q + '</span><button type="button" data-inc="' + n + '" aria-label="One more">+</button></span>';
   }
@@ -367,7 +367,7 @@
     /* 3 · Department store: small capitals, compact rows, swipeable add-ons */
     "3": function (t) {
       return '<div class="side-h"><h2 class="caps">Shopping bag (' + t.count + ")</h2>" + X + "</div>" + '<div class="side-b">' +
-        '<p class="b3-ship">' + (t.left ? "Complimentary UK delivery on orders over £" + FREE + ". You are " + money(t.left) + " away." : "Your order qualifies for complimentary UK delivery.") + "</p>" +
+        '<p class="b3-ship">' + (t.left ? "Complimentary " + (MK.uk ? "UK " : "") + "delivery on orders over " + money(FREE) + ". You are " + money(t.left) + " away." : "Your order qualifies for complimentary " + (MK.uk ? "UK " : "") + "delivery.") + "</p>" +
         basket.map(function (i, n) {
           return '<div class="b3-item">' + ph(i.p, 200) + '<div class="b3-info"><p class="b3-n">' + esc(i.n) + '</p><p class="b3-meta">' + esc(i.v) + '</p><p class="b3-meta">Qty ' + qtyCtl(n, i.q, "qty-caps") + '</p>' +
             '<div class="b3-links"><a href="#">Edit</a><button type="button" data-rm="' + n + '">Remove</button></div></div><span class="b3-p">' + money(i.pr * i.q) + "</span></div>";
