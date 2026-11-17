@@ -26,8 +26,8 @@ window.SOLAR_CONFIG = {
   /* --- Panel types (TEST PRICES) -------------------------------- */
   panelWatts: 440,
   panelTypes: [
-    { id: "std",   name: "440W panels",           pricePerPanel: 180 },
-    { id: "black", name: "440W all-black panels", pricePerPanel: 215 }
+    { id: "std",   name: "440W panels",           short: "Standard",  pricePerPanel: 180 },
+    { id: "black", name: "440W all-black panels", short: "All black", pricePerPanel: 215 }
   ],
   baseInstallPrice: 2400,   // inverter, labour, certification
   minPanels: 4,
@@ -35,7 +35,7 @@ window.SOLAR_CONFIG = {
      these house types only panels inside one house's width are used.
      Widths in metres (0 = use the whole roof). */
   houseWidths: { detached: 0, semi: 7, end: 5.5, terrace: 5 },
-  houseDepthMeters: 12,
+  houseDepthMeters: 24,
   roofPhotoRadiusMeters: 25,  // size of Google's roof photo shown after the pin step
   flatRoofPitch: 10,          // roofs flatter than this (degrees) get panels lined up with the walls
   maxPanels: 30,
@@ -46,10 +46,24 @@ window.SOLAR_CONFIG = {
 
   /* --- Packages: the "type of solar" (TEST PRICES) -------------- */
   packages: [
-    { id: "solar", name: "Solar panels",           batteryKwh: 0,  batteryPrice: 0,    note: "Lowest upfront cost" },
-    { id: "b5",    name: "Solar + 5 kWh battery",  batteryKwh: 5,  batteryPrice: 2900, note: "Most popular", recommended: true },
-    { id: "b10",   name: "Solar + 10 kWh battery", batteryKwh: 10, batteryPrice: 4600, note: "Biggest savings" }
+    { id: "solar", name: "Solar panels", blurb: "Panels and inverter. The lowest price to get started.",
+      batteryKwh: 0, batteryPrice: 0,
+      features: ["Runs your home on sunshine through the day", "Get paid for the power you don't use", "Add a battery any time later"] },
+    { id: "b5", name: "Solar + 5 kWh battery", blurb: "Stores the day's sun so you can use it in the evening.",
+      batteryKwh: 5, batteryPrice: 2900, recommended: true, tag: "Most popular",
+      features: ["Everything in Solar panels", "Use your own power after dark", "Top up on cheap overnight electricity"] },
+    { id: "b10", name: "Solar + 10 kWh battery", blurb: "The most independence from the grid and the biggest saving.",
+      batteryKwh: 10, batteryPrice: 4600, tag: "Biggest saving",
+      features: ["Everything in Solar panels", "Covers most evenings and mornings", "Best for bigger homes and electric cars"] }
   ],
+
+  /* --- Electricity use presets on the roof step ----------------- */
+  usagePresets: [
+    { label: "Flat or small home", kwh: 1800 },
+    { label: "Typical home", kwh: 2700 },
+    { label: "Large home or EV", kwh: 4100 }
+  ],
+  systemLifeYears: 25,
 
   /* --- Finance (TEST VALUES) ------------------------------------ */
   financeApr: 9.9,

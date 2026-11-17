@@ -19,17 +19,21 @@
       <span class="pill phone">Call <span class="phone-no">0800 000 0000</span></span>
     </header>
 
+    <ol class="progress" id="progress" aria-label="Progress">
+      <li data-p="address">Address</li><li data-p="pin">Roof</li><li data-p="suggest">Panels</li><li data-p="results">Price</li>
+    </ol>
+
     <div class="panel-body">
 
       <!-- 1. Address -->
       <div class="view" id="vAddress">
-        <h1>Get your solar quote <span class="soft">in under a minute</span></h1>
-        <p class="sub">Enter your postcode and we'll measure your roof for you</p>
+        <h1>See solar on <span class="hl">your roof</span> in under a minute</h1>
+        <p class="sub">We measure your roof from above, place the panels and price it. No home visit needed.</p>
         <div class="search-wrap">
           <form class="search" id="pcForm" novalidate>
             <label class="sr" for="postcode">Postcode</label>
             <input id="postcode" autocomplete="postal-code" placeholder="Enter your postcode" maxlength="9">
-            <button type="submit" class="go">Go <span aria-hidden="true">&rarr;</span></button>
+            <button type="submit" class="go">Find my roof <span aria-hidden="true">&rarr;</span></button>
           </form>
           <div class="drop" id="drop" hidden>
             <ul id="addrList" role="listbox" aria-label="Choose your address"></ul>
@@ -40,14 +44,19 @@
           </div>
         </div>
         <p class="err" id="pcErr" role="alert"></p>
+        <ul class="ticks">
+          <li>Your actual roof, measured by satellite</li>
+          <li>Panels placed where the sun is strongest</li>
+          <li>A price in seconds, with or without a battery</li>
+        </ul>
       </div>
 
       <!-- 2. Pin -->
       <div class="view" id="vPin" hidden>
-        <h1>Pin your roof</h1>
-        <p class="sub">Move the map until the dot is in the middle of your roof, then press Done.</p>
+        <h1>Is this <span class="hl">your roof?</span></h1>
+        <p class="sub">Drag the map so the dot sits in the middle of your roof.</p>
         <fieldset class="htype">
-          <legend>What type of house is it?</legend>
+          <legend>What type of home is it?</legend>
           <div class="seg">
             <label><input type="radio" name="htype" value="detached"><span>Detached</span></label>
             <label><input type="radio" name="htype" value="semi"><span>Semi-detached</span></label>
@@ -57,51 +66,77 @@
         </fieldset>
         <div class="actions">
           <button class="round" type="button" data-go="address" aria-label="Back">&larr;</button>
-          <button class="btn" type="button" id="pinDone">Done <span aria-hidden="true">&rarr;</span></button>
+          <button class="btn" type="button" id="pinDone">Measure my roof <span aria-hidden="true">&rarr;</span></button>
         </div>
         <p class="err" id="pinErr" role="alert"></p>
       </div>
 
       <!-- 3. Analysing -->
       <div class="view" id="vAnalyse" hidden>
-        <h1>Measuring your roof</h1>
+        <h1>Measuring <span class="hl">your roof</span></h1>
         <ul class="checks" id="checks">
-          <li>Finding your roof</li>
-          <li>Measuring each roof space</li>
+          <li>Finding your roof from above</li>
+          <li>Measuring each side and its sunlight</li>
           <li>Placing panels in the sunniest spots</li>
         </ul>
       </div>
 
       <!-- 4. Suggestion -->
-      <div class="view" id="vSuggest" hidden>
-        <h1>We'd suggest <span class="hl" id="sugN">8 panels</span> on <span id="sugSeg">1 of your roof spaces</span></h1>
-        <p class="sub">For your <button type="button" class="usage" id="usageBtn">~2,700 kWh</button> yearly electricity use</p>
-        <form class="usage-edit" id="usageForm" hidden novalidate>
-          <label for="usageIn">Yearly use in kWh (it's on your bill)</label>
-          <div class="house-row"><input id="usageIn" type="number" min="500" max="20000" step="100"><button class="go" type="submit">Update</button></div>
-        </form>
-        <ul class="segs" id="segs"></ul>
+      <div class="view wide" id="vSuggest" hidden>
+        <p class="eyebrow" id="sugAddr"></p>
+        <h1>We'd fit <span class="hl" id="sugN">8 panels</span></h1>
+        <p class="sub" id="sugLine"></p>
+
+        <div class="kpis">
+          <div><strong id="kGen">0</strong><span>kWh of power a year</span></div>
+          <div><strong id="kSave">£0</strong><span>saved a year, panels only</span></div>
+          <div><strong id="kCover">0%</strong><span>of your electricity use</span></div>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>How much electricity do you use?</span><button type="button" class="link" id="usageBtn">Enter exact kWh</button></div>
+          <div class="presets" id="usagePresets"></div>
+          <form class="usage-edit" id="usageForm" hidden novalidate>
+            <label for="usageIn">Yearly use in kWh (it's on your bill)</label>
+            <div class="house-row"><input id="usageIn" type="number" min="500" max="20000" step="100"><button class="go" type="submit">Update</button></div>
+          </form>
+        </div>
+
+        <div class="field">
+          <div class="field-head"><span>Your roof</span><span class="hint">Tick each side you want panels on</span></div>
+          <ul class="segs" id="segs"></ul>
+        </div>
+
         <div class="stepper-row">
           <span>Number of panels</span>
           <div class="stepper"><button type="button" data-step="-1" aria-label="Fewer panels">&minus;</button><output id="nOut">8</output><button type="button" data-step="1" aria-label="More panels">+</button></div>
         </div>
-        <button type="button" class="link" id="unusedBtn">Show unused roof space</button>
+
         <div class="actions">
           <button class="round" type="button" data-go="pin" aria-label="Back">&larr;</button>
-          <button class="btn" type="button" id="toQuote">Next, see your price <span aria-hidden="true">&rarr;</span></button>
+          <button class="btn" type="button" id="toQuote">See my price <span aria-hidden="true">&rarr;</span></button>
         </div>
       </div>
     </div>
 
-    <footer class="panel-foot">Free <i></i> No obligation <i></i> Real satellite data of your roof</footer>
+    <footer class="panel-foot">Free <i></i> No obligation <i></i> No home visit needed</footer>
   </section>
 
   <section class="visual" id="visual">
-    <div class="photo" id="photo"><span>Photo to follow</span></div>
+    <div class="photo" id="photo">
+      <div class="photo-art" aria-hidden="true"></div>
+      <span>Your photo goes here</span>
+    </div>
     <div class="map-holder" id="mapHolder">
       <div class="map" id="map" aria-label="Your roof"></div>
       <canvas class="roof-canvas" id="roofCanvas" hidden aria-label="Your roof with solar panels"></canvas>
+      <div class="scan" id="scan" hidden></div>
       <div class="cross" id="cross" hidden><i></i></div>
+      <div class="vis-tools" id="visTools" hidden>
+        <button type="button" class="tool" id="fluxBtn" aria-pressed="false"><i class="ic sun"></i>Sunlight map</button>
+        <button type="button" class="tool on" id="unusedBtn" aria-pressed="true"><i class="ic grid"></i>Spare spaces</button>
+      </div>
+      <div class="legend" id="fluxLegend" hidden><span>Shade</span><i></i><span>Full sun</span></div>
       <div class="map-tag" id="mapTag" hidden></div>
     </div>
   </section>
@@ -114,118 +149,126 @@
     <span class="pill phone">Call <span class="phone-no">0800 000 0000</span></span>
   </header>
 
-  <div class="res-grid wrap">
-    <!-- Book a call -->
-    <section class="card book">
-      <div class="book-photo" id="bookPhoto"><span>Photo to follow</span></div>
-      <h1>Book a call to finalise your price and get a free, no-obligation proposal</h1>
-      <div class="chips"><span class="chip dark">1 hour call</span><span class="chip">Phone or video</span></div>
+  <main class="wrap res">
 
-      <div id="bookFlow">
-        <h2>Pick a date for your call</h2>
-        <div class="cal">
-          <div class="cal-head">
-            <strong id="calMonth">December 2026</strong>
-            <div class="cal-nav">
-              <button type="button" class="round sm" id="calPrev" aria-label="Earlier dates">&larr;</button>
-              <button type="button" class="round sm" id="calNext" aria-label="Later dates">&rarr;</button>
-            </div>
-          </div>
-          <div class="days" id="days"></div>
-        </div>
-
-        <div id="timesWrap" hidden>
-          <h2>Pick a time</h2>
-          <div class="times" id="times"></div>
-        </div>
-
-        <form class="contact" id="contactForm" hidden novalidate>
-          <h2 id="contactTitle">Your details</h2>
-          <div class="fields">
-            <label><span>Name</span><input id="cName" name="name" autocomplete="name" required></label>
-            <label><span>Phone</span><input id="cPhone" name="phone" type="tel" autocomplete="tel" required></label>
-            <label class="full"><span>Email</span><input id="cEmail" name="email" type="email" autocomplete="email" required></label>
-          </div>
-          <button class="btn wide" type="submit" id="bookBtn">Confirm my call</button>
-          <p class="err" id="bookErr" role="alert"></p>
-        </form>
-
-        <div class="note">
-          <span class="i">i</span>
-          <p><strong>Can't wait that long?</strong><br>Ask our team to <button type="button" class="link inline" id="callbackBtn">call you back today</button>.</p>
+    <!-- headline numbers + roof -->
+    <section class="hero">
+      <div class="hero-text">
+        <button type="button" class="link back-link" id="backToRoof">&larr; Change my panels</button>
+        <h1>Your <span class="hl">solar quote</span></h1>
+        <p class="sub" id="resAddr"></p>
+        <div class="kpi-grid">
+          <div class="kpi dark"><span>Rough cost</span><strong id="sPrice">£0</strong><em id="sMonthly"></em></div>
+          <div class="kpi sun"><span>You'd save</span><strong id="sSave">£0</strong><em id="sPayback"></em></div>
+          <div class="kpi"><span>Electricity bill cut by</span><strong id="sCut">0%</strong><em id="sBill"></em></div>
+          <div class="kpi"><span id="sLifeLbl">Over 25 years</span><strong id="sLife">£0</strong><em>better off, at today's prices</em></div>
         </div>
       </div>
-
-      <div class="booked" id="booked" hidden>
-        <h2>You're booked in</h2>
-        <p id="bookedText"></p>
-      </div>
-    </section>
-
-    <!-- Summary -->
-    <aside class="card summary">
-      <h2>Summary</h2>
-      <div class="tiles">
-        <div class="tile sun">
-          <span class="t-lbl">Est. savings</span>
-          <strong id="sSave">£0<small>/yr</small></strong>
-          <span class="t-sub" id="sPayback">Pays back in ~0 years</span>
-        </div>
-        <div class="tile">
-          <span class="t-lbl" id="sPriceLbl">Rough cost (ex. scaffolding)</span>
-          <strong id="sPrice">£0</strong>
-          <span class="t-sub" id="sMonthly">from £0/mo</span>
-        </div>
-      </div>
-
-      <label class="switch">
-        <input type="checkbox" id="scaf" checked>
-        <span class="track"></span>
-        <span class="sw-text">My home needs scaffolding <small id="scafPrice">+£850</small></span>
-      </label>
-
-      <div class="block">
-        <div class="block-head"><h3>Your package</h3><button type="button" class="link" id="changePkg">Change</button></div>
-        <div class="pkg-row">
-          <div class="thumb" aria-hidden="true">
-            <svg viewBox="0 0 80 80"><rect x="10" y="16" width="38" height="50" rx="2" fill="#1B1F27"/><path d="M10 33h38M10 49h38M29 16v50" stroke="#5A6272" stroke-width="1"/><rect id="batIcon" x="54" y="30" width="16" height="36" rx="3" fill="#E9EAEC" stroke="#C9CCD1"/></svg>
-          </div>
-          <div class="pkg-text">
-            <strong id="pkgName">440W panels + 5 kWh battery</strong>
-            <span id="pkgSize">8 panels (3.5 kW)</span>
-          </div>
-          <div class="stepper sm"><button type="button" data-step="-1" aria-label="Fewer panels">&minus;</button><output id="nOut2">8</output><button type="button" data-step="1" aria-label="More panels">+</button></div>
-        </div>
-
-        <div class="pkg-pick" id="pkgPick" hidden>
-          <p class="mini">Type of solar</p>
-          <div class="pkgs" id="pkgs"></div>
-          <p class="mini">Panel type</p>
-          <div class="seg" id="ptypes"></div>
-        </div>
-      </div>
-
-      <div class="block">
-        <div class="block-head"><h3>Your roof</h3><button type="button" class="link" id="backToRoof">Edit</button></div>
+      <div class="hero-roof">
         <div class="roof-thumb" id="roofThumb"></div>
         <p class="mini" id="roofLine"></p>
       </div>
+    </section>
 
-      <div class="block">
-        <h3>Your installation</h3>
-        <div class="pkg-row">
-          <div class="thumb dark" aria-hidden="true"><svg viewBox="0 0 80 80"><path d="M24 42l11 11 22-24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="pkg-text"><strong>Fully installed</strong><span id="installText"></span></div>
+    <!-- packages -->
+    <section class="choose">
+      <div class="sec-head">
+        <div>
+          <h2>Choose your system</h2>
+          <p class="mute">Every option uses the panels shown on your roof. Tap one to see your numbers change.</p>
+        </div>
+        <div class="opts">
+          <div class="opt-item">
+            <span class="opt-lbl">Panels</span>
+            <div class="stepper sm"><button type="button" data-step="-1" aria-label="Fewer panels">&minus;</button><output id="nOut2">8</output><button type="button" data-step="1" aria-label="More panels">+</button></div>
+          </div>
+          <div class="opt-item">
+            <span class="opt-lbl">Panel style</span>
+            <div class="seg tight" id="ptypes"></div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="scaf" checked>
+            <span class="track"></span>
+            <span class="sw-text">Include scaffolding <small id="scafPrice">+£850</small></span>
+          </label>
+        </div>
+      </div>
+      <div class="pkgs" id="pkgs"></div>
+    </section>
+
+    <!-- savings -->
+    <section class="card savings">
+      <div class="sav-text">
+        <h2>Where your savings come from</h2>
+        <p class="mute" id="savLine"></p>
+      </div>
+      <div class="bars" id="bars"></div>
+    </section>
+
+    <!-- booking -->
+    <section class="book-grid">
+      <div class="card book">
+        <div class="book-photo" id="bookPhoto"><span>Your photo goes here</span></div>
+        <h2 class="big">Lock in your price with a free call</h2>
+        <p class="mute">A solar expert checks your roof photos with you, answers your questions and sends a fixed, no-obligation proposal.</p>
+        <div class="chips"><span class="chip dark">About 30 minutes</span><span class="chip">Phone or video</span><span class="chip">No obligation</span></div>
+
+        <div id="bookFlow">
+          <h3>Pick a day</h3>
+          <div class="cal">
+            <div class="cal-head">
+              <strong id="calMonth">December 2026</strong>
+              <div class="cal-nav">
+                <button type="button" class="round sm" id="calPrev" aria-label="Earlier dates">&larr;</button>
+                <button type="button" class="round sm" id="calNext" aria-label="Later dates">&rarr;</button>
+              </div>
+            </div>
+            <div class="days" id="days"></div>
+          </div>
+
+          <div id="timesWrap" hidden>
+            <h3>Pick a time</h3>
+            <div class="times" id="times"></div>
+          </div>
+
+          <form class="contact" id="contactForm" hidden novalidate>
+            <h3 id="contactTitle">Your details</h3>
+            <div class="fields">
+              <label><span>Name</span><input id="cName" name="name" autocomplete="name" required></label>
+              <label><span>Phone</span><input id="cPhone" name="phone" type="tel" autocomplete="tel" required></label>
+              <label class="full"><span>Email</span><input id="cEmail" name="email" type="email" autocomplete="email" required></label>
+            </div>
+            <button class="btn wide" type="submit" id="bookBtn">Confirm my call</button>
+            <p class="err" id="bookErr" role="alert"></p>
+          </form>
+
+          <div class="note">
+            <span class="i">i</span>
+            <p><strong>Rather talk today?</strong><br>Ask us to <button type="button" class="link inline" id="callbackBtn">call you back</button> and we'll ring as soon as we can.</p>
+          </div>
+        </div>
+
+        <div class="booked" id="booked" hidden>
+          <h2>You're booked in</h2>
+          <p id="bookedText"></p>
         </div>
       </div>
 
-      <details class="breakdown">
-        <summary>Price breakdown</summary>
-        <table id="breakdown"></table>
-      </details>
-      <p class="fine">Rough cost based on satellite data of your roof and test prices. Your final price is confirmed on the call.</p>
-    </aside>
-  </div>
+      <aside class="card summary">
+        <h2>Your quote</h2>
+        <div class="sum-pkg">
+          <strong id="pkgName"></strong>
+          <span id="pkgSize"></span>
+        </div>
+        <table class="lines" id="breakdown"></table>
+        <div class="sum-inst">
+          <span class="tick"></span>
+          <p><strong>Fully installed</strong><br><span id="installText"></span></p>
+        </div>
+        <p class="fine">Rough cost from satellite data of your roof and test prices. Your fixed price is confirmed on the call.</p>
+      </aside>
+    </section>
+  </main>
 </div>
 
 <div class="toast" id="toast" hidden></div>

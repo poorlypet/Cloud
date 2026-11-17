@@ -37,6 +37,21 @@
       });
     });
   }
+  var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tween(el, to, fmt) {   // count a number up or down to its new value
+    var from = +el.dataset.v || 0; el.dataset.v = to;
+    if (REDUCE || from === to) { el.textContent = fmt(to); return; }
+    var t0 = performance.now();
+    (function step(t) {
+      var k = Math.min(1, (t - t0) / 500), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * e);
+      if (k < 1 && +el.dataset.v === to) requestAnimationFrame(step);
+    })(t0);
+  }
+  function sunRating(perPanel) {  // yearly output of one panel, scaled to a 400W panel
+    var v = perPanel * 400 / (S.apiWatts || 400);
+    return v >= 400 ? [5, "Excellent sun"] : v >= 350 ? [4, "Very good sun"] : v >= 300 ? [3, "Good sun"] : v >= 250 ? [2, "Fair sun"] : [1, "Limited sun"];
+  }
   function compass(deg) {
     var n = ["North", "North-east", "East", "South-east", "South", "South-west", "West", "North-west"];
     return n[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
@@ -80,8 +95,14 @@
     (results ? $("roofThumb") : $("visual")).appendChild(holder);
     holder.classList.toggle("on", v !== "address");
     $("cross").hidden = v !== "pin";
-    $("mapTag").hidden = v !== "pin" && v !== "suggest";
-    $("mapTag").textContent = !LIVE ? "Sample roof (demo mode)" : v === "pin" ? "Drag the map to move it" : "Panels shown on your roof";
+    $("scan").hidden = v !== "analyse";
+    $("visTools").hidden = v !== "suggest";
+    $("fluxBtn").hidden = !S.flux;
+    $("fluxLegend").hidden = !(v === "suggest" && S.showFlux && S.flux);
+    $("mapTag").hidden = !(v === "pin" || (!LIVE && v !== "address"));
+    $("mapTag").textContent = !LIVE ? "Sample roof (demo mode)" : "Drag the map to line up your roof";
+    var order = ["address", "pin", "suggest", "results"], at = order.indexOf(v === "analyse" ? "pin" : v);
+    $$("#progress li").forEach(function (li, i) { li.className = i < at ? "done" : i === at ? "on" : ""; });
     if (LIVE && gmap) setTimeout(fitRoof, 50);
     if (S.img) setTimeout(function () { paint(S.stage); }, 30);
     window.scrollTo(0, 0);
@@ -128,6 +149,11 @@
           });
           if (!l.length) { var e = new Error("none"); e.status = 404; throw e; }
           return l;
+        }).catch(function (err) {
+          // address list unavailable (for example no credit left): ask for the house number instead
+          if (err.status === 404 || !LIVE) throw err;
+          console.warn("Address list unavailable, asking for house number", err);
+          return null;
         });
     }
     if (LIVE) return Promise.resolve(null);   // customer types their house number
@@ -173,7 +199,7 @@
      ============================================================ */
   function startPin() {
     $("pinErr").textContent = "";
-    S.showUnused = true; S.img = null; showCanvas(false);
+    S.showUnused = true; S.showFlux = false; S.img = null; S.flux = null; S.born = {}; showCanvas(false);
     if (!LIVE) { drawDemo(); paint("none"); return; }
     google().then(function (g) {
       if (!gmap) {
@@ -256,12 +282,22 @@
       S.frame = { fx: fx, fy: fy, width: width };
     }
     if (LIVE && S.centre && width) {
+      // Keep whole columns of panels only: the same number on every side of
+      // the roof, centred on the pin, so one house gets a matching front and back.
+      var dimAll = latticeDims(S.panels, sp), anchor = {};
+      S.panels.forEach(function (p) {            // the panel nearest the pin on each face
+        var o = off(p), d = Math.hypot(o.x, o.y), a = anchor[p.segmentIndex];
+        if (!a || d < a.d) anchor[p.segmentIndex] = { d: d, o: o };
+      });
       S.panels = S.panels.filter(function (p) {
-        var o = off(p);
-        var across = o.x * fx + o.y * fy;                  // up/down the roof
-        var along = Math.abs(-o.x * fy + o.y * fx);        // along the ridge, towards the neighbours
-        var half = p.orientation === "PORTRAIT" ? sp.panelWidthMeters / 2 : sp.panelHeightMeters / 2;
-        return along + half <= width / 2 && Math.abs(across) <= C.houseDepthMeters / 2;
+        var o = off(p), dm = dimAll[p.segmentIndex], a = anchor[p.segmentIndex];
+        if (Math.abs(o.x * fx + o.y * fy) > C.houseDepthMeters / 2) return false;   // up/down the roof
+        if (Math.abs(-o.x * fy + o.y * fx) > width / 2) return false;              // centre inside this house
+        var u = -o.x * dm.fy + o.y * dm.fx, u0 = -a.o.x * dm.fy + a.o.y * dm.fx;
+        var cols = Math.max(1, Math.floor((width + 0.2) / dm.along));
+        var start = Math.round(-u0 / dm.along - (cols - 1) / 2);
+        var ci = Math.round((u - u0) / dm.along);
+        return ci >= start && ci <= start + cols - 1;
       });
     }
     if (LIVE && S.centre && S.panels.length) { S.panels = tidyGrid(S.panels); S.dims = latticeDims(S.panels, sp); }
@@ -436,7 +472,7 @@
     return {
       solarPotential: {
         solarPanels: panels, panelCapacityWatts: C.panelWatts,
-        roofSegmentStats: [{ azimuthDegrees: 325 }, { azimuthDegrees: 145 }],
+        roofSegmentStats: [{ azimuthDegrees: 325, pitchDegrees: 35 }, { azimuthDegrees: 145, pitchDegrees: 35 }],
         wholeRoofStats: { areaMeters2: 84 }, maxSunshineHoursPerYear: 1210
       }
     };
@@ -493,7 +529,7 @@
     S.panels.forEach(function (p) { la += p.center.latitude; ln += p.center.longitude; });
     la /= S.panels.length; ln /= S.panels.length;
     var url = "https://solar.googleapis.com/v1/dataLayers:get?location.latitude=" + la + "&location.longitude=" + ln +
-      "&radiusMeters=" + C.roofPhotoRadiusMeters + "&view=IMAGERY_LAYERS&requiredQuality=MEDIUM&pixelSizeMeters=0.1&key=" + encodeURIComponent(C.googleApiKey);
+      "&radiusMeters=" + C.roofPhotoRadiusMeters + "&view=IMAGERY_AND_ANNUAL_FLUX_LAYERS&requiredQuality=MEDIUM&pixelSizeMeters=0.1&key=" + encodeURIComponent(C.googleApiKey);
     var key = "&key=" + encodeURIComponent(C.googleApiKey);
     var tif = function (u) {
       return fetch(u + key).then(function (res) { if (!res.ok) throw new Error("photo " + res.status); return res.arrayBuffer(); })
@@ -504,9 +540,12 @@
     return Promise.all([loadLibs(), getJSON(url)]).then(function (r) {
       layers = r[1];
       // the roof outline map is only needed for flat roofs; a failure there is not fatal
-      return Promise.all([tif(layers.rgbUrl), tif(layers.maskUrl).then(function (m) { return m.readRasters({ interleave: true }).then(function (d) { return { d: d, w: m.getWidth(), h: m.getHeight() }; }); }).catch(function () { return null; })]);
+      var band = function (u) {
+        return tif(u).then(function (m) { return m.readRasters({ interleave: true }).then(function (d) { return { d: d, w: m.getWidth(), h: m.getHeight() }; }); }).catch(function () { return null; });
+      };
+      return Promise.all([tif(layers.rgbUrl), band(layers.maskUrl), layers.annualFluxUrl ? band(layers.annualFluxUrl) : null]);
     }).then(function (r) {
-        var img = r[0]; S.mask = r[1];
+        var img = r[0]; S.mask = r[1]; S.flux = fluxCanvas(r[2], r[1]);
         return img.readRasters({ interleave: true }).then(function (px) {
           var w = img.getWidth(), h = img.getHeight(), n = img.getSamplesPerPixel();
           var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
@@ -614,6 +653,28 @@
     if (allFlat && axis && S.frame) { S.frame.fx = axis.fx; S.frame.fy = axis.fy; }
     return true;
   }
+  /* Sunlight map: Google's yearly sunshine per square metre of roof, coloured
+     from shade (purple) to full sun (pale yellow), on roofs only. */
+  function fluxCanvas(F, M) {
+    if (!F || !M || F.w !== M.w || F.h !== M.h) return null;
+    var n = F.w * F.h, vals = [], i;
+    for (i = 0; i < n; i += 7) if (M.d[i] > 0 && F.d[i] > 0) vals.push(F.d[i]);
+    if (vals.length < 50) return null;
+    vals.sort(function (a, b) { return a - b; });
+    var lo = vals[Math.floor(vals.length * 0.03)], hi = vals[Math.floor(vals.length * 0.97)];
+    var stops = [[59, 15, 112], [182, 54, 121], [248, 118, 92], [254, 194, 135], [255, 247, 184]];
+    var cv = document.createElement("canvas"); cv.width = F.w; cv.height = F.h;
+    var ctx = cv.getContext("2d"), id = ctx.createImageData(F.w, F.h);
+    for (i = 0; i < n; i++) {
+      if (!(M.d[i] > 0) || !(F.d[i] > 0)) continue;
+      var t = Math.max(0, Math.min(1, (F.d[i] - lo) / (hi - lo))) * (stops.length - 1);
+      var k = Math.min(stops.length - 2, Math.floor(t)), f = t - k, a = stops[k], b = stops[k + 1];
+      id.data[i * 4] = a[0] + (b[0] - a[0]) * f; id.data[i * 4 + 1] = a[1] + (b[1] - a[1]) * f;
+      id.data[i * 4 + 2] = a[2] + (b[2] - a[2]) * f; id.data[i * 4 + 3] = 215;
+    }
+    ctx.putImageData(id, 0, 0);
+    return cv;
+  }
   function showCanvas(on) {
     var cv = $("roofCanvas");
     cv.hidden = !(on && S.img);
@@ -636,21 +697,28 @@
     ox = Math.min(0, Math.max(W - I.w * sc, ox)); oy = Math.min(0, Math.max(H - I.h * sc, oy));
     ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
     ctx.drawImage(I.canvas, ox, oy, I.w * sc, I.h * sc);
+    if (S.showFlux && S.flux) ctx.drawImage(S.flux, ox, oy, I.w * sc, I.h * sc);
     var trace = function (path) {
       ctx.beginPath();
       path.forEach(function (q, k) { var p = I.px(q); var x = ox + p.x * sc, y = oy + p.y * sc; if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
       ctx.closePath();
     };
-    // every panel space Google found on this house, in yellow; chosen ones filled
-    var anyUsed = Object.keys(on).length > 0;
+    // every panel space on this house in yellow; chosen ones drop in one by one
+    var anyUsed = Object.keys(on).length > 0, now = performance.now(), pending = false;
     ctx.setLineDash([]);
     S.paths.forEach(function (path, i) {
       var used = !!on[i];
       if (!used && !unused) return;
       trace(path);
-      if (used) { ctx.fillStyle = "rgba(22,24,29,.95)"; ctx.fill(); }
-      ctx.strokeStyle = "#FFD21F"; ctx.lineWidth = used ? 1.4 : 1.2; ctx.stroke();
+      if (used) {
+        var a = REDUCE ? 1 : Math.max(0, Math.min(1, (now - (S.born[i] || 0)) / 280));
+        if (a < 1) pending = true;
+        ctx.globalAlpha = a; ctx.fillStyle = "rgba(18,20,25,.95)"; ctx.fill(); ctx.globalAlpha = 1;
+      }
+      ctx.strokeStyle = "#FFC21A"; ctx.lineWidth = used ? 1.5 : 1.1; ctx.globalAlpha = used ? 1 : 0.85; ctx.stroke(); ctx.globalAlpha = 1;
     });
+    cancelAnimationFrame(S.raf);
+    if (pending) S.raf = requestAnimationFrame(function () { drawCanvas(on, unused, showOutline); });
     if (showOutline && !anyUsed) {
       trace(S.hull);
       ctx.setLineDash([8, 6]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
@@ -668,6 +736,11 @@
     var showOutline = stage !== "none";
     var unused = S.showUnused && stage !== "none" && stage !== "outline";
     S.stage = stage;
+    // remember when each chosen panel first appeared, so new ones animate in
+    var t0 = performance.now(), k = 0;
+    S.born = S.born || {};
+    Object.keys(S.born).forEach(function (i) { if (!on[i]) delete S.born[i]; });
+    Object.keys(on).forEach(function (i) { if (S.born[i] == null) S.born[i] = t0 + (k++) * 55; });
     if (LIVE && S.img) {
       if (outline) outline.setVisible(false);
       polys.forEach(function (p) { p.setVisible(false); });
@@ -700,22 +773,45 @@
   /* ============================================================
      4. Suggestion
      ============================================================ */
+  function roofName(s) { return s.flat ? "Flat roof" : compass(s.azimuth) + " roof"; }
   function renderSuggest() {
     var ch = chosen(), perSeg = {};
     ch.forEach(function (i) { var s = S.panels[i].segmentIndex; perSeg[s] = (perSeg[s] || 0) + 1; });
-    var usedSegs = Object.keys(perSeg).length;
+    var used = S.segs.filter(function (s) { return perSeg[s.index]; });
+    var kw = S.n * C.panelWatts / 1000, kwh = kwhFor(ch), q = quote(C.packages[0].id);
+    $("sugAddr").textContent = S.address ? S.address.label : "";
     $("sugN").textContent = S.n + " panels";
-    $("sugSeg").textContent = usedSegs + " of your roof space" + (S.segs.length === 1 ? "" : "s");
-    $("usageBtn").textContent = "~" + num(S.usage) + " kWh";
+    var names = used.map(function (s) { return roofName(s).toLowerCase(); });
+    $("sugLine").textContent = (names.length > 1 ? "across your " + names.slice(0, -1).join(", ") + " and " + names[names.length - 1] + "s" : "on your " + (names[0] || "roof")) +
+      ", making a " + kw.toFixed(1) + " kW system.";
+    tween($("kGen"), Math.round(kwh), num);
+    tween($("kSave"), Math.round(q.save), money);
+    tween($("kCover"), Math.round(kwh / S.usage * 100), function (v) { return Math.round(v) + "%"; });
+    $("usagePresets").innerHTML = C.usagePresets.map(function (p) {
+      return '<button type="button" data-kwh="' + p.kwh + '" class="' + (p.kwh === S.usage ? "sel" : "") + '"><b>' + esc(p.label) + "</b><small>" + num(p.kwh) + " kWh</small></button>";
+    }).join("");
+    $("usageBtn").textContent = C.usagePresets.some(function (p) { return p.kwh === S.usage; }) ? "Enter exact kWh" : num(S.usage) + " kWh a year";
     $("segs").innerHTML = S.segs.map(function (s) {
-      var c = perSeg[s.index] || 0;
-      return '<li><label><input type="checkbox" data-seg="' + s.index + '"' + (S.segOn[s.index] ? " checked" : "") + '><span class="box"></span>' +
-        "<span><strong>" + (s.flat ? "Flat roof" : compass(s.azimuth)) + " &middot; " + (S.segOn[s.index] ? c + " panel" + (c === 1 ? "" : "s") : "fits " + s.count) + "</strong>" +
-        "<small>" + (s.flat ? "Flat roof, panels lined up with your walls" : faceNote(s.azimuth)) + "</small></span></label></li>";
+      var c = perSeg[s.index] || 0, on = !!S.segOn[s.index], r = sunRating(s.perPanel), dots = "";
+      for (var i = 1; i <= 5; i++) dots += '<i class="' + (i <= r[0] ? "f" : "") + '"></i>';
+      return '<li><label class="' + (on ? "on" : "") + '"><input type="checkbox" data-seg="' + s.index + '"' + (on ? " checked" : "") + ">" +
+        '<span class="compass' + (s.flat ? " flat" : "") + '"><i style="transform:rotate(' + (s.flat ? 0 : Math.round(s.azimuth)) + 'deg)"></i></span>' +
+        '<span class="seg-text"><strong>' + roofName(s) + "</strong><small>" +
+        (on ? c + " of " + s.count + " panel spaces used" : "Room for " + s.count + " panels") + " · " + r[1] + "</small></span>" +
+        '<span class="dots" aria-hidden="true">' + dots + '</span><span class="box"></span></label></li>';
     }).join("");
     $("nOut").textContent = S.n;
-    $("unusedBtn").textContent = S.showUnused ? "Hide unused roof space" : "Show unused roof space";
+    $("unusedBtn").classList.toggle("on", S.showUnused); $("unusedBtn").setAttribute("aria-pressed", S.showUnused);
+    $("fluxBtn").classList.toggle("on", !!S.showFlux); $("fluxBtn").setAttribute("aria-pressed", !!S.showFlux);
+    $("fluxLegend").hidden = !(S.showFlux && S.flux);
   }
+
+  $("usagePresets").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-kwh]"); if (!b) return;
+    S.usage = +b.dataset.kwh; $("usageForm").hidden = true;
+    recommend(); paint(); renderSuggest();
+  });
+  $("fluxBtn").addEventListener("click", function () { S.showFlux = !S.showFlux; paint(); renderSuggest(); });
 
   $("segs").addEventListener("change", function (e) {
     var i = e.target.dataset.seg; if (i == null) return;
@@ -758,45 +854,80 @@
     if (S.scaf) lines.push(["Scaffolding", C.scaffoldingPrice]);
     var total = lines.reduce(function (a, l) { return a + l[1]; }, 0);
     var kwh = kwhFor(chosen().slice(0, n));
+    // share of the solar power used in the home; a battery raises it
     var self = Math.min(C.selfUseMax, C.selfUseNoBattery + p.batteryKwh * C.selfUsePerBatteryKwh);
-    var save = kwh * self * C.electricityPrice + kwh * (1 - self) * C.exportPrice;
+    var used = Math.min(S.usage, kwh * self), exported = kwh - used;
+    var billNow = S.usage * C.electricityPrice, billAfter = (S.usage - used) * C.electricityPrice, exportPay = exported * C.exportPrice;
+    var save = billNow - billAfter + exportPay;
     var r = C.financeApr / 1200, m = C.financeMonths;
     var monthly = r ? total * r / (1 - Math.pow(1 + r, -m)) : total / m;
-    return { lines: lines, total: total, kwh: kwh, save: save, payback: save ? total / save : 0, monthly: monthly };
+    return {
+      lines: lines, total: total, kwh: kwh, save: save, payback: save ? total / save : 0, monthly: monthly,
+      billNow: billNow, billAfter: billAfter, exportPay: exportPay, cut: billNow ? 1 - billAfter / billNow : 0,
+      life: save * C.systemLifeYears - total
+    };
+  }
+
+  function pkgArt(p) {   // little picture: panels, plus a battery sized to the package
+    var bat = p.batteryKwh ? '<rect x="' + 96 + '" y="' + (p.batteryKwh > 7 ? 8 : 24) + '" width="26" height="' + (p.batteryKwh > 7 ? 56 : 40) + '" rx="5" fill="#fff" stroke="#C9CBD0" stroke-width="2"/>' +
+      '<rect x="103" y="' + (p.batteryKwh > 7 ? 18 : 33) + '" width="12" height="4" rx="2" fill="#FFC21A"/>' : "";
+    return '<svg viewBox="0 0 ' + (p.batteryKwh ? 126 : 86) + ' 68" aria-hidden="true"><g fill="#121419"><rect x="2" y="6" width="38" height="26" rx="3"/><rect x="44" y="6" width="38" height="26" rx="3"/><rect x="2" y="36" width="38" height="26" rx="3"/><rect x="44" y="36" width="38" height="26" rx="3"/></g>' +
+      '<path d="M21 6v56M63 6v56M2 19h80M2 49h80" stroke="#3A3F4A" stroke-width="1"/>' + bat + "</svg>";
   }
 
   function renderResults() {
     if ($("results").hidden) return;
     var q = quote(S.pkg), p = pkg(), kw = S.n * C.panelWatts / 1000;
-    $("sSave").innerHTML = money(q.save) + "<small>/yr</small>";
-    $("sPayback").textContent = "Pays back in ~" + q.payback.toFixed(1) + " years";
-    $("sPriceLbl").textContent = "Rough cost (" + (S.scaf ? "inc." : "ex.") + " scaffolding)";
-    $("sPrice").textContent = money(q.total);
-    $("sMonthly").textContent = "or from " + money(q.monthly) + "/mo";
+    $("resAddr").textContent = (S.address ? S.address.label + " · " : "") + S.n + " panels · " + kw.toFixed(1) + " kW · about " + num(q.kwh) + " kWh a year";
+    tween($("sPrice"), Math.round(q.total), money);
+    $("sMonthly").textContent = "or from " + money(q.monthly) + " a month";
+    tween($("sSave"), Math.round(q.save), function (v) { return money(v) + " a year"; });
+    $("sPayback").textContent = "Pays for itself in about " + q.payback.toFixed(1) + " years";
+    tween($("sCut"), Math.round(q.cut * 100), function (v) { return Math.round(v) + "%"; });
+    $("sBill").textContent = money(q.billNow) + " a year down to " + money(q.billAfter);
+    $("sLifeLbl").textContent = "Over " + C.systemLifeYears + " years";
+    tween($("sLife"), Math.round(q.life), money);
     $("scafPrice").textContent = "+" + money(C.scaffoldingPrice);
-    $("pkgName").textContent = ptype().name + (p.batteryKwh ? " + " + p.batteryKwh + " kWh battery" : "");
-    $("pkgSize").textContent = S.n + " panels (" + kw.toFixed(1) + " kW) · ~" + num(q.kwh) + " kWh a year";
     $("nOut2").textContent = S.n;
-    $("batIcon").style.display = p.batteryKwh ? "" : "none";
+    $("roofLine").textContent = "Your roof, with " + S.n + " panels in place.";
+
     $("pkgs").innerHTML = C.packages.map(function (x) {
-      var qq = quote(x.id);
-      return '<label><input type="radio" name="pkg" value="' + x.id + '"' + (x.id === S.pkg ? " checked" : "") + '><span class="opt"><span><b>' + esc(x.name) + "</b>" +
-        (x.recommended ? '<span class="tag">Recommended</span>' : "") + "<small>" + esc(x.note) + " · saves ~" + money(qq.save) + "/yr</small></span><em>" + money(qq.total) + "</em></span></label>";
+      var qq = quote(x.id), sel = x.id === S.pkg;
+      return '<label class="pk"><input type="radio" name="pkg" value="' + x.id + '"' + (sel ? " checked" : "") + '><span class="pk-in">' +
+        (x.tag ? '<span class="ribbon">' + esc(x.tag) + "</span>" : "") +
+        '<span class="pk-art">' + pkgArt(x) + "</span>" +
+        '<span class="pk-name">' + esc(x.name) + '</span><span class="pk-blurb">' + esc(x.blurb || "") + "</span>" +
+        '<span class="pk-price">' + money(qq.total) + '</span><span class="pk-mo">or from ' + money(qq.monthly) + " a month</span>" +
+        '<span class="pk-stats"><span><b>' + money(qq.save) + "</b>saved a year</span><span><b>" + qq.payback.toFixed(1) + " yrs</b>to pay back</span><span><b>" + Math.round(qq.cut * 100) + "%</b>off your bill</span></span>" +
+        '<ul class="pk-feat">' + (x.features || []).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
+        '<span class="pk-btn">' + (sel ? "Selected" : "Choose this") + "</span></span></label>";
     }).join("");
     $("ptypes").innerHTML = C.panelTypes.map(function (t) {
-      return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.name) + "<small>" + money(t.pricePerPanel) + " per panel</small></span></label>";
+      return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.short || t.name) + "</span></label>";
     }).join("");
-    var sp = S.insights.solarPotential;
-    $("roofLine").textContent = (S.address ? S.address.label + " · " : "") + "room for " + eligible().length + " panels on the roof spaces you chose";
+
+    // where the savings come from
+    $("savLine").textContent = "Your panels make about " + num(q.kwh) + " kWh a year. You use part of it at home, which cuts your bill, and get paid for the rest.";
+    var top = Math.max(q.billNow, 1);
+    var rows = [["Your electricity bill now", q.billNow, "now"], ["Your bill with solar", q.billAfter, ""], ["Paid to you for spare power", q.exportPay, "pay"]];
+    if (!$("bars").children.length) {
+      $("bars").innerHTML = rows.map(function (r, i) {
+        return '<div class="bar-row"><div class="bar-top"><span>' + r[0] + '</span><b id="barV' + i + '"></b></div><div class="bar-track"><div class="bar-fill ' + r[2] + '" id="barF' + i + '"></div></div></div>';
+      }).join("");
+    }
+    rows.forEach(function (r, i) {
+      $("barV" + i).textContent = money(r[1]) + " a year";
+      var w = Math.max(2, Math.min(100, r[1] / top * 100));
+      setTimeout(function () { $("barF" + i).style.width = w + "%"; }, 60);
+    });
+
+    $("pkgName").textContent = p.name;
+    $("pkgSize").textContent = S.n + " × " + ptype().name + " (" + kw.toFixed(1) + " kW)";
     $("breakdown").innerHTML = q.lines.map(function (l) { return "<tr><td>" + esc(l[0]) + "</td><td>" + money(l[1]) + "</td></tr>"; }).join("") +
-      "<tr><td>Total (0% VAT)</td><td>" + money(q.total) + "</td></tr>";
+      "<tr><td>Rough cost</td><td>" + money(q.total) + "</td></tr>";
   }
 
   $("scaf").addEventListener("change", function () { S.scaf = this.checked; renderResults(); });
-  $("changePkg").addEventListener("click", function () {
-    var pick = $("pkgPick"); pick.hidden = !pick.hidden;
-    this.textContent = pick.hidden ? "Change" : "Done";
-  });
   document.addEventListener("change", function (e) {
     if (e.target.name === "pkg") { S.pkg = e.target.value; renderResults(); }
     if (e.target.name === "ptype") { S.ptype = e.target.value; renderResults(); }
@@ -868,7 +999,7 @@
       name: $("cName").value, phone: $("cPhone").value, email: $("cEmail").value,
       call: S.mode === "callback" ? "Callback today" : dayLabel() + " " + S.time,
       address: S.address && S.address.label, postcode: S.postcode,
-      package: $("pkgName").textContent, panels: S.n, systemKw: (S.n * C.panelWatts / 1000).toFixed(2),
+      package: $("pkgName").textContent, panelType: ptype().name, panels: S.n, systemKw: (S.n * C.panelWatts / 1000).toFixed(2),
       scaffolding: S.scaf ? "Yes" : "No", roughCost: Math.round(q.total),
       yearlyKwh: Math.round(q.kwh), yearlySavings: Math.round(q.save)
     };
