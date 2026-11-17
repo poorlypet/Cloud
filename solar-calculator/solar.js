@@ -233,8 +233,10 @@
       drawRoof();
       return Promise.all([LIVE ? loadRoofImage().catch(function (e) { console.warn("Roof photo unavailable, using the map", e); S.img = null; }) : null, wait(800)]);
     }).then(function () {
-      if (LIVE && regridFlat()) drawRoof();
-      mapHouse();
+      return LIVE && C.aiEndpoint && S.img ? aiMap().catch(function (e) { console.warn("AI mapping unavailable, using Google's roof outline", e); return null; }) : null;
+    }).then(function (ai) {
+      if (ai && applyAI(ai)) { /* panels now come from the AI's outline of this home */ }
+      else { if (LIVE && regridFlat()) drawRoof(); mapHouse(); }
       S.traceStart = performance.now();
       showCanvas(true); paint("outline");
       return wait(S.house ? 2300 : 500);
@@ -267,6 +269,7 @@
     var sp = ins.solarPotential || {};
     S.insights = ins;
     S.panels = sp.solarPanels || [];
+    S.rawPanels = S.panels;
     S.apiWatts = sp.panelCapacityWatts || 400;
     // Semis and terraces: Google measures the whole row as one building.
     // Keep only panels that fit fully inside a strip one house wide,
@@ -675,6 +678,80 @@
     ctx.putImageData(id, 0, 0);
     return cv;
   }
+  /* ---------- AI mapping ----------
+     Send Claude a crop of Google's roof photo with the home marked and a pixel
+     grid, and get back the outline of this home's roof and its property
+     boundary. Panels are then kept only inside the home's own roof. */
+  function aiMap() {
+    var I = S.img, pc = I.px(S.centre), half = Math.round(C.aiCropMeters / 2 / I.res);
+    var x0 = Math.max(0, Math.round(pc.x - half)), y0 = Math.max(0, Math.round(pc.y - half));
+    var x1 = Math.min(I.w, Math.round(pc.x + half)), y1 = Math.min(I.h, Math.round(pc.y + half));
+    var k = C.aiCropPixels / Math.max(x1 - x0, y1 - y0), W = Math.round((x1 - x0) * k), H = Math.round((y1 - y0) * k);
+    var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    var ctx = cv.getContext("2d");
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(I.canvas, x0, y0, x1 - x0, y1 - y0, 0, 0, W, H);
+    var grid = 100;
+    ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1;
+    ctx.font = "bold 13px Arial"; ctx.fillStyle = "#fff"; ctx.shadowColor = "#000"; ctx.shadowBlur = 3;
+    for (var g = grid; g < Math.max(W, H); g += grid) {
+      if (g < W) { ctx.beginPath(); ctx.moveTo(g + .5, 0); ctx.lineTo(g + .5, H); ctx.stroke(); ctx.fillText(String(g), g + 3, 14); }
+      if (g < H) { ctx.beginPath(); ctx.moveTo(0, g + .5); ctx.lineTo(W, g + .5); ctx.stroke(); ctx.fillText(String(g), 3, g - 3); }
+    }
+    ctx.shadowBlur = 0;
+    var px = (pc.x - x0) * k, py = (pc.y - y0) * k;
+    ctx.beginPath(); ctx.arc(px, py, 7, 0, Math.PI * 2); ctx.fillStyle = "#FF2A2A"; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = "#fff"; ctx.stroke();
+    var image = cv.toDataURL("image/jpeg", 0.88).split(",")[1];
+    var ctrl = new AbortController(), timer = setTimeout(function () { ctrl.abort(); }, C.aiTimeoutMs);
+    return fetch(C.aiEndpoint, {
+      method: "POST", signal: ctrl.signal, headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: image, width: W, height: H, pin: { x: px, y: py }, metresPerPixel: I.res / k, homeType: S.htype, grid: grid })
+    }).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error("AI " + r.status); return r.json(); })
+      .then(function (out) {
+        var back = function (P) { return (P || []).map(function (p) { return [x0 + p.x / k, y0 + p.y / k]; }); };
+        return { house: back(out.house), plot: back(out.plot), confidence: out.confidence };
+      });
+  }
+  function inPoly(x, y, P) {
+    var inside = false;
+    for (var i = 0, j = P.length - 1; i < P.length; j = i++) {
+      if (((P[i][1] > y) !== (P[j][1] > y)) && (x < (P[j][0] - P[i][0]) * (y - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0])) inside = !inside;
+    }
+    return inside;
+  }
+  function applyAI(ai) {
+    if (!ai.house || ai.house.length < 3 || ai.confidence === "low") return false;
+    var I = S.img, sp = S.insights.solarPotential;
+    var poly = ai.house, kLat = 111320;
+    // keep Google's panels whose four corners all sit on this home's roof
+    var dims = latticeDims(S.rawPanels, sp);
+    var keep = S.rawPanels.filter(function (p) {
+      var d = dims[p.segmentIndex], kLng = 111320 * Math.cos(p.center.latitude * Math.PI / 180);
+      return [[1, 1], [1, -1], [-1, -1], [-1, 1]].every(function (q) {
+        var a = q[0] * d.along * 0.45, v = q[1] * d.down * 0.45;
+        var x = -d.fy * a + d.fx * v, y = d.fx * a + d.fy * v;
+        var pt = I.px({ lat: p.center.latitude + y / kLat, lng: p.center.longitude + x / kLng });
+        return inPoly(pt.x, pt.y, poly);
+      });
+    });
+    if (keep.length < 2) return false;
+    S.panels = tidyGrid(keep);
+    S.dims = latticeDims(S.panels, sp);
+    buildSegs(sp);
+    if (regridFlat()) {
+      S.panels = S.panels.filter(function (p) {
+        return !p.path || p.path.every(function (q) { var pt = I.px(q); return inPoly(pt.x, pt.y, poly); });
+      });
+      buildSegs(sp);
+    }
+    drawRoof();
+    S.house = poly;
+    S.box = ai.plot && ai.plot.length >= 3 ? ai.plot : null;
+    S.aiMapped = true;
+    return true;
+  }
+
   /* Map the house: take Google's roof outline map (its own image recognition of
      roofs), keep the part that belongs to this house, trace its edge, and draw a
      dashed box round the property from front garden to back garden. */
