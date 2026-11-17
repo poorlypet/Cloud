@@ -1,0 +1,100 @@
+{%- comment -%}
+  Cookie banner in the Axel & Hound style. Consent is saved through Shopify's Customer Privacy API,
+  so Shopify, analytics and marketing apps all respect the choice. Shown only where Shopify says a banner is needed
+  (or with ?cookies=show to preview). "Cookie settings" links (data-cookie-settings) reopen it.
+{%- endcomment -%}
+<div class="ck" id="ck" role="dialog" aria-modal="false" aria-labelledby="ck-h" hidden>
+  <div class="ck-in">
+    <p class="ck-k">Your privacy</p>
+    <h2 class="ck-h" id="ck-h">A few cookies, if that&rsquo;s alright</h2>
+    <p class="ck-p">We use cookies to keep the shop working, remember your basket and, with your permission, to understand how the site is used and show you relevant offers. <a href="/pages/cookie-policy">Cookie policy</a></p>
+    <div class="ck-opts" id="ck-opts" hidden>
+      <label class="ck-o"><span><b>Essential</b><small>Basket, checkout and security. Always on.</small></span><input type="checkbox" checked disabled></label>
+      <label class="ck-o"><span><b>Preferences</b><small>Remember your country and currency.</small></span><input type="checkbox" data-ck="preferences"></label>
+      <label class="ck-o"><span><b>Analytics</b><small>Help us see which pages work and which don&rsquo;t.</small></span><input type="checkbox" data-ck="analytics"></label>
+      <label class="ck-o"><span><b>Marketing</b><small>Show you relevant offers on other sites.</small></span><input type="checkbox" data-ck="marketing"></label>
+    </div>
+    <div class="ck-b">
+      <button type="button" class="ck-btn ck-acc" data-ck-all>Accept all</button>
+      <button type="button" class="ck-btn ck-o2" data-ck-none>Essential only</button>
+      <button type="button" class="ck-lnk" data-ck-manage aria-expanded="false" aria-controls="ck-opts">Manage</button>
+      <button type="button" class="ck-btn ck-o2" data-ck-save hidden>Save choices</button>
+    </div>
+  </div>
+</div>
+<style>
+.ck{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:9000;width:min(440px,calc(100vw - 32px));background:#fff;color:#111;border:1px solid rgba(17,17,17,.12);box-shadow:0 18px 50px rgba(17,17,17,.16);font-family:var(--sans,"Jost",system-ui,sans-serif);animation:ck-in .35s ease both}
+.ck[hidden]{display:none}
+@keyframes ck-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.ck-in{padding:26px 26px 22px}
+.ck-k{margin:0 0 8px;font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#6b6b66}
+.ck-h{margin:0 0 10px;font:600 26px/1.1 var(--display,"Cormorant Garamond",Georgia,serif);letter-spacing:0;text-wrap:balance}
+.ck-p{margin:0;font-size:14px;line-height:1.55;color:#3a3a37}
+.ck-p a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.ck-opts{margin:18px 0 0;border-top:1px solid rgba(17,17,17,.1)}
+.ck-opts[hidden]{display:none}
+.ck-o{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid rgba(17,17,17,.1);cursor:pointer}
+.ck-o b{display:block;font-size:13.5px;font-weight:500}
+.ck-o small{display:block;margin-top:2px;font-size:12.5px;color:#6b6b66;line-height:1.4}
+.ck-o input{appearance:none;-webkit-appearance:none;flex:none;width:38px;height:22px;border-radius:22px;background:#d9d9d4;position:relative;cursor:pointer;transition:background .2s;margin:0}
+.ck-o input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.ck-o input:checked{background:#2f3527}
+.ck-o input:checked::after{transform:translateX(16px)}
+.ck-o input:disabled{opacity:.55;cursor:default}
+.ck-o input:focus-visible{outline:2px solid #111;outline-offset:2px}
+.ck-b{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:20px}
+.ck-btn{flex:1 1 auto;min-height:44px;padding:0 18px;font:500 11px/1 var(--sans,"Jost",system-ui,sans-serif);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:1px solid #111;transition:background .2s,color .2s}
+.ck-acc{background:#111;color:#fff}
+.ck-acc:hover{background:#2f3527;border-color:#2f3527}
+.ck-o2{background:#fff;color:#111}
+.ck-o2:hover{background:#111;color:#fff}
+.ck-btn[hidden],.ck-lnk[hidden]{display:none}
+.ck-lnk{flex:0 0 auto;background:none;border:0;padding:8px 4px;font:500 11px/1 var(--sans,"Jost",system-ui,sans-serif);letter-spacing:.14em;text-transform:uppercase;color:#111;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+@media (max-width:560px){.ck{left:0;right:0;bottom:0;width:100%;border-left:0;border-right:0;border-bottom:0}.ck-in{padding:22px 16px max(18px,env(safe-area-inset-bottom,0px))}.ck-h{font-size:23px}.ck-btn{flex:1 1 40%}}
+@media (prefers-reduced-motion:reduce){.ck{animation:none}}
+</style>
+<script>
+(function () {
+  var el = document.getElementById("ck"); if (!el) return;
+  var opts = document.getElementById("ck-opts"), boxes = el.querySelectorAll("[data-ck]");
+  var force = /[?&]cookies=show\b/.test(location.search);
+  function api() { return window.Shopify && Shopify.customerPrivacy; }
+  function show() {
+    var cp = api();
+    if (cp && cp.currentVisitorConsent) {
+      var c = cp.currentVisitorConsent() || {};
+      boxes.forEach(function (b) { b.checked = c[b.getAttribute("data-ck")] === "yes"; });
+    }
+    el.hidden = false;
+  }
+  function hide() { el.hidden = true; }
+  function save(v) {
+    var cp = api(), done = function () { hide(); };
+    var consent = { analytics: !!v.analytics, marketing: !!v.marketing, preferences: !!v.preferences, sale_of_data: !!v.marketing };
+    if (cp && cp.setTrackingConsent) { try { cp.setTrackingConsent(consent, done); } catch (e) { done(); } } else done();
+  }
+  function manage(open) {
+    opts.hidden = !open;
+    el.querySelector("[data-ck-manage]").setAttribute("aria-expanded", open ? "true" : "false");
+    el.querySelector("[data-ck-manage]").hidden = open;
+    el.querySelector("[data-ck-save]").hidden = !open;
+  }
+  el.querySelector("[data-ck-all]").addEventListener("click", function () { save({ analytics: 1, marketing: 1, preferences: 1 }); });
+  el.querySelector("[data-ck-none]").addEventListener("click", function () { save({}); });
+  el.querySelector("[data-ck-manage]").addEventListener("click", function () { manage(true); });
+  el.querySelector("[data-ck-save]").addEventListener("click", function () {
+    var v = {}; boxes.forEach(function (b) { v[b.getAttribute("data-ck")] = b.checked; }); save(v);
+  });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("[data-cookie-settings]");
+    if (a) { e.preventDefault(); manage(true); show(); }
+  });
+  function init() {
+    var cp = api();
+    if (force || (cp && cp.shouldShowBanner && cp.shouldShowBanner())) show();
+  }
+  if (window.Shopify && Shopify.loadFeatures) {
+    Shopify.loadFeatures([{ name: "consent-tracking-api", version: "0.1" }], function (err) { init(); });
+  } else if (force) show();
+})();
+</script>
