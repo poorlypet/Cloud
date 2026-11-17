@@ -101,8 +101,6 @@
     $("fluxLegend").hidden = !(v === "suggest" && S.showFlux && S.flux);
     $("mapTag").hidden = !(v === "pin" || (!LIVE && v !== "address"));
     $("mapTag").textContent = !LIVE ? "Sample roof (demo mode)" : "Drag the map to line up your roof";
-    var order = ["address", "pin", "suggest", "results"], at = order.indexOf(v === "analyse" ? "pin" : v);
-    $$("#progress li").forEach(function (li, i) { li.className = i < at ? "done" : i === at ? "on" : ""; });
     if (LIVE && gmap) setTimeout(fitRoof, 50);
     if (S.img) setTimeout(function () { paint(S.stage); }, 30);
     window.scrollTo(0, 0);
@@ -778,27 +776,18 @@
     var ch = chosen(), perSeg = {};
     ch.forEach(function (i) { var s = S.panels[i].segmentIndex; perSeg[s] = (perSeg[s] || 0) + 1; });
     var used = S.segs.filter(function (s) { return perSeg[s.index]; });
-    var kw = S.n * C.panelWatts / 1000, kwh = kwhFor(ch), q = quote(C.packages[0].id);
-    $("sugAddr").textContent = S.address ? S.address.label : "";
-    $("sugN").textContent = S.n + " panels";
     var names = used.map(function (s) { return roofName(s).toLowerCase(); });
-    $("sugLine").textContent = (names.length > 1 ? "across your " + names.slice(0, -1).join(", ") + " and " + names[names.length - 1] + "s" : "on your " + (names[0] || "roof")) +
-      ", making a " + kw.toFixed(1) + " kW system.";
-    tween($("kGen"), Math.round(kwh), num);
-    tween($("kSave"), Math.round(q.save), money);
-    tween($("kCover"), Math.round(kwh / S.usage * 100), function (v) { return Math.round(v) + "%"; });
-    $("usagePresets").innerHTML = C.usagePresets.map(function (p) {
-      return '<button type="button" data-kwh="' + p.kwh + '" class="' + (p.kwh === S.usage ? "sel" : "") + '"><b>' + esc(p.label) + "</b><small>" + num(p.kwh) + " kWh</small></button>";
-    }).join("");
-    $("usageBtn").textContent = C.usagePresets.some(function (p) { return p.kwh === S.usage; }) ? "Enter exact kWh" : num(S.usage) + " kWh a year";
+    $("sugN").textContent = S.n + " panels";
+    $("sugLine").textContent = "On your " + (names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0] || "roof") +
+      ", making about " + num(kwhFor(ch)) + " kWh a year.";
+    $("usageBtn").textContent = "~" + num(S.usage) + " kWh";
     $("segs").innerHTML = S.segs.map(function (s) {
-      var c = perSeg[s.index] || 0, on = !!S.segOn[s.index], r = sunRating(s.perPanel), dots = "";
-      for (var i = 1; i <= 5; i++) dots += '<i class="' + (i <= r[0] ? "f" : "") + '"></i>';
+      var c = perSeg[s.index] || 0, on = !!S.segOn[s.index];
       return '<li><label class="' + (on ? "on" : "") + '"><input type="checkbox" data-seg="' + s.index + '"' + (on ? " checked" : "") + ">" +
         '<span class="compass' + (s.flat ? " flat" : "") + '"><i style="transform:rotate(' + (s.flat ? 0 : Math.round(s.azimuth)) + 'deg)"></i></span>' +
-        '<span class="seg-text"><strong>' + roofName(s) + "</strong><small>" +
-        (on ? c + " of " + s.count + " panel spaces used" : "Room for " + s.count + " panels") + " · " + r[1] + "</small></span>" +
-        '<span class="dots" aria-hidden="true">' + dots + '</span><span class="box"></span></label></li>';
+        '<span class="seg-text"><strong>' + roofName(s) + " &middot; " + (on ? c + " panel" + (c === 1 ? "" : "s") : "room for " + s.count) + "</strong>" +
+        "<small>" + (s.flat ? "Panels lined up with your walls" : faceNote(s.azimuth)) + "</small></span>" +
+        '<span class="box"></span></label></li>';
     }).join("");
     $("nOut").textContent = S.n;
     $("unusedBtn").classList.toggle("on", S.showUnused); $("unusedBtn").setAttribute("aria-pressed", S.showUnused);
@@ -806,11 +795,6 @@
     $("fluxLegend").hidden = !(S.showFlux && S.flux);
   }
 
-  $("usagePresets").addEventListener("click", function (e) {
-    var b = e.target.closest("[data-kwh]"); if (!b) return;
-    S.usage = +b.dataset.kwh; $("usageForm").hidden = true;
-    recommend(); paint(); renderSuggest();
-  });
   $("fluxBtn").addEventListener("click", function () { S.showFlux = !S.showFlux; paint(); renderSuggest(); });
 
   $("segs").addEventListener("change", function (e) {
@@ -868,66 +852,35 @@
     };
   }
 
-  function pkgArt(p) {   // little picture: panels, plus a battery sized to the package
-    var bat = p.batteryKwh ? '<rect x="' + 96 + '" y="' + (p.batteryKwh > 7 ? 8 : 24) + '" width="26" height="' + (p.batteryKwh > 7 ? 56 : 40) + '" rx="5" fill="#fff" stroke="#C9CBD0" stroke-width="2"/>' +
-      '<rect x="103" y="' + (p.batteryKwh > 7 ? 18 : 33) + '" width="12" height="4" rx="2" fill="#FFC21A"/>' : "";
-    return '<svg viewBox="0 0 ' + (p.batteryKwh ? 126 : 86) + ' 68" aria-hidden="true"><g fill="#121419"><rect x="2" y="6" width="38" height="26" rx="3"/><rect x="44" y="6" width="38" height="26" rx="3"/><rect x="2" y="36" width="38" height="26" rx="3"/><rect x="44" y="36" width="38" height="26" rx="3"/></g>' +
-      '<path d="M21 6v56M63 6v56M2 19h80M2 49h80" stroke="#3A3F4A" stroke-width="1"/>' + bat + "</svg>";
-  }
-
   function renderResults() {
     if ($("results").hidden) return;
     var q = quote(S.pkg), p = pkg(), kw = S.n * C.panelWatts / 1000;
-    $("resAddr").textContent = (S.address ? S.address.label + " · " : "") + S.n + " panels · " + kw.toFixed(1) + " kW · about " + num(q.kwh) + " kWh a year";
+    tween($("sSave"), Math.round(q.save), function (v) { return money(v) + "/yr"; });
+    $("sPayback").textContent = "Pays back in ~" + q.payback.toFixed(1) + " years";
+    $("sPriceLbl").textContent = "Rough cost (" + (S.scaf ? "inc." : "ex.") + " scaffolding)";
     tween($("sPrice"), Math.round(q.total), money);
-    $("sMonthly").textContent = "or from " + money(q.monthly) + " a month";
-    tween($("sSave"), Math.round(q.save), function (v) { return money(v) + " a year"; });
-    $("sPayback").textContent = "Pays for itself in about " + q.payback.toFixed(1) + " years";
-    tween($("sCut"), Math.round(q.cut * 100), function (v) { return Math.round(v) + "%"; });
-    $("sBill").textContent = money(q.billNow) + " a year down to " + money(q.billAfter);
-    $("sLifeLbl").textContent = "Over " + C.systemLifeYears + " years";
-    tween($("sLife"), Math.round(q.life), money);
+    $("sMonthly").textContent = "or from " + money(q.monthly) + "/mo";
     $("scafPrice").textContent = "+" + money(C.scaffoldingPrice);
+    $("pkgName").textContent = p.name + " · " + (ptype().short || ptype().name);
+    $("pkgSize").textContent = S.n + " panels (" + kw.toFixed(1) + " kW) · ~" + num(q.kwh) + " kWh a year";
     $("nOut2").textContent = S.n;
-    $("roofLine").textContent = "Your roof, with " + S.n + " panels in place.";
-
     $("pkgs").innerHTML = C.packages.map(function (x) {
-      var qq = quote(x.id), sel = x.id === S.pkg;
-      return '<label class="pk"><input type="radio" name="pkg" value="' + x.id + '"' + (sel ? " checked" : "") + '><span class="pk-in">' +
-        (x.tag ? '<span class="ribbon">' + esc(x.tag) + "</span>" : "") +
-        '<span class="pk-art">' + pkgArt(x) + "</span>" +
-        '<span class="pk-name">' + esc(x.name) + '</span><span class="pk-blurb">' + esc(x.blurb || "") + "</span>" +
-        '<span class="pk-price">' + money(qq.total) + '</span><span class="pk-mo">or from ' + money(qq.monthly) + " a month</span>" +
-        '<span class="pk-stats"><span><b>' + money(qq.save) + "</b>saved a year</span><span><b>" + qq.payback.toFixed(1) + " yrs</b>to pay back</span><span><b>" + Math.round(qq.cut * 100) + "%</b>off your bill</span></span>" +
-        '<ul class="pk-feat">' + (x.features || []).map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
-        '<span class="pk-btn">' + (sel ? "Selected" : "Choose this") + "</span></span></label>";
+      var qq = quote(x.id);
+      return '<label><input type="radio" name="pkg" value="' + x.id + '"' + (x.id === S.pkg ? " checked" : "") + '><span class="prow"><span><b>' + esc(x.name) + "</b>" +
+        "<small>Saves ~" + money(qq.save) + " a year</small></span><em>" + money(qq.total) + "</em></span></label>";
     }).join("");
     $("ptypes").innerHTML = C.panelTypes.map(function (t) {
-      return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.short || t.name) + "</span></label>";
+      return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.short || t.name) + "<small>" + money(t.pricePerPanel) + " a panel</small></span></label>";
     }).join("");
-
-    // where the savings come from
-    $("savLine").textContent = "Your panels make about " + num(q.kwh) + " kWh a year. You use part of it at home, which cuts your bill, and get paid for the rest.";
-    var top = Math.max(q.billNow, 1);
-    var rows = [["Your electricity bill now", q.billNow, "now"], ["Your bill with solar", q.billAfter, ""], ["Paid to you for spare power", q.exportPay, "pay"]];
-    if (!$("bars").children.length) {
-      $("bars").innerHTML = rows.map(function (r, i) {
-        return '<div class="bar-row"><div class="bar-top"><span>' + r[0] + '</span><b id="barV' + i + '"></b></div><div class="bar-track"><div class="bar-fill ' + r[2] + '" id="barF' + i + '"></div></div></div>';
-      }).join("");
-    }
-    rows.forEach(function (r, i) {
-      $("barV" + i).textContent = money(r[1]) + " a year";
-      var w = Math.max(2, Math.min(100, r[1] / top * 100));
-      setTimeout(function () { $("barF" + i).style.width = w + "%"; }, 60);
-    });
-
-    $("pkgName").textContent = p.name;
-    $("pkgSize").textContent = S.n + " × " + ptype().name + " (" + kw.toFixed(1) + " kW)";
     $("breakdown").innerHTML = q.lines.map(function (l) { return "<tr><td>" + esc(l[0]) + "</td><td>" + money(l[1]) + "</td></tr>"; }).join("") +
-      "<tr><td>Rough cost</td><td>" + money(q.total) + "</td></tr>";
+      "<tr><td>Total (0% VAT)</td><td>" + money(q.total) + "</td></tr>";
   }
 
   $("scaf").addEventListener("change", function () { S.scaf = this.checked; renderResults(); });
+  $("changePkg").addEventListener("click", function () {
+    var pick = $("pkgPick"); pick.hidden = !pick.hidden;
+    this.textContent = pick.hidden ? "Change" : "Done";
+  });
   document.addEventListener("change", function (e) {
     if (e.target.name === "pkg") { S.pkg = e.target.value; renderResults(); }
     if (e.target.name === "ptype") { S.ptype = e.target.value; renderResults(); }
