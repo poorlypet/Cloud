@@ -209,6 +209,7 @@
       drawRoof();
       return Promise.all([LIVE ? loadRoofImage().catch(function (e) { console.warn("Roof photo unavailable, using the map", e); S.img = null; }) : null, wait(800)]);
     }).then(function () {
+      if (LIVE && regridFlat()) drawRoof();
       showCanvas(true); paint("outline");
       return wait(500);
     }).then(function () {
@@ -265,7 +266,11 @@
     }
     if (LIVE && S.centre && S.panels.length) { S.panels = tidyGrid(S.panels); S.dims = latticeDims(S.panels, sp); }
     if (!S.panels.length) { var e = new Error("no panels"); e.status = 404; throw e; }
-    // roof spaces that can hold panels, best first
+    buildSegs(sp);
+  }
+
+  /* roof spaces that can hold panels, best first */
+  function buildSegs(sp) {
     var by = {};
     S.panels.forEach(function (p, i) {
       var s = by[p.segmentIndex] || (by[p.segmentIndex] = { index: p.segmentIndex, count: 0, energy: 0, first: i });
@@ -274,6 +279,7 @@
     S.segs = Object.keys(by).map(function (k) {
       var s = by[k], st = (sp.roofSegmentStats || [])[s.index] || {};
       s.azimuth = st.azimuthDegrees || 0;
+      s.flat = (st.pitchDegrees || 0) < C.flatRoofPitch;
       s.perPanel = s.energy / s.count;
       return s;
     }).filter(function (s) { return s.count >= 2; })
@@ -294,6 +300,9 @@
     panels.forEach(function (p) { (bySeg[p.segmentIndex] = bySeg[p.segmentIndex] || []).push(p); });
     var faces = Object.keys(bySeg).map(function (k) {
       var list = bySeg[k], la = 0, ln = 0, en = 0;
+      if (list[0].path) {   // flat roof already laid out in rows
+        return { avg: list.reduce(function (a, p) { return a + (p.yearlyEnergyDcKwh || 0); }, 0) / list.length, panels: list };
+      }
       list.forEach(function (p) { la += p.center.latitude; ln += p.center.longitude; en += p.yearlyEnergyDcKwh || 0; });
       la /= list.length; ln /= list.length;
       var kLng = Math.cos(la * Math.PI / 180);
@@ -378,6 +387,11 @@
     var pts = [];
     S.paths = [];
     polys = S.panels.map(function (p) {
+      if (p.path) {
+        p.path.forEach(function (q) { pts.push(q); });
+        S.paths.push(p.path);
+        return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: p.path });
+      }
       var d = S.dims[p.segmentIndex], a = d.along * gap / 2, v = d.down * gap / 2;
       var path = [[a, v], [a, -v], [-a, -v], [-a, v]].map(function (q) {
         var x = -d.fy * q[0] + d.fx * q[1], y = d.fx * q[0] + d.fy * q[1];
@@ -480,14 +494,19 @@
     la /= S.panels.length; ln /= S.panels.length;
     var url = "https://solar.googleapis.com/v1/dataLayers:get?location.latitude=" + la + "&location.longitude=" + ln +
       "&radiusMeters=" + C.roofPhotoRadiusMeters + "&view=IMAGERY_LAYERS&requiredQuality=MEDIUM&pixelSizeMeters=0.1&key=" + encodeURIComponent(C.googleApiKey);
+    var key = "&key=" + encodeURIComponent(C.googleApiKey);
+    var tif = function (u) {
+      return fetch(u + key).then(function (res) { if (!res.ok) throw new Error("photo " + res.status); return res.arrayBuffer(); })
+        .then(function (buf) { return window.GeoTIFF.fromArrayBuffer(buf); })
+        .then(function (t) { return t.getImage(); });
+    };
+    var layers;
     return Promise.all([loadLibs(), getJSON(url)]).then(function (r) {
-      return fetch(r[1].rgbUrl + "&key=" + encodeURIComponent(C.googleApiKey));
-    }).then(function (res) {
-      if (!res.ok) throw new Error("photo " + res.status);
-      return res.arrayBuffer();
-    }).then(function (buf) { return window.GeoTIFF.fromArrayBuffer(buf); })
-      .then(function (tiff) { return tiff.getImage(); })
-      .then(function (img) {
+      layers = r[1];
+      // the roof outline map is only needed for flat roofs; a failure there is not fatal
+      return Promise.all([tif(layers.rgbUrl), tif(layers.maskUrl).then(function (m) { return m.readRasters({ interleave: true }).then(function (d) { return { d: d, w: m.getWidth(), h: m.getHeight() }; }); }).catch(function () { return null; })]);
+    }).then(function (r) {
+        var img = r[0]; S.mask = r[1];
         return img.readRasters({ interleave: true }).then(function (px) {
           var w = img.getWidth(), h = img.getHeight(), n = img.getSamplesPerPixel();
           var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
@@ -501,13 +520,99 @@
           var bb = img.getBoundingBox();
           S.img = {
             canvas: cv, w: w, h: h,
+            res: (bb[2] - bb[0]) / w,
             px: function (q) {
               var p = window.proj4("EPSG:4326", proj, [q.lng, q.lat]);
               return { x: (p[0] - bb[0]) / (bb[2] - bb[0]) * w, y: (bb[3] - p[1]) / (bb[3] - bb[1]) * h };
+            },
+            ll: function (x, y) {
+              var p = window.proj4(proj, "EPSG:4326", [bb[0] + x / w * (bb[2] - bb[0]), bb[3] - y / h * (bb[3] - bb[1])]);
+              return { lat: p[1], lng: p[0] };
             }
           };
         });
       });
+  }
+  /* Flat roofs: Google angles the panels to face due south, but UK installers
+     line them up with the walls. Find which way the building runs from Google's
+     roof outline map, then lay the panels in rows square to the walls and inside
+     the roof edge. Google's figures still set how many and how much they make. */
+  function regridFlat() {
+    var I = S.img, M = S.mask, sp = S.insights.solarPotential, stats = sp.roofSegmentStats || [];
+    if (!I || !M || M.w !== I.w || M.h !== I.h) return false;
+    var flat = {};
+    S.panels.forEach(function (p) { if (((stats[p.segmentIndex] || {}).pitchDegrees || 0) < C.flatRoofPitch) flat[p.segmentIndex] = true; });
+    var keys = Object.keys(flat);
+    if (!keys.length) return false;
+    var W = M.w, H = M.h, md = M.d, res = I.res;
+    var mk = function (x, y) { x = Math.round(x); y = Math.round(y); return x >= 0 && y >= 0 && x < W && y < H && md[y * W + x] > 0; };
+    var out = S.panels.filter(function (p) { return !flat[p.segmentIndex]; });
+    var allFlat = !out.length, axis = null;
+    keys.forEach(function (k) {
+      var mine = S.panels.filter(function (p) { return p.segmentIndex == k; });
+      var energies = mine.map(function (p) { return p.yearlyEnergyDcKwh || 0; }).sort(function (a, b) { return b - a; });
+      var bb = stats[k].boundingBox;
+      if (!bb) { out = out.concat(mine); return; }
+      var a = I.px({ lat: bb.sw.latitude, lng: bb.sw.longitude }), b = I.px({ lat: bb.ne.latitude, lng: bb.ne.longitude });
+      var x0 = Math.max(1, Math.floor(Math.min(a.x, b.x) - 5)), x1 = Math.min(W - 2, Math.ceil(Math.max(a.x, b.x) + 5));
+      var y0 = Math.max(1, Math.floor(Math.min(a.y, b.y) - 5)), y1 = Math.min(H - 2, Math.ceil(Math.max(a.y, b.y) + 5));
+      var inR = function (x, y) { return x >= x0 && x <= x1 && y >= y0 && y <= y1 && mk(x, y); };
+      // which way the walls run: the commonest edge direction in the roof outline
+      var hist = new Array(90).fill(0), x, y;
+      for (y = y0; y <= y1; y++) for (x = x0; x <= x1; x++) {
+        var gx = (mk(x + 1, y) ? 1 : 0) - (mk(x - 1, y) ? 1 : 0), gy = (mk(x, y + 1) ? 1 : 0) - (mk(x, y - 1) ? 1 : 0);
+        if (gx || gy) hist[((Math.round(Math.atan2(gy, gx) * 180 / Math.PI) % 90) + 90) % 90]++;
+      }
+      var best = 0, bestV = -1;
+      for (var i = 0; i < 90; i++) { var v = 0; for (var j = -2; j <= 2; j++) v += hist[(i + j + 90) % 90]; if (v > bestV) { bestV = v; best = i; } }
+      var t = best * Math.PI / 180, c = Math.cos(t), sn = Math.sin(t);
+      axis = { fx: c, fy: -sn };   // a wall direction, as east/north
+      var us = [], vs = [], su = 0, sv = 0;
+      for (y = y0; y <= y1; y++) for (x = x0; x <= x1; x++) if (inR(x, y)) { var u = x * c + y * sn, w = -x * sn + y * c; us.push(u); vs.push(w); su += u; sv += w; }
+      if (!us.length) { out = out.concat(mine); return; }
+      var cu = su / us.length, cv = sv / us.length;
+      var umin = Math.min.apply(null, us), umax = Math.max.apply(null, us), vmin = Math.min.apply(null, vs), vmax = Math.max.apply(null, vs);
+      var toXY = function (u, v) { return { x: u * c - v * sn, y: u * sn + v * c }; };
+      var L = sp.panelHeightMeters / res, S2 = sp.panelWidthMeters / res, gap = 0.05 / res, mg = 0.25 / res;
+      var bestCells = [], bw = 0, bh = 0;
+      [[L, S2], [S2, L]].forEach(function (dim) {
+        var pw = dim[0], ph = dim[1];
+        for (var fu = 0; fu < 4; fu++) for (var fv = 0; fv < 4; fv++) {
+          var cells = [];
+          for (var u = umin + fu * (pw + gap) / 4; u < umax; u += pw + gap)
+            for (var v = vmin + fv * (ph + gap) / 4; v < vmax; v += ph + gap) {
+              var ok = true;
+              [-pw / 2 - mg, 0, pw / 2 + mg].forEach(function (du) {
+                [-ph / 2 - mg, 0, ph / 2 + mg].forEach(function (dv) { var q = toXY(u + du, v + dv); if (ok && !inR(q.x, q.y)) ok = false; });
+              });
+              if (ok) cells.push([u, v]);
+            }
+          if (cells.length > bestCells.length) { bestCells = cells; bw = pw; bh = ph; }
+        }
+      });
+      if (!bestCells.length) { out = out.concat(mine); return; }
+      // fill whole rows from the middle of the roof outwards
+      var ri = function (p) { return Math.round((p[1] - vmin) / (bh + gap)); }, ci = function (p) { return Math.round((p[0] - umin) / (bw + gap)); };
+      var rMid = bestCells.reduce(function (a, p) { return a + ri(p); }, 0) / bestCells.length;
+      var cMid = bestCells.reduce(function (a, p) { return a + ci(p); }, 0) / bestCells.length;
+      bestCells.sort(function (p, q) {
+        return Math.abs(ri(p) - rMid) - Math.abs(ri(q) - rMid) || ri(p) - ri(q) || Math.abs(ci(p) - cMid) - Math.abs(ci(q) - cMid) || ci(p) - ci(q);
+      });
+      bestCells.slice(0, mine.length).forEach(function (cell, i) {
+        var corner = function (du, dv) { var q = toXY(cell[0] + du * 0.96, cell[1] + dv * 0.96); return I.ll(q.x, q.y); };
+        var ctr = toXY(cell[0], cell[1]), ll = I.ll(ctr.x, ctr.y);
+        out.push({
+          segmentIndex: +k, center: { latitude: ll.lat, longitude: ll.lng },
+          path: [corner(bw / 2, bh / 2), corner(bw / 2, -bh / 2), corner(-bw / 2, -bh / 2), corner(-bw / 2, bh / 2)],
+          yearlyEnergyDcKwh: energies[Math.min(i, energies.length - 1)]
+        });
+      });
+    });
+    S.panels = tidyGrid(out);
+    buildSegs(sp);
+    // square the dashed outline up with the walls too
+    if (allFlat && axis && S.frame) { S.frame.fx = axis.fx; S.frame.fy = axis.fy; }
+    return true;
   }
   function showCanvas(on) {
     var cv = $("roofCanvas");
@@ -605,8 +710,8 @@
     $("segs").innerHTML = S.segs.map(function (s) {
       var c = perSeg[s.index] || 0;
       return '<li><label><input type="checkbox" data-seg="' + s.index + '"' + (S.segOn[s.index] ? " checked" : "") + '><span class="box"></span>' +
-        "<span><strong>" + compass(s.azimuth) + " &middot; " + (S.segOn[s.index] ? c + " panel" + (c === 1 ? "" : "s") : "fits " + s.count) + "</strong>" +
-        "<small>" + faceNote(s.azimuth) + "</small></span></label></li>";
+        "<span><strong>" + (s.flat ? "Flat roof" : compass(s.azimuth)) + " &middot; " + (S.segOn[s.index] ? c + " panel" + (c === 1 ? "" : "s") : "fits " + s.count) + "</strong>" +
+        "<small>" + (s.flat ? "Flat roof, panels lined up with your walls" : faceNote(s.azimuth)) + "</small></span></label></li>";
     }).join("");
     $("nOut").textContent = S.n;
     $("unusedBtn").textContent = S.showUnused ? "Hide unused roof space" : "Show unused roof space";
