@@ -287,3 +287,52 @@ h3{font-family:var(--disp);font-weight:500;letter-spacing:-.02em;line-height:1;m
 
 /* dark blocks keep white text on the light designs */
 .pay,.foot,.end{color:#fff}
+
+/* =====================  business-led sections (mosaic-1…5)  ===================== */
+.g-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.g-about.rev .media{order:2}
+.g-about .media{min-height:min(110vh,1000px)}
+.g-about>div:not(.media){display:flex;flex-direction:column;justify-content:center;padding:clamp(72px,9vw,140px) var(--pad)}
+.g-about h2,.g-tool h2{font-size:clamp(40px,5.2vw,92px)}
+.g-about .sub{margin:clamp(18px,2vw,28px) 0 clamp(28px,3vw,44px)}
+.g-about .tl{align-self:flex-start;margin-top:clamp(24px,3vw,40px)}
+.g-points{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(16px,2vw,32px);border-top:1px solid var(--line)}
+.g-points div{padding:clamp(18px,2vw,28px) 0;border-bottom:1px solid var(--line)}
+.g-points h3{font-size:clamp(21px,1.9vw,30px)}
+.g-points p{margin-top:8px;font-size:15.5px;color:var(--mute);max-width:30ch}
+.g-points.four{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:0;margin:0 var(--pad);padding-bottom:clamp(64px,8vw,120px);border-top:0}
+.g-points.four div{border-bottom:0;border-top:1px solid var(--line);padding-right:clamp(14px,1.6vw,24px)}
+.bone .g-points,.bone .g-points div{border-color:var(--line-d)}
+.bone .g-points p{color:var(--mute-d)}
+.g-brands{overflow:hidden;padding:clamp(56px,7vw,110px) 0}
+.g-brands .lab{padding:0 var(--pad)}
+.g-btrack{display:flex;width:max-content;animation:qx 46s linear infinite;font:600 clamp(44px,7.6vw,130px)/1.1 var(--disp);letter-spacing:-.03em;white-space:nowrap}
+.g-btrack span{padding-right:.55em}
+.g-btrack span:nth-child(even){color:transparent;-webkit-text-stroke:1.5px var(--o)}
+.g-areas p.big{font:500 clamp(30px,5vw,88px)/1.08 var(--disp);letter-spacing:-.025em}
+.g-areas p.big+.sub{margin-top:clamp(24px,3vw,44px)}
+.g-towns{overflow:hidden;padding:clamp(48px,6vw,90px) 0}
+.g-towns .lab{padding:0 var(--pad)}
+.g-trow{display:flex;width:max-content;gap:.45em;padding:0 var(--pad);font:600 clamp(48px,9vw,160px)/1.06 var(--disp);letter-spacing:-.035em;white-space:nowrap;will-change:transform}
+.g-trow span:nth-child(even){color:var(--o)}
+.g-tool{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.g-tool>div:first-child{display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,2.2vw,30px);padding:clamp(72px,9vw,140px) var(--pad)}
+.g-tool .lab{margin:0}
+.g-tool .demo-media{position:relative;overflow:hidden;min-height:min(92vh,840px)}
+.bone .pc{box-shadow:0 0 0 1.5px var(--k)}
+.g-call{position:relative;font:500 clamp(20px,2vw,30px) var(--disp);color:#fff;border-bottom:1px solid;padding-bottom:4px}
+.a-steps.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.a-steps.four b{font-size:clamp(70px,9vw,150px)}
+.blk .a-steps,.blk .a-steps article{border-color:var(--line)}
+.blk .a-steps p{color:var(--mute)}
+.d-how>.media{position:sticky;top:0;height:100svh}
+@media (max-width:980px){
+  .g-about,.g-tool{grid-template-columns:minmax(0,1fr)}
+  .g-about .media{min-height:0;height:64vh;order:0!important}
+  .g-points.four{grid-template-columns:1fr 1fr;column-gap:16px}
+  .g-tool .demo-media{min-height:0;height:62vh}
+  .a-steps.four{grid-template-columns:minmax(0,1fr)}
+  .d-how>.media{height:46svh;z-index:2}
+}
+
+.b-chap.long h3{font-size:clamp(40px,6.6vw,120px);line-height:.94}

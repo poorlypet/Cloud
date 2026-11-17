@@ -27,7 +27,8 @@
   var MS = window.MS = { motion: motion, desktop: desktop, $: $, $$: $$ };
 
   /* ---------- page furniture ---------- */
-  var NAMES = ["Daylight", "Cinema", "Sunrise", "Split", "Mosaic"];
+  var SET = body.dataset.set || "design"; // which family of pages the corner switch moves between
+  var NAMES = SET === "mosaic" ? ["Story", "Proof", "Services", "Local", "Film"] : ["Daylight", "Cinema", "Sunrise", "Split", "Mosaic"];
   var LINKS = [["products.html", "Products"], ["work.html", "Our work"], ["funding.html", "Funding"], ["finance.html", "Finance"], ["about.html", "About"], ["contact.html", "Contact"]];
   var logo = body.classList.contains("light") ? "logo-dark.png" : "logo-light.png";
   var cta = '<a class="btn" href="quote/index.html">Get my quote <i>→</i></a>';
@@ -45,7 +46,7 @@
     '<div><h4>Talk to us</h4><ul><li><a href="tel:08006546343">0800 654 6343</a></li><li><a href="tel:07599965786">07599 965 786</a></li><li><a href="mailto:enquiries@midlandssolar.co.uk">enquiries@midlandssolar.co.uk</a></li><li><a href="contact.html">Contact us</a></li></ul></div>' +
     '</div><div class="foot-word" aria-hidden="true">Midlands Solar</div><div class="foot-base"><span>© Midlands Solar Installations Ltd</span><span>MCS certified installer</span></div></footer>' +
     '<div class="switch">' + NAMES.map(function (n, i) {
-      return '<a href="design-' + (i + 1) + '.html"' + (String(i + 1) === design ? ' class="on"' : "") + ">" + (i + 1) + (String(i + 1) === design ? " " + n : "") + "</a>";
+      return '<a href="' + SET + "-" + (i + 1) + '.html"' + (String(i + 1) === design ? ' class="on"' : "") + ">" + (i + 1) + (String(i + 1) === design ? " " + n : "") + "</a>";
     }).join("") + "</div>");
 
   $("#burger").addEventListener("click", function () { body.classList.toggle("open"); });
@@ -230,6 +231,11 @@
       scrollTrigger: { trigger: m, start: "top 85%", end: "top 12%", scrub: true } });
     gsap.fromTo(m.querySelector("img,video"), { scale: 1.2 }, { scale: 1, ease: "none",
       scrollTrigger: { trigger: m, start: "top bottom", end: "bottom top", scrub: true } });
+  });
+
+  // roof demo that plays through as its section crosses the screen
+  $$("[data-roof][data-auto]").forEach(function (el) {
+    ScrollTrigger.create({ trigger: el, start: "top 70%", end: "bottom 75%", scrub: 0.6, animation: MS.roofTimeline(el) });
   });
 
   if (desktop) {

@@ -342,11 +342,15 @@ TAIL = '''
 <script src="assets/js/designs.js"></script>
 '''
 
-for i, fn in enumerate([d1, d2, d3, d4, d5]):
-    cls, _, main, js = fn()
-    html = (HEAD.format(title="Midlands Solar") + f'<body class="{cls}" data-design="{i+1}">\n<main id="top">{main}</main>\n' + TAIL
+def page(cls, n, main, js, family="design"):
+    """One full page: n is its number in the corner switch, family the set it belongs to."""
+    return (HEAD.format(title="Midlands Solar") + f'<body class="{cls}" data-design="{n}" data-set="{family}">\n<main id="top">{main}</main>\n' + TAIL
             + (f"<script>\n(function () {{{js}}})();\n</script>\n" if js.strip() else "") + "</body>\n</html>\n")
-    open(os.path.join(HERE, f"design-{i+1}.html"), "w").write(html)
+
+if __name__ == "__main__":
+    for i, fn in enumerate([d1, d2, d3, d4, d5]):
+        cls, _, main, js = fn()
+        open(os.path.join(HERE, f"design-{i+1}.html"), "w").write(page(cls, i + 1, main, js))
 
 tiles = "".join(f'<a href="design-{i+1}.html"><img src="assets/img/design-{i+1}.jpg" alt=""><span><b>{i+1}</b><strong>{n}</strong><em>{BLURB[i]}</em></span></a>' for i, n in enumerate(NAMES))
 CHOOSER = HEAD.format(title="Midlands Solar designs") + '''<body>
@@ -373,5 +377,6 @@ CHOOSER = HEAD.format(title="Midlands Solar designs") + '''<body>
 </body>
 </html>
 '''
-open(os.path.join(HERE, "designs.html"), "w").write(CHOOSER)
-print("built 5 designs + chooser")
+if __name__ == "__main__":
+    open(os.path.join(HERE, "designs.html"), "w").write(CHOOSER)
+    print("built 5 designs + chooser")
