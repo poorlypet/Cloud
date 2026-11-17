@@ -79,7 +79,7 @@ main > section.next{margin-top:var(--sec)}
   </div>
 </section>
 {%- endif -%}
-<section class="pd-bb zin" aria-label="{{ product.vendor }}">
+{%- assign gws = mf.goes_with.value -%}{%- capture brandfilm -%}<section class="pd-bb zin" aria-label="{{ product.vendor }}">
   <div class="pd-bb-in">
     {%- if films[bh] -%}{%- assign bfn = bh | append: '.mp4' -%}{%- render 'ah-vid', f: bfn -%}
     {%- elsif stills[bh] -%}<img src="{{ stills[bh] }}" alt="{{ product.vendor }}" loading="lazy">
@@ -87,11 +87,11 @@ main > section.next{margin-top:var(--sec)}
     {%- else -%}{{ product.featured_image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: product.vendor }}{%- endif -%}
     <div class="pd-bb-t"><span class="zkick">The brand</span><h2>{{ product.vendor }}</h2><p>{{ tagline }}</p>{%- if vcol -%}<a href="{{ vcol.url }}" class="pd-bb-a">Shop {{ product.vendor }}</a>{%- endif -%}</div>
   </div>
-</section>
+</section>{%- endcapture -%}{%- unless gws != blank and vcol and vcol.products_count > 1 -%}{{ brandfilm }}{%- endunless -%}
 {%- if vcol and vcol.products_count > 1 -%}
 <section class="zsec zin zrl zmore"><div class="zhd"><h2 class="zh2">More from {{ product.vendor }}</h2><a class="zlink" href="{{ vcol.url }}">Shop all {{ product.vendor }}</a></div><div class="g4">{%- assign shown = 0 -%}{%- for item in vcol.products -%}{%- assign ib = item.title | split: ',' | first | strip -%}{%- if item.id != product.id and ib != base -%}{%- render 'card', product: item -%}{%- assign shown = shown | plus: 1 -%}{%- endif -%}{%- if shown >= 4 -%}{%- break -%}{%- endif -%}{%- endfor -%}</div></section>
 {%- endif -%}
-{%- assign gws = mf.goes_with.value -%}
+{%- if gws != blank and vcol and vcol.products_count > 1 -%}{{ brandfilm }}{%- endif -%}
 {%- if gws != blank -%}<section class="zsec zin zrl pd-gw"><div class="zhd"><h2 class="zh2">Goes well with</h2></div><div class="g4">{%- for item in gws limit: 4 -%}{%- if item.available -%}{%- render 'card', product: item -%}{%- endif -%}{%- endfor -%}</div></section>{%- endif -%}
 </div>
 <style>

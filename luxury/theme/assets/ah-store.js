@@ -100,25 +100,53 @@
       if (a && !window.matchMedia("(hover: none)").matches) { e.preventDefault(); e.stopImmediatePropagation(); location.href = a.getAttribute("data-href"); }
     }, true);
 
-    /* search panel: live results from the store, Enter opens the full results page */
-    var q = document.getElementById("q"), res = $("[data-res]"), resH = $("[data-res-h]"), t = 0;
+    /* search panel: real products from the shop, four at a time; Enter or the Search button opens the full results page */
+    var q = document.getElementById("q"), res = $("[data-res]"), resH = $("[data-res-h]"), t = 0, newIn = null;
+    function pcard(p) {
+      var img = p.image || (p.featured_image && (p.featured_image.url || p.featured_image)) || (p.images && p.images[0] && (p.images[0].src || p.images[0])) || "";
+      var cents = typeof p.price === "number" ? p.price : Math.round(parseFloat(p.price || 0) * 100);
+      if (img && /^\/\//.test(img)) img = "https:" + img;
+      return '<a class="pcd" href="' + p.url + '"><span class="im"><img src="' + (img ? img + (img.indexOf("?") < 0 ? "?" : "&") + "width=500" : AH.blank) + '" alt="" loading="lazy" class="' + (img ? "" : "ah-blank") + '"></span><span class="br">' + (p.vendor || "") + '</span><span class="pn">' + p.title + '</span><span class="pr"><b>' + money(cents) + "</b></span></a>";
+    }
+    function go() { var v = q.value.trim(); if (v) location.href = R.search + "?type=product&q=" + encodeURIComponent(v); else q.focus(); }
+    function showNew() {
+      if (!res) return;
+      if (resH) resH.textContent = "New in";
+      if (newIn) { res.innerHTML = newIn; return; }
+      var root = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
+      fetch(root + "collections/new-in/products.json?limit=8").then(function (r) { return r.json(); }).then(function (d) {
+        var ps = (d.products || []).filter(function (p) { return p.variants && p.variants.some(function (v) { return v.available; }); }).slice(0, 4);
+        return Promise.all(ps.map(function (p) { return fetch(root + "products/" + p.handle + ".js").then(function (r) { return r.json(); }); }));
+      }).then(function (ps) {
+        newIn = ps.map(function (p) { p.url = p.url || "/products/" + p.handle; return pcard(p); }).join("");
+        if (!q.value.trim()) res.innerHTML = newIn;
+      }).catch(function () {});
+    }
+    function live() {
+      clearTimeout(t);
+      var v = q.value.trim(); if (!v) { showNew(); return; }
+      t = setTimeout(function () {
+        var root = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
+        fetch(root + "search/suggest.json?q=" + encodeURIComponent(v) + "&resources[type]=product&resources[limit]=4&resources[options][unavailable_products]=last").then(function (r) { return r.json(); }).then(function (d) {
+          if (q.value.trim() !== v) return;
+          var ps = ((d.resources && d.resources.results && d.resources.results.products) || []).slice(0, 4);
+          if (resH) resH.textContent = ps.length ? "Products" : "No matches yet";
+          if (res) res.innerHTML = ps.length ? ps.map(pcard).join("") : '<p class="srch-empty">Nothing matches &ldquo;' + v.replace(/</g, "&lt;") + '&rdquo; yet. Try a material or a category, such as wool or beds.</p>';
+          var all = $("[data-res-all]");
+          if (all) { all.hidden = !ps.length; all.setAttribute("href", R.search + "?type=product&q=" + encodeURIComponent(v)); }
+        }).catch(function () {});
+      }, 180);
+    }
     if (q) {
+      window.AHSearchLive = true;
+      window.AHSearch = function () { live(); };
       q.setAttribute("name", "q");
-      q.addEventListener("keydown", function (e) { if (e.key === "Enter" && q.value.trim()) { e.preventDefault(); location.href = R.search + "?type=product&q=" + encodeURIComponent(q.value.trim()); } });
-      q.addEventListener("input", function () {
-        clearTimeout(t);
-        var v = q.value.trim(); if (!v) return;
-        t = setTimeout(function () {
-          fetch("/search/suggest.json?q=" + encodeURIComponent(v) + "&resources[type]=product&resources[limit]=6").then(function (r) { return r.json(); }).then(function (d) {
-            var ps = (d.resources && d.resources.results && d.resources.results.products) || [];
-            if (resH) resH.textContent = ps.length ? "Products" : "No matches yet";
-            if (res) res.innerHTML = ps.length ? ps.map(function (p) {
-              return '<a class="pcd" href="' + p.url + '"><span class="im"><img src="' + (p.image || AH.blank) + '" alt="" class="' + (p.image ? "" : "ah-blank") + '"></span><span class="br">' + (p.vendor || "") + '</span><span class="pn">' + p.title + '</span><span class="pr"><b>£' + p.price + "</b></span></a>";
-            }).join("") + '<a class="zlink" href="' + R.search + "?type=product&q=" + encodeURIComponent(v) + '">See all results</a>' : '<p class="srch-empty">Nothing matches &ldquo;' + v.replace(/</g, "&lt;") + '&rdquo; yet. Try a material or a category, such as wool or beds.</p>';
-          }).catch(function () {});
-        }, 180);
-      });
-      $$("[data-q]").forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { q.dispatchEvent(new Event("input")); }, 0); }); });
+      q.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); go(); } });
+      q.addEventListener("input", live);
+      var gb = $("[data-search-go]"); if (gb) gb.addEventListener("click", go);
+      if (res && !$("[data-res-all]")) res.insertAdjacentHTML("afterend", '<a class="zlink srch-all" data-res-all hidden href="' + R.search + '">See all results</a>');
+      $$("[data-q]").forEach(function (a) { a.addEventListener("click", function () { setTimeout(live, 0); }); });
+      showNew();
     }
 
     /* product page: real variants, prices, stock and add to bag */

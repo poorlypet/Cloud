@@ -55,7 +55,7 @@
       f: [{ p: "jack", t: "Bowls", n: "Stoneware Bowl, Chalk", pr: 42 },
           { p: "darkDog", t: "Bowl stands", n: "Oak Bowl Stand", pr: 95 },
           { p: "groom", t: "Grooming", n: "Beechwood Brush", pr: 32 }] },
-    { key: "play", label: "Play", hero: "menu-play.jpg|home-category-play.jpg", hero2: "home-category-play.jpg|story-collect-play.jpg", line: "Soft, sturdy toys in wool felt and natural rubber.",
+    { key: "play", label: "Play", direct: "/collections/play", hero: "menu-play.jpg|home-category-play.jpg", hero2: "home-category-play.jpg|story-collect-play.jpg", line: "Soft, sturdy toys in wool felt and natural rubber.",
       g: [{ t: "Play", l: ["Plush toys", "Rope toys", "Balls", "Chew toys", "Puzzle toys"] },
           { t: "By age", l: ["Puppy", "Adult", "Senior"] },
           { t: "Collections", l: ["Wool felt", "Natural rubber"] }],
@@ -64,7 +64,6 @@
           { p: "corgi", t: "Puzzle toys", n: "Oak Puzzle", pr: 38 }] },
     { key: "travel", label: "Travel", hero: "menu-travel.jpg|home-category-travel.jpg", hero2: "home-category-travel.jpg|story-collect-travel.jpg", line: "Carriers, car seats and beds for weekends away.",
       g: [{ t: "Travel", l: ["Carriers", "Car seats", "Travel beds", "Travel bowls", "Travel blankets"] },
-          { t: "Occasions", l: ["Weekends away", "Long drives", "City days"] },
           { t: "Collections", l: ["Canvas", "Waxed cotton"] }],
       f: [{ p: "beach", t: "Travel beds", n: "Travel Bed, Canvas", pr: 165 },
           { p: "sea", t: "Car seats", n: "Car Seat, Charcoal", pr: 185 },
@@ -78,7 +77,7 @@
     c.g = (c.g || []).filter(function (g) { return alive(g.t); }).map(function (g) {
       g.l = (g.l || []).map(function (x) { return x === "Crate mats" ? "Mats" : x; }).filter(alive);
       return g;
-    });
+    }).filter(function (g) { return g.l.length; });
     c.f = (c.f || []).filter(function (f) { return alive(f.t); });
   });
   MENU = MENU.filter(function (c) { return !c.dead; });
@@ -166,6 +165,7 @@
 
   var navHtml = "";
   MENU.forEach(function (c) {
+    if (c.direct) { navHtml += '<li><a class="nl nl-direct" href="' + c.direct + '">' + esc(c.label) + "</a></li>"; return; }
     navHtml += '<li><a class="nl" href="#" data-k="' + c.key + '" aria-expanded="false" aria-controls="mp-' + c.key + '">' + esc(c.label) + "</a></li>";
     var p = document.createElement("div");
     p.className = "mp"; p.id = "mp-" + c.key; p.setAttribute("data-k", c.key);
@@ -245,17 +245,19 @@
   srch.setAttribute("aria-label", "Search");
   srch.innerHTML = '<div class="srch-in"><div class="srch-field"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>' +
     '<input id="q" type="search" placeholder="Search beds, collars, coats" autocomplete="off" aria-label="Search the shop">' +
+    '<button type="button" class="srch-go" data-search-go>Search</button>' +
     '<button type="button" class="srch-x" data-close-search>Close</button></div>' +
     '<div class="srch-body"><div><p class="cap">Popular</p><ul>' +
     ["Bouclé bed", "Leather collar", "Dachshund coat", "Wool throw", "Waxed cotton"].map(function (x) { return '<li><a class="ln" href="#" data-q="' + x + '">' + x + "</a></li>"; }).join("") +
-    '</ul><p class="cap" style="margin-top:28px">Help</p><ul><li><a class="ln" href="#">Delivery</a></li><li><a class="ln" href="#">Returns</a></li><li><a class="ln" href="#">Size guide</a></li></ul></div>' +
-    '<div><div class="srch-res-h"><p class="cap" data-res-h>Most searched this week</p></div><div class="srch-grid" data-res></div></div></div></div>';
+    '</ul><p class="cap" style="margin-top:28px">Help</p><ul><li><a class="ln" href="/pages/delivery">Delivery</a></li><li><a class="ln" href="/pages/returns">Returns</a></li><li><a class="ln" href="/pages/help">Help centre</a></li></ul></div>' +
+    '<div><div class="srch-res-h"><p class="cap" data-res-h>New in</p></div><div class="srch-grid" data-res></div></div></div></div>';
   hdr.appendChild(srch);
   var q = srch.querySelector("#q"), res = srch.querySelector("[data-res]"), resH = srch.querySelector("[data-res-h]");
   function card(p) {
     return '<a class="pc" href="#">' + ph(p.p, 520, null) + '<span class="pc-n">' + esc(p.n) + '</span><span class="pc-p">' + gbp(p.pr) + "</span></a>";
   }
   function renderResults() {
+    if (window.AHSearch) return window.AHSearch();
     var v = q.value.trim().toLowerCase(), list;
     if (!v) { list = [PRODUCTS[0], PRODUCTS[3], PRODUCTS[6], PRODUCTS[2]]; resH.textContent = "Most searched this week"; }
     else {
@@ -265,7 +267,7 @@
     }
     res.innerHTML = list.length ? list.map(card).join("") : '<p class="srch-empty">Nothing matches “' + esc(q.value) + '”. Try a material or a category, such as wool or beds.</p>';
   }
-  q.addEventListener("input", renderResults);
+  if (!window.AHSearchLive) q.addEventListener("input", renderResults);
   srch.querySelectorAll("[data-q]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); q.value = a.getAttribute("data-q"); renderResults(); q.focus(); }); });
   function searchSet(on) {
     if (on) { close(); renderResults(); }
@@ -517,7 +519,10 @@
   drawer.className = "drawer"; drawer.setAttribute("aria-hidden", "true");
   drawer.innerHTML = '<div class="drawer-top"><span class="logo">' + document.querySelector(".logo").innerHTML +
     '</span><button type="button" class="x" data-close-drawer>Close<svg viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13"/></svg></button></div>' +
-    '<div class="drawer-body">' + MENU.map(function (c) {
+    '<div class="drawer-body"><form class="drawer-srch" action="/search" method="get" role="search"><input type="hidden" name="type" value="product">' +
+    '<input type="search" name="q" placeholder="Search beds, collars, coats" aria-label="Search the shop" autocomplete="off">' +
+    '<button type="submit" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></button></form>' + MENU.map(function (c) {
+      if (c.direct) return '<a class="drawer-ln" href="' + c.direct + '">' + esc(c.label) + "</a>";
       return "<details><summary>" + esc(c.label) + "</summary><ul>" + c.g[0].l.concat(["Shop all " + c.label.toLowerCase()]).map(function (x) {
         return '<li><a href="#">' + esc(x) + "</a></li>";
       }).join("") + "</ul></details>";
