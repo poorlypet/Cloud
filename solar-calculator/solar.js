@@ -259,7 +259,7 @@
         return along + half <= width / 2 && Math.abs(across) <= C.houseDepthMeters / 2;
       });
     }
-    if (LIVE && S.centre && S.panels.length) S.panels = tidyGrid(S.panels, sp);
+    if (LIVE && S.centre && S.panels.length) S.panels = tidyGrid(S.panels);
     if (!S.panels.length) { var e = new Error("no panels"); e.status = 404; throw e; }
     // roof spaces that can hold panels, best first
     var by = {};
@@ -282,56 +282,22 @@
     if (S.segs.length && !S.segs.some(function (s) { return S.segOn[s.index]; })) S.segOn[S.segs[0].index] = true;
   }
 
-  /* Google places each panel on its own, which looks scattered once a roof is
-     cut down to one house. Keep Google's count and output per roof face, but
-     lay the panels out as a neat grid lined up with the roof. */
-  function tidyGrid(panels, sp) {
-    var gap = 0.05;
-    var kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
-    var toXY = function (lat, lng) { return { x: (lng - S.centre.lng) * kLng, y: (lat - S.centre.lat) * kLat }; };
-    var toLL = function (x, y) { return { lat: S.centre.lat + y / kLat, lng: S.centre.lng + x / kLng }; };
+  /* Google places every panel exactly on the roof, but ranks them by output,
+     so the top few can be scattered. Keep Google's positions and pick panels
+     from the middle of each roof face outwards, so any count is a tidy block. */
+  function tidyGrid(panels) {
     var bySeg = {};
     panels.forEach(function (p) { (bySeg[p.segmentIndex] = bySeg[p.segmentIndex] || []).push(p); });
     var faces = Object.keys(bySeg).map(function (k) {
-      var list = bySeg[k].slice().sort(function (a, b) { return (b.yearlyEnergyDcKwh || 0) - (a.yearlyEnergyDcKwh || 0); });
-      var st = (sp.roofSegmentStats || [])[k] || {};
-      var az = (st.azimuthDegrees || 0) * Math.PI / 180, pitch = (st.pitchDegrees || 30) * Math.PI / 180;
-      var f = { x: Math.sin(az), y: Math.cos(az) };      // down the slope
-      var a = { x: -f.y, y: f.x };                       // along the ridge
-      var land = list.filter(function (p) { return p.orientation !== "PORTRAIT"; }).length * 2 >= list.length;
-      var L = land ? sp.panelHeightMeters : sp.panelWidthMeters;                       // along the ridge
-      var D = (land ? sp.panelWidthMeters : sp.panelHeightMeters) * Math.cos(pitch);  // down the slope, seen from above
-      var us = [], vs = [];
-      list.forEach(function (p) {
-        var o = toXY(p.center.latitude, p.center.longitude);
-        us.push(o.x * a.x + o.y * a.y); vs.push(o.x * f.x + o.y * f.y);
-      });
-      var u0 = Math.min.apply(null, us), u1 = Math.max.apply(null, us);
-      var v0 = Math.min.apply(null, vs), v1 = Math.max.apply(null, vs);
-      var cols = Math.max(1, Math.min(list.length, Math.round((u1 - u0) / (L + gap)) + 1));
-      var rows = Math.max(1, Math.min(Math.round((v1 - v0) / (D + gap)) + 1, Math.ceil(list.length / cols)));
-      var uc = (u0 + u1) / 2, vc = (v0 + v1) / 2, cm = (cols - 1) / 2, rm = (rows - 1) / 2;
-      var cells = [];
-      for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) cells.push({ r: r, c: c });
-      // fill from the middle of the roof outwards so any size makes a neat block
-      cells.sort(function (p, q) {
-        return (Math.abs(p.c - cm) + Math.abs(p.r - rm)) - (Math.abs(q.c - cm) + Math.abs(q.r - rm)) || p.r - q.r || p.c - q.c;
-      });
-      var out = cells.map(function (cell, i) {
-        var u = uc + (cell.c - cm) * (L + gap), v = vc + (cell.r - rm) * (D + gap);
-        var pt = function (du, dv) { return toLL(a.x * (u + du) + f.x * (v + dv), a.y * (u + du) + f.y * (v + dv)); };
-        var ctr = pt(0, 0);
-        return {
-          segmentIndex: +k, center: { latitude: ctr.lat, longitude: ctr.lng },
-          corners: [pt(L / 2, D / 2), pt(L / 2, -D / 2), pt(-L / 2, -D / 2), pt(-L / 2, D / 2)],
-          yearlyEnergyDcKwh: list[Math.min(i, list.length - 1)].yearlyEnergyDcKwh || 0
-        };
-      });
-      var avg = out.reduce(function (s, p) { return s + p.yearlyEnergyDcKwh; }, 0) / out.length;
-      return { avg: avg, panels: out };
+      var list = bySeg[k], la = 0, ln = 0, en = 0;
+      list.forEach(function (p) { la += p.center.latitude; ln += p.center.longitude; en += p.yearlyEnergyDcKwh || 0; });
+      la /= list.length; ln /= list.length;
+      var kLng = Math.cos(la * Math.PI / 180);
+      var d = function (p) { var y = p.center.latitude - la, x = (p.center.longitude - ln) * kLng; return x * x + y * y; };
+      return { avg: en / list.length, panels: list.slice().sort(function (p, q) { return d(p) - d(q); }) };
     });
     faces.sort(function (x, y) { return y.avg - x.avg; });
-    return faces.reduce(function (all, fc) { return all.concat(fc.panels); }, []);
+    return faces.reduce(function (all, f) { return all.concat(f.panels); }, []);
   }
 
   /* ---------- which panels are used ---------- */
@@ -394,8 +360,7 @@
       });
       return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: path });
     });
-    // dashed outline: a rectangle squared up with the roof. For semis and
-    // terraces it is exactly one house wide, centred on the pin.
+    // dashed outline: a rectangle squared up with the roof, round the panels
     var F = S.frame, kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
     var u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
     pts.forEach(function (q) {
@@ -403,8 +368,10 @@
       var u = -x * F.fy + y * F.fx, v = x * F.fx + y * F.fy;
       u0 = Math.min(u0, u); u1 = Math.max(u1, u); v0 = Math.min(v0, v); v1 = Math.max(v1, v);
     });
-    if (F.width) { u0 = -F.width / 2; u1 = F.width / 2; } else { u0 -= 1; u1 += 1; }
-    v0 = Math.min(v0 - 1, -C.houseDepthMeters / 2); v1 = Math.max(v1 + 1, C.houseDepthMeters / 2);
+    // hug the panels with a small margin; for semis and terraces never wider than one house
+    var m = 0.75;
+    u0 -= m; u1 += m; v0 -= m; v1 += m;
+    if (F.width) { u0 = Math.max(u0, -F.width / 2); u1 = Math.min(u1, F.width / 2); }
     var corner = function (u, v) { var x = -F.fy * u + F.fx * v, y = F.fx * u + F.fy * v; return { lat: S.centre.lat + y / kLat, lng: S.centre.lng + x / kLng }; };
     S.hull = [corner(u0, v0), corner(u1, v0), corner(u1, v1), corner(u0, v1)];
     outline = new g.maps.Polyline({
