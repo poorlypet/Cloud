@@ -77,6 +77,16 @@
       routes: { cart: "{{ routes.cart_url }}", add: "{{ routes.cart_add_url }}.js", change: "{{ routes.cart_change_url }}.js", search: "{{ routes.search_url }}", account: "{{ routes.account_url }}" }
     };
   </script>
+  <script id="mk-geo">(function(){try{if(/(^|; )ah_cc=/.test(document.cookie)||/bot|crawl|spider|lighthouse/i.test(navigator.userAgent))return;
+  var cur={{ localization.country.iso_code | json }},ok={{ localization.available_countries | map: 'iso_code' | json }};
+  document.cookie="ah_cc="+cur+";path=/;max-age=31536000;samesite=lax";
+  fetch("/browsing_context_suggestions.json?country[enabled]=true&language[enabled]=false").then(function(r){return r.json();}).then(function(d){
+    var g=d&&d.detected_values&&d.detected_values.country&&d.detected_values.country.handle;if(!g||g===cur||ok.indexOf(g)<0)return;
+    document.cookie="ah_cc="+g+";path=/;max-age=31536000;samesite=lax";
+    var f=document.createElement("form");f.method="post";f.action="/localization";
+    [["form_type","localization"],["_method","put"],["country_code",g],["return_to",location.pathname.replace(/^\/[a-z]{2}(-[a-z]{2})?(?=\/|$)/,"")+location.search]].forEach(function(p){var i=document.createElement("input");i.type="hidden";i.name=p[0];i.value=p[1];f.appendChild(i);});
+    document.body.appendChild(f);f.submit();}).catch(function(){});}catch(e){}})();</script>
+  <script>document.addEventListener("change",function(e){if(e.target&&e.target.name==="country_code")document.cookie="ah_cc="+e.target.value+";path=/;max-age=31536000;samesite=lax";});</script>
   {%- if template.name == 'index' -%}
   <script src="{{ 'r5.js' | asset_url }}" defer></script>
   <script src="{{ 'r26.js' | asset_url }}" defer></script>

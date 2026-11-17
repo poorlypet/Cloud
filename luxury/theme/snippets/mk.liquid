@@ -1,17 +1,23 @@
 {%- comment -%}
   Market values. UK (default): free delivery over £75, otherwise £4.99.
-  US and Canada: free over $100, otherwise $5.99. UAE: free over AED 500, otherwise AED 25.
+  US: free over $100, otherwise $5.99. Canada: free over CA$140, otherwise CA$8.99. UAE: free over AED 500, otherwise AED 25.
   Amounts are in the shopper's own currency (minor units), so the money filters print them correctly.
   Usage: {% render 'mk', k: 'free' %}
 {%- endcomment -%}
 {%- liquid
   assign c = localization.country.iso_code
   case c
-    when 'US', 'CA'
+    when 'US'
       assign fc = 10000
       assign sc = 599
       assign b1 = 50
       assign b2 = 100
+      assign uk = false
+    when 'CA'
+      assign fc = 14000
+      assign sc = 899
+      assign b1 = 70
+      assign b2 = 140
       assign uk = false
     when 'AE'
       assign fc = 50000

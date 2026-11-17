@@ -15,7 +15,7 @@
     function paint() {
       var sub = 0, count = 0;
       lines().forEach(function (l) { var q = +$(".v9-q span", l).textContent, p = +l.dataset.price; sub += p * q; count += q; $("[data-lp]", l).textContent = money(p * q); });
-      var s = ship(), std = sub >= FREE ? 0 : MK.ship / 100, delivery = s ? s : std, total = Math.max(0, sub - disc) + (count ? delivery : 0);
+      var s = ship(), std = sub >= FREE ? 0 : MK.ship / 100, delivery = s ? s : std, total = Math.max(0, sub - disc) + (count ? delivery : 0); if (bk.dataset.disc) total = Math.max(0, total - +bk.dataset.disc / 100);
       $$("[data-sub]", bk).forEach(function (e) { e.textContent = money(sub); });
       $$("[data-ship]", bk).forEach(function (e) { e.textContent = !count ? "–" : delivery ? money(delivery) : "Free"; });
       $$("[data-total]", bk).forEach(function (e) { e.textContent = money(total); });
@@ -55,10 +55,17 @@
     $$("[data-promo]", bk).forEach(function (f) {
       f.addEventListener("submit", function (e) {
         e.preventDefault();
-        var v = $("input", f).value.trim().toUpperCase(), msg = f.parentNode.querySelector(".v9-pmsg");
-        if (v === "WELCOME10") { disc = 10; msg.textContent = "WELCOME10 applied: £10 off."; }
-        else { disc = 0; msg.textContent = v ? "That code isn’t valid. Try WELCOME10." : "Enter a code."; }
-        paint();
+        var v = $("input", f).value.trim(), msg = f.parentNode.querySelector(".v9-pmsg");
+        if (!v) { msg.textContent = "Enter a code."; return; }
+        msg.textContent = "Checking\u2026";
+        fetch("/cart/update.js", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ discount: v }) })
+          .then(function (r) { return r.json(); })
+          .then(function (c) {
+            var hit = (c.discount_codes || []).filter(function (d) { return d.code.toUpperCase() === v.toUpperCase(); })[0];
+            if (hit && hit.applicable) { msg.textContent = hit.code + " applied."; location.reload(); }
+            else { msg.textContent = "That code can\u2019t be used on this basket."; }
+          })
+          .catch(function () { msg.textContent = "Something went wrong. You can also add the code at checkout."; });
       });
     });
     paint();
