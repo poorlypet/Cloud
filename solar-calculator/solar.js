@@ -241,13 +241,16 @@
     // Keep only panels that fit fully inside a strip one house wide,
     // centred on the pin and running across the ridge.
     var width = C.houseWidths[S.htype] || 0;
-    if (LIVE && S.centre && width) {
+    if (LIVE && S.centre) {
       var kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
       var off = function (p) { return { x: (p.center.longitude - S.centre.lng) * kLng, y: (p.center.latitude - S.centre.lat) * kLat }; };
       // the roof face nearest the pin sets which way the ridge runs
       var near = S.panels.slice().sort(function (a, b) { var A = off(a), B = off(b); return Math.hypot(A.x, A.y) - Math.hypot(B.x, B.y); })[0];
       var az = (((sp.roofSegmentStats || [])[near.segmentIndex] || {}).azimuthDegrees || 0) * Math.PI / 180;
       var fx = Math.sin(az), fy = Math.cos(az);          // unit vector down the slope (east, north)
+      S.frame = { fx: fx, fy: fy, width: width };
+    }
+    if (LIVE && S.centre && width) {
       S.panels = S.panels.filter(function (p) {
         var o = off(p);
         var across = o.x * fx + o.y * fy;                  // up/down the roof
@@ -369,14 +372,6 @@
     // past zoom 21 the UK imagery turns soft, so stop there
     g.maps.event.addListenerOnce(gmap, "idle", function () { if (gmap.getZoom() > 21) gmap.setZoom(21); });
   }
-  function hull(pts) {   // convex hull (monotone chain) of {lat,lng} points
-    pts = pts.slice().sort(function (a, b) { return a.lng - b.lng || a.lat - b.lat; });
-    var cross = function (o, a, b) { return (a.lng - o.lng) * (b.lat - o.lat) - (a.lat - o.lat) * (b.lng - o.lng); };
-    var lo = [], up = [], i;
-    for (i = 0; i < pts.length; i++) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], pts[i]) <= 0) lo.pop(); lo.push(pts[i]); }
-    for (i = pts.length - 1; i >= 0; i--) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], pts[i]) <= 0) up.pop(); up.push(pts[i]); }
-    return lo.slice(0, -1).concat(up.slice(0, -1));
-  }
   function drawLive() {
     var g = window.google, sp = S.insights.solarPotential;
     clearLive();
@@ -399,15 +394,19 @@
       });
       return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: path });
     });
-    // dashed outline round the usable roof, pushed out about a metre
-    var hp = hull(pts), cy = 0, cx = 0;
-    hp.forEach(function (q) { cy += q.lat; cx += q.lng; }); cy /= hp.length; cx /= hp.length;
-    S.hull = hp.map(function (q) {
-      var c = new g.maps.LatLng(cy, cx), t = new g.maps.LatLng(q.lat, q.lng);
-      var d = g.maps.geometry.spherical.computeDistanceBetween(c, t);
-      var o = g.maps.geometry.spherical.computeOffset(c, d + 1, g.maps.geometry.spherical.computeHeading(c, t));
-      return { lat: o.lat(), lng: o.lng() };
+    // dashed outline: a rectangle squared up with the roof. For semis and
+    // terraces it is exactly one house wide, centred on the pin.
+    var F = S.frame, kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
+    var u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
+    pts.forEach(function (q) {
+      var x = (q.lng - S.centre.lng) * kLng, y = (q.lat - S.centre.lat) * kLat;
+      var u = -x * F.fy + y * F.fx, v = x * F.fx + y * F.fy;
+      u0 = Math.min(u0, u); u1 = Math.max(u1, u); v0 = Math.min(v0, v); v1 = Math.max(v1, v);
     });
+    if (F.width) { u0 = -F.width / 2; u1 = F.width / 2; } else { u0 -= 1; u1 += 1; }
+    v0 = Math.min(v0 - 1, -C.houseDepthMeters / 2); v1 = Math.max(v1 + 1, C.houseDepthMeters / 2);
+    var corner = function (u, v) { var x = -F.fy * u + F.fx * v, y = F.fx * u + F.fy * v; return { lat: S.centre.lat + y / kLat, lng: S.centre.lng + x / kLng }; };
+    S.hull = [corner(u0, v0), corner(u1, v0), corner(u1, v1), corner(u0, v1)];
     outline = new g.maps.Polyline({
       map: gmap, clickable: false, strokeOpacity: 0, visible: false,
       path: S.hull.concat([S.hull[0]]),
