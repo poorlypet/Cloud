@@ -19,7 +19,7 @@
     assign sc = 599
   endif
   assign free = fc | money_without_trailing_zeros
-  assign ship = sc | money
+  assign ship = sc | money_without_trailing_zeros
   assign uk_answer = 'Orders are dispatched the next working day. UK standard delivery then takes 2 to 4 working days, costs £4.99 and is free on orders over £75.'
   assign intl_answer = 'Orders are dispatched the next working day and sent tracked. Delivery costs ' | append: ship | append: ' and is free on orders over ' | append: free | append: '. Delivery times for your address are shown at checkout.'
   assign out = html
