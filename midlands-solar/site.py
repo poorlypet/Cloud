@@ -462,10 +462,10 @@ def products():
         ("sigenergy", "Sigenergy", "Inverter and battery in a single cabinet.", "bat-sigen.jpg", "Sigenergy battery"),
         ("growatt", "Growatt", "Widely used, with a clear monitoring app.", "bat-growatt.jpg", "Growatt inverter and batteries"),
         ("hanchu", "Hanchu", "Compact storage for homes with less space.", "bat-hanchu.jpg", "Hanchu inverter and battery")]]
-    rest = [prod(*r) for r in [
-        ("inverter", "Inverter", "Turns your panels' output into power your home can use.", "inv-fox.jpg", "Inverter on a wall"),
-        ("monitoring", "Monitoring app", "See what you make, use, store and export, live.", "bat-growatt.jpg", "Inverter and batteries"),
-        ("ev-charger", "EV charger", "Charge the car on your spare solar power.", "bat-outdoor.jpg", "Outdoor unit")]]
+    rest = "".join(f'<figure data-tilt data-up>{shot(slug, fb, alt)}<figcaption><b>{k}</b><h3>{h}</h3><p>{p}</p></figcaption></figure>' for slug, k, h, p, fb, alt in [
+        ("inverter", "INVERTER", "The part that does the work", "Turns your panels' output into power your home can use. We size it to your array and leave room for a battery.", "inv-fox.jpg", "Inverter on a wall"),
+        ("monitoring", "MONITORING", "Watch it working", "An app on your phone shows what you're making, using, storing and exporting, live.", "bat-growatt.jpg", "Inverter and batteries"),
+        ("ev-charger", "EV CHARGER", "Charge the car on sunshine", "Add a home charger that uses your spare solar power before it goes to the grid.", "bat-outdoor.jpg", "Outdoor unit")])
     panels = (f'<section class="scr split bone" id="panels"><div class="pstage" data-tilt>{shot("panel", "home-1.jpg", "All-black solar panels")}</div>'
               f'<div class="split-txt">{lab("Solar panels")}<h2 data-rise>All-black panels that look right on a house.</h2>'
               + sub("High-efficiency panels with black frames and black backing, so the array reads as one clean block on your roof.")
@@ -476,7 +476,7 @@ def products():
         panels,
         f'<section class="scr flush work bone" id="batteries" data-xpin>{head("Battery storage", "Use your own power after dark.", sub("A battery stores what your panels make in the day. These are makes we fit."))}'
         f'<div class="track" data-track>{"".join(bats)}</div></section>',
-        f'<section class="scr bone" id="inverters">{head("The rest of the system", "Inverters, monitoring and EV chargers.")}<div class="prods">{"".join(rest)}</div></section>',
+        f'<section class="scr bone" id="inverters">{head("The rest of the system", "Inverters, monitoring and EV chargers.")}<div class="sys">{rest}</div></section>',
         formscr("blk", "Not sure what you need?", "Ask us what<br>suits your home.", "Tell us about your home and how you use power and we'll recommend a setup."),
         end("See what fits<br>your roof.", "The quote shows how many panels your roof takes and what a battery would add.")])
     page("products.html", "Solar panels, batteries and inverters we fit | Midlands Solar Installations", "The solar panels, battery storage, inverters and EV chargers Midlands Solar installs.", body, "products.html")

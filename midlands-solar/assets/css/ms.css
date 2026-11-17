@@ -505,3 +505,33 @@ a.gcard:hover:after{transform:scaleX(1)}
 .phero>.media video,.phero>.media img{will-change:transform}
 @media (max-width:980px){.track figure.prod{height:52svh}}
 .track figure.prod{height:min(50vh,540px)}
+
+/* ---------- round 4 ---------- */
+/* rest of the system: picture lifted on the page, words underneath */
+.sys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.8vw,48px)}
+.sys figure{perspective:1000px}
+.sys .shot{height:min(38vh,360px);border-radius:22px;overflow:hidden;background:#1A1A1A;box-shadow:0 34px 60px rgba(10,10,10,.26),0 4px 12px rgba(10,10,10,.12);transform:rotateY(calc(var(--ry,0)*.5deg)) rotateX(calc(var(--rx,0)*.5deg));transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.sys figure:hover .shot{box-shadow:0 46px 80px rgba(10,10,10,.34),0 6px 16px rgba(10,10,10,.14)}
+.sys .shot img{width:100%;height:100%;object-fit:cover}
+.sys .shot.cut{background:none;overflow:visible;border-radius:0;box-shadow:none;filter:drop-shadow(0 30px 30px rgba(10,10,10,.3))}
+.sys .shot.cut img{object-fit:contain}
+.sys figcaption{padding-top:clamp(16px,3vh,30px)}
+.sys b{display:block;font:500 13px var(--body);letter-spacing:.09em;color:var(--o);margin-bottom:8px}
+.sys p{margin-top:8px;color:var(--mu);font-size:clamp(16.5px,1.2vw,18.5px);line-height:1.5;max-width:38ch}
+@media (max-width:980px){
+  .sys{grid-template-columns:minmax(0,1fr);gap:clamp(12px,2.2vh,20px)}
+  .sys figure{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;align-items:center}
+  .sys .shot{height:104px;border-radius:16px;box-shadow:0 16px 30px rgba(10,10,10,.24)}
+  .sys figcaption{padding:0}
+  .sys b{margin-bottom:3px;font-size:11.5px}
+  .sys h3{font-size:19px}
+  .sys p{font-size:14.5px;line-height:1.4;margin-top:4px}
+  /* slimmer postcode bar */
+  .pc{padding:4px 4px 4px 18px;max-width:420px}
+  .pc input{padding:8px 0;font-size:16px}
+  .pc .btn{height:42px;padding:0 16px}
+  /* strips move with the scroll on phones too */
+  .track{width:max-content;overflow:visible;scroll-snap-type:none}
+}
+.sys .shot{height:min(31vh,360px)}
+@media (max-width:980px){.sys .shot{height:104px}}

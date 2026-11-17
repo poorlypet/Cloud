@@ -20,7 +20,7 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var body = document.body;
   var hasGsap = !!(window.gsap && window.ScrollTrigger);
-  var motion = hasGsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var motion = hasGsap;
   var desktop = window.matchMedia("(min-width: 981px)").matches;
 
   /* ---------- menu ---------- */
@@ -91,6 +91,11 @@
     $$("video[data-v]").forEach(function (v) { io.observe(v); });
   }
 
+  /* ---------- phones that block autoplay: start the films on the first touch ---------- */
+  window.addEventListener("touchstart", function () {
+    $$("video[autoplay]").forEach(function (v) { if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } });
+  }, { once: true, passive: true });
+
   /* ---------- moving photo wall behind the home hero ---------- */
   var wall = $("#mosaic");
   if (wall) {
@@ -154,6 +159,7 @@
 
   /* =====================  everything below needs GSAP  ===================== */
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true }); // phone address bars resize the page as you scroll
   if (window.Lenis) {
     var lenis = new Lenis({ duration: 1.1 });
     lenis.on("scroll", ScrollTrigger.update);
@@ -260,8 +266,8 @@
       } });
   });
 
-  // sideways strips (desktop pins; phones swipe)
-  if (desktop) {
+  // sideways strips: the screen holds while the row travels across
+  {
     $$("[data-xpin]").forEach(function (sec) {
       var track = $("[data-track]", sec);
       var dist = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
