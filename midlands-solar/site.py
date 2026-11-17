@@ -501,7 +501,7 @@ def contact():
         end("Want a price<br>for your home?", "Skip the form. See panels on your roof and a rough cost in about a minute.")])
     page("contact.html", "Contact us | Midlands Solar Installations", "Contact Midlands Solar Installations by phone, email or message.", body, "contact.html")
 
-if __name__ == "__main__":
+def build_all():
     home(); landing(); about(); work(); funding(); grants(); finance(); products(); contact()
     biz("commercial.html", "Commercial solar", h1("Cut your site's", "<em>energy bill.</em>"), "Solar for offices, warehouses, factories, schools and retail units across the Midlands.",
         vid("commercial", True), "Lower running costs, fixed for decades.",
@@ -520,3 +520,6 @@ if __name__ == "__main__":
          ("Diversified sites", "Farm shops, workshops and holiday lets all share the same supply and savings.")],
         ("commercial.html", "Looking for commercial solar?"), img("com-5.jpg", "Solar panels on a large roof"))
     print("built", 10 + len(GRANTS), "pages")
+
+if __name__ == "__main__":
+    build_all()

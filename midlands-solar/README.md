@@ -40,3 +40,15 @@ Settings and prices are in `quote/config.js`. The AI roof mapping runs as a Netl
 ## Earlier design explorations
 
 `home2.html`, `design-1…5.html` and `mosaic-1…5.html` (built by `designs.py` and `mosaic.py`) are earlier options kept for reference. They are not linked from the site and can be deleted.
+
+## Shopify theme
+
+```bash
+python3 shopify.py
+```
+
+builds `shopify-theme/` and `midlands-solar-theme.zip` from the same source (both are left out of git; rebuild them when the site changes). Upload the zip in Shopify admin under Online Store > Themes > Add theme > Upload zip file.
+
+Each inner page needs a Shopify Page with a matching handle and template (for example handle `about`, template `page.about`). `shopify.py` prints the full list when it runs. The quote tool is the page with handle `solar-quote`.
+
+Contact forms and quote bookings go through Shopify's contact form, so they arrive at the store's email address. The AI roof-mapping step needs the `map-house` function hosted (for example on Netlify) and its address entered in Theme settings > Solar quote tool.

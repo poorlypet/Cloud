@@ -1176,7 +1176,17 @@
     };
     if (!C.leadEndpoint) { console.log("Booking (no leadEndpoint set):", data); done(); return; }
     var btn = $("bookBtn"); btn.disabled = true;
-    fetch(C.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) })
+    var send;
+    if (C.leadEndpoint === "shopify") {
+      // Shopify's contact form emails the store owner; each field becomes a line in that email
+      var fd = new URLSearchParams(); fd.append("form_type", "contact"); fd.append("utf8", "✓");
+      Object.keys(data).forEach(function (k) { fd.append("contact[" + k + "]", data[k] == null ? "" : String(data[k])); });
+      fd.append("contact[body]", "Solar quote booking: " + data.call + " - " + (data.address || data.postcode));
+      send = fetch("/contact#contact_form", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: fd.toString() });
+    } else {
+      send = fetch(C.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+    }
+    send
       .then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
       .catch(function () { btn.disabled = false; err.textContent = "That didn't send. Call us on " + C.phone + " to book."; });
   });

@@ -22,10 +22,13 @@ const SCHEMA = {
 
 const TYPES = { semi: "semi-detached", end: "end of terrace", terrace: "mid-terrace", detached: "detached" };
 
+// The storefront may be on another address (e.g. Shopify), so browsers need these headers.
+const CORS = { "access-control-allow-origin": process.env.ALLOWED_ORIGIN || "*", "access-control-allow-headers": "content-type", "access-control-allow-methods": "POST, OPTIONS" };
 const json = (data, status = 200) =>
-  new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
+  new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json", ...CORS } });
 
 export default async (req) => {
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
   if (req.method !== "POST") return json({ error: "Use POST" }, 405);
   const allowed = process.env.ALLOWED_ORIGIN;   // optional: e.g. https://yoursite.co.uk
   if (allowed && req.headers.get("origin") !== allowed) return json({ error: "Not allowed" }, 403);

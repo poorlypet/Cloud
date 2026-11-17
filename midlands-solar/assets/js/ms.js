@@ -36,7 +36,7 @@
       e.preventDefault();
       var pc = f.postcode.value.trim().toUpperCase();
       try { sessionStorage.setItem("ms_postcode", pc); } catch (err) {}
-      location.href = "quote/index.html?postcode=" + encodeURIComponent(pc);
+      location.href = (window.MS_QUOTE || "quote/index.html") + "?postcode=" + encodeURIComponent(pc);
     });
   });
 
@@ -98,6 +98,8 @@
 
   /* ---------- moving photo wall behind the home hero ---------- */
   var wall = $("#mosaic");
+  // on Shopify every asset lives in one folder, whose address the theme passes in as MS_BASE
+  var IMG = window.MS_BASE || "assets/img/", VID = window.MS_BASE || "assets/video/";
   if (wall) {
     var M = [["i", "home-1"], ["v", "fly-glades-1"], ["i", "home-drone-1"], ["i", "bat-ecoflow-1"],
       ["v", "fly-snowdon-1"], ["i", "home-3"], ["i", "com-1"], ["i", "home-5"],
@@ -108,8 +110,8 @@
     for (var c = 0; c < 6; c++) {
       var html = M.slice(c * 4, c * 4 + 4).map(function (it) {
         return it[0] === "v"
-          ? '<video src="assets/video/' + it[1] + '.mp4" poster="assets/video/' + it[1] + '.jpg" autoplay muted loop playsinline></video>'
-          : '<img src="assets/img/' + it[1] + '.jpg" alt="">';
+          ? '<video src="' + VID + it[1] + '.mp4" poster="' + VID + it[1] + '.jpg" autoplay muted loop playsinline></video>'
+          : '<img src="' + IMG + it[1] + '.jpg" alt="">';
       }).join("");
       // each column's list is doubled so it can loop without a visible jump
       wall.insertAdjacentHTML("beforeend", '<div class="mcol"><div style="--t:' + (38 + c * 7 % 19) + 's">' + html + html + "</div></div>");
