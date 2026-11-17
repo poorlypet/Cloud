@@ -250,7 +250,7 @@
     '<div class="srch-body"><div><p class="cap">Popular</p><ul>' +
     ["Bouclé bed", "Leather collar", "Dachshund coat", "Wool throw", "Waxed cotton"].map(function (x) { return '<li><a class="ln" href="#" data-q="' + x + '">' + x + "</a></li>"; }).join("") +
     '</ul><p class="cap" style="margin-top:28px">Help</p><ul><li><a class="ln" href="/pages/delivery">Delivery</a></li><li><a class="ln" href="/pages/returns">Returns</a></li><li><a class="ln" href="/pages/help">Help centre</a></li></ul></div>' +
-    '<div><div class="srch-res-h"><p class="cap" data-res-h>New in</p></div><div class="srch-grid" data-res></div></div></div></div>';
+    '<div><div class="srch-res-h"><p class="cap" data-res-h>Cloud7 coats</p></div><div class="srch-grid" data-res></div></div></div></div>';
   hdr.appendChild(srch);
   var q = srch.querySelector("#q"), res = srch.querySelector("[data-res]"), resH = srch.querySelector("[data-res-h]");
   function card(p) {

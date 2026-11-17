@@ -111,11 +111,14 @@
     function go() { var v = q.value.trim(); if (v) location.href = R.search + "?type=product&q=" + encodeURIComponent(v); else q.focus(); }
     function showNew() {
       if (!res) return;
-      if (resH) resH.textContent = "New in";
+      if (resH) resH.textContent = "Cloud7 coats";
       if (newIn) { res.innerHTML = newIn; return; }
       var root = (window.Shopify && Shopify.routes && Shopify.routes.root) || "/";
-      fetch(root + "collections/new-in/products.json?limit=8").then(function (r) { return r.json(); }).then(function (d) {
-        var ps = (d.products || []).filter(function (p) { return p.variants && p.variants.some(function (v) { return v.available; }); }).slice(0, 4);
+      fetch(root + "collections/coats/products.json?limit=250").then(function (r) { return r.json(); }).then(function (d) {
+        var seen = {}, ps = (d.products || []).filter(function (p) {
+          if (!/^cloud\s?7$/i.test(p.vendor || "") || !/\bcoat\b/i.test(p.title) || !(p.variants || []).some(function (v) { return v.available; })) return false;
+          var model = p.title.split(",")[0].toLowerCase(); if (seen[model]) return false; seen[model] = 1; return true;
+        }).slice(0, 4);
         return Promise.all(ps.map(function (p) { return fetch(root + "products/" + p.handle + ".js").then(function (r) { return r.json(); }); }));
       }).then(function (ps) {
         newIn = ps.map(function (p) { p.url = p.url || "/products/" + p.handle; return pcard(p); }).join("");
