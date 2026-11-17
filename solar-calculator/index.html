@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Solar Quote Calculator</title>
+<meta name="description" content="Enter your postcode, pick your house and see solar panels on your own roof with an instant price.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="solar.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand" id="brand">Your Solar Company</span>
+    <span class="demo-tag" id="demoTag" hidden>Demo mode</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <ol class="steps" aria-label="Progress">
+    <li data-step="1" class="on">Postcode</li>
+    <li data-step="2">Your house</li>
+    <li data-step="3">Your quote</li>
+  </ol>
+
+  <!-- Step 1: postcode -->
+  <section class="card step" id="step1">
+    <h1>See solar panels on <span class="hl">your roof</span></h1>
+    <p class="lead">Enter your postcode and we'll measure your roof from satellite data and price a system in seconds.</p>
+    <form id="pcForm" class="row" novalidate>
+      <label class="sr" for="postcode">Postcode</label>
+      <input id="postcode" name="postcode" autocomplete="postal-code" placeholder="e.g. SW1A 1AA" maxlength="9" required>
+      <button class="btn" type="submit">Find my house</button>
+    </form>
+    <p class="err" id="pcErr" role="alert"></p>
+  </section>
+
+  <!-- Step 2: house -->
+  <section class="card step" id="step2" hidden>
+    <button class="back" type="button" data-go="1">&larr; Change postcode</button>
+    <h2>Which house is yours?</h2>
+    <p class="lead" id="pcShown"></p>
+
+    <form id="addrForm" novalidate>
+      <div id="addrListWrap" hidden>
+        <label class="lbl" for="addrList">Select your address</label>
+        <select id="addrList"></select>
+      </div>
+      <div id="addrTypeWrap" hidden>
+        <label class="lbl" for="houseNo">House number or name</label>
+        <input id="houseNo" placeholder="e.g. 12 or Rose Cottage" autocomplete="address-line1">
+      </div>
+      <button class="btn" type="submit">Show my roof</button>
+    </form>
+    <p class="err" id="addrErr" role="alert"></p>
+  </section>
+
+  <!-- Step 3: roof and quote -->
+  <section class="step" id="step3" hidden>
+    <button class="back" type="button" data-go="2">&larr; Change house</button>
+    <div class="grid">
+      <div class="card roof">
+        <div class="roof-head">
+          <h2 id="addrTitle">Your roof</h2>
+          <p class="mute" id="roofHint">Panels are placed on the sunniest parts of your roof first.</p>
+        </div>
+        <div id="map" class="map" aria-label="Your roof with solar panels"></div>
+        <ul class="facts" id="facts"></ul>
+      </div>
+
+      <div class="card quote">
+        <h2>Build your system</h2>
+
+        <div class="ctl">
+          <div class="ctl-top">
+            <label for="panels">Panels</label>
+            <output id="panelsOut">10 panels</output>
+          </div>
+          <input type="range" id="panels" min="4" max="30" value="10">
+          <p class="mute sm" id="panelsNote"></p>
+        </div>
+
+        <fieldset class="ctl">
+          <legend>Battery</legend>
+          <div class="seg" id="batteryOpts"></div>
+        </fieldset>
+
+        <fieldset class="ctl">
+          <legend>Scaffolding</legend>
+          <div class="seg">
+            <label><input type="radio" name="scaf" value="1" checked><span>Needed</span></label>
+            <label><input type="radio" name="scaf" value="0"><span>Not needed</span></label>
+          </div>
+          <p class="mute sm">Most two-storey homes need scaffolding. Bungalows and low roofs often don't.</p>
+        </fieldset>
+
+        <div class="price">
+          <span class="mute">Estimated price</span>
+          <strong id="total">£0</strong>
+          <span class="mute sm" id="totalNote"></span>
+        </div>
+
+        <dl class="stats">
+          <div><dt>System size</dt><dd id="kw">-</dd></div>
+          <div><dt>Generation per year</dt><dd id="kwh">-</dd></div>
+          <div><dt>Savings per year</dt><dd id="save">-</dd></div>
+          <div><dt>Payback</dt><dd id="payback">-</dd></div>
+        </dl>
+
+        <details class="breakdown">
+          <summary>Price breakdown</summary>
+          <table id="breakdown"></table>
+        </details>
+      </div>
+    </div>
+
+    <div class="card compare">
+      <h2>Compare options for <span id="cmpPanels">10</span> panels</h2>
+      <div class="tbl-wrap"><table id="compare"></table></div>
+      <p class="mute sm">Tap a price to choose that option.</p>
+    </div>
+
+    <div class="card lead-form">
+      <h2>Happy with this? Book a free survey</h2>
+      <p class="mute">We'll visit to confirm your roof and give you a fixed price. No obligation.</p>
+      <form id="leadForm" class="lf" novalidate>
+        <label><span>Name</span><input name="name" required autocomplete="name"></label>
+        <label><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+        <label><span>Phone</span><input name="phone" type="tel" required autocomplete="tel"></label>
+        <button class="btn" type="submit">Book my survey</button>
+      </form>
+      <p class="err" id="leadErr" role="alert"></p>
+      <p class="ok" id="leadOk" hidden>Thank you. We'll be in touch within one working day.</p>
+    </div>
+
+    <p class="small-print">Estimate only, based on satellite roof data and typical UK usage. Your final price is confirmed after a survey.</p>
+  </section>
+
+  <div class="loading" id="loading" hidden><span class="spin"></span><span id="loadingText">Measuring your roof&hellip;</span></div>
+</main>
+
+<script src="config.js"></script>
+<script src="solar.js"></script>
+</body>
+</html>
