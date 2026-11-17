@@ -1041,36 +1041,61 @@
 
   function renderResults() {
     if ($("results").hidden) return;
-    var q = quote(S.pkg), p = pkg(), kw = S.n * C.panelWatts / 1000;
+    var q = quote(S.pkg), p = pkg(), kw = S.n * C.panelWatts / 1000, yrs = Math.round(C.financeMonths / 12);
+    var pct = function (x) { return Math.round(x * 100) + "%"; };
+    var years = function (x) { return x.toFixed(1) + " years"; };
+    // summary band
+    $("rN").textContent = S.n + " panels";
+    $("pkgSize").textContent = "A " + kw.toFixed(1) + " kW system making about " + num(q.kwh) + " kWh a year. Priced as: " + p.name + ".";
     tween($("sSave"), Math.round(q.save), function (v) { return money(v) + "/yr"; });
-    $("sPayback").textContent = "Pays back in ~" + q.payback.toFixed(1) + " years";
-    $("sPriceLbl").textContent = "Rough cost (" + (S.scaf ? "inc." : "ex.") + " scaffolding)";
+    $("sPayback").textContent = "Pays back in about " + years(q.payback);
+    $("sPriceLbl").textContent = "Rough cost (" + (S.scaf ? "with" : "without") + " scaffolding)";
     tween($("sPrice"), Math.round(q.total), money);
-    $("sMonthly").textContent = "or from " + money(q.monthly) + "/mo";
-    $("scafPrice").textContent = "+" + money(C.scaffoldingPrice);
-    $("pkgName").textContent = p.name + " · " + (ptype().short || ptype().name);
-    $("pkgSize").textContent = S.n + " panels (" + kw.toFixed(1) + " kW) · ~" + num(q.kwh) + " kWh a year";
+    $("sMonthly").textContent = "or from " + money(q.monthly) + " a month";
+    $("rCut").textContent = pct(q.cut);
+    $("rBills").textContent = money(q.billNow) + " a year now, about " + money(q.billAfter) + " after";
     $("nOut2").textContent = S.n;
+    // package cards
     $("pkgs").innerHTML = C.packages.map(function (x) {
-      var qq = quote(x.id);
-      return '<label><input type="radio" name="pkg" value="' + x.id + '"' + (x.id === S.pkg ? " checked" : "") + '><span class="prow"><span><b>' + esc(x.name) + "</b>" +
-        "<small>Saves ~" + money(qq.save) + " a year</small></span><em>" + money(qq.total) + "</em></span></label>";
+      var qq = quote(x.id), on = x.id === S.pkg;
+      return '<label><input type="radio" name="pkg" value="' + x.id + '"' + (on ? " checked" : "") + '><div class="pk">' +
+        '<span class="pk-tag' + (x.recommended ? " hot" : "") + '">' + esc(x.tag || "Lowest price") + "</span>" +
+        "<div><b>" + esc(x.name) + "</b><small>" + esc(x.blurb || "") + "</small></div>" +
+        "<div><strong>" + money(qq.total) + "</strong><em>or from " + money(qq.monthly) + " a month</em></div>" +
+        "<ul><li><span>Saves about</span><i>" + money(qq.save) + " a year</i></li>" +
+        "<li><span>Pays for itself in</span><i>" + years(qq.payback) + "</i></li>" +
+        "<li><span>Bill cut by</span><i>" + pct(qq.cut) + "</i></li></ul>" +
+        '<div class="pk-pick"><span>' + (on ? "Selected" : "Choose this") + "</span></div></div></label>";
+    }).join("");
+    // with / without scaffolding, both prices shown
+    var keep = S.scaf; S.scaf = true; var tOn = quote(S.pkg).total; S.scaf = false; var tOff = quote(S.pkg).total; S.scaf = keep;
+    $("scafSeg").innerHTML = [[1, "With scaffolding", tOn], [0, "Without scaffolding", tOff]].map(function (o) {
+      return '<label><input type="radio" name="scafopt" value="' + o[0] + '"' + (!!o[0] === !!S.scaf ? " checked" : "") + "><span>" + o[1] + "<small>" + money(o[2]) + "</small></span></label>";
     }).join("");
     $("ptypes").innerHTML = C.panelTypes.map(function (t) {
       return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.short || t.name) + "<small>" + money(t.pricePerPanel) + " a panel</small></span></label>";
     }).join("");
+    // the numbers for the chosen package
+    $("pkgName").textContent = p.name + " · " + (ptype().short || ptype().name);
+    $("fTotalLbl").textContent = "Rough cost, " + (S.scaf ? "with" : "without") + " scaffolding";
+    $("fTotal").textContent = money(q.total);
+    $("fMonthly").textContent = money(q.monthly) + " a month";
+    $("fMonthlyNote").textContent = "illustration over " + yrs + " years at " + C.financeApr + "% APR";
+    $("fSave").textContent = money(q.save);
+    $("fSaveNote").textContent = "including " + money(q.exportPay) + " for power you export";
+    $("fPayback").textContent = years(q.payback);
+    $("fLifeLbl").textContent = "Over " + C.systemLifeYears + " years";
+    $("fLife").textContent = money(Math.max(0, q.life));
+    $("fBill").textContent = money(q.billAfter) + " a year";
+    $("fBillNote").textContent = "down from " + money(q.billNow) + " now";
     $("breakdown").innerHTML = q.lines.map(function (l) { return "<tr><td>" + esc(l[0]) + "</td><td>" + money(l[1]) + "</td></tr>"; }).join("") +
       "<tr><td>Total (0% VAT)</td><td>" + money(q.total) + "</td></tr>";
   }
 
-  $("scaf").addEventListener("change", function () { S.scaf = this.checked; renderResults(); });
-  $("changePkg").addEventListener("click", function () {
-    var pick = $("pkgPick"); pick.hidden = !pick.hidden;
-    this.textContent = pick.hidden ? "Change" : "Done";
-  });
   document.addEventListener("change", function (e) {
     if (e.target.name === "pkg") { S.pkg = e.target.value; renderResults(); }
     if (e.target.name === "ptype") { S.ptype = e.target.value; renderResults(); }
+    if (e.target.name === "scafopt") { S.scaf = e.target.value === "1"; renderResults(); }
   });
 
   /* ---------- calendar (test availability) ---------- */
@@ -1160,7 +1185,8 @@
   $$(".brand").forEach(function (b) { b.textContent = C.companyName; });
   $$(".phone-no").forEach(function (b) { b.textContent = C.phone; });
   $("installText").textContent = C.installText;
-  if (C.heroPhoto) { $("photo").style.backgroundImage = "url(" + JSON.stringify(C.heroPhoto) + ")"; $("photo").classList.add("has-img"); }
+  // the first screen plays a drone film; the photo sits behind it until the film loads
+  if (C.heroPhoto) $("photo").style.backgroundImage = "url(" + JSON.stringify(C.heroPhoto) + ")";
   if (C.bookCallPhoto) { $("bookPhoto").style.backgroundImage = "url(" + JSON.stringify(C.bookCallPhoto) + ")"; $("bookPhoto").classList.add("has-img"); }
   if (LIVE) google().catch(function () {});
   // arriving from the website's postcode box: fill it in and start straight away

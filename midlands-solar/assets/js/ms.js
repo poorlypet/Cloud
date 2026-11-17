@@ -111,6 +111,18 @@
     }
   }
 
+  /* ---------- product pictures lean towards the pointer ---------- */
+  if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    $$("[data-tilt]").forEach(function (el) {
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--ry", (((e.clientX - r.left) / r.width - 0.5) * 34).toFixed(1));
+        el.style.setProperty("--rx", ((0.5 - (e.clientY - r.top) / r.height) * 22).toFixed(1));
+      });
+      el.addEventListener("mouseleave", function () { el.style.removeProperty("--ry"); el.style.removeProperty("--rx"); });
+    });
+  }
+
   /* ---------- loader ---------- */
   var loader = $("#loader");
   function endLoader(then) {
