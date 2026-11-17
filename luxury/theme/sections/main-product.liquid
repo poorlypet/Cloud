@@ -31,7 +31,7 @@ main > section.next{margin-top:var(--sec)}
 <table class="dl7-t"><thead><tr><th>{% if mk_uk == "true" %}UK service{% else %}Service{% endif %}</th><th>Arrives</th><th>Cost</th></tr></thead><tbody>
 <tr><td>Standard, tracked</td><td>{% if mk_uk == "true" %}2–4 working days after dispatch{% else %}Shown at checkout{% endif %}</td><td>{{ mk_ship }} <small>Free over {{ mk_free }}</small></td></tr>
 </tbody></table>
-{%- if big -%}<p class="dl7-n"><b>Beds travel by specialist courier.</b> You get a one-hour delivery window by text on the morning of delivery, and can rearrange it from the text.</p>{%- endif -%}
+{%- if big -%}<p class="dl7-n"><b>Beds are sent tracked</b> and may need a signature on delivery.</p>{%- endif -%}
 <p class="dl7-n">Highlands and Islands, Northern Ireland, Scilly and the Channel Islands: allow 1–2 extra working days. We ship worldwide, and international costs and times are shown at checkout.</p>
 
 <p class="dl7-n">Return anything unworn, with its tags. Refunds go back to your original payment method within 14 days of your return reaching us.{%- if tl contains 'shampoo' or tl contains 'balm' or tl contains 'treat' or tl contains 'chew' or tl contains 'spray' -%} Grooming products and treats can only be returned unopened.{%- endif -%}</p>
