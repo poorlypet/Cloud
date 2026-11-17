@@ -26,7 +26,7 @@ window.SOLAR_CONFIG = {
   /* AI mapping: Claude outlines the home and its property on the roof photo.
      Works when the site runs on Netlify with ANTHROPIC_API_KEY set; otherwise
      the page falls back to Google's own roof outline. Set to "" to turn off. */
-  aiEndpoint: "/.netlify/functions/map-house",
+  aiEndpoint: "",          // "/.netlify/functions/map-house" to switch on (tested: not accurate enough yet)
   aiCropMeters: 40,       // area of photo sent to the AI, around the pin
   aiCropPixels: 900,      // size of that picture
   aiTimeoutMs: 45000,
