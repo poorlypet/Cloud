@@ -19,7 +19,7 @@ window.SOLAR_CONFIG = {
        at a postcode. Empty = customer types their house number.
      leadEndpoint: where bookings are sent (e.g. a Formspree URL).
        Empty = shows the confirmation but sends nothing. */
-  googleApiKey: "",
+  googleApiKey: "AIzaSyBznmrYo0ZRl8j_V14O1ho50HKvSniJfSE",
   idealPostcodesKey: "",
   leadEndpoint: "",
 
