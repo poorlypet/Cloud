@@ -169,10 +169,10 @@
     google().then(function (g) {
       if (!gmap) {
         gmap = new g.maps.Map($("map"), {
-          center: S.centre, zoom: 20, mapTypeId: "satellite", tilt: 0,
+          center: S.centre, zoom: 21, mapTypeId: "satellite", tilt: 0,
           disableDefaultUI: true, zoomControl: true, gestureHandling: "greedy", keyboardShortcuts: false
         });
-      } else { gmap.setCenter(S.centre); gmap.setZoom(20); }
+      } else { gmap.setCenter(S.centre); gmap.setZoom(21); }
       clearLive();
     });
   }
