@@ -140,7 +140,15 @@
     var a = S.list[+b.dataset.i];
     S.address = a; S.centre = { lat: a.lat, lng: a.lng };
     $("drop").hidden = true;
-    go("pin"); startPin();
+    if (!LIVE) { go("pin"); startPin(); return; }
+    // Google's rooftop point usually sits on the middle of the house;
+    // the address list's point is often on the front edge.
+    google().then(function (g) {
+      return new g.maps.Geocoder().geocode({ address: a.label, componentRestrictions: { country: "GB" } });
+    }).then(function (r) {
+      var x = r.results && r.results[0];
+      if (x && x.geometry.location_type === "ROOFTOP") S.centre = { lat: x.geometry.location.lat(), lng: x.geometry.location.lng() };
+    }).catch(function () {}).then(function () { go("pin"); startPin(); });
   });
 
   $("houseForm").addEventListener("submit", function (e) {
@@ -169,10 +177,10 @@
     google().then(function (g) {
       if (!gmap) {
         gmap = new g.maps.Map($("map"), {
-          center: S.centre, zoom: 21, mapTypeId: "satellite", tilt: 0,
+          center: S.centre, zoom: 20, mapTypeId: "satellite", tilt: 0,
           disableDefaultUI: true, zoomControl: true, gestureHandling: "greedy", keyboardShortcuts: false
         });
-      } else { gmap.setCenter(S.centre); gmap.setZoom(21); }
+      } else { gmap.setCenter(S.centre); gmap.setZoom(20); }
       clearLive();
     });
   }
@@ -248,6 +256,7 @@
         return along + half <= width / 2 && Math.abs(across) <= C.houseDepthMeters / 2;
       });
     }
+    if (LIVE && S.centre && S.panels.length) S.panels = tidyGrid(S.panels, sp);
     if (!S.panels.length) { var e = new Error("no panels"); e.status = 404; throw e; }
     // roof spaces that can hold panels, best first
     var by = {};
@@ -265,9 +274,61 @@
     S.segOn = {};
     S.segs.forEach(function (s) {
       var d = ((s.azimuth % 360) + 360) % 360;
-      S.segOn[s.index] = d >= 67.5 && d <= 292.5;
+      S.segOn[s.index] = d >= 90 && d <= 270;   // east through south to west
     });
     if (S.segs.length && !S.segs.some(function (s) { return S.segOn[s.index]; })) S.segOn[S.segs[0].index] = true;
+  }
+
+  /* Google places each panel on its own, which looks scattered once a roof is
+     cut down to one house. Keep Google's count and output per roof face, but
+     lay the panels out as a neat grid lined up with the roof. */
+  function tidyGrid(panels, sp) {
+    var gap = 0.05;
+    var kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
+    var toXY = function (lat, lng) { return { x: (lng - S.centre.lng) * kLng, y: (lat - S.centre.lat) * kLat }; };
+    var toLL = function (x, y) { return { lat: S.centre.lat + y / kLat, lng: S.centre.lng + x / kLng }; };
+    var bySeg = {};
+    panels.forEach(function (p) { (bySeg[p.segmentIndex] = bySeg[p.segmentIndex] || []).push(p); });
+    var faces = Object.keys(bySeg).map(function (k) {
+      var list = bySeg[k].slice().sort(function (a, b) { return (b.yearlyEnergyDcKwh || 0) - (a.yearlyEnergyDcKwh || 0); });
+      var st = (sp.roofSegmentStats || [])[k] || {};
+      var az = (st.azimuthDegrees || 0) * Math.PI / 180, pitch = (st.pitchDegrees || 30) * Math.PI / 180;
+      var f = { x: Math.sin(az), y: Math.cos(az) };      // down the slope
+      var a = { x: -f.y, y: f.x };                       // along the ridge
+      var land = list.filter(function (p) { return p.orientation !== "PORTRAIT"; }).length * 2 >= list.length;
+      var L = land ? sp.panelHeightMeters : sp.panelWidthMeters;                       // along the ridge
+      var D = (land ? sp.panelWidthMeters : sp.panelHeightMeters) * Math.cos(pitch);  // down the slope, seen from above
+      var us = [], vs = [];
+      list.forEach(function (p) {
+        var o = toXY(p.center.latitude, p.center.longitude);
+        us.push(o.x * a.x + o.y * a.y); vs.push(o.x * f.x + o.y * f.y);
+      });
+      var u0 = Math.min.apply(null, us), u1 = Math.max.apply(null, us);
+      var v0 = Math.min.apply(null, vs), v1 = Math.max.apply(null, vs);
+      var cols = Math.max(1, Math.min(list.length, Math.round((u1 - u0) / (L + gap)) + 1));
+      var rows = Math.max(1, Math.min(Math.round((v1 - v0) / (D + gap)) + 1, Math.ceil(list.length / cols)));
+      var uc = (u0 + u1) / 2, vc = (v0 + v1) / 2, cm = (cols - 1) / 2, rm = (rows - 1) / 2;
+      var cells = [];
+      for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) cells.push({ r: r, c: c });
+      // fill from the middle of the roof outwards so any size makes a neat block
+      cells.sort(function (p, q) {
+        return (Math.abs(p.c - cm) + Math.abs(p.r - rm)) - (Math.abs(q.c - cm) + Math.abs(q.r - rm)) || p.r - q.r || p.c - q.c;
+      });
+      var out = cells.map(function (cell, i) {
+        var u = uc + (cell.c - cm) * (L + gap), v = vc + (cell.r - rm) * (D + gap);
+        var pt = function (du, dv) { return toLL(a.x * (u + du) + f.x * (v + dv), a.y * (u + du) + f.y * (v + dv)); };
+        var ctr = pt(0, 0);
+        return {
+          segmentIndex: +k, center: { latitude: ctr.lat, longitude: ctr.lng },
+          corners: [pt(L / 2, D / 2), pt(L / 2, -D / 2), pt(-L / 2, -D / 2), pt(-L / 2, D / 2)],
+          yearlyEnergyDcKwh: list[Math.min(i, list.length - 1)].yearlyEnergyDcKwh || 0
+        };
+      });
+      var avg = out.reduce(function (s, p) { return s + p.yearlyEnergyDcKwh; }, 0) / out.length;
+      return { avg: avg, panels: out };
+    });
+    faces.sort(function (x, y) { return y.avg - x.avg; });
+    return faces.reduce(function (all, fc) { return all.concat(fc.panels); }, []);
   }
 
   /* ---------- which panels are used ---------- */
@@ -305,6 +366,8 @@
     var b = new g.maps.LatLngBounds();
     S.hull.forEach(function (pt) { b.extend(pt); });
     gmap.fitBounds(b, 80);
+    // past zoom 21 the UK imagery turns soft, so stop there
+    g.maps.event.addListenerOnce(gmap, "idle", function () { if (gmap.getZoom() > 21) gmap.setZoom(21); });
   }
   function hull(pts) {   // convex hull (monotone chain) of {lat,lng} points
     pts = pts.slice().sort(function (a, b) { return a.lng - b.lng || a.lat - b.lat; });
@@ -322,6 +385,10 @@
     var corners = [[w, h], [w, -h], [-w, -h], [-w, h]];
     var pts = [];
     polys = S.panels.map(function (p) {
+      if (p.corners) {
+        p.corners.forEach(function (q) { pts.push(q); });
+        return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: p.corners });
+      }
       var c = new g.maps.LatLng(p.center.latitude, p.center.longitude);
       var az = ((sp.roofSegmentStats || [])[p.segmentIndex] || {}).azimuthDegrees || 0;
       var turn = p.orientation === "PORTRAIT" ? 90 : 0;
