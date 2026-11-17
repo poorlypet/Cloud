@@ -1,0 +1,99 @@
+{%- comment -%}
+  Share tags (Open Graph, Twitter) and structured data for search engines.
+  Products: Product with one Offer per variant, priced in the shopper's currency, with barcode where we have one.
+  Homepage: Organization and WebSite (with site search).
+{%- endcomment -%}
+{%- liquid
+  assign seo_img = shop.metafields.custom.ah_media.value.stills['home-category-coats']
+  assign og_type = 'website'
+  if template.name == 'product'
+    assign og_type = 'product'
+    if product.featured_image
+      assign seo_img = product.featured_image | image_url: width: 1200
+    endif
+  elsif template.name == 'collection' and collection
+    if collection.image
+      assign seo_img = collection.image | image_url: width: 1200
+    elsif collection.products.first.featured_image
+      assign seo_img = collection.products.first.featured_image | image_url: width: 1200
+    endif
+  elsif template.name == 'article' and article.image
+    assign seo_img = article.image | image_url: width: 1200
+  endif
+  assign seo_desc = page_description | default: shop.description | escape
+-%}
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ seo_desc }}">
+{%- if seo_img != blank %}
+<meta property="og:image" content="{% unless seo_img contains 'https:' %}https:{% endunless %}{{ seo_img }}">
+<meta property="og:image:secure_url" content="{% unless seo_img contains 'https:' %}https:{% endunless %}{{ seo_img }}">
+{%- endif %}
+{%- if template.name == 'product' %}
+<meta property="og:price:amount" content="{{ product.price | money_without_currency | remove: ',' | strip_html }}">
+<meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title | escape }}">
+<meta name="twitter:description" content="{{ seo_desc }}">
+{%- if template.name == 'product' -%}
+{%- assign seo_brand = product.vendor -%}
+{%- if seo_brand == 'BDEBRUNO' -%}{%- assign seo_brand = 'BdeBruno' -%}{%- elsif seo_brand == 'PAIKKA' -%}{%- assign seo_brand = 'Paikka' -%}{%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
+  "brand": { "@type": "Brand", "name": {{ seo_brand | json }} },
+  {%- if product.selected_or_first_available_variant.sku != blank %}
+  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  {%- endif %}
+  {%- if product.selected_or_first_available_variant.barcode != blank %}
+  "gtin": {{ product.selected_or_first_available_variant.barcode | json }},
+  {%- endif %}
+  "image": [{%- for img in product.images limit: 6 -%}{{ img | image_url: width: 1600 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
+  "offers": [
+    {%- for v in product.variants -%}
+    {
+      "@type": "Offer",
+      "url": {{ shop.url | append: v.url | json }},
+      {%- if v.sku != blank %}"sku": {{ v.sku | json }},{% endif %}
+      {%- if v.barcode != blank %}"gtin": {{ v.barcode | json }},{% endif %}
+      "price": {{ v.price | money_without_currency | remove: ',' | strip_html | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+      "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- elsif template.name == 'index' -%}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "description": {{ shop.description | json }}
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ shop.url }}{{ routes.search_url }}?type=product&q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+]
+</script>
+{%- endif -%}
