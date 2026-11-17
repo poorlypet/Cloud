@@ -1,56 +1,63 @@
 /* ============================================================
-   Solar calculator settings. This is the only file you need to
-   edit to change keys, prices and savings assumptions.
-   All prices in pounds, including VAT (solar is 0% VAT in the UK
-   until March 2027, so vatRate is 0).
+   Solar calculator settings. The only file you need to edit.
+   ALL PRICES BELOW ARE TEST VALUES. Replace them with your own.
    ============================================================ */
 
 window.SOLAR_CONFIG = {
   companyName: "Your Solar Company",
   phone: "0800 000 0000",
 
+  /* Photos (paste an image URL, or leave empty for a grey placeholder) */
+  heroPhoto: "",        // right-hand side of the first screen
+  bookCallPhoto: "",    // top of the "book a call" card
+
   /* --- API keys -------------------------------------------------
-     googleApiKey: one Google Cloud key with these APIs enabled:
-       Solar API, Maps JavaScript API, Geocoding API.
-     Restrict it to your website's domain in Google Cloud.
-     Leave it empty to run in demo mode (a sample house, no real data).
-
-     idealPostcodesKey: from ideal-postcodes.co.uk. Gives the list of
-     houses for a postcode, so the customer can pick theirs.
-     Leave it empty and the customer types their house number instead.
-
-     leadEndpoint: where the "book a survey" form is sent, for example
-     a Formspree URL (https://formspree.io/f/xxxxxx). Leave it empty
-     and the form shows a thank-you message but sends nothing. */
+     googleApiKey: Google Cloud key with Solar API, Maps JavaScript API
+       and Geocoding API enabled, restricted to your website.
+       Empty = demo mode with a sample roof.
+     idealPostcodesKey: ideal-postcodes.co.uk key, lists the houses
+       at a postcode. Empty = customer types their house number.
+     leadEndpoint: where bookings are sent (e.g. a Formspree URL).
+       Empty = shows the confirmation but sends nothing. */
   googleApiKey: "",
   idealPostcodesKey: "",
   leadEndpoint: "",
 
-  /* --- Panels --------------------------------------------------- */
-  panelWatts: 440,          // the panel you install
-  pricePerPanel: 180,       // panel + mounting + wiring, per panel
-  baseInstallPrice: 2400,   // inverter, labour, certification, fixed per job
+  /* --- Panel types (TEST PRICES) -------------------------------- */
+  panelWatts: 440,
+  panelTypes: [
+    { id: "std",   name: "440W panels",           pricePerPanel: 180 },
+    { id: "black", name: "440W all-black panels", pricePerPanel: 215 }
+  ],
+  baseInstallPrice: 2400,   // inverter, labour, certification
   minPanels: 4,
-  maxPanels: 30,            // the slider also stops at what fits the roof
-  defaultPanels: 10,
+  maxPanels: 30,
+  defaultUsageKwh: 2700,    // typical UK home, customer can change it
 
-  /* --- Scaffolding ---------------------------------------------- */
+  /* --- Scaffolding (TEST PRICE) --------------------------------- */
   scaffoldingPrice: 850,
 
-  /* --- Batteries (first one must be "No battery") --------------- */
-  batteries: [
-    { id: "none", name: "No battery",     kwh: 0,  price: 0 },
-    { id: "b5",   name: "5 kWh battery",  kwh: 5,  price: 2900 },
-    { id: "b10",  name: "10 kWh battery", kwh: 10, price: 4600 }
+  /* --- Packages: the "type of solar" (TEST PRICES) -------------- */
+  packages: [
+    { id: "solar", name: "Solar panels",           batteryKwh: 0,  batteryPrice: 0,    note: "Lowest upfront cost" },
+    { id: "b5",    name: "Solar + 5 kWh battery",  batteryKwh: 5,  batteryPrice: 2900, note: "Most popular", recommended: true },
+    { id: "b10",   name: "Solar + 10 kWh battery", batteryKwh: 10, batteryPrice: 4600, note: "Biggest savings" }
   ],
 
+  /* --- Finance (TEST VALUES) ------------------------------------ */
+  financeApr: 9.9,
+  financeMonths: 120,
+
   /* --- Savings assumptions -------------------------------------- */
-  electricityPrice: 0.25,   // £ per kWh the customer buys
-  exportPrice: 0.15,        // £ per kWh paid for export (SEG)
-  selfUseNoBattery: 0.35,   // share of generation used in the home
-  selfUsePerBatteryKwh: 0.05, // each battery kWh adds this much
+  electricityPrice: 0.25,
+  exportPrice: 0.15,
+  selfUseNoBattery: 0.35,
+  selfUsePerBatteryKwh: 0.05,
   selfUseMax: 0.85,
-  dcToAc: 0.85,             // losses from panel to plug
-  demoYieldPerKw: 950,      // kWh per kW per year, demo mode only
-  vatRate: 0
+  dcToAc: 0.85,
+
+  /* --- Booking calendar ----------------------------------------- */
+  callTimes: ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"],
+  callDays: [1, 2, 3, 4, 5, 6],   // 0 = Sunday ... 6 = Saturday
+  installText: "Full installation by certified installers, including all paperwork"
 };
