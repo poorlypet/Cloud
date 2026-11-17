@@ -178,6 +178,9 @@
   }
 
   $("pinDone").addEventListener("click", function () {
+    var t = document.querySelector('input[name="htype"]:checked');
+    if (!t) { $("pinErr").textContent = "Choose your type of house first."; return; }
+    S.htype = t.value;
     if (LIVE && gmap) { var c = gmap.getCenter(); S.centre = { lat: c.lat(), lng: c.lng() }; }
     analyse();
   });
@@ -226,6 +229,25 @@
     S.insights = ins;
     S.panels = sp.solarPanels || [];
     S.apiWatts = sp.panelCapacityWatts || 400;
+    // Semis and terraces: Google measures the whole row as one building.
+    // Keep only panels that fit fully inside a strip one house wide,
+    // centred on the pin and running across the ridge.
+    var width = C.houseWidths[S.htype] || 0;
+    if (LIVE && S.centre && width) {
+      var kLat = 111320, kLng = 111320 * Math.cos(S.centre.lat * Math.PI / 180);
+      var off = function (p) { return { x: (p.center.longitude - S.centre.lng) * kLng, y: (p.center.latitude - S.centre.lat) * kLat }; };
+      // the roof face nearest the pin sets which way the ridge runs
+      var near = S.panels.slice().sort(function (a, b) { var A = off(a), B = off(b); return Math.hypot(A.x, A.y) - Math.hypot(B.x, B.y); })[0];
+      var az = (((sp.roofSegmentStats || [])[near.segmentIndex] || {}).azimuthDegrees || 0) * Math.PI / 180;
+      var fx = Math.sin(az), fy = Math.cos(az);          // unit vector down the slope (east, north)
+      S.panels = S.panels.filter(function (p) {
+        var o = off(p);
+        var across = o.x * fx + o.y * fy;                  // up/down the roof
+        var along = Math.abs(-o.x * fy + o.y * fx);        // along the ridge, towards the neighbours
+        var half = p.orientation === "PORTRAIT" ? sp.panelWidthMeters / 2 : sp.panelHeightMeters / 2;
+        return along + half <= width / 2 && Math.abs(across) <= C.houseDepthMeters / 2;
+      });
+    }
     if (!S.panels.length) { var e = new Error("no panels"); e.status = 404; throw e; }
     // roof spaces that can hold panels, best first
     var by = {};
@@ -278,37 +300,53 @@
     if (outline) { outline.setMap(null); outline = null; }
   }
   function fitRoof() {
-    var bb = S.insights && S.insights.boundingBox, g = window.google;
-    if (!bb || !gmap || !g) return;
-    gmap.fitBounds(new g.maps.LatLngBounds({ lat: bb.sw.latitude, lng: bb.sw.longitude }, { lat: bb.ne.latitude, lng: bb.ne.longitude }), 40);
+    var g = window.google;
+    if (!S.hull || !gmap || !g) return;
+    var b = new g.maps.LatLngBounds();
+    S.hull.forEach(function (pt) { b.extend(pt); });
+    gmap.fitBounds(b, 80);
+  }
+  function hull(pts) {   // convex hull (monotone chain) of {lat,lng} points
+    pts = pts.slice().sort(function (a, b) { return a.lng - b.lng || a.lat - b.lat; });
+    var cross = function (o, a, b) { return (a.lng - o.lng) * (b.lat - o.lat) - (a.lat - o.lat) * (b.lng - o.lng); };
+    var lo = [], up = [], i;
+    for (i = 0; i < pts.length; i++) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], pts[i]) <= 0) lo.pop(); lo.push(pts[i]); }
+    for (i = pts.length - 1; i >= 0; i--) { while (up.length >= 2 && cross(up[up.length - 2], up[up.length - 1], pts[i]) <= 0) up.pop(); up.push(pts[i]); }
+    return lo.slice(0, -1).concat(up.slice(0, -1));
   }
   function drawLive() {
-    var g = window.google, sp = S.insights.solarPotential, bb = S.insights.boundingBox;
+    var g = window.google, sp = S.insights.solarPotential;
     clearLive();
-    if (bb) {
-      var sw = { lat: bb.sw.latitude, lng: bb.sw.longitude }, ne = { lat: bb.ne.latitude, lng: bb.ne.longitude };
-      outline = new g.maps.Polyline({
-        map: gmap, clickable: false, strokeOpacity: 0,
-        path: [sw, { lat: sw.lat, lng: ne.lng }, ne, { lat: ne.lat, lng: sw.lng }, sw],
-        icons: [{ icon: { path: "M 0,-1 0,1", strokeOpacity: 1, strokeColor: "#ffffff", scale: 2 }, offset: "0", repeat: "12px" }],
-        visible: false
-      });
-      fitRoof();
-    }
     // each panel: a rectangle round its centre, turned to its roof face
     var w = sp.panelWidthMeters / 2, h = sp.panelHeightMeters / 2;
     var corners = [[w, h], [w, -h], [-w, -h], [-w, h]];
+    var pts = [];
     polys = S.panels.map(function (p) {
       var c = new g.maps.LatLng(p.center.latitude, p.center.longitude);
       var az = ((sp.roofSegmentStats || [])[p.segmentIndex] || {}).azimuthDegrees || 0;
       var turn = p.orientation === "PORTRAIT" ? 90 : 0;
-      return new g.maps.Polygon({
-        map: gmap, clickable: false, visible: false, strokeWeight: 1,
-        paths: corners.map(function (xy) {
-          return g.maps.geometry.spherical.computeOffset(c, Math.hypot(xy[0], xy[1]), Math.atan2(xy[1], xy[0]) * 180 / Math.PI + turn + az);
-        })
+      var path = corners.map(function (xy) {
+        var q = g.maps.geometry.spherical.computeOffset(c, Math.hypot(xy[0], xy[1]), Math.atan2(xy[1], xy[0]) * 180 / Math.PI + turn + az);
+        pts.push({ lat: q.lat(), lng: q.lng() });
+        return q;
       });
+      return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: path });
     });
+    // dashed outline round the usable roof, pushed out about a metre
+    var hp = hull(pts), cy = 0, cx = 0;
+    hp.forEach(function (q) { cy += q.lat; cx += q.lng; }); cy /= hp.length; cx /= hp.length;
+    S.hull = hp.map(function (q) {
+      var c = new g.maps.LatLng(cy, cx), t = new g.maps.LatLng(q.lat, q.lng);
+      var d = g.maps.geometry.spherical.computeDistanceBetween(c, t);
+      var o = g.maps.geometry.spherical.computeOffset(c, d + 1, g.maps.geometry.spherical.computeHeading(c, t));
+      return { lat: o.lat(), lng: o.lng() };
+    });
+    outline = new g.maps.Polyline({
+      map: gmap, clickable: false, strokeOpacity: 0, visible: false,
+      path: S.hull.concat([S.hull[0]]),
+      icons: [{ icon: { path: "M 0,-1 0,1", strokeOpacity: 1, strokeColor: "#ffffff", scale: 2 }, offset: "0", repeat: "12px" }]
+    });
+    fitRoof();
   }
 
   /* demo: a sample terrace seen from above */
@@ -480,7 +518,7 @@
       return '<label><input type="radio" name="ptype" value="' + t.id + '"' + (t.id === S.ptype ? " checked" : "") + "><span>" + esc(t.name) + "<small>" + money(t.pricePerPanel) + " per panel</small></span></label>";
     }).join("");
     var sp = S.insights.solarPotential;
-    $("roofLine").textContent = (S.address ? S.address.label + " · " : "") + num((sp.wholeRoofStats || {}).areaMeters2 || 0) + " m² roof";
+    $("roofLine").textContent = (S.address ? S.address.label + " · " : "") + "room for " + eligible().length + " panels on the roof spaces you chose";
     $("breakdown").innerHTML = q.lines.map(function (l) { return "<tr><td>" + esc(l[0]) + "</td><td>" + money(l[1]) + "</td></tr>"; }).join("") +
       "<tr><td>Total (0% VAT)</td><td>" + money(q.total) + "</td></tr>";
   }

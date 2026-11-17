@@ -45,7 +45,16 @@
       <!-- 2. Pin -->
       <div class="view" id="vPin" hidden>
         <h1>Pin your roof</h1>
-        <p class="sub">Move the map until your roof is under the dot, then press Done.</p>
+        <p class="sub">Move the map until the dot is in the middle of your roof, then press Done.</p>
+        <fieldset class="htype">
+          <legend>What type of house is it?</legend>
+          <div class="seg">
+            <label><input type="radio" name="htype" value="detached"><span>Detached</span></label>
+            <label><input type="radio" name="htype" value="semi"><span>Semi-detached</span></label>
+            <label><input type="radio" name="htype" value="end"><span>End of terrace</span></label>
+            <label><input type="radio" name="htype" value="terrace"><span>Mid-terrace</span></label>
+          </div>
+        </fieldset>
         <div class="actions">
           <button class="round" type="button" data-go="address" aria-label="Back">&larr;</button>
           <button class="btn" type="button" id="pinDone">Done <span aria-hidden="true">&rarr;</span></button>

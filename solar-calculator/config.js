@@ -31,6 +31,11 @@ window.SOLAR_CONFIG = {
   ],
   baseInstallPrice: 2400,   // inverter, labour, certification
   minPanels: 4,
+  /* Google measures a whole terrace or pair of semis as one roof, so for
+     these house types only panels inside one house's width are used.
+     Widths in metres (0 = use the whole roof). */
+  houseWidths: { detached: 0, semi: 7, end: 5.5, terrace: 5 },
+  houseDepthMeters: 12,
   maxPanels: 30,
   defaultUsageKwh: 2700,    // typical UK home, customer can change it
 
