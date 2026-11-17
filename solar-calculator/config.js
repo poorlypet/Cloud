@@ -36,6 +36,7 @@ window.SOLAR_CONFIG = {
      Widths in metres (0 = use the whole roof). */
   houseWidths: { detached: 0, semi: 7, end: 5.5, terrace: 5 },
   houseDepthMeters: 12,
+  roofPhotoRadiusMeters: 25,   // size of Google's roof photo shown after the pin step
   maxPanels: 30,
   defaultUsageKwh: 2700,    // typical UK home, customer can change it
 

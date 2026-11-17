@@ -83,6 +83,7 @@
     $("mapTag").hidden = v !== "pin" && v !== "suggest";
     $("mapTag").textContent = !LIVE ? "Sample roof (demo mode)" : v === "pin" ? "Drag the map to move it" : "Panels shown on your roof";
     if (LIVE && gmap) setTimeout(fitRoof, 50);
+    if (S.img) setTimeout(function () { paint(S.stage); }, 30);
     window.scrollTo(0, 0);
   }
   $$("[data-go]").forEach(function (b) { b.addEventListener("click", function () { go(b.dataset.go); if (b.dataset.go === "pin") startPin(); }); });
@@ -172,7 +173,7 @@
      ============================================================ */
   function startPin() {
     $("pinErr").textContent = "";
-    S.showUnused = false;
+    S.showUnused = false; S.img = null; showCanvas(false);
     if (!LIVE) { drawDemo(); paint("none"); return; }
     google().then(function (g) {
       if (!gmap) {
@@ -205,8 +206,11 @@
     Promise.all([fetchRoof, wait(900)]).then(function (r) {
       useInsights(r[0]);
       li[0].className = "done"; li[1].className = "run";
-      drawRoof(); paint("outline");
-      return wait(800);
+      drawRoof();
+      return Promise.all([LIVE ? loadRoofImage().catch(function (e) { console.warn("Roof photo unavailable, using the map", e); S.img = null; }) : null, wait(800)]);
+    }).then(function () {
+      showCanvas(true); paint("outline");
+      return wait(500);
     }).then(function () {
       li[1].className = "done"; li[2].className = "run";
       recommend(); paint();
@@ -372,6 +376,7 @@
     // each panel: a rectangle round its centre, lined up with its roof face
     var kLat0 = 111320, kLng0 = 111320 * Math.cos(S.centre.lat * Math.PI / 180), gap = 0.96;
     var pts = [];
+    S.paths = [];
     polys = S.panels.map(function (p) {
       var d = S.dims[p.segmentIndex], a = d.along * gap / 2, v = d.down * gap / 2;
       var path = [[a, v], [a, -v], [-a, -v], [-a, v]].map(function (q) {
@@ -380,6 +385,7 @@
         pts.push(pt);
         return pt;
       });
+      S.paths.push(path);
       return new g.maps.Polygon({ map: gmap, clickable: false, visible: false, strokeWeight: 1, paths: path });
     });
     // dashed outline: a rectangle squared up with the roof, round the panels
@@ -452,13 +458,114 @@
     $("map").innerHTML = s;
   }
 
+  /* ---------- Google's own roof photo ----------
+     The Maps satellite layer is a different photo from the one Google measured
+     the roof on, and can be a metre or two out. So once the roof is measured we
+     show Google's measurement photo (a GeoTIFF) and draw the panels on that. */
+  var libsP = null;
+  function loadLibs() {
+    if (libsP) return libsP;
+    var add = function (src) {
+      return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+    };
+    libsP = Promise.all([
+      add("https://cdn.jsdelivr.net/npm/geotiff@2.1.3/dist-browser/geotiff.js"),
+      add("https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js")
+    ]).catch(function (e) { libsP = null; throw e; });
+    return libsP;
+  }
+  function loadRoofImage() {
+    var la = 0, ln = 0;
+    S.panels.forEach(function (p) { la += p.center.latitude; ln += p.center.longitude; });
+    la /= S.panels.length; ln /= S.panels.length;
+    var url = "https://solar.googleapis.com/v1/dataLayers:get?location.latitude=" + la + "&location.longitude=" + ln +
+      "&radiusMeters=" + C.roofPhotoRadiusMeters + "&view=IMAGERY_LAYERS&requiredQuality=MEDIUM&pixelSizeMeters=0.1&key=" + encodeURIComponent(C.googleApiKey);
+    return Promise.all([loadLibs(), getJSON(url)]).then(function (r) {
+      return fetch(r[1].rgbUrl + "&key=" + encodeURIComponent(C.googleApiKey));
+    }).then(function (res) {
+      if (!res.ok) throw new Error("photo " + res.status);
+      return res.arrayBuffer();
+    }).then(function (buf) { return window.GeoTIFF.fromArrayBuffer(buf); })
+      .then(function (tiff) { return tiff.getImage(); })
+      .then(function (img) {
+        return img.readRasters({ interleave: true }).then(function (px) {
+          var w = img.getWidth(), h = img.getHeight(), n = img.getSamplesPerPixel();
+          var cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+          var ctx = cv.getContext("2d"), id = ctx.createImageData(w, h);
+          for (var i = 0; i < w * h; i++) {
+            id.data[i * 4] = px[i * n]; id.data[i * 4 + 1] = px[i * n + 1]; id.data[i * 4 + 2] = px[i * n + 2]; id.data[i * 4 + 3] = 255;
+          }
+          ctx.putImageData(id, 0, 0);
+          var code = img.getGeoKeys().ProjectedCSTypeGeoKey;
+          var proj = "+proj=utm +zone=" + (code % 100) + (Math.floor(code / 100) === 327 ? " +south" : "") + " +datum=WGS84 +units=m +no_defs";
+          var bb = img.getBoundingBox();
+          S.img = {
+            canvas: cv, w: w, h: h,
+            px: function (q) {
+              var p = window.proj4("EPSG:4326", proj, [q.lng, q.lat]);
+              return { x: (p[0] - bb[0]) / (bb[2] - bb[0]) * w, y: (bb[3] - p[1]) / (bb[3] - bb[1]) * h };
+            }
+          };
+        });
+      });
+  }
+  function showCanvas(on) {
+    var cv = $("roofCanvas");
+    cv.hidden = !(on && S.img);
+  }
+  function drawCanvas(on, unused, showOutline) {
+    var cv = $("roofCanvas"), I = S.img;
+    var W = cv.clientWidth || cv.parentNode.clientWidth, H = cv.clientHeight || cv.parentNode.clientHeight;
+    if (!W || !H) return;
+    var dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var ctx = cv.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // frame the roof outline with room around it, never showing past the photo's edge
+    var hp = S.hull.map(I.px);
+    var x0 = Math.min.apply(null, hp.map(function (p) { return p.x; })), x1 = Math.max.apply(null, hp.map(function (p) { return p.x; }));
+    var y0 = Math.min.apply(null, hp.map(function (p) { return p.y; })), y1 = Math.max.apply(null, hp.map(function (p) { return p.y; }));
+    var sc = Math.min(W / ((x1 - x0) * 3.4), H / ((y1 - y0) * 3.4));
+    sc = Math.max(sc, W / I.w, H / I.h);
+    var ox = W / 2 - (x0 + x1) / 2 * sc, oy = H / 2 - (y0 + y1) / 2 * sc;
+    ox = Math.min(0, Math.max(W - I.w * sc, ox)); oy = Math.min(0, Math.max(H - I.h * sc, oy));
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(I.canvas, ox, oy, I.w * sc, I.h * sc);
+    var trace = function (path) {
+      ctx.beginPath();
+      path.forEach(function (q, k) { var p = I.px(q); var x = ox + p.x * sc, y = oy + p.y * sc; if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
+      ctx.closePath();
+    };
+    S.paths.forEach(function (path, i) {
+      var used = !!on[i];
+      if (!used && !unused) return;
+      trace(path);
+      ctx.setLineDash(used ? [] : [4, 3]);
+      if (used) { ctx.fillStyle = "rgba(22,24,29,.96)"; ctx.fill(); }
+      ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = used ? 1 : 1.2; ctx.stroke();
+    });
+    if (showOutline) {
+      trace(S.hull);
+      ctx.setLineDash([8, 6]); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.font = "11px Inter, Arial, sans-serif"; ctx.fillStyle = "rgba(255,255,255,.8)"; ctx.textAlign = "right";
+    ctx.fillText("Imagery \u00a9 Google", W - 10, H - 10);
+  }
+  window.addEventListener("resize", function () { if (S.img) paint(S.stage); });
+
   /* paint: show outline / chosen panels / unused spaces on the map */
   function paint(stage) {
     var on = {};
     if (stage !== "none" && stage !== "outline") chosen().forEach(function (i) { on[i] = true; });
     var showOutline = stage !== "none";
     var unused = S.showUnused && stage !== "none" && stage !== "outline";
-    if (LIVE) {
+    S.stage = stage;
+    if (LIVE && S.img) {
+      if (outline) outline.setVisible(false);
+      polys.forEach(function (p) { p.setVisible(false); });
+      drawCanvas(on, unused, showOutline);
+    } else if (LIVE) {
       if (outline) outline.setVisible(showOutline);
       polys.forEach(function (p, i) {
         var used = !!on[i];
