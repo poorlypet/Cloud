@@ -37,7 +37,7 @@ export default async (req) => {
     return json({ error: "Bad request" }, 400);
   }
   const prompt = [
-    `Aerial photo looking straight down at UK homes, turned so the row of homes runs left to right. It covers ${metres} metres across. The ${lines} numbered cyan lines are 1 metre apart. The red dot is on the roof of the customer's home. The customer says it is ${TYPES[homeType] || "a house"}, but check the photo.`,
+    `Aerial photo looking straight down at UK homes, turned so the row of homes runs left to right. It covers ${metres} metres across. The ${lines} numbered cyan lines are 1 metre apart. The red dot is on the roof of the customer's home. The customer says it is ${TYPES[homeType] || "a house"}. Roof measurements show this roof carries on into the neighbouring home${homeType === "terrace" ? "s on both sides" : ""}, so it is joined: find the party wall${homeType === "terrace" ? "s" : ""}.`,
     "",
     "Find where the customer's home starts and ends along the row. Clues for where one home ends and the next begins: a gap between buildings, a step or change in the roof, a chimney, a change in roof colour or tiles, and the fences, walls and hedges dividing front gardens and driveways (each home usually has its own). UK terraced homes are usually 4.5 to 6 metres wide, semi-detached homes 6 to 9 metres.",
     "",

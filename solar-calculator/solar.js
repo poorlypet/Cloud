@@ -284,6 +284,13 @@
       var fx = Math.sin(az), fy = Math.cos(az);          // unit vector down the slope (east, north)
       S.frame = { fx: fx, fy: fy, width: width };
     }
+    // If Google measured just this one home (no roof side runs much longer than
+    // one home is wide), keep all of it: there are no neighbours to cut off.
+    if (LIVE && S.centre && width) {
+      var amin = Infinity, amax = -Infinity;
+      S.panels.forEach(function (p) { var o = off(p), a = -o.x * fy + o.y * fx; amin = Math.min(amin, a); amax = Math.max(amax, a); });
+      if (amax - amin + 1.1 <= width + 1) { width = 0; S.frame.width = 0; }
+    }
     if (LIVE && S.centre && width) {
       // Keep whole columns of panels only: the same number on every side of
       // the roof, centred on the pin, so one house gets a matching front and back.
@@ -683,7 +690,7 @@
      grid, and get back the outline of this home's roof and its property
      boundary. Panels are then kept only inside the home's own roof. */
   function aiMap() {
-    if (S.htype === "detached") return Promise.resolve(null);
+    if (S.htype === "detached" || !S.frame || !S.frame.width) return Promise.resolve(null);   // nothing to split
     var I = S.img, F = S.frame, pc = I.px(S.centre);
     var K = 0.025 / I.res, M = C.aiRowMeters, W = Math.round(M / 0.025), H = Math.round(W * 2 / 3);
     var theta = Math.atan2(-F.fx, -F.fy);   // direction along the row, in photo pixels
@@ -723,7 +730,8 @@
   }
   function applyAI(ai) {
     if (!ai) return false;
-    if (ai.joined === "none") { S.alongRange = null; return false; }   // it's really a detached building
+    // Only called when Google's roof runs on past one home, so "not joined" can't be right
+    if (ai.joined === "none") return false;
     var w = ai.along[1] - ai.along[0];
     if (!(w >= 3.5 && w <= 12) || ai.along[0] > 0.5 || ai.along[1] < -0.5) return false;   // not believable: keep the house-width rule
     S.alongRange = ai.along;
@@ -991,7 +999,7 @@
       "Working out how solar will <b>change your bills</b>",
       "Calculating your prices with <b>0% VAT</b> and monthly payment options"
     ];
-    $("ovList").innerHTML = items.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    $("ovList").innerHTML = items.map(function (t) { return "<li><span>" + t + "</span></li>"; }).join("");
     var ov = $("overlay"), li = $$("#ovList li");
     ov.hidden = false;
     li.forEach(function (x, i) {
