@@ -244,7 +244,7 @@ write("templates/gift_card.liquid", "{% layout none %}<!doctype html><title>Gift
 
 # ------------------------------------------------------------------ config and locales
 write("config/settings_schema.json", json.dumps([
-    {"name": "theme_info", "theme_name": "Midlands Solar", "theme_version": "1.0.0", "theme_author": "Midlands Solar Installations Ltd",
+    {"name": "theme_info", "theme_name": "Midlands Solar", "theme_version": "1.0.0", "theme_author": "Midlands Solar",
      "theme_documentation_url": "https://www.midlandssolar.co.uk", "theme_support_url": "https://www.midlandssolar.co.uk"},
     {"name": "Solar quote tool", "settings": [
         {"type": "paragraph", "content": "Leave the two keys blank to use the ones built into the theme."},
