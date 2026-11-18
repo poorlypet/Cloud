@@ -1098,17 +1098,41 @@
     if (e.target.name === "scafopt") { S.scaf = e.target.value === "1"; renderResults(); }
   });
 
-  /* ---------- calendar (test availability) ---------- */
-  var DAYS = [];
-  (function () {
-    var d = new Date(); d.setHours(0, 0, 0, 0);
-    for (var i = 1; i <= 42; i++) {
+  /* ---------- calendar: real opening hours, taken slots removed ---------- */
+  var DAYS = [], BOOKED = {};
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  var ymd = function (d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); };
+  var slotKey = function (i, t) { return ymd(DAYS[i].date) + " " + t; };
+  function buildDays() {
+    DAYS = [];
+    var now = new Date(), d = new Date(now); d.setHours(0, 0, 0, 0);
+    var earliest = now.getTime() + (C.callNoticeMinutes || 0) * 60000;
+    for (var i = 0; i < (C.callWeeks || 4) * 7; i++) {
       var x = new Date(d); x.setDate(d.getDate() + i);
-      var open = C.callDays.indexOf(x.getDay()) > -1;
-      var times = open ? C.callTimes.filter(function (t, k) { return (x.getDate() * 7 + k * 3 + x.getMonth()) % 5 !== 0 && (x.getDate() + k) % 4 !== 1; }) : [];
+      if (C.callDays.indexOf(x.getDay()) < 0) continue;   // weekends are left out altogether
+      var key = ymd(x);
+      var times = C.callTimes.filter(function (t) {
+        var at = new Date(x); at.setHours(+t.slice(0, 2), +t.slice(3, 5), 0, 0);
+        return at.getTime() >= earliest && !BOOKED[key + " " + t];
+      });
       DAYS.push({ date: x, times: times });
     }
-  })();
+    // open on the first day that still has a free slot
+    if (S.day == null) { for (var k = 0; k < DAYS.length && !DAYS[k].times.length; k++); S.calStart = Math.floor(Math.min(k, DAYS.length - 1) / 5) * 5; }
+  }
+  function loadBooked() {
+    if (!C.bookingEndpoint) return Promise.resolve();
+    return fetch(C.bookingEndpoint, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : { booked: [] }; })
+      .then(function (out) { BOOKED = {}; (out.booked || []).forEach(function (k) { BOOKED[k] = 1; }); })
+      .catch(function () { /* can't reach the slot list: show all times; the booking itself still checks */ });
+  }
+  function refreshCal() {
+    return loadBooked().then(function () {
+      buildDays(); renderCal();
+      if (S.day != null && S.mode === "slot") showTimes();
+    });
+  }
+  buildDays();
   var DW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -1119,11 +1143,16 @@
     $("calNext").disabled = S.calStart + 5 >= DAYS.length;
     $("days").innerHTML = vis.map(function (d, k) {
       var i = S.calStart + k, n = d.times.length;
-      var badge = n === 0 ? "Full" : n >= 3 ? "3+ slots" : n + " slot" + (n > 1 ? "s" : "");
+      var badge = n === 0 ? "Full" : n >= 3 ? n + " slots" : n + " slot" + (n > 1 ? "s" : "");
       return '<button type="button" class="day' + (S.day === i ? " sel" : "") + '" data-day="' + i + '"' + (n ? "" : " disabled") + ">" +
         '<span class="dw">' + DW[d.date.getDay()] + '</span><span class="dn">' + d.date.getDate() + "</span>" +
         '<span class="slots' + (n && n < 3 ? " few" : "") + '">' + badge + "</span></button>";
     }).join("");
+  }
+  function showTimes() {
+    var t = DAYS[S.day].times;
+    $("times").innerHTML = t.length ? t.map(function (x) { return '<button type="button" data-time="' + x + '"' + (x === S.time ? ' class="sel"' : "") + ">" + x + "</button>"; }).join("")
+      : "<p>No times left on this day. Please pick another.</p>";
   }
   $("calPrev").addEventListener("click", function () { S.calStart = Math.max(0, S.calStart - 5); renderCal(); });
   $("calNext").addEventListener("click", function () { S.calStart = Math.min(DAYS.length - 5, S.calStart + 5); renderCal(); });
@@ -1133,7 +1162,7 @@
     renderCal();
     $("timesWrap").hidden = false;
     $("contactForm").hidden = true;
-    $("times").innerHTML = DAYS[S.day].times.map(function (t) { return '<button type="button" data-time="' + t + '">' + t + "</button>"; }).join("");
+    showTimes();
   });
   $("times").addEventListener("click", function (e) {
     var b = e.target.closest("[data-time]"); if (!b) return;
@@ -1168,28 +1197,85 @@
       scaffolding: S.scaf ? "Yes" : "No", roughCost: Math.round(q.total),
       yearlyKwh: Math.round(q.kwh), yearlySavings: Math.round(q.save)
     };
+    $("bookedText").textContent = S.mode === "callback"
+      ? "We'll call you back today on " + data.phone + "."
+      : "We'll call you on " + dayLabel() + " at " + S.time + " on " + data.phone + ".";
     var done = function () {
       $("bookFlow").hidden = true; $("booked").hidden = false;
       $("bookedText").textContent = S.mode === "callback"
         ? "We'll call you back today on " + data.phone + "."
-        : "We'll call you on " + dayLabel() + " at " + S.time + " on " + data.phone + ". A confirmation is on its way to " + data.email + ".";
+        : "We'll call you on " + dayLabel() + " at " + S.time + " on " + data.phone + ".";
     };
-    if (!C.leadEndpoint) { console.log("Booking (no leadEndpoint set):", data); done(); return; }
-    var btn = $("bookBtn"); btn.disabled = true;
-    var send;
-    if (C.leadEndpoint === "shopify") {
-      // Shopify's contact form emails the store owner; each field becomes a line in that email
-      var fd = new URLSearchParams(); fd.append("form_type", "contact"); fd.append("utf8", "✓");
-      Object.keys(data).forEach(function (k) { fd.append("contact[" + k + "]", data[k] == null ? "" : String(data[k])); });
-      fd.append("contact[body]", "Solar quote booking: " + data.call + " - " + (data.address || data.postcode));
-      send = fetch("/contact#contact_form", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: fd.toString() });
-    } else {
-      send = fetch(C.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
-    }
-    send
-      .then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
-      .catch(function () { btn.disabled = false; err.textContent = "That didn't send. Call us on " + C.phone + " to book."; });
+    var btn = $("bookBtn"), slot = S.mode === "slot" ? slotKey(S.day, S.time) : null;
+    btn.disabled = true;
+
+    // 1. hold the time so nobody else can take it
+    var reserve = slot && C.bookingEndpoint
+      ? fetch(C.bookingEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slot: slot }) })
+          .then(function (r) {
+            if (r.status === 409 || r.status === 400) throw { taken: true };
+            if (!r.ok) throw new Error("slots " + r.status);
+          })
+      : Promise.resolve();
+
+    reserve.then(function () {
+      // 2. send the details to the inbox
+      if (!C.leadEndpoint) { console.log("Booking (no leadEndpoint set):", data); return; }
+      if (C.leadEndpoint === "shopify") return sendShopify(data);
+      return fetch(C.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); });
+    }).then(function () {
+      if (slot) BOOKED[slot] = 1;
+      done();
+    }).catch(function (e) {
+      btn.disabled = false;
+      if (e && e.taken) {
+        err.textContent = "Sorry, " + S.time + " has just been booked by someone else. Please pick another time.";
+        S.time = null; $("contactForm").hidden = true;
+        refreshCal();
+      } else if (e && e.redirected) {
+        /* the browser is moving to Shopify's spam check; nothing to do here */
+      } else {
+        err.textContent = "That didn't send. Call us on " + C.phone + " to book.";
+      }
+    });
   });
+
+  // Shopify's contact form emails the store owner; each field becomes a line in that email.
+  // If Shopify asks for a spam check, the booking is sent as a normal form instead so the
+  // customer can complete it, and they come back to a confirmation.
+  function sendShopify(data) {
+    var fields = { "contact[email]": data.email, "contact[name]": data.name, "contact[phone]": data.phone,
+      "contact[body]": "Solar quote booking: " + data.call + " - " + (data.address || data.postcode || "") };
+    Object.keys(data).forEach(function (k) { if (["email", "name", "phone"].indexOf(k) < 0) fields["contact[" + k + "]"] = data[k] == null ? "" : String(data[k]); });
+    try { sessionStorage.setItem("ms_booked", $("bookedText").textContent || data.call); } catch (x) {}
+    // the theme puts a real Shopify contact form on the page; filling and submitting it lets
+    // Shopify run its spam check, then it brings the customer back here (?booked=1)
+    var f = document.getElementById("shopifyBooking");
+    if (!f) {
+      f = document.createElement("form"); f.method = "post"; f.action = "/contact"; f.style.display = "none";
+      fields.form_type = "contact"; fields.utf8 = "✓"; fields.return_to = location.pathname + "?booked=1";
+      document.body.appendChild(f);
+    }
+    Object.keys(fields).forEach(function (k) {
+      var i = f.querySelector('input[name="' + k + '"]');
+      if (!i) { i = document.createElement("input"); i.type = "hidden"; i.name = k; f.appendChild(i); }
+      i.value = fields[k];
+    });
+    if (f.requestSubmit) f.requestSubmit(); else f.submit();
+    return Promise.reject({ redirected: true });
+  }
+
+  // back from Shopify's spam check: confirm the booking
+  if (/[?&]booked=1/.test(location.search)) {
+    var msg = ""; try { msg = sessionStorage.getItem("ms_booked") || ""; sessionStorage.removeItem("ms_booked"); } catch (x) {}
+    var note = document.createElement("div"); note.className = "booked-note";
+    note.innerHTML = "<strong>Your call is booked.</strong> " + (msg ? msg.replace(/</g, "&lt;") : "We'll be in touch to confirm.");
+    document.body.insertBefore(note, document.body.firstChild);
+  }
+
+  refreshCal();
+  setInterval(function () { if (!$("booked").hidden) return; refreshCal(); }, 60000);
 
   /* ---------- start ---------- */
   $$(".brand").forEach(function (b) { b.textContent = C.companyName; });

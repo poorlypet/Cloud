@@ -52,3 +52,17 @@ builds `shopify-theme/` and `midlands-solar-theme.zip` from the same source (bot
 Each inner page needs a Shopify Page with a matching handle and template (for example handle `about`, template `page.about`). `shopify.py` prints the full list when it runs. The quote tool is the page with handle `solar-quote`.
 
 Contact forms and quote bookings go through Shopify's contact form, so they arrive at the store's email address. The AI roof-mapping step needs the `map-house` function hosted (for example on Netlify) and its address entered in Theme settings > Solar quote tool.
+
+## Call bookings
+
+The quote tool offers one-hour calls, Monday to Friday, 9am to 5pm (set in `quote/config.js`: `callTimes`, `callDays`, `callWeeks`).
+
+Taken slots are remembered by `netlify/functions/slots.mjs` (Netlify Blobs), so a slot disappears for everyone once booked and two people can't book the same time. This only runs once the site's `netlify/` folder is deployed to Netlify; until then every slot shows as free. On Shopify, enter the Netlify site address in Theme settings > Solar quote tool.
+
+To free a slot (for example after a cancellation), set `BOOKINGS_ADMIN_KEY` in Netlify and run:
+
+```bash
+curl -X DELETE -H "x-admin-key: YOUR_KEY" "https://YOUR-SITE.netlify.app/.netlify/functions/slots?slot=2026-11-25%2010:00"
+```
+
+The booking details themselves go to the store's inbox through Shopify's contact form.

@@ -322,3 +322,6 @@ button{cursor:pointer;background:none;border:0;padding:0}
 /* long button labels wrap instead of running off the card */
 .btn.wide{white-space:normal;text-align:center;line-height:1.25;padding:10px 22px}
 @media (max-width:560px){.figs strong{font-size:21px}}
+
+/* confirmation after Shopify's spam check */
+.booked-note{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:300;width:min(92vw,560px);background:#fff;color:#0A0A0A;border-radius:18px;padding:16px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35);font-size:16px;border-top:4px solid #F26727}

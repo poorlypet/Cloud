@@ -185,7 +185,9 @@ write("layout/quote.liquid", f'''<!doctype html>
     C.heroPhoto = {{{{ 'home-drone-1.jpg' | asset_url | json }}}};
     C.bookCallPhoto = {{{{ 'home-1.jpg' | asset_url | json }}}};
     C.leadEndpoint = "shopify";   // bookings go through the store's contact form, so they arrive by email
-    C.aiEndpoint = {{{{ settings.ai_endpoint | default: '' | json }}}};   // set in Theme settings > Solar quote tool
+    {{% assign fn = settings.functions_site | default: '' | remove: ' ' %}}{{% if fn != '' %}}{{% assign fn = fn | append: '/.netlify/functions/' | replace: '//.netlify', '/.netlify' %}}{{% endif %}}
+    C.aiEndpoint = {{% if fn != '' %}}{{{{ fn | append: 'map-house' | json }}}}{{% else %}}""{{% endif %}};       // AI roof mapping
+    C.bookingEndpoint = {{% if fn != '' %}}{{{{ fn | append: 'slots' | json }}}}{{% else %}}""{{% endif %}};  // taken call slots
     {{% if settings.google_key != blank %}}C.googleApiKey = {{{{ settings.google_key | json }}}};{{% endif %}}
     {{% if settings.ideal_key != blank %}}C.idealPostcodesKey = {{{{ settings.ideal_key | json }}}};{{% endif %}}
   }})(window.SOLAR_CONFIG);
@@ -214,7 +216,11 @@ for file, (handle, title) in PAGES.items():
 
 q = open(os.path.join(HERE, "quote/index.html")).read()
 q = q[q.index("<body>") + 6:q.index('<script src="config.js">')]
-write("templates/page.solar-quote.liquid", "{% layout 'quote' %}\n" + liquify(q).strip() + "\n")
+# A real Shopify contact form, filled in and submitted by the quote tool when a call is booked,
+# so the booking passes Shopify's spam check and arrives in the store's inbox.
+BOOKING_FORM = ("{% form 'contact', id: 'shopifyBooking', style: 'display:none' %}"
+                '<input type="hidden" name="return_to" value="/pages/solar-quote?booked=1">{% endform %}')
+write("templates/page.solar-quote.liquid", "{% layout 'quote' %}\n" + liquify(q).strip() + "\n" + BOOKING_FORM + "\n")
 
 PLAIN = '''<section class="scr {skin}" style="min-height:70svh">
   <p class="lab"><i></i>{label}</p>
@@ -250,7 +256,7 @@ write("config/settings_schema.json", json.dumps([
         {"type": "paragraph", "content": "Leave the two keys blank to use the ones built into the theme."},
         {"type": "text", "id": "google_key", "label": "Google Maps / Solar API key"},
         {"type": "text", "id": "ideal_key", "label": "Ideal Postcodes key"},
-        {"type": "text", "id": "ai_endpoint", "label": "AI roof mapping address", "info": "The full web address of the map-house function. Blank = use Google's roof outline only."}]}], indent=2) + "\n")
+        {"type": "text", "id": "functions_site", "label": "Netlify site address", "info": "e.g. https://midlands-solar.netlify.app. Runs the AI roof mapping and remembers booked call slots. Blank = both off."}]}], indent=2) + "\n")
 write("config/settings_data.json", json.dumps({"current": {}}, indent=2) + "\n")
 write("locales/en.default.json", "{}\n")
 for d in ("sections", "snippets"):

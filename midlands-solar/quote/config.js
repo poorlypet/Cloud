@@ -88,7 +88,13 @@ window.SOLAR_CONFIG = {
   dcToAc: 0.85,
 
   /* --- Booking calendar ----------------------------------------- */
-  callTimes: ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"],
-  callDays: [1, 2, 3, 4, 5, 6],   // 0 = Sunday ... 6 = Saturday
+  // One-hour calls, Monday to Friday, 9am to 5pm (the 16:00 call is the last one).
+  callTimes: ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00"],
+  callDays: [1, 2, 3, 4, 5],      // 0 = Sunday ... 6 = Saturday
+  callWeeks: 4,                   // how far ahead people can book
+  callNoticeMinutes: 60,          // earliest a same-day slot can be booked
+  // Remembers which slots are taken so nobody can book them twice (netlify/functions/slots.mjs).
+  // Empty = every slot always shows as free.
+  bookingEndpoint: "/.netlify/functions/slots",
   installText: "Full installation by certified installers, including all paperwork"
 };
