@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,700;87.5,800;100,400;100,500;100,600;100,700&display=swap">
+<style>
+:root{--display:"Archivo","Arial Narrow",Arial,sans-serif;--sans:"Archivo",Arial,sans-serif}
+/*@base.css*/
+h1,h2{font-stretch:87.5%;font-weight:800}
+
+.hd{background:var(--brand);color:#fff}
+.hd-in{display:flex;align-items:center;gap:24px;height:76px}
+.logo{font-family:var(--display);font-stretch:87.5%;font-size:28px;font-weight:800;text-decoration:none;color:#fff}
+.srch{flex:1;max-width:560px;display:flex;margin-inline:auto}
+.srch input{flex:1;min-width:0;height:46px;border:0;border-radius:6px 0 0 6px;padding:0 16px;background:#fff}
+.srch button{height:46px;border:0;border-radius:0 6px 6px 0;padding:0 18px;background:var(--text);color:#fff;font-weight:600}
+.hd-r{display:flex;gap:20px;font-weight:600}
+.hd-r a{text-decoration:none}
+.nav{background:var(--white);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:28px;overflow-x:auto;white-space:nowrap}
+.nav a{padding:14px 0;text-decoration:none;font-weight:600;font-size:15px}
+.nav a:hover{color:var(--brand)}
+.nav a.uk{margin-left:auto;color:var(--brand)}
+@media(max-width:760px){.hd-in{flex-wrap:wrap;height:auto;padding-block:12px;gap:12px}.srch{order:3;flex-basis:100%;max-width:none}.hd-r{margin-left:auto}.nav a.uk{margin-left:0}}
+
+.hero{background:var(--accent-l);border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:40px;align-items:center;padding-block:40px}
+.hero h1{font-size:clamp(32px,4vw,54px);letter-spacing:-.01em}
+.hero p{font-size:18px;margin-top:14px;max-width:52ch}
+.hero-a{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.hero .ph{aspect-ratio:4/3;background:var(--accent);border-radius:6px}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-block:28px}.hero .ph{display:none}}
+
+.facts{background:var(--white);border-bottom:1px solid var(--line);font-size:15px;font-weight:600}
+.facts ul{display:grid;grid-template-columns:repeat(4,1fr)}
+.facts li{padding:14px 16px;text-align:center;border-left:1px solid var(--line)}
+.facts li:first-child{border-left:0}
+@media(max-width:760px){.facts ul{grid-template-columns:1fr 1fr}.facts li:nth-child(odd){border-left:0}.facts li:nth-child(n+3){border-top:1px solid var(--line)}}
+
+.sec{padding:56px 0}
+.sec-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:10px 24px;margin-bottom:24px}
+.sec-h h2{font-size:clamp(26px,2.8vw,38px)}
+.sec-h p{color:var(--mute);margin-top:4px}
+
+/* finder board */
+.bd{display:grid;grid-template-columns:repeat(3,1fr);background:var(--white);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.bd-c{border-left:1px solid var(--line);min-width:0;display:flex;flex-direction:column}
+.bd-c:first-child{border-left:0}
+.bd-c h3{font-family:var(--sans);font-size:15px;font-weight:700;padding:14px 18px;background:var(--text);color:#fff;display:flex;justify-content:space-between;gap:8px}
+.bd-c h3 small{font-weight:400;opacity:.8}
+.bd-l{padding:8px;max-height:392px;overflow-y:auto}
+.bd-l button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-radius:6px;padding:11px 10px;min-height:44px;font-weight:500}
+.bd-l button:hover{background:var(--base)}
+.bd-l button::before{content:"";flex:none;width:18px;height:18px;border:1.5px solid var(--mute);border-radius:50%;background:#fff}
+.bd-l.multi button::before{border-radius:4px}
+.bd-l button[aria-pressed="true"]{background:#FBEFE8;font-weight:700}
+.bd-l button[aria-pressed="true"]::before{border-color:var(--brand);background:var(--brand);box-shadow:inset 0 0 0 3px #fff}
+@media(max-width:860px){.bd{grid-template-columns:1fr}.bd-c{border-left:0;border-top:1px solid var(--line)}.bd-c:first-child{border-top:0}.bd-l{max-height:236px}}
+
+.res-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:28px 0 18px}
+.res-h h3{font-size:24px;font-stretch:87.5%;font-weight:800;margin-right:auto}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--accent);border:0;border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600}
+.chip span{font-size:16px;line-height:1}
+.res-note{background:var(--accent-l);border-radius:6px;padding:12px 16px;margin-bottom:18px;font-size:15px}
+.empty{padding:32px;background:var(--white);border:1px dashed var(--mute);border-radius:8px;text-align:center}
+
+/* made in the UK */
+.uk{background:var(--white);border-block:1px solid var(--line)}
+.uk-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.uk .ph{min-height:420px;background:var(--accent)}
+.uk-t{padding:64px clamp(16px,5vw,72px)}
+.uk h2{font-size:clamp(30px,3.6vw,50px)}
+.uk h2 span{color:var(--brand)}
+.uk-t>p{font-size:18px;margin-top:16px;max-width:52ch}
+.cmp{width:100%;border-collapse:collapse;margin-top:28px;font-size:15px}
+.cmp th,.cmp td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.cmp thead th{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
+.cmp thead th.us,.cmp td.us{background:#FBEFE8;font-weight:600}
+.cmp thead th.us{color:var(--brand)}
+.cmp tbody th{font-weight:600;width:28%}
+.uk .btn{margin-top:28px}
+@media(max-width:860px){.uk-g{grid-template-columns:1fr}.uk .ph{min-height:200px}.uk-t{padding:36px 16px}.cmp{font-size:14px}.cmp th,.cmp td{padding:10px 8px}}
+
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.types a{display:block;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:20px;text-decoration:none}
+.types a:hover{border-color:var(--brand)}
+.types b{display:block;font-size:20px;font-stretch:87.5%;font-weight:800}
+.types span{display:block;color:var(--mute);font-size:14px;margin-top:4px}
+.types i{display:block;font-style:normal;font-weight:600;color:var(--brand);margin-top:14px;font-size:14px}
+@media(max-width:860px){.types{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.types{grid-template-columns:1fr}}
+
+.rv-g{display:grid;grid-template-columns:280px repeat(3,minmax(0,1fr));gap:16px}
+.score{background:var(--text);color:#fff;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.score b{font-size:52px;font-stretch:87.5%;font-weight:800;line-height:1}
+.score .stars{color:var(--accent)}
+.score a{margin-top:auto;color:#fff;font-weight:600}
+@media(max-width:1000px){.rv-g{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.rv-g{grid-template-columns:1fr}}
+</style></head><body>
+<div class="vs"><div class="wrap"><span>Homepage version</span><a href="home-a.html">A</a><a class="on" href="home-b.html">B</a><a href="home-c.html">C</a></div></div>
+
+<header class="hd"><div class="wrap hd-in">
+  <a class="logo" href="#">Brand name</a>
+  <form class="srch" onsubmit="return false"><input id="q" type="search" placeholder="Search by product or condition" aria-label="Search"><button>Search</button></form>
+  <div class="hd-r"><a href="#">Account</a><a href="#">Basket (0)</a></div>
+</div></header>
+<div class="nav"><div class="wrap">
+  <a href="#finder">Braces</a><a href="#finder">Splints</a><a href="#finder">Wraps</a><a href="#finder">Lifting harnesses</a><a href="#finder">Shop by condition</a><a href="#">Sizing help</a><a class="uk" href="#uk">Made in the UK</a>
+</div></div>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>Dog braces, splints and lifting harnesses, made in the UK</h1>
+    <p>Support for wrists, elbows, knees, hocks, hips and backs. Pick the body area, condition or symptoms below and see exactly what fits.</p>
+    <div class="hero-a"><a class="btn" href="#finder">Find the right support</a><a class="btn line" href="#uk">Why UK made matters</a></div>
+  </div>
+  <div class="ph">Photo: dog wearing a brace</div>
+</div></section>
+<div class="facts"><ul class="wrap">
+  <li>Made in North West England</li><li>Premium materials, fair prices</li><li>Checked by hand before it leaves</li><li>Sizing help from our team</li>
+</ul></div>
+
+<section class="sec" id="finder"><div class="wrap">
+  <div class="sec-h"><div><h2>Find the right support</h2><p>Start with any column. The products below update as you choose.</p></div><button class="btn line sm" id="clear" hidden>Clear all</button></div>
+  <div class="bd">
+    <div class="bd-c"><h3>Body area</h3><div class="bd-l" id="l-area"></div></div>
+    <div class="bd-c"><h3>Condition</h3><div class="bd-l" id="l-cond"></div></div>
+    <div class="bd-c"><h3>Symptoms <small>choose any</small></h3><div class="bd-l multi" id="l-sym"></div></div>
+  </div>
+  <div class="res-h"><h3 id="res-n"></h3><span id="chips"></span></div>
+  <p class="res-note" id="res-note" hidden></p>
+  <div class="grid" id="res"></div>
+</div></section>
+
+<section class="uk" id="uk"><div class="uk-g">
+  <div class="ph">Photo: our workshop in the North West of England</div>
+  <div class="uk-t">
+    <h2>Made in the <span>North West of England</span></h2>
+    <p>Most dog braces sold in the UK are imported from overseas factories. Ours are designed, cut and stitched in our own workshop, so we control the quality from the first cut to the final check.</p>
+    <table class="cmp">
+      <thead><tr><th></th><th class="us">Ours</th><th>Most other brands</th></tr></thead>
+      <tbody>
+        <tr><th>Where it is made</th><td class="us">Our workshop in the North West of England</td><td>Overseas factories</td></tr>
+        <tr><th>Who checks it</th><td class="us">The people who made it, by hand</td><td>Not the company selling it</td></tr>
+        <tr><th>Journey to you</th><td class="us">Straight from our workshop to your door</td><td>Shipped across the world first</td></tr>
+      </tbody>
+    </table>
+    <a class="btn" href="#">See how they are made</a>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="sec-h"><div><h2>Shop by type</h2></div></div>
+  <div class="types">
+    <a href="#finder"><b>Braces</b><span>Firm support for carpal, elbow, knee, hock, hip and back</span><i>6 products</i></a>
+    <a href="#finder"><b>Splints</b><span>Rigid support for injuries and recovery</span><i>3 products</i></a>
+    <a href="#finder"><b>Wraps</b><span>Light compression for carpal and hock</span><i>2 products</i></a>
+    <a href="#finder"><b>Lifting and mobility</b><span>Lift harnesses and the drag bag</span><i>3 products</i></a>
+  </div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><div><h2>Customer reviews</h2><p>Reviews from customers will appear here.</p></div></div>
+  <div class="rv-g">
+    <div class="score"><b>0.0</b><span class="stars">★★★★★</span><span>Average rating from 0 reviews</span><a href="#">Read all reviews</a></div>
+    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-q">Customer review goes here. Two or three sentences about the dog and how the support helped.</p><div class="rv-w"><span><b>Owner name</b>Dog's breed, product bought</span></div></div>
+    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-q">Customer review goes here. Two or three sentences about the dog and how the support helped.</p><div class="rv-w"><span><b>Owner name</b>Dog's breed, product bought</span></div></div>
+    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-q">Customer review goes here. Two or three sentences about the dog and how the support helped.</p><div class="rv-w"><span><b>Owner name</b>Dog's breed, product bought</span></div></div>
+  </div>
+</div></section>
+</main>
+<!--@footer.html-->
+
+<script>
+/*@data.js*/
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var sel={area:null,cond:null,syms:[]};
+  function btn(k,o,on){return '<button data-'+k+'="'+o.id+'" aria-pressed="'+on+'">'+o.name+'</button>'}
+  function draw(){
+    var conds=BR.conditionsFor(sel.area);
+    if(sel.cond&&!conds.some(function(c){return c.id===sel.cond}))sel.cond=null;
+    var syms=BR.symptomsFor(sel.area,sel.cond);
+    sel.syms=sel.syms.filter(function(s){return syms.some(function(x){return x.id===s})});
+    $('l-area').innerHTML=BR.areas.map(function(a){return btn('area',a,sel.area===a.id)}).join('');
+    $('l-cond').innerHTML=conds.map(function(c){return btn('cond',c,sel.cond===c.id)}).join('');
+    $('l-sym').innerHTML=syms.map(function(s){return btn('sym',s,sel.syms.indexOf(s.id)>-1)}).join('');
+
+    var r=BR.match(sel), n=r.items.length, any=sel.area||sel.cond||sel.syms.length;
+    $('clear').hidden=!any;
+    $('res-n').textContent=any?(n+(n===1?' product matches':' products match')):'All '+n+' products';
+    var chips=[];
+    if(sel.area)chips.push(['area','',BR.find(BR.areas,sel.area).name]);
+    if(sel.cond)chips.push(['cond','',BR.find(BR.conditions,sel.cond).name]);
+    sel.syms.forEach(function(s){chips.push(['sym',s,BR.find(BR.symptoms,s).name])});
+    $('chips').innerHTML=chips.map(function(c){return '<button class="chip" data-rm="'+c[0]+'" data-v="'+c[1]+'" aria-label="Remove '+c[2]+'">'+c[2]+' <span>×</span></button>'}).join(' ');
+    var note=$('res-note'); note.hidden=!r.likely.length;
+    note.textContent=r.likely.length?'These signs are often seen with '+r.likely.join(', ').toLowerCase().replace('ivdd','IVDD')+'. Your vet can confirm a diagnosis.':'';
+    if(n)BR.grid($('res'),r.items,any);
+    else $('res').innerHTML='<p class="empty" style="grid-column:1/-1">Nothing matches that combination. Remove a symptom, or <a class="link" href="#">contact us</a> and we will help you choose.</p>';
+  }
+  $('finder').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return; var d=b.dataset;
+    if(b.id==='clear')sel={area:null,cond:null,syms:[]};
+    else if(d.area)sel.area=sel.area===d.area?null:d.area;
+    else if(d.cond)sel.cond=sel.cond===d.cond?null:d.cond;
+    else if(d.sym){var i=sel.syms.indexOf(d.sym);i>-1?sel.syms.splice(i,1):sel.syms.push(d.sym)}
+    else if(d.rm==='area')sel.area=null;
+    else if(d.rm==='cond')sel.cond=null;
+    else if(d.rm==='sym')sel.syms.splice(sel.syms.indexOf(d.v),1);
+    else return;
+    draw();
+  });
+  draw();
+})();
+</script>
+</body></html>
