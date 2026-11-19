@@ -2,115 +2,210 @@
 <html lang="en-GB"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dog braces homepage, version B</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap">
 <style>
-:root{--sans:"IBM Plex Sans",Helvetica,Arial,sans-serif}
+:root{--sans:"Satoshi",Helvetica,Arial,sans-serif}
 /*@base.css*/
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
+.btn{border-radius:10px}
 
-.ph{background:var(--base);border-bottom:1px solid var(--line);padding:32px 0}
-.ph .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px 40px}
-.ph h1{font-size:clamp(28px,3vw,38px)}
-.ph p{color:var(--mute);margin-top:8px;max-width:62ch;font-size:16px}
-.tag{display:inline-flex;align-items:center;gap:10px;background:var(--accent);padding:8px 14px;font-weight:600;font-size:14px;border-radius:3px;text-decoration:none}
+/* header with department menu */
+.hd{position:sticky;top:0;z-index:50;background:#fff}
+.hd-t{display:flex;align-items:center;gap:32px;height:72px}
+.sr{flex:1;max-width:520px;margin-inline:auto;position:relative}
+.sr input{width:100%;height:46px;border:0;border-radius:10px;background:var(--base);padding:0 16px 0 44px;box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .2s}
+.sr input:focus{outline:0;box-shadow:inset 0 0 0 2px var(--brand)}
+.sr svg{position:absolute;left:14px;top:13px;color:var(--mute)}
+.hd-r{display:flex;gap:22px;font-weight:500}
+.hd-r a{display:flex;align-items:center;gap:8px}.hd-r a:hover{color:var(--brand)}
+.dp{background:var(--brand);color:#fff}
+.dp .w{display:flex;align-items:stretch;gap:4px;overflow-x:auto;scrollbar-width:none}
+.dp button,.dp a{position:relative;display:flex;align-items:center;gap:10px;padding:14px 18px;font-weight:500;white-space:nowrap;transition:background .25s}
+.dp button::before{content:"";width:10px;height:10px;background:linear-gradient(var(--mint),var(--mint)) center/100% 2.5px no-repeat,linear-gradient(var(--mint),var(--mint)) center/2.5px 100% no-repeat;transition:transform .4s var(--ease)}
+.dp button:hover,.dp a:hover{background:rgba(255,255,255,.12)}
+.dp button[aria-expanded="true"]{background:#fff;color:var(--ink)}
+.dp button[aria-expanded="true"]::before{transform:rotate(45deg);background:linear-gradient(var(--brand),var(--brand)) center/100% 2.5px no-repeat,linear-gradient(var(--brand),var(--brand)) center/2.5px 100% no-repeat}
+.dp .sp{margin-left:auto}
+.dpp{position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(41,40,60,.3);display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.dpp.open{grid-template-rows:1fr}
+.dpp>div{overflow:hidden}
+.dpp-g{display:grid;grid-template-columns:1fr 1.3fr 1.3fr;gap:40px;padding-block:28px 36px}
+.dpp h3{font-size:13px;font-weight:500;color:var(--mute);letter-spacing:0;margin-bottom:10px}
+.dpp li a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-weight:500;animation:rise .4s var(--ease) both;animation-delay:calc(var(--i)*.03s)}
+.dpp li a:hover{color:var(--brand)}
+.dpp li small{color:var(--mute);font-weight:400}
+@media(max-width:860px){.hd-t{flex-wrap:wrap;height:auto;padding-block:12px;gap:12px}.sr{order:3;flex-basis:100%;max-width:none}.hd-r{margin-left:auto}.hd-r span{display:none}.dpp{max-height:70vh;overflow-y:auto}.dpp-g{grid-template-columns:1fr;gap:20px}.dp .sp{margin-left:0}}
 
-.cat{display:grid;grid-template-columns:272px minmax(0,1fr);gap:40px;padding-block:32px 64px}
-.flt h2{font-size:18px;padding-bottom:12px;border-bottom:2px solid var(--text)}
-.flt details{border-bottom:1px solid var(--line)}
-.flt summary{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-weight:600;cursor:pointer;list-style:none}
-.flt summary::-webkit-details-marker{display:none}
-.flt summary::after{content:"+";font-size:18px;font-weight:400;color:var(--mute)}
-.flt details[open] summary::after{content:"\2212"}
-.flt summary small{font-weight:400;color:var(--mute);margin-left:auto;margin-right:12px}
-.flt-l{padding-bottom:12px;max-height:330px;overflow-y:auto}
-.flt label{display:flex;align-items:flex-start;gap:10px;padding:6px 0;cursor:pointer}
-.flt label:hover{color:var(--brand)}
-.flt input{accent-color:var(--brand);width:17px;height:17px;margin:2px 0 0;flex:none}
-.flt .btn{width:100%;margin-top:16px}
+/* intro + triage board */
+.in{padding:clamp(28px,4vw,56px) 0 clamp(20px,3vw,36px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 48px;align-items:end}
+.in h1{font-size:clamp(34px,4.6vw,64px);max-width:16em}
+.in p{color:var(--mute);font-size:18px;margin-top:14px;max-width:56ch}
+.mk{display:flex;align-items:center;gap:14px;background:var(--mint-l);border-radius:14px;padding:14px 18px}
+.mk b{display:block;font-weight:700}
+.mk span{font-size:14px}
+@media(max-width:860px){.in{grid-template-columns:1fr}}
+.bd{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.35fr);background:var(--base);border-radius:20px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.bc{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
+.bc h2{font-size:15px;font-weight:700;letter-spacing:0;padding:16px 18px 12px;display:flex;justify-content:space-between;gap:8px}
+.bc h2 small{font-weight:400;color:var(--mute)}
+.bl{padding:0 8px 12px;max-height:440px;overflow-y:auto}
+.bl button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px;border-radius:10px;font-weight:500;line-height:1.3;transition:background .2s;animation:rise .35s var(--ease) both;animation-delay:calc(var(--i)*.02s)}
+.bl button::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1.5px #B9BCCD;transition:box-shadow .2s,background .2s}
+.bl.ck button::before{border-radius:6px}
+.bl button:hover{background:#fff}
+.bl button[aria-pressed="true"]{background:#fff;color:var(--brand)}
+.bl button[aria-pressed="true"]::before{background:var(--brand) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.500 10.500l3 3 6-6.500' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E");box-shadow:none}
+.bl .hint{padding:10px;color:var(--mute);font-size:14px}
+.br{background:#fff;display:flex;flex-direction:column;min-width:0}
+.br h2{background:var(--mint)}
+.br-l{padding:6px 18px 18px;overflow-y:auto;max-height:440px}
+.br .note{margin:12px 18px 0}
+.ri{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;padding:14px 0;border-bottom:1px solid var(--line);animation:rise .45s var(--ease) both;animation-delay:calc(var(--i)*.05s)}
+.ri b{font-size:17px;font-weight:700}
+.ri p{font-size:13.5px;color:var(--mute);grid-column:1}
+.ri a{grid-row:1/4;grid-column:2;align-self:center;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:var(--base);color:var(--brand);transition:background .2s,color .2s}
+.ri:hover a{background:var(--brand);color:#fff}
+.br-f{margin-top:auto;padding:14px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.br-f button{font-weight:500;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1100px){.bd{grid-template-columns:1fr 1fr}.bc:nth-child(2){border-right:0}.bc:nth-child(3){grid-column:1/-1;border-top:1px solid var(--line);border-right:0}.br{grid-column:1/-1;border-top:1px solid var(--line)}.bl{max-height:300px}.bl.ck{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.bd{grid-template-columns:1fr}.bc{border-right:0;border-top:1px solid var(--line)}.bc:first-child{border-top:0}.bl,.bl.ck{display:block;max-height:240px}}
 
-.tb{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding-bottom:14px}
-.tb h2{font-size:20px;margin-right:auto}
-.chip{display:inline-flex;align-items:center;gap:8px;background:var(--accent-l);border:1px solid var(--accent);border-radius:3px;padding:4px 10px;font-size:13px;font-weight:500}
-.chip span{font-size:15px;line-height:1}
-.cat .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.empty{padding:28px;border:1px solid var(--line);text-align:center}
-@media(max-width:1000px){.cat{grid-template-columns:1fr;gap:24px}}
-@media(max-width:700px){.cat .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* flip cards */
+.tb{display:flex;flex-wrap:wrap;gap:8px}
+.tb button{padding:9px 16px;border-radius:10px;font-weight:500;box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,color .2s}
+.tb button.on{background:var(--ink);color:#fff;box-shadow:none}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.fc{perspective:1400px;animation:rise .6s var(--ease) both;animation-delay:calc(var(--i)*.04s)}
+.fc-in{position:relative;display:grid;transform-style:preserve-3d;transition:transform .8s var(--ease)}
+.fc:hover .fc-in,.fc.fl .fc-in,.fc:focus-within .fc-in{transform:rotateY(180deg)}
+.ff,.fb{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column}
+.ff{background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+.ff-i{aspect-ratio:1/1;margin:8px 8px 0;border-radius:10px;background:var(--base);position:relative}
+.ff-i span{position:absolute;left:10px;bottom:10px;background:#fff;border-radius:6px;padding:3px 9px;font-size:13px;font-weight:500}
+.ff-b{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px}
+.ff-b h3{font-size:20px}
+.ff-b p{font-size:14px;color:var(--mute);display:flex;align-items:center;gap:8px}
+.ff-f{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.ff-f b{font-size:17px;font-variant-numeric:tabular-nums}
+.ff-f span{font-size:13px;color:var(--brand);font-weight:500}
+.fb{background:var(--brand);color:#fff;transform:rotateY(180deg);padding:20px}
+.fb h3{font-size:20px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.3)}
+.fb dl{margin-top:4px}
+.fb dl div{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+.fb dt{font-size:12px;color:var(--mint)}
+.fb dd{font-size:14.500px;line-height:1.4;margin-top:2px}
+.fb .gb i{background:rgba(255,255,255,.25)}.fb .gb i.f{background:var(--mint)}
+.fb .btn{margin-top:auto;background:var(--mint);color:var(--ink);height:44px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ff-b{padding:12px}.ff-b h3{font-size:17px}.fb{padding:14px}.fb dl div:nth-child(3){display:none}}
 
-.uk{background:var(--brand);color:#fff}
-.uk-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
-.uk h2{font-size:clamp(28px,3.2vw,40px)}
-.uk-g>div>p{margin-top:14px;font-size:16px;max-width:52ch;color:#E3E1F6}
-.uk dl{display:grid;grid-template-columns:repeat(3,1fr);margin-top:32px;border-top:1px solid rgba(255,255,255,.3)}
-.uk dl div{padding:16px 16px 0 0}
-.uk dl div+div{padding-left:16px;border-left:1px solid rgba(255,255,255,.3)}
-.uk dt{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
-.uk dd{font-weight:600;margin-top:4px}
-.uk .btn{margin-top:32px;background:var(--accent);border-color:var(--accent);color:var(--text)}
-.uk .btn:hover{background:#fff;border-color:#fff}
-.uk .slot{aspect-ratio:4/3;background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:13px}
-@media(max-width:900px){.uk-g{grid-template-columns:1fr;gap:28px}.uk dl{grid-template-columns:1fr}.uk dl div+div{padding-left:0;border-left:0}}
+/* levels chart */
+.ch{width:100%;border-collapse:separate;border-spacing:0;border-radius:20px;box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
+.ch th,.ch td{text-align:left;vertical-align:top;padding:20px 22px;border-bottom:1px solid var(--line)}
+.ch tr:last-child th,.ch tr:last-child td{border-bottom:0}
+.ch thead th{background:var(--base);font-size:13px;font-weight:500;color:var(--mute);padding-block:12px}
+.ch tbody th{width:22%}
+.ch tbody th b{display:block;font-size:24px;letter-spacing:-.03em}
+.ch tbody th span{font-size:14px;color:var(--brand);font-weight:500}
+.ch td.g{width:17%}
+.ch td.g small{display:block;font-size:13px;color:var(--mute);margin-top:8px}
+.ch td.p{color:var(--mute);font-size:14.500px}
+.mb{display:block;height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px}
+.mb::after{content:"";display:block;height:100%;border-radius:4px;background:var(--brand);width:var(--v);transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--ease) .2s}
+.mb.m::after{background:#5FC79C}
+.in .mb::after,html:not(.js) .mb::after{transform:none}
+.ch tbody tr{transition:background .2s}.ch tbody tr:hover{background:var(--mint-l)}
+@media(max-width:860px){.ch thead{display:none}.ch,.ch tbody,.ch tr,.ch th,.ch td{display:block;width:auto!important}.ch th,.ch td{border:0;padding:6px 18px}.ch tr{padding:14px 0;border-bottom:1px solid var(--line)}}
 
-.rv-top{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px}
-.score{border:1px solid var(--line);padding:24px;align-self:start}
-.score b{display:block;font-size:44px;font-weight:600;line-height:1}
-.score span{display:block;margin-top:6px}
-.score small{color:var(--mute)}
-.rv-top .rvs{grid-template-columns:1fr}
-.rv-top .rv,.rv-top .rv+.rv{padding:18px 0;border-left:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 24px}
-.rv-top .rv p:first-of-type{grid-column:2;grid-row:1/3}
-@media(max-width:800px){.rv-top{grid-template-columns:1fr;gap:20px}.rv-top .rv,.rv-top .rv+.rv{grid-template-columns:1fr}.rv-top .rv p:first-of-type{grid-column:1;grid-row:auto}}
+/* UK */
+.uk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-radius:20px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.uk-l{padding:clamp(24px,4vw,56px)}
+.uk h2{font-size:clamp(30px,3.6vw,52px)}
+.uk-l p{margin-top:16px;font-size:18px;color:var(--mute);max-width:44ch}
+.uk-l .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px}
+.uk-l .slot{aspect-ratio:1/1;border-radius:10px}
+.uk-r{background:var(--mint);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:center}
+.uk-r dl div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:16px 0;border-top:1px solid rgba(41,40,60,.25)}
+.uk-r dl div:last-child{border-bottom:1px solid rgba(41,40,60,.25)}
+.uk-r dt{font-size:14px;padding-top:4px}
+.uk-r dd{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.uk-r .btn{margin-top:28px;align-self:flex-start}
+@media(max-width:860px){.uk{grid-template-columns:1fr}.uk-r dl div{grid-template-columns:1fr;gap:0}}
+
+/* conditions */
+.az{columns:2;column-gap:40px}
+.az details{break-inside:avoid;border-bottom:1px solid var(--line)}
+.az summary{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;cursor:pointer;list-style:none;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.az summary::-webkit-details-marker{display:none}
+.az summary::after{content:"";flex:none;width:12px;height:12px;background:linear-gradient(var(--brand),var(--brand)) center/100% 2.5px no-repeat,linear-gradient(var(--brand),var(--brand)) center/2.5px 100% no-repeat;transition:transform .4s var(--ease)}
+.az details[open] summary::after{transform:rotate(45deg)}
+.az summary:hover{color:var(--brand)}
+.az details>div{padding:0 0 18px;animation:rise .4s var(--ease)}
+.az details p{color:var(--mute);max-width:54ch}
+.az details ul{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.az details li{background:var(--mint-l);border-radius:6px;padding:4px 10px;font-size:14px;font-weight:500}
+@media(max-width:860px){.az{columns:1}}
+.rv div{border-radius:16px}
 </style></head><body>
-<div class="vs"><div class="wrap"><span>Homepage version</span><a href="home-a.html">A</a><a class="on" href="home-b.html">B</a><a href="home-c.html">C</a></div></div>
-<!--@header.html-->
+<div class="vs"><div class="w"><span>Homepage version</span><a href="home-a.html">A</a><a class="on" href="home-b.html">B</a><a href="home-c.html">C</a></div></div>
+
+<header class="hd">
+  <div class="w hd-t">
+    <a class="logo" href="#"><i></i>Brand name</a>
+    <form class="sr" onsubmit="return false"><svg class="ic" viewBox="0 0 20 20"><circle cx="9" cy="9" r="6"/><path d="M13.500 13.500L18 18"/></svg><input id="q" type="search" placeholder="Search a product, condition or symptom" aria-label="Search"></form>
+    <div class="hd-r"><a href="#"><svg class="ic" viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.500"/><path d="M3 17.500c.800-3.200 3.600-5 7-5s6.200 1.800 7 5"/></svg><span>Account</span></a><a href="#"><svg class="ic" viewBox="0 0 20 20"><path d="M3.500 6.500h13l-1 11h-11z"/><path d="M7 6.500V5a3 3 0 016 0v1.500"/></svg><span>Basket</span></a></div>
+  </div>
+  <div class="dp"><div class="w" id="dp">
+    <button data-d="front" aria-expanded="false">Front leg</button><button data-d="rear" aria-expanded="false">Back leg</button><button data-d="spine" aria-expanded="false">Spine and hips</button><button data-d="mob" aria-expanded="false">Lifting and mobility</button>
+    <a class="sp" href="#levels">Support levels</a><a href="#uk">UK manufacturing</a><a href="#">Sizing guide</a>
+  </div></div>
+  <div class="dpp" id="dpp"><div><div class="w dpp-g" id="dpp-g"></div></div></div>
+</header>
 
 <main>
-<section class="ph"><div class="wrap">
-  <div><h1>Dog braces, splints and support harnesses</h1>
-  <p>Filter by body area, condition or symptom to see the supports suitable for your dog.</p></div>
-  <a class="tag" href="#uk">Made in the UK, North West of England</a>
-</div></section>
-
-<div class="wrap cat" id="finder">
-  <aside class="flt">
-    <h2>Find the right support</h2>
-    <details open><summary>Body area</summary><div class="flt-l" id="l-area"></div></details>
-    <details open><summary>Condition</summary><div class="flt-l" id="l-cond"></div></details>
-    <details open><summary>Symptoms <small>select any</small></summary><div class="flt-l" id="l-sym"></div></details>
-    <button class="btn line" id="clear">Clear all filters</button>
-  </aside>
-  <section id="products">
-    <div class="tb"><h2 id="res-n"></h2><span id="chips"></span></div>
-    <p class="note" id="res-note" hidden style="margin-bottom:14px"></p>
-    <div class="grid" id="res"></div>
-  </section>
-</div>
-
-<section class="uk sec" id="uk"><div class="wrap uk-g">
-  <div>
-    <h2>Manufactured in the North West of England</h2>
-    <p>Most dog braces and splints sold in the UK are manufactured overseas and imported. Ours are made in our own workshop, where we control materials, stitching and inspection ourselves.</p>
-    <dl>
-      <div><dt>Manufactured</dt><dd>North West of England</dd></div>
-      <div><dt>Inspected</dt><dd>In our workshop, before dispatch</dd></div>
-      <div><dt>Dispatched from</dt><dd>Our workshop</dd></div>
-    </dl>
-    <a class="btn" href="#">About our manufacturing</a>
+<section id="finder"><div class="w">
+  <div class="in">
+    <div><h1>Orthopaedic braces and splints for dogs</h1><p>Select the body area, the diagnosis and the signs you are seeing. Suitable supports are listed as you choose.</p></div>
+    <div class="mk"><i class="plus"></i><span><b>Made in the UK</b>North West of England</span></div>
   </div>
-  <div class="slot">Workshop photo</div>
-</div></section>
-
-<section class="sec"><div class="wrap">
-  <div class="sec-h"><div><h2>Customer reviews</h2></div><a class="link" href="#">All reviews</a></div>
-  <div class="rv-top">
-    <div class="score"><b>0.0</b><span class="stars">★★★★★</span><small>Based on 0 reviews</small></div>
-    <div class="rvs">
-      <div class="rv"><p>Customer review to be added.</p><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-      <div class="rv"><p>Customer review to be added.</p><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-      <div class="rv"><p>Customer review to be added.</p><span class="stars" aria-label="5 out of 5">★★★★★</span><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-    </div>
+  <div class="bd">
+    <div class="bc"><h2>Body area</h2><div class="bl" id="b-area"></div></div>
+    <div class="bc"><h2>Condition</h2><div class="bl" id="b-cond"></div></div>
+    <div class="bc"><h2>Signs <small>select any</small></h2><div class="bl ck" id="b-sym"></div></div>
+    <div class="br" aria-live="polite"><h2 class="bc-h" style="font-size:15px;letter-spacing:0;padding:16px 18px 12px;margin:0" id="b-h">Suitable supports</h2>
+      <p class="note" id="b-n" hidden></p><div class="br-l" id="b-res"></div>
+      <div class="br-f"><button id="b-clr">Clear selection</button><a class="btn sm" href="#range">View full range</a></div></div>
   </div>
 </div></section>
+
+<section class="sec" id="range"><div class="w">
+  <div class="sh" data-r><h2>Product range</h2><div class="tb" id="tb"><button class="on" data-t="">All</button><button data-t="brace">Braces</button><button data-t="splint">Splints</button><button data-t="wrap">Wraps</button><button data-t="mobility">Lifting and mobility</button></div></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section class="sec" id="levels"><div class="w">
+  <div class="sh" data-r><h2>Support levels compared</h2><p>How much each type holds the joint, how much movement it allows and when it is used.</p></div>
+  <table class="ch" data-r><thead><tr><th>Type</th><th>Support</th><th>Movement</th><th>When it is used</th><th>Products</th></tr></thead><tbody id="ch"></tbody></table>
+</div></section>
+
+<section class="sec" id="uk"><div class="w"><div class="uk" data-r>
+  <div class="uk-l"><h2>Manufactured in the North West of England</h2>
+    <p>Most dog braces and splints sold in the UK are manufactured overseas and imported. Ours are made in our own workshop, where we choose the materials, do the stitching and check every piece ourselves.</p>
+    <div class="slots"><div class="slot">Photo</div><div class="slot">Photo</div><div class="slot">Photo</div></div></div>
+  <div class="uk-r"><dl>
+    <div><dt>Manufactured</dt><dd>North West of England</dd></div>
+    <div><dt>Checked</dt><dd>In our workshop, before it is sent</dd></div>
+    <div><dt>Sent from</dt><dd>The place it was made</dd></div>
+    <div><dt>Most other brands</dt><dd>Manufactured overseas</dd></div>
+  </dl><a class="btn" href="#">About our manufacturing</a></div>
+</div></div></section>
+
+<section class="sec" id="conditions"><div class="w">
+  <div class="sh" data-r><h2>Condition guide</h2><p>What each condition is and the supports used for it. Your vet can confirm a diagnosis.</p></div>
+  <div class="az" id="az" data-r></div>
+</div></section>
+<!--@reviews.html-->
 </main>
 <!--@footer.html-->
 
@@ -118,47 +213,74 @@
 /*@data.js*/
 (function(){
   var $=function(id){return document.getElementById(id)};
+  var T1={brace:'Brace',splint:'Splint',wrap:'Wrap',mobility:'Mobility'};
+  function bars(n){return n?'<span class="gb">'+[1,2,3].map(function(k){return '<i'+(k<=n?' class="f"':'')+'></i>'}).join('')+'</span>':''}
+  var arrow='<svg class="ic" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5"/></svg>';
+
+  /* department menu */
+  var DEP={front:['wrist','elbow'],rear:['knee','hock','rearpaw'],spine:['back','hip'],mob:['whole']},open=null;
+  function dep(d){
+    var as=DEP[d],cs=BR.conditions.filter(function(c){return c.id!=='post-op'&&c.areas.some(function(a){return as.indexOf(a)>-1})}),
+        ps=BR.products.filter(function(p){return p.areas.some(function(a){return as.indexOf(a)>-1})});
+    function li(l,f){return l.map(function(o,i){return '<li><a href="#finder" style="--i:'+i+'" '+f(o)+'</a></li>'}).join('')}
+    $('dpp-g').innerHTML='<div><h3>Body area</h3><ul>'+li(as.map(function(a){return BR.find(BR.areas,a)}),function(a){return 'data-a="'+a.id+'">'+a.name+'<small>'+a.note+'</small>'})+'</ul></div>'+
+      '<div><h3>Conditions</h3><ul>'+li(cs.slice(0,7),function(c){return 'data-a="'+c.areas.filter(function(a){return as.indexOf(a)>-1})[0]+'" data-c="'+c.id+'">'+c.name})+'</ul></div>'+
+      '<div><h3>Products</h3><ul>'+li(ps,function(p){return '>'+p.name+'<small>'+bars(BR.LV[p.type])+' '+p.sup+'</small>'})+'</ul></div>';
+  }
+  function menu(d){open=d;[].forEach.call($('dp').querySelectorAll('button'),function(b){b.setAttribute('aria-expanded',b.dataset.d===d)});
+    if(d)dep(d);$('dpp').classList.toggle('open',!!d)}
+  $('dp').addEventListener('click',function(e){var b=e.target.closest('button');if(b)menu(open===b.dataset.d?null:b.dataset.d)});
+  if(matchMedia('(hover:hover)').matches){$('dp').addEventListener('mouseover',function(e){var b=e.target.closest('button');if(b&&open!==b.dataset.d)menu(b.dataset.d)});
+    document.querySelector('.hd').addEventListener('mouseleave',function(){menu(null)})}
+  $('dpp').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;menu(null);if(a.dataset.a){sel={area:a.dataset.a,cond:a.dataset.c||null,syms:[]};draw()}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')menu(null)});
+
+  /* triage board */
   var sel={area:null,cond:null,syms:[]};
-  function opt(type,name,o,on){return '<label><input type="'+type+'" name="'+name+'" value="'+o.id+'"'+(on?' checked':'')+'>'+o.name+'</label>'}
-  function draw(){
+  function rows(k,list,on){return list.map(function(o,i){return '<button style="--i:'+i+'" data-'+k+'="'+o.id+'" aria-pressed="'+on(o.id)+'">'+o.name+'</button>'}).join('')}
+  function draw(part){
     var conds=BR.conditionsFor(sel.area);
     if(sel.cond&&!conds.some(function(c){return c.id===sel.cond}))sel.cond=null;
     var syms=BR.symptomsFor(sel.area,sel.cond);
     sel.syms=sel.syms.filter(function(s){return syms.some(function(x){return x.id===s})});
-    $('l-area').innerHTML=opt('radio','area',{id:'',name:'All areas'},!sel.area)+BR.areas.map(function(a){return opt('radio','area',a,sel.area===a.id)}).join('');
-    $('l-cond').innerHTML=opt('radio','cond',{id:'',name:'Any / not diagnosed'},!sel.cond)+conds.map(function(c){return opt('radio','cond',c,sel.cond===c.id)}).join('');
-    $('l-sym').innerHTML=syms.map(function(s){return opt('checkbox','sym',s,sel.syms.indexOf(s.id)>-1)}).join('');
-    var r=BR.match(sel),n=r.items.length,any=sel.area||sel.cond||sel.syms.length;
-    $('clear').hidden=!any;
-    $('res-n').textContent=any?n+(n===1?' suitable product':' suitable products'):'All products ('+n+')';
-    var chips=[];
-    if(sel.area)chips.push(['area','',BR.find(BR.areas,sel.area).name]);
-    if(sel.cond)chips.push(['cond','',BR.find(BR.conditions,sel.cond).name]);
-    sel.syms.forEach(function(s){chips.push(['sym',s,BR.find(BR.symptoms,s).name])});
-    $('chips').innerHTML=chips.map(function(c){return '<button class="chip" data-rm="'+c[0]+'" data-v="'+c[1]+'" aria-label="Remove '+c[2]+'">'+c[2]+' <span>×</span></button>'}).join(' ');
-    var note=$('res-note');note.hidden=!r.likely.length;
-    note.textContent=r.likely.length?'These symptoms are commonly associated with '+BR.tidy(r.likely.join(', '))+'. Your vet can confirm a diagnosis.':'';
-    if(n)BR.grid($('res'),r.items,any);
-    else $('res').innerHTML='<p class="empty" style="grid-column:1/-1">No product matches this combination. Remove a symptom, or <a class="link" href="#">contact us</a> for advice.</p>';
+    function mark(el,k,f){[].forEach.call(el.children,function(b){b.setAttribute('aria-pressed',f(b.dataset[k]))})}
+    if(part)mark($('b-area'),'area',function(v){return v===sel.area});else $('b-area').innerHTML=rows('area',BR.areas,function(id){return sel.area===id});
+    if(part==='cond'||part==='sym')mark($('b-cond'),'cond',function(v){return v===sel.cond});else $('b-cond').innerHTML=rows('cond',conds,function(id){return sel.cond===id});
+    if(part==='sym')mark($('b-sym'),'sym',function(v){return sel.syms.indexOf(v)>-1});else $('b-sym').innerHTML=rows('sym',syms,function(id){return sel.syms.indexOf(id)>-1});
+    var any=sel.area||sel.cond||sel.syms.length,r=BR.match(sel);
+    $('b-h').textContent=any?'Suitable supports':'All supports';$('b-clr').hidden=!any;
+    var n=$('b-n');n.hidden=!r.likely.length;
+    n.innerHTML=r.likely.length?'<i class="plus"></i><span>Often seen with '+BR.tidy(r.likely.join(', '))+'. Your vet can confirm.</span>':'';
+    $('b-res').innerHTML=r.items.length?r.items.map(function(it,i){var p=it.p;
+      return '<div class="ri" style="--i:'+i+'"><b>'+p.name+'</b><p>'+bars(BR.LV[p.type])+' '+p.sup+'</p><p>'+(any?'For '+BR.tidy(it.why.slice(0,2).join(', ')):BR.areaText(p))+'</p><a href="#" aria-label="View '+p.name+'">'+arrow+'</a></div>'}).join('')
+      :'<p class="hint" style="padding:16px 0;color:var(--mute)">Nothing matches that combination. Remove a sign, or contact us for advice.</p>';
   }
-  $('finder').addEventListener('change',function(e){
-    var t=e.target;
-    if(t.name==='area')sel.area=t.value||null;
-    else if(t.name==='cond')sel.cond=t.value||null;
-    else if(t.name==='sym'){var i=sel.syms.indexOf(t.value);i>-1?sel.syms.splice(i,1):sel.syms.push(t.value)}
-    draw();
-  });
-  $('finder').addEventListener('click',function(e){
+  document.querySelector('.bd').addEventListener('click',function(e){
     var b=e.target.closest('button');if(!b)return;var d=b.dataset;
-    if(b.id==='clear')sel={area:null,cond:null,syms:[]};
-    else if(d.rm==='area')sel.area=null;
-    else if(d.rm==='cond')sel.cond=null;
-    else if(d.rm==='sym')sel.syms.splice(sel.syms.indexOf(d.v),1);
-    else return;
-    draw();
+    if(b.id==='b-clr'){sel={area:null,cond:null,syms:[]};draw()}
+    else if(d.area){sel.area=sel.area===d.area?null:d.area;draw('area')}
+    else if(d.cond){sel.cond=sel.cond===d.cond?null:d.cond;draw('cond')}
+    else if(d.sym){var i=sel.syms.indexOf(d.sym);i>-1?sel.syms.splice(i,1):sel.syms.push(d.sym);draw('sym')}
   });
-  if(innerWidth<1000)[].slice.call(document.querySelectorAll('.flt details'),1).forEach(function(d){d.open=false});
   draw();
+
+  /* flip cards */
+  function range(t){$('grid').innerHTML=BR.byType(t).map(function(p,i){
+    return '<article class="fc" style="--i:'+i+'" tabindex="0"><div class="fc-in"><div class="ff"><div class="ff-i"><span>'+T1[p.type]+'</span></div><div class="ff-b"><h3>'+p.name+'</h3><p>'+bars(BR.LV[p.type])+p.sup+'</p>'+
+      '<div class="ff-f"><b>£00.00</b><span>Clinical details</span></div></div></div>'+
+      '<div class="fb"><h3>'+p.name+'</h3><dl><div><dt>Indicated for</dt><dd>'+BR.uses(p).slice(0,3).join(', ')+'</dd></div><div><dt>Body area</dt><dd>'+BR.areaText(p)+'</dd></div><div><dt>How it helps</dt><dd>'+p.d+'</dd></div></dl>'+
+      '<a class="btn" href="#">Select size</a></div></div></article>'}).join('')}
+  $('tb').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)});range(b.dataset.t)});
+  $('grid').addEventListener('click',function(e){var c=e.target.closest('.fc');if(c&&!e.target.closest('a'))c.classList.toggle('fl')});
+  range('');
+
+  $('ch').innerHTML=BR.levels.map(function(l){
+    return '<tr><th><b>'+l.name+'</b><span>'+l.sup+'</span></th><td class="g"><span class="mb" style="--v:'+(l.n/3*100)+'%"></span><small>'+(l.n?l.sup.replace(' support',''):'Not applicable')+'</small></td>'+
+      '<td class="g"><span class="mb m" style="--v:'+l.mv+'%"></span><small>'+l.move+'</small></td><td>'+l.d+'</td><td class="p">'+BR.byType(l.type).map(function(p){return p.name}).join('<br>')+'</td></tr>'}).join('');
+
+  $('az').innerHTML=BR.conditions.slice().sort(function(a,b){return a.name<b.name?-1:1}).map(function(c){
+    return '<details><summary>'+c.name+'</summary><div><p>'+c.info+'</p><ul>'+c.products.map(function(id){return '<li>'+BR.find(BR.products,id).name+'</li>'}).join('')+'</ul></div></details>'}).join('');
+  BR.reveal();
 })();
 </script>
 </body></html>

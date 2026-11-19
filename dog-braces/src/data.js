@@ -1,14 +1,14 @@
 /* Product range and the body area / condition / symptom matching used by the homepage finder. */
 var BR = (function () {
   var areas = [
-    { id: 'wrist', name: 'Front leg and wrist', note: 'Carpal joint and front paw' },
-    { id: 'elbow', name: 'Elbow', note: 'Front leg, upper joint' },
-    { id: 'back', name: 'Back and spine', note: 'Neck to tail' },
-    { id: 'hip', name: 'Hips', note: 'Hip joints and pelvis' },
-    { id: 'knee', name: 'Knee', note: 'Stifle joint, back leg' },
-    { id: 'hock', name: 'Hock', note: 'Ankle joint, back leg' },
-    { id: 'rearpaw', name: 'Lower back leg and paw', note: 'Below the hock' },
-    { id: 'whole', name: 'Whole body and mobility', note: 'Lifting, walking, getting about' }
+    { id: 'wrist', s: 'Wrist', name: 'Front leg and wrist', note: 'Carpal joint and front paw' },
+    { id: 'elbow', s: 'Elbow', name: 'Elbow', note: 'Front leg, upper joint' },
+    { id: 'back', s: 'Back', name: 'Back and spine', note: 'Neck to tail' },
+    { id: 'hip', s: 'Hips', name: 'Hips', note: 'Hip joints and pelvis' },
+    { id: 'knee', s: 'Knee', name: 'Knee', note: 'Stifle joint, back leg' },
+    { id: 'hock', s: 'Hock', name: 'Hock', note: 'Ankle joint, back leg' },
+    { id: 'rearpaw', s: 'Lower leg', name: 'Lower back leg and paw', note: 'Below the hock' },
+    { id: 'whole', s: 'Whole body', name: 'Whole body and mobility', note: 'Lifting, walking, getting about' }
   ];
 
   var symptoms = [
@@ -97,24 +97,62 @@ var BR = (function () {
     return { items: items, likely: likely.slice(0, 3).map(function (l) { return l.n; }) };
   }
 
-  function tidy(t) { return t.toLowerCase().replace('ivdd', 'IVDD').replace('achilles', 'Achilles'); }
+  var info = {
+    'carpal-hyper': 'The ligaments at the back of the wrist are stretched or torn, so the wrist sinks towards the ground.',
+    'wrist-sprain': 'Soft tissue around the wrist is overstretched, often after a jump or an awkward landing.',
+    'arthritis': 'Wear of the joint cartilage that causes pain and stiffness. Most common in older dogs.',
+    'knuckling': 'The paw is not placed correctly and the dog walks on the top of the toes. Usually a nerve problem.',
+    'lower-leg': 'Soft tissue injuries or healing fractures below the wrist or hock that need to be held still.',
+    'elbow-dysplasia': 'The elbow joint develops abnormally, leading to lameness and early arthritis. Common in larger breeds.',
+    'hygroma': 'A fluid-filled swelling over the point of the elbow, caused by repeated pressure on hard floors.',
+    'ivdd': 'A disc in the spine bulges or bursts and presses on the spinal cord, causing pain, weakness or paralysis.',
+    'spondylosis': 'Bony spurs form along the spine, usually with age, and can cause stiffness.',
+    'dm': 'A progressive disease of the spinal cord that gradually reduces strength and coordination in the back legs.',
+    'hip-dysplasia': 'The ball and socket of the hip do not fit together properly, so the joint is loose and wears.',
+    'cruciate': 'The ligament that stabilises the knee is partly or fully torn. A very common cause of back leg lameness.',
+    'patella': 'The kneecap slips out of its groove, causing a skipping step. Common in small breeds.',
+    'achilles': 'The tendon at the back of the hock is strained or torn, so the hock drops towards the ground.',
+    'hock-sprain': 'Ligaments around the hock are stretched or damaged, leaving the joint unstable.',
+    'paralysis': 'Loss of some or all movement in the back legs, from spinal injury or disease.',
+    'senior': 'Muscle loss and stiff joints make standing, stairs and longer walks harder.',
+    'post-op': 'Controlled support and help with lifting while a repair heals, as directed by your vet.'
+  };
+  conditions.forEach(function (c) { c.info = info[c.id]; });
+  var levels = [
+    { type: 'wrap', n: 1, move: 'Full movement', mv: 100, name: 'Wrap', sup: 'Light support', d: 'Soft compression and warmth. For mild strains, arthritis and everyday comfort. Full movement is kept.' },
+    { type: 'brace', n: 2, move: 'Controlled movement', mv: 55, name: 'Brace', sup: 'Firm support', d: 'Stabilises the joint while allowing controlled movement. For instability, ligament injuries and long-term conditions.' },
+    { type: 'splint', n: 3, move: 'Joint held still', mv: 12, name: 'Splint', sup: 'Rigid support', d: 'Holds the joint still. For serious injuries, knuckling and recovery after surgery, usually on your vet\'s advice.' },
+    { type: 'mobility', n: 0, move: 'You take the weight', mv: 0, name: 'Lifting and mobility', sup: 'Lifting aid', d: 'Harnesses that let you take your dog\'s weight, and protection for dogs that cannot use their back legs.' }
+  ];
   var LV = { wrap: 1, brace: 2, splint: 3, mobility: 0 };
-  function level(p) {
-    var n = LV[p.type]; if (!n) return '<span class="lv">' + p.sup + '</span>';
-    return '<span class="lv"><i>' + [1, 2, 3].map(function (k) { return '<b' + (k <= n ? ' class="f"' : '') + '></b>'; }).join('') + '</i>' + p.sup + '</span>';
-  }
+  function tidy(t) { return t.toLowerCase().replace('ivdd', 'IVDD').replace('achilles', 'Achilles'); }
   function areaText(p) { return p.areas.map(function (a) { return find(areas, a).name; }).join(', '); }
-  function whyText(why) { return why && why.length ? '<p class="pc-why"><b>Indicated for:</b> ' + tidy(why.slice(0, 3).join(', ')) + '</p>' : ''; }
-  function card(p, why) {
-    return '<article class="pc"><a class="slot" href="#" aria-label="' + p.name + '"></a><div class="pc-b">' +
-      '<h3><a href="#">' + p.name + '</a></h3>' + level(p) +
-      (why && why.length ? whyText(why) : '<p class="pc-a">' + areaText(p) + '</p>') +
-      '<div class="pc-f"><span class="pc-p">£00.00</span><a class="btn line sm" href="#">Select size</a></div></div></article>';
-  }
-  function grid(el, items, showWhy) {
-    el.innerHTML = items.map(function (it) { return card(it.p || it, showWhy ? it.why : null); }).join('');
+  /* conditions a product is used for, optionally limited to the ones that matched */
+  function uses(p) { return conditions.filter(function (c) { return has(c.products, p.id) && c.id !== 'post-op'; }).map(function (c) { return c.name; }); }
+  function byType(t) { return products.filter(function (p) { return !t || p.type === t; }); }
+  var regions = [
+    { id: 'front', name: 'Front leg', areas: ['wrist', 'elbow'] },
+    { id: 'rear', name: 'Back leg', areas: ['knee', 'hock', 'rearpaw'] },
+    { id: 'spine', name: 'Spine and hips', areas: ['back', 'hip'] },
+    { id: 'mob', name: 'Lifting and mobility', areas: ['whole'] }
+  ];
+  /* how conditions are grouped in menus */
+  var condGroups = [
+    { name: 'Front leg', ids: ['carpal-hyper', 'wrist-sprain', 'knuckling', 'lower-leg', 'elbow-dysplasia', 'hygroma'] },
+    { name: 'Back leg', ids: ['cruciate', 'patella', 'achilles', 'hock-sprain'] },
+    { name: 'Spine and hips', ids: ['ivdd', 'spondylosis', 'dm', 'hip-dysplasia'] },
+    { name: 'Joints and mobility', ids: ['arthritis', 'paralysis', 'senior', 'post-op'] }
+  ].map(function (g) { return { name: g.name, list: g.ids.map(function (id) { return find(conditions, id); }) }; });
+  var typeName = { brace: 'Braces', splint: 'Splints', wrap: 'Wraps', mobility: 'Lifting and mobility' };
+  var typeOne = { brace: 'Brace', splint: 'Splint', wrap: 'Wrap', mobility: 'Mobility aid' };
+  /* conditions grouped by the first region they belong to */
+  function condsByRegion() {
+    return regions.map(function (r) {
+      return { region: r, list: conditions.filter(function (c) { return c.id !== 'post-op' && has(r.areas, c.areas[0]); }) };
+    });
   }
 
-  return { areas: areas, symptoms: symptoms, products: products, conditions: conditions,
-    find: find, conditionsFor: conditionsFor, symptomsFor: symptomsFor, match: match, card: card, grid: grid, level: level, areaText: areaText, whyText: whyText, tidy: tidy };
+  return { areas: areas, symptoms: symptoms, products: products, conditions: conditions, levels: levels, regions: regions, LV: LV,
+    typeName: typeName, typeOne: typeOne, find: find, has: has, conditionsFor: conditionsFor, symptomsFor: symptomsFor, match: match,
+    tidy: tidy, areaText: areaText, uses: uses, byType: byType, condsByRegion: condsByRegion, condGroups: condGroups };
 })();

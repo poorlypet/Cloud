@@ -2,165 +2,629 @@
 <html lang="en-GB"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dog braces homepage, version A</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Onest:wght@400..700&display=swap">
 <style>
-:root{--sans:"Inter",Helvetica,Arial,sans-serif}
-/*@base.css*/
+:root{--ink:#29283C;--brand:#4B43A8;--brand-d:#3B3490;--brand-l:#6C65C6;--mint:#BFE9D5;--mint-l:#E9F7F0;--lilac:#E6E4F6;--base:#F8F9FC;--line:#E2E4EE;--mute:#696880;
+  --display:"Gabarito","Trebuchet MS",Arial,sans-serif;--sans:"Onest",Helvetica,Arial,sans-serif;--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:150px}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,dl,dd{margin:0}ul{padding:0;list-style:none}a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0;padding:0}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.1;letter-spacing:-.01em}
+.ic{width:20px;height:20px;flex:none}
+:focus-visible{outline:3px solid var(--brand-l);outline-offset:2px}
+.w{max-width:1288px;margin:0 auto;padding:0 24px}
+@media(max-width:700px){.w{padding:0 16px}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes zp{0%,2%{opacity:0}6%,14%{opacity:1}18%,100%{opacity:0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes mq{to{transform:translateX(-50%)}}
 
-.hero{padding:48px 0 0}
-.hero-t{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end}
-.hero h1{font-size:clamp(30px,3.4vw,44px);max-width:18em}
-.hero-t p{font-size:17px;color:var(--mute);margin-top:10px;max-width:56ch}
-.made{display:flex;align-items:center;gap:12px;background:var(--accent-l);border:1px solid var(--accent);border-radius:4px;padding:12px 16px;font-size:14px}
-.made b{display:block;font-weight:600}
-.made a{margin-left:12px}
+/* buttons */
+.bp,.bo,.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s,transform .2s var(--ease)}
+.bp{height:46px;padding:0 28px;background:var(--ink);color:#fff}.bp:hover{background:var(--brand)}
+.bp.w1{background:#fff;color:var(--ink)}.bp.w1:hover{background:var(--mint)}
+.bo{height:44px;padding:0 22px;color:var(--brand);box-shadow:inset 0 0 0 1.5px var(--brand);font-size:15px}.bo:hover{background:var(--brand);color:#fff}
+.cta{height:60px;padding:0 44px;background:var(--mint);color:var(--ink);font:700 22px var(--display)}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 0 -4px rgba(0,0,0,.25)}
+.cta.i{background:var(--brand);color:#fff}.cta.d{background:var(--ink);color:#fff}
+.tape{display:inline-block;background:var(--mint);color:var(--ink);padding:0 .16em .04em;border-radius:.1em;transform:rotate(-2deg)}
 
-/* finder bar */
-.fb{margin-top:32px;border:1px solid var(--line);border-top:3px solid var(--brand);background:var(--base);padding:24px}
-.fb h2{font-size:18px;margin-bottom:16px}
-.fb-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:16px;align-items:end}
-.fb .btn{height:48px}
-.fb-x{margin-top:14px;font-size:13px;color:var(--mute)}
-.fb-x button{background:none;border:0;padding:0;color:var(--brand);font-weight:600;text-decoration:underline;text-underline-offset:3px}
-@media(max-width:900px){.hero-t{grid-template-columns:1fr}.fb-g{grid-template-columns:1fr}.fb{padding:16px}}
+/* preview only */
+.vs{background:#15141F;color:#fff;font-size:12px}
+.vs .w{display:flex;gap:8px;align-items:center;padding-block:5px}
+.vs a{padding:1px 9px;border-radius:3px}.vs a.on{background:#fff;color:var(--ink);font-weight:700}
 
-.areas{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
-.areas button{display:grid;grid-template-columns:1fr auto;gap:2px 12px;text-align:left;background:#fff;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 20px}
-.areas button:hover{background:var(--accent-l)}
-.areas b{font-weight:600;font-size:16px}
-.areas small{font-size:13px;color:var(--mute);grid-column:1}
-.areas span{grid-row:1/3;grid-column:2;align-self:center;font-size:13px;color:var(--brand);font-weight:600;white-space:nowrap}
-@media(max-width:900px){.areas{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.areas{grid-template-columns:1fr}}
+/* header */
+.hd{position:sticky;top:-37px;z-index:60;background:var(--ink);color:#fff}
+.u{border-bottom:1px solid rgba(255,255,255,.14);font-size:14px}
+.u .w{display:flex;justify-content:space-between;align-items:center;height:36px;gap:16px}
+.u-m{display:flex;gap:10px;align-items:center;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.u-m .ic{width:18px;height:18px;color:var(--mint)}
+.u-l{display:flex;gap:28px}.u-l a:hover{color:var(--mint)}
+.hb .w{display:flex;align-items:center;gap:28px;height:80px}
+.logo{font:800 28px/.84 var(--display);letter-spacing:-.03em;color:#fff;flex:none}
+.logo i{font-style:normal;color:var(--mint);margin-left:1px}
+.srch{flex:1;position:relative;min-width:0}
+.srch input{width:100%;height:46px;border-radius:999px;border:0;background:#fff;color:var(--ink);padding:0 20px 0 54px;font-size:15px}
+.srch .ic{position:absolute;left:18px;top:11px;width:24px;height:24px;color:var(--ink)}
+.hi{display:flex;align-items:center;gap:10px;font-size:15px;white-space:nowrap}
+.hi .ic{width:30px;height:30px;stroke-width:1.300}
+.hi:hover{color:var(--mint)}
+.burger{display:none}
+.nv{border-top:1px solid rgba(255,255,255,.14);position:relative}
+.nv>.w{display:flex;justify-content:space-between}
+.nv-i{display:flex;align-items:center;gap:8px;height:48px;padding:0 14px;font-size:15px;color:#fff;white-space:nowrap;transition:background .2s,color .2s}
+.nv-i .ic{width:15px;height:15px;transition:transform .3s var(--ease)}
+.nv-i:hover{background:rgba(255,255,255,.1)}
+.nv-i[aria-expanded="true"]{background:#fff;color:var(--ink)}
+.nv-i[aria-expanded="true"] .ic{transform:rotate(180deg)}
+.nv-i.hot{background:var(--brand)}.nv-i.hot:hover{background:var(--brand-l)}
+.mm{position:absolute;left:0;right:0;top:100%;background:#fff;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 34px 50px -26px rgba(41,40,60,.45);visibility:hidden;opacity:0;transform:translateY(-8px);transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
+.mm.open{visibility:visible;opacity:1;transform:none;transition:opacity .25s,transform .3s var(--ease)}
+.mp{padding-block:28px 34px}
+.mp-g{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px}
+.mp h3{font-size:19px;margin-bottom:12px}
+.mp-pl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 20px}
+.mp-pl a{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 12px;align-items:center;padding:8px;border-radius:12px;transition:background .2s}
+.mp-pl a:hover{background:var(--mint-l)}
+.mp-pl span{grid-row:1/3;background:var(--base);border-radius:10px;padding:6px}
+.mp-pl a:hover span{background:#fff}
+.mp-pl b{font-weight:600;align-self:end}.mp-pl small{color:var(--mute);font-size:13px;align-self:start}
+.mp-c{background:var(--mint);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.mp-c h3{margin:0;font-size:22px}.mp-c p{font-size:14.500px}.mp-c .bp{margin-top:auto;align-self:flex-start;height:42px}
+.mp-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.mp-cols li a,.mp-cols li button{display:flex;align-items:center;gap:8px;padding:6px 0;text-align:left;font-size:15px;transition:color .2s,padding .25s var(--ease)}
+.mp-cols li a::before,.mp-cols li button::before{content:"";width:8px;height:8px;flex:none;background:linear-gradient(var(--brand),var(--brand)) center/100% 2px no-repeat,linear-gradient(var(--brand),var(--brand)) center/2px 100% no-repeat}
+.mp-cols li a:hover,.mp-cols li button:hover{color:var(--brand);padding-left:5px}
+.mp-ar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mp-ar button{display:grid;grid-template-columns:76px minmax(0,1fr);gap:0 14px;align-items:center;text-align:left;padding:10px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .2s,background .2s}
+.mp-ar button:hover{box-shadow:inset 0 0 0 2px var(--brand);background:var(--mint-l)}
+.mp-ar span{grid-row:1/3;background:var(--mint-l);border-radius:50%;padding:10px;aspect-ratio:1}
+.mp-ar b{font-weight:600;align-self:end}.mp-ar small{color:var(--mute);font-size:13px;align-self:start}
+@media(max-width:1000px){
+  .hd{top:0}.u-l,.u{display:none}
+  .hb .w{flex-wrap:wrap;height:auto;padding-block:12px;gap:10px 16px}
+  .burger{display:block;order:0}.burger .ic{width:28px;height:28px}
+  .logo{order:1;margin-right:auto;font-size:24px}.hi{order:2}.hi span{display:none}
+  .srch{order:3;flex-basis:100%}.srch input{height:42px}.srch .ic{top:9px}
+  .nv>.w{overflow-x:auto;scrollbar-width:none;justify-content:flex-start;padding:0 6px}
+  .nv-i{height:42px;padding:0 12px;font-size:14px}
+  .mm{max-height:66vh;overflow-y:auto}
+  .mp-g{grid-template-columns:1fr;gap:20px}.mp-pl{grid-template-columns:1fr 1fr}.mp-cols,.mp-ar{grid-template-columns:1fr 1fr;gap:10px 16px}
+}
+@media(max-width:560px){.mp-pl,.mp-ar{grid-template-columns:1fr}}
 
-.uk{background:var(--base);border-block:1px solid var(--line)}
-.uk-g{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:start}
-.uk h2{font-size:clamp(26px,2.8vw,36px)}
-.uk-g p{margin-top:14px;max-width:54ch}
-.uk-g .btn{margin-top:24px}
-.org{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line)}
-.org th,.org td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-.org thead th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);background:var(--base)}
-.org tbody th{font-weight:600;width:34%}
-.org td.us{background:var(--accent-l);font-weight:500}
-.uk-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-.uk-slots .slot{aspect-ratio:4/3;background:#fff;border:1px dashed #B9BCCD;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--mute)}
-@media(max-width:900px){.uk-g{grid-template-columns:1fr;gap:28px}.org th,.org td{padding:10px}}
+.usp{border-bottom:1px solid var(--line);font-size:15px;font-weight:500}
+.usp .w{display:flex;justify-content:center;align-items:center;gap:14px 40px;min-height:48px;flex-wrap:wrap;padding-block:8px}
+.usp>.w>span{display:flex;align-items:center;gap:10px}
+.usp>.w>span+span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--ink);margin-right:30px}
+.usp .ic{color:var(--brand)}
+.usp b{font-weight:700}
+@media(max-width:860px){.usp>.w>span+span,.usp .lg{display:none}}
 
-.helps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
-.helps a{padding:22px 24px;text-decoration:none}
-.helps a+a{border-left:1px solid var(--line)}
-.helps a:hover{background:var(--base)}
-.helps b{display:block;font-size:16px;font-weight:600;color:var(--brand)}
-.helps span{display:block;color:var(--mute);margin-top:4px;font-size:14px}
-@media(max-width:800px){.helps{grid-template-columns:1fr}.helps a+a{border-left:0;border-top:1px solid var(--line)}}
+/* banner carousel */
+.he .w{max-width:1344px}
+.sls{position:relative;height:440px;overflow:hidden}
+.sl{position:absolute;inset:0;display:grid;grid-template-columns:56% 44%;opacity:0;visibility:hidden;transition:opacity .7s,visibility 0s .7s}
+.sl.on{opacity:1;visibility:visible;transition:opacity .7s}
+.sl-t{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:18px;padding:0 0 0 76px;position:relative;z-index:2}
+.sl.on .sl-t>*{animation:rise .7s var(--ease) both}
+.sl.on .sl-t>*:nth-child(2){animation-delay:.1s}.sl.on .sl-t>*:nth-child(3){animation-delay:.2s}.sl.on .sl-t>*:nth-child(4){animation-delay:.3s}
+.sl h2{font-size:clamp(46px,7.300vw,100px);font-weight:800;line-height:.92;letter-spacing:-.035em}
+.sl p{font:500 clamp(18px,2vw,27px)/1.2 var(--display)}
+.sl small{font-size:14px;opacity:.85}
+.art{position:relative}
+.art .dg{position:absolute;right:15%;bottom:44px;width:min(430px,82%)}
+.art .disc{position:absolute;right:10%;top:50%;width:400px;aspect-ratio:1;border-radius:50%;transform:translateY(-50%)}
+.px{position:absolute;width:26px;height:26px;background:linear-gradient(currentColor,currentColor) center/100% 34% no-repeat,linear-gradient(currentColor,currentColor) center/34% 100% no-repeat;animation:pulse 3.200s ease-in-out infinite}
+.sc{position:absolute;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;line-height:1;color:var(--ink)}
+.sc .sc-bg{position:absolute;inset:0;width:100%;height:100%;fill:var(--mint);animation:spin 50s linear infinite}
+.sc>span{position:relative}
+.s1{background:var(--brand);color:#fff}
+.s1 .disc{background:var(--brand-l);opacity:.55;right:22%}
+.s1 .dg{right:27%}
+.s1 .sc{right:3%;top:22px;width:176px;height:176px;font-size:25px;transform:rotate(8deg)}
+.s1 .sc small{display:block;font:600 13px/1.2 var(--sans);margin-top:5px;opacity:1}
+.s2{background:var(--ink);color:#fff}
+.s2 .rb{position:absolute;inset:0;width:100%;height:100%}
+.s2 .dg{right:20%}
+.cyc .dog-z>*{opacity:0;animation:zp 9s linear infinite}
+.cyc .dog-z>*:nth-child(2){animation-delay:1.500s}.cyc .dog-z>*:nth-child(3){animation-delay:3s}.cyc .dog-z>*:nth-child(4){animation-delay:4.500s}.cyc .dog-z>*:nth-child(5){animation-delay:6s}.cyc .dog-z>*:nth-child(6){animation-delay:7.500s}
+.fl{position:absolute;display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border-radius:999px;padding:9px 18px 9px 12px;font-weight:600;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.fl .ic{color:#fff;background:var(--brand);border-radius:50%;padding:3px;stroke-width:2.600}
+.s3{background:var(--mint);color:var(--ink)}
+.lc{position:absolute;top:50%;width:176px;background:#fff;border-radius:22px;padding:22px 20px;box-shadow:0 22px 40px -22px rgba(41,40,60,.55);display:grid;gap:10px}
+.lc b{font:800 26px/1 var(--display)}.lc small{opacity:1;color:var(--mute);font-size:14px}
+.lc i{display:flex;gap:5px}.lc i u{flex:1;height:38px;border-radius:6px;background:var(--lilac)}.lc i u.f{background:var(--brand)}
+.sl-c{display:flex;align-items:center;justify-content:center;gap:26px;padding:22px 0 26px}
+.sl-c button{display:flex;align-items:center;gap:8px;color:var(--brand);font-weight:500}
+.sl-c .ic{width:26px;height:26px}
+.sl-b,.rl-b{position:relative;flex:0 1 700px;height:3px;background:#DADCE8;border-radius:2px}
+.sl-b i,.rl-b i{position:absolute;top:0;height:100%;background:var(--brand);border-radius:2px;transition:left .5s var(--ease)}
+.sl-x{color:var(--ink)!important}.sl-x .ic{color:var(--brand)}
+.sl-x span{display:grid}.sl-x .i-pl{display:none}.sl-x.paused .i-pl{display:grid}.sl-x.paused .i-pa{display:none}
+@media(max-width:900px){
+  .sls{height:520px}.sl{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .sl-t{padding:32px 24px 0;gap:14px}.cta{height:52px;padding:0 32px;font-size:19px}
+  .art .dg,.s1 .dg,.s2 .dg{right:50%;transform:translateX(50%);bottom:18px;width:250px}.art .disc,.s1 .disc{width:240px;right:50%;transform:translate(50%,-50%)}
+  .s1 .sc{width:118px;height:118px;font-size:17px;top:6px}.s1 .sc small{font-size:10px}.fl{display:none}
+  .lc{width:104px;padding:14px 12px}.lc b{font-size:17px}.lc i u{height:24px}
+}
+
+/* trust strip */
+.tr{background:var(--base)}
+.tr .w{display:flex;justify-content:space-between;align-items:center;gap:16px 40px;min-height:84px;flex-wrap:wrap;padding-block:14px}
+.tr-r{display:flex;align-items:center;gap:14px;font-size:17px}
+.tr-r b{font-weight:700}
+.st{display:inline-flex;gap:3px}
+.st i{width:20px;height:20px;border-radius:4px;background:var(--brand);color:#fff;display:grid;place-items:center}
+.st .ic{width:14px;height:14px}
+.tr-l{border:1.500px dashed #B7BACD;border-radius:8px;padding:8px 18px;font-size:13px;color:var(--mute)}
+.tr-o{display:flex;align-items:center;gap:14px;font-size:17px}
+.av{display:flex}.av i{width:44px;height:44px;border-radius:50%;background:var(--lilac);border:3px solid var(--base);margin-left:-12px}.av i:first-child{margin-left:0}.av i:nth-child(2){background:var(--mint)}
+@media(max-width:900px){.tr .w{justify-content:center}.tr-l{display:none}}
+
+.sec{padding:44px 0 0}
+.sh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 24px;margin-bottom:20px}
+.sh h2{font-size:27px}
+.sh.rule{padding-bottom:16px;border-bottom:2px solid var(--line)}
+.lk{color:var(--brand);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.lk:hover{text-decoration:underline;text-underline-offset:4px}
+
+/* finder */
+.ft{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:end}
+.ft button{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 16px;align-items:center;text-align:left;border-radius:24px 24px 0 0;padding:20px 24px 22px;transition:padding .3s var(--ease),filter .2s}
+.ft button span{grid-row:1/3;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16)}
+.ft button .ic{width:26px;height:26px}
+.ft button b{font:700 24px/1.1 var(--display)}
+.ft button small{font-size:15px;opacity:.86}
+.ft .t1{background:var(--ink);color:#fff}.ft .t2{background:var(--brand);color:#fff}.ft .t3{background:var(--mint);color:var(--ink)}
+.ft .t3 span{background:rgba(41,40,60,.1)}
+.ft button:not(.on){filter:saturate(.85)}
+.ft button:not(.on):hover{padding-bottom:30px}
+.ft button.on{padding-bottom:34px}
+.ft button.on::after{content:"";position:absolute;left:50%;bottom:-1px;width:22px;height:11px;margin-left:-11px;background:#fff;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.fp{border:2px solid var(--line);border-top:0;border-radius:0 0 24px 24px;padding:28px 28px 30px}
+.circ{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:14px}
+.ci{display:grid;justify-items:center;gap:10px;font-weight:600;font-size:15px}
+.ci-d{position:relative;width:100%;max-width:124px;aspect-ratio:1;border-radius:50%;background:var(--mint-l);padding:16% 12%;display:grid;place-items:center;transition:background .25s,box-shadow .25s,transform .3s var(--ease)}
+.ci:hover .ci-d{transform:translateY(-4px);background:var(--mint)}
+.ci.on .ci-d{background:var(--mint);box-shadow:0 0 0 4px #fff,0 0 0 7px var(--brand)}
+.ci.on .ci-d::after{content:"";position:absolute;right:2px;top:2px;width:26px;height:26px;border-radius:50%;background:var(--brand) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.500l4 4L18 8' fill='none' stroke='%23fff' stroke-width='2.600' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat;border:2px solid #fff}
+.ci.on .dog-z{animation:pulse 1.800s ease-in-out infinite}
+.dog{display:block;width:100%;height:auto}
+.gr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 24px}
+.gr h4{font-size:17px;margin-bottom:10px}
+.chs{display:flex;flex-wrap:wrap;gap:8px}
+.ch{min-height:40px;padding:6px 16px;border-radius:999px;box-shadow:inset 0 0 0 1.500px #C9CCDC;font-size:15px;font-weight:500;line-height:1.2;text-align:left;transition:box-shadow .2s,background .2s,color .2s;animation:rise .35s var(--ease) both}
+.ch:hover{box-shadow:inset 0 0 0 2px var(--brand);color:var(--brand)}
+.ch.on{background:var(--brand);color:#fff;box-shadow:none}
+.rf{display:grid;gap:16px;margin-top:24px;padding-top:22px;border-top:1px dashed #C9CCDC}
+.rf-r{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;align-items:start}
+.rf-r>b{font:700 16px/1.25 var(--display);padding-top:10px}
+.sm{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:24px;padding:14px 16px;background:var(--base);border-radius:14px;font-size:15px}
+.sm b{margin-right:6px}
+.sm .x{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;border-radius:999px;padding:5px 8px 5px 14px;font-weight:500}
+.sm .x .ic{width:16px;height:16px;opacity:.8}.sm .x:hover .ic{opacity:1}
+.sm .cl{margin-left:auto;color:var(--brand);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--mint-l);border-radius:12px;padding:12px 14px;font-size:14.500px;margin:16px 0 0}
+.note .ic{color:var(--brand);margin-top:1px}
+.fo{margin-top:26px}
+.fo h3{font-size:22px;margin-bottom:14px}
+.hint{margin-top:24px;padding:18px;border-radius:14px;background:var(--base);color:var(--mute);text-align:center}
+@media(max-width:1000px){.ft{gap:8px}.ft button{grid-template-columns:1fr;padding:14px 14px 16px}.ft button span{display:none}.ft button b{font-size:18px}.ft button small{display:none}.ft button.on{padding-bottom:24px}
+  .fp{padding:20px 16px 22px}.circ{grid-template-columns:repeat(4,minmax(0,1fr))}.gr{grid-template-columns:1fr}.rf-r{grid-template-columns:1fr;gap:6px}.rf-r>b{padding-top:0}}
+
+/* rails */
+.rl-t{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:6px 3px 10px;margin:-6px -3px 0}
+.rl-t::-webkit-scrollbar{display:none}
+.rl-t>*{flex:0 0 auto;scroll-snap-align:start}
+.rl-c{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:16px}
+.rl-c.off{display:none}
+.rl-c button{color:var(--brand);display:grid}.rl-c button:disabled{opacity:.3;cursor:default}
+.rl-c .ic{width:26px;height:26px}
+.p5>*{flex-basis:calc((100% - 64px)/5)}
+.p4>*{flex-basis:calc((100% - 48px)/4)}
+.p3>*{flex-basis:calc((100% - 32px)/3)}
+@media(max-width:1100px){.p5>*{flex-basis:calc((100% - 48px)/4)}.p4>*{flex-basis:calc((100% - 32px)/3)}}
+@media(max-width:860px){.p5>*,.p4>*{flex-basis:calc((100% - 32px)/3)}.p3>*{flex-basis:calc((100% - 16px)/2)}}
+@media(max-width:620px){.p5>*,.p4>*{flex-basis:calc((100% - 16px)/2.150)}.p3>*{flex-basis:86%}}
+
+/* product card */
+.pc{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;transition:border-color .2s,box-shadow .3s,transform .3s var(--ease);animation:rise .5s var(--ease) both;animation-delay:calc(var(--i,0)*.05s)}
+.pc:hover{border-color:var(--brand);box-shadow:0 18px 30px -20px rgba(75,67,168,.6);transform:translateY(-4px)}
+.pc-i{position:relative;display:block;aspect-ratio:1/.92;background:var(--base);padding:34px 14px 6px;overflow:hidden;transition:background .3s}
+.pc:hover .pc-i{background:var(--mint-l)}
+.pc-i .dog{transition:transform .5s var(--ease)}
+.pc:hover .pc-i .dog{transform:scale(1.070)}
+.pc:hover .dog-z{animation:pulse 1.600s ease-in-out infinite}
+.tag{position:absolute;left:0;top:12px;display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 10px;border-radius:0 6px 6px 0;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:var(--brand);color:#fff}
+.tag.l1{background:var(--mint);color:var(--ink)}.tag.l3{background:var(--ink)}.tag.l0{background:var(--lilac);color:var(--ink)}
+.mt{display:inline-flex;gap:2px}.mt b{width:5px;height:11px;border-radius:1.500px;background:currentColor;opacity:.3}.mt b.f{opacity:1}
+.pc-o{position:absolute;left:8px;right:8px;bottom:8px;background:#fff;border-radius:8px;padding:9px 11px;font-size:13px;line-height:1.35;box-shadow:0 8px 18px -10px rgba(41,40,60,.5);transform:translateY(130%);transition:transform .4s var(--ease)}
+.pc-o b{display:block;color:var(--brand);font-size:12px}
+.pc:hover .pc-o,.pc:focus-within .pc-o{transform:none}
+.pc-b{display:flex;flex-direction:column;gap:4px;padding:14px 16px 16px;flex:1}
+.pc-k{font:700 18px/1.2 var(--display)}.pc-k:hover{color:var(--brand)}
+.pc-n{font-size:14px;line-height:1.4;color:#4D4C63;min-height:2.800em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pc-w{font-size:13px;color:var(--brand);font-weight:500}
+.pc-p{font-weight:700;font-size:17px;margin:6px 0 10px;font-variant-numeric:tabular-nums}
+.pc .bo{margin-top:auto;width:100%}
+.pc:hover .bo{background:var(--brand);color:#fff}
+@media(hover:none){.pc-o{display:none}}
+
+/* common conditions tiles */
+.tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.ti{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;min-height:150px;border-radius:16px;padding:14px;text-align:left;color:#fff;background:var(--brand);overflow:hidden;transition:transform .3s var(--ease)}
+.ti:nth-child(3n+2){background:var(--ink)}.ti:nth-child(3n){background:var(--mint);color:var(--ink)}
+.ti:hover{transform:translateY(-4px)}
+.ti b{font:700 19px/1.1 var(--display);position:relative}
+.ti i{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;transition:transform .3s var(--ease)}
+.ti:hover i{transform:translateX(4px)}
+.ti i .ic{width:16px;height:16px}
+.ti span{position:absolute;right:-18px;top:-6px;width:130px;opacity:.9;transition:transform .5s var(--ease)}
+.ti:hover span{transform:scale(1.080) translateX(-4px)}
+@media(max-width:1000px){.tl{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.tl{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ti{min-height:120px}.ti b{font-size:16px}}
+
+.tabs{display:flex;gap:6px 34px;flex-wrap:wrap;justify-content:center;border-bottom:2px solid var(--line);margin-bottom:22px}
+.tabs button{position:relative;padding:10px 4px 14px;font:600 17px var(--display);color:var(--brand)}
+.tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.tabs button.on{color:var(--ink)}.tabs button.on::after{transform:none}
+
+/* guide cards */
+.gc{display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:16px;overflow:hidden;background:var(--mint-l);padding-bottom:24px;transition:transform .3s var(--ease)}
+.gc:hover{transform:translateY(-5px)}
+.gc-a{position:relative;width:100%;aspect-ratio:1/.86;display:grid;place-items:center;overflow:hidden}
+.gc h3{font-size:25px;margin-top:18px}
+.gc p{margin:6px 16px 16px;font-size:16px}
+.gc.g1{background:var(--brand);color:#fff}.gc.g2{background:var(--mint)}.gc.g3{background:var(--ink);color:#fff}.gc.g4{background:var(--lilac)}
+.tp{position:relative;width:76%;height:40px;border-radius:6px;background:#fff;transform:rotate(-8deg);box-shadow:0 12px 20px -12px rgba(0,0,0,.5);background-image:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 18px);background-size:100% 40%;background-repeat:no-repeat}
+.tp::after{content:"";position:absolute;inset:auto 0 0 0;height:30%;background:repeating-linear-gradient(90deg,var(--brand) 0 2px,transparent 2px 9px)}
+.g2 .dg{width:74%}
+.lv3{display:flex;gap:10px;align-items:flex-end;width:62%;height:56%}
+.lv3 i{flex:1;border-radius:10px 10px 0 0;background:var(--mint)}.lv3 i:nth-child(1){height:38%}.lv3 i:nth-child(2){height:68%}.lv3 i:nth-child(3){height:100%}
+.bk{width:54%;aspect-ratio:1.300;border-radius:8px;background:#fff;box-shadow:0 14px 22px -14px rgba(41,40,60,.6);display:grid;grid-template-columns:1fr 1fr;gap:0 14px;padding:16px 14px;transform:rotate(4deg);position:relative}
+.bk::before{content:"";position:absolute;left:50%;top:8px;bottom:8px;width:1.500px;background:var(--line)}
+.bk b{display:block}.bk i{display:block;height:6px;border-radius:3px;background:var(--lilac);margin-bottom:9px}.bk b i:first-child{background:var(--brand);width:70%}
+
+/* made in the UK */
+.uk{margin-top:52px;background:var(--mint);position:relative;overflow:hidden}
+.uk .rb{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.uk-g{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;padding-block:64px 40px}
+.uk h2{font-size:clamp(38px,5vw,68px);font-weight:800;line-height:.98;letter-spacing:-.03em}
+.uk .tape{background:var(--brand);color:#fff}
+.uk-g p{font-size:19px;margin-top:20px;max-width:34em}
+.uk-f{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:28px 0 30px}
+.uk-f li{background:#fff;border-radius:16px;padding:16px;display:grid;gap:4px}
+.uk-f .ic{width:30px;height:30px;color:var(--brand);margin-bottom:4px}
+.uk-f b{font:700 17px/1.2 var(--display)}.uk-f span{font-size:14px;color:var(--mute)}
+.uk-a{position:relative;min-height:420px}
+.fr{position:absolute;background:#fff;padding:10px;border-radius:20px;box-shadow:0 24px 40px -24px rgba(41,40,60,.6);transition:transform .5s var(--ease)}
+.fr i{display:grid;place-items:center;width:100%;height:100%;border-radius:12px;background:var(--base);color:var(--mute);font-style:normal;font-size:13px}
+.fr.f1{left:2%;top:6%;width:52%;aspect-ratio:4/3;transform:rotate(-6deg)}
+.fr.f2{right:0;top:0;width:42%;aspect-ratio:3/4;transform:rotate(5deg)}
+.fr.f3{left:26%;bottom:0;width:46%;aspect-ratio:4/3;transform:rotate(3deg)}
+.uk-a:hover .f1{transform:rotate(-3deg) translateY(-6px)}.uk-a:hover .f2{transform:rotate(2deg) translateY(-6px)}.uk-a:hover .f3{transform:rotate(0deg) translateY(-6px)}
+.uk .sc{right:4%;bottom:6%;width:150px;height:150px;font-size:23px;color:#fff;transform:rotate(-10deg)}
+.uk .sc .sc-bg{fill:var(--brand)}
+.uk .sc small{display:block;font:600 12px/1.2 var(--sans);margin-top:4px}
+.vsr{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:20px 20px 0 0;overflow:hidden}
+.vsr div{padding:20px 28px;display:grid;gap:2px}
+.vsr small{font-size:14px;font-weight:600}
+.vsr b{font:700 23px/1.15 var(--display)}
+.vsr .us{background:var(--ink);color:#fff}.vsr .us small{color:var(--mint)}
+.vsr .ot{background:rgba(255,255,255,.6);color:#4D4C63}
+@media(max-width:960px){.uk-g{grid-template-columns:1fr;padding-block:40px 28px;gap:28px}.uk-f{grid-template-columns:1fr}.uk-a{min-height:320px}.vsr{grid-template-columns:1fr}}
+
+/* reviews */
+.rv{border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px;background:#fff}
+.rv h3{font-size:19px}
+.rv p{color:#4D4C63}
+.rv-w{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
+.rv-w i{width:44px;height:44px;border-radius:10px;background:var(--base);flex:none}
+.rv-w b{display:block}.rv-w span{color:var(--mute)}
+.rv-v{display:inline-flex;align-items:center;gap:5px;color:var(--brand);font-size:13px;font-weight:600}
+.rv-v .ic{width:16px;height:16px}
+
+/* sign up */
+.nl{margin-top:56px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.nl .rb{position:absolute;inset:0;width:100%;height:100%}
+.nl .w{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:end}
+.nl-t{padding:56px 0}
+.nl h2{font-size:clamp(32px,4vw,50px);font-weight:800;letter-spacing:-.02em}
+.nl p{font-size:18px;margin-top:12px;max-width:34em}
+.nl form{display:flex;gap:10px;margin-top:24px;max-width:540px}
+.nl input{flex:1;min-width:0;height:54px;border-radius:999px;border:0;padding:0 24px;background:#fff;color:var(--ink)}
+.nl .cta{height:54px;font-size:19px;padding:0 34px}
+.nl small{display:block;margin-top:14px;font-size:13px;opacity:.75}
+.nl .dg{align-self:end;margin-bottom:-6px}
+@media(max-width:900px){.nl .w{grid-template-columns:1fr}.nl .dg{display:none}.nl form{flex-direction:column}.nl input{flex:none}.nl-t{padding:40px 0}}
+
+/* footer */
+.ft2{background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.14);padding:48px 0 26px}
+.ft-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.500fr) minmax(0,1.100fr);gap:32px}
+.ft2 h3{font-size:18px;margin-bottom:16px}
+.ft2 li{margin-bottom:9px}
+.ft2 li a{display:inline-flex;align-items:center;gap:12px;opacity:.9}
+.ft2 li a::before{content:"";width:8px;height:8px;background:linear-gradient(var(--brand-l),var(--brand-l)) center/100% 2px no-repeat,linear-gradient(var(--brand-l),var(--brand-l)) center/2px 100% no-repeat}
+.ft2 li a:hover{opacity:1;color:var(--mint)}
+.ft-s p{opacity:.9;margin-bottom:16px}
+.ft-s .bp{width:100%;background:var(--brand);margin-bottom:10px;font-size:14px}.ft-s .bp:hover{background:var(--brand-l)}
+.ft-s .ic{width:17px;height:17px}
+.ft-o .tr-l{display:inline-block;border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.8);margin-bottom:14px}
+.ft-o .st i{background:var(--mint);color:var(--ink)}
+.so{display:flex;gap:10px;margin-top:16px}.so a{width:38px;height:38px;border-radius:50%;box-shadow:inset 0 0 0 1.500px rgba(255,255,255,.6);display:grid;place-items:center;font-size:13px;font-weight:700}.so a:hover{background:#fff;color:var(--ink)}
+.ft-b{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;opacity:.75}
+@media(max-width:1000px){.ft-g{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body>
-<div class="vs"><div class="wrap"><span>Homepage version</span><a class="on" href="home-a.html">A</a><a href="home-b.html">B</a><a href="home-c.html">C</a></div></div>
-<!--@header.html-->
+<div class="vs"><div class="w"><span>Homepage version</span><a class="on" href="home-a.html">A</a><a href="home-b.html">B</a><a href="home-c.html">C</a></div></div>
+
+<header class="hd">
+  <div class="u"><div class="w">
+    <a class="u-m" href="#">{i:info}<span>Free UK delivery over £00 | Made in the North West of England</span></a>
+    <nav class="u-l" aria-label="Help"><a href="#">Sizing guide</a><a href="#">Delivery</a><a href="#">Contact us</a></nav>
+  </div></div>
+  <div class="hb"><div class="w">
+    <button class="burger" aria-label="Menu">{i:menu}</button>
+    <a class="logo" href="#" aria-label="Brand name home">brand<br>name<i>+</i></a>
+    <form class="srch" role="search" onsubmit="return false">{i:search}<input type="search" id="q" placeholder="Search braces, conditions or symptoms" aria-label="Search"></form>
+    <a class="hi" href="#">{i:user}<span>Sign in / Register</span></a>
+    <a class="hi" href="#">{i:basket}<span>Basket</span></a>
+  </div></div>
+  <nav class="nv" id="nv" aria-label="Departments">
+    <div class="w">
+      <button class="nv-i" data-m="brace" aria-expanded="false">Braces {i:chev-down}</button>
+      <button class="nv-i" data-m="splint" aria-expanded="false">Splints {i:chev-down}</button>
+      <button class="nv-i" data-m="wrap" aria-expanded="false">Wraps {i:chev-down}</button>
+      <button class="nv-i" data-m="mobility" aria-expanded="false">Lifting Harnesses {i:chev-down}</button>
+      <button class="nv-i" data-m="area" aria-expanded="false">Shop By Body Area {i:chev-down}</button>
+      <button class="nv-i" data-m="cond" aria-expanded="false">Shop By Condition {i:chev-down}</button>
+      <a class="nv-i hot" href="#uk">Made In The UK</a>
+      <button class="nv-i" data-m="advice" aria-expanded="false">Advice {i:chev-down}</button>
+    </div>
+    <div class="mm" id="mm"></div>
+  </nav>
+</header>
+<div class="usp"><div class="w">
+  <span>{i:pin}<span><b>Made in the UK:</b> <span class="lg">cut and stitched in the </span>North West of England</span></span>
+  <span>{i:ruler}<span><b>Sizing guide</b> with every product</span></span>
+</div></div>
 
 <main>
-<section class="hero" id="finder"><div class="wrap">
-  <div class="hero-t">
-    <div><h1>Dog braces, splints and support harnesses</h1>
-    <p>Orthopaedic supports for joints, legs and backs. Select the body area, condition and symptoms to see which products are suitable.</p></div>
-    <div class="made"><span><b>Made in the UK</b>North West of England</span><a class="link" href="#uk">Why it matters</a></div>
-  </div>
-  <form class="fb" onsubmit="return false">
-    <h2>Find the right support</h2>
-    <div class="fb-g">
-      <div><label class="lbl" for="f-area">Body area</label><select class="sel" id="f-area"></select></div>
-      <div><label class="lbl" for="f-cond">Condition</label><select class="sel" id="f-cond"></select></div>
-      <div><label class="lbl" for="f-sym">Main symptom</label><select class="sel" id="f-sym"></select></div>
-      <a class="btn" href="#products">Show products</a>
+<section class="he" aria-label="Offers and information"><div class="w" id="hero">
+  <div class="sls">
+    <div class="sl s1 on">
+      <div class="sl-t"><h2>Made in<br><span class="tape">the UK</span></h2><p>Dog braces, splints and harnesses</p><a class="cta" href="#range">Shop the range</a><small>Most other brands are made overseas</small></div>
+      <div class="art"><span class="disc"></span><span class="px" style="left:6%;top:18%;color:#BFE9D5"></span><span class="px" style="left:16%;top:62%;color:#8E88DB;animation-delay:.800s;width:18px;height:18px"></span><span class="px" style="right:6%;bottom:16%;color:#BFE9D5;animation-delay:1.600s;width:20px;height:20px"></span>
+        <span class="dg" data-dog="knee" data-theme="onbrand"></span>
+        <span class="sc" data-scallop="14"><span>Cut and<br>stitched<small>in the North West</small></span></span></div>
     </div>
-    <p class="fb-x" id="fb-x" hidden><span id="fb-n"></span> <button type="button" id="reset">Clear selection</button></p>
-  </form>
-</div></section>
-
-<section class="sec" id="products"><div class="wrap">
-  <div class="sec-h"><div><h2 id="p-h"></h2><p id="p-p"></p></div></div>
-  <p class="note" id="p-note" hidden style="margin-bottom:16px"></p>
-  <div class="grid" id="p-grid"></div>
-</div></section>
-
-<section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="sec-h"><div><h2>Shop by body area</h2></div></div>
-  <div class="areas" id="areas"></div>
-</div></section>
-
-<section class="uk sec" id="uk"><div class="wrap uk-g">
-  <div>
-    <h2>Manufactured in the North West of England</h2>
-    <p>Most dog braces and splints sold in the UK are manufactured overseas and imported. Ours are made in our own workshop in the North West of England.</p>
-    <p>That means we control materials, stitching and inspection ourselves, and every order is dispatched from the place it was made.</p>
-    <a class="btn line" href="#">About our manufacturing</a>
+    <div class="sl s2">
+      <div class="sl-t"><h2>Find the right support</h2><p>By body area, condition or symptom</p><a class="cta" href="#finder">Start here</a></div>
+      <div class="art"><svg class="rb" viewBox="0 0 600 440" preserveAspectRatio="none" aria-hidden="true"><path d="M-80 400 C 120 400 180 250 300 190 C 420 130 470 60 700 40" fill="none" stroke="#4B43A8" stroke-width="54" stroke-linecap="round"/></svg>
+        <span class="px" style="left:8%;top:22%;color:#BFE9D5"></span><span class="px" style="right:10%;top:14%;color:#8E88DB;width:18px;height:18px;animation-delay:1s"></span>
+        <span class="dg cyc" data-dog="carpal-brace,elbow,back,hip,knee,hock-brace" data-theme="ondark"></span>
+        <span class="fl" style="left:2%;top:26%;transform:rotate(-5deg)">{i:check}Knee</span><span class="fl" style="right:5%;top:42%;transform:rotate(4deg)">{i:check}Arthritis</span><span class="fl" style="left:12%;bottom:12%;transform:rotate(3deg)">{i:check}Limping</span></div>
+    </div>
+    <div class="sl s3">
+      <div class="sl-t"><h2>Wrap, brace or splint?</h2><p>Three levels of support, explained</p><a class="cta i" href="#help">Compare support levels</a></div>
+      <div class="art">
+        <div class="lc" style="left:2%;transform:translateY(-58%) rotate(-7deg)"><i><u class="f"></u><u></u><u></u></i><b>Wrap</b><small>Light support</small></div>
+        <div class="lc" style="left:32%;transform:translateY(-44%) rotate(2deg);z-index:1"><i><u class="f"></u><u class="f"></u><u></u></i><b>Brace</b><small>Firm support</small></div>
+        <div class="lc" style="left:62%;transform:translateY(-56%) rotate(8deg)"><i><u class="f"></u><u class="f"></u><u class="f"></u></i><b>Splint</b><small>Rigid support</small></div></div>
+    </div>
   </div>
-  <div>
-    <table class="org">
-      <thead><tr><th></th><th>Our products</th><th>Most other brands</th></tr></thead>
-      <tbody>
-        <tr><th>Manufactured</th><td class="us">North West of England</td><td>Overseas</td></tr>
-        <tr><th>Inspected</th><td class="us">In our workshop, before dispatch</td><td>Varies</td></tr>
-        <tr><th>Dispatched from</th><td class="us">Our workshop</td><td>Importer or warehouse</td></tr>
-      </tbody>
-    </table>
-    <div class="uk-slots"><div class="slot">Workshop photo</div><div class="slot">Workshop photo</div><div class="slot">Workshop photo</div></div>
-  </div>
+  <div class="sl-c"><button class="sl-p" aria-label="Previous banner">{i:chev-left}</button><div class="sl-b"><i></i></div><button class="sl-n" aria-label="Next banner">{i:chev-right}</button>
+    <button class="sl-x"><span class="i-pa">{i:pause}</span><span class="i-pl">{i:play}</span><span class="sl-xt">Pause</span></button></div>
 </div></section>
 
-<section class="sec"><div class="wrap">
-  <div class="sec-h"><div><h2>Customer reviews</h2></div><a class="link" href="#">All reviews</a></div>
-  <div class="rvs">
-    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p>Customer review to be added.</p><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p>Customer review to be added.</p><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-    <div class="rv"><span class="stars" aria-label="5 out of 5">★★★★★</span><p>Customer review to be added.</p><p class="rv-w"><b>Customer name</b>Dog breed. Product purchased.</p></div>
-  </div>
+<section class="tr" aria-label="Reviews"><div class="w">
+  <div class="tr-r"><b>Excellent</b><span class="st"><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i></span><span><b>0.0</b>/5 based on 0 reviews</span></div>
+  <span class="tr-l">Review platform logo</span>
+  <div class="tr-o"><span>Join the <b>dog owners</b> who trust us</span><span class="av"><i></i><i></i><i></i></span></div>
 </div></section>
 
-<section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="helps">
-    <a href="#"><b>Sizing guide</b><span>How to measure your dog for each product.</span></a>
-    <a href="#"><b>Fitting instructions</b><span>How to fit and adjust a brace or splint.</span></a>
-    <a href="#"><b>Contact us</b><span>Ask a question about a product or an order.</span></a>
+<section class="sec" id="finder"><div class="w">
+  <div class="ft" role="tablist" id="ft">
+    <button class="t1 on" data-k="area" role="tab" aria-selected="true"><span>{i:paw}</span><b>Shop by body area</b><small>Choose where your dog needs support</small></button>
+    <button class="t2" data-k="cond" role="tab" aria-selected="false"><span>{i:stethoscope}</span><b>Shop by condition</b><small>Choose your vet's diagnosis</small></button>
+    <button class="t3" data-k="sym" role="tab" aria-selected="false"><span>{i:search}</span><b>Shop by symptom</b><small>Choose what you are seeing</small></button>
+  </div>
+  <div class="fp">
+    <div id="fd-main"></div>
+    <div id="fd-ref"></div>
+    <div id="fd-sum"></div>
+    <div class="fo rl" id="fd-out" hidden>
+      <h3>Suitable supports</h3>
+      <div class="rl-t p5" id="fd-res"></div>
+      <div class="rl-c"><button class="rl-p" aria-label="Previous">{i:chev-left}</button><div class="rl-b"><i></i></div><button class="rl-n" aria-label="Next">{i:chev-right}</button></div>
+    </div>
+    <p class="hint" id="fd-hint">Choose a body area, condition or symptom to see the supports that suit your dog.</p>
   </div>
 </div></section>
+
+<section class="sec"><div class="w">
+  <div class="sh"><h2>Common conditions</h2><a class="lk" href="#finder" id="allc">All conditions {i:chev-right}</a></div>
+  <div class="tl" id="tl"></div>
+</div></section>
+
+<section class="sec" id="range"><div class="w rl" id="rg">
+  <div class="sh rule"><h2>The range</h2></div>
+  <div class="tabs" role="tablist" id="rt"><button class="on" data-k="">All supports</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div>
+  <div class="rl-t p5" id="rg-t"></div>
+  <div class="rl-c"><button class="rl-p" aria-label="Previous">{i:chev-left}</button><div class="rl-b"><i></i></div><button class="rl-n" aria-label="Next">{i:chev-right}</button></div>
+</div></section>
+
+<section class="sec" id="help"><div class="w rl" id="gd">
+  <div class="sh"><h2>Help and advice</h2><a class="lk" href="#">All guides {i:chev-right}</a></div>
+  <div class="rl-t p4">
+    <a class="gc g1" href="#"><div class="gc-a"><span class="tp"></span></div><h3>Sizing guide</h3><p>How to measure your dog</p><span class="bp w1">Read guide</span></a>
+    <a class="gc g2" href="#"><div class="gc-a"><span class="dg" data-dog="carpal-brace,hock-brace" data-theme="onmint"></span></div><h3>Fitting instructions</h3><p>How to fit and adjust a support</p><span class="bp">Read guide</span></a>
+    <a class="gc g3" href="#"><div class="gc-a"><span class="lv3"><i></i><i></i><i></i></span></div><h3>Wrap, brace or splint?</h3><p>Support levels explained</p><span class="bp w1">Read guide</span></a>
+    <a class="gc g4" href="#"><div class="gc-a"><span class="bk"><b><i></i><i></i><i></i><i></i></b><b><i></i><i></i><i></i></b></span></div><h3>Condition guides</h3><p>What each diagnosis means</p><span class="bp">Read guide</span></a>
+  </div>
+  <div class="rl-c"><button class="rl-p" aria-label="Previous">{i:chev-left}</button><div class="rl-b"><i></i></div><button class="rl-n" aria-label="Next">{i:chev-right}</button></div>
+</div></section>
+
+<section class="uk" id="uk">
+  <svg class="rb" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true"><path d="M-60 520 C 260 560 420 300 640 330 C 860 360 760 560 940 520 C 1160 470 1180 120 1500 90" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="46" stroke-linecap="round"/></svg>
+  <div class="w uk-g">
+    <div>
+      <h2>Made in the <span class="tape">North West</span> of England</h2>
+      <p>Most dog braces sold in the UK are made overseas. Ours are cut, stitched and checked in our own workshop.</p>
+      <ul class="uk-f">
+        <li>{i:scissors}<b>Cut and stitched here</b><span>In our own workshop</span></li>
+        <li>{i:check-circle}<b>Checked by hand</b><span>Before it is sent</span></li>
+        <li>{i:box}<b>Sent from where it is made</b><span>Straight to your door</span></li>
+      </ul>
+      <a class="cta d" href="#">See how they are made</a>
+    </div>
+    <div class="uk-a"><div class="fr f1"><i>Workshop photo</i></div><div class="fr f2"><i>Workshop photo</i></div><div class="fr f3"><i>Workshop photo</i></div>
+      <span class="sc" data-scallop="14"><span>UK<br>made<small>North West</small></span></span></div>
+  </div>
+  <div class="w"><div class="vsr"><div class="us"><small>Our supports</small><b>Made in the North West of England</b></div><div class="ot"><small>Most other brands</small><b>Made overseas and imported</b></div></div></div>
+</section>
+
+<section class="sec"><div class="w rl" id="rvs">
+  <div class="sh"><h2>What owners say</h2><a class="lk" href="#">All reviews {i:chev-right}</a></div>
+  <div class="rl-t p3" id="rv-t"></div>
+  <div class="rl-c"><button class="rl-p" aria-label="Previous">{i:chev-left}</button><div class="rl-b"><i></i></div><button class="rl-n" aria-label="Next">{i:chev-right}</button></div>
+</div></section>
+
+<section class="nl">
+  <svg class="rb" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M700 420 C 820 260 980 330 1080 240 C 1200 130 1240 40 1500 20" fill="none" stroke="#4B43A8" stroke-width="50" stroke-linecap="round"/></svg>
+  <div class="w">
+    <div class="nl-t"><h2>Fitting tips and new products, by email</h2><p>Advice on measuring, fitting and caring for your dog's support.</p>
+      <form onsubmit="return false"><input type="email" id="em" placeholder="Email address" aria-label="Email address"><button class="cta">Sign up</button></form><small>You can unsubscribe at any time.</small></div>
+    <span class="dg" data-dog="whole" data-theme="ondark" data-shadow="0"></span>
+  </div>
+</section>
 </main>
-<!--@footer.html-->
+
+<footer class="ft2"><div class="w">
+  <div class="ft-g">
+    <div><h3>Orders</h3><ul><li><a href="#">Delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Track your order</a></li><li><a href="#">Sizing guide</a></li><li><a href="#">FAQs</a></li></ul></div>
+    <div><h3>Shop</h3><ul><li><a href="#range">Braces</a></li><li><a href="#range">Splints</a></li><li><a href="#range">Wraps</a></li><li><a href="#range">Lifting harnesses</a></li><li><a href="#finder">Shop by condition</a></li></ul></div>
+    <div><h3>About us</h3><ul><li><a href="#uk">Made in the UK</a></li><li><a href="#">Our story</a></li><li><a href="#help">Advice</a></li><li><a href="#">Contact us</a></li></ul></div>
+    <div class="ft-s"><h3>Customer service</h3><p>Our team can help you choose the right support and the right size.</p><a class="bp" href="#">{i:mail} Email us</a><a class="bp" href="#">{i:phone} Call us</a><a class="bp" href="#">{i:chat} Chat now</a></div>
+    <div class="ft-o"><h3>Our customers</h3><span class="tr-l">Review platform badge</span><div class="tr-r" style="font-size:15px"><span class="st"><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i></span><span>0.0/5</span></div><div class="so"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="YouTube">yt</a><a href="#" aria-label="TikTok">tt</a></div></div>
+  </div>
+  <div class="ft-b"><span>© 2026 Brand name</span><span>Product guidance on this site does not replace advice from your vet.</span></div>
+</div></footer>
 
 <script>
 /*@data.js*/
+/*@dog.js*/
+/*@lib.js*/
 (function(){
-  var $=function(id){return document.getElementById(id)};
-  var sA=$('f-area'),sC=$('f-cond'),sS=$('f-sym');
-  function fill(el,first,list,keep){
-    el.innerHTML='<option value="">'+first+'</option>'+list.map(function(o){return '<option value="'+o.id+'">'+o.name+'</option>'}).join('');
-    el.value=list.some(function(o){return o.id===keep})?keep:'';
+  var $=UI.$,$$=UI.$$,id=function(x){return document.getElementById(x)};
+  function meter(p){var n=BR.LV[p.type];return n?'<i class="mt">'+[1,2,3].map(function(k){return '<b'+(k<=n?' class="f"':'')+'></b>'}).join('')+'</i>':''}
+  function card(p,i,why){
+    var uses=BR.tidy(BR.uses(p).slice(0,3).join(', '));
+    return '<article class="pc" style="--i:'+i+'"><a class="pc-i" href="#" aria-label="'+p.name+'"><span class="tag l'+BR.LV[p.type]+'">'+meter(p)+p.sup+'</span>'+DOG.svg({zone:DOG.fit[p.id]})+
+      '<span class="pc-o"><b>Used for</b>'+uses+'</span></a><div class="pc-b"><a class="pc-k" href="#">'+p.name+'</a><p class="pc-n">'+p.d+'</p>'+
+      (why?'<span class="pc-w">Matches: '+BR.tidy(why.slice(0,2).join(', '))+'</span>':'')+'<span class="pc-p">£00.00</span><a class="bo" href="#">Select size</a></div></article>';
   }
-  function update(){
-    fill(sC,'Not diagnosed / not sure',BR.conditionsFor(sA.value),sC.value);
-    fill(sS,'Any symptom',BR.symptomsFor(sA.value,sC.value),sS.value);
-    var sel={area:sA.value||null,cond:sC.value||null,syms:sS.value?[sS.value]:[]};
-    var any=sel.area||sel.cond||sel.syms.length, r=BR.match(sel), n=r.items.length;
-    $('fb-x').hidden=!any; $('fb-n').textContent=n+(n===1?' product is':' products are')+' suitable.';
-    $('p-h').textContent=any?n+(n===1?' suitable product':' suitable products'):'All products';
-    var bits=[];
-    if(sel.area)bits.push(BR.find(BR.areas,sel.area).name);
-    if(sel.cond)bits.push(BR.find(BR.conditions,sel.cond).name);
-    if(sel.syms.length)bits.push(BR.find(BR.symptoms,sel.syms[0]).name);
-    $('p-p').textContent=any?(n?'Selected: '+bits.join(' / '):'No product matches this selection. Change an answer or contact us for advice.'):'14 supports, from light wraps to rigid splints.';
-    var note=$('p-note'); note.hidden=!r.likely.length;
-    note.textContent=r.likely.length?'This symptom is commonly associated with '+BR.tidy(r.likely.join(', '))+'. Your vet can confirm a diagnosis.':'';
-    BR.grid($('p-grid'),r.items,any);
+
+  /* mega menu */
+  var promo='<div class="mp-c"><h3>Not sure what your dog needs?</h3><p>Choose the body area, condition or symptom and we will show the supports that suit.</p><a class="bp" href="#finder">Find the right support</a></div>';
+  var mm='';
+  BR.levels.forEach(function(l){
+    mm+='<div class="mp w" data-p="'+l.type+'" hidden><div class="mp-g"><div><h3>'+BR.typeName[l.type]+': '+l.sup.toLowerCase()+'</h3><ul class="mp-pl">'+BR.byType(l.type).map(function(p){
+      return '<li><a href="#range"><span>'+DOG.svg({zone:DOG.fit[p.id],shadow:false})+'</span><b>'+p.name+'</b><small>'+BR.areaText(p)+'</small></a></li>'}).join('')+'</ul></div>'+promo+'</div></div>';
+  });
+  mm+='<div class="mp w" data-p="area" hidden><h3>Where does your dog need support?</h3><div class="mp-ar">'+BR.areas.map(function(a){
+    return '<button data-pick="area:'+a.id+'"><span>'+DOG.svg({zone:a.id,shadow:false})+'</span><b>'+a.name+'</b><small>'+a.note+'</small></button>'}).join('')+'</div></div>';
+  mm+='<div class="mp w" data-p="cond" hidden><div class="mp-cols">'+BR.condGroups.map(function(g){
+    return '<div><h3>'+g.name+'</h3><ul>'+g.list.map(function(c){return '<li><button data-pick="cond:'+c.id+'">'+c.name+'</button></li>'}).join('')+'</ul></div>'}).join('')+'</div></div>';
+  mm+='<div class="mp w" data-p="advice" hidden><div class="mp-g"><div class="mp-cols" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div><h3>Choosing</h3><ul><li><a href="#help">Wrap, brace or splint?</a></li><li><a href="#finder">Find the right support</a></li><li><a href="#help">Condition guides</a></li></ul></div>'+
+    '<div><h3>Sizing and fitting</h3><ul><li><a href="#help">Sizing guide</a></li><li><a href="#help">Fitting instructions</a></li><li><a href="#">Caring for your support</a></li></ul></div>'+
+    '<div><h3>Help</h3><ul><li><a href="#">Delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact us</a></li></ul></div></div>'+promo+'</div></div>';
+  id('mm').innerHTML=mm;
+  UI.mega(id('nv'));
+
+  /* finder */
+  var sel={area:null,cond:null,syms:[]},tab='area',fr;
+  function chip(k,o,on,i){return '<button class="ch'+(on?' on':'')+'" style="animation-delay:'+(i*.015)+'s" data-'+k+'="'+o.id+'" aria-pressed="'+on+'">'+o.name+'</button>'}
+  function chips(k,list){return '<div class="chs">'+list.map(function(o,i){return chip(k,o,k==='sym'?sel.syms.indexOf(o.id)>-1:sel[k]===o.id,i)}).join('')+'</div>'}
+  function areaList(){return sel.cond?BR.areas.filter(function(a){return BR.find(BR.conditions,sel.cond).areas.indexOf(a.id)>-1}):BR.areas}
+  function draw(){
+    var m='';
+    if(tab==='area')m='<div class="circ">'+BR.areas.map(function(a){var on=sel.area===a.id;
+      return '<button class="ci'+(on?' on':'')+'" data-area="'+a.id+'" aria-pressed="'+on+'" title="'+a.name+'"><span class="ci-d">'+DOG.svg({zone:a.id,shadow:false})+'</span>'+a.s+'</button>'}).join('')+'</div>';
+    else if(tab==='cond')m='<div class="gr">'+BR.condGroups.map(function(g){return '<div><h4>'+g.name+'</h4>'+chips('cond',g.list)+'</div>'}).join('')+'</div>';
+    else m=chips('sym',BR.symptomsFor(sel.area,sel.cond));
+    id('fd-main').innerHTML=m;
+    var any=sel.area||sel.cond||sel.syms.length,rows='';
+    if(any){
+      if(tab!=='area')rows+='<div class="rf-r"><b>Narrow by body area</b>'+chips('area',areaList())+'</div>';
+      if(tab!=='cond')rows+='<div class="rf-r"><b>Narrow by condition</b>'+chips('cond',BR.conditionsFor(sel.area))+'</div>';
+      if(tab!=='sym')rows+='<div class="rf-r"><b>Narrow by symptom</b>'+chips('sym',BR.symptomsFor(sel.area,sel.cond))+'</div>';
+    }
+    id('fd-ref').innerHTML=rows?'<div class="rf">'+rows+'</div>':'';
+    var x=[];
+    if(sel.area)x.push(['area','',BR.find(BR.areas,sel.area).name]);
+    if(sel.cond)x.push(['cond','',BR.find(BR.conditions,sel.cond).name]);
+    sel.syms.forEach(function(s){x.push(['sym',s,BR.find(BR.symptoms,s).name])});
+    id('fd-sum').innerHTML=any?'<div class="sm"><b>Your dog:</b>'+x.map(function(c){return '<button class="x" data-rm="'+c[0]+'" data-v="'+c[1]+'" aria-label="Remove '+c[2]+'">'+c[2]+'{i:close}</button>'}).join('')+'<button class="cl" data-rm="all">Clear all</button></div>':'';
+    var r=BR.match(sel);
+    id('fd-out').hidden=!any;id('fd-hint').hidden=!!any;
+    if(any){
+      var old=$('.note',id('fd-out'));if(old)old.remove();
+      if(r.likely.length)$('h3',id('fd-out')).insertAdjacentHTML('afterend','<p class="note" style="margin:0 0 16px">{i:info}<span>These signs are often seen with '+BR.tidy(r.likely.join(', '))+'. Your vet can confirm a diagnosis.</span></p>');
+      id('fd-res').innerHTML=r.items.length?r.items.map(function(it,i){return card(it.p,i,it.why)}).join(''):'<p class="hint" style="margin:0;flex:1">Nothing matches that combination. Remove one of your choices, or contact us for advice.</p>';
+      fr.update();
+    }
   }
-  fill(sA,'Select a body area',BR.areas,'');
-  [sA,sC,sS].forEach(function(s){s.addEventListener('change',update)});
-  $('reset').addEventListener('click',function(){sA.value=sC.value=sS.value='';update()});
-  $('areas').innerHTML=BR.areas.map(function(a){
-    var n=BR.products.filter(function(p){return p.areas.indexOf(a.id)>-1}).length;
-    return '<button data-a="'+a.id+'"><b>'+a.name+'</b><small>'+a.note+'</small><span>'+n+(n===1?' product':' products')+'</span></button>'}).join('');
-  $('areas').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sA.value=b.dataset.a;sC.value=sS.value='';update();$('finder').scrollIntoView()});
-  update();
+  function fix(){
+    if(sel.cond&&sel.area&&BR.find(BR.conditions,sel.cond).areas.indexOf(sel.area)<0)return false;
+    var ok=BR.symptomsFor(sel.area,sel.cond).map(function(s){return s.id});
+    sel.syms=sel.syms.filter(function(s){return ok.indexOf(s)>-1});return true;
+  }
+  function pick(k,v){
+    if(k==='area'){sel.area=sel.area===v?null:v;if(!fix())sel.cond=null}
+    else if(k==='cond'){sel.cond=sel.cond===v?null:v;if(!fix())sel.area=null}
+    else{var i=sel.syms.indexOf(v);i>-1?sel.syms.splice(i,1):sel.syms.push(v)}
+    fix();draw();
+  }
+  function setTab(k){tab=k;$$('button',id('ft')).forEach(function(b){var on=b.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});draw()}
+  fr=UI.rail(id('fd-out'));
+  id('ft').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setTab(b.dataset.k)});
+  $('.fp').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;var d=b.dataset;
+    if(d.rm==='all'){sel={area:null,cond:null,syms:[]};draw()}
+    else if(d.rm==='sym')pick('sym',d.v);
+    else if(d.rm){sel[d.rm]=null;fix();draw()}
+    else if(d.area)pick('area',d.area);else if(d.cond)pick('cond',d.cond);else if(d.sym)pick('sym',d.sym);
+  });
+  /* external entry points (menu, tiles) */
+  function jump(k,v){sel={area:null,cond:null,syms:[]};sel[k]=v;setTab(k==='cond'?'cond':'area');id('finder').scrollIntoView()}
+  id('mm').addEventListener('click',function(e){var b=e.target.closest('[data-pick]');if(b){var kv=b.dataset.pick.split(':');jump(kv[0],kv[1])}});
+  id('allc').addEventListener('click',function(){setTab('cond')});
+
+  /* common condition tiles */
+  var common=[['arthritis','hip'],['cruciate','knee'],['hip-dysplasia','hip'],['ivdd','back'],['carpal-hyper','carpal-brace'],['patella','knee']];
+  id('tl').innerHTML=common.map(function(c,i){var th=i%3===2?'onmint':i%3===1?'ondark':'onbrand';
+    return '<button class="ti" data-c="'+c[0]+'"><span>'+DOG.svg({zone:c[1],theme:th,shadow:false})+'</span><b>'+BR.find(BR.conditions,c[0]).name+'</b><i>{i:chev-right}</i></button>'}).join('');
+  id('tl').addEventListener('click',function(e){var b=e.target.closest('button');if(b)jump('cond',b.dataset.c)});
+
+  /* the range */
+  var rr=UI.rail(id('rg'));
+  function range(t){id('rg-t').innerHTML=BR.byType(t).map(function(p,i){return card(p,i)}).join('');rr.update()}
+  UI.tabs(id('rt'),range);range('');
+
+  /* reviews: empty slots */
+  id('rv-t').innerHTML=[0,1,2,3].map(function(){return '<article class="rv"><span class="st"><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i><i>{i:star}</i></span><h3>Review title</h3><p>Customer review to be added.</p>'+
+    '<div class="rv-w"><i></i><span><b>Customer name</b><span>Product purchased</span></span><span class="rv-v" style="margin-left:auto">{i:check-circle}Verified buyer</span></div></article>'}).join('');
+  UI.rail(id('rvs'));UI.rail(id('gd'));
+
+  DOG.mount();UI.badges();UI.slider(id('hero'),6500);draw();
 })();
 </script>
 </body></html>
