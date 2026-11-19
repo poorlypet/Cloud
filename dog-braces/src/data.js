@@ -97,17 +97,24 @@ var BR = (function () {
     return { items: items, likely: likely.slice(0, 3).map(function (l) { return l.n; }) };
   }
 
+  function tidy(t) { return t.toLowerCase().replace('ivdd', 'IVDD').replace('achilles', 'Achilles'); }
+  var LV = { wrap: 1, brace: 2, splint: 3, mobility: 0 };
+  function level(p) {
+    var n = LV[p.type]; if (!n) return '<span class="lv">' + p.sup + '</span>';
+    return '<span class="lv"><i>' + [1, 2, 3].map(function (k) { return '<b' + (k <= n ? ' class="f"' : '') + '></b>'; }).join('') + '</i>' + p.sup + '</span>';
+  }
+  function areaText(p) { return p.areas.map(function (a) { return find(areas, a).name; }).join(', '); }
+  function whyText(why) { return why && why.length ? '<p class="pc-why"><b>Indicated for:</b> ' + tidy(why.slice(0, 3).join(', ')) + '</p>' : ''; }
   function card(p, why) {
-    var w = why && why.length ? '<p class="pc-why">Used for ' + why.slice(0, 2).join(', ').toLowerCase().replace('ivdd', 'IVDD') + '</p>' : '';
-    return '<article class="pc"><a class="ph" href="#">Product photo</a><div class="pc-b">' +
-      '<p class="pc-sup">' + p.sup + '</p><h3><a href="#">' + p.name + '</a></h3>' +
-      '<p class="pc-d">' + p.d + '</p>' + w +
-      '<div class="pc-f"><span class="pc-p">£00.00</span><a class="btn sm" href="#">Choose size</a></div></div></article>';
+    return '<article class="pc"><a class="slot" href="#" aria-label="' + p.name + '"></a><div class="pc-b">' +
+      '<h3><a href="#">' + p.name + '</a></h3>' + level(p) +
+      (why && why.length ? whyText(why) : '<p class="pc-a">' + areaText(p) + '</p>') +
+      '<div class="pc-f"><span class="pc-p">£00.00</span><a class="btn line sm" href="#">Select size</a></div></div></article>';
   }
   function grid(el, items, showWhy) {
     el.innerHTML = items.map(function (it) { return card(it.p || it, showWhy ? it.why : null); }).join('');
   }
 
   return { areas: areas, symptoms: symptoms, products: products, conditions: conditions,
-    find: find, conditionsFor: conditionsFor, symptomsFor: symptomsFor, match: match, card: card, grid: grid };
+    find: find, conditionsFor: conditionsFor, symptomsFor: symptomsFor, match: match, card: card, grid: grid, level: level, areaText: areaText, whyText: whyText, tidy: tidy };
 })();
