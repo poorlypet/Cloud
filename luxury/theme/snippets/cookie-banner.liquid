@@ -25,6 +25,8 @@
 <style>
 .ck{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:9000;width:min(440px,calc(100vw - 32px));background:#fff;color:#111;border:1px solid rgba(17,17,17,.12);box-shadow:0 18px 50px rgba(17,17,17,.16);font-family:var(--sans,"Jost",system-ui,sans-serif);animation:ck-in .35s ease both}
 .ck[hidden]{display:none}
+/* our banner records consent through Shopify, so Shopify's own banner is not needed */
+#shopify-pc__banner{display:none!important}
 @keyframes ck-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .ck-in{padding:26px 26px 22px}
 .ck-k{margin:0 0 8px;font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#6b6b66}
