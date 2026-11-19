@@ -1,0 +1,87 @@
+[
+ {
+  "file": "01-order-confirmation",
+  "name": "Order confirmation",
+  "subject": "Thank you for your order {{ order_name }}"
+ },
+ {
+  "file": "02-order-edited",
+  "name": "Order edited",
+  "subject": "Your order {{ order_name }} has been updated"
+ },
+ {
+  "file": "03-order-cancelled",
+  "name": "Order cancelled",
+  "subject": "Your order {{ order_name }} has been cancelled"
+ },
+ {
+  "file": "04-order-payment-receipt",
+  "name": "Order payment receipt",
+  "subject": "Payment received for order {{ order_name }}"
+ },
+ {
+  "file": "05-payment-error",
+  "name": "Payment error",
+  "subject": "There was a problem with your payment for {{ order_name }}"
+ },
+ {
+  "file": "06-refund-notification",
+  "name": "Refund notification",
+  "subject": "Your refund for order {{ order_name }}"
+ },
+ {
+  "file": "07-shipping-confirmation",
+  "name": "Shipping confirmation",
+  "subject": "Your order {{ order_name }} is on its way"
+ },
+ {
+  "file": "08-shipping-update",
+  "name": "Shipping update",
+  "subject": "An update on your order {{ order_name }}"
+ },
+ {
+  "file": "09-out-for-delivery",
+  "name": "Out for delivery",
+  "subject": "Your order {{ order_name }} is out for delivery"
+ },
+ {
+  "file": "10-delivered",
+  "name": "Delivered",
+  "subject": "Your order {{ order_name }} has been delivered"
+ },
+ {
+  "file": "11-return-created",
+  "name": "Return created",
+  "subject": "We have your return request for {{ order_name }}"
+ },
+ {
+  "file": "12-abandoned-checkout",
+  "name": "Abandoned checkout",
+  "subject": "You left something in your basket"
+ },
+ {
+  "file": "13-customer-account-invite",
+  "name": "Customer account invite",
+  "subject": "Activate your Axel & Hound account"
+ },
+ {
+  "file": "14-customer-account-welcome",
+  "name": "Customer account welcome",
+  "subject": "Welcome to Axel & Hound"
+ },
+ {
+  "file": "15-customer-account-password-reset",
+  "name": "Customer account password reset",
+  "subject": "Reset your Axel & Hound password"
+ },
+ {
+  "file": "16-contact-customer",
+  "name": "Contact customer",
+  "subject": "A message from Axel & Hound"
+ },
+ {
+  "file": "17-gift-card-created",
+  "name": "Gift card created",
+  "subject": "Your Axel & Hound gift card"
+ }
+]
