@@ -22,7 +22,7 @@
  {
   "file": "05-payment-error",
   "name": "Payment error",
-  "subject": "There was a problem with your payment for {{ order_name }}"
+  "subject": "Your payment for {{ order_name }} did not go through"
  },
  {
   "file": "06-refund-notification",
@@ -42,12 +42,12 @@
  {
   "file": "09-out-for-delivery",
   "name": "Out for delivery",
-  "subject": "Your order {{ order_name }} is out for delivery"
+  "subject": "Your order {{ order_name }} arrives today"
  },
  {
   "file": "10-delivered",
   "name": "Delivered",
-  "subject": "Your order {{ order_name }} has been delivered"
+  "subject": "Your order {{ order_name }} has arrived"
  },
  {
   "file": "11-return-created",
@@ -57,7 +57,7 @@
  {
   "file": "12-abandoned-checkout",
   "name": "Abandoned checkout",
-  "subject": "You left something in your basket"
+  "subject": "Still thinking it over?"
  },
  {
   "file": "13-customer-account-invite",
