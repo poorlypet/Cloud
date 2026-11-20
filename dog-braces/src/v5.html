@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Atkinson+Hyperlegible+Next:wght@400..800&display=swap">
+<style>
+:root{--display:"Parkinsans","Trebuchet MS",Arial,sans-serif;--sans:"Atkinson Hyperlegible Next",Helvetica,Arial,sans-serif}
+/*@s-base.css*/
+
+/* hero: one rounded indigo banner with a mint circle */
+.hero{padding-top:8px}
+.bn{position:relative;display:grid;grid-template-columns:minmax(0,1.100fr) minmax(0,.900fr);align-items:center;min-height:clamp(320px,28vw,410px);background:var(--brand);color:#fff;border-radius:clamp(28px,3.400vw,52px);overflow:hidden}
+.bn-t{position:relative;z-index:2;padding:clamp(26px,3.400vw,52px) 0 clamp(26px,3.400vw,52px) clamp(22px,4.400vw,70px)}
+.bn h1{font-size:clamp(34px,4.400vw,66px)}
+.bn h1 em{font-style:normal;color:var(--mint)}
+.bn p{font:600 clamp(17px,1.500vw,21px)/1.300 var(--display);letter-spacing:-.01em;margin:16px 0 24px;max-width:23em}
+.bn-b{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+.bn .tl{color:#fff}
+.bn-p{position:relative;align-self:stretch}
+.bn-p::before{content:"";position:absolute;right:-16%;top:-32%;height:164%;aspect-ratio:1;border-radius:50%;background:var(--mint)}
+.bn-p .ph{position:absolute;right:9%;top:11%;height:78%;aspect-ratio:1;--slot:#fff}
+.tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 24px;padding-block:20px;border-bottom:1.500px solid var(--line)}
+.tr li{display:flex;align-items:center;justify-content:center;gap:14px}
+.tr .ic{width:28px;height:28px;color:var(--brand);stroke-width:1.600}
+.tr b{display:block;font:700 16.500px/1.2 var(--display)}
+.tr small{color:var(--mute);font-size:14.500px}
+@media(max-width:900px){.bn{grid-template-columns:1fr}.bn-t{padding:26px 22px 10px}.bn-p{height:250px;align-self:auto}.bn-p::before{right:auto;left:-15%;top:22%;width:130%;height:auto}.bn-p .ph{right:auto;left:calc(50% - 100px);top:14px;height:200px}}
+@media(max-width:760px){.tr{gap:8px}.tr li{flex-direction:column;text-align:center;gap:6px}.tr b{font-size:14px}.tr small{display:none}}
+
+/* three lists side by side: body area, condition, symptoms */
+.pk{display:grid;grid-template-columns:minmax(0,1.150fr) minmax(0,1fr) minmax(0,1fr);gap:12px;background:var(--base);border-radius:clamp(28px,3vw,46px);padding:12px;box-shadow:inset 0 0 0 1px var(--line)}
+.pk-c{background:#fff;border-radius:clamp(20px,2.300vw,34px);padding:clamp(18px,1.900vw,28px);box-shadow:inset 0 0 0 1px var(--line)}
+.pk-h{margin-bottom:16px}
+.pk-h h3{font-size:24px;letter-spacing:-.025em}
+.pk-h span{display:block;color:var(--mute);font-size:15px;margin-top:3px}
+.pk-a{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.at{display:flex;align-items:center;gap:12px;min-width:0;padding:6px 14px 6px 6px;border-radius:999px;box-shadow:inset 0 0 0 1.500px var(--line);font:700 16.500px/1.150 var(--display);text-align:left;transition:box-shadow .2s,background .25s,color .2s,opacity .3s}
+.at .ph{width:62px;height:62px;flex:none;border-radius:50%;transition:background .25s,color .25s}
+.at .ph .ic{width:22px;height:22px;stroke-width:1.500}
+.at:hover{box-shadow:inset 0 0 0 2px var(--brand);color:var(--brand)}
+.at.on{background:var(--brand);color:#fff;box-shadow:none}
+.at.on .ph{--slot:var(--mint);color:var(--brand)}
+.at.dim{opacity:.42}
+.pk-l{display:grid;gap:2px;margin-inline:-12px}
+.op{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:9px 12px;border-radius:14px;font-weight:600;font-size:16px;line-height:1.250;transition:background .2s,color .2s}
+.op i{flex:none;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1.500px #B7BACD;display:grid;place-items:center;color:transparent;transition:background .2s,box-shadow .2s,color .2s}
+.op.sq i{border-radius:7px}
+.op i .ic{width:14px;height:14px;stroke-width:3.200}
+.op:hover{background:var(--base);color:var(--brand)}
+.op:hover i{box-shadow:inset 0 0 0 2px var(--brand)}
+.op.on{background:var(--mint-l);color:var(--ink)}
+.op.on i{background:var(--brand);box-shadow:none;color:#fff}
+.pk-m{margin:10px 0 0 12px;font:700 15px var(--display);color:var(--brand);border-bottom:2px solid currentColor;padding-bottom:1px}
+.res{margin-top:clamp(30px,3.600vw,56px)}
+.res-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin-bottom:6px}
+.res-h h3{font-size:clamp(26px,2.800vw,42px)}
+.res .note{background:var(--mint-l);margin-top:16px}
+.res .rl-t{margin-top:22px}
+.go{position:fixed;left:50%;bottom:16px;z-index:50;margin-left:-104px;width:208px;display:none;box-shadow:0 16px 30px -12px rgba(22,20,50,.6)}
+@media(max-width:1000px){.pk{grid-template-columns:1fr}.go.on{display:inline-flex}}
+
+/* fitting: mint band with a video */
+.fit{position:relative;background:var(--mint);padding:clamp(100px,12vw,190px) 0;overflow:hidden}
+.fit-g{display:grid;grid-template-columns:minmax(0,.900fr) minmax(0,1.100fr);gap:clamp(28px,5vw,90px);align-items:center}
+.sl3{margin:26px 0 30px;border-bottom:1.500px solid rgba(41,40,60,.18)}
+.sl3 li{display:grid;grid-template-columns:28px minmax(0,.500fr) minmax(0,1.500fr);gap:6px 14px;align-items:center;padding:15px 0;border-top:1.500px solid rgba(41,40,60,.18)}
+.sl3 .ic{width:26px;height:26px;color:var(--brand)}
+.sl3 b{font:800 21px var(--display);letter-spacing:-.02em}
+.sl3 span{color:#3F3E55}
+.vid{aspect-ratio:1.550;border-radius:clamp(26px,3vw,44px);--slot:#fff}
+.vid button{width:92px;height:92px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;margin:0 auto 14px;transition:transform .5s var(--ease),background .25s}
+.vid button .ic{width:30px;height:30px;margin-left:4px;fill:currentColor;stroke-width:1.300}
+.vid button:hover{transform:scale(1.080);background:var(--ink)}
+.vid small{display:block;font-size:14px}
+@media(max-width:900px){.fit-g{grid-template-columns:1fr}.sl3 li{grid-template-columns:28px minmax(0,1fr)}.sl3 span{grid-column:2}}
+
+/* made in the UK */
+.uk-h{display:grid;grid-template-columns:minmax(0,.850fr) minmax(0,1.150fr);gap:clamp(18px,5vw,90px);align-items:start}
+.uk .big{font:700 clamp(23px,2.900vw,44px)/1.140 var(--display);letter-spacing:-.025em}
+.strip{display:grid;grid-template-columns:.900fr .800fr 1.500fr .900fr;gap:clamp(10px,1.600vw,24px);align-items:end;margin:clamp(34px,4.400vw,68px) 0}
+.strip .p1{aspect-ratio:.820;border-radius:999px 999px 26px 26px}
+.strip .p2{aspect-ratio:1;border-radius:50%;--slot:var(--mint);color:var(--brand)}
+.strip .p3{aspect-ratio:1.450;border-radius:26px 140px 26px 26px}
+.strip .p4{aspect-ratio:1;border-radius:58% 42% 46% 54%/46% 56% 44% 54%;--slot:var(--brand);color:#fff}
+.strip .p4 small{color:#fff}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(18px,3vw,44px);border-top:2px solid var(--ink)}
+.facts li{padding:20px 0 0}
+.facts b{display:block;font:800 21px/1.150 var(--display);letter-spacing:-.02em;margin-bottom:5px}
+.facts span{color:var(--mute)}
+@media(max-width:900px){.uk-h{grid-template-columns:1fr}.strip{grid-template-columns:1fr 1fr;align-items:center}.facts{grid-template-columns:1fr;border-top:0}.facts li{border-top:1.500px solid var(--line);padding:16px 0}}
+
+/* reviews: one at a time, on the pale band that runs into the footer */
+.voi{position:relative;background:var(--base);padding:clamp(96px,10.500vw,160px) 0 clamp(56px,6.500vw,100px);text-align:center}
+.voi .rsum{justify-content:center;margin-top:16px}
+.voi .stage{max-width:900px;margin:30px auto 0;min-height:210px}
+.voi .ctl{justify-content:center;margin-top:10px}
+.ft{margin-top:0}.ft .cv path{fill:var(--base)}
+@media(max-width:760px){.voi .stage{min-height:270px}}
+</style></head><body>
+<!--@s-top.html-->
+<header class="hd flat" id="nv"><div class="w hd-in">
+<!--@s-nav.html-->
+</div></header>
+
+<main>
+<section class="hero" data-hero><div class="w">
+  <div class="bn">
+    <div class="bn-t">
+      <h1><span class="ln"><span>Dog braces,</span></span><span class="ln"><span><em>made in the UK.</em></span></span></h1>
+      <p data-hin>Braces, splints and lifting harnesses, cut and stitched in the North West of England.</p>
+      <div class="bn-b" data-hin><a class="btn mi lg" href="#choose">Find the right support</a><a class="tl" href="#range">Shop the range {i:arrow-right}</a></div>
+    </div>
+    <div class="bn-p"><div class="ph circle" data-hin><span>{i:image}<br><small>Photo: dog wearing a brace</small></span></div></div>
+  </div>
+  <ul class="tr">
+    <li>{i:pin}<span><b>Made in the UK</b><small>North West of England</small></span></li>
+    <li>{i:ruler}<span><b>Sizing and fitting guides</b><small>For every support</small></span></li>
+    <li>{i:chat}<span><b>Help choosing</b><small>Ask us before you buy</small></span></li>
+  </ul>
+</div></section>
+
+<section class="sec" id="choose" style="padding-block:clamp(40px,4.600vw,72px) clamp(40px,5vw,80px)"><div class="w">
+  <div class="sh"><div><h2 class="h2" data-rise>Find the right support</h2><p class="sub">Choose a body area, a condition or the symptoms you are seeing. The supports below update as you go.</p></div><button class="btn ol sm" id="clr" hidden>Start again</button></div>
+  <div class="pk" id="pk">
+    <div class="pk-c"><div class="pk-h"><h3>Body area</h3><span>Where do they need support?</span></div><div class="pk-a" id="pa"></div></div>
+    <div class="pk-c"><div class="pk-h"><h3>Condition</h3><span>If a vet has diagnosed one</span></div><ul class="pk-l" id="pc"></ul></div>
+    <div class="pk-c"><div class="pk-h"><h3>Symptoms</h3><span>What are you seeing?</span></div><ul class="pk-l" id="ps"></ul></div>
+  </div>
+  <div class="res" id="range">
+    <div class="res-h"><h3 id="res-t">The range</h3><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+    <div class="tabs" id="rt"><button class="on" data-k="">All</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div>
+    <div id="res-n"></div>
+    <div class="rl-t p5" id="rb"></div>
+  </div>
+</div></section>
+
+<section class="fit">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w fit-g">
+    <div>
+      <h2 class="h2" data-rise>How to measure<br>your dog.</h2>
+      <ul class="sl3">
+        <li data-up>{i:ruler}<b>Measure</b><span>Take a few simple measurements at home.</span></li>
+        <li data-up>{i:check}<b>Choose</b><span>Pick the size from the sizing guide.</span></li>
+        <li data-up>{i:strap}<b>Fit</b><span>Follow the fitting guide for a secure, comfortable fit.</span></li>
+      </ul>
+      <a class="tl" href="#">Explore the fitting guide {i:arrow-right}</a>
+    </div>
+    <div class="ph vid" data-wipe><span><button aria-label="Play video" data-cur="Play">{i:play}</button><small>Video: how to measure your dog</small></span></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec uk" id="uk"><div class="w">
+  <div class="uk-h">
+    <h2 class="h2" data-rise>Made in the North West of England.</h2>
+    <div><p class="big" data-words>Most dog braces sold in the UK are made overseas. Ours are cut, stitched and checked in our own workshop.</p><a class="btn" href="#" style="margin-top:26px">See how they are made {i:arrow-right}</a></div>
+  </div>
+  <div class="strip">
+    <div class="ph p1" data-wipe><span>{i:image}<br><small>Photo: cutting</small></span></div>
+    <div class="ph p2" data-wipe><span>{i:image}<br><small>Photo: stitching</small></span></div>
+    <div class="ph p3" data-wipe><span>{i:image}<br><small>Workshop photo</small></span></div>
+    <div class="ph p4" data-wipe><span>{i:image}<br><small>Photo: checking</small></span></div>
+  </div>
+  <ul class="facts">
+    <li data-up><b>Cut and stitched here</b><span>Every support is made in our own workshop.</span></li>
+    <li data-up><b>Checked by hand</b><span>We check each one before it is sent.</span></li>
+    <li data-up><b>Sent from where it is made</b><span>Straight from our workshop to your door.</span></li>
+  </ul>
+</div></section>
+
+<section class="voi" id="reviews">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w" id="voi">
+    <h2 class="h2" data-rise>From owners</h2>
+    <div class="rsum"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>0.0</b>/5 from 0 reviews</span><span class="pl">Review platform logo</span></div>
+    <div class="stage">
+      <blockquote class="on"><p>Customer review to be added. A few sentences about the dog, the problem and how the support helped.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+      <blockquote><p>Second customer review to be added, in the customer's own words.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+      <blockquote><p>Third customer review to be added, in the customer's own words.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+    </div>
+    <div class="ctl"><button class="rd" data-prev aria-label="Previous review">{i:chev-left}</button><button class="rd" data-next aria-label="Next review">{i:chev-right}</button><span class="dots"><i class="on"></i><i></i><i></i></span></div>
+  </div>
+</section>
+</main>
+<button class="btn go" id="go">Show supports {i:arrow-right}</button>
+<!--@s-foot.html-->
+<script>
+(function(){
+  var $=UI.$,$$=UI.$$,id=function(x){return document.getElementById(x)},rt,rr,type='',seen=false,all={cond:false,sym:false};
+  var MAX=innerWidth<760?4:7;
+  /* shown first in the condition list until a body area narrows it down */
+  var first=['arthritis','cruciate','hip-dysplasia','ivdd','patella','carpal-hyper','post-op'];
+  var f=APP.Finder(draw),go=id('go');
+  id('pa').innerHTML=BR.areas.map(function(a){return '<button class="at" data-area="'+a.id+'"><span class="ph">'+APP.IMG+'</span>'+a.s+'</button>'}).join('');
+
+  function conds(){
+    var l=f.conds();if(f.s.area)return l;
+    return l.slice().sort(function(a,b){var x=first.indexOf(a.id),y=first.indexOf(b.id);return (x<0?99:x)-(y<0?99:y)});
+  }
+  function rows(k,list){
+    var on=function(o){return k==='sym'?f.s.syms.indexOf(o.id)>-1:f.s.cond===o.id};
+    var cut=!all[k]&&list.length>MAX,shown=cut?list.slice(0,MAX):list;
+    if(cut)list.slice(MAX).forEach(function(o){if(on(o))shown.push(o)});
+    return shown.map(function(o){var x=on(o);
+      return '<li><button class="op'+(k==='sym'?' sq':'')+(x?' on':'')+'" data-'+k+'="'+o.id+'" aria-pressed="'+x+'"><i>{i:check}</i>'+o.name+'</button></li>'}).join('')+
+      (list.length>MAX?'<li><button class="pk-m" data-more="'+k+'">'+(all[k]?'Show fewer':'Show all '+(k==='sym'?'symptoms':'conditions'))+'</button></li>':'');
+  }
+  function upgo(){go.classList.toggle('on',f.any()&&!seen)}
+  function draw(){
+    var ok=f.areaList().map(function(a){return a.id}),any=f.any();
+    $$('.at',id('pa')).forEach(function(t){var on=t.dataset.area===f.s.area;t.classList.toggle('on',on);t.classList.toggle('dim',ok.indexOf(t.dataset.area)<0);t.setAttribute('aria-pressed',on)});
+    id('pc').innerHTML=rows('cond',conds());
+    id('ps').innerHTML=rows('sym',f.symList());
+    id('clr').hidden=!any;
+    var r=any?f.res():{items:BR.byType('').map(function(p){return {p:p}}),likely:[]};
+    var items=r.items.filter(function(it){return !type||it.p.type===type});
+    id('res-t').textContent=any?'Supports for '+BR.tidy(f.condName()||f.areaName()||'these symptoms'):'The range';
+    id('res-n').innerHTML=APP.note(r);
+    id('rb').innerHTML=APP.cards(items,{showWhy:any});
+    if(rr)rr.update();
+    upgo();
+    clearTimeout(rt);rt=setTimeout(FX.refresh,300);
+  }
+  id('pk').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var d=b.dataset;
+    if(d.more){all[d.more]=!all[d.more];draw()}else if(d.area)f.area(d.area);else if(d.cond)f.cond(d.cond);else if(d.sym)f.sym(d.sym)});
+  id('clr').onclick=function(){f.clear()};
+  UI.tabs(id('rt'),function(k){type=k;draw()});
+  rr=UI.rail(id('range'));
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){seen=es[0].isIntersecting;upgo()},{rootMargin:'0px 0px -25% 0px'}).observe(id('rb'));
+  go.onclick=function(){FX.scrollTo(id('range'),-80)};
+  APP.menu(id('nv'),function(a){f.only('area',a);FX.scrollTo(id('choose'))});
+  APP.voices(id('voi'));APP.versionBar();draw();FX.init();
+})();
+</script>
+</body></html>

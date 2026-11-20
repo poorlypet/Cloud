@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Onest:wght@400..700&display=swap">
+<style>
+:root{--display:"Gabarito","Trebuchet MS",Arial,sans-serif;--sans:"Onest",Helvetica,Arial,sans-serif}
+/*@s-base.css*/
+
+/* hero: mint, floating header, bowl curve */
+.hero{position:relative;background:var(--mint);overflow:hidden;padding-top:92px}
+.hero-g{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.050fr) minmax(0,.950fr);gap:32px;align-items:center;padding-block:clamp(20px,2.200vw,32px) clamp(104px,11vw,164px)}
+.hero h1{font-size:clamp(38px,4.800vw,72px);letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font:500 clamp(17px,1.500vw,21px)/1.350 var(--sans);margin:16px 0 26px;max-width:26em}
+.hero-b{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+.hero-p{position:relative;min-height:clamp(240px,23vw,320px)}
+.hero-p .a{position:absolute;right:6%;top:0;height:100%;aspect-ratio:1;--slot:#fff}
+.hero-p .b{position:absolute;left:4%;bottom:-8%;width:34%;aspect-ratio:1;--slot:var(--brand);color:#fff;box-shadow:0 0 0 10px var(--mint)}
+@media(max-width:900px){.hero-g{grid-template-columns:1fr;padding-bottom:100px}.hero-p{min-height:220px;max-width:340px;margin-inline:auto;width:100%}}
+
+/* body areas as circles, then two plain dropdowns */
+.circs{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:clamp(10px,1.600vw,26px)}
+.cb{display:grid;justify-items:center;gap:12px;font:800 clamp(15px,1.300vw,19px) var(--display);text-align:center}
+.cb span{width:100%;aspect-ratio:1;border-radius:50%;background:var(--slot);color:#A9ACC4;display:grid;place-items:center;transition:box-shadow .35s,transform .7s var(--ease),background .35s,color .3s}
+.cb span .ic{width:30px;height:30px;stroke-width:1.300}
+.cb:hover span{transform:translateY(-6px);background:var(--mint-l);color:var(--brand)}
+.cb.on span{background:var(--mint);color:var(--brand);box-shadow:0 0 0 5px #fff,0 0 0 8px var(--brand)}
+.bar{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) auto;gap:14px 16px;align-items:center;margin-top:34px;padding:14px 22px 14px 30px;border-radius:999px;background:var(--base);animation:rise .6s var(--ease)}
+.bar-a{font:800 22px var(--display);letter-spacing:-.02em;padding-right:10px}
+.out{margin-top:34px}
+.out h3{font-size:clamp(24px,2.400vw,34px);margin-bottom:18px}
+.out .note{background:var(--mint-l);margin-bottom:18px}
+@media(max-width:900px){.circs{grid-template-columns:repeat(4,minmax(0,1fr))}.bar{grid-template-columns:1fr;border-radius:30px;padding:18px}}
+
+/* types */
+.tys{position:relative;background:var(--base);padding:clamp(100px,11vw,170px) 0}
+.types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.ty{display:flex;flex-direction:column;gap:6px}
+.ty .ph{aspect-ratio:1.200;border-radius:26px;--slot:#fff;margin-bottom:12px;transition:border-radius .8s var(--ease),background .4s}
+.ty:hover .ph{border-radius:60px 26px 60px 26px;--slot:var(--mint)}
+.ty b{font:800 26px/1.1 var(--display);letter-spacing:-.025em}
+.ty small{font:700 15.500px var(--display);color:var(--brand)}
+.ty p{color:var(--mute);font-size:15.500px;margin:4px 0 10px}
+.ty .tl{align-self:flex-start;margin-top:auto;font-size:16px}
+@media(max-width:1000px){.types{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.types{grid-template-columns:1fr;gap:18px}.ty{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:16px;row-gap:2px;align-items:start}.ty .ph{grid-row:1/span 4;aspect-ratio:1;margin:0;border-radius:20px}.ty b{font-size:21px}.ty p{margin:2px 0 6px}}
+/* fitting: one mint strip */
+.fitb{display:grid;grid-template-columns:minmax(0,.800fr) minmax(0,2.200fr);gap:26px clamp(24px,4vw,64px);align-items:center;background:var(--mint);border-radius:clamp(30px,4vw,64px);padding:clamp(24px,3.600vw,56px)}
+.fitb h2{font-size:clamp(26px,2.700vw,40px);margin-bottom:14px}
+.fitb ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px clamp(16px,2.400vw,36px)}
+.fitb li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:4px 16px;align-items:center}
+.fitb i{grid-row:1/span 2;width:54px;height:54px;border-radius:50%;background:#fff;color:var(--brand);display:grid;place-items:center}
+.fitb i .ic{width:24px;height:24px}
+.fitb b{font:800 21px/1.1 var(--display);letter-spacing:-.02em;align-self:end}
+.fitb span{color:#3F3E55;font-size:15.500px;line-height:1.350;align-self:start}
+@media(max-width:1000px){.fitb{grid-template-columns:1fr}}@media(max-width:700px){.fitb ul{grid-template-columns:1fr}}
+.more{display:flex;justify-content:center;margin-top:36px}
+
+/* made in the UK */
+.uk-g{display:grid;grid-template-columns:minmax(0,.900fr) minmax(0,1.100fr);gap:clamp(28px,6vw,110px);align-items:center}
+.uk-p{position:relative;max-width:520px;width:100%}
+.uk-p .a{aspect-ratio:1;--slot:var(--brand);color:#fff}
+.uk-p .a small{color:#fff}
+.uk-p .b{position:absolute;right:-8%;bottom:-4%;width:46%;aspect-ratio:1.100;--slot:var(--mint);color:var(--brand);box-shadow:0 0 0 10px #fff}
+.uk .big{font:600 clamp(20px,2.100vw,30px)/1.300 var(--display);letter-spacing:-.015em;margin-top:22px;max-width:22em}
+.pts{margin:28px 0 30px;border-bottom:1.500px solid var(--line)}
+.pts li{display:grid;grid-template-columns:minmax(0,.800fr) minmax(0,1.200fr);gap:8px 24px;padding:16px 0;border-top:1.500px solid var(--line)}
+.pts b{font:800 19px var(--display);letter-spacing:-.015em}.pts span{color:var(--mute)}
+.pts .o b,.pts .o span{color:var(--mute)}
+@media(max-width:900px){.uk-g{grid-template-columns:1fr}.uk-p{max-width:300px;margin-inline:auto}.uk-p .b{right:-4%}.pts li{grid-template-columns:1fr}}
+
+/* conditions: a plain index */
+.ix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px}
+.ix h3{font-size:19px;letter-spacing:-.015em;padding-bottom:12px;margin-bottom:6px;border-bottom:2px solid var(--ink)}
+.ix li button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:10px 0;border-bottom:1px solid var(--line);font-weight:500;transition:color .2s,padding .4s var(--ease)}
+.ix li button .ic{width:16px;height:16px;stroke-width:2.200;color:var(--brand);opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .4s var(--ease)}
+.ix li button:hover{color:var(--brand);padding-left:6px}.ix li button:hover .ic{opacity:1;transform:none}
+@media(max-width:1000px){.ix{grid-template-columns:1fr 1fr}}@media(max-width:560px){.ix{grid-template-columns:1fr}}
+.voi-g{display:grid;grid-template-columns:minmax(0,.750fr) minmax(0,2.250fr);gap:clamp(28px,5vw,80px)}
+@media(max-width:900px){.voi-g{grid-template-columns:1fr}}
+</style></head><body>
+<!--@s-top.html-->
+<header class="hd pill" id="nv"><div class="hd-in">
+<!--@s-nav.html-->
+</div></header>
+
+<main>
+<section class="hero" data-hero>
+  <div class="w hero-g">
+    <div>
+      <h1><span class="ln"><span>Helping dogs</span></span><span class="ln"><span>move <em>comfortably.</em></span></span></h1>
+      <p data-hin>Braces, splints and lifting harnesses for joints, legs and backs. Made in the North West of England.</p>
+      <div class="hero-b" data-hin><a class="btn lg" href="#choose">Find the right support</a><a class="tl" href="#range">Shop the range {i:arrow-right}</a></div>
+    </div>
+    <div class="hero-p"><div class="ph circle a" data-hin><span>{i:image}<br><small>Photo: dog wearing a brace</small></span></div><div class="ph circle b" data-hpop><span>{i:image}</span></div></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 200" aria-hidden="true" data-curve="M0 110 C 380 150 1060 150 1440 110 V201 H0 Z"><path d="M0 60 C 380 215 1060 215 1440 60 V201 H0 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="choose" style="padding-top:clamp(20px,2vw,36px)"><div class="w">
+  <div class="sh"><div><h2 class="h2" data-rise>Where do they need support?</h2><p class="sub">Choose an area, then narrow it down by condition and symptom.</p></div></div>
+  <div class="circs" id="circs"></div>
+  <div class="bar" id="bar" hidden>
+    <span class="bar-a" id="bar-a"></span>
+    <label class="sl"><select id="s-cond" aria-label="Condition"></select></label>
+    <label class="sl"><select id="s-sym" aria-label="Symptom"></select></label>
+    <button class="btn ol sm" id="bar-c">Start again</button>
+  </div>
+  <div class="out" id="out" hidden><h3 id="out-h"></h3><div id="out-n"></div><div class="grid c5" id="out-g"></div></div>
+</div></section>
+
+<section class="tys" id="types">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w">
+    <div class="sh"><h2 class="h2" data-rise>Shop by type</h2></div>
+    <div class="types" id="types-g"></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="range" style="padding-top:clamp(20px,2vw,36px)"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>Our supports</h2><div class="tabs" id="rt"><button class="on" data-k="">All</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div></div>
+  <div class="grid c5" id="rb"></div>
+  <div class="more"><a class="btn ol" href="#">View all supports {i:arrow-right}</a></div>
+</div></section>
+
+<section class="sec" style="padding-top:0"><div class="w">
+  <div class="fitb">
+    <div><h2 data-rise>Sizing made simple.</h2><a class="tl" href="#">Explore the fitting guide {i:arrow-right}</a></div>
+    <ul>
+      <li data-up><i>{i:ruler}</i><b>Measure</b><span>Take a few simple measurements at home.</span></li>
+      <li data-up><i>{i:check}</i><b>Choose</b><span>Pick the size from the sizing guide.</span></li>
+      <li data-up><i>{i:strap}</i><b>Fit</b><span>Follow the fitting guide for a secure, comfortable fit.</span></li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="sec uk" id="uk" style="padding-block:clamp(20px,2vw,36px) 0"><div class="w uk-g">
+  <div class="uk-p"><div class="ph circle a" data-wipe><span>{i:image}<br><small>Workshop photo</small></span></div><div class="ph r b" data-up><span>{i:image}</span></div></div>
+  <div>
+    <h2 class="h2" data-rise>Made in the North West of England.</h2>
+    <p class="big" data-words>Most dog braces sold in the UK are made overseas. Ours are cut, stitched and checked in our own workshop.</p>
+    <ul class="pts">
+      <li data-up><b>Cut and stitched here</b><span>Every support is made in our own workshop.</span></li>
+      <li data-up><b>Checked by hand</b><span>We check each one before it is sent.</span></li>
+      <li data-up><b>Sent from where it is made</b><span>Straight from our workshop to your door.</span></li>
+      <li data-up class="o"><b>Most other brands</b><span>Made overseas and imported.</span></li>
+    </ul>
+    <a class="btn" href="#">See how they are made {i:arrow-right}</a>
+  </div>
+</div>
+</section>
+
+<section class="sec" id="conditions"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>Shop by condition</h2></div>
+  <div class="ix" id="ix"></div>
+</div></section>
+
+<section class="sec" id="reviews" style="padding-top:0"><div class="w voi-g" id="voi">
+  <div><h2 class="h2" data-rise style="font-size:clamp(28px,2.800vw,42px);margin-bottom:16px">From owners</h2><div class="rsum"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>0.0</b>/5 from 0 reviews</span><span class="pl">Review platform logo</span></div></div>
+  <div>
+    <div class="stage">
+      <blockquote class="on"><p>Customer review to be added. A few sentences about the dog, the problem and how the support helped.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+      <blockquote><p>Second customer review to be added, in the customer's own words.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+      <blockquote><p>Third customer review to be added, in the customer's own words.</p><footer><b>Customer name</b> · Dog breed, product purchased</footer></blockquote>
+    </div>
+    <div class="ctl"><button class="rd" data-prev aria-label="Previous review">{i:chev-left}</button><button class="rd" data-next aria-label="Next review">{i:chev-right}</button><span class="dots"><i class="on"></i><i></i><i></i></span></div>
+  </div>
+</div></section>
+</main>
+<!--@s-foot.html-->
+<script>
+(function(){
+  var $=UI.$,$$=UI.$$,id=function(x){return document.getElementById(x)},rt;
+  var f=APP.Finder(draw);
+  id('circs').innerHTML=BR.areas.map(function(a){return '<button class="cb" data-area="'+a.id+'" data-cur="Choose"><span>'+APP.IMG+'</span>'+a.s+'</button>'}).join('');
+  function draw(){
+    $$('.cb',id('circs')).forEach(function(t){var on=t.dataset.area===f.s.area;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on)});
+    var any=f.any();id('bar').hidden=!any;id('out').hidden=!any;
+    if(any){
+      id('bar-a').textContent=f.areaName()||'Any body area';
+      id('s-cond').innerHTML=APP.options(f.conds(),'Condition: not sure',f.s.cond);
+      id('s-sym').innerHTML=APP.options(f.symList(),'Symptom: any',f.s.syms[0]);
+      var r=f.res();
+      id('out-h').textContent='Supports for '+BR.tidy(f.condName()||f.areaName()||'your dog');
+      id('out-n').innerHTML=APP.note(r);
+      id('out-g').innerHTML=APP.cards(r.items,{label:false,showWhy:true});
+    }
+    clearTimeout(rt);rt=setTimeout(FX.refresh,300);
+  }
+  id('circs').addEventListener('click',function(e){var b=e.target.closest('.cb');if(b)f.area(b.dataset.area)});
+  id('s-cond').addEventListener('change',function(){f.cond(this.value,true)});
+  id('s-sym').addEventListener('change',function(){f.oneSym(this.value)});
+  id('bar-c').onclick=function(){f.clear()};
+  APP.menu(id('nv'),function(a){f.only('area',a);FX.scrollTo(id('choose'))});
+
+  /* types */
+  id('types-g').innerHTML=BR.levels.map(function(l){
+    return '<a class="ty" href="#range" data-t="'+l.type+'" data-up data-cur="Shop"><span class="ph">'+APP.IMG+'</span><b>'+BR.typeName[l.type]+'</b><small>'+l.sup+'</small><p>'+l.d+'</p><span class="tl">Shop '+BR.typeName[l.type].toLowerCase()+' {i:arrow-right}</span></a>'}).join('');
+  var tabs=id('rt');
+  id('types-g').addEventListener('click',function(e){var a=e.target.closest('.ty');if(a){var b=$('button[data-k="'+a.dataset.t+'"]',tabs);if(b)b.click()}});
+  APP.range({tabs:tabs,box:id('rb'),card:{label:false},limit:10});
+
+  /* conditions index */
+  id('ix').innerHTML=BR.condGroups.map(function(g){
+    return '<div data-up><h3>'+g.name+'</h3><ul>'+g.list.map(function(c){return '<li><button data-c="'+c.id+'">'+c.name+'{i:arrow-right}</button></li>'}).join('')+'</ul></div>'}).join('');
+  id('ix').addEventListener('click',function(e){var b=e.target.closest('button');if(b){f.only('cond',b.dataset.c);FX.scrollTo(id('choose'))}});
+
+  APP.voices(id('voi'));APP.versionBar();draw();FX.init();
+})();
+</script>
+</body></html>

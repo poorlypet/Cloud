@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Atkinson+Hyperlegible+Next:wght@400..800&display=swap">
+<style>
+:root{--display:"Parkinsans","Trebuchet MS",Arial,sans-serif;--sans:"Atkinson Hyperlegible Next",Helvetica,Arial,sans-serif}
+/*@s-base.css*/
+
+/* hero: one big curve, picture standing on it */
+.hero{position:relative;background:var(--brand);color:#fff}
+.hero-g{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;padding-block:clamp(24px,2.400vw,36px) clamp(92px,10vw,148px)}
+.hero h1{font-size:clamp(36px,4.600vw,68px)}
+.hero p{font:600 clamp(17px,1.500vw,21px)/1.300 var(--display);letter-spacing:-.01em;margin:16px 0 24px;max-width:20em}
+.hero-p{align-self:end}
+.hero-p .ph{width:min(460px,100%);aspect-ratio:1.250;margin:0 0 -4.500vw auto;--slot:rgba(255,255,255,.16);color:rgba(255,255,255,.9)}
+.hero-p .ph small{color:rgba(255,255,255,.9)}
+.hero .cv path{fill:#fff}
+.hero-x{position:absolute;left:0;bottom:-1px;width:100%;height:auto;overflow:visible;z-index:3;pointer-events:none}
+.hero-x text{font:800 27px var(--display);fill:var(--brand);letter-spacing:-.01em}
+@media(max-width:900px){.hero-g{grid-template-columns:1fr;padding-block:36px 90px}.hero-p .ph{max-width:340px;margin:0 auto -30px}.hero-x{display:none}}
+
+/* body area row */
+.tile{display:grid;gap:14px;justify-items:center;text-align:center}
+.tile-i{width:100%;aspect-ratio:.880;border-radius:30px;display:grid;place-items:center;background:var(--slot);color:#A9ACC4;transition:border-radius .8s var(--ease),background .4s,transform .7s var(--ease),color .3s}
+.tile-i .ic{width:36px;height:36px;stroke-width:1.300}
+.tile b{font:800 clamp(18px,1.700vw,25px)/1.1 var(--display);letter-spacing:-.02em}
+.tile:hover .tile-i,.tile.on .tile-i{border-radius:58% 42% 46% 54%/46% 56% 44% 54%;background:var(--mint);color:var(--brand)}
+.tile.on .tile-i{transform:scale(1.030)}
+.pn{margin-top:30px;background:var(--mint-l);border-radius:40px;padding:clamp(20px,2.800vw,42px);animation:rise .7s var(--ease)}
+.pn-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 16px;margin-bottom:18px}
+.pn-h h3{font-size:clamp(26px,2.700vw,40px)}
+.pn-r{display:grid;grid-template-columns:230px minmax(0,1fr);gap:10px 24px;align-items:start;padding:16px 0;border-top:1.500px solid rgba(41,40,60,.14)}
+.pn-r>b{font:700 17.500px/1.300 var(--display);padding-top:9px}
+.pn-o{padding-top:24px;border-top:1.500px solid rgba(41,40,60,.14)}
+.pn-o h4{font-size:23px;margin-bottom:16px}
+.pn-o .note{margin-bottom:16px}
+@media(max-width:800px){.pn{border-radius:28px}.pn-r{grid-template-columns:1fr}.pn-r>b{padding-top:0}}
+
+/* fitting */
+.fit{position:relative;background:var(--mint);padding:clamp(100px,12vw,190px) 0;overflow:hidden}
+.fit-g{display:grid;grid-template-columns:minmax(0,.900fr) minmax(0,1.100fr);gap:clamp(28px,6vw,110px);align-items:center}
+.fit-p .ph{width:min(540px,100%);aspect-ratio:1;--slot:#fff}
+.steps{display:grid;gap:26px;margin:30px 0 32px;position:relative}
+.steps::before{content:"";position:absolute;left:25px;top:26px;bottom:26px;width:2px;background:var(--brand);opacity:.4}
+.steps li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:20px;align-items:center;position:relative}
+.steps i{width:52px;height:52px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center}
+.steps i .ic{width:24px;height:24px}
+.steps b{display:block;font:800 23px/1.150 var(--display);letter-spacing:-.02em}
+.steps span{color:#3F3E55}
+@media(max-width:900px){.fit-g{grid-template-columns:1fr}.fit-p .ph{max-width:320px;margin-inline:auto}}
+
+/* made in the UK */
+.uk{position:relative;background:var(--brand);color:#fff;padding:clamp(100px,12vw,190px) 0;overflow:hidden}
+.uk-g{display:grid;grid-template-columns:minmax(0,1.100fr) minmax(0,.900fr);gap:clamp(28px,6vw,110px);align-items:center}
+.uk .big{font:700 clamp(21px,2.200vw,32px)/1.250 var(--display);letter-spacing:-.015em;margin-top:22px;max-width:21em}
+.ck{display:grid;gap:12px;margin:28px 0}
+.ck li{display:flex;align-items:center;gap:12px;font:700 18px var(--display)}
+.ck .ic{width:26px;height:26px;padding:5px;border-radius:50%;background:var(--mint);color:var(--ink);stroke-width:2.800}
+.oth{opacity:.85;margin-bottom:26px}
+.uk-p{position:relative;max-width:520px;margin-left:auto;width:100%}
+.uk-p .a{aspect-ratio:1;--slot:rgba(255,255,255,.16);color:rgba(255,255,255,.9)}
+.uk-p .a small{color:rgba(255,255,255,.9)}
+.uk-p .b{position:absolute;left:-10%;bottom:-6%;width:44%;aspect-ratio:1.150;--slot:#fff;box-shadow:0 26px 40px -24px rgba(0,0,0,.6)}
+@media(max-width:900px){.uk-g{grid-template-columns:1fr}.uk-p{max-width:340px;margin-inline:auto}}
+</style></head><body>
+<!--@s-top.html-->
+<header class="hd flat" id="nv"><div class="w hd-in">
+<!--@s-nav.html-->
+</div></header>
+
+<main>
+<section class="hero" data-hero>
+  <div class="w hero-g">
+    <div>
+      <h1><span class="ln"><span>Support for</span></span><span class="ln"><span>every step.</span></span></h1>
+      <p data-hin>Dog braces, splints and harnesses, made in the North West of England.</p>
+      <a class="btn mi lg" href="#choose" data-hin>Find the right support</a>
+    </div>
+    <div class="hero-p"><div class="ph blob" data-hin><span>{i:image}<br><small>Photo: dog wearing a brace</small></span></div></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 220" aria-hidden="true"><path d="M0 150 C 180 184 420 192 700 142 C 980 92 1220 42 1440 24 V221 H0 Z"/></svg>
+  <svg class="hero-x" viewBox="0 0 1440 220" aria-hidden="true"><defs><path id="hcp" d="M0 150 C 180 184 420 192 700 142 C 980 92 1220 42 1440 24"/></defs><text dy="42"><textPath href="#hcp" startOffset="2.600%">Made in the North West of England.</textPath></text></svg>
+</section>
+
+<section class="sec" id="choose" style="padding-top:clamp(28px,3vw,48px)"><div class="w">
+  <div class="sh"><div><h2 class="h2" data-rise>Where do they need support?</h2><p class="sub">Choose an area, then narrow it down by condition and symptoms.</p></div><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+  <div class="rl-t p5" id="tiles"></div>
+  <div class="pn" id="pn" hidden></div>
+</div></section>
+
+<section class="fit">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w fit-g">
+    <div class="fit-p"><div class="ph circle" data-wipe><span>{i:image}<br><small>Photo: fitting a brace</small></span></div></div>
+    <div>
+      <h2 class="h2" data-rise>Getting the<br>right fit.</h2>
+      <ul class="steps">
+        <li data-up><i>{i:ruler}</i><span><b>Measure</b>Take a few simple measurements at home.</span></li>
+        <li data-up><i>{i:check}</i><span><b>Choose</b>Pick the size from the sizing guide.</span></li>
+        <li data-up><i>{i:strap}</i><span><b>Fit</b>Follow the fitting guide for a secure, comfortable fit.</span></li>
+      </ul>
+      <a class="tl" href="#">Explore the fitting guide {i:arrow-right}</a>
+    </div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="range"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>The range</h2><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+  <div class="tabs" id="rt"><button class="on" data-k="">All</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div>
+  <p class="tx" id="rx"></p>
+  <div class="rl-t p5" id="rb" style="margin-top:22px"></div>
+</div></section>
+
+<section class="uk" id="uk">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w uk-g">
+    <div>
+      <h2 class="h2" data-rise>Made in the North West of England.</h2>
+      <p class="big" data-words>Most dog braces sold in the UK are made overseas. Ours are cut, stitched and checked in our own workshop.</p>
+      <ul class="ck"><li data-up>{i:check}Cut and stitched in our own workshop</li><li data-up>{i:check}Checked by hand before it is sent</li><li data-up>{i:check}Sent straight from where it is made</li></ul>
+      <a class="btn mi" href="#">See how they are made {i:arrow-right}</a>
+    </div>
+    <div class="uk-p"><div class="ph circle a" data-wipe><span>{i:image}<br><small>Workshop photo</small></span></div><div class="ph r b" data-up><span>{i:image}</span></div></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="reviews" style="padding-bottom:0"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>From owners</h2><div class="rsum"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>0.0</b>/5 from 0 reviews</span><span class="pl">Review platform logo</span></div></div>
+  <div class="rvs">
+    <article class="rv" data-up><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv" data-up><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv" data-up><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+  </div>
+</div></section>
+</main>
+<!--@s-foot.html-->
+<script>
+(function(){
+  var $=UI.$,$$=UI.$$,id=function(x){return document.getElementById(x)},rt;
+  var f=APP.Finder(draw);
+  id('tiles').innerHTML=BR.areas.map(function(a){return '<button class="tile" data-area="'+a.id+'" data-cur="Choose"><span class="tile-i">'+APP.IMG+'</span><b>'+a.s+'</b></button>'}).join('');
+  function draw(){
+    $$('.tile',id('tiles')).forEach(function(t){var on=t.dataset.area===f.s.area;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on)});
+    var pn=id('pn');pn.hidden=!f.any();
+    if(f.any()){var r=f.res();
+      pn.innerHTML='<div class="pn-h"><h3>'+(f.areaName()||f.condName()||'Your dog')+'</h3><button class="btn ol sm" data-clear="1">Start again</button></div>'+
+        (f.s.area?'':'<div class="pn-r"><b>Where do they need support?</b>'+APP.chips('area',f.areaList(),f.s)+'</div>')+
+        '<div class="pn-r"><b>Has a vet diagnosed a condition?</b>'+APP.chips('cond',f.conds(),f.s)+'</div>'+
+        '<div class="pn-r"><b>What are you seeing?</b>'+APP.chips('sym',f.symList(),f.s)+'</div>'+
+        '<div class="pn-o"><h4>Supports that suit</h4>'+APP.note(r)+'<div class="grid">'+APP.cards(r.items,{cls:'b',showWhy:true})+'</div></div>';
+    }
+    clearTimeout(rt);rt=setTimeout(FX.refresh,300);
+  }
+  id('tiles').addEventListener('click',function(e){var b=e.target.closest('.tile');if(b)f.area(b.dataset.area)});
+  id('pn').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var d=b.dataset;
+    if(d.clear)f.clear();else if(d.area)f.area(d.area);else if(d.cond)f.cond(d.cond);else if(d.sym)f.sym(d.sym)});
+  UI.rail(id('choose'));
+  APP.menu(id('nv'),function(a){f.only('area',a);FX.scrollTo(id('choose'))});
+  var rr;APP.range({tabs:id('rt'),box:id('rb'),tx:id('rx'),card:{},after:function(){if(rr)rr.update()}});rr=UI.rail(id('range'));
+  APP.versionBar();draw();FX.init();
+})();
+</script>
+</body></html>

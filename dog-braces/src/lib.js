@@ -54,7 +54,7 @@ var UI = (function () {
     root.addEventListener('click', function (e) {
       var b = e.target.closest('[data-m]');
       if (b) { open(cur === b.dataset.m ? null : b.dataset.m); return; }
-      if (e.target.closest('.mm a, .mm button[data-pick]')) open(null);
+      if (e.target.closest('.mm a, .mm button')) open(null);
     });
     if (window.matchMedia && matchMedia('(hover:hover) and (min-width:1000px)').matches) {
       $$('[data-m]', root).forEach(function (b) { b.addEventListener('mouseenter', function () { clearTimeout(t); open(b.dataset.m); }); });

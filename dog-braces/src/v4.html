@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Onest:wght@400..700&display=swap">
+<style>
+:root{--display:"Gabarito","Trebuchet MS",Arial,sans-serif;--sans:"Onest",Helvetica,Arial,sans-serif}
+/*@s-base.css*/
+
+/* hero: pale lilac, centred, a picture either side */
+.hero{position:relative;background:var(--lilac);overflow:hidden;padding-top:92px}
+.hero-g{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,.600fr) minmax(0,1.500fr) minmax(0,.600fr);gap:clamp(16px,3vw,48px);align-items:center;text-align:center;padding-block:clamp(18px,2vw,30px) clamp(104px,11vw,164px)}
+.hero h1{font-size:clamp(40px,5.100vw,78px);letter-spacing:-.035em}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero p{font:500 clamp(17px,1.500vw,21px)/1.350 var(--sans);margin:16px auto 26px;max-width:25em}
+.hero-b{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 26px}
+.hero .ph.a{aspect-ratio:.900;--slot:#fff;align-self:end;margin-bottom:-3vw}
+.hero .ph.b{aspect-ratio:1;--slot:var(--brand);color:#fff;align-self:start}
+.hero .ph.b small{color:#fff}
+@media(max-width:900px){.hero-g{grid-template-columns:1fr;padding-bottom:96px}.hero-t{order:-1}.hero .ph.a{display:none}.hero .ph.b{width:200px;margin-inline:auto}}
+
+/* body areas as picture cards; a panel slides in from the right */
+.kc{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font:700 17px var(--display)}
+.kc .sl{width:min(300px,78vw)}
+.acs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.acs>div{display:grid}
+.ac{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 10px;padding:10px 10px 14px;border-radius:26px;background:#fff;box-shadow:inset 0 0 0 1.500px var(--line);text-align:left;transition:box-shadow .3s,transform .6s var(--ease)}
+.ac-i{grid-column:1/-1;aspect-ratio:1.500;border-radius:18px;background:var(--slot);color:#A9ACC4;display:grid;place-items:center;margin-bottom:14px;transition:background .4s,color .3s}
+.ac-i .ic{width:34px;height:34px;stroke-width:1.300;transition:transform .7s var(--ease)}
+.ac-t{padding-left:8px;min-width:0}
+.ac b{display:block;font:800 clamp(18px,1.500vw,22px)/1.150 var(--display);letter-spacing:-.02em}
+.ac small{display:block;color:var(--mute);font-size:14.500px;margin-top:2px}
+.ac-a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.500px var(--ink);margin-right:4px;transition:background .25s,color .25s,box-shadow .25s}
+.ac-a .ic{width:18px;height:18px;stroke-width:2.200}
+.ac:hover{box-shadow:inset 0 0 0 2px var(--brand);transform:translateY(-5px)}
+.ac:hover .ac-i,.ac.on .ac-i{background:var(--mint);color:var(--brand)}
+.ac:hover .ac-i .ic{transform:scale(1.150)}
+.ac:hover .ac-a,.ac.on .ac-a{background:var(--brand);color:#fff;box-shadow:none}
+.ac.on{box-shadow:inset 0 0 0 2px var(--brand)}
+@media(max-width:1200px){.ac small{display:none}}
+@media(max-width:1000px){.acs{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+@media(max-width:560px){.ac{padding:8px 8px 12px;border-radius:22px}.ac small,.ac-a{display:none}.ac-i{margin-bottom:10px}.ac-t{padding-left:6px}}
+
+.dwo{position:fixed;inset:0;z-index:110;background:rgba(41,40,60,.5);opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s}
+.dwo.open{opacity:1;visibility:visible;transition:opacity .4s}
+.dw{position:fixed;top:0;right:0;bottom:0;z-index:120;width:min(580px,100%);display:flex;flex-direction:column;background:#fff;border-radius:44px 0 0 44px;box-shadow:-30px 0 80px -30px rgba(22,20,50,.5);transform:translateX(104%);visibility:hidden;transition:transform .7s var(--ease),visibility 0s .7s}
+.dw.open{transform:none;visibility:visible;transition:transform .7s var(--ease)}
+.dw-h{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 22px 18px 34px}
+.dw-h h3{font-size:clamp(26px,2.600vw,36px)}
+.dw-b{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 34px 26px}
+.dw-p{aspect-ratio:3.200;border-radius:24px;margin-bottom:16px}
+.dw-i{color:var(--mute)}
+.dw-r{padding:18px 0;border-top:1.500px solid var(--line);margin-top:18px}
+.dw-r+.dw-r{margin-top:0}
+.dw-r>b{display:block;font:800 18px var(--display);letter-spacing:-.01em;margin-bottom:12px}
+.dw .note{background:var(--mint-l)}
+.dw-r .note{margin-top:12px}
+.dw-s{display:grid;gap:10px;padding-top:20px;border-top:1.500px solid var(--line)}
+.dw-s h4{font-size:22px;margin-bottom:4px}
+.dw-f{display:flex;justify-content:space-between;gap:10px;padding:16px 34px 20px;border-top:1.500px solid var(--line)}
+@media(max-width:600px){.dw{border-radius:28px 0 0 28px;width:94%}.dw-h{padding:16px 14px 12px 20px}.dw-b{padding:0 20px 20px}.dw-f{padding:12px 20px 16px}}
+
+/* fitting: three pictures on a mint band */
+.fit{position:relative;background:var(--mint);padding:clamp(100px,11vw,176px) 0;overflow:hidden}
+.f3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.f3 li{display:grid;align-content:start;gap:4px}
+.f3-p{position:relative;margin-bottom:34px}
+.f3-p .ph{aspect-ratio:1.550;border-radius:28px;--slot:#fff}
+.f3-p i{position:absolute;left:24px;bottom:-26px;width:58px;height:58px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 7px var(--mint)}
+.f3-p i .ic{width:25px;height:25px}
+.f3 b{font:800 26px/1.1 var(--display);letter-spacing:-.025em}
+.f3 span{color:#3F3E55;max-width:24em}
+@media(max-width:800px){.f3{grid-template-columns:1fr}.f3-p .ph{aspect-ratio:2}}
+
+.more{display:flex;justify-content:center;margin-top:36px}
+
+/* the types side by side */
+.cmp{background:var(--base);border-radius:clamp(28px,3.400vw,52px);padding:clamp(22px,3.400vw,52px)}
+.cmp-s{overflow-x:auto}
+.cmp table{width:100%;min-width:880px;border-collapse:collapse;text-align:left}
+.cmp thead th{font:800 clamp(21px,1.900vw,27px)/1.1 var(--display);letter-spacing:-.025em;padding:0 20px 18px 0;vertical-align:bottom}
+.cmp tbody tr{border-top:1.500px solid var(--line)}
+.cmp tbody th{width:140px;font:700 15.500px var(--display);color:var(--mute);padding:16px 20px 16px 0;vertical-align:top;white-space:nowrap}
+.cmp td{width:21%;padding:16px 20px 16px 0;vertical-align:top;font-size:16px;line-height:1.400}
+.cmp td b{font:800 18px var(--display)}
+.cmp tbody tr:last-child td{padding-block:20px 2px}
+.cmp .tl{font-size:15.500px}
+.cmp-m{display:none}
+.cmp-m>div{padding:20px 0;border-top:1.500px solid var(--line)}
+.cmp-m h3{font-size:24px;margin-bottom:10px}
+.cmp-m dl{display:grid;grid-template-columns:104px minmax(0,1fr);gap:8px 12px;margin-bottom:14px;font-size:15.500px;line-height:1.400}
+.cmp-m dt{font:700 14.500px/1.500 var(--display);color:var(--mute)}
+@media(max-width:800px){.cmp-s{display:none}.cmp-m{display:block}}
+
+/* made in the UK: one indigo card, picture with a round edge */
+.ukc{display:grid;grid-template-columns:minmax(0,1.050fr) minmax(0,.950fr);background:var(--brand);color:#fff;border-radius:clamp(30px,3.400vw,52px);overflow:hidden}
+.ukc-t{padding:clamp(26px,4.400vw,72px)}
+.ukc .big{font:600 clamp(19px,1.900vw,27px)/1.300 var(--display);letter-spacing:-.01em;margin-top:20px;max-width:22em}
+.ck{display:grid;gap:12px;margin:26px 0 30px}
+.ck li{display:flex;align-items:center;gap:12px;font:700 18px var(--display)}
+.ck .ic{width:26px;height:26px;padding:5px;border-radius:50%;background:var(--mint);color:var(--ink);stroke-width:2.800}
+.ukc-p{min-height:340px;height:100%;border-radius:999px 0 0 999px;--slot:rgba(255,255,255,.15);color:rgba(255,255,255,.9)}
+.ukc-p small{color:rgba(255,255,255,.9)}
+@media(max-width:900px){.ukc{grid-template-columns:1fr}.ukc-p{min-height:0;aspect-ratio:1.400;border-radius:999px 999px 0 0;margin:0 22px}}
+</style></head><body>
+<!--@s-top.html-->
+<header class="hd pill" id="nv"><div class="hd-in">
+<!--@s-nav.html-->
+</div></header>
+
+<main>
+<section class="hero" data-hero>
+  <div class="w hero-g">
+    <div class="ph blob a" data-hin><span>{i:image}<br><small>Photo: dog wearing a brace</small></span></div>
+    <div class="hero-t">
+      <h1><span class="ln"><span>Support they</span></span><span class="ln"><span><em>can rely on.</em></span></span></h1>
+      <p data-hin>Braces, splints and lifting harnesses for dogs, made in the North West of England.</p>
+      <div class="hero-b" data-hin><a class="btn lg" href="#choose">Find the right support</a><a class="tl" href="#range">Shop the range {i:arrow-right}</a></div>
+    </div>
+    <div class="ph circle b" data-hin><span>{i:image}<br><small>Photo: close up</small></span></div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="choose" style="padding-top:clamp(20px,2vw,36px)"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>Where do they need support?</h2>
+    <label class="kc"><span>Know the condition?</span><span class="sl"><select id="cs" aria-label="Choose a condition"></select></span></label></div>
+  <div class="acs" id="acs"></div>
+</div></section>
+
+<section class="fit">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z" fill="#fff"/></svg>
+  <div class="w">
+    <div class="sh"><h2 class="h2" data-rise>Getting the size right</h2><a class="tl" href="#">Explore the fitting guide {i:arrow-right}</a></div>
+    <ul class="f3">
+      <li data-up><div class="f3-p"><div class="ph"><span>{i:image}<br><small>Photo: measuring a leg</small></span></div><i>{i:ruler}</i></div><b>Measure</b><span>Take a few simple measurements at home.</span></li>
+      <li data-up><div class="f3-p"><div class="ph"><span>{i:image}<br><small>Photo: the sizing guide</small></span></div><i>{i:check}</i></div><b>Choose</b><span>Pick the size from the sizing guide.</span></li>
+      <li data-up><div class="f3-p"><div class="ph"><span>{i:image}<br><small>Photo: fitting a brace</small></span></div><i>{i:strap}</i></div><b>Fit</b><span>Follow the fitting guide for a secure, comfortable fit.</span></li>
+    </ul>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-curve="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z" fill="#fff"/></svg>
+</section>
+
+<section class="sec" id="range" style="padding-bottom:clamp(34px,4vw,64px)"><div class="w">
+  <div class="sh"><h2 class="h2" data-rise>Our supports</h2><div class="tabs" id="rt"><button class="on" data-k="">All</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div></div>
+  <div class="grid c5" id="rb"></div>
+  <div class="more"><a class="btn ol" href="#">View all supports {i:arrow-right}</a></div>
+</div></section>
+
+<section class="sec" id="types" style="padding-top:0"><div class="w">
+  <div class="cmp" data-up>
+    <div class="sh"><h2 class="h2">Compare the types</h2></div>
+    <div class="cmp-s"><table id="cmp"></table></div>
+    <div class="cmp-m" id="cmpm"></div>
+  </div>
+</div></section>
+
+<section class="sec" id="uk" style="padding-top:0"><div class="w">
+  <div class="ukc">
+    <div class="ukc-t">
+      <h2 class="h2" data-rise>Made in the North West of England.</h2>
+      <p class="big" data-words>Most dog braces sold in the UK are made overseas. Ours are cut, stitched and checked in our own workshop.</p>
+      <ul class="ck"><li data-up>{i:check}Cut and stitched in our own workshop</li><li data-up>{i:check}Checked by hand before it is sent</li><li data-up>{i:check}Sent straight from where it is made</li></ul>
+      <a class="btn mi" href="#">See how they are made {i:arrow-right}</a>
+    </div>
+    <div class="ph ukc-p" data-wipe><span>{i:image}<br><small>Workshop photo</small></span></div>
+  </div>
+</div></section>
+
+<section class="sec" id="reviews" style="padding-block:0"><div class="w" id="rvw">
+  <div class="sh"><div><h2 class="h2" data-rise>From owners</h2><div class="rsum" style="margin-top:14px"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>0.0</b>/5 from 0 reviews</span><span class="pl">Review platform logo</span></div></div><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+  <div class="rl-t p3">
+    <article class="rv"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+    <article class="rv"><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><h3>Review title</h3><p>Customer review to be added.</p><div class="rv-w"><span class="ph">{i:image}</span><span><b>Customer name</b><span>Product purchased</span></span></div></article>
+  </div>
+</div></section>
+</main>
+
+<div class="dwo" id="dwo" data-lenis-prevent></div>
+<aside class="dw" id="dw" role="dialog" aria-modal="true" aria-labelledby="dw-t" data-lenis-prevent>
+  <div class="dw-h"><h3 id="dw-t"></h3><button class="rd" id="dw-x" aria-label="Close">{i:close}</button></div>
+  <div class="dw-b" id="dw-b"></div>
+  <div class="dw-f"><button class="btn ol sm" id="dw-c">Start again</button><a class="btn sm" href="#range" id="dw-r">Shop the full range {i:arrow-right}</a></div>
+</aside>
+<!--@s-foot.html-->
+<script>
+(function(){
+  var $=UI.$,$$=UI.$$,id=function(x){return document.getElementById(x)},mode='area',last;
+  var f=APP.Finder(draw),dw=id('dw'),dwo=id('dwo');
+  id('acs').innerHTML=BR.areas.map(function(a){return '<div data-up><button class="ac" data-area="'+a.id+'" data-cur="Choose"><span class="ac-i">'+APP.IMG+'</span><span class="ac-t"><b>'+a.name+'</b><small>'+a.note+'</small></span><i class="ac-a">{i:arrow-right}</i></button></div>'}).join('');
+  id('cs').innerHTML='<option value="">Choose a condition</option>'+BR.condGroups.map(function(g){return '<optgroup label="'+g.name+'">'+g.list.map(function(c){return '<option value="'+c.id+'">'+c.name+'</option>'}).join('')+'</optgroup>'}).join('');
+
+  function open(from){last=from;dw.classList.add('open');dwo.classList.add('open');document.body.classList.add('open');id('dw-b').scrollTop=0;id('dw-x').focus({preventScroll:true})}
+  function close(){if(!dw.classList.contains('open'))return;dw.classList.remove('open');dwo.classList.remove('open');document.body.classList.remove('open');if(last&&last.focus)last.focus({preventScroll:true})}
+  function draw(){
+    $$('.ac',id('acs')).forEach(function(t){var on=t.dataset.area===f.s.area;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on)});
+    if(!f.any()){close();return}
+    var r=f.res(),a=f.s.area&&BR.find(BR.areas,f.s.area),c=f.s.cond&&BR.find(BR.conditions,f.s.cond),h='<div class="ph dw-p">'+APP.IMG+'</div>';
+    if(mode==='area'&&a){
+      id('dw-t').textContent=a.name;
+      h+='<p class="dw-i">'+a.note+'.</p>'+
+        '<div class="dw-r"><b>Has a vet diagnosed a condition?</b>'+APP.chips('cond',f.conds(),f.s)+(c?'<p class="note">{i:info}<span>'+c.info+'</span></p>':'')+'</div>';
+    }else{
+      id('dw-t').textContent=c?c.name:'Your dog';
+      h+='<p class="dw-i">'+(c?c.info:'')+'</p>'+(c&&c.areas.length>1?'<div class="dw-r"><b>Where is it?</b>'+APP.chips('area',f.areaList(),f.s)+'</div>':'');
+    }
+    h+='<div class="dw-r"><b>What are you seeing?</b>'+APP.chips('sym',f.symList(),f.s)+'</div>'+
+      '<div class="dw-s"><h4>Supports that suit</h4>'+APP.note(r)+APP.cards(r.items,{h:true,label:false,showWhy:true})+'</div>';
+    id('dw-b').innerHTML=h;
+  }
+  id('acs').addEventListener('click',function(e){var b=e.target.closest('.ac');if(!b)return;mode='area';f.only('area',b.dataset.area);open(b)});
+  id('cs').addEventListener('change',function(){if(!this.value)return;mode='cond';f.only('cond',this.value);this.value='';open(this)});
+  id('dw-b').addEventListener('click',function(e){var b=e.target.closest('button.ch');if(!b)return;var d=b.dataset;
+    if(d.area)f.area(d.area);else if(d.cond)f.cond(d.cond);else if(d.sym)f.sym(d.sym)});
+  id('dw-x').onclick=close;dwo.onclick=close;id('dw-r').onclick=close;
+  id('dw-c').onclick=function(){f.clear()};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  ['wheel','touchmove'].forEach(function(ev){dwo.addEventListener(ev,function(e){e.preventDefault()},{passive:false})});
+  APP.menu(id('nv'),function(a){mode='area';f.only('area',a);FX.scrollTo(id('choose'));open($('.ac[data-area="'+a+'"]'))});
+
+  APP.range({tabs:id('rt'),box:id('rb'),card:{},limit:innerWidth<760?6:10});
+
+  /* the types side by side */
+  var L=BR.levels,use={wrap:'Mild strains, arthritis and everyday comfort.',brace:'Instability, ligament injuries and long-term conditions.',splint:'Serious injuries, knuckling and recovery after surgery, usually on your vet\'s advice.',mobility:'Dogs that need help standing, on stairs or getting about.'};
+  function row(h,fn){return '<tr><th scope="row">'+h+'</th>'+L.map(function(l){return '<td>'+fn(l)+'</td>'}).join('')+'</tr>'}
+  id('cmp').innerHTML='<thead><tr><td></td>'+L.map(function(l){return '<th scope="col">'+BR.typeName[l.type]+'</th>'}).join('')+'</tr></thead><tbody>'+
+    row('Support',function(l){return '<b>'+l.sup+'</b>'})+
+    row('Movement',function(l){return l.move})+
+    row('Used for',function(l){return use[l.type]})+
+    row('In the range',function(l){return BR.byType(l.type).map(function(p){return p.name}).join(', ')})+
+    row('',function(l){return '<a class="tl" href="#range" data-t="'+l.type+'">Shop '+BR.typeName[l.type].toLowerCase()+' {i:arrow-right}</a>'})+'</tbody>';
+  id('cmpm').innerHTML=L.map(function(l){return '<div><h3>'+BR.typeName[l.type]+'</h3><dl><dt>Support</dt><dd>'+l.sup+'</dd><dt>Movement</dt><dd>'+l.move+'</dd><dt>Used for</dt><dd>'+use[l.type]+'</dd><dt>In the range</dt><dd>'+BR.byType(l.type).map(function(p){return p.name}).join(', ')+'</dd></dl>'+
+    '<a class="tl" href="#range" data-t="'+l.type+'">Shop '+BR.typeName[l.type].toLowerCase()+' {i:arrow-right}</a></div>'}).join('');
+  id('types').addEventListener('click',function(e){var a=e.target.closest('[data-t]');if(a){var b=$('button[data-k="'+a.dataset.t+'"]',id('rt'));if(b)b.click()}});
+
+  UI.rail(id('rvw'));
+  APP.versionBar();draw();FX.init();
+})();
+</script>
+</body></html>
