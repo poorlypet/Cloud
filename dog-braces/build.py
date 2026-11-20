@@ -3,6 +3,7 @@
 Each src/<v>.html may use:
   /*@file*/ or <!--@file-->   inline another file from src/
   {i:name}                    inline an icon from src/icons.json
+  /*@@vendor/file*/           inline a third-party library from src/vendor/ (done last, left untouched)
 """
 import json
 import pathlib
@@ -32,5 +33,7 @@ for v in "abc":
         html = re.sub(r"<!--@([\w.-]+)-->", include, html)
     html = re.sub(r"\{i:([a-z0-9-]+)\}", icon, html)
     assert "—" not in html and "–" not in html, f"dash found in {v}"
+    assert "DOG." not in html and "data-dog" not in html, f"dog drawing code left in {v}"
+    html = re.sub(r"/\*@@([\w./-]+)\*/", lambda m: (src / m.group(1)).read_text(), html)
     (root / f"home-{v}.html").write_text(html)
     print("built", f"home-{v}.html", len(html) // 1024, "KB")
