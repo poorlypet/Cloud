@@ -96,7 +96,7 @@
 <div><h2 class="ct-h2" id="ct-form-h">Send us a message</h2><p class="ct-sub">Fields marked optional can be left blank. Everything else we need to reply.</p></div>
 <!-- Posts to Shopify's standard contact form: POST /contact with form_type=contact and contact[...] fields.
      Shopify emails every submission to the store's contact email (hello@poorly-pet.com). -->
-<form class="ct-form" id="ct-form" action="/contact" method="post" accept-charset="UTF-8" enctype="multipart/form-data" novalidate data-ct-form aria-labelledby="ct-form-h">
+<form class="ct-form" id="ct-form" action="/contact" method="post" accept-charset="UTF-8" novalidate data-ct-form aria-labelledby="ct-form-h">
   <input type="hidden" name="form_type" value="contact"><input type="hidden" name="utf8" value="&#10003;">
   <div class="ct-sum" data-ct-sum role="alert" tabindex="-1" hidden><h3>Please check the form</h3><ul></ul></div>
   <div class="ct-f" data-f="topic">
@@ -137,19 +137,9 @@
     <p class="ct-err" id="ct-msg-e"></p>
     <span class="ct-count" id="ct-msg-c" data-ct-count>0 / 3000</span>
   </div>
-  <div class="ct-f" data-f="photo">
-    <span class="ct-fl" id="ct-photo-l">Add a photo <span class="ct-opt">(optional)</span></span>
-    <div class="ct-file" data-ct-file>
-      <input id="ct-photo" name="contact[photo]" type="file" accept="image/*" aria-labelledby="ct-photo-l" aria-describedby="ct-photo-h ct-photo-e">
-      <div class="ct-drop" aria-hidden="true"><i></i><div><b>Choose a photo</b> <span>or drag it here</span></div></div>
-    </div>
-    <div class="ct-chosen" data-ct-chosen hidden><img alt="" data-ct-thumb><span class="ct-cn" data-ct-fname></span><button type="button" data-ct-remove>Remove</button></div>
-    <p class="ct-hint" id="ct-photo-h">JPG, PNG or HEIC, up to 10MB. Useful for a damaged item or checking a fit.</p>
-    <p class="ct-err" id="ct-photo-e"></p>
-  </div>
   <div class="ct-actions">
     <button class="btn sec" type="submit" data-ct-send>Send message</button>
-    <p class="ct-small">We reply by email within one working day. See our <a href="#">privacy policy</a>.</p>
+    <p class="ct-small">We reply by email within one working day. To send a photo, email it to <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a>. See our <a href="#">privacy policy</a>.</p>
   </div>
 </form>
 <div class="ct-ok" data-ct-ok tabindex="-1" hidden aria-live="polite">
@@ -163,7 +153,7 @@
     <div class="ct-c-side">
     <aside class="ct-c-inc" aria-labelledby="ct-inc-h" aria-live="polite">
       <h2 class="ct-h3" id="ct-inc-h" data-ct-inc-h>What to include</h2>
-      <ul data-ct-inc><li>Your order number, if it's about an order</li><li>What's happened, in a sentence or two</li><li>A photo, if something arrived damaged</li></ul>
+      <ul data-ct-inc><li>Your order number, if it's about an order</li><li>What's happened, in a sentence or two</li><li>If something arrived damaged, email us a photo</li></ul>
       <p>The more we know, the faster we can sort it.</p>
     </aside>
     <div class="ct-c-info">

@@ -7,18 +7,22 @@
      fields contact[topic], contact[order_number], contact[name], contact[email], contact[body].
    Shopify emails each submission to the store contact email (hello@poorly-pet.com) and
    redirects back to the page with ?contact_posted=true, which is picked up below to show
-   the success state.
-   Set LIVE = true in the theme so a valid form is submitted for real. In this preview
-   (LIVE = false) validation runs and the success state is shown without sending.
+   the success state. Shopify keeps no copy of a message: the email is the only record.
 
-   PHOTO UPLOADS: Shopify's standard contact form does not accept file attachments, so the
-   contact[photo] field is ignored by Shopify. To receive photos, add a form app that supports
-   attachments, or ask customers to reply to our email with their photo. See report.
+   LIVE is true on the live theme (its layout sets window.THEME_LIVE), so a valid form is
+   posted for real and the thank-you only shows once Shopify has redirected back. In the
+   static preview there is no THEME_LIVE: validation runs and the success state is shown
+   without sending.
+
+   NO PHOTO FIELD: Shopify's standard contact form cannot receive file attachments. A photo
+   also made the request large enough to be cut off before it finished, so messages with a
+   photo were lost. Customers are asked to email photos to hello@poorly-pet.com instead.
+   Do not add a file input to this form.
    ========================================================================== */
 (function(){
   'use strict';
-  var LIVE = false;
-  var MAX_MB = 10;
+  var LIVE = !!window.THEME_LIVE;
+  var SENT_KEY = 'pp_contact_sent';
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   var ORDER_RE = /^#?\s?\d{3,8}$/;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -55,29 +59,24 @@
   var hint=form.querySelector('[data-ct-hint]');
   var msg=form.querySelector('#ct-msg');
   var count=form.querySelector('[data-ct-count]');
-  var photo=form.querySelector('#ct-photo');
-  var fileBox=form.querySelector('[data-ct-file]');
-  var chosen=form.querySelector('[data-ct-chosen]');
-  var thumb=form.querySelector('[data-ct-thumb]');
-  var fname=form.querySelector('[data-ct-fname]');
   var inc=document.querySelector('[data-ct-inc]');
   var incH=document.querySelector('[data-ct-inc-h]');
 
   /* ---------- topic-specific help ---------- */
   var HINTS={
     order:'Add your order number if you have it and we can check it straight away. Want to follow a parcel? <a href="track-my-order.html">Track my order</a>.',
-    returns:'Tell us which items and why. If something arrived damaged or faulty, a photo helps us sort it quickly.',
+    returns:'Tell us which items and why. If something arrived damaged or faulty, email a photo to <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a> and we\'ll sort it quickly.',
     product:'Tell us your dog\'s age, breed and what you\'re seeing, and we\'ll suggest what might help.',
-    wheelchair:'Include your dog\'s weight, breed and measurements. A side-on photo of your dog standing helps us check the fit.',
+    wheelchair:'Include your dog\'s weight, breed and measurements. To help us check the fit, email a side-on photo of your dog standing to <a href="mailto:hello@poorly-pet.com">hello@poorly-pet.com</a>.',
     trade:'Tell us about your organisation, the products you\'re interested in and rough quantities.',
     other:''
   };
   var INCLUDE={
-    '':{h:'What to include',l:['Your order number, if it\'s about an order','What\'s happened, in a sentence or two','A photo, if something arrived damaged']},
+    '':{h:'What to include',l:['Your order number, if it\'s about an order','What\'s happened, in a sentence or two','If something arrived damaged, email us a photo']},
     order:{h:'For an order or delivery',l:['Your order number (it starts with #)','The name and postcode on the order','What\'s wrong: late, missing or a change you need']},
-    returns:{h:'For a return',l:['Your order number','Which items you\'d like to return','Whether they\'re unopened, or faulty or damaged','A photo if something is faulty or damaged']},
+    returns:{h:'For a return',l:['Your order number','Which items you\'d like to return','Whether they\'re unopened, or faulty or damaged','If it\'s faulty or damaged, email us a photo']},
     product:{h:'For product advice',l:['Your dog\'s age, breed and weight','What you\'re seeing and for how long','Anything your vet has already said','Products you\'ve already tried']},
-    wheelchair:{h:'For wheelchair sizing',l:['Your dog\'s breed and weight','The measurements the size chart asks for','Which legs need support','A side-on photo of your dog standing']},
+    wheelchair:{h:'For wheelchair sizing',l:['Your dog\'s breed and weight','The measurements the size chart asks for','Which legs need support','A side-on photo of your dog standing, sent by email']},
     trade:{h:'For trade or wholesale',l:['Your organisation\'s name','The products you\'re interested in','Rough quantities and how often']},
     other:{h:'What to include',l:['What it\'s about, in a sentence or two','Your order number, if it\'s about an order']}
   };
@@ -105,22 +104,18 @@
       return EMAIL_RE.test(v)?'':'Enter an email address like name@example.com.'}},
     message:{el:msg,label:'Your message',test:function(){
       var v=msg.value.trim();if(!v)return 'Tell us how we can help.';
-      return v.length<10?'Add a little more detail so we can help (at least 10 characters).':''}},
-    photo:{el:photo,label:'Photo',test:function(){
-      var f=photo.files&&photo.files[0];if(!f)return '';
-      if(!/^image\//.test(f.type)&&!/\.(heic|heif)$/i.test(f.name))return 'Choose a photo (JPG, PNG or HEIC).';
-      return f.size>MAX_MB*1024*1024?'That photo is over '+MAX_MB+'MB. Try a smaller one.':''}}
+      return v.length<10?'Add a little more detail so we can help (at least 10 characters).':''}}
   };
   function box(k){return form.querySelector('[data-f="'+k+'"]')}
   function setErr(k,m){
     var f=FIELDS[k],b=box(k),e=form.querySelector('#'+f.el.id+'-e');
     if(e)e.textContent=m;
     if(m){f.el.setAttribute('aria-invalid','true')}else{f.el.removeAttribute('aria-invalid')}
-    if(b){b.classList.toggle('has-err',!!m);b.classList.toggle('is-ok',!m&&k!=='photo'&&k!=='order'&&!!(f.el.value||'').trim())}
+    if(b){b.classList.toggle('has-err',!!m);b.classList.toggle('is-ok',!m&&k!=='order'&&!!(f.el.value||'').trim())}
   }
   function check(k){var m=FIELDS[k].test();setErr(k,m);return m}
   Object.keys(FIELDS).forEach(function(k){
-    var el=FIELDS[k].el;if(!el||k==='photo'||k==='topic')return;
+    var el=FIELDS[k].el;if(!el||k==='topic')return;
     el.addEventListener('blur',function(){if(el.value.trim())touched[k]=true;if(touched[k])check(k)});
     el.addEventListener('input',function(){if(touched[k])check(k)});
   });
@@ -129,27 +124,6 @@
   /* message counter */
   function updCount(){count.textContent=msg.value.length+' / '+msg.maxLength}
   msg.addEventListener('input',updCount);updCount();
-
-  /* ---------- photo ---------- */
-  var objUrl;
-  function showFile(){
-    var f=photo.files&&photo.files[0];
-    if(objUrl){URL.revokeObjectURL(objUrl);objUrl=null}
-    touched.photo=true;var m=check('photo');
-    if(!f||m){chosen.hidden=true;fileBox.hidden=false;if(m)photo.value='';return}
-    objUrl=URL.createObjectURL(f);thumb.src=objUrl;
-    thumb.onerror=function(){thumb.removeAttribute('src')};
-    fname.innerHTML='';fname.appendChild(document.createTextNode(f.name));
-    var sm=document.createElement('small');sm.textContent=(f.size/1024/1024).toFixed(1)+'MB';fname.appendChild(sm);
-    chosen.hidden=false;fileBox.hidden=true;
-  }
-  photo.addEventListener('change',showFile);
-  chosen.querySelector('[data-ct-remove]').addEventListener('click',function(){
-    photo.value='';if(objUrl){URL.revokeObjectURL(objUrl);objUrl=null}
-    chosen.hidden=true;fileBox.hidden=false;setErr('photo','');photo.focus();
-  });
-  ['dragenter','dragover'].forEach(function(e){fileBox.addEventListener(e,function(){fileBox.classList.add('is-over')})});
-  ['dragleave','drop'].forEach(function(e){fileBox.addEventListener(e,function(){fileBox.classList.remove('is-over')})});
 
   /* ---------- submit ---------- */
   form.addEventListener('submit',function(ev){
@@ -170,13 +144,22 @@
       return;
     }
     sum.hidden=true;
-    if(LIVE)return; /* let the browser POST to /contact */
-    ev.preventDefault();
-    var btn=form.querySelector('[data-ct-send]');btn.disabled=true;btn.textContent='Sending';
-    setTimeout(function(){showOk({
+    var btn=form.querySelector('[data-ct-send]');
+    var sent={
       name:FIELDS.name.el.value.trim(),email:FIELDS.email.el.value.trim(),
       topic:topic.value,order:orderWrap.hidden?'':FIELDS.order.el.value.trim()
-    });btn.disabled=false;btn.textContent='Send message'},reduce?0:450);
+    };
+    if(LIVE){
+      /* The browser posts to /contact and Shopify redirects back with ?contact_posted=true.
+         Nothing is shown as sent until then; the details are kept for the thank-you. */
+      try{sessionStorage.setItem(SENT_KEY,JSON.stringify(sent))}catch(e){}
+      btn.textContent='Sending';btn.setAttribute('aria-busy','true');btn.style.pointerEvents='none';
+      setTimeout(function(){btn.textContent='Send message';btn.removeAttribute('aria-busy');btn.style.pointerEvents=''},12000);
+      return;
+    }
+    ev.preventDefault();
+    btn.disabled=true;btn.textContent='Sending';
+    setTimeout(function(){showOk(sent);btn.disabled=false;btn.textContent='Send message'},reduce?0:450);
   });
 
   function showOk(d){
@@ -195,7 +178,7 @@
   ok.querySelector('[data-ct-again]').addEventListener('click',function(){
     form.reset();touched={};
     Object.keys(FIELDS).forEach(function(k){setErr(k,'')});
-    chosen.hidden=true;fileBox.hidden=false;updCount();onTopic();
+    updCount();onTopic();
     ok.hidden=true;form.hidden=false;
     var h=wrap.querySelector('#ct-form-h');if(h)h.parentNode.hidden=false;
     topic.focus();
@@ -214,7 +197,12 @@
   }
   var qs=new URLSearchParams(location.search);
   if(qs.get('topic'))setTopic(qs.get('topic'),false);
-  if(qs.get('contact_posted')==='true')showOk({name:'',email:'',topic:'',order:''});
+  if(qs.get('contact_posted')==='true'){
+    /* back from a real send: show who it went from, if this browser still has the details */
+    var done={name:'',email:'',topic:'',order:''};
+    try{var kept=sessionStorage.getItem(SENT_KEY);if(kept){done=JSON.parse(kept);sessionStorage.removeItem(SENT_KEY)}}catch(e){}
+    showOk(done);
+  }
 
   /* version B: topic tiles open an answer panel */
   var tiles=document.querySelectorAll('[data-ct-tile]');
