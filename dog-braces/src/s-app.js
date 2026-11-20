@@ -56,6 +56,7 @@ var APP = (function () {
   var NONE = '<p class="note" style="grid-column:1/-1">{i:info}<span>Nothing matches that combination. Remove one of your choices, or contact us for advice.</span></p>';
 
   /* Product card. o.why = matched conditions, o.cls = extra classes, o.h = picture beside the text, o.label = show the level on the picture. */
+  /* A page can pass o.render to draw its own card instead. */
   function card(p, i, o) {
     o = o || {};
     var sub = o.why ? '<b>Matches:</b> ' + BR.tidy(o.why.slice(0, 2).join(', ')) : (o.sub === 'uses' ? 'For ' + BR.tidy(BR.uses(p).slice(0, 2).join(', ')) : BR.areaText(p));
@@ -69,7 +70,7 @@ var APP = (function () {
     return items.length ? items.map(function (it, i) {
       var oo = {}; for (var k in (o || {})) oo[k] = o[k];
       if (it.why && (o || {}).showWhy) oo.why = it.why;
-      return card(it.p || it, i, oo);
+      return (oo.render || card)(it.p || it, i, oo);
     }).join('') : NONE;
   }
 

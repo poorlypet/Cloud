@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-GB"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dog braces homepage, version 1B</title>
+<style>
+/* Cabinet Grotesk for headings (medium, with the accent words in extra bold), General Sans for reading. Both embedded. */
+/*@font:Cabinet Grotesk:500:cabinet-grotesk-500.woff2*/
+/*@font:Cabinet Grotesk:700:cabinet-grotesk-700.woff2*/
+/*@font:Cabinet Grotesk:800:cabinet-grotesk-800.woff2*/
+/*@font:General Sans:400:general-sans-400.woff2*/
+/*@font:General Sans:500:general-sans-500.woff2*/
+/*@font:General Sans:600:general-sans-600.woff2*/
+:root{--disp:"Cabinet Grotesk","Arial Black",Arial,sans-serif;--body:"General Sans","Segoe UI",Arial,sans-serif;--hw:500;--aw:800;--lw:800;--rw:700;--htr:-.03em;--hs:1.100}
+/*@t-base.css*/
+
+/* this version leads with mint and white: mint hero, indigo fitting band, mint UK band, light product cards */
+.hero{--fgs:var(--ink)}
+.hero-p .l1{right:0;top:3%;width:74%;aspect-ratio:1.220;--dry:-14;--drx:5;--drz:1.500}
+.hero-p .l2{left:1%;bottom:-7%;width:33%;aspect-ratio:.800;--dry:17;--drx:4;--drz:-5;--dz:40px}
+.rib text{letter-spacing:0}
+.pn .pc.lt .pc-b{background:#fff}
+
+/* reviews: the score, then a plain list */
+.rv2{display:grid;grid-template-columns:minmax(0,.800fr) minmax(0,1.200fr);gap:clamp(28px,6vw,110px);align-items:start}
+.score{display:flex;align-items:flex-end;gap:16px;margin:26px 0 18px}
+.score b{font:var(--aw) clamp(64px,7.400vw,108px)/.800 var(--disp);letter-spacing:-.04em;color:var(--brand);font-variant-numeric:tabular-nums}
+.score>span{display:grid;gap:6px;color:var(--mu);font-size:15.500px;padding-bottom:2px}
+.rv2-l .tl{margin-top:22px}
+.rv2-r{border-bottom:1px solid var(--ln)}
+.rv2-r li{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:8px 30px;padding:24px 0;border-top:1px solid var(--ln)}
+.rv2-r h3{font-size:23px;margin-bottom:8px}
+.rv2-r p{color:var(--mu)}
+.rv2-r footer{display:grid;gap:8px;align-content:start;font-size:15px;color:var(--mu)}
+.rv2-r footer b{display:block;color:var(--ink);font-weight:500}
+@media(max-width:900px){.rv2{grid-template-columns:1fr}.rv2-r li{grid-template-columns:1fr}}
+</style></head><body>
+<!--@t-top.html-->
+<header class="hd" id="nv"><div class="w hd-in">
+<!--@t-nav.html-->
+</div></header>
+
+<main>
+<section class="hero sk-m" data-hero>
+  <div class="w hero-g">
+    <div class="hero-t">
+      <h1><span class="ln"><span>Support for</span></span><span class="ln"><span><em>every step.</em></span></span></h1>
+      <p data-hin>Dog braces, splints and harnesses, <b>made in the North West of England.</b></p>
+      <div class="hero-b" data-hin><a class="btn" href="#choose" data-mag>Find the right support {i:arrow-right}</a><a class="tl" href="#range">Shop the range</a></div>
+    </div>
+    <div class="hero-p" data-tilt="16,10">
+      <div class="lift l1" data-land data-par="-7"><span class="shot"><span class="ph w">{i:image}<span>Photo: dog wearing a brace</span></span></span></div>
+      <div class="lift l2" data-land data-par="9"><span class="shot"><span class="ph i">{i:image}<span>Photo: the brace close up</span></span></span></div>
+    </div>
+  </div>
+  <svg class="hero-c d" viewBox="0 0 1440 220" aria-hidden="true"><path data-flex="M0 134 C 200 188 460 170 720 132 C 1000 92 1230 66 1440 46 V221 H0 Z" d="M0 150 C 180 184 420 192 700 142 C 980 92 1220 42 1440 24 V221 H0 Z"/></svg>
+  <svg class="rib d" viewBox="0 0 1440 220" data-rib data-start="44" data-travel="46">
+    <defs><path id="rb-d" data-rbp data-flex="M0 134 C 200 188 460 170 720 132 C 1000 92 1230 66 1440 46" d="M0 150 C 180 184 420 192 700 142 C 980 92 1220 42 1440 24"/></defs>
+    <a href="#uk"><text dy="40"><textPath href="#rb-d" data-rb data-gap="28">Made in the North West of England</textPath></text></a>
+    <a href="#reviews"><g data-rb="stars" data-size="9" data-dy="32" data-gap="8"></g><text dy="40"><textPath href="#rb-d" data-rb>0.0 from 000 reviews</textPath></text></a>
+  </svg>
+  <svg class="hero-c m" viewBox="0 0 390 110" aria-hidden="true"><path d="M0 64 C 60 86 150 90 216 70 C 290 46 340 24 390 12 V111 H0 Z"/></svg>
+  <svg class="rib m" viewBox="0 0 390 110" data-rib data-start="16">
+    <defs><path id="rb-m" data-rbp d="M0 64 C 60 86 150 90 216 70 C 290 46 340 24 390 12"/></defs>
+    <a href="#uk"><text dy="20"><textPath href="#rb-m" data-rb>Made in the North West of England</textPath></text></a>
+    <a href="#reviews"><g data-rb="stars" data-line data-size="5.5" data-dy="34.500" data-gap="6"></g><text dy="39"><textPath href="#rb-m" data-rb>0.0 from 000 reviews</textPath></text></a>
+  </svg>
+</section>
+
+<section class="sec" id="choose" style="padding-top:clamp(56px,5.400vw,84px)"><div class="w">
+  <div class="sh"><div><h2 class="h2" data-lines><span class="ln"><span>Where do they need <em>support?</em></span></span></h2><p class="sub">Choose an area, then narrow it down by condition and symptoms.</p></div><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+  <div class="rl-t p5" id="tiles" data-drag></div>
+  <div class="pn" id="pn" hidden></div>
+</div></section>
+
+<section class="fit sk-i" data-stack>
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-flex="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z"/></svg>
+  <div class="w fit-g">
+    <div>
+      <h2 class="h2" data-lines><span class="ln"><span>Getting the</span></span><span class="ln"><span><em>right fit.</em></span></span></h2>
+      <ul class="steps">
+        <li data-step><b>Measure</b><span>Take a few simple measurements at home.</span></li>
+        <li data-step><b>Choose</b><span>Pick the size from the sizing guide.</span></li>
+        <li data-step><b>Fit</b><span>Follow the fitting guide for a secure, comfortable fit.</span></li>
+      </ul>
+      <a class="tl" href="#">Explore the fitting guide {i:arrow-right}</a>
+    </div>
+    <div class="stack" data-land>
+      <div class="lift" data-card data-tilt="14,10"><span class="shot"><span class="ph w">{i:image}<span>Photo: measuring a leg</span></span></span></div>
+      <div class="lift" data-card data-tilt="14,10"><span class="shot"><span class="ph m">{i:image}<span>Photo: the sizing guide</span></span></span></div>
+      <div class="lift" data-card data-tilt="14,10"><span class="shot"><span class="ph l">{i:image}<span>Photo: fitting a brace</span></span></span></div>
+    </div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-flex="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z"/></svg>
+</section>
+
+<section class="sec" id="range"><div class="w">
+  <div class="sh"><h2 class="h2" data-lines><span class="ln"><span>Shop the <em>range.</em></span></span></h2><div class="ar rl-c"><button class="rd rl-p" aria-label="Previous">{i:chev-left}</button><button class="rd rl-n" aria-label="Next">{i:chev-right}</button></div></div>
+  <div class="tabs" id="rt"><button class="on" data-k="">All</button><button data-k="brace">Braces</button><button data-k="splint">Splints</button><button data-k="wrap">Wraps</button><button data-k="mobility">Lifting and mobility</button></div>
+  <p class="tx" id="rx"></p>
+  <div class="rl-t p4" id="rb" data-drag data-cur="Drag" style="margin-top:0"></div>
+</div></section>
+
+<section class="uk sk-m" id="uk">
+  <svg class="cv t" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-flex="M0 0 H1440 V64 C 1000 30 520 150 0 60 Z"><path d="M0 0 H1440 V30 C 1040 10 560 170 0 96 Z"/></svg>
+  <div class="w uk-g">
+    <div>
+      <h2 class="h2" data-lines><span class="ln"><span>Made in the</span></span><span class="ln"><span><em>North West</em> of England.</span></span></h2>
+      <p class="big"><span data-words>Most dog braces sold in the UK are made overseas.</span> <em data-words>Ours are cut, stitched and checked in our own workshop.</em></p>
+      <ul class="ticks"><li data-up>Cut and stitched in our own workshop</li><li data-up>Checked by hand before it is sent</li><li data-up>Sent straight from where it is made</li></ul>
+      <a class="btn" href="#">See how they are made {i:arrow-right}</a>
+    </div>
+    <div class="uk-p" data-tilt="14,9">
+      <div class="lift u1" data-land data-par="-6"><span class="shot"><span class="ph w">{i:image}<span>Workshop photo</span></span></span></div>
+      <div class="lift u2" data-land data-par="8"><span class="shot"><span class="ph i">{i:image}<span>Photo: stitching</span></span></span></div>
+    </div>
+  </div>
+  <svg class="cv b" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" data-flex="M0 160 H1440 V70 C 1000 36 520 156 0 68 Z"><path d="M0 160 H1440 V40 C 1040 20 560 180 0 104 Z"/></svg>
+</section>
+
+<section class="sec" id="reviews" style="padding-bottom:clamp(20px,3vw,48px)"><div class="w rv2">
+  <div class="rv2-l">
+    <h2 class="h2" data-lines><span class="ln"><span>What owners</span></span><span class="ln"><span><em>say.</em></span></span></h2>
+    <div class="score"><b>0.0</b><span><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span>out of 5 from 000 reviews</span></div>
+    <span class="pl">Review platform logo</span><br>
+    <a class="tl" href="#">Read all reviews {i:arrow-right}</a>
+  </div>
+  <ul class="rv2-r">
+    <li data-up><footer><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>Customer name</b>Product purchased</span></footer><div><h3>Review title</h3><p>Customer review to be added. A few sentences about the dog, the problem and how the support helped.</p></div></li>
+    <li data-up><footer><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>Customer name</b>Product purchased</span></footer><div><h3>Review title</h3><p>Second customer review to be added, in the customer's own words.</p></div></li>
+    <li data-up><footer><span class="st">{i:star}{i:star}{i:star}{i:star}{i:star}</span><span><b>Customer name</b>Product purchased</span></footer><div><h3>Review title</h3><p>Third customer review to be added, in the customer's own words.</p></div></li>
+  </ul>
+</div></section>
+</main>
+<!--@t-foot.html-->
+<script>PAGE.init({ card: 'lt' });</script>
+</body></html>
