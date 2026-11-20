@@ -1,0 +1,145 @@
+{%- comment -%}
+  Mobile number pop-up, UK only. Code TEXT5: 5 pounds off orders of 50 pounds or more, not valid on sale items.
+  Sends the number to Klaviyo (list: Mobile pop-up sign-ups (TEXT5), id W3FCr3) with consent to marketing texts, then shows the code.
+  sms_live: set to true once texting is switched on in Klaviyo and the welcome text is running. Until then the pop-up
+  does not promise a text, it only shows the code on screen.
+  Shows 20 seconds after the page loads, once per visitor (a dismissed pop-up stays away for 3 days). Not on the cart page.
+  Add ?sms=test to the address to see it at once.
+{%- endcomment -%}
+{%- assign sms_live = false -%}
+{%- if localization.country.iso_code == 'GB' and request.page_type != 'cart' -%}
+<style>
+.smp{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;padding:16px;font-family:Figtree,"Segoe UI",Arial,sans-serif;color:#0E2A28}
+.smp.on{display:flex}
+.smp *{box-sizing:border-box}
+.smp-scrim{position:absolute;inset:0;background:rgba(14,42,40,.55);opacity:0;transition:opacity .35s}
+.smp.in .smp-scrim{opacity:1}
+.smp-card{position:relative;display:grid;grid-template-columns:320px 1fr;width:min(760px,100%);background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(10,58,55,.28);opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.smp.in .smp-card{opacity:1;transform:none}
+.smp-card:focus{outline:none}
+.smp-pic{background-size:cover;background-position:center}
+.smp-bd{padding:44px 40px 30px;min-width:0}
+.smp-x{position:absolute;top:12px;right:12px;z-index:3;width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:#0E2A28;font:400 24px/1 Figtree,Arial,sans-serif;display:grid;place-items:center;cursor:pointer}
+.smp h2{margin:0 0 10px;font:700 34px/1.12 Domine,Georgia,"Times New Roman",serif;color:#0F4C48}
+.smp-p{margin:0 0 18px;font:400 16px/1.5 Figtree,Arial,sans-serif;color:#5B6B69}
+.smp-fld{display:flex;height:52px;border:1px solid #C6D0CE;border-radius:8px;overflow:hidden;background:#fff}
+.smp-fld.bad{border-color:#D9503B}
+.smp-fld span{display:flex;align-items:center;padding:0 12px;border-right:1px solid #E3E8E6;font:500 16px Figtree,Arial,sans-serif;color:#5B6B69}
+.smp-fld input{flex:1;min-width:0;border:0;padding:0 14px;font:400 16px Figtree,Arial,sans-serif;color:#0E2A28;background:transparent;outline:0}
+.smp-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;margin-top:10px;padding:0 20px;border:0;border-radius:8px;background:#DFE43A;color:#0F4C48;font:600 16px/1.2 Figtree,Arial,sans-serif;text-decoration:none;cursor:pointer}
+.smp-btn:hover{background:#D2D82C}
+.smp-btn[disabled]{opacity:.7;cursor:default}
+.smp-err{display:none;margin:8px 0 0;font:400 14px/1.4 Figtree,Arial,sans-serif;color:#B3261E}
+.smp-err.on{display:block}
+.smp-fine{margin:12px 0 0;font:400 11px/1.45 Figtree,Arial,sans-serif;color:#7b8987}
+.smp-ok{display:none}
+.smp-bd.sent .smp-form{display:none}
+.smp-bd.sent .smp-ok{display:block}
+.smp-code{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #C6D0CE;border-radius:8px;padding:8px 8px 8px 16px;background:#F2F4F3}
+.smp-code b{font:700 24px/1 Domine,Georgia,serif;color:#0F4C48;letter-spacing:.03em}
+.smp-copy{width:auto;min-height:38px;margin:0;padding:0 14px;font-size:14px;background:#0F4C48;color:#fff}
+.smp-copy:hover{background:#0A3A37}
+@media (max-width:620px){
+  .smp-card{grid-template-columns:1fr}
+  .smp-pic{height:170px}
+  .smp-bd{padding:24px 22px 22px}
+  .smp h2{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){.smp *{transition-duration:.01ms!important}}
+</style>
+<div class="smp" id="smp" role="dialog" aria-modal="true" aria-labelledby="smp-h" hidden>
+  <div class="smp-scrim" data-smp-close></div>
+  <div class="smp-card" tabindex="-1">
+    <button class="smp-x" type="button" aria-label="Close" data-smp-close>&times;</button>
+    <div class="smp-pic" style="background-image:url({{ 'bf-weekend-dog.jpg' | asset_url }})"></div>
+    <div class="smp-bd" id="smp-bd">
+      <h2 id="smp-h">&pound;5 off your next order</h2>
+      <div class="smp-form">
+        <p class="smp-p">{% if sms_live %}Spend &pound;50 or more. Tell us your mobile number and we'll text you the code.{% else %}Spend &pound;50 or more. Enter your mobile number to get your code.{% endif %}</p>
+        <form id="smp-form" onsubmit="return false" novalidate>
+          <label for="smp-tel" style="position:absolute;left:-9999px">Mobile number</label>
+          <div class="smp-fld" id="smp-fld"><span>+44</span><input type="tel" id="smp-tel" inputmode="tel" autocomplete="tel-national" placeholder="Mobile number"></div>
+          <p class="smp-err" id="smp-err">Please enter a UK mobile number, for example 07700 900123.</p>
+          <button class="smp-btn" type="submit" id="smp-go">Send my code</button>
+        </form>
+        <p class="smp-fine">By sending your number you agree to marketing texts from Poorly Pet. Reply STOP to opt out. One use per customer, not valid on sale items.</p>
+      </div>
+      <div class="smp-ok">
+        <p class="smp-p">{% if sms_live %}Here's your code. We've texted it to you as well.{% else %}Here's your code. Use it at checkout on orders of &pound;50 or more.{% endif %}</p>
+        <div class="smp-code"><b id="smp-code">TEXT5</b><button class="smp-btn smp-copy" type="button" id="smp-copy">Copy</button></div>
+        <a class="smp-btn" href="{{ routes.root_url }}discount/TEXT5?redirect={{ routes.all_products_collection_url | url_encode }}">Shop now, code applied</a>
+        <p class="smp-fine">One use per customer, not valid on sale items.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  if (window.top !== window.self) return;
+  var KEY = 'pp_sms5', el = document.getElementById('smp'); if (!el) return;
+  var q = new URLSearchParams(location.search), tst = q.get('sms') === 'test', now = Date.now();
+  if (tst) { try { localStorage.removeItem(KEY); } catch (e) {} }
+  try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && (v.done || now - v.t < 3 * 864e5)) return; } catch (e) {}
+  var shown = false, last = null, card = el.querySelector('.smp-card'), bd = document.getElementById('smp-bd');
+  function store(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+  function open() {
+    if (shown) return; shown = true; last = document.activeElement;
+    el.hidden = false; el.classList.add('on');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('in'); card.focus({ preventScroll: true }); }); });
+  }
+  function close() {
+    el.classList.remove('in'); setTimeout(function () { el.classList.remove('on'); el.hidden = true; }, 350);
+    if (!bd.classList.contains('sent')) store({ t: Date.now() });
+    if (last && last.focus) try { last.focus(); } catch (e) {}
+  }
+  [].forEach.call(el.querySelectorAll('[data-smp-close]'), function (b) { b.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) {
+    if (!shown || !el.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = [].filter.call(el.querySelectorAll('button,a[href],input'), function (n) { return n.offsetParent !== null; });
+      if (!f.length) return; var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === a || document.activeElement === card)) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  setTimeout(open, tst ? 600 : 20000);
+
+  // a UK mobile number in any of the usual ways of writing it, as +447xxxxxxxxx
+  function e164(s) {
+    var d = String(s).replace(/[^\d+]/g, '');
+    d = d.replace(/^\+?44/, '').replace(/^0044/, '').replace(/^0/, '');
+    return /^7\d{9}$/.test(d) ? '+44' + d : null;
+  }
+  function post(path, body) {
+    try {
+      return fetch('https://a.klaviyo.com/client/' + path + '/?company_id=UU3NF7', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/vnd.api+json', 'revision': '2024-10-15' },
+        body: JSON.stringify(body)
+      }).catch(function () {});
+    } catch (x) {}
+  }
+  var tel = document.getElementById('smp-tel'), fld = document.getElementById('smp-fld'), err = document.getElementById('smp-err');
+  tel.addEventListener('input', function () { fld.classList.remove('bad'); err.classList.remove('on'); });
+  document.getElementById('smp-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var n = e164(tel.value);
+    if (!n) { fld.classList.add('bad'); err.classList.add('on'); tel.focus(); return; }
+    document.getElementById('smp-go').disabled = true;
+    var props = { source: 'sms-popup', voucher: 'TEXT5', sms_consent_at: new Date().toISOString() };
+    // the number is saved on the profile first, then the consent to marketing texts is recorded and the profile joins the list
+    post('profiles', { data: { type: 'profile', attributes: { phone_number: n, properties: props } } });
+    post('subscriptions', { data: { type: 'subscription', attributes: { custom_source: 'Mobile number pop-up',
+      profile: { data: { type: 'profile', attributes: { phone_number: n, subscriptions: { sms: { marketing: { consent: 'SUBSCRIBED' } } }, properties: props } } } },
+      relationships: { list: { data: { type: 'list', id: 'W3FCr3' } } } } });
+    setTimeout(function () { store({ done: 1, t: Date.now() }); bd.classList.add('sent'); }, 350);
+  });
+  document.getElementById('smp-copy').addEventListener('click', function () {
+    var b = this;
+    function done() { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText('TEXT5').then(done, done); else done();
+  });
+})();
+</script>
+{%- endif -%}
