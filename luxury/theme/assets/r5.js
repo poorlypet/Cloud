@@ -81,7 +81,7 @@
     c.f = (c.f || []).filter(function (f) { return alive(f.t); });
   });
   MENU = MENU.filter(function (c) { return !c.dead; });
-  var FEAT = ["New in", "Sale"];
+  var FEAT = ["New in"];
   var DOGS = ["still2", "goldenWalk", "toller", "samoyed", "mastiff", "poodle", "labCollar", "goldenToy", "beach", "cavalier", "pupDark", "groom"];
 
   /* ---------------- helpers ---------------- */
@@ -321,7 +321,7 @@
       '</p><span class="track"><i style="width:' + Math.min(100, t.sub / FREE * 100) + '%"></i></span></div>';
   }
   var RECS = [PRODUCTS[2], PRODUCTS[7], PRODUCTS[4], PRODUCTS[6]];
-  var TRUST = '<ul class="trust"><li>Free returns within 14 days</li><li>Secure checkout</li></ul>';
+  var TRUST = '<ul class="trust"><li>14-day returns</li><li>Secure checkout</li></ul>';
   var PAY = '<p class="paynote">Pay in 3 at 0% APR with <b>Shop Pay</b> or <b>Klarna</b></p>';
   /* official Shop Pay and Klarna marks, supplied by Axel & Hound */
   var AB = ((document.querySelector('script[src*="/r5.js"]') || {}).src || '').replace(/r5\.js.*$/, '');
@@ -340,7 +340,7 @@
           return '<div class="b1-item"><a href="#" class="b1-img">' + ph(i.p, 300) + '</a><div class="b1-info"><p class="b1-n">' + esc(i.n) + '</p><p class="b1-meta">' + esc(i.v) + '</p>' +
             '<div class="b1-row">' + qtyCtl(n, i.q, "qty-bare") + '<span class="b1-p">' + money(i.pr * i.q) + '</span></div><button type="button" class="b1-rm" data-rm="' + n + '">Remove</button></div></div>';
         }).join("") + "</div>" +
-        '<div class="side-f"><div class="sum total"><span>Subtotal</span><span>' + money(t.sub) + '</span></div><p class="fine">Delivery and taxes are calculated at checkout. Free returns within 14 days.</p>' +
+        '<div class="side-f"><div class="sum total"><span>Subtotal</span><span>' + money(t.sub) + '</span></div><p class="fine">Delivery and taxes are calculated at checkout. 14-day returns.</p>' +
         '<button type="button" class="wbtn">Checkout securely' + ARW + "</button>" +
         '<div class="pay3"><p>Or pay in 3 interest-free instalments of <b>' + inst + '</b> with</p><div class="pay3-logos">' + SHOPPAY + KLARNA + "</div></div></div>";
     },

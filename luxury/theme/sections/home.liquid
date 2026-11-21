@@ -36,7 +36,7 @@ section.bh.v2{padding-top:clamp(8px,1vw,16px)}
 .cs:has(+ .bh){padding-bottom:clamp(24px,3vw,40px)}
 
 /* tighter gaps: Winter Sale to Shop by category, and the dachshund/greyhound tiles to the long-backs row */
-section[aria-label="Winter Sale"]{padding-bottom:clamp(16px,2vw,28px)!important}
+section[aria-label="Most popular"]{padding-bottom:clamp(16px,2vw,28px)!important}
 section[aria-label="Shop by category"]{padding-top:clamp(16px,2vw,28px)!important}
 section[aria-label="Dachshund and greyhound"]{padding-bottom:clamp(16px,2vw,28px)!important}
 section[aria-label="Shop for long backs"]{padding-top:clamp(16px,2vw,28px)!important}
@@ -48,20 +48,20 @@ section[aria-label="Shop for long backs"]{padding-top:clamp(16px,2vw,28px)!impor
     <div class="hero-copy">
       <p class="eyebrow">Axel &amp; Hound</p>
       <h1>Beautiful things for dogs, and the homes they share.</h1>
-      <div class="btns"><a class="sqbtn" href="/collections/new-in">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="/collections/sale">Winter Sale</a></div>
+      <div class="btns"><a class="sqbtn" href="/collections/new-in">Shop new in <svg viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a><a class="sqbtn ghost" href="/collections/coats">Shop coats</a></div>
     </div>
     <div class="usp usp-over" aria-label="Why shop with us">
       <div class="usp-in">
         
         <div class="u"><span>Free delivery over £75</span></div>
-        <div class="u"><span>Free 14-day returns</span></div>
+        <div class="u"><span>14-day returns</span></div>
         <div class="u"><span>Based in the UK</span></div>
         <div class="u"><span>Dispatched next working day</span></div>
       </div>
     </div>
   </section>
-  <section class="ws w1" aria-label="Winter Sale">
-    <div class="hx hx1"><h2>Winter Sale <i>up to 30% off</i></h2><a class="all" href="/collections/sale">Shop the sale <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['home-sale'].products limit: 8 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
+  <section class="ws w1" aria-label="Most popular">
+    <div class="hx hx1"><h2>Most popular</h2><a class="all" href="/collections/new-in">Shop new in <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div><div class="g4">{%- for product in collections['home-sale'].products limit: 8 -%}{%- render 'card', product: product -%}{%- endfor -%}</div>
   </section>
   <section class="sp cs" aria-label="Shop by category">
     <div class="sp-h"><h2>Shop by category</h2><a class="all" href="/collections/all">Shop all <svg class="a" viewBox="0 0 16 10"><path d="M0 5h15M11 1l4 4-4 4"/></svg></a></div>
@@ -70,7 +70,7 @@ section[aria-label="Shop for long backs"]{padding-top:clamp(16px,2vw,28px)!impor
       <div class="cs-r" tabindex="0" aria-label="Categories, scroll sideways"><a class="cs-t" href="/collections/beds">{%- render 'ah-img', f: 'home-category-beds.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Beds</span></a><a class="cs-t" href="/collections/walking">{%- render 'ah-img', f: 'home-category-walking.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Walking</span></a><a class="cs-t" href="/collections/coats">{%- render 'ah-img', f: 'home-category-coats.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Coats & knitwear</span></a><a class="cs-t" href="/collections/dining">{%- render 'ah-img', f: 'home-category-dining.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Dining</span></a><a class="cs-t" href="/collections/play">{%- render 'ah-img', f: 'home-category-play.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Play</span></a><a class="cs-t" href="/collections/travel">{%- render 'ah-img', f: 'home-category-travel.jpg', sizes: '(max-width: 640px) 78vw, 30vw' -%}<span class="cs-l">Travel</span></a></div>
       <button type="button" class="cs-a next" aria-label="More categories"><svg viewBox="0 0 8 14" aria-hidden="true"><path d="M1 1l6 6-6 6"/></svg></button>
     </div>
-    <div class="mq" aria-label="Why Axel &amp; Hound"><div class="mq-t"><div class="mq-g"><span class="mq-i">Complimentary UK delivery over £75</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span></div><div class="mq-g" aria-hidden="true"><span class="mq-i">Complimentary UK delivery over £75</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Free returns within 14 days</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Europe&rsquo;s best independent makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">We ship worldwide</span><span class="mq-d" aria-hidden="true">&#9671;</span></div></div></div>
+    <div class="mq" aria-label="Why Axel &amp; Hound"><div class="mq-t"><div class="mq-g"><span class="mq-i">Complimentary UK delivery over £75</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">14-day returns</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Independent European makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Tracked delivery on every order</span><span class="mq-d" aria-hidden="true">&#9671;</span></div><div class="mq-g" aria-hidden="true"><span class="mq-i">Complimentary UK delivery over £75</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">14-day returns</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Independent European makers</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Wrapped by hand</span><span class="mq-d" aria-hidden="true">&#9671;</span><span class="mq-i">Tracked delivery on every order</span><span class="mq-d" aria-hidden="true">&#9671;</span></div></div></div>
   </section>
 <style>
   .cs .cs-w{position:relative;margin-top:28px;margin-right:calc(var(--gut,24px) * -1)}

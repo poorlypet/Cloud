@@ -56,6 +56,9 @@
   assign out = out | replace: 'Orders outside the UK', 'Orders'
   assign out = out | replace: 'outside the UK', 'internationally'
   assign out = out | replace: 'UK delivery', 'Delivery'
+  assign out = out | replace: 'the United Kingdom, the United States', 'the United States'
+  assign out = out | replace: ' Under the Consumer Rights Act 2015 you can reject a faulty item for a full refund within 30 days of delivery. After that, you may be entitled to a repair, replacement or refund.', ''
+  assign out = out | replace: ' For UK orders this is your right under the Consumer Contracts Regulations 2013, and if you cancel your whole order we also refund the standard delivery charge.', ''
   assign out = out | replace: 'FREE_AMT', free
   assign out = out | replace: 'SHIP_AMT', ship
   echo out
