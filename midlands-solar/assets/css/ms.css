@@ -535,3 +535,9 @@ a.gcard:hover:after{transform:scaleX(1)}
 }
 .sys .shot{height:min(31vh,360px)}
 @media (max-width:980px){.sys .shot{height:104px}}
+
+/* complaints wording: long text, so smaller type and links underlined */
+.gcards.comp .gcard p{font-size:clamp(15px,1.05vw,17px)}
+.gcards.comp .gcard p a,.foot-base a{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:980px){.gcards.comp .gcard p{font-size:13.5px;line-height:1.38}.gcards.comp .gcard .tag{display:none}}
+@media (max-width:980px) and (max-height:720px){.foot{padding-top:28px}.foot-cols{gap:14px}.foot-cols li{margin-bottom:5px}.foot-cols img{height:44px;margin-bottom:8px}.foot-base{padding:10px 0 14px}}

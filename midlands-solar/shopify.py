@@ -28,6 +28,7 @@ QUOTE_URL = "/pages/solar-quote"
 PAGES = {"about.html": ("about", "About us"), "work.html": ("work", "Recent work and reviews"), "funding.html": ("funding", "Government funding"),
          "finance.html": ("finance", "Finance options"), "products.html": ("products", "Products"), "commercial.html": ("commercial", "Commercial solar"),
          "agricultural.html": ("agricultural", "Agricultural solar"), "contact.html": ("contact", "Contact us"), "get-quote.html": ("get-quote", "Free online solar quote")}
+PAGES["complaints.html"] = ("complaints", "Complaints")
 for g in S.GRANTS:
     PAGES[g["file"]] = (g["file"][:-5], g["name"])
 
@@ -128,7 +129,7 @@ write("snippets/ms-footer.liquid", f'''<footer class="foot"><div class="foot-col
 <div><h4>Solar</h4><ul><li><a href="{QUOTE_URL}">Get my quote</a></li><li><a href="/pages/products">Products</a></li><li><a href="/pages/work">Our work</a></li><li><a href="/pages/commercial">Commercial</a></li><li><a href="/pages/agricultural">Agricultural</a></li></ul></div>
 <div><h4>Paying</h4><ul><li><a href="/pages/funding">Government funding</a></li><li><a href="/pages/finance">Finance options</a></li><li><a href="/pages/about">About us</a></li></ul></div>
 <div><h4>Talk to us</h4><ul><li><a href="{S.PHONE_HREF}">{S.PHONE}</a></li><li><a href="{S.MOBILE_HREF}">{S.MOBILE}</a></li><li><a href="mailto:{S.EMAIL}">{S.EMAIL}</a></li><li><a href="/pages/contact">Contact us</a></li></ul></div>
-</div><div class="foot-word" aria-hidden="true">Midlands Solar</div><div class="foot-base"><span>© Midlands Solar Installations Ltd</span><span>MCS certified installer</span></div></footer>
+</div><div class="foot-word" aria-hidden="true">Midlands Solar</div><div class="foot-base"><span>© Midlands Solar Installations Ltd</span><span><a href="/pages/complaints">Complaints</a> · MCS certified installer</span></div></footer>
 ''')
 
 # ------------------------------------------------------------------ layouts
@@ -160,7 +161,7 @@ write("layout/landing.liquid", f'''<!doctype html>
 <main id="top">
 {{{{ content_for_layout }}}}
 </main>
-<footer class="foot"><div class="foot-base" style="margin:0"><span>© Midlands Solar Installations Ltd · MCS certified installer</span><span><a href="{S.PHONE_HREF}">{S.PHONE}</a> · <a href="mailto:{S.EMAIL}">{S.EMAIL}</a></span></div></footer>
+<footer class="foot"><div class="foot-base" style="margin:0"><span>© Midlands Solar Installations Ltd · MCS certified installer · <a href="/pages/complaints">Complaints</a></span><span><a href="{S.PHONE_HREF}">{S.PHONE}</a> · <a href="mailto:{S.EMAIL}">{S.EMAIL}</a></span></div></footer>
 {SCRIPTS}</body>
 </html>
 ''')

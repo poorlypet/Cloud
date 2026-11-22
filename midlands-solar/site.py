@@ -195,7 +195,7 @@ def page(file, title, desc, body, active="", landing=False):
     cta = btn("quote/index.html", "Get my quote")
     if landing:
         nav = f'<header class="nav min" id="nav"><a class="logo" href="#top"><img src="assets/img/logo-light.png" alt="Midlands Solar"></a><a class="tel" href="{PHONE_HREF}">{PHONE}</a></header>'
-        foot = (f'<footer class="foot"><div class="foot-base" style="margin:0"><span>© Midlands Solar Installations Ltd · MCS certified installer</span>'
+        foot = (f'<footer class="foot"><div class="foot-base" style="margin:0"><span>© Midlands Solar Installations Ltd · MCS certified installer · <a href="complaints.html">Complaints</a></span>'
                 f'<span><a href="{PHONE_HREF}">{PHONE}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span></div></footer>')
     else:
         nav = (f'<header class="nav" id="nav"><a class="logo" href="index.html" aria-label="Midlands Solar home"><img src="assets/img/logo-light.png" alt="Midlands Solar"></a>'
@@ -206,7 +206,7 @@ def page(file, title, desc, body, active="", landing=False):
 <div><h4>Solar</h4><ul><li><a href="quote/index.html">Get my quote</a></li><li><a href="products.html">Products</a></li><li><a href="work.html">Our work</a></li><li><a href="commercial.html">Commercial</a></li><li><a href="agricultural.html">Agricultural</a></li></ul></div>
 <div><h4>Paying</h4><ul><li><a href="funding.html">Government funding</a></li><li><a href="finance.html">Finance options</a></li><li><a href="about.html">About us</a></li></ul></div>
 <div><h4>Talk to us</h4><ul><li><a href="{PHONE_HREF}">{PHONE}</a></li><li><a href="{MOBILE_HREF}">{MOBILE}</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><a href="contact.html">Contact us</a></li></ul></div>
-</div><div class="foot-word" aria-hidden="true">Midlands Solar</div><div class="foot-base"><span>© Midlands Solar Installations Ltd</span><span>MCS certified installer</span></div></footer>'''
+</div><div class="foot-word" aria-hidden="true">Midlands Solar</div><div class="foot-base"><span>© Midlands Solar Installations Ltd</span><span><a href="complaints.html">Complaints</a> · MCS certified installer</span></div></footer>'''
     doc = f'''<!doctype html>
 <html lang="en-GB">
 <head>
@@ -400,7 +400,7 @@ def grants():
 # ------------------------------------------------------------------ finance
 # Fill these in once the lender is confirmed. Anything left as None shows as "To be confirmed".
 LENDER = {
-    "Lender": None,
+    "Lender": "Hometree Finance, a trading name of HTG Finance Limited",
     "Authorised and regulated by": "Financial Conduct Authority",
     "Lender's FCA number": None,
     "Representative APR": None,
@@ -409,6 +409,28 @@ LENDER = {
     "Our FCA number (as credit broker)": None,
 }
 REP_EXAMPLE = None  # the lender's representative example wording, once supplied
+
+# Complaints wording required by the FCA for Hometree. Keep it word for word.
+COMPLAINTS_WORK = ('If your complaint is about the installation, the products, or the service you received from us, please contact us at '
+                   '<a href="mailto:enquiries@midlandssolar.co.uk">enquiries@midlandssolar.co.uk</a> on <a href="tel:08006546343">08006546343</a> or by post '
+                   'Midlands Solar Installations LTD, Unit B2, Hilton Main Industrial Estate, Wolverhampton, WV11 2BE.')
+COMPLAINTS_WORK_2 = "We will acknowledge your complaint and tell you how we will handle it."
+COMPLAINTS_FINANCE = ('If your complaint relates to the finance agreement itself, including the terms of the agreement, payments, the way the finance was explained to you, '
+                      'or the administration of your finance agreement, please contact Hometree Finance, a trading name of HTG Finance Limited, directly at '
+                      '<a href="mailto:hello@hometreefinance.co.uk">hello@hometreefinance.co.uk</a>')
+COMPLAINTS_FOS = ('If you are unhappy with the outcome of your complaint, or you have not received a final response within eight weeks, you may be able to refer your '
+                  'complaint to the Financial Ombudsman Service (FOS). The service is free and independent.')
+
+def complaints_section(skin="blk", tag="h2", label="Complaints"):
+    return (f'<section class="scr {skin}" id="complaints">{lab(label)}<div class="head"><{tag} class="h2" data-rise>Making a complaint.</{tag}></div>'
+            '<div class="gcards comp" style="--n:2">'
+            f'<div class="gcard" data-up><span class="tag">About our work</span><h3>Complaints about our work</h3><p>{COMPLAINTS_WORK}</p><p>{COMPLAINTS_WORK_2}</p></div>'
+            f'<div class="gcard" data-up><span class="tag">About your finance</span><h3>Complaints relating to finance:</h3><p>{COMPLAINTS_FINANCE}</p><p>{COMPLAINTS_FOS}</p></div>'
+            '</div></section>')
+
+def complaints():
+    body = "\n".join([complaints_section("blk", "h1"), end()])
+    page("complaints.html", "Complaints | Midlands Solar Installations", "How to make a complaint about our work or about your finance agreement.", body)
 
 def finance():
     tbc = '<span class="tbc">To be confirmed</span>'
@@ -433,12 +455,13 @@ def finance():
               + ticks(["Yearly saving on your electricity bill", "Yearly income from exported power", "How many years the system takes to pay for itself", "The same figures with a battery added"])
               + f'<div class="btns">{btn("quote/index.html", "See my numbers")}</div>', img("home-1.jpg", "Solar panels on a house roof")),
         lender,
-        faq("blk", "Questions", "Paying for solar.", [
+        complaints_section("blk"),
+        faq("bone", "Questions", "Paying for solar.", [
             ("When do I pay?", "If you pay in full, a deposit secures your install date and the balance is due once the system is installed and working. If you spread the cost, your agreement with the lender sets out the payment dates."),
             ("Will the savings cover a monthly payment?", "It depends on your roof, your usage and the term you choose. We show the expected monthly saving next to the monthly payment so you can compare them directly."),
-            ("Who am I borrowing from?", "The lender named on this page. They carry out the credit check and you sign your agreement with them."),
+            ("Who am I borrowing from?", "Hometree Finance, a trading name of HTG Finance Limited. They carry out the credit check and you sign your agreement with them."),
             ("Does a battery change the numbers?", "Usually, yes. A battery costs more up front but lets you use more of your own power, which raises the saving. The quote shows both versions.")]),
-        formscr("bone", "Ask about finance", "Want a personal<br>illustration?", "Leave your details and we'll talk you through the monthly figures."),
+        formscr("blk", "Ask about finance", "Want a personal<br>illustration?", "Leave your details and we'll talk you through the monthly figures."),
         end()])
     page("finance.html", "Finance options for solar | Midlands Solar Installations", "Ways to pay for solar panels and batteries: pay in full or spread the cost monthly through a regulated lender.", body, "finance.html")
 
@@ -502,7 +525,7 @@ def contact():
     page("contact.html", "Contact us | Midlands Solar Installations", "Contact Midlands Solar Installations by phone, email or message.", body, "contact.html")
 
 def build_all():
-    home(); landing(); about(); work(); funding(); grants(); finance(); products(); contact()
+    home(); landing(); about(); work(); funding(); grants(); finance(); products(); contact(); complaints()
     biz("commercial.html", "Commercial solar", h1("Cut your site's", "<em>energy bill.</em>"), "Solar for offices, warehouses, factories, schools and retail units across the Midlands.",
         vid("commercial", True), "Lower running costs, fixed for decades.",
         "Businesses use most of their electricity in daylight, which is exactly when solar produces it. A well-sized system cuts what you buy from the grid.",
