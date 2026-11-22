@@ -69,9 +69,13 @@
     }
     el.hidden = false;
   }
+  var CK = "ah_consent";
+  function chosen() { return new RegExp("(^|; )" + CK + "=").test(document.cookie); }
+  function remember() { document.cookie = CK + "=1;path=/;max-age=31536000;samesite=lax"; }
   function hide() { el.hidden = true; }
   function save(v) {
-    var cp = api(), done = function () { hide(); };
+    remember(); hide();
+    var cp = api(), done = function () {};
     var consent = { analytics: !!v.analytics, marketing: !!v.marketing, preferences: !!v.preferences, sale_of_data: !!v.marketing };
     if (cp && cp.setTrackingConsent) { try { cp.setTrackingConsent(consent, done); } catch (e) { done(); } } else done();
   }
@@ -93,7 +97,11 @@
   });
   function init() {
     var cp = api();
-    if (force || (cp && cp.shouldShowBanner && cp.shouldShowBanner())) show();
+    if (force) { show(); return; }
+    if (chosen()) return;
+    var c = (cp && cp.currentVisitorConsent && cp.currentVisitorConsent()) || {};
+    if (c.analytics || c.marketing || c.preferences) { remember(); return; }
+    if (cp && cp.shouldShowBanner && cp.shouldShowBanner()) show();
   }
   if (window.Shopify && Shopify.loadFeatures) {
     Shopify.loadFeatures([{ name: "consent-tracking-api", version: "0.1" }], function (err) { init(); });
