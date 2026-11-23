@@ -1,5 +1,6 @@
 {%- comment -%}
   Black Friday week pop-up: 15% off orders over 25 pounds with code BFWEEK15 (not valid on sale items, one use per customer).
+  The code shows after the visitor gives an email address, which goes to Klaviyo (list: Black Friday week 15% sign-ups, id XqJekh).
   UK, Ireland, Germany and the US, each in its own currency and language. Runs until Monday 30 November 2026, 23:59 UK time.
   Shows 20 seconds after the page loads, once per visitor (a closed pop-up stays away for 3 days). Not on the cart page.
   Add ?bf15=test to any address to see it at once.
@@ -10,6 +11,7 @@
   {%- assign t_kick = 'Black-Friday-Woche' -%}
   {%- assign t_a = '15 %' -%}{%- assign t_b = ' Rabatt ab ' -%}{%- assign t_c = '30 €' -%}{%- assign t_d = '' -%}
   {%- assign t_sub = 'Ein Code für alles, was nicht schon reduziert ist. Gültig bis Montag, 30. November.' -%}
+  {%- assign t_ask = 'Tragen Sie Ihre E-Mail-Adresse ein und wir zeigen Ihnen sofort Ihren Code.' -%}{%- assign t_label = 'Ihre E-Mail-Adresse' -%}{%- assign t_go = 'Code anzeigen' -%}{%- assign t_err = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' -%}{%- assign t_ok = 'Hier ist Ihr Code. Gültig bis Montag, 30. November.' -%}{%- assign t_consent = 'Mit dem Absenden stimmen Sie zu, E-Mails von Poorly Pet zu erhalten. Abmeldung jederzeit möglich.' -%}
   {%- assign t_copy = 'Kopieren' -%}{%- assign t_copied = 'Kopiert' -%}{%- assign t_shop = 'Jetzt einkaufen' -%}{%- assign t_close = 'Schließen' -%}
   {%- assign t_fine = 'Ab 30 € Bestellwert. Einmal pro Kunde. Nicht gültig für reduzierte Artikel.' -%}
 {%- else -%}
@@ -17,6 +19,7 @@
   {%- assign t_a = '15%' -%}{%- assign t_b = ' off when you spend ' -%}{%- assign t_d = '' -%}
   {%- if mk == 'US' -%}{%- assign t_c = '$35' -%}{%- elsif mk == 'IE' -%}{%- assign t_c = '€30' -%}{%- else -%}{%- assign t_c = '£25' -%}{%- endif -%}
   {%- assign t_sub = 'One code, works on everything not already on sale. Ends Monday 30 November.' -%}
+  {%- assign t_ask = 'Pop your email in and we will show your code straight away.' -%}{%- assign t_label = 'Your email address' -%}{%- assign t_go = 'Show my code' -%}{%- assign t_err = 'Please enter a valid email address.' -%}{%- assign t_ok = 'Here is your code. It works until Monday 30 November.' -%}{%- assign t_consent = 'By signing up you agree to emails from Poorly Pet. Unsubscribe any time.' -%}
   {%- assign t_copy = 'Copy' -%}{%- assign t_copied = 'Copied' -%}{%- assign t_shop = 'Shop now' -%}{%- assign t_close = 'Close' -%}
   {%- capture t_fine -%}Orders over {{ t_c }}. One use per customer. Not valid on sale items.{%- endcapture -%}
 {%- endif -%}
@@ -46,12 +49,25 @@
 .bfw-copy:hover{background:#0A3A37}
 .bfw-go{width:100%;margin-top:10px}
 .bfw-fine{margin:12px 0 0;font:400 11px/1.45 Figtree,Arial,sans-serif;color:#9fb8b3}
+.bfw-fm{display:grid;gap:10px}
+.bfw-fm input{height:52px;border:0;border-radius:8px;padding:0 16px;font:400 16px Figtree,Arial,sans-serif;color:#0E2A28;background:#fff;width:100%}
+.bfw-fm input[aria-invalid=true]{outline:2px solid #F0614A}
+.bfw-fm .bfw-btn{width:100%}
+.bfw-err{display:none;margin:0;font:400 13px/1.4 Figtree,Arial,sans-serif;color:#ffd2c9}
+.bfw-err.on{display:block}
+.bfw-ok{display:none}
+.bfw-bd.sent .bfw-form{display:none}
+.bfw-bd.sent .bfw-ok{display:block}
 @media (max-width:620px){
-  .bfw-card{grid-template-columns:1fr}
-  .bfw-ph{order:-1;min-height:0;height:220px;background-position:45% 12%}
-  .bfw-bd{padding:24px 22px 22px}
-  .bfw h2{font-size:31px}
-  .bfw-x{background:#fff;color:#0F4C48}
+  .bfw-card{grid-template-columns:1fr;width:min(360px,100%);text-align:center}
+  .bfw-ph{display:none}
+  .bfw-bd{padding:34px 20px 20px}
+  .bfw-kick{margin-bottom:10px;font-size:12px}
+  .bfw h2{font-size:27px;margin-bottom:10px}
+  .bfw-sub{font-size:15px;margin-bottom:14px}
+  .bfw-fm input,.bfw-btn{min-height:48px;height:48px}
+  .bfw-code{padding:6px 6px 6px 14px}.bfw-code b{font-size:20px}
+  .bfw-x{top:8px;right:8px;width:32px;height:32px;font-size:22px}
 }
 @media (prefers-reduced-motion:reduce){.bfw *{transition-duration:.01ms!important}}
 </style>
@@ -62,10 +78,22 @@
     <div class="bfw-bd">
       <p class="bfw-kick">{{ t_kick }}</p>
       <h2 id="bfw-h"><span class="bfw-p bfw-l">{{ t_a }}</span>{{ t_b }}<span class="bfw-p bfw-c">{{ t_c }}</span>{{ t_d }}</h2>
-      <p class="bfw-sub">{{ t_sub }}</p>
-      <div class="bfw-code"><b id="bfw-code">BFWEEK15</b><button class="bfw-btn bfw-copy" type="button" id="bfw-copy">{{ t_copy }}</button></div>
-      <a class="bfw-btn bfw-go" href="{{ routes.root_url | append: '/' | replace: '//', '/' }}discount/BFWEEK15?redirect={{ routes.all_products_collection_url | url_encode }}">{{ t_shop }}</a>
-      <p class="bfw-fine">{{ t_fine }}</p>
+      <div class="bfw-form">
+        <p class="bfw-sub">{{ t_ask }}</p>
+        <form class="bfw-fm" id="bfw-form" novalidate onsubmit="return false">
+          <label for="bfw-email" style="position:absolute;left:-9999px">{{ t_label }}</label>
+          <input type="email" id="bfw-email" placeholder="{{ t_label | escape }}" autocomplete="email">
+          <p class="bfw-err" id="bfw-err">{{ t_err }}</p>
+          <button class="bfw-btn" type="submit" id="bfw-go">{{ t_go }}</button>
+        </form>
+        <p class="bfw-fine">{{ t_consent }} {{ t_fine }}</p>
+      </div>
+      <div class="bfw-ok">
+        <p class="bfw-sub">{{ t_ok }}</p>
+        <div class="bfw-code"><b id="bfw-code">BFWEEK15</b><button class="bfw-btn bfw-copy" type="button" id="bfw-copy">{{ t_copy }}</button></div>
+        <a class="bfw-btn bfw-go" href="{{ routes.root_url | append: '/' | replace: '//', '/' }}discount/BFWEEK15?redirect={{ routes.all_products_collection_url | url_encode }}">{{ t_shop }}</a>
+        <p class="bfw-fine">{{ t_fine }}</p>
+      </div>
     </div>
     <div class="bfw-ph" role="img" aria-label=""></div>
   </div>
@@ -95,13 +123,32 @@
     if (!shown || !el.classList.contains('on')) return;
     if (e.key === 'Escape') close();
     if (e.key === 'Tab') {
-      var f = [].filter.call(el.querySelectorAll('button,a[href]'), function (n) { return n.offsetParent !== null; });
+      var f = [].filter.call(el.querySelectorAll('button,a[href],input'), function (n) { return n.offsetParent !== null; });
       if (!f.length) return; var a = f[0], z = f[f.length - 1];
       if (e.shiftKey && (document.activeElement === a || document.activeElement === card)) { e.preventDefault(); z.focus(); }
       else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
     }
   });
   setTimeout(open, tst ? 600 : 20000);
+  var bd = el.querySelector('.bfw-bd'), em = document.getElementById('bfw-email'), er = document.getElementById('bfw-err');
+  try { var dn = JSON.parse(localStorage.getItem(KEY + '_done') || 'null'); if (dn) bd.classList.add('sent'); } catch (e) {}
+  em.addEventListener('input', function () { em.removeAttribute('aria-invalid'); er.classList.remove('on'); });
+  document.getElementById('bfw-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = em.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { em.setAttribute('aria-invalid', 'true'); er.classList.add('on'); em.focus(); return; }
+    document.getElementById('bfw-go').disabled = true;
+    try {
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UU3NF7', {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/vnd.api+json', 'revision': '2024-10-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Black Friday week 15% pop-up',
+          profile: { data: { type: 'profile', attributes: { email: v, properties: { source: 'bfweek15-popup', market: {{ mk | default: 'GB' | json }}, voucher: 'BFWEEK15' } } } } },
+          relationships: { list: { data: { type: 'list', id: 'XqJekh' } } } } })
+      }).catch(function () {});
+    } catch (x) {}
+    setTimeout(function () { try { localStorage.setItem(KEY + '_done', '1'); } catch (x) {} bd.classList.add('sent'); }, 350);
+  });
   document.getElementById('bfw-copy').addEventListener('click', function () {
     var b = this;
     function done() { b.textContent = {{ t_copied | json }}; setTimeout(function () { b.textContent = {{ t_copy | json }}; }, 1800); }
