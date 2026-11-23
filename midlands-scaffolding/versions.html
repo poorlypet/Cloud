@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Midlands Solar Scaffolding</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="assets/img/sun.png">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+.pick-page{min-height:100svh;background:var(--ink);color:#fff;padding-block:clamp(28px,6vh,64px);padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.pick-page .wrap{max-width:1320px}
+.pick-page header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(24px,4vh,44px)}
+.pick-page header img{height:56px;width:auto;margin-bottom:22px}
+.pick-page h1{font-size:clamp(36px,5vw,72px)}
+.pick-page header p{color:var(--mu-d);max-width:44ch}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:26px 16px}
+.vgrid a{display:block}
+.vgrid .shot{border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:var(--ink-2)}
+.vgrid .shot img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.vgrid a:hover .shot img{transform:scale(1.05)}
+.vgrid .meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px;padding-top:14px}
+.vgrid b{grid-row:span 2;font:500 44px/1 var(--disp);color:var(--cy)}
+.vgrid strong{font:500 23px/1.1 var(--disp)}
+.vgrid span{color:var(--mu-d);font-size:15px}
+</style>
+</head>
+<body>
+<main class="pick-page"><div class="wrap">
+  <header><div><img src="assets/img/logo-light.png" alt="Midlands Solar Scaffolding Ltd"><h1>Five homepages.</h1></div>
+  <p>Open each one and scroll to the bottom. The numbered switch in the bottom corner jumps between them.</p></header>
+  <div class="vgrid">
+    <a href="v1.html"><div class="shot"><img src="assets/img/v1.jpg" alt=""></div><div class="meta"><b>1</b><strong>Clean</strong><span>White and bright, a curved photo with floating cards.</span></div></a>
+    <a href="v2.html"><div class="shot"><img src="assets/img/v2.jpg" alt=""></div><div class="meta"><b>2</b><strong>Night</strong><span>Dark and bold. Services slide past full-screen.</span></div></a>
+    <a href="v3.html"><div class="shot"><img src="assets/img/v3.jpg" alt=""></div><div class="meta"><b>3</b><strong>Mosaic</strong><span>A moving wall of your jobs behind the headline.</span></div></a>
+    <a href="v4.html"><div class="shot"><img src="assets/img/v4.jpg" alt=""></div><div class="meta"><b>4</b><strong>Split</strong><span>Half cyan, half photo. The photo changes as each service scrolls past.</span></div></a>
+    <a href="v5.html"><div class="shot"><img src="assets/img/v5.jpg" alt=""></div><div class="meta"><b>5</b><strong>Posts</strong><span>Styled like your social posts. Jobs stack up as cards.</span></div></a>
+  </div>
+</div></main>
+</body>
+</html>
