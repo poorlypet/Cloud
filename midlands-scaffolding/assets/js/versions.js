@@ -6,15 +6,15 @@
   var desktop = matchMedia("(min-width: 901px)").matches;
 
   // moving photo wall (v3): each column's photos are doubled so the loop has no jump
-  var wall = $("#wall");
-  if (wall) {
-    var P = ["job-09", "job-05", "job-01", "job-03", "job-11", "job-04", "job-06", "job-08", "job-10", "job-02", "job-12", "job-07"];
+  var P = ["job-09", "job-05", "job-01", "job-03", "job-11", "job-04", "job-06", "job-08", "job-10", "job-02", "job-12", "job-07"];
+  $$(".wall").forEach(function (wall) {
+    var off = +(wall.dataset.offset || 0);
     for (var c = 0; c < 6; c++) {
-      var list = [0, 1, 2, 3].map(function (k) { return P[(c * 2 + k * 3) % P.length]; });
+      var list = [0, 1, 2, 3].map(function (k) { return P[(off + c * 2 + k * 3) % P.length]; });
       var h = list.map(function (p) { return '<img src="assets/img/' + p + '.jpg" alt="">'; }).join("");
       wall.insertAdjacentHTML("beforeend", '<div class="wcol"><div style="--t:' + (40 + c * 7 % 17) + 's">' + h + h + "</div></div>");
     }
-  }
+  });
 
   // myth / fact switcher (v5)
   var sw = $$(".mf-sw button"), panes = $$(".mf-pane"), mi = 0, mt;
@@ -54,7 +54,9 @@
     $$(".v2-card > img", pan).forEach(function (im) { gsap.fromTo(im, { scale: 1.2 }, { scale: 1, ease: "none", scrollTrigger: { trigger: pan, start: "top top", end: function () { return "+=" + d(); }, scrub: true } }); });
   }
   // v3: the wall drifts as you scroll away
-  $$(".wcol").forEach(function (c, i) { gsap.to(c, { yPercent: i % 2 ? 10 : -10, ease: "none", scrollTrigger: { trigger: ".v3-hero", start: "top top", end: "bottom top", scrub: true } }); });
+  $$(".v3-hero").forEach(function (hero) {
+    $$(".wcol", hero).forEach(function (c, i) { gsap.to(c, { yPercent: i % 2 ? 10 : -10, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } }); });
+  });
   // v5: each post shrinks a little as the next one stacks on top
   var posts = $$(".post");
   posts.forEach(function (p, i) {

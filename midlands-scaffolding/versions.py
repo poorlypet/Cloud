@@ -86,7 +86,7 @@ def v2():
     return "v2", False, [hero, marquee(True), pan, checks("dark"), myths("light"), strip("white"), areas("dark"), contact("dark"), end()]
 
 def v3():
-    hero = (f'<section class="v3-hero" data-hero><div class="wall" id="wall" aria-hidden="true"></div><div class="v3-in">'
+    hero = (f'<section class="v3-hero" data-hero><div class="wall" data-offset="0" aria-hidden="true"></div><div class="v3-in">'
             f'<div class="chips" data-hin><span>Commercial</span><span>Domestic</span><span>Industrial</span></div>'
             f'<h1>{h1("Scaffolding across", "<em>Wolverhampton.</em>")}</h1>'
             '<p class="sub" data-hin>Reliable scaffolding for solar installs, roof repairs and building work, from the Midlands Solar group.</p>'
@@ -130,13 +130,16 @@ def write(i, fn):
     B.page(f"v{i}.html", "Midlands Solar Scaffolding", "Commercial, domestic and industrial scaffolding across Wolverhampton and the surrounding towns.", "\n".join(secs), "", solid)
     p = os.path.join(B.ROOT, f"v{i}.html")
     h = open(p).read()
-    h = h.replace('<link rel="stylesheet" href="assets/css/site.css">', '<link rel="stylesheet" href="assets/css/site.css">\n<link rel="stylesheet" href="assets/css/versions.css">')
-    h = h.replace('<script src="assets/js/site.js"></script>', '<script src="assets/js/site.js"></script>\n<script src="assets/js/versions.js"></script>')
     if cls:
         h = h.replace("<body", f'<body data-v="{cls}"', 1).replace(f'<body data-v="{cls}">', f'<body class="{cls}">', 1)
     sw = '<div class="switch">' + "".join(f'<a href="v{k+1}.html"{" class=on" if k + 1 == i else ""}>{k+1}{" " + NAMES[k] if k + 1 == i else ""}</a>' for k in range(5)) + "</div>"
     h = h.replace("</footer>", "</footer>\n" + sw, 1)
     open(p, "w").write(h)
+
+def write_home():
+    """The chosen design (Mosaic) as the site's home page."""
+    cls, solid, secs = v3()
+    B.page("index.html", "Midlands Solar Scaffolding", "Commercial, domestic and industrial scaffolding across Wolverhampton and the surrounding towns.", "\n".join(secs), "", solid)
 
 if __name__ == "__main__":
     for i, fn in enumerate([v1, v2, v3, v4, v5], 1):

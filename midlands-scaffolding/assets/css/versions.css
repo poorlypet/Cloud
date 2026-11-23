@@ -77,6 +77,10 @@
 .v3-in .sub{color:#DDE5EA;max-width:46ch}
 .v3-in .chips{justify-content:center;margin:0}
 .v3-in .btns{justify-content:center}
+.v3-in .lab{color:#8FD6E8;margin:0}
+.v3-hero.inner{height:auto;min-height:78svh;padding:120px var(--gut) 70px}
+.v3-hero.inner h1{font-size:clamp(42px,min(6.4vw,11vh),104px)}
+.v3-hero .phone{color:#fff}
 
 /* ===================== v4 Split ===================== */
 .v4-hero{min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -171,3 +175,76 @@
   .switch{font-size:12px}
   .switch a{padding:6px 8px}
 }
+
+/* ---------- phones: keep each section to about one screen ---------- */
+@media (max-width:900px){
+  .band{padding-block:clamp(64px,9vh,84px) clamp(28px,5vh,44px)}
+  .head{margin-bottom:16px}
+  .svc .pic{height:26svh}
+  .ticks{margin-top:10px}
+  .ticks li{padding:7px 0 7px 30px;font-size:15px}
+  .ticks li:before{top:9px}
+  .svc .btns{margin-top:14px}
+  .terms{grid-template-columns:1fr 1fr;gap:8px}
+  .term{padding:12px}
+  .term h3{font-size:16px;margin-bottom:4px}
+  .term p{font-size:13px;line-height:1.35}
+  .checks{grid-template-columns:1fr 1fr;gap:8px}
+  .check{padding:12px}
+  .check b{width:30px;height:30px;font-size:14px;border-radius:9px;margin-bottom:8px}
+  .check h3{font-size:15.5px;margin-bottom:4px}
+  .check p{font-size:13px;line-height:1.35}
+  .contact .sub{display:none}
+  .contact h2{margin-bottom:8px}
+  .lines{margin-top:8px}
+  .lines div{padding:6px 0}
+  .lines strong{font-size:16px}
+  .form{gap:8px}
+  .form input,.form select,.form textarea{padding:9px 12px}
+  .form textarea{height:56px}
+  .card{padding:16px}
+  .contact{gap:14px}
+  .spot{height:32svh}
+  .safe{gap:14px}
+  .safe-list li{padding:6px 0}
+  .safe-list li:before{width:26px;height:26px;font-size:13px}
+  .safe-list h3{font-size:15.5px}
+  .group{gap:14px}
+  .points li{padding:10px 0;grid-template-columns:44px minmax(0,1fr)}
+  .points svg{width:38px;height:38px;padding:8px}
+  .points p{font-size:14.5px}
+  .logos{margin-top:14px}
+  .bento{grid-auto-rows:minmax(120px,17svh);gap:8px}
+  .faq summary{padding:11px 0;font-size:17px}
+  .end h2{font-size:38px}
+  .towns span{padding:7px 12px;font-size:14px}
+  .type-tabs button{padding:11px 14px;font-size:16px}
+  .types{gap:14px}
+  .type-pane h3{font-size:24px;margin-bottom:6px}
+  .type-pane dl{margin-top:10px;padding-top:10px;gap:6px 14px}
+  .values{gap:10px}
+  .value{padding:16px}
+  .value svg{width:40px;height:40px;padding:9px;margin-bottom:10px}
+}
+@media (max-width:520px){
+  .checks{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  .flow{grid-template-columns:1fr 1fr;gap:8px}
+  .flow li{padding:12px}
+  .flow li:before{font-size:26px;margin-bottom:6px}
+  .flow h3{font-size:16px}
+  .flow p{font-size:13px;line-height:1.35}
+  .contact .lines div:last-child{display:none}
+  .form label{gap:4px}
+  .myth{min-height:260px}
+  .safe-list p{font-size:13.5px}
+}
+.bento{grid-auto-rows:minmax(140px,19vh)}
+@media (max-width:900px){
+  .bento{grid-auto-rows:minmax(110px,15svh)}
+  .spot{height:27svh}
+  .points li{padding:8px 0}
+  .logos{padding:12px}
+}
+.bento .tile:nth-child(6){grid-column:span 2}

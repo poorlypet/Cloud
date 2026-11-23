@@ -127,7 +127,8 @@ def areas(skin="light"):
     towns = "".join(f'<span{" class=hq" if t[0] == "Wolverhampton" else ""}>{t[0]}</span>' for t in TOWNS)
     return (f'<section class="band {skin} screen"><div class="wrap group"><div>{lab("Where we work")}<h2 data-rise>Wolverhampton and<br>the towns around it.</h2>'
             f'<p class="sub">Based in Wolverhampton, working across the Black Country, Staffordshire and Shropshire. Not sure if we cover you? Ask us.</p>'
-            f'<div class="towns" data-up>{towns}</div></div><div class="radar" data-up>{radar()}</div></div></section>')
+            f'<div class="towns" data-up>{towns}</div></div><div class="svc" style="grid-template-columns:1fr"><div class="pic" data-wipe>{img("job-07.jpg", "A scaffold going up on a house")}'
+            f'<span class="stamp">Based in Wolverhampton</span></div></div></div></section>')
 
 FAQ = [
     ("How quickly can you put a scaffold up?", "We do our best to fit short-notice jobs in. Most domestic scaffolds go up in a day once booked. Call us with your dates and we'll tell you what we can do."),
@@ -163,9 +164,12 @@ def end(h2="Need scaffolding<br>at short notice?", p="Get in touch and we'll do 
     return (f'<section class="band cyan end screen">{rings}<div class="wrap"><h2 data-rise>{h2}</h2><p class="sub">{p}</p>'
             f'<div class="btns">{btn("quote.html", "Get a free quote")}{phone()}</div></div></section>')
 
-def phero(label, title, text, picture):
-    return (f'<section class="phero" data-hero>{img(picture)}<div class="wrap">{lab(label)}<h1>{title}</h1><p class="sub" data-hin>{text}</p></div>'
-            f'{WAVE.format(cls="")}</section>')
+def phero(label, title, text, picture=None, offset=0):
+    """Inner page header: the moving wall of job photos (as on the home page) behind the page title."""
+    if picture and offset == 0: offset = int(picture[4:6])   # a different set of photos leads each page
+    return (f'<section class="v3-hero inner" data-hero><div class="wall" data-offset="{offset}" aria-hidden="true"></div><div class="v3-in">'
+            f'{lab(label)}<h1>{title}</h1><p class="sub" data-hin>{text}</p>'
+            f'<div class="btns" data-hin>{btn("quote.html", "Get a free quote")}{phone()}</div></div></section>')
 
 # ------------------------------------------------------------------ page shell
 def page(file, title, desc, body, active="", solid=False):
@@ -181,6 +185,7 @@ def page(file, title, desc, body, active="", solid=False):
 <meta name="description" content="{html.escape(desc)}">
 <link rel="icon" href="assets/img/sun.png">
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/versions.css">
 </head>
 <body{' class="solidnav"' if solid else ""}>
 <div class="loader" id="loader"><img src="assets/img/sun.png" alt=""></div>
@@ -207,6 +212,7 @@ def page(file, title, desc, body, active="", solid=False):
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="assets/js/site.js"></script>
+<script src="assets/js/versions.js"></script>
 </body>
 </html>
 '''
@@ -370,6 +376,12 @@ def quote():
     body = "\n".join([planner, faq("white"), end("Rather talk<br>it through?", "Call us and we'll talk you through what you need.")])
     page("quote.html", "Free scaffolding quote | Midlands Solar Scaffolding", "Plan your scaffold in six quick questions and get a free quote.", body, "quote.html", solid=True)
 
+def build_all():
+    """Every page except the home page, which versions.py writes (the Mosaic design)."""
+    services(); learn(); work(); about(); quote()
+
 if __name__ == "__main__":
-    home(); services(); learn(); work(); about(); quote()
+    build_all()
+    import versions
+    versions.write_home()
     print("built 6 pages")
