@@ -41,8 +41,8 @@ SERVICES = [
     ("Solar panel installs", "Safe roof access for solar fitters, with edge protection at the eaves.", "job-05.jpg", "services.html#solar"),
     ("Roof repairs", "Fully boarded lifts to the gutter line, so roofers can work and store tiles safely.", "job-09.jpg", "services.html#roofing"),
     ("Chimney work", "Chimney stack scaffolds for repointing, flashing and capping.", "job-11.jpg", "services.html#chimney"),
-    ("Gutters and fascias", "Quick, tidy scaffolds for roofline, gutter and painting work.", "job-03.jpg", "services.html#roofline"),
-    ("Building and extensions", "Scaffolds that grow with the build, from the first lift to the roof.", "job-10.jpg", "services.html#building"),
+    ("Gutters and fascias", "Quick, tidy scaffolds for roofline, gutter and painting work.", "job-12.jpg", "services.html#roofline"),
+    ("Building and extensions", "Scaffolds that grow with the build, from the first lift to the roof.", "job-06.jpg", "services.html#building"),
     ("Commercial and industrial", "Shops, units and larger buildings, planned around your site.", "job-08.jpg", "services.html#commercial"),
 ]
 
@@ -233,7 +233,7 @@ def home():
            ("clock", "Short notice where we can", "Call us with your dates and we'll do our best to fit you in.")]
     group = (f'<section class="band light screen"><div class="wrap group"><div>{lab("Who we are")}<h2 data-rise>Scaffolding from the<br>Midlands Solar group.</h2>'
              '<p class="sub">We\'re the sister company of Midlands Solar Installations Ltd. We scaffold their solar installs, and take on independent jobs for homeowners, builders and businesses.</p>'
-             f'<div class="logos" data-up>{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<i></i>{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}</div></div>'
+             f'<div class="logos" data-up><div class="half">{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<span>Scaffolding</span></div><i></i><a class="half" href="https://www.midlandssolar.co.uk" target="_blank" rel="noopener">{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}<span>Solar installations ↗</span></a></div></div>'
              '<ul class="points">' + "".join(f'<li data-up>{ICON[i]}<div><h3>{t}</h3><p>{d}</p></div></li>' for i, t, d in pts) + "</ul></div></section>")
     body = "\n".join([hero, group, tiles(), build_demo(), myths("light"), strip("white"), planner_teaser(), areas("light"), faq("white"),
                       contact("dark"), end()])
@@ -250,10 +250,10 @@ def services():
         ("chimney", "Chimney work", "Chimney stacks,<br>safely reached.", "job-11.jpg", "Chimneys",
          "Repointing, lead flashing, pots and cowls. We build a platform around the stack, with safe access up from the roof scaffold.",
          ["Platform all round the stack", "Roof protected under the scaffold", "Combined with a front scaffold where needed"]),
-        ("roofline", "Gutters, fascias and painting", "Quick, tidy<br>roofline scaffolds.", "job-03.jpg", "Roofline",
+        ("roofline", "Gutters, fascias and painting", "Quick, tidy<br>roofline scaffolds.", "job-12.jpg", "Roofline",
          "Gutters, fascias, soffits, rendering and painting. Short-hire scaffolds put up and taken down with as little disruption as possible.",
          ["Short hire periods", "Front, back, side or all the way round", "Garden and drive protected"]),
-        ("building", "Building and extensions", "Scaffolds that grow<br>with your build.", "job-10.jpg", "Building work",
+        ("building", "Building and extensions", "Scaffolds that grow<br>with your build.", "job-06.jpg", "Building work",
          "From the first lift on a new extension to a full scaffold for a loft conversion. We adapt the scaffold as the build goes up.",
          ["Lifts added as walls go up", "Adaptations at short notice", "Tied in to suit the build"]),
         ("commercial", "Commercial and industrial", "Shops, units and<br>bigger buildings.", "job-08.jpg", "Commercial",
@@ -334,7 +334,7 @@ def about():
     story = (f'<section class="band light screen"><div class="wrap group"><div>{lab("About us")}<h2 data-rise>Part of the<br>Midlands Solar group.</h2>'
              '<p class="sub">Midlands Solar Scaffolding Ltd is the sister company of Midlands Solar Installations Ltd. We work closely alongside them, providing scaffolding to support their solar installation projects, while also taking on independent projects for private customers and other businesses.</p>'
              '<p class="sub" style="margin-top:14px">We\'re proud to work as part of the same group, delivering reliable, professional scaffolding across a wide range of projects.</p>'
-             f'<div class="logos" data-up>{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<i></i>{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}</div></div>'
+             f'<div class="logos" data-up><div class="half">{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<span>Scaffolding</span></div><i></i><a class="half" href="https://www.midlandssolar.co.uk" target="_blank" rel="noopener">{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}<span>Solar installations ↗</span></a></div></div>'
              f'<div class="svc" style="grid-template-columns:1fr"><div class="pic" data-wipe>{img("job-08.jpg", "Our van loaded with tubes and boards")}<span class="stamp">Our own team and kit</span></div></div></div></section>')
     vals = [("shield", "Safe first", "Every scaffold boarded, guarded and checked before we hand it over."),
             ("broom", "Tidy sites", "Gardens and drives protected, and the site left clean when we're done."),

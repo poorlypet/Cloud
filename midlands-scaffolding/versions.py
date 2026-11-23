@@ -24,7 +24,7 @@ def group(skin="light"):
            ("clock", "Short notice where we can", "Call us with your dates and we'll do our best to fit you in.")]
     return (f'<section class="band {skin} screen"><div class="wrap group"><div>{lab("Who we are")}<h2 data-rise>Scaffolding from the<br>Midlands Solar group.</h2>'
             '<p class="sub">We\'re the sister company of Midlands Solar Installations Ltd. We scaffold their solar installs, and take on independent jobs for homeowners, builders and businesses.</p>'
-            f'<div class="logos" data-up>{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<i></i>{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}</div></div>'
+            f'<div class="logos" data-up><div class="half">{img("logo-dark.png", "Midlands Solar Scaffolding Ltd")}<span>Scaffolding</span></div><i></i><a class="half" href="https://www.midlandssolar.co.uk" target="_blank" rel="noopener">{img("solar-logo-dark.png", "Midlands Solar Installations Ltd")}<span>Solar installations ↗</span></a></div></div>'
             '<ul class="points">' + "".join(f'<li data-up>{ICON[i]}<div><h3>{t}</h3><p>{d}</p></div></li>' for i, t, d in pts) + "</ul></div></section>")
 
 def marquee(dark=False):
@@ -33,9 +33,10 @@ def marquee(dark=False):
     return f'<div class="marq{" dark-m" if dark else ""}" aria-hidden="true"><div class="marq-in">{run}{run}</div></div>'
 
 def bento(skin="light"):
-    t = "".join(f'<a class="tile" href="{h}" data-up>{img(p, n)}<span class="go">→</span><div><h3>{n}</h3><p>{d}</p></div></a>' for n, d, p, h in SERVICES)
-    return (f'<section class="band {skin} screen"><div class="wrap"><div class="head"><div>{lab("What we scaffold")}<h2 data-rise>Scaffolding for every<br>kind of job.</h2></div>'
-            f'{tl("services.html", "All services")}</div><div class="bento">{t}</div></div></section>')
+    t = "".join(f'<a class="scard" href="{h}" data-up><div class="im">{img(p, n)}</div><div class="tx"><h3>{n}</h3><p>{d}</p><span class="more">Find out more <i>→</i></span></div></a>'
+                for n, d, p, h in SERVICES)
+    return (f'<section class="band {skin} screen"><div class="wrap"><div class="head"><div>{lab("What we scaffold")}<h2 data-rise>Scaffolding for every kind of job.</h2></div>'
+            f'{tl("services.html", "All services")}</div><div class="cards">{t}</div></div></section>')
 
 def checks(skin="light"):
     c = "".join(f'<div class="check" data-up><b>{i+1}</b><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(SAFE))
@@ -87,7 +88,7 @@ def v2():
 
 def v3():
     hero = (f'<section class="v3-hero" data-hero><div class="wall" data-offset="0" aria-hidden="true"></div><div class="v3-in">'
-            f'<div class="chips" data-hin><span>Commercial</span><span>Domestic</span><span>Industrial</span></div>'
+            f'{lab("Commercial · Domestic · Industrial")}'
             f'<h1>{h1("Scaffolding across", "<em>Wolverhampton.</em>")}</h1>'
             '<p class="sub" data-hin>Reliable scaffolding for solar installs, roof repairs and building work, from the Midlands Solar group.</p>'
             f'<div class="btns" data-hin>{btn("quote.html", "Get a free quote")}{phone()}</div></div></section>')
