@@ -1,0 +1,150 @@
+{%- comment -%}
+  Black Friday Week pop-up: 15% off everything with a code. Five designs.
+  bf_live = 0 keeps it off for shoppers. Set it to 1-5 to put that design live.
+  Any design can be previewed without going live by adding ?bf=1 (to 5) to a page address.
+  Shown once per visitor (3 days), a few seconds after the page loads. "Shop now" applies the code automatically.
+{%- endcomment -%}
+{%- assign bf_live = 0 -%}
+{%- assign bf_code = 'BLACKFRIDAY15' -%}
+{%- assign bf_img = shop.metafields.custom.ah_media.value.stills['home-category-coats'] -%}
+{%- assign bf_img2 = shop.metafields.custom.ah_media.value.stills['menu-new-knitwear'] -%}
+{%- capture bf_go -%}/discount/{{ bf_code }}?redirect={{ routes.root_url | append: '/collections/new-in' | replace: '//', '/' | url_encode }}{%- endcapture -%}
+<div class="bfp" id="bf" data-live="{{ bf_live }}" data-code="{{ bf_code }}" hidden>
+  <div class="bf-scrim" data-bf-x></div>
+
+  {%- comment -%} 1 · Classic: white card, centred {%- endcomment -%}
+  <div class="bf-v bf1" data-v="1" role="dialog" aria-modal="true" aria-label="Black Friday Week offer" hidden>
+    <button type="button" class="bf-x" data-bf-x aria-label="Close">&times;</button>
+    <p class="bf-k">Black Friday Week</p>
+    <h2 class="bf-h">15% off everything</h2>
+    <p class="bf-p">Beds, coats, collars and leads from our independent European makers. This week only.</p>
+    <div class="bf-code"><span>Use code</span><b>{{ bf_code }}</b><button type="button" data-bf-copy>Copy</button></div>
+    <a class="bf-btn" href="{{ bf_go }}">Shop now</a>
+    <p class="bf-s">Applied at checkout. One use per customer. Can&rsquo;t be combined with other codes.</p>
+  </div>
+
+  {%- comment -%} 2 · Split: photograph left, offer right {%- endcomment -%}
+  <div class="bf-v bf2" data-v="2" role="dialog" aria-modal="true" aria-label="Black Friday Week offer" hidden>
+    <button type="button" class="bf-x" data-bf-x aria-label="Close">&times;</button>
+    <div class="bf2-ph">{%- if bf_img != blank -%}<img src="{{ bf_img }}{% if bf_img contains '?' %}&{% else %}?{% endif %}width=900" alt="" loading="lazy">{%- endif -%}</div>
+    <div class="bf2-tx">
+      <p class="bf-k">Black Friday Week</p>
+      <h2 class="bf-h">15% off<br>everything</h2>
+      <p class="bf-p">This week only, across the whole shop.</p>
+      <div class="bf-code"><span>Use code</span><b>{{ bf_code }}</b><button type="button" data-bf-copy>Copy</button></div>
+      <a class="bf-btn" href="{{ bf_go }}">Shop now</a>
+      <p class="bf-s">Applied at checkout. One use per customer.</p>
+    </div>
+  </div>
+
+  {%- comment -%} 3 · Olive: dark brand green, cream type {%- endcomment -%}
+  <div class="bf-v bf3" data-v="3" role="dialog" aria-modal="true" aria-label="Black Friday Week offer" hidden>
+    <button type="button" class="bf-x" data-bf-x aria-label="Close">&times;</button>
+    <p class="bf-k">Black Friday Week</p>
+    <p class="bf3-n">15<i>%</i></p>
+    <h2 class="bf-h">off everything</h2>
+    <p class="bf-p">One week, the whole shop. Enter the code at checkout.</p>
+    <div class="bf-code"><b>{{ bf_code }}</b><button type="button" data-bf-copy>Copy</button></div>
+    <a class="bf-btn" href="{{ bf_go }}">Shop now</a>
+    <p class="bf-s">One use per customer. Can&rsquo;t be combined with other codes.</p>
+  </div>
+
+  {%- comment -%} 4 · Corner card: slides in bottom right, page stays usable {%- endcomment -%}
+  <div class="bf-v bf4" data-v="4" data-noscrim role="dialog" aria-label="Black Friday Week offer" hidden>
+    <button type="button" class="bf-x" data-bf-x aria-label="Close">&times;</button>
+    {%- if bf_img2 != blank -%}<img class="bf4-ph" src="{{ bf_img2 }}{% if bf_img2 contains '?' %}&{% else %}?{% endif %}width=700&height=380&crop=center" alt="" loading="lazy">{%- endif -%}
+    <div class="bf4-tx">
+      <p class="bf-k">Black Friday Week</p>
+      <h2 class="bf-h">15% off everything</h2>
+      <div class="bf-code"><b>{{ bf_code }}</b><button type="button" data-bf-copy>Copy</button></div>
+      <a class="bf-btn" href="{{ bf_go }}">Shop now</a>
+    </div>
+  </div>
+
+  {%- comment -%} 5 · Bar: slim strip across the bottom {%- endcomment -%}
+  <div class="bf-v bf5" data-v="5" data-noscrim role="region" aria-label="Black Friday Week offer" hidden>
+    <p class="bf5-t"><b>Black Friday Week</b><span>15% off everything with code</span><strong>{{ bf_code }}</strong></p>
+    <div class="bf5-a"><button type="button" class="bf5-c" data-bf-copy>Copy code</button><a class="bf-btn" href="{{ bf_go }}">Shop now</a></div>
+    <button type="button" class="bf-x" data-bf-x aria-label="Close">&times;</button>
+  </div>
+</div>
+<style>
+.bfp{position:fixed;inset:0;z-index:8900;pointer-events:none;font-family:var(--sans,"Jost",system-ui,sans-serif);color:#111}
+.bfp[hidden],.bf-v[hidden]{display:none}
+.bf-scrim{position:absolute;inset:0;background:rgba(17,17,17,.5);pointer-events:auto;animation:bf-f .3s ease both}
+.bfp.noscrim .bf-scrim{display:none}
+@keyframes bf-f{from{opacity:0}to{opacity:1}}
+@keyframes bf-up{from{opacity:0;transform:translate(-50%,calc(-50% + 16px))}to{opacity:1;transform:translate(-50%,-50%)}}
+@keyframes bf-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.bf-v{pointer-events:auto;position:absolute;background:#fff;box-shadow:0 24px 70px rgba(17,17,17,.25)}
+.bf1,.bf2,.bf3{left:50%;top:50%;transform:translate(-50%,-50%);animation:bf-up .4s ease both;max-height:calc(100vh - 32px);overflow:auto}
+.bf-x{position:absolute;top:8px;right:10px;width:40px;height:40px;border:0;background:none;font:300 30px/1 var(--sans,system-ui);color:inherit;cursor:pointer;z-index:2}
+.bf-k{margin:0 0 14px;font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#4A5236}
+.bf-h{margin:0;font:500 46px/1.02 var(--display,"Cormorant Garamond",Georgia,serif);letter-spacing:-.01em;text-wrap:balance}
+.bf-p{margin:14px auto 0;font-size:15px;line-height:1.6;color:#4A4A46;max-width:34ch}
+.bf-code{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px auto 0;padding:12px 14px;border:1px dashed #111;max-width:340px}
+.bf-code span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6B6B66}
+.bf-code b{font-size:17px;font-weight:600;letter-spacing:.14em}
+.bf-code button,.bf5-c{border:0;background:none;padding:4px 2px;font:500 11px/1 var(--sans,system-ui);letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;color:inherit;cursor:pointer}
+.bfp .bf-btn{display:block;margin:16px auto 0;max-width:340px;padding:17px 24px;background:#111;color:#fff!important;text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
+.bf-btn:hover{background:#2E3422}
+.bf-s{margin:14px 0 0;font-size:12px;line-height:1.5;color:#8A8A85}
+.bf-v :focus-visible{outline:2px solid #4A5236;outline-offset:2px}
+/* 1 */
+.bf1{width:min(480px,calc(100vw - 32px));padding:52px 40px 36px;text-align:center}
+/* 2 */
+.bf2{width:min(820px,calc(100vw - 32px));display:grid;grid-template-columns:1fr 1fr}
+.bf2-ph{background:#EDEBE5;min-height:440px}.bf2-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.bf2-tx{padding:52px 40px 36px;text-align:left;align-self:center}
+.bf2 .bf-p{margin-left:0}.bf2 .bf-code,.bfp .bf2 .bf-btn{margin-left:0;max-width:none}
+/* 3 */
+.bf3{width:min(460px,calc(100vw - 32px));padding:50px 40px 36px;text-align:center;background:#2E3422;color:#F4F1EA}
+.bf3 .bf-k{color:#C9CBBE}.bf3 .bf-p{color:#C9CBBE}.bf3 .bf-s{color:#9DA190}
+.bf3-n{margin:0;font:500 120px/.9 var(--display,"Cormorant Garamond",Georgia,serif);color:#F4F1EA}.bf3-n i{font-size:.5em;font-style:italic;vertical-align:.5em;margin-left:4px}
+.bf3 .bf-h{font-size:34px;font-style:italic}
+.bf3 .bf-code{border-color:#F4F1EA}.bfp .bf3 .bf-btn{background:#F4F1EA;color:#16170F!important}.bf3 .bf-btn:hover{background:#fff}
+/* 4 */
+.bf4{right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));width:min(360px,calc(100vw - 32px));animation:bf-in .4s ease both}
+.bf4-ph{display:block;width:100%;height:auto}.bf4-tx{padding:22px 24px 24px;text-align:left}
+.bf4 .bf-h{font-size:30px}.bf4 .bf-code{margin:16px 0 0;justify-content:space-between;max-width:none}.bfp .bf4 .bf-btn{margin:12px 0 0;max-width:none}
+.bf4 .bf-x{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+/* 5 */
+.bf5{left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;padding:14px 56px 14px 20px;padding-bottom:max(14px,env(safe-area-inset-bottom,0px));background:#2E3422;color:#F4F1EA;box-shadow:0 -8px 30px rgba(17,17,17,.18);animation:bf-in .4s ease both}
+.bf5-t{margin:0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;justify-content:center;font-size:14.5px}
+.bf5-t b{font:500 24px/1 var(--display,"Cormorant Garamond",Georgia,serif)}.bf5-t strong{font-weight:600;letter-spacing:.14em;border:1px dashed #F4F1EA;padding:5px 10px}
+.bf5-a{display:flex;align-items:center;gap:16px}.bfp .bf5 .bf-btn{margin:0;padding:13px 22px;background:#F4F1EA;color:#16170F!important}
+.bf5 .bf-x{top:50%;transform:translateY(-50%);right:8px}
+@media (max-width:700px){.bf-h{font-size:36px}.bf1,.bf3{padding:46px 24px 28px}.bf2{grid-template-columns:1fr}.bf2-ph{min-height:0;height:190px}.bf2-tx{padding:28px 24px;text-align:center}.bf2 .bf-p,.bf2 .bf-code,.bfp .bf2 .bf-btn{margin-left:auto}.bf3-n{font-size:96px}.bf5{padding:14px 44px 14px 16px;gap:12px}.bf5-t{font-size:13.5px;gap:8px}.bf5-t b{width:100%;text-align:center}}
+@media (prefers-reduced-motion:reduce){.bf-v,.bf-scrim{animation:none}}
+</style>
+<script>
+(function () {
+  var el = document.getElementById("bf"); if (!el) return;
+  var m = /[?&]bf=([1-5])\b/.exec(location.search), preview = !!m, v = preview ? m[1] : el.getAttribute("data-live");
+  if (!v || v === "0") return;
+  var KEY = "ah_bf_seen";
+  if (!preview && new RegExp("(^|; )" + KEY + "=").test(document.cookie)) return;
+  var card = el.querySelector('.bf-v[data-v="' + v + '"]'); if (!card) return;
+  var last = null;
+  function close() { el.hidden = true; document.cookie = KEY + "=1;path=/;max-age=259200;samesite=lax"; if (last && last.focus) last.focus(); }
+  function open() {
+    var ck = document.getElementById("ck");
+    if (!preview && ck && !ck.hidden) { setTimeout(open, 1500); return; }   /* wait for the cookie choice first */
+    el.classList.toggle("noscrim", card.hasAttribute("data-noscrim"));
+    card.hidden = false; el.hidden = false; last = document.activeElement;
+    if (!card.hasAttribute("data-noscrim")) { var b = card.querySelector(".bf-btn"); if (b) b.focus({ preventScroll: true }); }
+  }
+  el.addEventListener("click", function (e) {
+    if (e.target.closest("[data-bf-x]")) { close(); return; }
+    var c = e.target.closest("[data-bf-copy]");
+    if (c) {
+      var code = el.getAttribute("data-code"), label = c.textContent;
+      var ok = function () { c.textContent = "Copied"; setTimeout(function () { c.textContent = label; }, 1800); };
+      try { navigator.clipboard.writeText(code).then(ok, ok); } catch (x) { ok(); }
+    }
+    if (e.target.closest(".bf-btn")) document.cookie = KEY + "=1;path=/;max-age=259200;samesite=lax";
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !el.hidden) close(); });
+  setTimeout(open, preview ? 300 : 4000);
+})();
+</script>
