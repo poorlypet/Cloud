@@ -65,6 +65,27 @@
   {%- endif -%}
   <style>.ah-blank{background:#EDEDEB} .shopify-section{display:contents}</style>
   {{ content_for_header }}
+  {%- comment -%} Google Ads tag. Advertising cookies stay off until the visitor's cookie choice allows them (Google consent mode). {%- endcomment -%}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 1500 });
+    gtag('js', new Date());
+    gtag('config', 'AW-18586683934');
+    (function () {
+      function sync() {
+        var cp = window.Shopify && Shopify.customerPrivacy; if (!cp) return;
+        var m = cp.marketingAllowed && cp.marketingAllowed(), a = cp.analyticsProcessingAllowed && cp.analyticsProcessingAllowed();
+        gtag('consent', 'update', { ad_storage: m ? 'granted' : 'denied', ad_user_data: m ? 'granted' : 'denied', ad_personalization: m ? 'granted' : 'denied', analytics_storage: a ? 'granted' : 'denied' });
+      }
+      document.addEventListener('visitorConsentCollected', sync);
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.Shopify && Shopify.loadFeatures) Shopify.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], function () { sync(); });
+      });
+    })();
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18586683934"></script>
+
 </head>
 <body data-layout="lib" data-basket="1" class="has-over{% unless template.name == 'index' or template.suffix == 'brand' %} solid{% endunless %} t-{{ template.name }}">
   {% section 'header' %}
