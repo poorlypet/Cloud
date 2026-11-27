@@ -151,12 +151,16 @@
 <script>
 (function () {
   var el = document.getElementById("bfp"); if (!el) return;
-  var SEEN = "ah_bf_seen", DONE = "ah_bf_email", WAIT = "ah_bf_wait";
+  var SEEN = "ah_bf_seen", DONE = "ah_bf_email", WAIT = "ah_bf_wait", BACK = "ah_bf_back";
+  if (/\/challenge/.test(location.pathname)) return;                     /* never over Shopify's own check page */
   function get(n) { var x = new RegExp("(^|; )" + n + "=([^;]*)").exec(document.cookie); return x ? x[2] : ""; }
   function has(n) { return !!get(n); }
   function set(n, days, val) { document.cookie = n + "=" + (val || 1) + ";path=/;max-age=" + Math.round(days * 86400) + ";samesite=lax"; }
   /* If Shopify had to reload the page to save the email, we come back here: show the code straight away */
   var waiting = get(WAIT), posted = !!waiting;
+  /* Shopify can send people to the homepage after its check: take them back to the page they were on */
+  var back = get(BACK); if (back) { set(BACK, 0); try { back = decodeURIComponent(back); } catch (x) { back = ""; } }
+  if (posted && back && back.charAt(0) === "/" && back.charAt(1) !== "/" && back.split("?")[0] !== location.pathname) { location.replace(back); return; }
   var m = /[?&]bf=([1-5])\b/.exec(location.search), preview = !!m, v = preview ? m[1] : (posted && /^[1-5]$/.test(waiting) ? waiting : el.getAttribute("data-live"));
   if (!v || v === "0") return;
   if (posted) { set(DONE, 30); set(WAIT, 0); }
@@ -180,7 +184,13 @@
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)) { err.textContent = "Please enter a valid email address."; err.hidden = false; email.focus(); return; }
     err.hidden = true;
     var btn = form.querySelector(".bfp-btn"), label = btn.textContent; btn.textContent = "One moment…"; btn.disabled = true;
-    function native() { set(WAIT, 0.02, v); form.submit(); }            /* Shopify asked for a check: submit normally, the code shows after the page reloads */
+    function native() {
+      set(WAIT, 0.02, v); set(BACK, 0.02, encodeURIComponent(location.pathname + location.search));
+      var rt = form.querySelector('[name="return_to"]'); if (!rt) { rt = document.createElement("input"); rt.type = "hidden"; rt.name = "return_to"; form.appendChild(rt); }
+      rt.value = location.pathname + location.search;
+      form.submit();
+      setTimeout(function () { set(WAIT, 0); set(BACK, 0); reveal(); btn.textContent = label; btn.disabled = false; }, 8000);   /* still here? never leave anyone waiting */
+    }            /* Shopify asked for a check: submit normally, the code shows after the page reloads */
     fetch(form.getAttribute("action") || "/contact", { method: "POST", body: new FormData(form), headers: { Accept: "text/html" } })
       .then(function (r) { if (!r.ok || /challenge/.test(r.url)) { native(); return; } reveal(); btn.textContent = label; btn.disabled = false; })
       .catch(native);

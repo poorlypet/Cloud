@@ -9,6 +9,72 @@
   if (grid) {
     var cards = $$(".pcd[data-price]", grid), count = $$(".cx-count"), chips = $(".cx-chips");
     var LBL = { size: "Size", colour: "Colour", fit: "Fit", price: "Price", sale: "" };
+    /* ---- filters only offer what this collection actually contains ---- */
+    var FAM = [
+      ["Black", /\b(black|coal|charcoal|anthracite|noir|onyx|night)\b/],
+      ["Grey", /\b(gr[ae]y|stone|slate|ash|graphite|pebble|cement)\b/],
+      ["Brown", /\b(brown|choco|chocolate|cognac|tan|camel|hazel|hazelnut|coffee|mocha|moka|tobacco|caramel|chestnut|walnut|cinnamon|rust|toffee|teddy|ginger|mud)\b/],
+      ["Cream & beige", /\b(cream|beige|sand|sandy|oat|ivory|ecru|natural|taupe|nude|vanilla|white|bone|linen|cappuccino|snow|powder)\b/],
+      ["Green", /\b(green|olive|moss|sage|forest|forrest|khaki|mint|thyme|fern|avocado|cabbage|pistachio|emerald|grass|lime)\b/],
+      ["Blue", /\b(blue|navy|denim|indigo|aqua|teal|petrol|ocean|sky|turquoise|santorini)\b/],
+      ["Pink & red", /\b(pink|rose|red|berry|coral|blush|burgundy|bordeaux|cherry|raspberry|fuchsia|magenta|salmon|peach|wine)\b/],
+      ["Purple", /\b(plum|aubergine|lilac|purple|lavender|mauve|violet)\b/],
+      ["Yellow & orange", /\b(yellow|mustard|orange|sunset|banana|lemon|honey|ochre|amber|apricot|terracotta|neon)\b/],
+      ["Patterned", /\b(tartan|check|checked|tweed|houndstooth|leo|stripe|striped|pattern|print|plaid|floral|zigzag|dots|camo|herringbone|seersucker)\b/]
+    ];
+    function slug(t) { return String(t).toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+    function tag(c) {
+      if (c.dataset.tagged) return; c.dataset.tagged = "1";
+      var t = (c.dataset.t || "").toLowerCase(), col = t + " " + (c.dataset.colour || "").toLowerCase().replace(/-/g, " ");
+      c.dataset.colour = FAM.filter(function (f) { return f[1].test(col); }).map(function (f) { return slug(f[0]); }).join(" ");
+      c.dataset.brand = slug(c.dataset.v || "");
+    }
+    function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+    function group(key) { var i = $('.fd [data-f="' + key + '"]'); return i ? i.closest(".fg") : null; }
+    function rebuild(g, key, items) {      /* items: [value, label]; keeps anything already ticked */
+      var sig = items.map(function (x) { return x[0]; }).join("|"); if (g.dataset.sig === sig) return; g.dataset.sig = sig;
+      var on = $$('[data-f="' + key + '"]:checked', g).map(function (i) { return i.value; });
+      var box = g.querySelector(".opts") || g.querySelector("summary").nextElementSibling;
+      box.innerHTML = items.map(function (x) { return '<label class="fo"><input type="checkbox" data-f="' + key + '" value="' + x[0] + '" data-label="' + esc(x[1]) + '" id="df-' + key + "-" + x[0] + '">' + esc(x[1]) + "</label>"; }).join("");
+      on.forEach(function (v) { var i = $('[data-f="' + key + '"][value="' + v + '"]', g); if (i) i.checked = true; });
+    }
+    function prune() {
+      var all = $$(".pcd[data-price]", grid); all.forEach(tag);
+      function tokens(k) { var o = {}; all.forEach(function (c) { (c.dataset[k] || "").split(" ").forEach(function (x) { if (x) o[x] = (o[x] || 0) + 1; }); }); return o; }
+      var first = $(".fd .fg"); if (!first) return; var host = first.parentNode;
+      /* brand: only when the collection has more than one */
+      var brands = {}; all.forEach(function (c) { if (c.dataset.v) brands[c.dataset.brand] = c.dataset.v; });
+      var bk = Object.keys(brands).sort(function (a, b) { return brands[a].localeCompare(brands[b]); }), bg = $(".fg[data-brand]", host);
+      if (bk.length > 1) {
+        if (!bg) { bg = document.createElement("details"); bg.className = "fg"; bg.setAttribute("data-brand", ""); bg.innerHTML = '<summary>Brand</summary><div class="opts"></div>'; host.insertBefore(bg, first); }
+        bg.hidden = false; rebuild(bg, "brand", bk.map(function (k) { return [k, brands[k] === "BDEBRUNO" ? "BdeBruno" : brands[k] === "PAIKKA" ? "Paikka" : brands[k]]; }));
+      } else if (bg) bg.hidden = true;
+      /* size: only sizes these products come in */
+      var sg = $(".fg[data-size]", host) || group("size"), sz = tokens("size");
+      if (sg) {
+        sg.setAttribute("data-size", "");
+        var ORD = ["toy", "xxxs", "xxs", "xs", "xs/s", "s", "s/m", "m", "m/l", "l", "l/xl", "xl", "xxl", "xxxl"];
+        var have = ORD.filter(function (k) { return sz[k]; }); if (!have.length) have = have.concat(Object.keys(sz).filter(function (k) { return /^\d+(\.\d+)?$/.test(k); }).sort(function (a, b) { return a - b; }));
+        sg.hidden = have.length < 2;
+        var ssig = have.join("|");
+        if (have.length >= 2 && sg.dataset.sig !== ssig) {
+          sg.dataset.sig = ssig;
+          var son = $$('[data-f="size"]:checked', sg).map(function (i) { return i.value; });
+          sg.querySelector(".opts").innerHTML = have.map(function (k) { var L = k === "toy" ? "Toy" : k.toUpperCase(); return '<label class="fs"><input type="checkbox" data-f="size" value="' + k + '" data-label="Size ' + L + '" id="dsz-' + slug(k) + '"><span>' + L + "</span></label>"; }).join("");
+          son.forEach(function (v) { var i = $('[data-f="size"][value="' + v + '"]', sg); if (i) i.checked = true; });
+        }
+      }
+      /* fit: only where there are breed-specific cuts */
+      var fg = group("fit"), ft = tokens("fit");
+      if (fg) { var special = Object.keys(ft).some(function (k) { return k !== "standard"; }); fg.hidden = !special; $$('[data-f="fit"]', fg).forEach(function (i) { var has = special && !!ft[i.value]; i.closest("label").hidden = !has; if (!has) i.checked = false; }); }
+      /* colour: grouped into families, only those present */
+      var cg = $(".fg[data-colour]", host) || group("colour"), ct = tokens("colour");
+      if (cg) { cg.setAttribute("data-colour", ""); var fams = FAM.filter(function (f) { return ct[slug(f[0])]; }).map(function (f) { return [slug(f[0]), f[0]]; }); cg.hidden = fams.length < 2; if (fams.length >= 2) rebuild(cg, "colour", fams); }
+      /* price: only bands with something in them */
+      var pg = group("price");
+      if (pg) { var pl = 0; $$('[data-f="price"]', pg).forEach(function (i) { var has = all.some(function (c) { return inPrice(+c.dataset.price, [i.value]); }); i.closest("label").hidden = !has; if (has) pl++; else i.checked = false; }); pg.hidden = pl < 2; }
+    }
+    LBL.brand = "Brand";
     function chosen() {
       var f = {};
       $$("[data-f]:checked").forEach(function (i) { (f[i.dataset.f] = f[i.dataset.f] || []).push(i.value); });
@@ -18,6 +84,7 @@
       return bands.some(function (b) { var r = b.split("-"); return p >= +r[0] && p <= +r[1]; });
     }
     function apply() {
+      cards = $$(".pcd[data-price]", grid); cards.forEach(tag);
       var f = chosen(), n = 0;
       cards.forEach(function (c) {
         var ok = Object.keys(f).every(function (k) {
@@ -47,6 +114,8 @@
     function sync(src) { /* keep matching inputs in sidebar and drawer in step */
       $$('[data-f="' + src.dataset.f + '"][value="' + src.value + '"]').forEach(function (i) { i.checked = src.checked; });
     }
+    prune();
+    var pt = 0, seen = cards.length; new MutationObserver(function () { clearTimeout(pt); pt = setTimeout(function () { var n = $$(".pcd[data-price]", grid).length; if (n !== seen) { seen = n; prune(); apply(); } }, 150); }).observe(grid, { childList: true });
     document.addEventListener("change", function (e) { if (e.target.matches("[data-f]")) { sync(e.target); apply(); } });
     document.addEventListener("click", function (e) {
       var b = e.target.closest("[data-ff]");
@@ -74,7 +143,11 @@
     /* drawer */
     var fd = $(".fd"), sc = $(".fscrim");
     function fdSet(on) { if (!fd) return; fd.classList.toggle("on", on); sc.classList.toggle("on", on); document.body.style.overflow = on ? "hidden" : ""; if (on) fd.focus(); }
-    $$("[data-filters]").forEach(function (b) { b.addEventListener("click", function () { fdSet(true); }); });
+    /* filters cover the whole collection: once the drawer is opened, the remaining products load in behind */
+    var allOn = false;
+    function loadAll() { allOn = true; var m = $(".cx-more a.btn-o"); if (m && !m.disabled) m.click(); }
+    if (grid) new MutationObserver(function () { if (allOn) setTimeout(loadAll, 250); }).observe(grid, { childList: true });
+    $$("[data-filters]").forEach(function (b) { b.addEventListener("click", function () { fdSet(true); loadAll(); }); });
     $$("[data-fd-close]").forEach(function (b) { b.addEventListener("click", function () { fdSet(false); }); });
     if (sc) sc.addEventListener("click", function () { fdSet(false); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && fd && fd.classList.contains("on")) fdSet(false); });
