@@ -1,0 +1,144 @@
+{%- comment -%}
+  About us: four films, edge to edge, each with one centred sentence that arrives word by word and drifts as you scroll,
+  then a short closing. US, Canada and UAE shoppers see the delivery line rewritten for their market (mk-out).
+{%- endcomment -%}
+{%- capture mkbody -%}
+<div class="abt">
+  <section class="ab-ch">
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/1126/0313/6390/files/preview_images/a87ec79fcd4c4e89b5ae25c637282f61.thumbnail.0000000000.jpg?v=1795817619" src="https://cdn.shopify.com/videos/c/o/v/a87ec79fcd4c4e89b5ae25c637282f61.mp4" aria-label="Two small dogs in coats exploring an autumn wood"></video>
+    <div class="ab-say ab-pad"><div class="ab-in" data-ab-float>
+      <p class="ab-k ab-fade">About Axel &amp; Hound</p>
+      <h1 class="ab-split">Fewer, <i>better</i> things for dogs.</h1>
+    </div></div>
+  </section>
+  <section class="ab-ch">
+    <video autoplay muted loop playsinline preload="metadata" poster="https://cdn.shopify.com/s/files/1/1126/0313/6390/files/preview_images/bfc17c901fb94d95b01209a79bc4e883.thumbnail.0000000000.jpg?v=1795817645" src="https://cdn.shopify.com/videos/c/o/v/bfc17c901fb94d95b01209a79bc4e883.mp4" aria-label="A spaniel in a tartan Cloud7 coat"></video>
+    <div class="ab-say ab-pad"><div class="ab-in" data-ab-float>
+      <h2 class="ab-split">We choose every piece ourselves, from eight <i>independent</i> European makers.</h2>
+    </div></div>
+  </section>
+  <section class="ab-ch">
+    <video autoplay muted loop playsinline preload="metadata" poster="https://cdn.shopify.com/s/files/1/1126/0313/6390/files/preview_images/e036814ddf82433da21fc0695408e60b.thumbnail.0000000000.jpg?v=1795817674" src="https://cdn.shopify.com/videos/c/o/v/e036814ddf82433da21fc0695408e60b.mp4" aria-label="A dalmatian in a patterned coat running through woodland"></video>
+    <div class="ab-say ab-pad"><div class="ab-in" data-ab-float>
+      <h2 class="ab-split">Coats cut for the dog you have, <i>dachshunds, whippets and greyhounds</i> included.</h2>
+    </div></div>
+  </section>
+  <section class="ab-ch">
+    <video autoplay muted loop playsinline preload="metadata" poster="https://cdn.shopify.com/s/files/1/1126/0313/6390/files/preview_images/6b9542bf6ffd4c459ed960c27a67673c.thumbnail.0000000000.jpg?v=1795817706" src="https://cdn.shopify.com/videos/c/o/v/6b9542bf6ffd4c459ed960c27a67673c.mp4" aria-label="Close-ups of dogs wearing beaded and leather collars"></video>
+    <div class="ab-say ab-pad"><div class="ab-in" data-ab-float>
+      <h2 class="ab-split">Every order is <i>packed by hand</i> and sent tracked the next working day.</h2>
+    </div></div>
+  </section>
+  <section class="ab-end ab-pad">
+    <div class="ab-makers">
+      <p class="ab-k ab-fade">The makers</p>
+      <p class="ab-names ab-split ab-scrub"><i>Cloud7</i> from Berlin. <i>Nordog</i> and <i>Tadazhi</i> from Denmark. <i>Paikka</i> from Finland. <i>Brott Barcelona</i>, <i>Molly and Stitch</i>, <i>Pintu</i> and <i>BdeBruno</i>.</p>
+    </div>
+    <p class="ab-how ab-fade">We deliver to the United Kingdom, the United States, Canada and the United Arab Emirates, and you have 14 days to return anything that isn&rsquo;t right.</p>
+    <div class="ab-ask">
+      <p class="ab-fade">Not sure about a size or a fit? Ask us before you buy.</p>
+      <a class="ab-mail ab-fade" style="--d:.15s" href="mailto:hello@axelandhound.com">hello@axelandhound.com</a>
+      <a class="ab-btn ab-fade" style="--d:.3s" href="{{ routes.collections_url }}/new-in">Shop new in</a>
+    </div>
+    <p class="ab-co ab-fade">Axel &amp; Hound is a trading name of Poorly Pet Ltd, registered in England and Wales, company number 17086223. Registered office: 4 Lomas Road, Sandbach, Cheshire, CW11 3EE, United Kingdom.</p>
+  </section>
+</div>
+{%- endcapture -%}
+{%- render 'mk-out', html: mkbody -%}
+<style>
+.abt{--ab-paper:#fff;--ab-ink:#111;--ab-soft:#3a3a37;--ab-mute:#6b6b66;--ab-faint:#cfcfc9;--ab-olive:#2f3527;--ab-film:#1b1d17;--ab-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;--ab-sans:"Jost","Helvetica Neue",Arial,sans-serif;background:var(--ab-paper);color:var(--ab-ink);font:400 17px/1.7 var(--ab-sans)}
+.abt *{box-sizing:border-box}
+.abt h1,.abt h2,.abt p{margin:0;padding:0}
+.abt h1,.abt h2{font-family:var(--ab-display);font-weight:500;text-wrap:balance;letter-spacing:0;text-transform:none;color:inherit}
+.abt .ab-pad{padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+.abt .ab-k{font:500 11px/1 var(--ab-sans);letter-spacing:.22em;text-transform:uppercase}
+.abt .ab-ch{position:relative;aspect-ratio:21/9;max-width:100%;overflow:hidden;background:var(--ab-film);color:#fff}
+.abt .ab-ch video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.abt .ab-ch::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.36)}
+.abt .ab-say{position:absolute;inset:0;z-index:1;display:grid;place-items:center;text-align:center}
+.abt .ab-in{max-width:min(880px,100%);display:grid;gap:18px;justify-items:center}
+.abt .ab-ch h1{font-size:clamp(36px,5.2vw,76px);line-height:1.04}
+.abt .ab-ch h2{font-size:clamp(24px,3.1vw,46px);line-height:1.16}
+.abt .ab-ch i{font-style:italic}
+.abt .ab-end{text-align:center;padding-top:clamp(72px,9vw,130px);padding-bottom:clamp(72px,9vw,130px);display:grid;gap:clamp(44px,5vw,72px);justify-items:center}
+.abt .ab-makers{display:grid;gap:20px;justify-items:center}
+.abt .ab-makers .ab-k{color:var(--ab-mute)}
+.abt .ab-names{font:500 clamp(22px,2.5vw,36px)/1.3 var(--ab-display);max-width:26em;text-wrap:balance}
+.abt .ab-names i{color:var(--ab-olive)}
+.abt .ab-how{color:var(--ab-soft);max-width:34em}
+.abt .ab-ask{display:grid;gap:14px;justify-items:center}
+.abt a.ab-mail{font:500 clamp(22px,2.4vw,32px)/1.2 var(--ab-display);color:var(--ab-ink)!important;text-decoration:none;overflow-wrap:anywhere;padding-bottom:5px;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat}
+.abt a.ab-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 34px;margin-top:10px;background:var(--ab-olive);color:#fff!important;font:500 11.5px/1 var(--ab-sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.abt a.ab-btn:hover{background:var(--ab-ink)}
+.abt a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.abt .ab-co{font-size:13px;line-height:1.7;color:var(--ab-mute);max-width:54em}
+.ab-js .abt .ab-w{display:inline-block;opacity:0;transform:translateY(.7em);filter:blur(7px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s ease;transition-delay:calc(var(--i)*65ms + var(--d,0s))}
+.ab-js .abt .ab-go .ab-w{opacity:1;transform:none;filter:none}
+.ab-js .abt .ab-fade{opacity:0;transform:translateY(18px);transition:opacity 1s ease var(--d,0s),transform 1s cubic-bezier(.2,.7,.2,1) var(--d,0s),background-color .2s}
+.ab-js .abt .ab-fade.ab-go{opacity:1;transform:none}
+.ab-js .abt .ab-k.ab-fade{letter-spacing:.04em;transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1),letter-spacing 1.5s cubic-bezier(.2,.7,.2,1)}
+.ab-js .abt .ab-k.ab-fade.ab-go{letter-spacing:.22em}
+.ab-js .abt .ab-scrub .ab-w{opacity:1;transform:none;filter:none;color:var(--ab-faint);transition:color .45s ease}
+.ab-js .abt .ab-scrub .ab-w.ab-on{color:var(--ab-ink)}
+.ab-js .abt .ab-scrub i .ab-w.ab-on{color:var(--ab-olive)}
+.ab-js .abt a.ab-mail{background-size:0 1px;transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1),background-size 1.2s cubic-bezier(.2,.7,.2,1) .5s}
+.ab-js .abt a.ab-mail.ab-go{background-size:100% 1px}
+@media (max-width:760px){.abt .ab-ch{aspect-ratio:4/5}}
+@media (prefers-reduced-motion:reduce){
+  .ab-js .abt .ab-w,.ab-js .abt .ab-fade{opacity:1;transform:none;filter:none;transition:none}
+  .ab-js .abt .ab-scrub .ab-w{color:inherit}.ab-js .abt .ab-k.ab-fade{letter-spacing:.22em}.ab-js .abt a.ab-mail{background-size:100% 1px}
+}
+</style>
+<script>
+(function () {
+  var root = document.querySelector(".abt"); if (!root || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("ab-js");
+  var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.querySelectorAll(".ab-split").forEach(function (el) {
+    var i = 0;
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var f = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (t) {
+            if (!t) return;
+            if (/^\s+$/.test(t)) { f.appendChild(document.createTextNode(" ")); return; }
+            var s = document.createElement("span"); s.className = "ab-w"; s.style.setProperty("--i", i++); s.textContent = t; f.appendChild(s);
+          });
+          node.replaceChild(f, n);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    })(el);
+  });
+  var targets = root.querySelectorAll(".ab-split:not(.ab-scrub), .ab-fade");
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("ab-go"); io.unobserve(e.target); } }); }, { threshold: 0.35 });
+  targets.forEach(function (el) { io.observe(el); });
+  /* films only play while on screen */
+  var vio = new IntersectionObserver(function (es) { es.forEach(function (e) { var v = e.target; if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); }); }, { threshold: 0.1 });
+  root.querySelectorAll("video").forEach(function (v) { v.muted = true; vio.observe(v); });
+  var floats = Array.prototype.slice.call(root.querySelectorAll("[data-ab-float]")), scrubs = Array.prototype.slice.call(root.querySelectorAll(".ab-scrub")), tick = false;
+  function frame() {
+    tick = false; var vh = innerHeight;
+    if (!still) floats.forEach(function (el) {
+      var r = el.parentNode.getBoundingClientRect(), p = (r.top + r.height / 2) / vh - 0.5;
+      el.style.transform = "translateY(" + (p * -70).toFixed(1) + "px)";
+      el.style.opacity = Math.max(0, Math.min(1, 1.55 - Math.abs(p) * 1.9)).toFixed(3);
+    });
+    scrubs.forEach(function (el) {
+      var r = el.getBoundingClientRect(), ws = el.querySelectorAll(".ab-w");
+      var p = Math.max(0, Math.min(1, (vh * 0.9 - r.top) / (r.height + vh * 0.4))), n = Math.round(p * ws.length);
+      for (var k = 0; k < ws.length; k++) ws[k].classList.toggle("ab-on", k < n);
+    });
+  }
+  addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
+  addEventListener("resize", frame); frame();
+  setTimeout(function () { targets.forEach(function (el) { if (el.getBoundingClientRect().top < innerHeight) el.classList.add("ab-go"); }); }, 1500);
+})();
+</script>
+{% schema %}
+{
+  "name": "About us",
+  "tag": "div",
+  "class": "ah-sec"
+}
+{% endschema %}
